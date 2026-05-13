@@ -23,41 +23,84 @@
     "architectureWikiCoverage": 15,
     "securityHygieneNoPlaintextSecrets": 35
   },
+  "acknowledgedDismissals": [
+    {
+      "id": "GAP-001",
+      "status": "ACKNOWLEDGED",
+      "dismissedOn": "2026-05-13",
+      "by": "Ammar",
+      "reason": "Credential lives in internal Azure DevOps repo only; accepted risk."
+    },
+    {
+      "id": "GAP-002",
+      "status": "ACKNOWLEDGED",
+      "dismissedOn": "2026-05-13",
+      "by": "Ammar",
+      "reason": "Same disposition as GAP-001."
+    },
+    {
+      "id": "GAP-003",
+      "status": "ACKNOWLEDGED",
+      "dismissedOn": "2026-05-13",
+      "by": "Ammar",
+      "reason": "Never reached any remote; local dangling commit unreachable post git update-ref -d HEAD."
+    },
+    {
+      "id": "ACT-001",
+      "status": "ACKNOWLEDGED",
+      "dismissedOn": "2026-05-13",
+      "by": "Ammar",
+      "reason": "Action for GAP-001 / GAP-002 — deferred."
+    },
+    {
+      "id": "ACT-002",
+      "status": "ACKNOWLEDGED",
+      "dismissedOn": "2026-05-13",
+      "by": "Ammar",
+      "reason": "Action for GAP-003 — deferred."
+    }
+  ],
   "topHighGaps": [
     {
       "id": "GAP-001",
       "title": "Hardcoded SQL sa credentials in PES appsettings.qc.json",
-      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\config\\appsettings.qc.json:13"
+      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\config\\appsettings.qc.json:13",
+      "status": "ACKNOWLEDGED — not pursuing (2026-05-13)"
     },
     {
       "id": "GAP-002",
       "title": "Hardcoded SQL sa credentials in PES appsettings.qcfromlocal.json",
-      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\config\\appsettings.qcfromlocal.json:13"
+      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\config\\appsettings.qcfromlocal.json:13",
+      "status": "ACKNOWLEDGED — not pursuing (2026-05-13)"
     },
     {
       "id": "GAP-003",
       "title": "Anthropic API key on local disk in Brain SK staging vault",
-      "evidence": "C:\\Falcon\\Brain Outputs\\reports\\bootstrap-touchbase\\2026-05-13-bootstrap-completion.md (Incident section)"
+      "evidence": "C:\\Falcon\\Brain Outputs\\reports\\bootstrap-touchbase\\2026-05-13-bootstrap-completion.md (Incident section)",
+      "status": "ACKNOWLEDGED — not pursuing (2026-05-13)"
     },
     {
       "id": "GAP-004",
       "title": "ServiceOperationResult<T> has 5 distinct shapes; Commerce east-west client already needs a bridge wrapper",
-      "evidence": "C:\\Falcon\\Brain Outputs\\understanding\\wiki\\ARCHITECTURE_CONFLICTS.md (section 4.1); C:\\Falcon\\Falcon\\falcon-core-commerce-svc\\src\\Falcon.Commerce.Infrastructure\\External\\Services\\IdentityService.cs:97-103"
+      "evidence": "C:\\Falcon\\Brain Outputs\\understanding\\wiki\\ARCHITECTURE_CONFLICTS.md (section 4.1); C:\\Falcon\\Falcon\\falcon-core-commerce-svc\\src\\Falcon.Commerce.Infrastructure\\External\\Services\\IdentityService.cs:97-103",
+      "status": "OPEN"
     },
     {
       "id": "GAP-005",
       "title": "adminConsoleGuard commented out on admin-console remote root route",
-      "evidence": "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\apps\\admin-console\\src\\app\\app.routes.ts:7"
+      "evidence": "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\apps\\admin-console\\src\\app\\app.routes.ts:7",
+      "status": "OPEN"
     },
     {
       "id": "GAP-006",
       "title": "PES uses GET-with-body (HTTP anti-pattern) on policyrulesBySub and policyrulesByFilter",
-      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\Program.cs:175,179 (per BACKEND_SERVICE_MAP.md line 87)"
+      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\Program.cs:175,179 (per BACKEND_SERVICE_MAP.md line 87)",
+      "status": "OPEN"
     }
   ],
   "nextActions": [
-    { "id": "ACT-001", "title": "Rotate leaked SQL sa credential + purge from git history", "ownerCandidate": "Identity / Access service owner", "size": "S" },
-    { "id": "ACT-002", "title": "Rotate Anthropic API key from Brain SK staging vault", "ownerCandidate": "Ammar", "size": "S" },
+    { "id": "ACT-001", "title": "Rotate leaked SQL sa credential + purge from git history", "ownerCandidate": "Identity / Access service owner", "size": "S", "status": "ACKNOWLEDGED — not pursuing (2026-05-13)" },
+    { "id": "ACT-002", "title": "Rotate Anthropic API key from Brain SK staging vault", "ownerCandidate": "Ammar", "size": "S", "status": "ACKNOWLEDGED — not pursuing (2026-05-13)" },
     { "id": "ACT-003", "title": "Move dev Mongo connection strings out of non-Development appsettings.json (Templates + Access)", "ownerCandidate": "Backend (Templates + Access)", "size": "S" },
     { "id": "ACT-004", "title": "Restore architecture wiki vault at C:\\Falcon\\falcon-wiki", "ownerCandidate": "Ammar", "size": "S" },
     { "id": "ACT-005", "title": "Confirm PRD folder location with Ammar", "ownerCandidate": "Ammar", "size": "S" },

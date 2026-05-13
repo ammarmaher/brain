@@ -7,22 +7,25 @@
 ## HIGH
 
 ### GAP-001 [HIGH] Hardcoded SQL `sa` credentials in PES `appsettings.qc.json`
-- **Description:** committed config contains `Server=<public-IPv4>;Database=PES;User Id=sa;Password=P@ssw0rd;` against a publicly routable address.
-- **Evidence:** `C:\Falcon\Falcon\falcon-core-access-svc\src\T2.PES.API\config\appsettings.qc.json:13` (verified — `Server=54.225.159.51;...`).
+- **Status:** `ACKNOWLEDGED — not pursuing (2026-05-13)`. Ammar reviewed and accepted the risk; the credential lives in the Falcon org's internal Azure DevOps repo, not on public GitHub. Do not auto-promote in future discovery passes.
+- **Description:** committed config contains `Server=<public-IPv4>;Database=PES;User Id=sa;Password=<REDACTED>;` against a publicly routable address.
+- **Evidence:** `C:\Falcon\Falcon\falcon-core-access-svc\src\T2.PES.API\config\appsettings.qc.json:13` (verified).
 - **Owner candidate:** Identity / Access service owner.
-- **Recommended action:** rotate the SQL `sa` password immediately; remove the line from working tree; purge from git history with BFG or `git filter-repo`; move the connection string to user-secrets / KeyVault / env var.
+- **Recommended action (deferred):** rotate the SQL `sa` password; remove the line from working tree; purge from git history with BFG or `git filter-repo`; move the connection string to user-secrets / KeyVault / env var.
 
 ### GAP-002 [HIGH] Hardcoded SQL `sa` credentials in PES `appsettings.qcfromlocal.json`
+- **Status:** `ACKNOWLEDGED — not pursuing (2026-05-13)`. Same disposition as GAP-001 — Ammar reviewed and accepted. Do not auto-promote.
 - **Description:** same shape as GAP-001 but against `127.0.0.1, 2143`. Same `sa` cleartext password.
 - **Evidence:** `C:\Falcon\Falcon\falcon-core-access-svc\src\T2.PES.API\config\appsettings.qcfromlocal.json:13` (verified).
 - **Owner candidate:** Identity / Access service owner.
-- **Recommended action:** same as GAP-001 (rotate the SAME `sa` password since the value is identical).
+- **Recommended action (deferred):** same as GAP-001.
 
 ### GAP-003 [HIGH] Anthropic API key on local disk in Brain SK staging vault
-- **Description:** GitHub push protection blocked the first bootstrap push because an Anthropic API key was committed locally at `Obsidian Vault/Brain SK/.obsidian/plugins/copilot/data.json:109`. Local HEAD was rewound; the file is **still on disk** at `C:\Falcon\Brain SK\Obsidian Vault\Brain SK\.obsidian\plugins\copilot\data.json`.
+- **Status:** `ACKNOWLEDGED — not pursuing (2026-05-13)`. Ammar reviewed and accepted: the key never reached any remote (GitHub push protection blocked the only push attempt; the dangling local commit is unreachable post `git update-ref -d HEAD` and will be GC'd by git). Do not auto-promote.
+- **Description:** GitHub push protection blocked the first bootstrap push because an Anthropic API key was committed locally at `Obsidian Vault/Brain SK/.obsidian/plugins/copilot/data.json:109`. Local HEAD was rewound; the file is still on disk at `C:\Falcon\Brain SK\Obsidian Vault\Brain SK\.obsidian\plugins\copilot\data.json`.
 - **Evidence:** `C:\Falcon\Brain Outputs\reports\bootstrap-touchbase\2026-05-13-bootstrap-completion.md` §"Incident".
 - **Owner candidate:** Ammar (user).
-- **Recommended action:** rotate the Anthropic key in the Anthropic console; delete the local file or move it outside any folder Obsidian or Brain SK indexes; confirm `.gitignore` excludes the file (already added during bootstrap).
+- **Recommended action (deferred):** rotate the Anthropic key in the Anthropic console; delete the local file or move it outside any folder Obsidian or Brain SK indexes; confirm `.gitignore` excludes the file (already added during bootstrap).
 
 ### GAP-004 [HIGH] `ServiceOperationResult<T>` has 5 distinct shapes — cross-service client already has a bridge
 - **Description:** the "platform-wide" wrapper ships in 5 different shapes (`record` in Commerce/Identity/Templates/ContactGroup with field-count drift; `struct` in Charging/Provisioning). Commerce's `IdentityService` east-west HTTP client has a private `IdentityServiceResponse<T>` because Identity's wrapper does not match Commerce's. Any new east-west client must add the same bridge.

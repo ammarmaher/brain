@@ -33,11 +33,17 @@
       "_obsidian/BUSINESS_INDEX.md"
     ],
     "topHighGaps": [
-      "Hardcoded SQL sa credentials in falcon-core-access-svc appsettings.qc*.json",
-      "Anthropic API key still on disk in Brain SK secondary Obsidian staging vault",
       "Mongo default creds in non-Development appsettings.json (Templates + Access)",
       "ServiceOperationResult<T> ships in 5 distinct shapes across services",
-      "adminConsoleGuard commented out in apps/admin-console/src/app/app.routes.ts:7"
+      "adminConsoleGuard commented out in apps/admin-console/src/app/app.routes.ts:7",
+      "PES uses GET-with-body on policyrulesBySub and policyrulesByFilter"
+    ],
+    "acknowledgedDismissals": [
+      { "id": "GAP-001", "dismissedOn": "2026-05-13", "by": "Ammar", "reason": "SQL sa creds in PES appsettings.qc.json — credential lives in internal Azure DevOps repo only; accepted risk." },
+      { "id": "GAP-002", "dismissedOn": "2026-05-13", "by": "Ammar", "reason": "SQL sa creds in PES appsettings.qcfromlocal.json — same disposition as GAP-001." },
+      { "id": "GAP-003", "dismissedOn": "2026-05-13", "by": "Ammar", "reason": "Anthropic API key on local disk in Brain SK staging vault — never reached any remote; local dangling commit unreachable post git update-ref -d HEAD." },
+      { "id": "ACT-001", "dismissedOn": "2026-05-13", "by": "Ammar", "reason": "Rotate SQL sa — deferred (linked to GAP-001/002)." },
+      { "id": "ACT-002", "dismissedOn": "2026-05-13", "by": "Ammar", "reason": "Rotate Anthropic key — deferred (linked to GAP-003)." }
     ],
     "phase1OverclaimsCorrected": [
       "Commerce NodeController NRE on _changeApplicationPriceTypeHandler: backend agent claimed unassigned; integration agent verified assignment at NodeController.cs:87. Real defect downgraded to MED method-overload at lines 194 + 212.",

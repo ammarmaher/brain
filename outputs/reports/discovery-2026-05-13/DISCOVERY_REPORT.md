@@ -6,22 +6,24 @@
 
 The Brain SK v0.1 discovery pipeline ran two phases against the Falcon platform on 2026-05-13. Phase 1 produced 74 backend dossiers, 17 frontend dossiers, and a 4-file code-extracted wiki fallback. Phase 2 (this pass) cross-referenced the three streams and produced the integration view at `understanding/integration/` (6 files) and this rollup. Net result: the platform is well-inventoried and reasonably consistent for a microservices monorepo of this size, but two sources of truth are missing (PRD folder + Architecture Wiki) and several drift issues span multiple services.
 
-## Top 5 HIGH gaps
+## Top HIGH gaps remaining (3 after acknowledgments)
+
+> GAP-001, GAP-002, and GAP-003 were `ACKNOWLEDGED — not pursuing (2026-05-13)` and remain in `GAP_LIST.md` for audit. They are excluded from this surfaced list.
 
 | ID | Title | Evidence |
 |---|---|---|
-| **GAP-001** | Hardcoded SQL `sa` credentials in `T2.PES.API/config/appsettings.qc.json:13` against public IPv4. | `C:\Falcon\Falcon\falcon-core-access-svc\src\T2.PES.API\config\appsettings.qc.json:13` (verified — `Server=54.225.159.51;...User Id=sa;Password=P@ssw0rd;`) |
-| **GAP-002** | Hardcoded SQL `sa` credentials in `appsettings.qcfromlocal.json:13` (same password as GAP-001). | `C:\Falcon\Falcon\falcon-core-access-svc\src\T2.PES.API\config\appsettings.qcfromlocal.json:13` (verified) |
-| **GAP-003** | Anthropic API key on local disk in Brain SK staging vault — pushed once, rejected by GitHub secret scanning, still on disk. | `C:\Falcon\Brain Outputs\reports\bootstrap-touchbase\2026-05-13-bootstrap-completion.md` §"Incident"; file at `C:\Falcon\Brain SK\Obsidian Vault\Brain SK\.obsidian\plugins\copilot\data.json` |
 | **GAP-004** | `ServiceOperationResult<T>` ships in 5 distinct shapes across the 6 services that define it; Commerce's east-west `IdentityService` already needs a private bridge wrapper. | `wiki/ARCHITECTURE_CONFLICTS.md` §4.1; `falcon-core-commerce-svc/src/Falcon.Commerce.Infrastructure/External/Services/IdentityService.cs:97-103` |
 | **GAP-005** | `adminConsoleGuard` is commented out in `apps/admin-console/src/app/app.routes.ts:7` — admin routes are reachable without role gating beyond the host-shell guards. | `C:\Falcon\Falcon\falcon-web-platform-ui\apps\admin-console\src\app\app.routes.ts:7` (verified) |
+| **GAP-006** | PES uses GET-with-body (HTTP anti-pattern) on `policyrulesBySub` and `policyrulesByFilter` — may be silently broken in some deployment topologies. | `falcon-core-access-svc/src/T2.PES.API/Program.cs:175,179` (per `BACKEND_SERVICE_MAP.md` deviations) |
 
 ## Top 5 next actions
 
-1. **ACT-001 / ACT-002 (S, today, parallel):** rotate the SQL `sa` password and purge from git history; rotate the Anthropic API key in the Anthropic console. Both are independent and unblock security row from 35% → ≥ 70%.
-2. **ACT-003 (S, today):** move dev Mongo connection strings out of non-Development `appsettings.json` for Templates + Access.
-3. **ACT-004 (S, today):** restore the architecture Wiki vault at `C:\Falcon\falcon-wiki`. This single action unblocks 7 downstream actions (ACT-008…ACT-013 + ACT-015) and lifts the wiki row from 15% → ≥ 80%.
-4. **ACT-006 (S, parallel):** file the Commerce NodeController method-overload bug — note that the Phase-1 NRE claim does **not** reproduce against the actual file (constructor assignment present at `NodeController.cs:87`). The real defect is the method-name collision at lines 194/212.
+> ACT-001 and ACT-002 were `ACKNOWLEDGED — not pursuing (2026-05-13)` and remain in `NEXT_ACTIONS.md` for audit. They are excluded from this surfaced list.
+
+1. **ACT-003 (S, today):** move dev Mongo connection strings out of non-Development `appsettings.json` for Templates + Access.
+2. **ACT-004 (S, today):** restore the architecture Wiki vault at `C:\Falcon\falcon-wiki`. This single action unblocks 7 downstream actions (ACT-008…ACT-013 + ACT-015) and lifts the wiki row from 15% → ≥ 80%.
+3. **ACT-006 (S, parallel):** file the Commerce NodeController method-overload bug — note that the Phase-1 NRE claim does **not** reproduce against the actual file (constructor assignment present at `NodeController.cs:87`). The real defect is the method-name collision at lines 194/212.
+4. **ACT-007 (S, parallel):** confirm intent of commented-out `adminConsoleGuard` — restore it or document the exception with a `TODO(restore-by:<date>)`.
 5. **ACT-009 (M, after wiki is back):** extract a shared `Falcon.Common.Contracts` package carrying canonical `ServiceOperationResult<T>` + `FalconException` + `FalconError`. Replace each service's local copy in subsequent PRs.
 
 ## Phase 1 surface (what already exists)

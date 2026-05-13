@@ -5,8 +5,8 @@
 
 | ID | Title | Owner candidate | Size | Depends on | Success criterion |
 |---|---|---|---:|---|---|
-| **ACT-001** | Rotate leaked SQL `sa` credential + purge from git history | Identity / Access service owner | S | none | The `sa` password no longer authenticates against the QC SQL server; the literal `P@ssw0rd` string is absent from `git log -p --all` for `falcon-core-access-svc`; new password lives in user-secrets or KeyVault. |
-| **ACT-002** | Rotate Anthropic API key from Brain SK staging vault | Ammar | S | none | The key in `C:\Falcon\Brain SK\Obsidian Vault\Brain SK\.obsidian\plugins\copilot\data.json` returns 401 against the Anthropic console; the file is moved outside any indexable folder or deleted. |
+| **ACT-001** ~~Rotate leaked SQL `sa` credential + purge from git history~~ | (deferred) | Identity / Access service owner | S | none | `ACKNOWLEDGED — not pursuing (2026-05-13)` — Ammar accepted the risk (credential lives in internal Azure DevOps repo only). |
+| **ACT-002** ~~Rotate Anthropic API key from Brain SK staging vault~~ | (deferred) | Ammar | S | none | `ACKNOWLEDGED — not pursuing (2026-05-13)` — never reached a remote; local dangling commit unreachable. |
 | **ACT-003** | Move dev Mongo connection strings out of non-Development `appsettings.json` (Templates + Access) | Backend (Templates + Access) | S | none | `appsettings.json` for Templates + Access has `"ConnectionString": ""`; the dev value lives in `appsettings.Development.json` only. |
 | **ACT-004** | Restore architecture wiki vault at `C:\Falcon\falcon-wiki` | Ammar | S | none | `Get-ChildItem C:\Falcon\falcon-wiki\Home\Software-Architecture-Design\` returns the 11 canonical docs listed in `wiki/WIKI_FALLBACK_NOTE.md`; the readiness report flips wiki row from `WARN` to `OK`. |
 | **ACT-005** | Confirm PRD folder location with Ammar | Ammar | S | none | Path recorded in `discovery/discovered-path-map.md`; or confirmation that PRDs live in Google Drive per `project_brain_always_grow_pipeline.md`. |
@@ -23,6 +23,6 @@
 
 ### Notes
 
-- **Cache-warming win:** ACT-001 / ACT-002 / ACT-003 / ACT-006 are all S-sized and independent — they can run in parallel and unblock the security-hygiene readiness row from 35% to ≥ 70% within one day.
+- **Cache-warming win:** ACT-003 / ACT-006 / ACT-007 are S-sized and independent — they can run in parallel. (ACT-001 + ACT-002 were `ACKNOWLEDGED — not pursuing (2026-05-13)`; the security-hygiene readiness row stays at 35% reflecting that the underlying findings remain accepted-risk, not remediated.)
 - **Wiki dependency:** ACT-004 unblocks 7 downstream actions (ACT-008 through ACT-015 except ACT-014). Restore the wiki first if you only have time for one thing.
 - **Out of scope for this list:** the LOW-severity items (slnx unification, dead `tailwindcss-primeui` dep, `falcon-portal` stub, deprecated repos on disk, DB-name capitalisation, `Respose` typo, `PrimeNGThemeService` rename, partial folder-structure rule, `.npmrc legacy-peer-deps` cleanup). All are tracked in `GAP_LIST.md` GAP-021 through GAP-030 and can be batched into a single "platform hygiene sweep" PR once the HIGH/MED items are cleared.
