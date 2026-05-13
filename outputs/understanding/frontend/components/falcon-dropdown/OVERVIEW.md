@@ -1,45 +1,70 @@
 # falcon-dropdown — OVERVIEW
 
-## What this is
+## Component purpose
 
-The Falcon UI single-select dropdown — a searchable, clearable picker with a button trigger and a popover panel. The default replacement for `<p-dropdown>` / `<select>` across Falcon consoles.
+Single-select dropdown with searchable filter, type-ahead buffer, keyboard navigation, and clearable selection. Designed as the form-field cousin of `<falcon-angular-input>` (shares size / state / variant / appearance contract).
 
-## Render paths
+## Business / UI use case
 
-- **Shadow DOM** — `<falcon-dropdown>` at `libs/falcon-ui-core/src/components/falcon-dropdown/falcon-dropdown.tsx` (`shadow: true`, 572 LOC — second-largest component after table).
-- **Light DOM** — `<falcon-dropdown-tw>` at `libs/falcon-ui-core/src/components/falcon-dropdown-tw/falcon-dropdown-tw.tsx` (`shadow: false`).
-- **Angular wrapper** — `<falcon-angular-dropdown>` at `libs/falcon-ui-core/src/angular-wrapper/components/falcon-dropdown/falcon-dropdown.component.ts`.
+- Account-owner picker, country picker (non-phone), category picker, status picker.
+- Language picker (uses `iconUrl` per-option flag images — Wave 4 addition replaced the per-item ng-template pattern).
+- Form-shell dropdowns inside organization-hierarchy wizards (admin + management consoles).
 
-## Why it exists
+## When to use it / when NOT to use it
 
-- Replaces every PrimeNG `<p-dropdown>` / `<p-select>` instance in the codebase after Wave PR-8.
-- Single source of design tokens (`--falcon-dropdown-*`) drives both render paths so the Studio can mutate appearance at runtime.
-- Cross-framework — same Stencil tags are wrapped for React + Vue.
+**Use it for:**
+- Single-value selection from a known list of options.
+- Searchable list when option count > ~10.
+- Type-ahead navigation against a labeled list.
 
-## Spec lineage
+**Do NOT use it for:**
+- Multi-value selection → `<falcon-angular-multi-select>`.
+- Free-text input + suggestions → `<falcon-angular-combobox>`.
+- Tree-shaped options → `<falcon-angular-tree>` or `<falcon-angular-tree-table>`.
+- Country picker INSIDE a phone field → `<falcon-angular-phone-field>` has its own internal country chooser.
+- Custom-rendered option rows beyond `iconUrl` + `label` (today's contract is limited — see GAPS).
 
-From comment in `falcon-dropdown.tsx:3-4`:
+## Status
 
-> Spec mirrored from `REFERENCE-V02-INVENTORY.md §2` (`.ac-select-wrap` form-style native select) and `§3` (`.tpl-share-search` search-over-list pattern), `§4` (panel + option visuals).
+**ACTIVE / PREFERRED.** Replaces PrimeNG `<p-dropdown>` and native `<select>` in Wave PR-8.
 
-## Where it lives
+## Source file paths
 
 | Layer | Path |
 |---|---|
-| Stencil Shadow tag | `libs/falcon-ui-core/src/components/falcon-dropdown/falcon-dropdown.tsx` |
-| Stencil Light tag | `libs/falcon-ui-core/src/components/falcon-dropdown-tw/falcon-dropdown-tw.tsx` |
-| Stencil styles | `libs/falcon-ui-core/src/components/falcon-dropdown/falcon-dropdown.css` |
+| Angular wrapper TS | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-dropdown/falcon-dropdown.component.ts` |
+| Angular wrapper HTML | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-dropdown/falcon-dropdown.component.html` |
+| Angular wrapper CSS | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-dropdown/falcon-dropdown.component.css` |
+| Stencil Shadow | `libs/falcon-ui-core/src/components/falcon-dropdown/falcon-dropdown.tsx` |
+| Stencil Light | `libs/falcon-ui-core/src/components/falcon-dropdown-tw/falcon-dropdown-tw.tsx` |
 | Types | `libs/falcon-ui-core/src/components/falcon-dropdown/falcon-dropdown.types.ts` |
-| Utils (option filtering, active-index nav, error guard) | `libs/falcon-ui-core/src/components/falcon-dropdown/falcon-dropdown.utils.ts` |
-| Tailwind helpers | `libs/falcon-ui-core/src/tailwind/dropdown-tailwind-classes.ts` |
-| Angular wrapper | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-dropdown/falcon-dropdown.component.{ts,html,css}` |
-| Component tokens | `libs/falcon-ui-tokens/src/components/dropdown.tokens.css` |
-| Re-export (Angular) | `libs/falcon/src/shared-ui/index.ts:44-45` |
+| Utils | `libs/falcon-ui-core/src/components/falcon-dropdown/falcon-dropdown.utils.ts` |
+| Tailwind helper | `libs/falcon-ui-core/src/tailwind/dropdown-tailwind-classes.ts` |
+| Tokens | `libs/falcon-ui-tokens/src/components/dropdown.tokens.css` |
 
-## Standing rules
+## Selectors
 
-- **Single-select only.** Multi-select is a separate component: `falcon-angular-multi-select`. Comments in `add-user-wizard/user-role-status-step` flag a Wave 4 follow-up to add per-item template slot for live language switch — currently the consumer must translate option labels at construction time.
-- **Type-ahead buffer** in non-searchable mode — a 600ms timer drains after the last keypress so users can type "Ja" to jump to "Jakarta".
-- The active index reseeds when `options` changes (the `@Watch('options')` hook).
-- The component owns the open / close lifecycle internally; consumers can also call `openPanel()` / `closePanel()` Stencil methods if needed.
-- Search input lives **inside** the popover (not the trigger). Trigger button shows the selected option's label or the placeholder.
+| Layer | Tag / selector |
+|---|---|
+| Angular | `falcon-angular-dropdown` |
+| Stencil Shadow | `<falcon-dropdown>` |
+| Stencil Light | `<falcon-dropdown-tw>` |
+
+## Known consumers
+
+- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-user-wizard/user-role-status-step/...` (status dropdown).
+- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/...` (country, category).
+- `apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/...` (parallel set).
+- Language picker (top-bar): uses `iconUrl` per-option for flag images.
+- Playground: `apps/host-shell/src/app/playground/playground.page.html`.
+
+## Related components
+
+- `<falcon-angular-multi-select>` — multi-select variant.
+- `<falcon-angular-combobox>` — free-text combo.
+- `<falcon-angular-select>` — alias wrapper (Angular-only convenience — see falcon-select component folder).
+- Same family pattern as `<falcon-angular-input>` for size / state / variant / appearance + CVA + dual-render.
+
+## Ownership
+
+`libs/falcon-ui-core` (cross-framework).

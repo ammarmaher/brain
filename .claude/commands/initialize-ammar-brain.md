@@ -35,3 +35,28 @@ outputs/understanding/frontend/
 outputs/understanding/wiki/
 _obsidian/
 ```
+
+## Canonical Frontend Knowledge Path
+
+The Falcon Component Registry Agent and any other frontend / component-knowledge agent MUST write into the canonical tree:
+
+**Canonical frontend component knowledge path** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend
+```
+
+**Component folders** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend\components\<component-name>
+```
+
+**Legacy / import / mirror — do NOT use as active source:**
+
+- `C:\Falcon\Brain Outputs\component-registry`
+- `C:\Falcon\Brain Outputs\frontend-understanding`
+- `C:\Falcon\Brain SK\outputs\component-registry`
+- `C:\Falcon\Brain SK\outputs\frontend-understanding`
+
+The relative `outputs/understanding/frontend/` path quoted above resolves to the same canonical absolute path when Brain SK mirrors generated outputs from `Brain Outputs`. Config keys: `outputs.frontendUnderstanding` and `outputs.frontendComponents` in `config/brain.config.json`.

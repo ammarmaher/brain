@@ -1,144 +1,130 @@
 # falcon-dropdown — USAGE
 
-## Playground snippet (host-shell, both render paths)
+## Real usage examples
 
-`apps/host-shell/src/app/playground/playground.page.html`
+### Example 1 — Status picker (admin-console user role wizard)
 
 ```html
-<!-- Shadow DOM (Stencil) render path -->
 <falcon-angular-dropdown
-  class="w-full"
-  [label]="'Country'"
-  [placeholder]="'Select a country'"
-  [helperText]="'Stencil-rendered. Token-driven. Searchable + clearable.'"
-  [size]="'md'"
-  [options]="countryOptions"
-  [searchable]="true"
+  [label]="'hierarchy.addUser.fields.status.label' | translate"
+  [placeholder]="'common.choose' | translate"
+  [options]="statusOptions()"
+  [state]="statusError() ? 'error' : 'default'"
+  [errorText]="statusError() | translate"
+  [required]="true"
   [clearable]="true"
-  [(ngModel)]="selectedCountry"
-></falcon-angular-dropdown>
-
-<!-- Light DOM (Tailwind) render path -->
-<falcon-angular-dropdown
-  [useTailwind]="true"
-  class="w-full"
-  [label]="'Country'"
-  [placeholder]="'Select a country'"
-  [helperText]="'Tailwind-rendered. Same tokens. Light DOM.'"
-  [size]="'md'"
-  [options]="countryOptions"
-  [searchable]="true"
-  [clearable]="true"
-  [(ngModel)]="selectedCountry"
-></falcon-angular-dropdown>
+  [(ngModel)]="value().status">
+</falcon-angular-dropdown>
 ```
 
-## Auth flow snippet (host-shell login-layout)
+### Example 2 — Searchable country picker (non-phone)
 
-`apps/host-shell/src/app/features/auth/login-layout/login-layout.component.ts:N`
+```html
+<falcon-angular-dropdown
+  label="Country"
+  [options]="countryOptions"
+  [searchable]="true"
+  searchPlaceholder="Search country..."
+  [(ngModel)]="selectedCountry">
+</falcon-angular-dropdown>
+```
+
+### Example 3 — Language picker with icons (Wave 4 — iconUrl)
 
 ```ts
-/*** Mutable copy passed to <falcon-angular-dropdown> [options] (typed FalconDropdownOption[]). ***/
-languageOptions: FalconDropdownOption[] = [
-  { value: 'en', label: 'English' },
-  { value: 'ar', label: 'العربية' },
+languages: FalconDropdownOption[] = [
+  { value: 'en', label: 'English',  iconUrl: '/assets/flags/en.svg' },
+  { value: 'ar', label: 'العربية', iconUrl: '/assets/flags/ar.svg' },
 ];
 ```
 
 ```html
 <falcon-angular-dropdown
-  [label]="'Language'"
-  [options]="languageOptions"
-  [(ngModel)]="selectedLanguage"
-  [size]="'sm'"
-></falcon-angular-dropdown>
+  [options]="languages"
+  [(ngModel)]="currentLang"
+  variant="search"
+  size="sm">
+</falcon-angular-dropdown>
 ```
 
-## i18n adapter pattern (admin-console add-user wizard)
+## Recommended usage for NEW Angular pages
 
-`apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-user-wizard/user-role-status-step/user-role-status-step.component.ts`
-
-```ts
-/*** Adapter: translate i18n label keys at construction so <falcon-angular-dropdown> can render them.
-     Wave 4 follow-up: add per-item template slot to <falcon-angular-dropdown> for live language switch. ***/
-roleOptions: FalconDropdownOption[] = this.translate.translateOptions(rawRoleOptions);
-```
-
-This pattern is mandatory until the per-item template slot lands — the dropdown does NOT currently let the consumer slot a `ng-template` per option, so labels must be translated upfront and re-translated on language change.
+- Always use Reactive Forms or `[(ngModel)]`.
+- Set `searchable=true` when options > ~10.
+- Set `clearable=true` when the field is optional.
+- Use `errorText` + `state="error"` together.
+- Prefer `iconUrl` on options over slot-based custom rendering.
 
 ## Reactive Forms
 
-```html
-<form [formGroup]="form">
-  <falcon-angular-dropdown
-    formControlName="country"
-    [label]="'Country'"
-    [options]="countryOptions"
-    [searchable]="true"
-    [required]="true"
-    [state]="form.controls.country.invalid && form.controls.country.touched ? 'error' : 'default'"
-    [errorMessage]="form.controls.country.touched && form.controls.country.errors?.['required'] ? 'Country is required' : ''"
-  ></falcon-angular-dropdown>
-</form>
+```ts
+form = new FormGroup({
+  status: new FormControl<string | null>(null, Validators.required),
+});
 ```
 
-## Stencil-only HTML usage
-
 ```html
-<falcon-dropdown
-  label="Tenant"
-  placeholder="Choose a tenant"
-  searchable
-  clearable
-  required
-  size="md"
-></falcon-dropdown>
-
-<script>
-  const el = document.querySelector('falcon-dropdown');
-  el.options = [
-    { value: 't1', label: 'Tenant A' },
-    { value: 't2', label: 'Tenant B' },
-  ];
-  el.addEventListener('falcon-change', (e) => {
-    console.log('Selected:', e.detail.option);
-  });
-</script>
+<falcon-angular-dropdown
+  formControlName="status"
+  [label]="'Status'"
+  [options]="statusOptions"
+  [errorText]="form.controls.status.touched && form.controls.status.invalid ? 'Required' : ''"
+  [state]="form.controls.status.touched && form.controls.status.invalid ? 'error' : 'default'">
+</falcon-angular-dropdown>
 ```
 
-## Grouped options
-
-When `option.group` is set on each entry, options visually cluster under group headers (renderer is internal — no slot per group yet).
-
-## Custom option rendering (Shadow DOM only)
+## ngModel
 
 ```html
-<falcon-dropdown label="Account">
-  <div slot="options">
-    <!-- Custom option markup goes here -->
-  </div>
-</falcon-dropdown>
+<falcon-angular-dropdown
+  [options]="options"
+  [(ngModel)]="selectedValue">
+</falcon-angular-dropdown>
 ```
 
-> The slotted-options template is a placeholder pattern — the default panel rendering is preferred. Custom slot rendering is experimental.
+## Tailwind-only usage
 
-## Per-instance token override
+```html
+<falcon-angular-dropdown class="w-full max-w-xs" ... />
+```
 
-In the consuming component's CSS:
+For wrapper-scoped Tailwind extras (panel/trigger/options classes):
+
+```html
+<falcon-angular-dropdown
+  triggerClass="border-2"
+  panelClass="shadow-2xl"
+  optionClass="hover:bg-falcon-teal-tint"
+  ... />
+```
+
+## Token usage (per-instance override pattern)
+
+```html
+<falcon-angular-dropdown class="brand-dropdown" ... />
+```
 
 ```css
-:host ::ng-deep .org-menu-tenant-dropdown {
-  --falcon-dropdown-trigger-height: 2.5rem;
-  --falcon-dropdown-radius: var(--radius-md);
-  --falcon-dropdown-panel-max-height: 320px;
-  --falcon-dropdown-option-hover-bg: var(--color-falcon-teal-option);
+.brand-dropdown {
+  --falcon-dropdown-border-color-focus: var(--color-falcon-teal-500);
+  --falcon-dropdown-border-radius: 12px;
+  --falcon-dropdown-panel-max-height: 280px;
 }
 ```
 
-Applied like:
+## Bad usage to avoid
 
-```html
-<falcon-angular-dropdown class="org-menu-tenant-dropdown" ...></falcon-angular-dropdown>
-```
+- Do NOT use for multi-select — use `<falcon-angular-multi-select>`.
+- Do NOT pass `errorMessage` (Stencil-side name) on the Angular wrapper — it's `errorText`.
+- Do NOT bind `[value]` directly — use CVA.
+- Do NOT try to use `slot="options"` through the Angular wrapper — it doesn't propagate; use `iconUrl` on options or contribute a per-option template upgrade (see GAPS).
+- Do NOT hand-roll a search input wrapper around `<falcon-angular-dropdown>` to filter options — use the built-in `searchable=true`.
 
-Both Shadow + Light render paths pick the override up because both resolve to `--falcon-dropdown-*` tokens.
+## Do / Don't
+
+| Do | Don't |
+|---|---|
+| Use `[options]` setter — wrapper handles Stencil prop assignment timing. | Push options imperatively via `nativeElement.options =`. |
+| Use `iconUrl` for flag/avatar visuals. | Wrap in legacy `<falcon-form-field>` unless mixed-control layout demands it. |
+| Use `searchable=true` for long lists. | Hand-roll a filter on top of the component. |
+| Use `errorText` + `state="error"` together. | Use only one of the two. |

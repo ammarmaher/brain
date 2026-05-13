@@ -1,48 +1,85 @@
 # falcon-input — OVERVIEW
 
-## What this is
+## Component purpose
 
-The flagship dual-render input component — the reference implementation for the Shadow + Light DOM parity pattern across the Falcon UI library. Used everywhere a single-line text input is needed (text, email, password, number, search, tel, url types).
+Flagship single-line text-entry control. The reference implementation for the **dual-render Stencil pattern** (Shadow DOM `<falcon-input>` + Light DOM `<falcon-input-tw>` + Angular CVA wrapper `<falcon-angular-input>`). Every other form-control wrapper in `libs/falcon-ui-core/src/angular-wrapper/components/` mirrors its `useTailwind` toggle + shared `falconInputXxxClasses()` helper pattern.
 
-## Render paths
+## Business / UI use case
 
-Two coexisting Stencil tags backed by the same token chain and the same Tailwind helpers:
+- Username / first name / last name / account name / generic free-text entry.
+- Heavily used by **organization-hierarchy** wizards (add user, add client) and **org info panel** drawers in both admin-console and management-console.
+- Acts as the rendering hinge for `<falcon-angular-password>` (composes `<falcon-angular-input type="password">` + reveal toggle + optional strength meter) and `<falcon-angular-search-input>` (composes `<falcon-input variant="search">`).
 
-- **Shadow DOM** — `<falcon-input>` at `libs/falcon-ui-core/src/components/falcon-input/falcon-input.tsx` (`shadow: true`, 297 LOC).
-- **Light DOM** — `<falcon-input-tw>` at `libs/falcon-ui-core/src/components/falcon-input-tw/falcon-input-tw.tsx` (`shadow: false`).
+## When to use it / when NOT to use it
 
-A single Angular CVA wrapper switches between the two render paths via the `useTailwind` input (default `true`).
+**Use it for:**
+- Any non-numeric, non-multiline free-text field (text / email / password / search / tel / url).
+- `type="number"` quick-numeric fields where step + min/max + format are NOT needed.
+- Any form-field that needs a Falcon label / helper / error contract.
 
-- **Angular wrapper** — `<falcon-angular-input>` at `libs/falcon-ui-core/src/angular-wrapper/components/falcon-input/falcon-input.component.ts` (`ChangeDetectionStrategy.OnPush`, `CUSTOM_ELEMENTS_SCHEMA`, `NG_VALUE_ACCESSOR`).
+**Do NOT use it for:**
+- Numeric inputs that need step + format + decimals + prefix/suffix → use `<falcon-angular-input-number>`.
+- Email with a verify-button affordance → use `<falcon-angular-email-field>`.
+- Phone with country chooser + dial code → use `<falcon-angular-phone-field>`.
+- Password with strength meter or reveal-toggle → use `<falcon-angular-password>`.
+- Multi-line text → use `<falcon-angular-textarea>`.
+- In-grid numeric editing → use `<falcon-angular-grid-input>`.
+- OTP code entry → use `<falcon-angular-otp>`.
+- Search with debounce + clear → use `<falcon-angular-search-input>`.
 
-The wrapper is also exposed via `@falcon` (`libs/falcon/src/shared-ui/index.ts:34`) as `FalconAngularInputComponent` for backward compatibility with consumers that import from `@falcon`.
+## Status
 
-## Why it exists
+**ACTIVE / PREFERRED / FLAGSHIP REFERENCE.** Replaced PrimeNG `<p-input-text>` + native `<input>` in Wave PR-8. Not deprecated. Mandatory for all new form inputs in admin-console / management-console.
 
-- Replaces every PrimeNG `<p-inputText>` / `<input pInputText>` in the codebase after Wave PR-8.
-- Provides one prop surface that drives both render paths so the Studio can mutate `--falcon-input-*` tokens at runtime and update Shadow + Light renders identically.
-- Cross-framework — the same Stencil tags + Tailwind helpers are consumed by React (`@falcon/ui-react`) and Vue (`@falcon/ui-vue`) wrappers, keeping the visual output identical across frameworks.
+## Replaces
 
-## Where it lives
+- Legacy PrimeNG `<p-input-text>`.
+- Legacy native `<input class="p-input">` patterns.
+
+## Source file paths
 
 | Layer | Path |
 |---|---|
-| Stencil Shadow tag | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.tsx` |
-| Stencil Light tag | `libs/falcon-ui-core/src/components/falcon-input-tw/falcon-input-tw.tsx` |
-| Stencil styles | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.css` |
+| Angular wrapper TS | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-input/falcon-input.component.ts` |
+| Angular wrapper HTML | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-input/falcon-input.component.html` |
+| Angular wrapper CSS | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-input/falcon-input.component.css` (block + width only — no rules beyond layout) |
+| Angular barrel | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-input/index.ts` |
+| Stencil Shadow source | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.tsx` |
+| Stencil Shadow CSS | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.css` |
+| Stencil Light source | `libs/falcon-ui-core/src/components/falcon-input-tw/falcon-input-tw.tsx` |
 | Types | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.types.ts` |
 | Utils | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.utils.ts` |
-| Tailwind helpers (cross-framework) | `libs/falcon-ui-core/src/tailwind/input-tailwind-classes.ts` |
-| Angular wrapper | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-input/falcon-input.component.{ts,html,css}` |
-| Component tokens | `libs/falcon-ui-tokens/src/components/input.tokens.css` |
-| Cross-framework barrel | `libs/falcon-ui-core/src/angular-wrapper/index.ts` |
-| Angular re-export | `libs/falcon/src/shared-ui/index.ts:34` |
+| Tailwind helper | `libs/falcon-ui-core/src/tailwind/input-tailwind-classes.ts` (cross-framework SSOT) |
+| Component token file | `libs/falcon-ui-tokens/src/components/input.tokens.css` |
 
-## Standing rules / decisions
+## Selectors / tags
 
-- `useTailwind = true` is the default (Light DOM Tailwind path). Consumers opt back into Shadow DOM by `[useTailwind]="false"`.
-- Methods (not `computed()`) are used to derive class strings in the Angular wrapper because `computed()` would only track signal deps, not `@Input` props — methods re-run on every CD cycle, which OnPush triggers whenever an `@Input` ref changes. Documented at `falcon-input.component.ts:106-108`.
-- `shadowless`, `borderless`, `flat`, `noFocusRing` feature toggles are reflected as host attributes so `:host([flat])` etc. CSS rules can target them. Tokens still win — a host class can re-enable any feature these props turned off.
-- Per-instance token overrides are achieved by adding a host class (e.g. `add-client-special-input`) and setting the relevant `--falcon-input-*` token in a CSS rule scoped to that class.
-- The clear button has its own `clearAriaLabel` prop so `<falcon-search-input>` can pass `"Clear search"` instead of the default `"Clear input"`.
-- `falcon-input` registers on demand inside the Angular wrapper's `ngOnInit` via `defineFalconTwComponent('falcon-input')` (Wave 5 — replaces eager `defineCustomElements()`).
+| Layer | Tag / selector |
+|---|---|
+| Angular selector | `falcon-angular-input` |
+| Stencil Shadow tag | `<falcon-input>` |
+| Stencil Light tag | `<falcon-input-tw>` |
+
+## Known consumers (grep verified)
+
+- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html` — flagship usage (per-instance token override class `add-client-special-input` + `useTailwind` demo).
+- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/client-account-owner-step/...`
+- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-user-wizard/user-personal-step/...`
+- `apps/admin-console/src/app/features/organization-hierarchy/components/tab-components/hierarchy-tab/falcon-org-info-panel/...`
+- `apps/admin-console/src/app/features/organization-hierarchy/components/tab-components/hierarchy-tab/falcon-org-node-drawer/...`
+- `apps/admin-console/src/app/features/organization-hierarchy/components/organization-hierarchy-menu.component.html`
+- `apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step/...`
+- `apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-client-wizard/client-information-step/...`
+- `apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-client-wizard/client-account-owner-step/...`
+- `apps/management-console/src/app/features/organization-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-info-panel/...`
+- `apps/management-console/src/app/features/organization-hierarchy-page/components/organization-hierarchy-page-menu.component.html`
+- `apps/host-shell/src/app/playground/playground.page.html` — playground demo route.
+
+## Related components
+
+- Composed by: `<falcon-angular-password>`, `<falcon-angular-search-input>`, internally similar surface to `<falcon-angular-dropdown>`, `<falcon-angular-textarea>`, `<falcon-angular-input-number>`.
+- Often wrapped by legacy `<falcon-form-field>` to add a labeled-wrapper + error slot (see admin-console wizards). New code should prefer the built-in `label` / `helperText` / `errorMessage` inputs instead of nesting in `<falcon-form-field>`.
+
+## Ownership / responsibility
+
+`libs/falcon-ui-core` (cross-framework). Owned by Falcon UI team. Token contract lives in `libs/falcon-ui-tokens`.

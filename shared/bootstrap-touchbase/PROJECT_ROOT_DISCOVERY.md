@@ -62,3 +62,28 @@ obj/
 .vs/
 .git/
 ```
+
+## Canonical Frontend Knowledge Path
+
+When discovery generates frontend understanding artifacts (component dossiers, capability matrices, theme audits, architecture audits), the canonical write target is:
+
+**Canonical frontend component knowledge path** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend
+```
+
+**Component folders** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend\components\<component-name>
+```
+
+**Legacy / import / mirror — do NOT use as active source:**
+
+- `C:\Falcon\Brain Outputs\component-registry`
+- `C:\Falcon\Brain Outputs\frontend-understanding`
+- `C:\Falcon\Brain SK\outputs\component-registry`
+- `C:\Falcon\Brain SK\outputs\frontend-understanding`
+
+If a legacy path is discovered on disk, it is informational only — index it under the discovery report but do NOT route new generated outputs there. New outputs go ONLY to the canonical path above. Config keys: `outputs.frontendUnderstanding` and `outputs.frontendComponents` in `../../config/brain.config.json`.

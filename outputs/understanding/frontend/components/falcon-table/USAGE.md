@@ -1,162 +1,156 @@
 # falcon-table — USAGE
 
-## Admin-console organization-hierarchy menu (data-table, lazy + paginated)
+## Direct use is rare
 
-`apps/admin-console/src/app/features/organization-hierarchy/components/organization-hierarchy-menu.component.html`
+`<falcon-table>` and `<falcon-angular-table>` are **the substrate, not the consumer surface.** Production Angular pages reach `<falcon-angular-data-table>` instead — it composes `<falcon-table-tw>` + Strategy E projection so consumers can write `<ng-template falconDataTableCell="…">`. See [`falcon-data-table/USAGE.md`](../falcon-data-table/USAGE.md).
 
-```html
-<falcon-angular-data-table
-  class="org-menu-users-table"
-  [data]="state.users()"
-  [columns]="state.userColumns"
-  [rowMenuItems]="state.userRowMenuItems"
-  [paginator]="true"
-  [lazy]="true"
-  [totalRecords]="state.totalUsers()"
-  [loading]="state.loadingUsers()"
-  [globalFilterFields]="['name', 'email', 'role']"
-  (lazyLoad)="state.loadUsers($event)"
-  (rowAction)="state.openUserRowMenu($event)"
-></falcon-angular-data-table>
-```
+Verified via grep over `apps/admin-console`, `apps/management-console`, `apps/host-shell`:
+- Direct `<falcon-table>` or `<falcon-angular-table>` usage outside `playground/` and `showcase`: **NONE**.
 
-What this shows:
+## Example 1 — Stencil raw (framework-agnostic)
 
-- **Signal-driven data** — `state.users()`, `state.totalUsers()`, `state.loadingUsers()` are signals on the feature state service.
-- **Lazy mode** — `[lazy]="true"` + `[totalRecords]` + `(lazyLoad)` — server pagination + sort + filter dispatch.
-- **Per-row menu** — `[rowMenuItems]` declared on state, `(rowAction)` handler opens it. The table emits `falcon-row-action-trigger` internally; the wrapper translates to Angular outputs.
-- **Global filter** — `[globalFilterFields]` lists which row fields the filter strip queries.
-
-## Management-console organization-hierarchy page menu (data-table)
-
-`apps/management-console/src/app/features/organization-hierarchy-page/components/organization-hierarchy-page-menu.component.html`
+For React/Vue or framework-agnostic mounts that don't need Angular templates:
 
 ```html
-<falcon-angular-data-table
-  [data]="state.users()"
-  [columns]="state.userColumns"
-  [rowMenuItems]="state.userRowMenuItems"
-  [paginator]="true"
-  [lazy]="true"
-  [totalRecords]="state.totalUsers()"
-  [pageSize]="20"
-  [responsiveLayout]="'scroll'"
-></falcon-angular-data-table>
-```
-
-Same shape as admin-console but with the management-console's state service. Both feature implementations follow the identical pattern — the data-table wrapper is the single replacement for every PrimeNG `<p-table>` in the platform.
-
-## Custom cell templates (via FalconDataTableCellDirective)
-
-```html
-<falcon-angular-data-table [data]="users" [columns]="cols" [paginator]="true">
-  <!-- Column field: 'name' -->
-  <ng-template [falconCell]="'name'" let-row>
-    <div class="flex items-center gap-3">
-      <falcon-angular-avatar [name]="row.name" size="sm"></falcon-angular-avatar>
-      <div>
-        <div class="font-medium">{{ row.name }}</div>
-        <div class="text-xs text-falcon-neutral-475">{{ row.email }}</div>
-      </div>
-    </div>
-  </ng-template>
-
-  <!-- Column field: 'status' -->
-  <ng-template [falconCell]="'status'" let-row>
-    <falcon-angular-status-badge [status]="row.status" [label]="row.statusLabel"></falcon-angular-status-badge>
-  </ng-template>
-
-  <!-- Column field: 'role' -->
-  <ng-template [falconCell]="'role'" let-row>
-    <falcon-angular-tag [value]="row.roleLabel" [severity]="row.role === 'admin' ? 'danger' : 'info'"></falcon-angular-tag>
-  </ng-template>
-</falcon-angular-data-table>
-```
-
-## Stencil-only usage (Shadow DOM, no Angular)
-
-```html
-<falcon-table id="myTable" data-key="id" selectable="multiple" sortable density="compact" striped hoverable>
-</falcon-table>
-
+<falcon-table-tw
+  paginated
+  page-size="10"
+  selection-mode="multiple"
+  sort-mode="single"
+  data-key="id"
+  aria-label="Users"
+></falcon-table-tw>
 <script>
-  const table = document.getElementById('myTable');
-  table.columns = [
-    { field: 'name',  header: 'Name',  sortable: true },
-    { field: 'email', header: 'Email' },
-    { field: 'role',  header: 'Role',  align: 'right' },
+  const el = document.querySelector('falcon-table-tw');
+  el.rows = [{ id: 1, name: 'Ammar' }, { id: 2, name: 'Taha' }];
+  el.columns = [
+    { key: 'id', label: '#', sortable: true, type: 'number' },
+    { key: 'name', label: 'Name', sortable: true },
   ];
-  table.rows = [
-    { id: 1, name: 'Alice', email: 'a@co.com', role: 'Admin' },
-    { id: 2, name: 'Bob',   email: 'b@co.com', role: 'User' },
-  ];
-  table.addEventListener('falcon-row-select', (e) => console.log('Selected:', e.detail.selectedRowIds));
-  table.addEventListener('falcon-sort',       (e) => console.log('Sort:',     e.detail));
+  el.addEventListener('falcon-row-click', (e) => console.log('clicked row', e.detail));
 </script>
 ```
 
-## Sort modes
+## Example 2 — Angular basic wrapper (DEPRECATED for new code — use falcon-angular-data-table instead)
 
-```html
-<!-- Single-column sort -->
-<falcon-angular-table [rows]="rows" [columns]="cols" [sortMode]="'single'" [sortBy]="{ field: 'name', direction: 'asc' }"></falcon-angular-table>
+```typescript
+// app component
+import { Component } from '@angular/core';
+import { FalconAngularTableComponent } from '@falcon-ui-core/angular-wrapper/components/falcon-table';
+import type { FalconTableColumn } from '@falcon-ui-core/components/falcon-table/falcon-table.types';
 
-<!-- Multi-column sort -->
-<falcon-angular-table [rows]="rows" [columns]="cols" [sortMode]="'multi'" [sortBy]="[
-  { field: 'department', direction: 'asc' },
-  { field: 'name', direction: 'asc' }
-]"></falcon-angular-table>
-```
+@Component({
+  selector: 'my-list',
+  standalone: true,
+  imports: [FalconAngularTableComponent],
+  template: `
+    <falcon-angular-table
+      [rows]="rows"
+      [columns]="columns"
+      [paginated]="true"
+      [pageSize]="10"
+      selectable="multiple"
+      [(selectedRowIds)]="selectedIds"
+      (falconRowClick)="onRowClick($event)">
+    </falcon-angular-table>
+  `,
+})
+export class MyListComponent {
+  rows = [{ id: 1, name: 'Ammar', email: 'a@x.com' }];
+  columns: FalconTableColumn[] = [
+    { key: 'name', label: 'Name', sortable: true },
+    { key: 'email', label: 'Email', sortable: true },
+  ];
+  selectedIds: ReadonlyArray<string | number> = [];
 
-## Frozen columns + sticky actions
-
-```ts
-const columns: FalconTableColumn[] = [
-  { field: 'id', header: 'ID', frozen: 'left', width: '64px' },
-  { field: 'name', header: 'Name', frozen: 'left', width: '200px' },
-  { field: 'department', header: 'Department' },
-  { field: 'role', header: 'Role' },
-  // ... more columns
-  { field: 'actions', header: '', frozen: 'right', width: '48px' },
-];
-```
-
-```html
-<falcon-angular-table
-  [rows]="rows"
-  [columns]="columns"
-  [scrollable]="true"
-  [scrollHeight]="'480px'"
-  [stickyActions]="true"
-  [hasRowActions]="true"
-></falcon-angular-table>
-```
-
-## Per-row class hook
-
-```ts
-const rowStyleClass: FalconTableRowStyleClassFn = (row: User) => ({
-  'opacity-50': row.disabled,
-  'bg-falcon-red-50': row.flagged,
-});
-```
-
-```html
-<falcon-angular-table [rows]="rows" [columns]="cols" [rowStyleClass]="rowStyleClass"></falcon-angular-table>
-```
-
-## Per-instance token override
-
-```css
-:host ::ng-deep .org-menu-users-table {
-  --falcon-table-row-height: 3rem;
-  --falcon-table-header-bg: var(--color-falcon-teal-tint);
-  --falcon-table-row-hover-bg: var(--color-falcon-teal-option);
+  onRowClick(detail: { row: Record<string, unknown>; index: number }) {
+    console.log('row click', detail);
+  }
 }
 ```
 
-Applied with:
+## Example 3 — Lazy (server-side) mode pattern
+
+```typescript
+// Lazy data binding (matches FalconTableLazyLoadDetail shape)
+<falcon-angular-table
+  [rows]="serverPage"
+  [columns]="columns"
+  [paginated]="true"
+  [pageSize]="20"
+  [lazy]="true"
+  [totalRecords]="serverTotal"
+  (falcon-lazy-load)="onLazy($event)">
+</falcon-angular-table>
+```
+
+```typescript
+onLazy(ev: CustomEvent<FalconTableLazyLoadDetail>): void {
+  const { first, rows, sortField, sortOrder, globalFilter } = ev.detail;
+  const page = first / rows + 1;
+  this.api.getUsers({ page, pageSize: rows, sortField, sortOrder, q: globalFilter });
+}
+```
+
+> NOTE — the basic Angular wrapper doesn't surface `(falcon-lazy-load)` as an `@Output` yet. For lazy mode use `<falcon-angular-data-table>` which exposes typed `lazyLoad` output (`FalconDataTableLazyLoad`).
+
+## Recommended usage for NEW Angular pages
+
+> **Use `<falcon-angular-data-table>` instead.** The basic wrapper does not project Angular templates into cells. See [`../falcon-data-table/USAGE.md`](../falcon-data-table/USAGE.md) for the canonical example with `<ng-template falconDataTableCell>`.
+
+## Tailwind-only usage
+
+- `<falcon-table-tw>` is Light DOM, so utility classes from the host app's Tailwind cascade in. The component already runs `falconTableClasses()`, `falconTableHeaderCellClasses()`, etc.; container-level utilities can be appended via `styleClass` and `tableStyleClass`:
 
 ```html
-<falcon-angular-data-table class="org-menu-users-table" ...></falcon-angular-data-table>
+<falcon-angular-data-table
+  rootClass="rounded-lg shadow-sm"
+  tableStyleClass="text-falcon-neutral-900"
+  ...></falcon-angular-data-table>
 ```
+
+## Token override pattern
+
+```css
+/*** Add a marker class on the host. ***/
+<falcon-angular-table class="my-tight-table" ...></falcon-angular-table>
+```
+
+```css
+/*** Then mutate component tokens for that scope only. ***/
+.my-tight-table {
+  --falcon-table-cell-padding-block: 8px;
+  --falcon-table-cell-padding-inline: 6px;
+  --falcon-table-header-padding-block: 8px;
+}
+```
+
+## Bad usage to avoid
+
+- DO NOT add `<table>` / `<thead>` / `<tbody>` / `<tr>` / `<td>` raw HTML for a Falcon list page. The Falcon library's `<falcon-angular-data-table>` covers sortable, selectable, paginated, lazy, projected-cell, frozen-column, sticky-action — there is no business case to hand-roll a table.
+- DO NOT bind `[rows]`, `[columns]`, `[selectedRowIds]`, `[sortBy]` as `[attr.x]` — these are objects/arrays, not strings. Angular's template-attr binding will silently stringify or set `[object Object]`.
+- DO NOT use `<falcon-angular-table>` (basic) for any new feature — it is `@deprecated`. Reach `<falcon-angular-data-table>`.
+- DO NOT use `col.render()` for cells that contain Falcon components — `render()` returns an HTML string flushed via `innerHTML`. Use a `<ng-template falconDataTableCell>` instead so Angular components instantiate properly.
+
+## Import requirements (Angular)
+
+```typescript
+import { FalconAngularTableComponent } from '@falcon-ui-core/angular-wrapper/components/falcon-table';
+// Or, for the canonical projection-aware wrapper:
+import { FalconAngularDataTableComponent } from '@falcon-ui-core/angular-wrapper/components/falcon-data-table';
+```
+
+## Do / Don't
+
+### Do
+- Use `<falcon-angular-data-table>` for new Angular pages — it projects `<ng-template falconDataTableCell>` into Stencil cells via Strategy E.
+- Use Stencil `<falcon-table-tw>` directly only in framework-agnostic mounts.
+- Pass object/array inputs (`[data]`, `[columns]`, `[rowMenuItems]`) — the wrapper handles the property reflection.
+- Use `FalconTableColumnExt` fields (`render`, `frozen`, `headerClass`, `cellClass`, `maxWidth`) for additive metadata when you don't need Angular templates.
+- Use `aria-label="…"` to keep screen readers happy.
+
+### Don't
+- Don't add new `<falcon-angular-table>` usages — it's deprecated.
+- Don't hand-roll a `<table>` for any Falcon list view.
+- Don't put Falcon Angular components inside `col.render()` — `render()` returns a static HTML string. Use a template directive.
+- Don't expect Arrow-key navigation between rows — the table is `tabIndex={0}` but does NOT implement Arrow / Home / End key handling on rows (see GAPS_AND_UPGRADES.md).

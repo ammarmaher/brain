@@ -41,3 +41,28 @@ TouchBase must link generated Markdown knowledge into `_obsidian/` index notes a
 ## Authorization/API key behavior
 
 If GitHub, repo, API, or tool authorization is needed, ask Ammar only for the required missing key/access. Never block for optional tools.
+
+## Canonical Frontend Knowledge Path
+
+When TouchBase generates or updates frontend / component-knowledge outputs, it MUST write into the canonical tree:
+
+**Canonical frontend component knowledge path** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend
+```
+
+**Component folders** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend\components\<component-name>
+```
+
+**Legacy / import / mirror — do NOT use as active source:**
+
+- `C:\Falcon\Brain Outputs\component-registry`
+- `C:\Falcon\Brain Outputs\frontend-understanding`
+- `C:\Falcon\Brain SK\outputs\component-registry`
+- `C:\Falcon\Brain SK\outputs\frontend-understanding`
+
+The config keys backing this rule are `outputs.frontendUnderstanding` and `outputs.frontendComponents` in `../../config/brain.config.json`.

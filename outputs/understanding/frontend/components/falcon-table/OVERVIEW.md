@@ -1,51 +1,59 @@
 # falcon-table — OVERVIEW
 
-## What this is
+## Purpose
 
-The Falcon UI native-`<table>` component — the largest component in the library at **685 LOC** (Stencil source). Supports sortable headers (single + multi), row selection (single/multi), skeleton-loading body, empty-state cell, optional pagination footer composing `<falcon-paginator>`, frozen columns + sticky-actions, scrollable sticky thead, global filter strip, lazy server-side mode, responsive layouts.
+Native HTML `<table>`-based data grid with sortable headers, row selection, skeleton loading, empty-state, pagination, frozen columns, sticky actions, scrollable mode, lazy server-side mode, global filter, and ARIA `role="grid"`. Shipped as the canonical Falcon table primitive — the rendering substrate behind `<falcon-angular-data-table>` (which projects custom Angular cells on top).
 
-Designed for **PrimeNG `<p-table>` feature parity** so the post-Wave-PR-8 codebase can fully retire the PrimeNG table without losing capability.
+## Business / UI use case
 
-## Render paths
+Generic tabular data display for client/admin lists, billing entries, user lists, audit logs — anywhere a Falcon page needs a sortable, paginated, selectable grid that visually matches `admin/styles.css` `.users-table-wrap`.
 
-- **Shadow DOM** — `<falcon-table>` at `libs/falcon-ui-core/src/components/falcon-table/falcon-table.tsx` (`shadow: true`, 685 LOC).
-- **Light DOM** — `<falcon-table-tw>` at `libs/falcon-ui-core/src/components/falcon-table-tw/falcon-table-tw.tsx` (`shadow: false`).
-- **Angular wrapper (table)** — `<falcon-angular-table>` at `libs/falcon-ui-core/src/angular-wrapper/components/falcon-table/falcon-table.component.ts` — thin CVA-less wrapper that switches between the two render paths.
-- **Angular wrapper (data-table)** — `<falcon-angular-data-table>` at `libs/falcon-ui-core/src/angular-wrapper/components/falcon-data-table/falcon-data-table.component.ts` (672 LOC + cell directive) — **Strategy E projection orchestrator** that composes `<falcon-table-tw>` (Light DOM only) and adds per-column custom template support via `FalconDataTableCellDirective`.
+## When to use it
 
-These are TWO sibling components, not duplicates:
+- **Wrapped by Falcon — almost never used directly in app templates.** The expected entry point is `<falcon-angular-data-table>`, which composes `<falcon-table-tw>` plus Strategy E projection so consumers can use `<ng-template falconDataTableCell="…">`. See [`falcon-data-table/OVERVIEW.md`](../falcon-data-table/OVERVIEW.md).
+- Stencil tag (`<falcon-table>` / `<falcon-table-tw>`) is suitable when working framework-agnostic (React/Vue) or when the `render()` per-column function is sufficient and you do not need Angular cell templates.
+- `<falcon-angular-table>` (the basic Angular wrapper) is `@deprecated` per its own JSDoc (line 5-9 of `falcon-table.component.ts`).
 
-| Component | Render path | Purpose |
-|---|---|---|
-| `<falcon-angular-table>` | Shadow OR Light (toggleable via `useTailwind`) | Thin wrapper around `<falcon-table>` / `<falcon-table-tw>`. Use when you don't need Angular templates per cell. |
-| `<falcon-angular-data-table>` | Light DOM only (composes `<falcon-table-tw>`) | Strategy E projection wrapper with custom Angular cell templates. **Replaced the legacy PrimeNG-style `<falcon-data-table>` in Wave PR-7.** Heavy production use across admin + management consoles. |
+## When NOT to use it
 
-## Why it exists
+- Do NOT use `<falcon-angular-table>` for new pages — it lacks per-cell Angular templates, no row-action menu, no lazy-load wiring beyond raw `(falcon-page-change)`. Use `<falcon-angular-data-table>` instead.
+- Do NOT use Stencil `<falcon-table-tw>` directly inside Angular when you need Angular templates for cells — the `hostsExternalCells=true` projection orchestrator only ships inside `<falcon-angular-data-table>`.
+- Do NOT use this for tree-shaped data — that is `<falcon-angular-tree-table>` (CSS Grid recursive expandable rows).
 
-- Replaces every PrimeNG `<p-table>` after Wave PR-8.
-- Single source of design tokens (`--falcon-table-*`) drives both render paths so Studio can restyle at runtime.
-- Cross-framework — same Stencil tags are wrapped for React + Vue.
+## Status
 
-## Where it lives
+- **ACTIVE (Stencil core):** `<falcon-table>` Shadow + `<falcon-table-tw>` Light are both shipped and consumed via `<falcon-angular-data-table>`. The Light variant is the Strategy E projection host (`hostsExternalCells` + `falcon-cells-mounted` event).
+- **`<falcon-angular-table>` (basic wrapper) is `@deprecated`** — JSDoc at `falcon-table.component.ts:5-9` directs consumers to `<falcon-angular-data-table>`.
+- Replaced legacy `<falcon-data-table>` (PrimeNG `p-table` wrapper) in Wave PR-7.
 
-| Layer | Path |
-|---|---|
-| Stencil Shadow tag | `libs/falcon-ui-core/src/components/falcon-table/falcon-table.tsx` (685 LOC) |
-| Stencil Light tag | `libs/falcon-ui-core/src/components/falcon-table-tw/falcon-table-tw.tsx` |
-| Stencil styles | `libs/falcon-ui-core/src/components/falcon-table/falcon-table.css` |
-| Types | `libs/falcon-ui-core/src/components/falcon-table/falcon-table.types.ts` |
-| Angular wrapper (table) | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-table/falcon-table.component.{ts,html,css}` |
-| Angular wrapper (data-table) | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-data-table/falcon-data-table.component.ts` (672 LOC) + `falcon-data-table-cell.directive.ts` + `falcon-data-table.types.ts` |
-| Component tokens | `libs/falcon-ui-tokens/src/components/table.tokens.css` + `data-table.tokens.css` |
-| Re-export (Angular) | `libs/falcon/src/shared-ui/index.ts:242-261` |
+## Paths
 
-## Standing rules / decisions
+- **Stencil Shadow DOM:** `libs/falcon-ui-core/src/components/falcon-table/falcon-table.tsx` (685 LOC)
+- **Stencil Light DOM (`-tw`):** `libs/falcon-ui-core/src/components/falcon-table-tw/falcon-table-tw.tsx` (810 LOC)
+- **Stencil tags:** `<falcon-table>` (Shadow) and `<falcon-table-tw>` (Light)
+- **Types:** `libs/falcon-ui-core/src/components/falcon-table/falcon-table.types.ts`
+- **Tokens:** `libs/falcon-ui-tokens/src/components/table.tokens.css`
+- **Tailwind helpers:** `libs/falcon-ui-core/src/tailwind/table-tailwind-classes.ts`
+- **Angular wrapper (basic, deprecated):** `libs/falcon-ui-core/src/angular-wrapper/components/falcon-table/falcon-table.component.ts`
+- **Angular selector (basic wrapper):** `falcon-angular-table`
+- **Canonical Angular consumer:** `<falcon-angular-data-table>` (see sibling component folder)
 
-- The PR sequence is documented in source comments:
-  - **PR-2** added PrimeNG-feature-parity surface: `dataKey`, `scrollable`, `styleClass` / `tableStyleClass` / `rowStyleClass`, `column.render` / `headerClass` / `cellClass` / `maxWidth`, row-action trigger, `aria-busy` on tbody.
-  - **PR-3** added lazy server-side mode, paginator integration (`currentPageReportTemplate` / `paginatorTemplate`), global filter strip, frozen columns + sticky-actions, scrollable sticky thead, `rowStyleClass` callback union, `responsiveLayout: 'scroll' | 'stack'`.
-  - **PR-7** deleted the legacy PrimeNG-style `<falcon-data-table>` Angular wrapper. Consumers now use `<falcon-angular-data-table>` from `@falcon/ui-core/angular` (Strategy E projection wrapper around `<falcon-table-tw>`, Light DOM).
-- ARIA contract: `role="grid"` + `aria-rowcount` + per-`<th>` `aria-sort` + per-`<tr>` `aria-selected` + `aria-busy` on tbody.
-- **Row ID resolution** — uses the configured `dataKey` field, falls back to `id`, then to numeric row index. Implemented in `resolveRowId()` helper.
-- **`paginatorTemplate` carries PrimeNG-shaped tokens** like `'CurrentPageReport FirstPageLink PrevPageLink JumpToPageInput NextPageLink LastPageLink RowsPerPageDropdown'`. This is intentional for drop-in replacement.
-- The Strategy E projection wrapper (`falcon-angular-data-table`) uses Angular content projection to inject custom cell templates via `[falconCell]` directive without breaking the Stencil component's encapsulation.
+## Consumers
+
+- Direct consumers of `<falcon-angular-table>` or `<falcon-table>` raw in `apps/` — **NONE FOUND** (verified via grep against `apps/`).
+- `<falcon-table-tw>` is consumed indirectly through `<falcon-angular-data-table>` in:
+  - `apps/admin-console/.../organization-hierarchy/components/organization-hierarchy-menu.component.html`
+  - `apps/management-console/.../organization-hierarchy-page/components/organization-hierarchy-page-menu.component.html`
+- Playground / showcase only — `apps/host-shell/src/app/playground/playground.page.html`
+
+## Related components
+
+- `falcon-angular-data-table` — preferred Angular consumer (Strategy E projection wrapper)
+- `falcon-paginator` — composed in the footer when `paginated=true`
+- `falcon-empty-state` — visually adjacent but not yet composed by `<falcon-table>` (default empty-cell rendering is bare text — see GAPS_AND_UPGRADES.md)
+- `falcon-tree-table` — for tree-shaped data
+- `falcon-filter-panel` — for filter UI above the table
+
+## Ownership
+
+Stencil core (Shadow + Light) + Angular basic wrapper. Maintained as the rendering substrate behind `<falcon-angular-data-table>`. Per JSDoc and active source: the Light-DOM `<falcon-table-tw>` is the source of truth (Stencil receives object props natively, emits projection mount-points when `hostsExternalCells=true`).

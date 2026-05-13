@@ -1,8 +1,10 @@
 # falcon-input — USAGE
 
-## Real-world snippet (admin-console wizard, Light DOM default)
+## Real usage examples (active codebase)
 
-`apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html:14-29`
+### Example 1 — Reactive Forms style with explicit `state` binding + per-instance token override
+
+`apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html`:
 
 ```html
 <!-- *** Falcon UI cross-framework <falcon-angular-input> — proves the Nx wiring (Stencil core + tokens + Angular CVA wrapper) end-to-end. *** -->
@@ -15,105 +17,167 @@
   [errorMessage]="accountNameError() ? (accountNameError()!.key | translate: accountNameError()!.params) : ''"
   [state]="accountNameError() ? 'error' : 'default'"
   [required]="true"
-  [(ngModel)]="state.accountName"
-></falcon-angular-input>
+  [clearable]="true"
+  [maxlength]="100"
+  [ngModel]="value().accountName"
+  (ngModelChange)="updateField('accountName', $event)"
+  (blur)="onBlur('accountName')">
+</falcon-angular-input>
 ```
 
-### What this shows
+### Example 2 — Tailwind-mode with `wrapperClass` overlay
 
-- **i18n via TranslatePipe** — all label / placeholder / helper / error strings flow through `| translate`.
-- **Signal-derived error state** — `accountNameError()` is a signal returning `{ key, params } | null`; the template reactively renders its message OR an empty string.
-- **`[state]` flips to `'error'`** based on the same signal — the visual state and error message are kept in sync.
-- **Per-instance token override** — the `add-client-special-input` class is defined in component CSS that mutates `--falcon-input-*` tokens for that single element (height, radius, focus colour, background). The standard `<falcon-input>` rendering is unchanged everywhere else.
-- **`[(ngModel)]`** wires the input to the state-service signal via `ControlValueAccessor`. Same idiom works for Reactive Forms (`formControl` / `formControlName`).
-- **`w-full`** Tailwind utility on the wrapper — sets width to 100% of the parent.
-
-## Playground snippet (host-shell, both render paths side-by-side)
-
-`apps/host-shell/src/app/playground/playground.page.html`
+Same file, second snippet:
 
 ```html
-<!-- Shadow DOM render path -->
-<falcon-angular-input
-  class="w-full"
-  [label]="'Username'"
-  [placeholder]="'Enter your username'"
-  [helperText]="'Stencil-rendered. Token-driven. Shadow DOM.'"
-  [size]="'md'"
-  [clearable]="true"
-  [(ngModel)]="username"
-></falcon-angular-input>
-
-<!-- Light DOM render path -->
+<!-- *** Falcon UI in TAILWIND mode (useTailwind=true). *** -->
+<!-- *** Caller-supplied wrapperClass adds hover-green border on top of the canonical idle/focus look. *** -->
 <falcon-angular-input
   [useTailwind]="true"
   class="w-full"
-  [label]="'Username'"
-  [placeholder]="'Enter your username'"
-  [helperText]="'Tailwind-rendered. Same tokens. Light DOM.'"
-  [size]="'md'"
+  [label]="'hierarchy.addClient.fields.financeId.label' | translate"
+  ... />
+```
+
+### Example 3 — Wrapped in legacy `<falcon-form-field>` for old-school labeled wrapper
+
+`apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step/user-personal-step.component.html`:
+
+```html
+<falcon-form-field [label]="'...'" [required]="true">
+  <falcon-angular-input type="text" class="w-full"
+    [state]="firstNameError() ? 'error' : 'default'"
+    [placeholder]="'hierarchy.addUser.fields.firstName.placeholder' | translate"
+    [ngModel]="value().firstName"
+    (ngModelChange)="updateField('firstName', $event)"
+    (blur)="onBlur('firstName')" />
+</falcon-form-field>
+```
+
+> Note: new code should use the built-in `label` / `required` / `errorMessage` inputs on `<falcon-angular-input>` instead of wrapping in `<falcon-form-field>`. Keep `<falcon-form-field>` only when the form has heterogeneous labeled controls.
+
+## Recommended usage for NEW Angular pages
+
+```html
+<falcon-angular-input
+  [label]="'fields.email.label' | translate"
+  [placeholder]="'fields.email.placeholder' | translate"
+  [errorMessage]="emailError() | translate"
+  [state]="emailError() ? 'error' : 'default'"
+  [required]="true"
   [clearable]="true"
-  [(ngModel)]="username"
-></falcon-angular-input>
-```
-
-The playground demonstrates that flipping `useTailwind` swaps the render path while every visual value stays identical because both paths read from `--falcon-input-*` tokens.
-
-## Reactive Forms snippet
-
-```html
-<form [formGroup]="form">
-  <falcon-angular-input
-    formControlName="email"
-    [label]="'Email'"
-    type="email"
-    [required]="true"
-    [clearable]="true"
-    [state]="form.controls.email.invalid && form.controls.email.touched ? 'error' : 'default'"
-    [errorMessage]="form.controls.email.touched && form.controls.email.errors?.['email'] ? 'Please enter a valid email' : ''"
-  ></falcon-angular-input>
-</form>
-```
-
-## Stencil-only usage (e.g. inside a non-Angular page)
-
-```html
-<falcon-input
-  label="Email"
-  placeholder="you@company.com"
   type="email"
   size="md"
-  required
-  clearable
-></falcon-input>
+  [(ngModel)]="email">
+</falcon-angular-input>
+```
 
-<script>
-  document.querySelector('falcon-input').addEventListener('falcon-change', (event) => {
-    console.log('New value:', event.detail.value);
+Defaults are tuned for forms: `useTailwind=true`, `type='text'`, `size='md'`, `state='default'`, `variant='form'`, `appearance='default'`.
+
+## Reactive Forms
+
+```ts
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FalconAngularInputComponent } from '@falcon/ui-core';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [ReactiveFormsModule, FalconAngularInputComponent],
+  template: `
+    <form [formGroup]="form">
+      <falcon-angular-input
+        formControlName="email"
+        [label]="'Email'"
+        [errorMessage]="form.controls.email.touched && form.controls.email.invalid ? 'Invalid email' : ''">
+      </falcon-angular-input>
+    </form>
+  `,
+})
+export class ExampleComponent {
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
   });
-</script>
-```
-
-## Slotted prefix / suffix (Shadow DOM only)
-
-```html
-<falcon-input label="Amount" placeholder="0.00">
-  <span slot="prefix">$</span>
-  <span slot="suffix">USD</span>
-</falcon-input>
-```
-
-## Per-instance token override pattern
-
-In the consuming component's CSS:
-
-```css
-:host ::ng-deep .add-client-special-input {
-  --falcon-input-control-height: 2.5rem;       /* taller */
-  --falcon-input-radius: var(--radius-md);     /* rounder */
-  --falcon-input-focus-color: var(--color-falcon-amber-500); /* amber instead of teal */
-  --falcon-input-bg: var(--color-falcon-neutral-50);
 }
 ```
 
-This works for **both render paths** because both Shadow + Light DOM resolve their visual values through the same `--falcon-input-*` token chain. (Wave 12A removed glass / glossify tokens but the per-instance override pattern stayed intact.)
+## ngModel (template forms)
+
+```html
+<falcon-angular-input
+  [label]="'Username'"
+  [(ngModel)]="username"
+  (ngModelChange)="onUsernameChange($event)">
+</falcon-angular-input>
+```
+
+## Tailwind-only usage
+
+When you need extra Tailwind utilities on the field shell (e.g. responsive width, max-w), apply them via the host `class=` attribute or the `wrapperClass` input:
+
+```html
+<falcon-angular-input class="max-w-sm" [label]="'Name'" [(ngModel)]="name" />
+```
+
+For wrapper-scoped customization in Tailwind mode:
+
+```html
+<falcon-angular-input
+  [useTailwind]="true"
+  wrapperClass="hover:border-falcon-green-500 focus-within:border-falcon-green-700"
+  [(ngModel)]="value" />
+```
+
+## Token usage (per-instance override pattern)
+
+Add a host class (e.g. `add-client-special-input`) on the consumer, then in a CSS file scoped to the consumer mutate the `--falcon-input-*` tokens:
+
+```css
+.add-client-special-input {
+  --falcon-input-height-md: 40px;
+  --falcon-input-border-radius: 12px;
+  --falcon-input-border-color-focus: var(--color-falcon-green-500);
+  --falcon-input-bg: var(--color-falcon-teal-tint);
+}
+```
+
+> Stencil Shadow honors the override because `--falcon-input-*` tokens are inherited through Shadow DOM. Tailwind path picks them up through the same `falcon-input.tokens.css` `:where()` selector chain.
+
+## Admin-console / management-console example
+
+`apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html` is the most thorough reference; see USAGE Example 1 above.
+
+## Bad usage to avoid
+
+- **Do NOT** bind both `[value]` and `[(ngModel)]` — CVA handles value; `[value]` is a Stencil-prop-attr passthrough and will race.
+- **Do NOT** import `FalconAngularInputComponent` AND set `CUSTOM_ELEMENTS_SCHEMA` on the host — the wrapper already declares it internally.
+- **Do NOT** put SCSS rules in the consumer's `.component.css` to style the field. Use the per-instance token override pattern above.
+- **Do NOT** nest `<falcon-angular-input>` inside `<falcon-form-field>` for NEW code — duplicates label rendering. Use the built-in `label` / `errorMessage` instead.
+- **Do NOT** use `*ngIf` / `*ngFor` in the surrounding template — use `@if` / `@for` per project rule.
+- **Do NOT** rely on `prefix` / `suffix` slots in Tailwind mode — they are not implemented there. Use Shadow mode (`useTailwind=false`) if slots are required.
+- **Do NOT** add `pi pi-*` icons — PrimeIcons are physically removed. Use the vendored Falcon icon font instead.
+
+## Import requirements (standalone component)
+
+```ts
+import { FalconAngularInputComponent } from '@falcon/ui-core';
+import { FormsModule } from '@angular/forms'; // for ngModel
+// or: import { ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  standalone: true,
+  imports: [FalconAngularInputComponent, FormsModule],
+  ...
+})
+```
+
+## Do / Don't
+
+| Do | Don't |
+|---|---|
+| Use built-in `label` / `helperText` / `errorMessage` inputs. | Nest in `<falcon-form-field>` for new code. |
+| Set `state="error"` AND `errorMessage` together. | Set only one (works, but inconsistent). |
+| Override tokens via host class + CSS file. | Hardcode hex / px in `style=`. |
+| Use `useTailwind=true` (default). | Toggle to Shadow only if slots needed. |
+| Bind `(ngModelChange)` or `formControlName`. | Bind `[value]` directly. |
+| Add Tailwind utilities via `class=` or `wrapperClass`. | Add SCSS rules in consumer CSS. |

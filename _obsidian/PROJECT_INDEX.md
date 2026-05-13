@@ -32,7 +32,7 @@ Overall readiness **68%** · decision **READY_WITH_WARNINGS** · 101 understandi
 |---|---|
 | Discovery rollup | [report](../outputs/reports/discovery-2026-05-13/DISCOVERY_REPORT.md) · [JSON](../outputs/reports/discovery-2026-05-13/DISCOVERY_SUMMARY.json) |
 | Backend portfolio | [BACKEND_SERVICE_MAP](../outputs/understanding/backend/BACKEND_SERVICE_MAP.md) · [GATEWAY_ROUTE_MAP](../outputs/understanding/backend/GATEWAY_ROUTE_MAP.md) |
-| Frontend portfolio | [WORKSPACE_MAP](../outputs/understanding/frontend/FRONTEND_WORKSPACE_MAP.md) · [COMPONENT_REGISTRY](../outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY.md) |
+| Frontend portfolio | [WORKSPACE_MAP](../../Brain%20Outputs/understanding/frontend/FRONTEND_WORKSPACE_MAP.md) · [COMPONENT_REGISTRY](../../Brain%20Outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY.md) · [[Frontend Understanding]] · [[Frontend Components Index]] |
 | Architecture (code-extracted) | [RULES](../outputs/understanding/wiki/ARCHITECTURE_RULES.md) · [CONFLICTS](../outputs/understanding/wiki/ARCHITECTURE_CONFLICTS.md) |
 | Integration | [OVERVIEW](../outputs/understanding/integration/INTEGRATION_OVERVIEW.md) · [READINESS_MATRIX](../outputs/understanding/integration/READINESS_MATRIX.md) · [GAP_LIST](../outputs/understanding/integration/GAP_LIST.md) · [NEXT_ACTIONS](../outputs/understanding/integration/NEXT_ACTIONS.md) · [API_TO_COMPONENT_TRACE](../outputs/understanding/integration/API_TO_COMPONENT_TRACE.md) · [BLOCKERS_AND_QUESTIONS](../outputs/understanding/integration/BLOCKERS_AND_QUESTIONS.md) |
 

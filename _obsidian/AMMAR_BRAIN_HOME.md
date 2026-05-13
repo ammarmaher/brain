@@ -22,19 +22,20 @@ Welcome to Brain SK knowledge vault.
 
 ## Latest knowledge build — 2026-05-13 (evening)
 
-Seven-agent parallel Deep Falcon Component Knowledge Build · overall readiness **91 %**.
+Seven-agent parallel Deep Falcon Component Knowledge Build · overall readiness **91 %**. Canonical-path repointed 2026-05-13 by Agent 6 (Obsidian Link Agent). Top-level navigation: [[Frontend Understanding]] and [[Frontend Components Index]].
 
-- [[FALCON_COMPONENT_INDEX]] — 60-component master index
-- [FALCON_COMPONENT_REGISTRY_DEEP](../outputs/component-registry/FALCON_COMPONENT_REGISTRY_DEEP.md)
-- [FALCON_COMPONENT_CAPABILITY_MATRIX](../outputs/frontend-understanding/FALCON_COMPONENT_CAPABILITY_MATRIX.md)
-- [COMPONENT_RELATIONSHIP_MAP](../outputs/frontend-understanding/COMPONENT_RELATIONSHIP_MAP.md)
-- [COMPONENT_UPGRADE_BACKLOG](../outputs/frontend-understanding/COMPONENT_UPGRADE_BACKLOG.md) — 124-item prioritized backlog
-- [FRONTEND_COMPONENT_KNOWLEDGE_REPORT](../outputs/frontend-understanding/FRONTEND_COMPONENT_KNOWLEDGE_REPORT.md)
-- [FRONTEND_COMPONENT_DYNAMIC_CAPABILITY_REPORT](../outputs/frontend-understanding/FRONTEND_COMPONENT_DYNAMIC_CAPABILITY_REPORT.md)
-- [FALCON_THEME_AND_TAILWIND_REPORT](../outputs/frontend-understanding/FALCON_THEME_AND_TAILWIND_REPORT.md)
-- [FALCON_WRAPPER_AND_RENDER_PATH_REPORT](../outputs/frontend-understanding/FALCON_WRAPPER_AND_RENDER_PATH_REPORT.md)
-- [READINESS_SCORES](../outputs/frontend-understanding/READINESS_SCORES.md)
-- [FINAL_COVERAGE_REPORT](../outputs/frontend-understanding/FINAL_COVERAGE_REPORT.md)
+- [[FALCON_COMPONENT_INDEX]] — 60-component master index (now points to canonical paths)
+- [CANONICAL_FRONTEND_UNDERSTANDING](../../Brain%20Outputs/understanding/frontend/CANONICAL_FRONTEND_UNDERSTANDING.md) — top-level canonical entry point
+- [FALCON_COMPONENT_REGISTRY_DEEP](../../Brain%20Outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY_DEEP.md)
+- [FALCON_COMPONENT_CAPABILITY_MATRIX](../../Brain%20Outputs/understanding/frontend/FALCON_COMPONENT_CAPABILITY_MATRIX.md)
+- [COMPONENT_RELATIONSHIP_MAP](../../Brain%20Outputs/understanding/frontend/COMPONENT_RELATIONSHIP_MAP.md)
+- [COMPONENT_UPGRADE_BACKLOG](../../Brain%20Outputs/understanding/frontend/COMPONENT_UPGRADE_BACKLOG.md) — 124-item prioritized backlog
+- [FRONTEND_COMPONENT_KNOWLEDGE_REPORT](../../Brain%20Outputs/understanding/frontend/FRONTEND_COMPONENT_KNOWLEDGE_REPORT.md)
+- [FRONTEND_COMPONENT_DYNAMIC_CAPABILITY_REPORT](../../Brain%20Outputs/understanding/frontend/FRONTEND_COMPONENT_DYNAMIC_CAPABILITY_REPORT.md)
+- [FALCON_THEME_AND_TAILWIND_REPORT](../../Brain%20Outputs/understanding/frontend/FALCON_THEME_AND_TAILWIND_REPORT.md)
+- [FALCON_WRAPPER_AND_RENDER_PATH_REPORT](../../Brain%20Outputs/understanding/frontend/FALCON_WRAPPER_AND_RENDER_PATH_REPORT.md)
+- [narrative/READINESS_SCORES](../../Brain%20Outputs/understanding/frontend/narrative/READINESS_SCORES.md)
+- [narrative/FINAL_COVERAGE_REPORT](../../Brain%20Outputs/understanding/frontend/narrative/FINAL_COVERAGE_REPORT.md)
 
 Coverage: 60 component folders / 360 component markdown files / 22 READY / 22 NEEDS-UPGRADE / 2 DEPRECATED / 7 LEGACY / 2 REFERENCE-ONLY · 124-item upgrade backlog · 12 conflicts resolved against live source · zero uncovered components.
 

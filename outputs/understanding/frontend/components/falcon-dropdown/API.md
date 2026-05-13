@@ -1,115 +1,106 @@
 # falcon-dropdown — API
 
-## Tag map
+## Selectors / tags
 
-| Render path | Tag |
-|---|---|
-| Angular wrapper | `<falcon-angular-dropdown>` |
-| Stencil Shadow | `<falcon-dropdown>` |
-| Stencil Light | `<falcon-dropdown-tw>` |
+- Angular: `falcon-angular-dropdown`
+- Stencil Shadow: `<falcon-dropdown>` (shadow: true)
+- Stencil Light: `<falcon-dropdown-tw>` (shadow: false)
 
-## Types (from `falcon-dropdown.types.ts`)
+## Import
 
 ```ts
-type FalconDropdownSize = 'sm' | 'md' | 'lg';
-type FalconDropdownState = 'default' | 'error' | 'success' | 'warning';
-type FalconDropdownVariant = 'form' | 'search' | 'grid';
-type FalconDropdownAppearance = 'default' | 'filled' | 'ghost';
+import { FalconAngularDropdownComponent, FalconDropdownOption } from '@falcon/ui-core';
+```
 
-interface FalconDropdownOption {
+## Inputs (Angular wrapper)
+
+| Name | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string?` | `undefined` | |
+| `placeholder` | `string?` | `undefined` | |
+| `helperText` | `string?` | `undefined` | |
+| `errorText` | `string?` | `undefined` | NOTE: wrapper uses `errorText` not `errorMessage` (Stencil tag uses `errorMessage`). See GAPS — minor API inconsistency vs sibling components. |
+| `options` | `FalconDropdownOption[] \| null \| undefined` | `[]` | Setter triggers `pushOptions()` to live Stencil element. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | |
+| `state` | `'default' \| 'error' \| 'success' \| 'warning'` | `'default'` | |
+| `variant` | `'form' \| 'search' \| 'grid'` | `'form'` | Wave 9.C. |
+| `appearance` | `'default' \| 'filled' \| 'ghost'` | `'default'` | Wave 9.C. |
+| `readonly` | `boolean` | `false` | |
+| `required` | `boolean` | `false` | |
+| `clearable` | `boolean` | `false` | |
+| `searchable` | `boolean` | `false` | Shows search input inside panel. |
+| `name` | `string?` | `undefined` | |
+| `inputId` | `string?` | auto `falcon-ad-{seq}` | |
+| `searchPlaceholder` | `string` | `'Search…'` | |
+| `emptyMessage` | `string` | `'No results'` | |
+| `useTailwind` | `boolean` | `true` | Render-path switch. |
+| `wrapperClass` | `string` | `''` | Tailwind path. |
+| `triggerClass` | `string` | `''` | Tailwind path. |
+| `panelClass` | `string` | `''` | Tailwind path. |
+| `optionClass` | `string` | `''` | Tailwind path. |
+| `labelClass` | `string` | `''` | Tailwind path. |
+
+## Outputs
+
+| Name | Payload | Notes |
+|---|---|---|
+| `valueChange` | `string \| number \| null` | Mirrors CVA write. |
+| `opened` | `void` | Panel opened. |
+| `closed` | `void` | Panel closed. |
+| (Stencil events on bare tag) | `falcon-change`, `falcon-search`, `falcon-open`, `falcon-close`, `falcon-clear`, `falcon-blur` | All `CustomEvent<{ value }>`. |
+
+## TypeScript types
+
+```ts
+export interface FalconDropdownOption {
   value: string | number;
   label: string;
   disabled?: boolean;
-  icon?: string;
-  group?: string;
-  data?: unknown;
+  iconUrl?: string;        // Wave 4 — replaces per-item ng-template for icons/flags
+  iconSrcset?: string;
+  iconAlt?: string;
 }
-
-interface FalconDropdownChangeDetail { value: string | number | null; option: FalconDropdownOption | null; }
-interface FalconDropdownSearchDetail  { query: string; }
-interface FalconDropdownToggleDetail  { open: boolean; }
+type FalconDropdownSize = 'sm' | 'md' | 'lg';
+type FalconDropdownState = 'default' | 'error' | 'success' | 'warning';
+type FalconDropdownValue = string | number | null;
+type FalconDropdownVariant = 'form' | 'search' | 'grid';
+type FalconDropdownAppearance = 'default' | 'filled' | 'ghost';
 ```
 
-## Props / @Input
+## CVA / Reactive Forms
 
-| Name | Type | Default | Reflected | Notes |
-|---|---|---|---|---|
-| `value` | `string \| number \| null` | `null` | no | Mutable on host. Two-way via CVA / `[(ngModel)]`. |
-| `options` | `FalconDropdownOption[]` | `[]` | no | Source list. `@Watch('options')` reseeds active index. |
-| `label` | `string?` | — | no | Field label above the trigger. |
-| `placeholder` | `string?` | — | no | Trigger text when no option selected. |
-| `helperText` | `string?` | — | no | Below the field; hidden when `errorMessage` set. |
-| `errorMessage` | `string?` | — | no | Below the field in danger style. Implicit error state. |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | yes | |
-| `state` | `'default' \| 'error' \| 'success' \| 'warning'` | `'default'` | yes | |
-| `variant` | `'form' \| 'search' \| 'grid'` | `'form'` | yes | Same input-family as `<falcon-input>` (Wave 9.C). |
-| `appearance` | `'default' \| 'filled' \| 'ghost'` | `'default'` | yes | Wave 9.C. |
-| `disabled` | `boolean` | `false` | yes | |
-| `readonly` | `boolean` | `false` | yes | |
-| `required` | `boolean` | `false` | yes | Renders `*` marker. |
-| `clearable` | `boolean` | `false` | yes | Shows X to reset to `null`. |
-| `searchable` | `boolean` | `false` | yes | Renders a search input inside the popover. |
-| `name` | `string?` | — | no | Mirrors native `name`. |
-| `inputId` | `string?` | — | no | Override generated id (default `falcon-dropdown-<seq>`). |
-| `searchPlaceholder` | `string` | `'Search…'` | no | i18n hook for the in-panel search input. |
-| `emptyMessage` | `string` | `'No results'` | no | Rendered when no options match the search. |
+**YES** — `NG_VALUE_ACCESSOR` + `forwardRef`. Supports `[(ngModel)]`, `formControl`, `formControlName`. `setDisabledState(true)` toggles internal disabled signal which the template forwards via `[attr.disabled]`.
 
-### Angular wrapper additions
+## Methods (Stencil only)
 
-- `useTailwind` — `true` by default → `<falcon-dropdown-tw>`; `false` → `<falcon-dropdown>`.
-- Standard CVA inputs (`formControl`, `formControlName`, `ngModel`).
+- `openPanel()`
+- `closePanel()`
+- `setFocus()` — focuses trigger button.
+- `clear()` — applies clear.
 
-## Events (Stencil — all bubble + composed)
+> **GAP** — Angular wrapper does NOT proxy these methods (same as `<falcon-input>`).
 
-| Event | Detail | When |
-|---|---|---|
-| `falcon-change` | `FalconDropdownChangeDetail` | Option selected (mouse / Enter / type-ahead). |
-| `falcon-search` | `FalconDropdownSearchDetail` | User types in the search input. Debouncing is the consumer's responsibility. |
-| `falcon-open` | `FalconDropdownToggleDetail` | Panel opens. |
-| `falcon-close` | `FalconDropdownToggleDetail` | Panel closes. |
-| `falcon-clear` | `FalconDropdownChangeDetail` | Clear button clicked. |
-| `falcon-blur` | `FalconDropdownChangeDetail` | Component loses focus. CVA calls `onTouched()`. |
+## Slots / template inputs
 
-## Slots
+- **Stencil Shadow**: `slot="options"` exists in the listbox (allows full panel custom rendering by replacing the default option loop). Default content is the auto-generated option list.
+- **Angular wrapper**: no `ng-template` inputs. The Stencil `slot="options"` can be used via raw Stencil tag but NOT through the Angular wrapper's template.
+- Per-option custom templates → NOT supported beyond `iconUrl` (see GAPS).
 
-| Slot | Render path | Purpose |
-|---|---|---|
-| `options` | Shadow | Custom option rendering. Default renderer prints `option.label`. |
+## Constraints
 
-## Public methods (Stencil)
+- Single-value only. Use `<falcon-angular-multi-select>` for multi.
+- `searchable` panel auto-focuses search input on open.
+- Type-ahead (closed dropdown) uses 600ms drain buffer matching native `<select>` behaviour.
+- Outside-click + Escape close the panel.
+- `slot="options"` exists on Shadow but Angular wrapper doesn't surface it (raw `<falcon-dropdown>` tag works).
+- Wrapper `errorText` input name does NOT match Stencil `errorMessage` prop — internal mapping is needed in template (verify in `falcon-dropdown.component.html`).
 
-| Method | Returns | Purpose |
-|---|---|---|
-| `openPanel()` | `Promise<void>` | Programmatically open the popover. |
-| `closePanel()` | `Promise<void>` | Programmatically close the popover. |
-| `focusTrigger()` | `Promise<void>` | Focus the trigger button. |
+## Accessibility
 
-## Internal state
-
-- `@State() open: boolean` — popover visibility.
-- `@State() focused: boolean` — trigger button focus.
-- `@State() searchQuery: string` — current search input value (when `searchable`).
-- `@State() activeIndex: number` — keyboard nav cursor (-1 means nothing focused).
-- `@State() resolvedId: string` — generated id used by `aria-labelledby` / label `for`.
-
-## Keyboard interactions
-
-- `ArrowDown` / `ArrowUp` — move active index across enabled options (wraps via `moveActiveIndex`).
-- `Home` / `End` — jump to first / last enabled option.
-- `Enter` / `Space` (on trigger) — open panel.
-- `Enter` (in panel) — select active option, close panel.
-- `Esc` — close panel without committing.
-- Type-ahead (when NOT `searchable`) — fills a 600ms buffer to jump to first matching option label.
-
-## CSS variables (component-scoped)
-
-Declared in `libs/falcon-ui-tokens/src/components/dropdown.tokens.css` and consumed by both render paths via Tailwind v4 arbitrary-value utilities. Falcon Studio mutates these to restyle every render path at once. Examples (non-exhaustive): trigger height / padding / radius, panel max-height, option hover/active backgrounds, chevron colour.
-
-## CVA contract (Angular)
-
-```ts
-writeValue(value: string | number | null): void
-registerOnChange(fn: (value: string | number | null) => void): void
-registerOnTouched(fn: () => void): void
-setDisabledState(isDisabled: boolean): void
-```
+- `role="combobox"` on trigger button.
+- `aria-haspopup="listbox"`, `aria-expanded`, `aria-controls`, `aria-invalid`, `aria-required`, `aria-describedby`, `aria-disabled` on trigger.
+- `role="listbox"` on panel, `role="option"` on each option.
+- Per-option `aria-selected`, `aria-disabled`.
+- Error message has `role="alert"`.
+- Required asterisk is `aria-hidden`.
+- Full keyboard nav: ArrowUp/Down, Home, End, Enter, Tab (closes), Esc (closes + refocus trigger), printable chars (type-ahead).

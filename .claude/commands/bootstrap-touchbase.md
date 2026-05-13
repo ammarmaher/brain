@@ -30,3 +30,28 @@ _obsidian/BRAIN_SK_HOME.md
 ```
 
 If authorization is required, ask one clear question and wait for Ammar.
+
+## Canonical Frontend Knowledge Path
+
+When discovery detects the frontend workspace and any subsequent agent writes component-knowledge artifacts, the canonical write target is:
+
+**Canonical frontend component knowledge path** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend
+```
+
+**Component folders** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend\components\<component-name>
+```
+
+**Legacy / import / mirror — do NOT use as active source:**
+
+- `C:\Falcon\Brain Outputs\component-registry`
+- `C:\Falcon\Brain Outputs\frontend-understanding`
+- `C:\Falcon\Brain SK\outputs\component-registry`
+- `C:\Falcon\Brain SK\outputs\frontend-understanding`
+
+Config keys: `outputs.frontendUnderstanding` and `outputs.frontendComponents` in `../../config/brain.config.json`.
