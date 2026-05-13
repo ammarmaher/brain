@@ -12,7 +12,44 @@
       "_obsidian/TASK_REPORT_INDEX.md"
     ]
   },
-  "lastScans": {},
+  "lastDiscovery": {
+    "ranAt": "2026-05-13",
+    "pass": "full-parallel-discovery-phase-1-and-2",
+    "decision": "READY_WITH_WARNINGS",
+    "overallReadinessPercent": 68,
+    "agents": {
+      "backendApi": { "files": 74, "endpointsCatalogued": 125, "servicesScanned": 9 },
+      "frontendComponent": { "files": 17, "componentsRegistered": 58, "tailwindTokens": 264, "appsScanned": 3, "libsScanned": 9 },
+      "architectureStructure": { "files": 4, "mode": "code-extracted-fallback", "reason": "wiki vault missing at C:/Falcon/falcon-wiki" },
+      "integrationImpact": { "files": 6, "gaps": { "high": 6, "medium": 14, "low": 12 }, "nextActions": 15, "unboundEndpoints": 85 }
+    },
+    "obsidianIndexesUpdated": [
+      "_obsidian/AMMAR_BRAIN_HOME.md",
+      "_obsidian/PROJECT_INDEX.md",
+      "_obsidian/TASK_REPORT_INDEX.md",
+      "_obsidian/BACKEND_INDEX.md",
+      "_obsidian/FRONTEND_INDEX.md",
+      "_obsidian/WIKI_INDEX.md",
+      "_obsidian/BUSINESS_INDEX.md"
+    ],
+    "topHighGaps": [
+      "Hardcoded SQL sa credentials in falcon-core-access-svc appsettings.qc*.json",
+      "Anthropic API key still on disk in Brain SK secondary Obsidian staging vault",
+      "Mongo default creds in non-Development appsettings.json (Templates + Access)",
+      "ServiceOperationResult<T> ships in 5 distinct shapes across services",
+      "adminConsoleGuard commented out in apps/admin-console/src/app/app.routes.ts:7"
+    ],
+    "phase1OverclaimsCorrected": [
+      "Commerce NodeController NRE on _changeApplicationPriceTypeHandler: backend agent claimed unassigned; integration agent verified assignment at NodeController.cs:87. Real defect downgraded to MED method-overload at lines 194 + 212.",
+      "BACKEND_SERVICE_MAP claimed ServiceOperationResult in every service: ARCHITECTURE_RULES verified PES has no implementation. Wrapper adoption is 8 of 9 services."
+    ]
+  },
+  "lastScans": {
+    "backend": { "ranAt": "2026-05-13", "depth": "first-pass + 3 representative controller drill-downs" },
+    "frontend": { "ranAt": "2026-05-13", "depth": "first-pass + 3 component dossiers" },
+    "architecture": { "ranAt": "2026-05-13", "depth": "code-extracted, wiki absent" },
+    "integration": { "ranAt": "2026-05-13", "depth": "phase-2 cross-cutting" }
+  },
   "defaultBrainRepo": "https://github.com/ammarmaher/brain",
-  "notes": "Updated by bootstrap and incremental scan protocols."
+  "notes": "Updated by bootstrap and incremental scan protocols. Deep per-controller and per-component dossiers happen on demand per task per INCREMENTAL_SCAN_PROTOCOL.md."
 }

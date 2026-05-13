@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "generatedAt": "2026-05-13",
+  "phase": "Phase 2 — Integration & Impact",
+  "decision": "READY_WITH_WARNINGS",
+  "readinessOverallPercent": 68,
+  "readinessOverallTier": "AMBER",
+  "byAxis": {
+    "backendServiceInventoryComplete": 95,
+    "backendEndpointContractsDocumented": 90,
+    "backendDtoCatalogueComplete": 80,
+    "gatewayRoutesDocumented": 95,
+    "authZitadelJwtConsistency": 80,
+    "serviceOperationResultUniformity": 45,
+    "multiLanguageNameUniformity": 50,
+    "falconExceptionFalconErrorUniformity": 55,
+    "frontendFalconComponentRegistryComplete": 90,
+    "tailwindTokensCentralised": 85,
+    "zonelessSignalsAdoption": 75,
+    "moduleFederationWiring": 90,
+    "frontendIdentityOnlyAuthNoZitadelDirect": 100,
+    "prdCoverage": 0,
+    "architectureWikiCoverage": 15,
+    "securityHygieneNoPlaintextSecrets": 35
+  },
+  "topHighGaps": [
+    {
+      "id": "GAP-001",
+      "title": "Hardcoded SQL sa credentials in PES appsettings.qc.json",
+      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\config\\appsettings.qc.json:13"
+    },
+    {
+      "id": "GAP-002",
+      "title": "Hardcoded SQL sa credentials in PES appsettings.qcfromlocal.json",
+      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\config\\appsettings.qcfromlocal.json:13"
+    },
+    {
+      "id": "GAP-003",
+      "title": "Anthropic API key on local disk in Brain SK staging vault",
+      "evidence": "C:\\Falcon\\Brain Outputs\\reports\\bootstrap-touchbase\\2026-05-13-bootstrap-completion.md (Incident section)"
+    },
+    {
+      "id": "GAP-004",
+      "title": "ServiceOperationResult<T> has 5 distinct shapes; Commerce east-west client already needs a bridge wrapper",
+      "evidence": "C:\\Falcon\\Brain Outputs\\understanding\\wiki\\ARCHITECTURE_CONFLICTS.md (section 4.1); C:\\Falcon\\Falcon\\falcon-core-commerce-svc\\src\\Falcon.Commerce.Infrastructure\\External\\Services\\IdentityService.cs:97-103"
+    },
+    {
+      "id": "GAP-005",
+      "title": "adminConsoleGuard commented out on admin-console remote root route",
+      "evidence": "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\apps\\admin-console\\src\\app\\app.routes.ts:7"
+    },
+    {
+      "id": "GAP-006",
+      "title": "PES uses GET-with-body (HTTP anti-pattern) on policyrulesBySub and policyrulesByFilter",
+      "evidence": "C:\\Falcon\\Falcon\\falcon-core-access-svc\\src\\T2.PES.API\\Program.cs:175,179 (per BACKEND_SERVICE_MAP.md line 87)"
+    }
+  ],
+  "nextActions": [
+    { "id": "ACT-001", "title": "Rotate leaked SQL sa credential + purge from git history", "ownerCandidate": "Identity / Access service owner", "size": "S" },
+    { "id": "ACT-002", "title": "Rotate Anthropic API key from Brain SK staging vault", "ownerCandidate": "Ammar", "size": "S" },
+    { "id": "ACT-003", "title": "Move dev Mongo connection strings out of non-Development appsettings.json (Templates + Access)", "ownerCandidate": "Backend (Templates + Access)", "size": "S" },
+    { "id": "ACT-004", "title": "Restore architecture wiki vault at C:\\Falcon\\falcon-wiki", "ownerCandidate": "Ammar", "size": "S" },
+    { "id": "ACT-005", "title": "Confirm PRD folder location with Ammar", "ownerCandidate": "Ammar", "size": "S" },
+    { "id": "ACT-006", "title": "File Azure DevOps bug for Commerce NodeController method-overload (Phase-1 NRE claim does not reproduce)", "ownerCandidate": "Backend (Commerce)", "size": "S" },
+    { "id": "ACT-007", "title": "Confirm adminConsoleGuard intent — restore or document the exception", "ownerCandidate": "Frontend (Web-Platform-UI) + Ammar", "size": "S" },
+    { "id": "ACT-008", "title": "Investigate Templates not being exposed through either gateway", "ownerCandidate": "Architect + Backend (Templates)", "size": "S" },
+    { "id": "ACT-009", "title": "Decide on canonical ServiceOperationResult<T> shape + ship shared package", "ownerCandidate": "Architect (Adnan)", "size": "M" },
+    { "id": "ACT-010", "title": "Pick endpoint-style policy (Controllers vs FastEndpoints) and write it into wiki", "ownerCandidate": "Architect", "size": "S" },
+    { "id": "ACT-011", "title": "Align JWT ValidateAudience across all services + gateways", "ownerCandidate": "Identity + Architect", "size": "S" },
+    { "id": "ACT-012", "title": "Add System Gateway rate limiter (per-Falcon-admin)", "ownerCandidate": "Backend (System Gateway)", "size": "M" },
+    { "id": "ACT-013", "title": "Plan east-west HTTP -> gRPC migration (or drop the gRPC rule)", "ownerCandidate": "Architect", "size": "M" },
+    { "id": "ACT-014", "title": "Finish the org-hierarchy SCSS-to-Tailwind migration", "ownerCandidate": "Frontend (Web-Platform-UI)", "size": "M" },
+    { "id": "ACT-015", "title": "Add wiki entry for the polishing-v0.4 branch exception (or merge to main)", "ownerCandidate": "Frontend lead + Architect", "size": "S" }
+  ],
+  "unverifiedItems": [
+    {
+      "claim": "Commerce NodeController constructor missing assignment for _changeApplicationPriceTypeHandler -> guaranteed NRE on PUT /api/Node/application/price-type",
+      "phase1Source": "C:\\Falcon\\Brain Outputs\\understanding\\backend\\commerce\\controllers\\NodeController\\OVERVIEW.md:77",
+      "phase2Verification": "Actual file C:\\Falcon\\Falcon\\falcon-core-commerce-svc\\src\\Falcon.Commerce.Api\\Controllers\\NodeController.cs:87 contains: _changeApplicationPriceTypeHandler = changeApplicationPriceTypeHandler;",
+      "status": "WRONG — downgrade required",
+      "resolution": "Real defect is the method-name overload at NodeController.cs:194,212 (two methods both named ChangeCommunicationChannelPriceType). Tracked as GAP-007 (MED), not HIGH-NRE."
+    },
+    {
+      "claim": "Templates is east-west-only (no frontend consumer)",
+      "phase1Source": "C:\\Falcon\\Brain Outputs\\understanding\\backend\\templates\\FRONTEND_CONTRACT.md:6-9",
+      "phase2Verification": "Confirmed via Grep across the active frontend tree — zero call sites match 'templates/' or 'communication-channel-configs'.",
+      "status": "VERIFIED — but underlying intent (east-west-only vs stale route map) is still UNVERIFIED until Ammar confirms",
+      "resolution": "Tracked as Q5 in BLOCKERS_AND_QUESTIONS.md and GAP-008 in GAP_LIST.md."
+    },
+    {
+      "claim": "All 9 services have ServiceOperationResult<T>",
+      "phase1Source": "C:\\Falcon\\Brain Outputs\\understanding\\backend\\BACKEND_SERVICE_MAP.md (Conventions row)",
+      "phase2Verification": "Per ARCHITECTURE_RULES.md section 4.1: Access (PES) has 'not found' — only 8 of 9 services define ServiceOperationResult<T>.",
+      "status": "PARTIAL — overall claim correct except Access exception",
+      "resolution": "Access uses different response shapes (PES authorize-resources returns PesAuthorizeResourcesResponse directly). Not a HIGH issue but worth noting."
+    }
+  ],
+  "boundEndpointCount": 41,
+  "distinctBoundEndpoints": 22,
+  "unboundEndpointBuckets": {
+    "identity": "9 of 26 endpoints unbound (verify-email/phone/change-password/verify-password/count/by-tenant/webhook/security-status/logout)",
+    "commerce": "20+ of 42 endpoints unbound (visibility/price/payment/disable/enable/delete-new-price/contracts CRUD/Information/Setting/wallets/testing-accounts/3 GW aggregations)",
+    "charging": "All 20 endpoints unbound",
+    "provisioning": "All 6 endpoints unbound",
+    "templates": "All 3 endpoints unbound (Templates not gateway-exposed)",
+    "contactGroup": "All 14 endpoints unbound",
+    "access": "All endpoints except pes/authorize/resources unbound"
+  }
+}
