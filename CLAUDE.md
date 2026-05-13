@@ -123,3 +123,12 @@ For ChatGPT/Claude/Gemini orchestration, use the migrated brand skills under `sk
 For voice/text alerts, use `protocols/NOTIFICATION_PROTOCOL.md` and `tools/notifications/`.
 
 If a legacy skill conflicts with Brain SK v0.1 governance, v8 governance wins, but the conflict must be documented.
+
+## Permanent Safety Rule: Additive Output Sync Only
+
+Never use destructive sync when copying Brain Outputs into the brain repo.
+
+Do not use `robocopy /MIR`, `/PURGE`, or delete destination folders.
+
+Use additive sync only:
+`robocopy "C:\Falcon\Brain Outputs" "C:\Falcon\Brain SK\outputs" /E /XO /XD .git node_modules dist bin obj`
