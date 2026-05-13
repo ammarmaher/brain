@@ -16,8 +16,8 @@
 | Frontend repo (alt) | OK | `falcon-portal` clean, `main` | Available |
 | Backend repos | OK | 7 services all clean on `main` | Ready for domain scans on demand |
 | Gateway repos | OK | Core + System gateways clean on `main` | Ready for route-map scan on demand |
-| PRD folder | WARN | Not found at `C:\Falcon\PRD` | Ask only when a Business task starts |
-| Architecture wiki | WARN | Not found at `C:\Falcon\falcon-wiki` | Ask only when an Architecture/governance task starts |
+| PRD folder | **OK** (updated 2026-05-13 evening) | Drive `https://drive.google.com/drive/folders/1ww3nICya-CjW4_5mzoVpzTaaMz9nNTtH` canonicalized in `brain.config.json`; local synced mirror at `Brain SK\skills\imported-business\prd-knowledge\modules\` (6 modules, last synced 2026-04-24). Brain analysis at `Brain Outputs\prd\`. | None (PRD-understanding agent ran in this session) |
+| Architecture wiki | **OK** (updated 2026-05-13 evening) | Azure DevOps wiki `https://t2development.visualstudio.com/Falcon/_wiki/wikis/Falcon.wiki/1129/Home` canonicalized; cloned to `C:\Falcon\falcon-wiki` (branch `wikiMaster`, HEAD `0d0cb311…`, 110 files). Brain analysis at `Brain Outputs\wiki-architect\`. | Pull weekly (Sunday) or before architectural decisions |
 | Obsidian vault | OK | `C:\Falcon\Brain SK\_obsidian` exists with 7 index notes | Will be auto-linked in this session |
 | Git auth | OK | git 2.45.1 available; push not yet attempted | Will validate on first push |
 | Node / npm | OK | Node 22.19.0 · npm 11.6.0 (via cmd shim) | None |

@@ -42,3 +42,19 @@ Overall readiness **68%** · decision **READY_WITH_WARNINGS** · 101 understandi
 - ~264 Tailwind `@theme` design tokens in the canonical theme.
 - 6 HIGH · 14 MED · 12 LOW gaps · 15 next actions queued.
 - ~85+ backend endpoints currently unbound in the API-to-component trace.
+
+### 2026-05-13 (evening) · Wiki + PRD onboarding (Phase 3)
+
+Both previously-WARN sources are now **OK**. See [onboarding rollup](../outputs/reports/discovery-2026-05-13/2026-05-13-wiki-prd-onboarding.md).
+
+| Output | Link |
+|---|---|
+| Wiki-grounded architecture | [`outputs/wiki-architect/`](../outputs/wiki-architect/README.md) — 21 files |
+| PRD understanding (6 modules) | [`outputs/prd/`](../outputs/prd/README.md) — 32 files |
+
+Headline additions:
+- **180 PRD business rules** extracted with line-cited evidence
+- **~45 domain entities** catalogued from PRDs
+- **185 PRD↔code GAP rows** (≈ 48% covered)
+- **9 of 12 fallback UNVERIFIED items resolved** against the wiki
+- **7 new conflicts** the wiki surfaced (X-MicroApp-Key, third gateway, Outbox, FeatureManagement, ClickHouse, …)

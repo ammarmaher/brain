@@ -127,7 +127,15 @@
     "brainCorePath": "C:/Falcon/Brain SK",
     "projectRoot": "C:/Falcon/Falcon",
     "generatedOutputRoot": "C:/Falcon/Brain Outputs",
-    "obsidianVaultPath": "C:/Falcon/Brain SK/_obsidian"
+    "obsidianVaultPath": "C:/Falcon/Brain SK/_obsidian",
+    "prdDriveUrl": "https://drive.google.com/drive/folders/1ww3nICya-CjW4_5mzoVpzTaaMz9nNTtH",
+    "prdLocalMirror": "C:/Falcon/Brain SK/skills/imported-business/prd-knowledge/modules",
+    "prdGeneratedOutputRoot": "C:/Falcon/Brain Outputs/prd",
+    "architectureWikiUrl": "https://t2development.visualstudio.com/Falcon/_wiki/wikis/Falcon.wiki/1129/Home",
+    "architectureWikiGitUrl": "https://t2development.visualstudio.com/Falcon/_git/Falcon.wiki",
+    "architectureWikiGitBranch": "wikiMaster",
+    "architectureWikiLocalClone": "C:/Falcon/falcon-wiki",
+    "architectureWikiGeneratedOutputRoot": "C:/Falcon/Brain Outputs/wiki-architect"
   },
   "gitSync": {
     "enabled": true,

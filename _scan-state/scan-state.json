@@ -50,11 +50,69 @@
       "BACKEND_SERVICE_MAP claimed ServiceOperationResult in every service: ARCHITECTURE_RULES verified PES has no implementation. Wrapper adoption is 8 of 9 services."
     ]
   },
+  "lastWikiOnboarding": {
+    "ranAt": "2026-05-13",
+    "decision": "READY",
+    "wikiUrl": "https://t2development.visualstudio.com/Falcon/_wiki/wikis/Falcon.wiki/1129/Home",
+    "wikiGitUrl": "https://t2development.visualstudio.com/Falcon/_git/Falcon.wiki",
+    "wikiGitBranch": "wikiMaster",
+    "wikiLocalClone": "C:/Falcon/falcon-wiki",
+    "wikiHead": "0d0cb311b56a991b94b6a0af03a26a12014b2926",
+    "filesInClone": 110,
+    "canonicalDocsScanned": 16,
+    "generatedOutputRoot": "C:/Falcon/Brain Outputs/wiki-architect",
+    "filesProduced": 21,
+    "fallbackUnverifiedItemsResolved": 9,
+    "fallbackUnverifiedItemsRemaining": 3,
+    "newConflictsSurfaced": [
+      "Identity should publish IP-allowlist Kafka topic, not Commerce",
+      "Third Platform Services Gateway prescribed but repo missing",
+      "Outbox pattern recommended; not implemented",
+      "Microsoft.FeatureManagement mandated; not adopted",
+      "ClickHouse OLAP tier prescribed; absent",
+      "falcon-comm-* and falcon-util-* repos prescribed (future)",
+      "AI Conversational Orchestration entirely forward-looking"
+    ],
+    "topHighWikiVsCodeConflicts": [
+      "ValidateAudience=true canonical; Commerce + Core Gateway + System Gateway have false",
+      "Domain references nothing canonical; Falcon.Commerce.Domain references MongoDB.Bson",
+      "X-MicroApp-Key dual-credential auth required; not implemented anywhere"
+    ]
+  },
+  "lastPrdOnboarding": {
+    "ranAt": "2026-05-13",
+    "decision": "READY",
+    "prdDriveUrl": "https://drive.google.com/drive/folders/1ww3nICya-CjW4_5mzoVpzTaaMz9nNTtH",
+    "prdLocalMirror": "C:/Falcon/Brain SK/skills/imported-business/prd-knowledge/modules",
+    "modulesScanned": 6,
+    "lastDriveSync": "2026-04-24",
+    "generatedOutputRoot": "C:/Falcon/Brain Outputs/prd",
+    "filesProduced": 32,
+    "businessRulesExtracted": 180,
+    "domainEntitiesCatalogued": 45,
+    "prdVsCodeGaps": { "covered": 69, "partial": 21, "missing": 45, "unverifiable": 42, "total": 185, "coveredPercent": 48 },
+    "topHighPrdVsCodeGaps": [
+      "Templates entity has no public API (only 3 CommunicationChannelConfig endpoints)",
+      "Templates service not routed by either gateway",
+      "Contact Group frontend unbound (14 endpoints, no consumer)",
+      "CommChannel/App lifecycle admin UI unbound on polishing-v0.4",
+      "Packaging + Billing missing from PRD body"
+    ],
+    "topOpenQuestions": [
+      "Password security levels: PRD says Normal/Advanced 2-tier; Identity code uses Low/Medium/High/Strict 4-tier",
+      "Wallet topology mid-life migration when Balance Type or Wallet Type changes with non-zero balances",
+      "Refund flow for failed campaigns",
+      "Forgot Password wrong OTP — PRD says silent vs Login says lock after 3",
+      "Template versioning on edit — does old version keep running until new is approved?"
+    ]
+  },
   "lastScans": {
     "backend": { "ranAt": "2026-05-13", "depth": "first-pass + 3 representative controller drill-downs" },
     "frontend": { "ranAt": "2026-05-13", "depth": "first-pass + 3 component dossiers" },
-    "architecture": { "ranAt": "2026-05-13", "depth": "code-extracted, wiki absent" },
-    "integration": { "ranAt": "2026-05-13", "depth": "phase-2 cross-cutting" }
+    "architecture": { "ranAt": "2026-05-13", "depth": "wiki-grounded (supersedes code-extracted fallback)" },
+    "integration": { "ranAt": "2026-05-13", "depth": "phase-2 cross-cutting" },
+    "wiki": { "ranAt": "2026-05-13", "depth": "wiki-grounded first-pass; 16 canonical docs" },
+    "prd": { "ranAt": "2026-05-13", "depth": "6 modules; PRD-vs-code GAP trace" }
   },
   "defaultBrainRepo": "https://github.com/ammarmaher/brain",
   "notes": "Updated by bootstrap and incremental scan protocols. Deep per-controller and per-component dossiers happen on demand per task per INCREMENTAL_SCAN_PROTOCOL.md."
