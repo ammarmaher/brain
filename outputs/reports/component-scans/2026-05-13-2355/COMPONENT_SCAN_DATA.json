@@ -1,51 +1,24 @@
 {
-  "generatedAt": "2026-05-13T23:55:23.893+03:00",
-  "generator": "incremental-scan@1.0.0",
-  "schemaVersion": "1.0.0",
-  "falconRepo": "C:/Falcon/Falcon/falcon-web-platform-ui",
-  "knowledgeRoot": "C:/Falcon/Brain Outputs/understanding/frontend",
-  "runs": [
-    {
-      "runStamp": "2026-05-13-2355",
-      "runAt": "2026-05-13T23:55:23.893+03:00",
-      "durationMs": 9629,
-      "falconBranch": "polishing-v0.4",
-      "falconHead": "6ecd2f2f9a7a078822cfa8f699803014b122258d",
-      "generator": "incremental-scan@1.0.0",
-      "counts": {
-        "discovered": 60,
-        "scanned": 0,
-        "skipped": 60,
-        "needsScan": 0,
-        "failed": 0,
-        "missingKnowledge": 0
-      },
-      "metadataCompletenessPct": 93,
-      "editTrackingCompletenessPct": 93,
-      "scanCoveragePct": 100,
-      "changedPct": 0
+  "run": {
+    "runStamp": "2026-05-13-2355",
+    "runAt": "2026-05-13T23:55:23.893+03:00",
+    "durationMs": 9629,
+    "falconBranch": "polishing-v0.4",
+    "falconHead": "6ecd2f2f9a7a078822cfa8f699803014b122258d",
+    "generator": "incremental-scan@1.0.0",
+    "counts": {
+      "discovered": 60,
+      "scanned": 0,
+      "skipped": 60,
+      "needsScan": 0,
+      "failed": 0,
+      "missingKnowledge": 0
     },
-    {
-      "runStamp": "2026-05-13-2355",
-      "runAt": "2026-05-13T23:55:14.180+03:00",
-      "durationMs": 9593,
-      "falconBranch": "polishing-v0.4",
-      "falconHead": "6ecd2f2f9a7a078822cfa8f699803014b122258d",
-      "generator": "incremental-scan@1.0.0",
-      "counts": {
-        "discovered": 60,
-        "scanned": 60,
-        "skipped": 0,
-        "needsScan": 0,
-        "failed": 0,
-        "missingKnowledge": 0
-      },
-      "metadataCompletenessPct": 93,
-      "editTrackingCompletenessPct": 93,
-      "scanCoveragePct": 100,
-      "changedPct": 0
-    }
-  ],
+    "metadataCompletenessPct": 93,
+    "editTrackingCompletenessPct": 93,
+    "scanCoveragePct": 100,
+    "changedPct": 0
+  },
   "components": {
     "falcon-accordion": {
       "componentName": "falcon-accordion",

@@ -20,13 +20,18 @@ const REQUIRED_DOCS = ['OVERVIEW.md','API.md','USAGE.md','TOKENS.md','GAPS_AND_U
 const argv = new Map(process.argv.slice(2).map((a,i,arr)=>[a.replace(/^--/,''), arr[i+1]]));
 const FORCE_RESCAN = process.argv.includes('--force-rescan');
 
-const nowIso = () => new Date().toISOString().replace('Z', (() => {
-  const o = -new Date().getTimezoneOffset();
-  const sign = o >= 0 ? '+' : '-';
-  const hh = String(Math.floor(Math.abs(o)/60)).padStart(2,'0');
-  const mm = String(Math.abs(o)%60).padStart(2,'0');
-  return `${sign}${hh}:${mm}`;
-})());
+/*** Local time + correct offset (matches fileMtimeIso convention). ***
+ *** Bug fix 2026-05-13: previous version returned UTC time stamped with local offset, ***
+ *** causing string comparisons against fileMtimeIso to be skewed by the offset.       ***/
+const nowIso = () => {
+  const t = new Date();
+  const offsetMin = -t.getTimezoneOffset();
+  const sign = offsetMin >= 0 ? '+' : '-';
+  const hh = String(Math.floor(Math.abs(offsetMin)/60)).padStart(2,'0');
+  const mm = String(Math.abs(offsetMin)%60).padStart(2,'0');
+  const local = new Date(t.getTime() - t.getTimezoneOffset()*60_000);
+  return local.toISOString().replace('Z', `${sign}${hh}:${mm}`);
+};
 const runStamp = () => {
   const d = new Date();
   const pad = n => String(n).padStart(2,'0');
