@@ -1,0 +1,186 @@
+{
+  "_comment": "Falcon brain-skills sound settings. Edit this file then run: scripts/apply-settings.ps1",
+  "_voices_available": {
+    "british_male": ["bm_george", "bm_daniel", "bm_fable", "bm_lewis"],
+    "british_female": ["bf_emma", "bf_isabella", "bf_alice", "bf_lily"],
+    "us_male": ["am_michael", "am_adam", "am_eric", "am_liam"],
+    "us_female": ["af_bella", "af_heart", "af_sky", "af_alloy", "af_nova"],
+    "_full_list": "curl http://localhost:8880/v1/audio/voices"
+  },
+  "global": {
+    "kokoroBaseUrl": "http://localhost:8880/v1",
+    "model": "kokoro",
+    "responseFormat": "mp3",
+    "volumeMultiplier": 8.0,
+    "speed": 1.0,
+    "playerVolume": 1.0,
+    "completion": {
+      "_comment": "Played at the end of EVERY skill cycle, after the per-skill beep signature. Always British male.",
+      "voice": "bm_george",
+      "phrase": "I am finishing, boss.",
+      "beep": [[1320, 100], [1320, 100]]
+    }
+  },
+  "agentTts": {
+    "watchPaths": ["~/.claude/projects/**/*.jsonl"],
+    "parserType": "claude-code",
+    "fallbackVoice": "bm_george"
+  },
+  "skills": {
+    "prd-knowledge": {
+      "voice": "bm_george",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "PRD knowledge running.",
+        "working": "PRD knowledge working.",
+        "complete": "PRD knowledge complete."
+      },
+      "triggers": [
+        "take latest from PRD",
+        "update PRD knowledge",
+        "sync PRDs",
+        "refresh PRD",
+        "pull PRD from Drive",
+        "import PRD",
+        "fetch latest PRDs",
+        "PRD sync",
+        "what does the PRD say about",
+        "show me the latest PRD",
+        "what changed in the PRD",
+        "diff PRD"
+      ],
+      "beep": [
+        [660, 200],
+        [880, 200],
+        [1100, 400]
+      ]
+    },
+    "domain-glossary": {
+      "voice": "bm_lewis",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Domain glossary running.",
+        "working": "Domain glossary working.",
+        "complete": "Domain glossary complete."
+      },
+      "triggers": [
+        "validate against glossary",
+        "check glossary",
+        "add glossary term",
+        "regenerate glossary index",
+        "what does this term mean",
+        "is this term canonical",
+        "find banned terms",
+        "translate to Arabic",
+        "what is the canonical term for",
+        "are there synonyms for",
+        "show disambiguation for",
+        "glossary status"
+      ],
+      "beep": [
+        [1000, 150],
+        [1000, 150],
+        [1000, 150]
+      ],
+      "beepGapMs": 80
+    },
+    "module-catalog": {
+      "voice": "bm_daniel",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Module catalog running.",
+        "working": "Module catalog working.",
+        "complete": "Module catalog complete."
+      },
+      "triggers": [
+        "what does module",
+        "describe module",
+        "open module dossier",
+        "module catalog index",
+        "list all modules",
+        "who owns module",
+        "module decisions",
+        "show open questions for",
+        "module surface map",
+        "where does module live",
+        "what module owns",
+        "create new module dossier"
+      ],
+      "beep": [
+        [700, 500],
+        [700, 200],
+        [700, 500]
+      ]
+    },
+    "test-case-authoring": {
+      "voice": "bm_fable",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Test case authoring running.",
+        "working": "Test case authoring working.",
+        "complete": "Test case authoring complete."
+      },
+      "triggers": [
+        "generate test cases for all PRD",
+        "generate test cases for",
+        "author tests for",
+        "build test plan",
+        "test plan for",
+        "edge cases for",
+        "permission matrix for",
+        "Gherkin scenarios for",
+        "coverage matrix for",
+        "regenerate tests",
+        "trace TC to PRD",
+        "list test IDs for"
+      ],
+      "beep": [
+        [880, 400],
+        [1100, 400],
+        [880, 400]
+      ]
+    },
+    "business-pipeline": {
+      "_comment": "Orchestrator: runs prd-knowledge -> domain-glossary -> module-catalog -> test-case-authoring",
+      "voice": "bf_emma",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Business pipeline running.",
+        "working": "Business pipeline working.",
+        "complete": "Business pipeline complete."
+      },
+      "triggers": [
+        "run business",
+        "do business",
+        "business pipeline",
+        "full business sync",
+        "business everything",
+        "business run"
+      ],
+      "beep": [
+        [440, 200],
+        [660, 200],
+        [880, 200],
+        [1100, 400]
+      ]
+    }
+  },
+  "globalCommands": {
+    "_comment": "Skill-agnostic commands. 'list command' prints INSTRUCTIONS.md to chat (read-only).",
+    "list-command": {
+      "triggers": [
+        "list command",
+        "list commands",
+        "list instructions",
+        "list prd commands",
+        "list prd instructions"
+      ],
+      "action": "print INSTRUCTIONS.md command-reference table to chat"
+    }
+  }
+}

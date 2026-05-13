@@ -1,0 +1,27 @@
+*** Local TTS workspace — keep generated audio + caches out of git ***
+
+# audio outputs / caches
+*.mp3
+*.wav
+*.ogg
+*.m4a
+audio-cache/
+.cache/
+
+# node
+node_modules/
+npm-debug.log*
+
+# python venvs / caches (if used as Kokoro fallback)
+.venv/
+__pycache__/
+*.pyc
+
+# legacy elevenlabs build artifacts (kept on disk, not in git)
+elevenlabs-mcp-player/dist/
+elevenlabs-mcp-player/node_modules/
+*.mcpb
+
+# OS
+.DS_Store
+Thumbs.db

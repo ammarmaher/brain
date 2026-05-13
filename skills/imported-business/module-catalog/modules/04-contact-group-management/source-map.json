@@ -1,0 +1,49 @@
+{
+  "moduleName": "Contact Group Management",
+  "originalDriveFolderName": "4- Contact Group Mngmnt Module",
+  "driveFolderId": "1UudiiIbPBerqWXfwq1SZJEqgyf3i7bDz",
+  "localModuleFolder": "business-prd-skill/modules/04-contact-group-management",
+  "lastSyncedAt": "2026-04-24",
+  "selectedLatestPrd": {
+    "fileName": "Contact Group Management Module_V2",
+    "driveId": "",
+    "version": "V2",
+    "mimeType": "application/vnd.google-apps.document",
+    "modifiedTime": "2026-04-01T07:11:35.210Z",
+    "size": "18 KB",
+    "sourcePathOrLink": "Google Drive > 4- Contact Group Mngmnt Module > Contact Group Management Module_V2",
+    "cachedTextPath": "C:/Users/User/.gdrive/cache/04-contact-group-management__prd__Contact_Group_Management_Module_V2.txt",
+    "selectionReason": "Explicit _V2 marker; higher than the unversioned alternative which is treated as 'unknown'."
+  },
+  "ignoredDuplicatePrds": [
+    {
+      "fileName": "Contact Group Management Module",
+      "version": "unknown",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-03-08T08:04:31.918Z",
+      "reason": "No v<number> marker; superseded by _V2."
+    }
+  ],
+  "supportingFiles": [],
+  "images": [],
+  "excelFiles": [
+    {
+      "fileName": "Contact Group Permissions",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-04-23T10:34:24.106Z",
+      "size": "1 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/04-contact-group-management__xlsx__Contact_Group_Permissions.csv",
+      "usedForUnderstanding": true,
+      "extractedIntoSection": "understanding.md > Permission matrix"
+    }
+  ],
+  "wordFiles": [],
+  "unreadableFiles": [],
+  "openQuestions": [
+    "What is the App Settings max-upload default value for contact files?",
+    "Share scope for AO/NA (not creator) — same node only, or hierarchy-wide?",
+    "Behavior when a Shared With user is deleted.",
+    "Is there a 'Failed' status when file parsing errors?",
+    "Deeply nested hierarchy — how many levels show in Account Owner's own-node list?"
+  ]
+}

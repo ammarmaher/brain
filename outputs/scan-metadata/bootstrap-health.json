@@ -1,0 +1,18 @@
+{
+  "$schema": "brain-sk/v0.1/bootstrap-health",
+  "ranAt": "2026-05-13",
+  "overall": "READY_WITH_WARNINGS",
+  "checks": [
+    { "name": "brain-repo",       "required": true,  "status": "OK",   "detail": "configured; local init pending in this bootstrap" },
+    { "name": "frontend-repo",    "required": true,  "status": "OK",   "detail": "falcon-web-platform-ui @ polishing-v0.4 (clean); falcon-portal @ main (clean)" },
+    { "name": "backend-repos",    "required": true,  "status": "OK",   "detail": "7 services clean on main" },
+    { "name": "gateway-repos",    "required": true,  "status": "OK",   "detail": "Core + System gateways clean on main" },
+    { "name": "prd-folder",       "required": true,  "status": "WARN", "detail": "C:/Falcon/PRD missing" },
+    { "name": "architecture-wiki","required": false, "status": "WARN", "detail": "C:/Falcon/falcon-wiki missing" },
+    { "name": "obsidian-vault",   "required": false, "status": "OK",   "detail": "C:/Falcon/Brain SK/_obsidian present, 7 index notes" },
+    { "name": "git",              "required": true,  "status": "OK",   "version": "2.45.1.windows.1" },
+    { "name": "node",             "required": false, "status": "OK",   "version": "22.19.0" },
+    { "name": "npm",              "required": false, "status": "OK",   "version": "11.6.0", "note": "PS exec-policy blocks npm.ps1; use cmd shim" },
+    { "name": "dotnet",           "required": false, "status": "OK",   "version": "9.0.201" }
+  ]
+}

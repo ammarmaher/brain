@@ -1,0 +1,40 @@
+{
+  "taskId": "TASK-20260501-001",
+  "title": "Define wallet/charging service boundary (GAP-CC-002)",
+  "currentState": "received",
+  "history": [],
+  "gates": {
+    "l1Approved": false,
+    "l2Approved": false,
+    "l3Approved": false,
+    "scenariosBuilt": false,
+    "codeWritten": false,
+    "qaPassed": false,
+    "pushRequested": false,
+    "pushApproved": false
+  },
+  "artifacts": {
+    "planL1Path": "",
+    "planL2Path": "",
+    "planL3Path": "",
+    "scenariosPath": "",
+    "codeChanges": [],
+    "qaReportPath": ""
+  },
+  "timestamps": {
+    "created": "2026-05-01T00:00:00Z",
+    "updated": "2026-05-01T00:00:00Z",
+    "eachStateEntered": {
+      "received": "2026-05-01T00:00:00Z"
+    }
+  },
+  "blockers": [],
+  "notes": [
+    "Source gap: GAP-CC-002 (critical, contradiction) in Brain\\analysis\\L2-business\\20260501\\03-contract-packaging-charging-billing-management-gaps.md",
+    "Module: 03-contract-packaging-charging-billing-management",
+    "Cluster: GAP-CC-002, GAP-CC-003, GAP-CC-008, GAP-CC-009 all hinge on the wallet/charging boundary",
+    "Affected services: falcon-core-commerce-svc, falcon-core-charging-svc, wallet-service",
+    "Wiki anchors: HLA §2.2.2 (wallet route), HLA §2.6 (OCS), HLA §3.4 (Send Transaction)",
+    "Outcome target: ADR + boundary spec doc; NO code in this task"
+  ]
+}

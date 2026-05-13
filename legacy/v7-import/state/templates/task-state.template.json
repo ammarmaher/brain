@@ -1,0 +1,31 @@
+{
+  "taskId": "",
+  "title": "",
+  "currentState": "received",
+  "history": [],
+  "gates": {
+    "l1Approved": false,
+    "l2Approved": false,
+    "l3Approved": false,
+    "scenariosBuilt": false,
+    "codeWritten": false,
+    "qaPassed": false,
+    "pushRequested": false,
+    "pushApproved": false
+  },
+  "artifacts": {
+    "planL1Path": "",
+    "planL2Path": "",
+    "planL3Path": "",
+    "scenariosPath": "",
+    "codeChanges": [],
+    "qaReportPath": ""
+  },
+  "timestamps": {
+    "created": "",
+    "updated": "",
+    "eachStateEntered": {}
+  },
+  "blockers": [],
+  "notes": []
+}

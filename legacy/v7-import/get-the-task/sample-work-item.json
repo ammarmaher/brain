@@ -1,0 +1,20 @@
+{
+  "id": 115329,
+  "title": "Contact Group — Permission matrix enforcement",
+  "type": "User Story",
+  "state": "Active",
+  "priority": 2,
+  "areaPath": "Falcon\\Web\\Contact Group",
+  "iterationPath": "Falcon\\2026\\Sprint 9",
+  "assignedTo": "a.sukkariyeh@t2.sa",
+  "parentFeature": {
+    "id": 98765,
+    "title": "Contact Group Management Module"
+  },
+  "description": "Enforce the Contact Group permission matrix from the PRD across the Contact Groups list and detail screens. The matrix is defined in the Contact Group Permissions sheet (linked from attachments.md). Falcon usertypes (System Admin, Operation, Product) MUST be view-only. Client Account Owner / Node Admin can create, edit own, share, and share groups created by others within their hierarchy. Client Normal Users can create / edit own / share own / use own + shared-with-me groups. Action visibility on the three-dots menu must reflect the role + relationship to the group (creator vs. shared-with-me) on every render.",
+  "acceptanceCriteria": "Given a Falcon System Admin viewing the Contact Groups list on a Main node, when they open the three-dots menu, then no Create / Edit / Delete / Share actions are visible.\nGiven a Client Account Owner viewing a contact group created by a Normal User in their hierarchy, when they open the three-dots menu, then Share is visible.\nGiven a Client Normal User viewing the Shared Groups tab, when they open a row, then no Edit / Delete / Share actions are visible.\nGiven a Client Normal User who created a group, when they open the detail view, then Edit / Delete / Share are visible.\nGiven any user, when their role changes mid-session, then the action visibility re-evaluates on next list render without a hard reload.",
+  "tags": ["frontend", "permissions", "contact-group"],
+  "createdDate": "2026-04-22T10:14:00Z",
+  "changedDate": "2026-04-29T14:02:00Z",
+  "history": []
+}

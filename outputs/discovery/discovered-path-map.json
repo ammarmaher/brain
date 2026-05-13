@@ -1,0 +1,56 @@
+{
+  "$schema": "brain-sk/v0.1/discovered-path-map",
+  "generatedAt": "2026-05-13",
+  "bootstrap": "Shared Bootstrap TouchBase (first-pass)",
+  "paths": {
+    "falconWorkspaceRoot": "C:/Falcon",
+    "brainCorePath": "C:/Falcon/Brain SK",
+    "projectRoot": "C:/Falcon/Falcon",
+    "generatedOutputRoot": "C:/Falcon/Brain Outputs",
+    "generatedOutputRepoMirror": "C:/Falcon/Brain SK/outputs",
+    "obsidianVaultPath": "C:/Falcon/Brain SK/_obsidian",
+    "brainRepoUrl": "https://github.com/ammarmaher/brain"
+  },
+  "umbrellaRepo": {
+    "path": "C:/Falcon/Falcon/Falcon",
+    "branch": "main",
+    "dirty": 0,
+    "remote": "https://t2development.visualstudio.com/DefaultCollection/Falcon/_git/Falcon"
+  },
+  "backendServices": [
+    { "name": "falcon-core-identity-svc",      "path": "C:/Falcon/Falcon/falcon-core-identity-svc",      "branch": "main", "dirty": 0 },
+    { "name": "falcon-core-commerce-svc",      "path": "C:/Falcon/Falcon/falcon-core-commerce-svc",      "branch": "main", "dirty": 0 },
+    { "name": "falcon-core-charging-svc",      "path": "C:/Falcon/Falcon/falcon-core-charging-svc",      "branch": "main", "dirty": 0 },
+    { "name": "falcon-core-provisioning-svc",  "path": "C:/Falcon/Falcon/falcon-core-provisioning-svc",  "branch": "main", "dirty": 0 },
+    { "name": "falcon-core-access-svc",        "path": "C:/Falcon/Falcon/falcon-core-access-svc",        "branch": "main", "dirty": 0 },
+    { "name": "falcon-core-contact-group-svc", "path": "C:/Falcon/Falcon/falcon-core-contact-group-svc", "branch": "main", "dirty": 0 },
+    { "name": "falcon-core-templates-svc",     "path": "C:/Falcon/Falcon/falcon-core-templates-svc",     "branch": "main", "dirty": 0 }
+  ],
+  "gateways": [
+    { "name": "falcon-int-core-gateway-svc",   "path": "C:/Falcon/Falcon/falcon-int-core-gateway-svc",   "branch": "main", "dirty": 0 },
+    { "name": "falcon-int-system-gateway-svc", "path": "C:/Falcon/Falcon/falcon-int-system-gateway-svc", "branch": "main", "dirty": 0 }
+  ],
+  "frontends": [
+    { "name": "falcon-web-platform-ui", "path": "C:/Falcon/Falcon/falcon-web-platform-ui", "branch": "polishing-v0.4", "dirty": 0, "branchWarning": "Not on default 'main' — using working branch for this session" },
+    { "name": "falcon-portal",          "path": "C:/Falcon/Falcon/falcon-portal",          "branch": "main",            "dirty": 0 }
+  ],
+  "infrastructure": [
+    { "name": "falcon-essentials", "path": "C:/Falcon/Falcon/Falcon/falcon-essentials" },
+    { "name": "docker-compose",    "path": "C:/Falcon/Falcon/Falcon/docker-compose.yml" }
+  ],
+  "optionalSources": [
+    { "kind": "wiki", "expectedPath": "C:/Falcon/falcon-wiki", "state": "missing" },
+    { "kind": "prd",  "expectedPath": "C:/Falcon/PRD",          "state": "missing" }
+  ],
+  "excludedFromActiveScan": [
+    "legacy", "legacy-v7", "archived", "old", "backup", "generated-archive",
+    "previous-brain", "node_modules", "dist", "bin", "obj", ".vs", ".git",
+    "deprecated-falcon-core-identity-svc", "deprecated-falcon-web-platform-ui"
+  ],
+  "tools": {
+    "git":     { "version": "2.45.1.windows.1", "state": "OK" },
+    "node":    { "version": "22.19.0",          "state": "OK" },
+    "npm":     { "version": "11.6.0",           "state": "OK", "note": "PowerShell exec-policy blocks npm.ps1; use 'cmd /c npm' or set ExecutionPolicy" },
+    "dotnet":  { "version": "9.0.201",          "state": "OK" }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "moduleName": "Root Documents",
+  "originalDriveFolderName": "(root)",
+  "driveFolderId": "1ww3nICya-CjW4_5mzoVpzTaaMz9nNTtH",
+  "localModuleFolder": "business-prd-skill/modules/root-documents",
+  "lastSyncedAt": "2026-04-24",
+  "selectedLatestPrd": null,
+  "ignoredDuplicatePrds": [],
+  "supportingFiles": [
+    {
+      "fileName": "Points to be covered later",
+      "driveId": "1lHNJCyMEpO8CpxLhPeip-BA-PAhXTFKn1bHjzX1QncE",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-04-13T08:56:16.209Z",
+      "size": "1.9 KB",
+      "cachedTextPath": "C:/Users/User/.gdrive/cache/root-documents__doc__Points_to_be_covered_later.txt",
+      "usedForUnderstanding": true,
+      "note": "Cross-cutting backlog; items mapped to modules in latest-prd.md."
+    },
+    {
+      "fileName": "Copilot 4DevOps",
+      "driveId": "11O2GNQjqzjaT6lUFsOExKvTefQ8e2esgL3otwYyVMOs",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-03-15T14:27:03.351Z",
+      "size": "9 KB",
+      "cachedTextPath": "C:/Users/User/.gdrive/cache/root-documents__doc__Copilot_4DevOps.txt",
+      "usedForUnderstanding": false,
+      "note": "Tooling / prompt library; NOT a business requirement."
+    }
+  ],
+  "images": [],
+  "excelFiles": [],
+  "wordFiles": [],
+  "unreadableFiles": [
+    { "fileName": "Copilot 4DevOps (lines 121..451)", "reason": "Not read in this sync; low priority as tooling-only content." }
+  ],
+  "openQuestions": [
+    "Propagate each item in 'Points to be covered later' into the mapped module's understanding.md > Clarifying questions when those modules get a deep sync."
+  ]
+}

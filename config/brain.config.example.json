@@ -1,0 +1,154 @@
+{
+  "brainName": "Brain SK v0.1",
+  "brainRepo": "https://github.com/ammarmaher/brain",
+  "projectRoot": "C:/Falcon/Falcon",
+  "defaultBranch": "main",
+  "autoSyncBrainArtifacts": true,
+  "autoPushImplementationAfterQualityGates": true,
+  "discovery": {
+    "autoDiscoverFromProjectRoot": true,
+    "generateUnderstandingOutputs": true,
+    "frontend": {
+      "enabled": true,
+      "path": null,
+      "detectBy": [
+        "angular.json",
+        "nx.json",
+        "package.json",
+        "apps",
+        "libs",
+        "project.json",
+        "tailwind.config"
+      ]
+    },
+    "backend": {
+      "enabled": true,
+      "path": null,
+      "detectBy": [
+        "*.sln",
+        "*.csproj",
+        "Controllers",
+        "Program.cs",
+        "appsettings.json",
+        "Validators",
+        "Dtos",
+        "DTOs",
+        "Services",
+        "Entities"
+      ]
+    },
+    "gateway": {
+      "enabled": true,
+      "path": null,
+      "detectBy": [
+        "ocelot.json",
+        "gateway",
+        "Gateway",
+        "ApiGateway",
+        "YARP"
+      ]
+    },
+    "prd": {
+      "enabled": true,
+      "path": null,
+      "detectBy": [
+        "prd",
+        "PRD",
+        "requirements",
+        "epics",
+        "stories",
+        "business"
+      ]
+    },
+    "wiki": {
+      "enabled": true,
+      "path": null,
+      "detectBy": [
+        "wiki",
+        "docs",
+        "architecture",
+        "diagrams",
+        "images",
+        "standards"
+      ]
+    }
+  },
+  "obsidian": {
+    "enabled": true,
+    "autoLink": true,
+    "vaultPath": "C:/Falcon/Brain SK/_obsidian",
+    "linkGeneratedOutputRoot": "C:/Falcon/Brain Outputs",
+    "generateIndexNotes": true,
+    "continueIfMissing": true
+  },
+  "outputs": {
+    "writeGeneratedUnderstandingOutsideBrainCore": true,
+    "root": "C:/Falcon/Brain Outputs",
+    "discovery": "C:/Falcon/Brain Outputs/discovery",
+    "understanding": "C:/Falcon/Brain Outputs/understanding",
+    "bootstrap": "C:/Falcon/Brain Outputs/bootstrap",
+    "businessUnderstanding": "C:/Falcon/Brain Outputs/business-understanding",
+    "backendUnderstanding": "C:/Falcon/Brain Outputs/backend-understanding",
+    "frontendUnderstanding": "C:/Falcon/Brain Outputs/frontend-understanding",
+    "componentRegistry": "C:/Falcon/Brain Outputs/component-registry",
+    "reports": "C:/Falcon/Brain Outputs/reports",
+    "scanMetadata": "C:/Falcon/Brain Outputs/scan-metadata",
+    "obsidianLinkedNotes": "C:/Falcon/Brain Outputs/obsidian-linked-notes",
+    "obsidianIndex": "C:/Falcon/Brain SK/_obsidian"
+  },
+  "authorization": {
+    "askOnlyWhenRequired": true,
+    "useEnvironmentVariablesFirst": true,
+    "localSecretsFile": "config/local.secrets.json",
+    "neverCommitSecrets": true
+  },
+  "scan": {
+    "excludeActiveScanFolders": [
+      "legacy",
+      "legacy-v7",
+      "archived",
+      "old",
+      "backup",
+      "generated-archive",
+      "previous-brain",
+      "node_modules",
+      "dist",
+      "bin",
+      "obj",
+      ".vs",
+      ".git"
+    ]
+  },
+  "falconWorkspaceRoot": "C:/Falcon",
+  "brainCorePath": "C:/Falcon/Brain SK",
+  "generatedOutputRoot": "C:/Falcon/Brain Outputs",
+  "paths": {
+    "falconWorkspaceRoot": "C:/Falcon",
+    "brainCorePath": "C:/Falcon/Brain SK",
+    "projectRoot": "C:/Falcon/Falcon",
+    "generatedOutputRoot": "C:/Falcon/Brain Outputs",
+    "obsidianVaultPath": "C:/Falcon/Brain SK/_obsidian"
+  },
+  "gitSync": {
+    "enabled": true,
+    "brainRepoPath": "C:/Falcon/Brain SK",
+    "brainRepoUrl": "https://github.com/ammarmaher/brain",
+    "syncGeneratedOutputsToBrainRepo": true,
+    "generatedOutputRoot": "C:/Falcon/Brain Outputs",
+    "generatedOutputRepoMirror": "C:/Falcon/Brain SK/outputs",
+    "autoCommit": true,
+    "autoPush": true,
+    "exclude": [
+      "**/.env",
+      "**/*.key",
+      "**/*.pem",
+      "**/*secret*",
+      "**/*password*",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/bin/**",
+      "**/obj/**",
+      "**/.git/**"
+    ]
+  }
+}

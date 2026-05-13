@@ -1,0 +1,49 @@
+{
+  "$schema": "brain-sk/v0.1/scan-metadata",
+  "lastBootstrapAt": "2026-05-13",
+  "bootstrapPass": "shared-bootstrap-touchbase-first-pass",
+  "decision": "READY_WITH_WARNINGS",
+  "scanScope": {
+    "active": [
+      "C:/Falcon/Falcon/falcon-core-identity-svc",
+      "C:/Falcon/Falcon/falcon-core-commerce-svc",
+      "C:/Falcon/Falcon/falcon-core-charging-svc",
+      "C:/Falcon/Falcon/falcon-core-provisioning-svc",
+      "C:/Falcon/Falcon/falcon-core-access-svc",
+      "C:/Falcon/Falcon/falcon-core-contact-group-svc",
+      "C:/Falcon/Falcon/falcon-core-templates-svc",
+      "C:/Falcon/Falcon/falcon-int-core-gateway-svc",
+      "C:/Falcon/Falcon/falcon-int-system-gateway-svc",
+      "C:/Falcon/Falcon/falcon-web-platform-ui",
+      "C:/Falcon/Falcon/falcon-portal",
+      "C:/Falcon/Falcon/Falcon"
+    ],
+    "excluded": [
+      "C:/Falcon/Falcon/deprecated-falcon-core-identity-svc",
+      "C:/Falcon/Falcon/deprecated-falcon-web-platform-ui",
+      "C:/Falcon/Brain SK/legacy",
+      "C:/Falcon/Brain SK/protocols/legacy-v7"
+    ],
+    "missing": [
+      { "kind": "wiki", "expectedPath": "C:/Falcon/falcon-wiki" },
+      { "kind": "prd",  "expectedPath": "C:/Falcon/PRD" }
+    ]
+  },
+  "deepScansPerformed": {
+    "prd": false,
+    "backendApi": false,
+    "falconComponents": false,
+    "architectureWiki": false,
+    "gatewayRoutes": false
+  },
+  "note": "TouchBase first-pass discovers paths + verifies repos/tools. Deep domain scans are triggered on the first task that needs them (per INCREMENTAL_SCAN_PROTOCOL.md).",
+  "obsidian": {
+    "vaultPath": "C:/Falcon/Brain SK/_obsidian",
+    "indexesUpdated": true
+  },
+  "gitSync": {
+    "brainRepoInitialized": false,
+    "brainRepoUrl": "https://github.com/ammarmaher/brain",
+    "lastPushAt": null
+  }
+}

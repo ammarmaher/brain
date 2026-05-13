@@ -1,0 +1,82 @@
+/*** Brain UI global styles - Tailwind + design tokens ***/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    @apply bg-brain-bg text-slate-100 font-sans antialiased;
+  }
+
+  body.light {
+    @apply bg-slate-50 text-slate-900;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-brain-bg-border rounded;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply bg-brain-bg-surface border border-brain-bg-border rounded-lg;
+  }
+
+  .panel-light {
+    @apply bg-white border border-slate-200 rounded-lg;
+  }
+
+  .nav-link {
+    @apply grid grid-cols-[20px_1fr] items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-300 hover:bg-brain-bg-panel hover:text-white transition-colors;
+  }
+
+  .nav-link-active {
+    @apply bg-falcon-blue/15 text-falcon-blue;
+  }
+
+  /*** Markdown rendering for knowledge dossiers ***/
+  .prose-brain {
+    @apply text-sm text-slate-200 leading-relaxed;
+  }
+  .prose-brain h1 { @apply text-xl font-semibold text-slate-50 mt-4 mb-3; }
+  .prose-brain h2 { @apply text-lg font-semibold text-slate-100 mt-4 mb-2 border-b border-brain-bg-border pb-1; }
+  .prose-brain h3 { @apply text-base font-semibold text-slate-100 mt-3 mb-2; }
+  .prose-brain h4 { @apply text-sm font-semibold text-slate-200 mt-3 mb-1; }
+  .prose-brain p  { @apply my-2; }
+  .prose-brain ul { @apply list-disc pl-5 my-2 grid gap-1; }
+  .prose-brain ol { @apply list-decimal pl-5 my-2 grid gap-1; }
+  .prose-brain a  { @apply text-falcon-blue hover:underline; }
+  .prose-brain code { @apply bg-brain-bg-panel text-falcon-blue px-1 py-0.5 rounded text-xs font-mono; }
+  .prose-brain pre { @apply bg-brain-bg-panel p-3 rounded text-xs font-mono overflow-auto my-2; }
+  .prose-brain pre code { @apply bg-transparent p-0; }
+  .prose-brain blockquote { @apply border-l-2 border-falcon-blue/50 pl-3 text-slate-400 italic my-2; }
+  .prose-brain table { @apply w-full text-xs border-collapse my-2; }
+  .prose-brain th { @apply text-left px-2 py-1 bg-brain-bg-panel border border-brain-bg-border font-semibold; }
+  .prose-brain td { @apply px-2 py-1 border border-brain-bg-border; }
+  .prose-brain hr { @apply border-brain-bg-border my-4; }
+  .prose-brain img { @apply max-w-full rounded; }
+}

@@ -1,0 +1,105 @@
+{
+  "moduleName": "Contract, Packaging, Charging, Billing Management",
+  "originalDriveFolderName": "3- Contract, Packaging, Charging, Billing Mngmnt Module",
+  "driveFolderId": "1fhakbQRpNJd7vUxlNV96J2MyOTBX3y29",
+  "localModuleFolder": "business-prd-skill/modules/03-contract-packaging-charging-billing-management",
+  "lastSyncedAt": "2026-04-24",
+  "selectedLatestPrd": {
+    "fileName": "Contract & Cost Management V2",
+    "version": "V2",
+    "mimeType": "application/vnd.google-apps.document",
+    "modifiedTime": "2026-04-13T08:53:06.017Z",
+    "size": "26 KB",
+    "sourcePathOrLink": "Google Drive > 3- Contract, Packaging, Charging, Billing Mngmnt Module > Contract & Cost Management V2",
+    "cachedTextPath": "C:/Users/User/.gdrive/cache/03-contract-packaging-charging-billing-management__prd__Contract_Cost_Management_V2.txt",
+    "selectionReason": "Explicit V2 beats explicit V1."
+  },
+  "ignoredDuplicatePrds": [
+    {
+      "fileName": "Contract & Cost Management V1",
+      "version": "V1",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-01-28T08:28:41.038Z",
+      "size": "40 KB",
+      "reason": "V1 < V2."
+    }
+  ],
+  "supportingFiles": [
+    {
+      "fileName": "Destination Identification",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-02-03T13:43:53.134Z",
+      "size": "501 KB",
+      "cachedTextPath": "C:/Users/User/.gdrive/cache/03-contract-packaging-charging-billing-management__support__Destination_Identification.txt",
+      "usedForUnderstanding": true
+    },
+    {
+      "fileName": "Research - Phone Number Data Request v3",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-01-29T06:54:14.446Z",
+      "size": "25 KB",
+      "cachedTextPath": "C:/Users/User/.gdrive/cache/03-contract-packaging-charging-billing-management__support__Research_-_Phone_Number_Data_Request_v3.txt",
+      "usedForUnderstanding": false,
+      "note": "Secondary research; not a primary source for the PRD."
+    },
+    { "fileName": "Research - Phone Number Data Request v2", "version": "v2", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2026-01-29T06:32:38.455Z", "size": "58 KB", "usedForUnderstanding": false, "note": "Older research; ignored." },
+    { "fileName": "Research - Phone Number Data Request", "version": "unknown", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2026-01-28T11:33:45.955Z", "size": "56 KB", "usedForUnderstanding": false },
+    { "fileName": "Research - International Phone Number Length", "version": "unknown", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2026-01-28T10:14:39.733Z", "size": "63 KB", "usedForUnderstanding": false }
+  ],
+  "images": [
+    { "fileName": "Phone Number Analysis - V6",           "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-03T20:01:44.313Z", "usedForUnderstanding": true, "note": "Latest destination analysis diagram." },
+    { "fileName": "Phone Number Analysis - V5 Specific",  "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-02T12:53:46.414Z", "usedForUnderstanding": false },
+    { "fileName": "Phone Number Analysis - V5 Generic",   "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-02T10:46:20.753Z", "usedForUnderstanding": false },
+    { "fileName": "Phone Number Analysis - V4",           "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-03T12:21:23.680Z", "usedForUnderstanding": false },
+    { "fileName": "Phone Number Analysis - V3",           "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-02T08:02:09.177Z", "usedForUnderstanding": false },
+    { "fileName": "Phone Number Analysis - V2",           "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-01-29T12:26:24.574Z", "usedForUnderstanding": false },
+    { "fileName": "Phone Number Analysis",                "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-01-28T12:25:42.591Z", "usedForUnderstanding": false }
+  ],
+  "excelFiles": [
+    {
+      "fileName": "International Phone# Destination List",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-02-03T13:21:57.527Z",
+      "size": "11 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/03-contract-packaging-charging-billing-management__xlsx__International_Phone_Destination_List.csv",
+      "usedForUnderstanding": true,
+      "extractedIntoSection": "understanding.md > Cost matrix dimensions"
+    },
+    {
+      "fileName": "Multip Contract & Balance Actions",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-02-04T10:08:28.294Z",
+      "size": "5 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/03-contract-packaging-charging-billing-management__xlsx__Multip_Contract_Balance_Actions.csv",
+      "usedForUnderstanding": true
+    },
+    {
+      "fileName": "Contract user stories",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-01-29T08:10:03.504Z",
+      "size": "1 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/03-contract-packaging-charging-billing-management__xlsx__Contract_user_stories.csv",
+      "usedForUnderstanding": false,
+      "note": "User-story reference; useful for QA/test generation."
+    },
+    { "fileName": "Dina- international phone destenation ", "mimeType": "application/vnd.google-apps.spreadsheet", "modifiedTime": "2026-02-02T13:13:56.050Z", "size": "3 KB", "usedForUnderstanding": false, "note": "Working copy; superseded by International Phone# Destination List." },
+    { "fileName": "Untitled spreadsheet", "mimeType": "application/vnd.google-apps.spreadsheet", "modifiedTime": "2026-02-01T14:12:37.955Z", "size": "2 KB", "usedForUnderstanding": false, "note": "Unlabeled; owner clarification needed." }
+  ],
+  "wordFiles": [],
+  "unreadableFiles": [
+    { "fileName": "Drive Drawings (7 files)", "reason": "Drive Drawings have no text export; visual inspection not part of this sync." },
+    { "fileName": "Multi-tab Google Sheets", "reason": "CSV export returns first tab only; deeper-tab content may exist and be unseen." }
+  ],
+  "openQuestions": [
+    "Packaging and Billing PRDs — where do they live? Folder name implies them but PRD does not.",
+    "Tie-breaker when multiple Active contracts share the same expiration date.",
+    "Back-filling transactions during an Expired period when the contract is later extended.",
+    "Admin UI for Price Unit list or permanent DB-only?",
+    "Concurrency / locking strategy on shared wallets.",
+    "VAT / fees on top of SAR transaction costs.",
+    "Audit log for contract edits.",
+    "Real-time vs cached Remaining Value.",
+    "Untitled spreadsheet — confirm or delete.",
+    "Re-inspect Drive Drawings for additional business rules not in PRD prose."
+  ]
+}

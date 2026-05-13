@@ -1,0 +1,30 @@
+# Local secrets and machine-specific config
+config/local.secrets.json
+*.secrets.json
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Build/temp
+node_modules/
+dist/
+bin/
+obj/
+.vs/
+.tmp/
+temp/
+
+# Logs
+*.log
+
+# Secondary local Obsidian staging vault (contains plugin data with API keys).
+# Canonical Brain SK vault is `_obsidian/`, which IS tracked.
+Obsidian Vault/
+
+# Any Obsidian plugin data folder (plugin auth tokens / API keys live here).
+**/.obsidian/plugins/*/data.json
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json

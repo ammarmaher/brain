@@ -1,0 +1,67 @@
+{
+  "moduleName": "User Management",
+  "originalDriveFolderName": "2- User Mngmnt Module",
+  "driveFolderId": "1RRIr9Mw6ErCpqv3RzOf6RfZo4N083Qk7",
+  "localModuleFolder": "business-prd-skill/modules/02-user-management",
+  "lastSyncedAt": "2026-04-24",
+  "selectedLatestPrd": {
+    "fileName": "User Management Module - V2",
+    "version": "V2",
+    "mimeType": "application/vnd.google-apps.document",
+    "modifiedTime": "2026-02-17T08:19:59.461Z",
+    "size": "29 KB",
+    "sourcePathOrLink": "Google Drive > 2- User Mngmnt Module > User Management Module - V2",
+    "cachedTextPath": "C:/Users/User/.gdrive/cache/02-user-management__prd__User_Management_Module_-_V2.txt",
+    "selectionReason": "Explicit V2; higher than the unversioned alternative (treated as 'unknown')."
+  },
+  "ignoredDuplicatePrds": [
+    {
+      "fileName": "User Management Module",
+      "version": "unknown",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-02-09T11:08:53.833Z",
+      "reason": "No v<number> marker; superseded by V2."
+    }
+  ],
+  "supportingFiles": [],
+  "images": [
+    { "fileName": "Creating/Editing User - Jawad", "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-10T11:23:46.721Z", "usedForUnderstanding": true, "note": "Flowchart; content not text-extractable." },
+    { "fileName": "Dina- Edit user status", "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-08T07:09:44.144Z", "usedForUnderstanding": true, "note": "Status transitions flowchart." },
+    { "fileName": "User 1-Change User Status", "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-07T19:04:48.671Z", "usedForUnderstanding": true, "note": "Status transitions flowchart." },
+    { "fileName": "Dina - Add user", "mimeType": "application/vnd.google-apps.drawing", "modifiedTime": "2026-02-05T09:14:04.962Z", "usedForUnderstanding": true, "note": "Add User wizard flowchart." }
+  ],
+  "excelFiles": [
+    {
+      "fileName": "Permission list - Jawad",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-04-20T12:27:59.804Z",
+      "size": "15 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/02-user-management__xlsx__Permission_list_-_Jawad.csv",
+      "usedForUnderstanding": true,
+      "extractedIntoSection": "understanding.md > Permission rules",
+      "note": "Only sheet 1 captured via CSV export; PRD references sheet 2 too — not captured."
+    },
+    {
+      "fileName": "Users statuses & others",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-02-19T10:02:43.791Z",
+      "size": "4 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/02-user-management__xlsx__Users_statuses_others.csv",
+      "usedForUnderstanding": true,
+      "extractedIntoSection": "understanding.md > User Status"
+    }
+  ],
+  "wordFiles": [],
+  "unreadableFiles": [
+    { "fileName": "Permission list - Jawad (sheet 2)", "reason": "CSV export returns first tab only; multi-tab export not attempted this sync." }
+  ],
+  "openQuestions": [
+    "Forgot Password OTP wrong-attempt lockout — status stays Active per PRD vs Locked in login flow. Bug or intended?",
+    "Deleted → Active restore — password reset or preserved?",
+    "Change Password — does it invalidate sessions on other devices?",
+    "Profile picture format/size limits?",
+    "'Contact your manager' alerts — do they surface manager contact info?",
+    "30-min idle logout implementation — server or client side?",
+    "Re-export sheet 2 of 'Permission list - Jawad' in a future sync."
+  ]
+}

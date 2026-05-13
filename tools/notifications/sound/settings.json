@@ -1,0 +1,321 @@
+{
+  "_comment": "Falcon brain-skills sound settings. Edit this file then run: scripts/apply-settings.ps1",
+  "_voices_available": {
+    "british_male": ["bm_george", "bm_daniel", "bm_fable", "bm_lewis"],
+    "british_female": ["bf_emma", "bf_isabella", "bf_alice", "bf_lily"],
+    "us_male": ["am_michael", "am_adam", "am_eric", "am_liam"],
+    "us_female": ["af_bella", "af_heart", "af_sky", "af_alloy", "af_nova"],
+    "_full_list": "curl http://localhost:8880/v1/audio/voices"
+  },
+  "global": {
+    "kokoroBaseUrl": "http://localhost:8880/v1",
+    "model": "kokoro",
+    "responseFormat": "mp3",
+    "volumeMultiplier": 8.0,
+    "speed": 1.0,
+    "playerVolume": 1.0,
+    "starting": {
+      "_comment": "Played at the START of EVERY skill cycle, before the per-skill running phrase. Always British male.",
+      "voice": "bm_george",
+      "phrase": "Starting, boss.",
+      "beep": [[1320, 100]]
+    },
+    "completion": {
+      "_comment": "Played at the END of EVERY skill cycle, after the per-skill beep signature. Always British male.",
+      "voice": "bm_george",
+      "phrase": "I am finishing, boss.",
+      "beep": [[1320, 100], [1320, 100]]
+    }
+  },
+  "agentTts": {
+    "watchPaths": ["~/.claude/projects/**/*.jsonl"],
+    "parserType": "claude-code",
+    "fallbackVoice": "bm_george"
+  },
+  "skills": {
+    "prd-knowledge": {
+      "voice": "bm_george",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "PRD knowledge running.",
+        "working": "PRD knowledge working.",
+        "complete": "PRD knowledge complete."
+      },
+      "triggers": [
+        "take latest from PRD",
+        "update PRD knowledge",
+        "sync PRDs",
+        "refresh PRD",
+        "pull PRD from Drive",
+        "import PRD",
+        "fetch latest PRDs",
+        "PRD sync",
+        "what does the PRD say about",
+        "show me the latest PRD",
+        "what changed in the PRD",
+        "diff PRD"
+      ],
+      "beep": [
+        [660, 200],
+        [880, 200],
+        [1100, 400]
+      ]
+    },
+    "domain-glossary": {
+      "voice": "bm_lewis",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Domain glossary running.",
+        "working": "Domain glossary working.",
+        "complete": "Domain glossary complete."
+      },
+      "triggers": [
+        "validate against glossary",
+        "check glossary",
+        "add glossary term",
+        "regenerate glossary index",
+        "what does this term mean",
+        "is this term canonical",
+        "find banned terms",
+        "translate to Arabic",
+        "what is the canonical term for",
+        "are there synonyms for",
+        "show disambiguation for",
+        "glossary status"
+      ],
+      "beep": [
+        [1000, 150],
+        [1000, 150],
+        [1000, 150]
+      ],
+      "beepGapMs": 80
+    },
+    "module-catalog": {
+      "voice": "bm_daniel",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Module catalog running.",
+        "working": "Module catalog working.",
+        "complete": "Module catalog complete."
+      },
+      "triggers": [
+        "what does module",
+        "describe module",
+        "open module dossier",
+        "module catalog index",
+        "list all modules",
+        "who owns module",
+        "module decisions",
+        "show open questions for",
+        "module surface map",
+        "where does module live",
+        "what module owns",
+        "create new module dossier"
+      ],
+      "beep": [
+        [700, 500],
+        [700, 200],
+        [700, 500]
+      ]
+    },
+    "test-case-authoring": {
+      "voice": "bm_fable",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Test case authoring running.",
+        "working": "Test case authoring working.",
+        "complete": "Test case authoring complete."
+      },
+      "triggers": [
+        "generate test cases for all PRD",
+        "generate test cases for",
+        "author tests for",
+        "build test plan",
+        "test plan for",
+        "edge cases for",
+        "permission matrix for",
+        "Gherkin scenarios for",
+        "coverage matrix for",
+        "regenerate tests",
+        "trace TC to PRD",
+        "list test IDs for"
+      ],
+      "beep": [
+        [880, 400],
+        [1100, 400],
+        [880, 400]
+      ]
+    },
+    "wiki-knowledge": {
+      "_comment": "Sync from Falcon Azure Wiki (C:\\falcon\\falcon-wiki). Source of truth for architecture.",
+      "voice": "bm_v0george",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Wiki knowledge running.",
+        "working": "Wiki knowledge working.",
+        "complete": "Wiki knowledge complete."
+      },
+      "triggers": [
+        "sync wiki",
+        "update wiki",
+        "pull wiki",
+        "wiki sync",
+        "take latest from wiki",
+        "refresh wiki knowledge",
+        "what does the wiki say about",
+        "wiki sources of truth"
+      ],
+      "beep": [
+        [800, 200],
+        [1200, 300]
+      ]
+    },
+    "business-gap-detection": {
+      "_comment": "Cross-reference PRD + Wiki + module-catalog to flag missing requirements / contradictions BEFORE coding. (BRD = PRD in Falcon.)",
+      "voice": "bf_alice",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Business gap detection running.",
+        "working": "Business gap detection working.",
+        "complete": "Business gap detection complete."
+      },
+      "triggers": [
+        "detect gaps",
+        "find business gaps",
+        "gap analysis",
+        "coverage gaps",
+        "what is missing",
+        "business analyst review",
+        "BRD gap check",
+        "PRD vs BRD diff"
+      ],
+      "beep": [
+        [1200, 100],
+        [800, 100],
+        [1200, 100]
+      ]
+    },
+    "business-pipeline": {
+      "_comment": "Orchestrator: runs wiki-knowledge -> prd-knowledge -> domain-glossary -> module-catalog -> business-gap-detection -> test-case-authoring (then hands off to coding).",
+      "voice": "bf_emma",
+      "speed": 1.0,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Business pipeline running.",
+        "working": "Business pipeline working.",
+        "complete": "Business pipeline complete."
+      },
+      "triggers": [
+        "run business",
+        "do business",
+        "business pipeline",
+        "full business sync",
+        "business everything",
+        "business run",
+        "business analyst",
+        "business workflow"
+      ],
+      "stages": [
+        "wiki-knowledge",
+        "prd-knowledge",
+        "domain-glossary",
+        "module-catalog",
+        "business-gap-detection",
+        "test-case-authoring"
+      ],
+      "scenariosBeforeCodeRule": "Coding (any agent that writes/edits source files) MUST NOT begin until business-pipeline produces test scenarios for the affected module. test-case-authoring is the gate to coding.",
+      "beep": [
+        [440, 200],
+        [660, 200],
+        [880, 200],
+        [1100, 400]
+      ]
+    },
+    "brain": {
+      "_comment": "Tri-mindset orchestrator skill. Brain envelope at original deep British tone.",
+      "voice": "bm_v0george",
+      "speed": 0.88,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Brain online, comrade.",
+        "working": "Brain working.",
+        "complete": "Brain complete."
+      },
+      "triggers": [
+        "use brain",
+        "engage brain",
+        "brain analyze",
+        "tri-mindset",
+        "ask gemini",
+        "ask chatgpt",
+        "brain route",
+        "brain plan",
+        "brain orchestrate",
+        "run brain"
+      ],
+      "beep": [
+        [440, 150],
+        [660, 150],
+        [880, 300]
+      ]
+    }
+  },
+  "mindsets": {
+    "_comment": "Brain skill mindsets — ChatGPT / Claude / Gemini. ChatGPT + Claude at original distinct British male voices; Gemini retuned 2026-04-30 to bm_v0george/0.78/4.0 (aggressive Russian-accented commander, no echo).",
+    "ChatGPT": {
+      "_role": "Strategic commander — business analysis, requirements, prompt polishing, business test authoring",
+      "voice": "bm_v0george",
+      "speed": 0.85,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "ChatGPT engaged, comrade.",
+        "working": "ChatGPT analysing.",
+        "complete": "ChatGPT complete."
+      },
+      "beep": [[523, 200], [659, 200], [784, 400]]
+    },
+    "Claude": {
+      "_role": "Tactical engineer — implementation, code changes, refactoring, validation",
+      "voice": "bm_v0lewis",
+      "speed": 0.9,
+      "volumeMultiplier": 8.0,
+      "phrases": {
+        "running": "Claude engaged, comrade.",
+        "working": "Claude implementing.",
+        "complete": "Claude complete."
+      },
+      "beep": [[440, 200], [554, 200], [659, 400]]
+    },
+    "Gemini": {
+      "_role": "Verification officer — visual, charts, dashboards, QA review, screenshot validation",
+      "voice": "bm_v0george",
+      "speed": 0.78,
+      "volumeMultiplier": 4.0,
+      "phrases": {
+        "running": "Gemini engaged, comrade.",
+        "working": "Gemini reviewing.",
+        "complete": "Gemini complete."
+      },
+      "beep": [[392, 200], [493, 200], [587, 400]]
+    }
+  },
+  "globalCommands": {
+    "_comment": "Skill-agnostic commands. 'list command' prints INSTRUCTIONS.md to chat (read-only).",
+    "list-command": {
+      "triggers": [
+        "list command",
+        "list commands",
+        "list instructions",
+        "list prd commands",
+        "list prd instructions"
+      ],
+      "action": "print INSTRUCTIONS.md command-reference table to chat"
+    }
+  }
+}

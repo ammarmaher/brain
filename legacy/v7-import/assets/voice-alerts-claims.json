@@ -1,0 +1,302 @@
+{
+  "_meta": {
+    "description": "State-claim tags per phrase. A phrase is eligible to play only when EVERY claim in its 'claims' array is currently true. Empty 'claims' = always eligible.",
+    "allowedClaims": ["tested", "reviewed", "deployed", "validated", "tests_authored", "approved"],
+    "source": "voice-alerts.json",
+    "phraseCount": 240
+  },
+  "chatgpt": {
+    "taskReceived": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "deepAnalysis": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "processing": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "deployment": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "testing": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "finished": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": ["tests_authored"] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "blocked": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "waitingForInput": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    }
+  },
+  "claude": {
+    "taskReceived": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "deepAnalysis": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "processing": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "deployment": {
+      "01": { "claims": ["deployed"] },
+      "02": { "claims": ["deployed"] },
+      "03": { "claims": ["deployed"] },
+      "04": { "claims": ["deployed"] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": ["deployed"] },
+      "10": { "claims": [] }
+    },
+    "testing": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "finished": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": ["validated"] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "blocked": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "waitingForInput": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    }
+  },
+  "gemini": {
+    "taskReceived": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "deepAnalysis": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "processing": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "deployment": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "testing": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "finished": {
+      "01": { "claims": ["validated"] },
+      "02": { "claims": ["reviewed"] },
+      "03": { "claims": ["reviewed"] },
+      "04": { "claims": ["reviewed"] },
+      "05": { "claims": ["tested"] },
+      "06": { "claims": ["reviewed"] },
+      "07": { "claims": ["validated"] },
+      "08": { "claims": ["reviewed"] },
+      "09": { "claims": ["reviewed"] },
+      "10": { "claims": ["validated"] }
+    },
+    "blocked": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    },
+    "waitingForInput": {
+      "01": { "claims": [] },
+      "02": { "claims": [] },
+      "03": { "claims": [] },
+      "04": { "claims": [] },
+      "05": { "claims": [] },
+      "06": { "claims": [] },
+      "07": { "claims": [] },
+      "08": { "claims": [] },
+      "09": { "claims": [] },
+      "10": { "claims": [] }
+    }
+  }
+}

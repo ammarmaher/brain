@@ -1,0 +1,9 @@
+{
+  "taskId": "TASK-20260501-001",
+  "label": "GAP-CC-002 staged — awaiting user approval to start L1",
+  "percent": 5,
+  "step": "task_received",
+  "totalSteps": 14,
+  "etaSeconds": null,
+  "updatedAt": "2026-05-01T00:00:00Z"
+}

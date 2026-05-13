@@ -1,0 +1,95 @@
+{
+  "moduleName": "Account Management",
+  "originalDriveFolderName": "1- Account Mngmnt Module",
+  "driveFolderId": "107ZCuoXgt3KSWl11J_oHMXnKUVps6jlr",
+  "localModuleFolder": "business-prd-skill/modules/01-account-management",
+  "lastSyncedAt": "2026-04-24",
+  "selectedLatestPrd": {
+    "fileName": "Account Management Module VB4",
+    "version": "VB4",
+    "mimeType": "application/vnd.google-apps.document",
+    "modifiedTime": "2026-04-12T12:33:17.361Z",
+    "size": "1655 KB",
+    "sourcePathOrLink": "Google Drive > 1- Account Mngmnt Module > Account Management Module VB4",
+    "cachedTextPath": "C:/Users/User/.gdrive/cache/01-account-management__prd__Account_Management_Module_VB4.txt",
+    "selectionReason": "Explicit VB4 (numeric 4) beats VB3, VB2, VB1."
+  },
+  "ignoredDuplicatePrds": [
+    { "fileName": "Account Management Module VB3", "version": "VB3", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2025-12-07T09:57:07.923Z", "size": "2288 KB", "reason": "VB3 < VB4." },
+    { "fileName": "Account Management Module VB2", "version": "VB2", "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "modifiedTime": "2025-12-09T07:49:03.153Z", "size": "601 KB", "reason": "VB2 < VB4; also Word format duplicate of earlier Google Doc." },
+    { "fileName": "Account Management Module VB1", "version": "VB1", "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "modifiedTime": "2025-12-09T07:49:11.966Z", "size": "617 KB", "reason": "VB1 < VB4." }
+  ],
+  "supportingFiles": [
+    {
+      "fileName": "Acc - Wallet & Balance Mng VB4",
+      "version": "VB4",
+      "mimeType": "application/vnd.google-apps.document",
+      "modifiedTime": "2026-03-24T09:57:12.190Z",
+      "size": "1794 KB",
+      "cachedTextPath": "C:/Users/User/.gdrive/cache/01-account-management__support__Acc_-_Wallet_Balance_Mng_VB4.txt",
+      "usedForUnderstanding": true,
+      "note": "Primary supporting doc; VB4 latest of VB1..VB4 series."
+    },
+    { "fileName": "Acc - Wallet & Balance Mng VB3", "version": "VB3", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2026-01-16T20:11:08.170Z", "size": "1751 KB", "usedForUnderstanding": false, "note": "Superseded by VB4." },
+    { "fileName": "Acc - Wallet & Balance Mng VB2", "version": "VB2", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2025-12-09T07:51:03.283Z", "size": "6 KB", "usedForUnderstanding": false },
+    { "fileName": "Acc - Wallet & Balance Mng VB1", "version": "VB1", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2025-12-09T07:50:55.345Z", "size": "4 KB", "usedForUnderstanding": false },
+    { "fileName": "Acc - CommChannels & Marketplace MenuItems", "version": "unknown", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2026-02-02T11:48:14.483Z", "size": "5 KB", "usedForUnderstanding": false, "note": "Information-architecture doc; flagged for deep sync." }
+  ],
+  "images": [
+    { "category": "Figure Acc.*", "count": 14, "note": "Reference flow diagrams for hierarchy, create-account, edit-commchannel-status variants. Individual names and IDs preserved in drive-scan.json." },
+    { "category": "Balance Deduction workflow", "count": 8, "latestUsed": ["Balance Deduction workflow - V5", "Balance Deduction workflow - Multiple wallet V2", "Balance Deduction workflow - Single wallet V2"], "note": "Version chain V1..V5 + Single/Multiple V2; Copy-of duplicates ignored." },
+    { "category": "Wallet transfer flows", "count": 25, "note": "MW↔CommChnl, CommChnl↔User/Node, User↔User across Single and Multiple wallet scenarios." },
+    { "category": "Marked for deletion", "count": 6, "note": "Prefixed '** Delete**' or '** Delete -'; owner-flagged, excluded." },
+    { "category": "Other", "count": 1, "examples": ["Activating Communication channels & Applications"] }
+  ],
+  "excelFiles": [
+    {
+      "fileName": "Account Setting & Others",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-01-13T13:52:39.181Z",
+      "size": "4 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/01-account-management__xlsx__Account_Setting_Others.csv",
+      "usedForUnderstanding": true
+    },
+    {
+      "fileName": "Account Mngmnt Module - User Stories",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2025-12-23T10:01:31.654Z",
+      "size": "3 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/01-account-management__xlsx__Account_Mngmnt_Module_-_User_Stories.csv",
+      "usedForUnderstanding": false,
+      "note": "User-story backlog; useful for QA/test generation."
+    },
+    {
+      "fileName": "Wallets & Balance Mngmnt and Flow",
+      "mimeType": "application/vnd.google-apps.spreadsheet",
+      "modifiedTime": "2026-04-16T14:26:58.459Z",
+      "size": "5 KB",
+      "cachedCsvPath": "C:/Users/User/.gdrive/cache/01-account-management__xlsx__Wallets_Balance_Mngmnt_and_Flow.csv",
+      "usedForUnderstanding": true
+    }
+  ],
+  "wordFiles": [
+    { "fileName": "Account Management Module VB1", "version": "VB1", "size": "617 KB", "usedForUnderstanding": false, "note": "Same as ignored duplicate; kept for audit." },
+    { "fileName": "Account Management Module VB2", "version": "VB2", "size": "601 KB", "usedForUnderstanding": false, "note": "Same as ignored duplicate; kept for audit." }
+  ],
+  "unreadableFiles": [
+    { "fileName": "57 Drive Drawings", "reason": "Drive Drawings have no text export; visual inspection deferred to a future deep sync." },
+    { "fileName": "Multi-tab Google Sheets", "reason": "CSV export returns first tab only." },
+    { "fileName": "Account Management Module VB4 (full body)", "reason": "57,602 characters captured; only first ~250 lines read in this sync for context budget." },
+    { "fileName": "Acc - Wallet & Balance Mng VB4 (full body)", "reason": "34,010 characters captured; only first ~150 lines read in this sync." }
+  ],
+  "openQuestions": [
+    "Wallet Type / Balance Type change workflow post-creation.",
+    "Fate of balance held by a deleted user.",
+    "Enforcement mode for Account Limits edits (reject new vs grandfather existing).",
+    "CommChannel Show→Hide while Active — still consumable?",
+    "Allowed IPs edit — do active sessions terminate?",
+    "Finance ID provenance (manual vs auto from Finance system).",
+    "Balance Transfer Limit % baseline (source balance at transfer time vs per day).",
+    "Account archive vs delete.",
+    "Renewal job trigger (cron vs on-demand).",
+    "Full text of PRD wallet flows per scenario (4 cells × many actions) — deep sync needed.",
+    "Full content of Figure Acc.* drawings — visual inspection needed."
+  ]
+}

@@ -1,0 +1,22 @@
+Use Falcon Brain Genius v5.
+
+Read Skill.md first.
+Then read orchestration/SMART_SKILL_CHAINING_V5.md.
+Route every task to the correct skill chain.
+
+For React-to-Angular, HTML clone, screenshot clone, or live project copy:
+Use RAGE MODE + Falcon Component Mapping + PES if needed + Retest/Restructure/Redraw.
+
+For PRDs:
+Use PRD Intelligence + Business Rules + PES Matrix + Validation Matrix + Frontend/Backend Traceability + Sprint Plan + Tests + Artifact Governance.
+
+For PES:
+Do not invent the PES acronym.
+Do not call it PESD.
+Use the Falcon Wiki/code definition if available.
+If missing, ask targeted questions or document safe assumptions.
+
+Never lose old skills.
+Never duplicate Falcon components.
+Never over-engineer.
+Never mark complete while visible, business, PES, validation, or test gaps remain.

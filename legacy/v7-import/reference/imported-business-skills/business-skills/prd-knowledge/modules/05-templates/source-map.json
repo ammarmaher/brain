@@ -1,0 +1,38 @@
+{
+  "moduleName": "Templates",
+  "originalDriveFolderName": "5- Templates",
+  "driveFolderId": "1SSUMdHjzAEua5B_sex8llHQsVTe5n28F",
+  "localModuleFolder": "business-prd-skill/modules/05-templates",
+  "lastSyncedAt": "2026-04-24",
+  "selectedLatestPrd": {
+    "fileName": "Copy of Template Module",
+    "version": "unknown",
+    "mimeType": "application/vnd.google-apps.document",
+    "modifiedTime": "2026-04-23T12:29:02.636Z",
+    "size": "448 KB",
+    "sourcePathOrLink": "Google Drive > 5- Templates > Copy of Template Module",
+    "cachedTextPath": "C:/Users/User/.gdrive/cache/05-templates__prd__Copy_of_Template_Module.txt",
+    "selectionReason": "User explicitly selected on 2026-04-24 among 3 unknown-version candidates (per skill rule for multiple-unknowns)."
+  },
+  "ignoredDuplicatePrds": [
+    { "fileName": "Template Module", "version": "unknown", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2026-03-30T09:57:03.589Z", "size": "30 KB", "reason": "User override picked 'Copy of Template Module' as active; retained as inventory." },
+    { "fileName": "Template Management Module", "version": "unknown", "mimeType": "application/vnd.google-apps.document", "modifiedTime": "2026-03-28T18:13:13.767Z", "size": "9 KB", "reason": "Same as above." }
+  ],
+  "supportingFiles": [],
+  "images": [],
+  "excelFiles": [],
+  "wordFiles": [],
+  "unreadableFiles": [
+    { "fileName": "Copy of Template Module (full body)", "reason": "82,588 chars captured; only first ~250 lines read this sync. Voice flow and remaining WhatsApp rules uncaptured." }
+  ],
+  "openQuestions": [
+    "Full Voice template creation flow.",
+    "Authoritative distinction between 'Copy of Template Module', 'Template Module', and 'Template Management Module'.",
+    "Checker role assignment (who by default).",
+    "Auto-approval scope when approval is not configured.",
+    "Versioning on edit — new version vs in-place.",
+    "Meta Pause / Disable surfacing (webhook vs poll).",
+    "Cross-commchannel template flows (Voice, AI, others).",
+    "Falcon usertype view/approve rights across clients."
+  ]
+}
