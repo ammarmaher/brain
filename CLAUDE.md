@@ -16,6 +16,10 @@ Auto-sync brain artifacts to this repository by default.
 
 Never commit or push secrets, credentials, passwords, tokens, private keys, `.env` files, local-only sensitive config, certificates, `node_modules`, `dist`, or temporary debug files. Exclude them and report the exclusion.
 
+### Obsidian secret rule
+
+Obsidian vault Markdown files can be linked and committed, but Obsidian plugin secrets, Copilot/autopilot API keys, workspace state, and plugin data files are local-only and must never be committed or printed. See [`shared/obsidian-auto-link/OBSIDIAN_SECRET_HANDLING.md`](shared/obsidian-auto-link/OBSIDIAN_SECRET_HANDLING.md) for the full handling protocol.
+
 ## Smart routing
 
 Ammar may speak naturally. Do not require exact skill names.

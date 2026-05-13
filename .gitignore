@@ -3,8 +3,11 @@ config/local.secrets.json
 *.secrets.json
 .env
 .env.*
+**/.env
 *.pem
+**/*.pem
 *.key
+**/*.key
 *.pfx
 *.p12
 
@@ -24,7 +27,24 @@ temp/
 # Canonical Brain SK vault is `_obsidian/`, which IS tracked.
 Obsidian Vault/
 
-# Any Obsidian plugin data folder (plugin auth tokens / API keys live here).
+# Any Obsidian plugin / workspace state (plugin auth tokens / API keys live here).
 **/.obsidian/plugins/*/data.json
+**/.obsidian/plugins/*/main.js.map
+**/.obsidian/plugins/*/.env
 **/.obsidian/workspace.json
 **/.obsidian/workspace-mobile.json
+**/.obsidian/cache/**
+
+# Generic credential filename guards. Negations below keep templates,
+# example files, and Markdown documentation committable.
+**/*secret*
+**/*password*
+**/*token*
+
+# --- Negations: legitimate files that must remain trackable ---
+# Keep all Markdown documentation (e.g. OBSIDIAN_SECRET_HANDLING.md, knowledge notes).
+!**/*.md
+# Keep clearly-marked example/template files (no real values inside).
+!**/*.example.*
+!**/*.template.*
+!**/*.sample.*
