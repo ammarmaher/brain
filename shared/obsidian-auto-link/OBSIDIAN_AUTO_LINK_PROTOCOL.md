@@ -73,3 +73,44 @@ After every scan/report update, update the relevant index note so Ammar can open
 - Reports
 - Gaps
 - Decisions
+
+## Canonical Frontend Knowledge Path
+
+When Obsidian auto-link generates or refreshes the **Frontend** index notes (`FRONTEND_INDEX.md`, `FALCON_COMPONENT_INDEX.md`, and any per-component or per-capability sub-index), all wiki-link targets and resolved relative paths MUST point into the canonical frontend tree:
+
+**Canonical frontend component knowledge path** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend
+```
+
+**Component folders** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend\components\<component-name>
+```
+
+**Legacy / import / mirror — do NOT use as active source:**
+
+- `C:\Falcon\Brain Outputs\component-registry`
+- `C:\Falcon\Brain Outputs\frontend-understanding`
+- `C:\Falcon\Brain SK\outputs\component-registry`
+- `C:\Falcon\Brain SK\outputs\frontend-understanding`
+
+When refreshing existing Obsidian indexes that still reference legacy paths, rewrite the link to the canonical equivalent. If a legacy file has no canonical successor yet, keep the legacy link inside a clearly labelled "Legacy" subsection so it does not pollute the active link graph. Config keys: `outputs.frontendUnderstanding` and `outputs.frontendComponents` in `../../config/brain.config.json`.
+
+## Component Scan Reports — Obsidian Link Block
+
+Every time `domains/frontend/component-knowledge/incremental-scan/SKILL.md` produces a run, the auto-link layer must append (additively, never overwrite) links to:
+
+- `_obsidian/FRONTEND_INDEX.md` — under a heading "Latest scan run — `<YYYY-MM-DD-HHmm>`" with:
+  - `[COMPONENT_SCAN_REPORT.md](../outputs/reports/component-scans/<run-stamp>/COMPONENT_SCAN_REPORT.md)`
+  - `[COMPONENT_SCAN_REPORT.pdf](../outputs/reports/component-scans/<run-stamp>/COMPONENT_SCAN_REPORT.pdf)` (only if the PDF exists)
+  - `[COMPONENT_SCAN_DATA.json](../outputs/reports/component-scans/<run-stamp>/COMPONENT_SCAN_DATA.json)`
+  - `[COMPONENT_EDIT_HISTORY_TABLE.md](../outputs/reports/component-scans/<run-stamp>/COMPONENT_EDIT_HISTORY_TABLE.md)`
+  - `[component-scan-metadata.json](../outputs/understanding/frontend/_scan-state/component-scan-metadata.json)` — only one canonical link; do not duplicate per run
+
+- `_obsidian/FALCON_COMPONENT_INDEX.md` — under a heading "Latest scan run":
+  - The same metadata + latest report links so the component dossier index always exposes the freshness state
+
+**Hard constraint:** never touch `_obsidian/.obsidian/` plugin data files (Copilot/autopilot API keys, workspace state). Limit additive edits to the human-readable Markdown indexes listed above.

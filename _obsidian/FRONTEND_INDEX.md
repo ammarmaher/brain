@@ -5,6 +5,20 @@
 
 ## Latest
 
+### 2026-05-13 (night) · Incremental Component Scan — Run `2026-05-13-2337`
+
+First baseline of the new incremental-scan skill (`domains/frontend/component-knowledge/incremental-scan/SKILL.md`).
+
+- [COMPONENT_SCAN_REPORT (md)](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_REPORT.md)
+- [COMPONENT_SCAN_REPORT (pdf)](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_REPORT.pdf)
+- [COMPONENT_SCAN_DATA.json](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_DATA.json)
+- [COMPONENT_EDIT_HISTORY_TABLE](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_EDIT_HISTORY_TABLE.md)
+- [COMPONENT_SCAN_SUMMARY (csv)](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_SUMMARY.csv)
+- [component-scan-metadata.json (canonical)](../outputs/understanding/frontend/_scan-state/component-scan-metadata.json)
+- [FRONTEND_COMPONENT_SCAN_RUN (log)](../outputs/understanding/frontend/_scan-state/FRONTEND_COMPONENT_SCAN_RUN.md)
+
+Coverage: 60 discovered · 60 scanned · 0 skipped · 0 missing-knowledge · 0 failed · 100 % scan coverage · 88 % edit-tracking completeness · Falcon `polishing-v0.4` @ `6ecd2f2f` · 9.5 s run.
+
 ### 2026-05-13 (evening) · Deep Falcon Component Knowledge Build
 
 Seven-agent parallel investigation. **60 component folders × 6 files = 360 component markdown files** + 10 master files + per-agent summaries.

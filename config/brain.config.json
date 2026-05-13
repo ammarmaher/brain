@@ -89,12 +89,20 @@
     "bootstrap": "C:/Falcon/Brain Outputs/bootstrap",
     "businessUnderstanding": "C:/Falcon/Brain Outputs/business-understanding",
     "backendUnderstanding": "C:/Falcon/Brain Outputs/backend-understanding",
-    "frontendUnderstanding": "C:/Falcon/Brain Outputs/frontend-understanding",
-    "componentRegistry": "C:/Falcon/Brain Outputs/component-registry",
+    "frontendUnderstanding": "C:/Falcon/Brain Outputs/understanding/frontend",
+    "frontendComponents": "C:/Falcon/Brain Outputs/understanding/frontend/components",
+    "componentRegistry": "C:/Falcon/Brain Outputs/understanding/frontend",
     "reports": "C:/Falcon/Brain Outputs/reports",
     "scanMetadata": "C:/Falcon/Brain Outputs/scan-metadata",
     "obsidianLinkedNotes": "C:/Falcon/Brain Outputs/obsidian-linked-notes",
-    "obsidianIndex": "C:/Falcon/Brain SK/_obsidian"
+    "obsidianIndex": "C:/Falcon/Brain SK/_obsidian",
+    "legacy": {
+      "_comment": "These paths are LEGACY / IMPORT / MIRROR only. Do NOT use as active source. Canonical frontend knowledge lives at outputs.frontendUnderstanding and outputs.frontendComponents above.",
+      "componentRegistry": "C:/Falcon/Brain Outputs/component-registry",
+      "frontendUnderstanding": "C:/Falcon/Brain Outputs/frontend-understanding",
+      "componentRegistryMirror": "C:/Falcon/Brain SK/outputs/component-registry",
+      "frontendUnderstandingMirror": "C:/Falcon/Brain SK/outputs/frontend-understanding"
+    }
   },
   "authorization": {
     "askOnlyWhenRequired": true,
@@ -136,6 +144,47 @@
     "architectureWikiGitBranch": "wikiMaster",
     "architectureWikiLocalClone": "C:/Falcon/falcon-wiki",
     "architectureWikiGeneratedOutputRoot": "C:/Falcon/Brain Outputs/wiki-architect"
+  },
+  "incrementalScan": {
+    "_comment": "Configuration for domains/frontend/component-knowledge/incremental-scan/SKILL.md",
+    "enabled": true,
+    "engineScript": "C:/Falcon/Brain SK/scripts/incremental-scan/run-scan.mjs",
+    "activeFrontendSource": "C:/Falcon/Falcon/falcon-web-platform-ui",
+    "knowledgeRoot": "C:/Falcon/Brain Outputs/understanding/frontend",
+    "componentsDir": "C:/Falcon/Brain Outputs/understanding/frontend/components",
+    "scanStateDir": "C:/Falcon/Brain Outputs/understanding/frontend/_scan-state",
+    "scanMetadataFile": "C:/Falcon/Brain Outputs/understanding/frontend/_scan-state/component-scan-metadata.json",
+    "scanRunLog": "C:/Falcon/Brain Outputs/understanding/frontend/_scan-state/FRONTEND_COMPONENT_SCAN_RUN.md",
+    "reportsRoot": "C:/Falcon/Brain Outputs/reports/component-scans",
+    "reportFolderPattern": "<YYYY-MM-DD-HHmm>",
+    "requiredKnowledgeFiles": ["OVERVIEW.md","API.md","USAGE.md","TOKENS.md","GAPS_AND_UPGRADES.md","DECISION.md"],
+    "timestampFormat": "ISO-8601 with offset (e.g. 2026-05-13T22:45:00+03:00)",
+    "editTracking": {
+      "method": "git",
+      "authorFormat": "%an <%ae>",
+      "dateFormat": "%aI",
+      "commitFormat": "%H",
+      "fallbackForUntracked": "UNKNOWN_NOT_IN_GIT",
+      "untrackedDateSource": "filesystem-mtime"
+    },
+    "pdf": {
+      "preferredSkill": "pdf-creator",
+      "fallback": "npx-md-to-pdf",
+      "themeCss": "C:/Falcon/reports/Falcon Component Reports Understanding/_pdf-theme.css",
+      "configJs": "C:/Falcon/reports/Falcon Component Reports Understanding/_pdf-config.js",
+      "pendingMarkerSuffix": ".pdf.pending"
+    },
+    "obsidianLinks": {
+      "updateFrontendIndex": true,
+      "updateFalconComponentIndex": true,
+      "neverTouchPluginData": true
+    },
+    "gitSync": {
+      "addSpecificPathsOnly": true,
+      "preCommitSecretGrep": true,
+      "commitMessageTemplate": "feat(frontend): incremental component scan <RUN_STAMP>"
+    },
+    "scanReportFieldsRequired": ["lastEditedBy","lastEditedAt","changedFilesSinceLastScan","status","scanReason","skipReason"]
   },
   "gitSync": {
     "enabled": true,

@@ -136,3 +136,48 @@ Do not use `robocopy /MIR`, `/PURGE`, or delete destination folders.
 
 Use additive sync only:
 `robocopy "C:\Falcon\Brain Outputs" "C:\Falcon\Brain SK\outputs" /E /XO /XD .git node_modules dist bin obj`
+
+## Canonical Frontend Knowledge Path
+
+**Canonical frontend component knowledge path** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend
+```
+
+**Component folders** (read + write):
+
+```text
+C:\Falcon\Brain Outputs\understanding\frontend\components\<component-name>
+```
+
+Every frontend / component-knowledge skill and protocol — including Falcon Component Registry, Component Capability Matrix, Component Upgrade Backlog, Frontend Component Knowledge Report, theme/Tailwind audits, architecture audits, and all per-component 6-file dossiers (`OVERVIEW.md`, `API.md`, `USAGE.md`, `TOKENS.md`, `GAPS_AND_UPGRADES.md`, `DECISION.md`) — MUST read from and write to this canonical tree.
+
+**Legacy / import / mirror — do NOT use as active source:**
+
+- `C:\Falcon\Brain Outputs\component-registry`
+- `C:\Falcon\Brain Outputs\frontend-understanding`
+- `C:\Falcon\Brain SK\outputs\component-registry`
+- `C:\Falcon\Brain SK\outputs\frontend-understanding`
+
+These legacy locations are kept for archival provenance only. New writes go ONLY into the canonical path. If a skill, agent, or report needs to ingest data from a legacy location, it must do so as an import operation and route its outputs back to `C:\Falcon\Brain Outputs\understanding\frontend`.
+
+The corresponding `config/brain.config.json` keys are `outputs.frontendUnderstanding`, `outputs.frontendComponents`, and `outputs.legacy.*`. Always prefer the config keys over hardcoded paths.
+
+## Permanent Rule: Component Scan Reports
+
+Every Falcon component scan report — produced by `domains/frontend/component-knowledge/incremental-scan/SKILL.md` or any equivalent skill — MUST include, for every component covered:
+
+- **last edited user** (git author, or `UNKNOWN_NOT_IN_GIT` for untracked files)
+- **last edited date/time** (ISO 8601 with timezone offset, e.g. `2026-05-13T22:45:00+03:00`)
+- **last changed files** (relative paths from the active Falcon repo root)
+- **scan status** (`scanned` / `skipped` / `needs-scan` / `failed` / `missing-knowledge`)
+- **scan reason** (when status implies a scan was needed)
+- **skip reason** (when status is `skipped`)
+
+A report missing any of these fields for ANY component is invalid and must be regenerated before being shown to Ammar or committed. The incremental-scan skill enforces this via the `component-scan-metadata.json` schema and the per-run `COMPONENT_SCAN_REPORT.md` table.
+
+Reports live in two places:
+
+- Per-run dated folder: `C:\Falcon\Brain Outputs\reports\component-scans\<YYYY-MM-DD-HHmm>\`
+- Mirrored after sync: `C:\Falcon\Brain SK\outputs\reports\component-scans\<YYYY-MM-DD-HHmm>\`

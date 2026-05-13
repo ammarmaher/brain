@@ -5,6 +5,16 @@
 
 This index lists every Falcon component dossier built by the seven-agent parallel investigation. Each entry links to the canonical folder under `outputs/component-registry/components/<name>/` containing six markdown files: `OVERVIEW.md`, `API.md`, `USAGE.md`, `GAPS_AND_UPGRADES.md`, `TOKENS.md`, `DECISION.md`.
 
+## Latest scan run — `2026-05-13-2337`
+
+- [COMPONENT_SCAN_REPORT (md)](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_REPORT.md)
+- [COMPONENT_SCAN_REPORT (pdf)](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_REPORT.pdf)
+- [COMPONENT_SCAN_DATA.json](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_DATA.json)
+- [COMPONENT_EDIT_HISTORY_TABLE](../outputs/reports/component-scans/2026-05-13-2337/COMPONENT_EDIT_HISTORY_TABLE.md)
+- [component-scan-metadata.json](../outputs/understanding/frontend/_scan-state/component-scan-metadata.json) — canonical source of last-edited / last-scanned per component
+
+Status this run: 60 / 60 scanned · 100 % coverage · Falcon `polishing-v0.4` @ `6ecd2f2f`.
+
 ## Master files
 
 - [FALCON_COMPONENT_REGISTRY_DEEP](../outputs/component-registry/FALCON_COMPONENT_REGISTRY_DEEP.md) — 60-row deep registry
