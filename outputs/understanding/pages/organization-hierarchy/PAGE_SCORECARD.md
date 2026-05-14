@@ -10,7 +10,7 @@
 
 | Metric | Score | Trend |
 |---|---|---|
-| **Aggregated Page Understanding %** | **25%** | ↑ +9 (vs baseline 16%) |
+| **Aggregated Page Understanding %** | **30%** | ↑ +14 (vs baseline 16%) |
 
 > Formula: `(UIUX × 0.35) + (Business × 0.25) + (Validation × 0.20) + (GapsResolved × 0.20)`
 
@@ -21,10 +21,10 @@
 | Dimension | Score | Trend | Weight | Weighted contribution | NEEDS-ATTENTION? |
 |---|---|---|---|---|---|
 | UI / UX | **45%** | ↑ +20 | 0.35 | 15.75 | YES (< 60%) |
-| Business | **10%** | — | 0.25 | 2.50 | YES (< 60%) |
+| Business | **27%** | ↑ +17 | 0.25 | 6.75 | YES (< 60%) |
 | Validation | **5%** | — | 0.20 | 1.00 | YES (< 60%) |
-| Gaps Resolved | **29%** | ↑ +9 | 0.20 | 5.80 | YES (< 60%) |
-| **Total** | | | | **25.05%** | **page = NEEDS ATTENTION** |
+| Gaps Resolved | **33%** | ↑ +13 | 0.20 | 6.60 | YES (< 60%) |
+| **Total** | | | | **30.10%** | **page = NEEDS ATTENTION** |
 
 Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardless of total**.
 
@@ -49,6 +49,7 @@ Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardle
 | 2026-05-14 13:30 | After Wave 17.5 visual parity sweep (12 sections, live HTML vs Angular comparison) | **23%** | **40%** | 10% | 5% | **25%** | PENDING |
 | 2026-05-14 13:45 | After Wave 18 fix of GAP-PARITY-001 (page title) + GAP-PARITY-002 (sidebar cleanup) — live verified | **25%** | **45%** | 10% | 5% | **29%** | PENDING |
 | 2026-05-14 14:00 | **PAGE APPROVED** by Ammar ("approve the page") — 6 components auto-promoted to 100%; menu stays at 60% (BUG-004 blocks). Page % unchanged because dimensions still earn the score, not the approval. | **25%** | 45% | 10% | 5% | 29% | **APPROVED** (component-level) |
+| 2026-05-14 14:30 | **P1.3 executed** — added `(rowClick)` Output to lib data-table + wired in consumer + updated handler to accept `event.row` shape. Live verified: clicking AccOwner2 row opens UserDetailsPage drilldown. BIZ-006 + GAP-BEH-001 now APPLIED. | **30%** | 45% | **27%** | 5% | **33%** | PENDING |
 
 Headline numbers in the tables above are now the post-Wave-17.5 values.
 

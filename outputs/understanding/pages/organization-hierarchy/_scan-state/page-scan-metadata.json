@@ -31,12 +31,12 @@
     "C:\\Falcon\\Brain Outputs\\reports\\falcon-ui-library-learnings\\2026-05-14-org-hierarchy-data-table\\index.md"
   ],
   "currentScores": {
-    "pageUnderstandingPct": 25,
+    "pageUnderstandingPct": 30,
     "dimensions": {
       "uiux": 45,
-      "business": 10,
+      "business": 27,
       "validation": 5,
-      "gapsResolved": 29
+      "gapsResolved": 33
     },
     "auxiliary": {
       "sourceUnderstandingPct": 80,

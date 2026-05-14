@@ -2,14 +2,14 @@
 
 > Granularity: feature/flow level. Status taxonomy per [`PAGE_RULE_REGISTRY.md`](PAGE_RULE_REGISTRY.md).
 
-## Quick stats
+## Quick stats (post Wave 18 BIZ-006 restored)
 
 | Total | Applied | Not Applied | Applicable | Not Applicable | Unknown |
 |---|---|---|---|---|---|
-| 14 | 2 | 4 | 5 | 1 | 2 |
+| 14 | **3** (+1) | **3** (-1) | 5 | 1 | 2 |
 
-**Dimension score: ~18%** = 2 / (2 + 4 + 5) × 100 = 18.2%
-(Capped to 10% in PAGE_SCORECARD due to seed-conservative policy until first formal business review)
+**Dimension score: ~27%** = 3 / (3 + 3 + 5) × 100 = 27.3%
+(Previously 10% conservative seed; now reflects BIZ-006 restoration evidence)
 
 ---
 
@@ -27,7 +27,7 @@
 
 | ruleId | Title | Source | Destination | Status | Reason | Next action | Last checked |
 |---|---|---|---|---|---|---|---|
-| BIZ-006 | "More Details" opens UserDetailsPage drill-in (in-place, no route change) | HTML §6 + §22 | `<app-user-details-page>` rendered via `userDetails()` signal | not_applied | The row-action kebab is now DELETED library-wide (today's edit) — there's NO trigger for More Details anymore | Restore kebab once `<falcon-angular-menu>` syncProps bug fixed (BUG-2026-05-14-004), OR surface drill-in via row-click | 2026-05-14 |
+| BIZ-006 | "More Details" opens UserDetailsPage drill-in (in-place, no route change) | HTML §6 + §22 | `<app-user-details-page>` rendered via `userDetails()` signal | **applied (Wave 18 row-click 2026-05-14)** | Restored via row-click instead of kebab — added `(rowClick)` Output to library data-table; consumer wires it to `onUserRowActionLocal`; handler updated to accept both `event.user` (legacy) and `event.row` (new) shapes | — | 2026-05-14 |
 | BIZ-007 | UserDetailsPage save is in-memory only (backend deferred) | Wave 12 decision | template comment + `onUserDetailsSave` no-op | applied | Verified in code | — | 2026-05-14 |
 | BIZ-008 | UserDetailsPage shows verify badge per email/phone (verified vs pending) | HTML §22 | unknown | unknown | Verify-badge rendering not formally checked | Live test | 2026-05-14 |
 | BIZ-009 | User Status is READ-ONLY in Add User AND in UserDetails edit (changes happen elsewhere) | HTML §13 + §22 | unknown | unknown | Not verified | Live test | 2026-05-14 |

@@ -43,7 +43,7 @@
 
 | gapId | Title | Source | Destination | Status | Reason | Next action | Last checked |
 |---|---|---|---|---|---|---|---|
-| GAP-BEH-001 | "More Details" drill-in path is broken — kebab column gone, no replacement trigger yet | HTML §6 + BIZ-006 | none | applicable | Today's library edit removed the trigger | Add row-click handler to open drill-in OR wait for library fix | 2026-05-14 |
+| GAP-BEH-001 | "More Details" drill-in path | HTML §6 + BIZ-006 | row-click handler → drilldown opens | **applied (resolved 2026-05-14 Wave 18)** | Added `(rowClick)` Output to lib data-table; consumer wires to `onUserRowActionLocal` (handler now accepts `event.row` shape). Live verified — clicking AccOwner2 row opens UserDetailsPage with Personal Info / Role & Status / Permissions tabs. | — | 2026-05-14 |
 | GAP-BEH-002 | Tree auto-scroll on programmatic selection not implemented | HTML §4 | none | applicable | Source has `el.scrollIntoView` call we don't replicate | Implement in tree-panel consumer | 2026-05-14 |
 | GAP-BEH-003 | Horizontal-scroll-reveal-full-name not implemented | HTML §4 | none | applicable | Source has `.is-scrolled` modifier we don't have | Page-side CSS or library upgrade | 2026-05-14 |
 | GAP-BEH-004 | PES/permissions wiring NOT done — every button visible regardless of role | HTML §3 + Wiki | none | applicable | Frontend needs PES integration | Ammar Auth + backend gateway must expose role | 2026-05-14 |
