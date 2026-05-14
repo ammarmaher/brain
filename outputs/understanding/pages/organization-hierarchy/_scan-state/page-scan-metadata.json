@@ -1,0 +1,99 @@
+{
+  "page": "admin-console/org-hierarchy-page",
+  "registryVersion": "1.0.0",
+  "schemaVersion": "page-knowledge.v1",
+  "lastPageScanAt": "2026-05-14T08:35:00Z",
+  "lastSourceTruthCheckedAt": "2026-05-14T08:30:00Z",
+  "lastDestinationCheckedAt": "2026-05-14T08:32:00Z",
+  "lastEditedBy": "Ammar Mk",
+  "lastEditedAt": "2026-05-14T08:32:00Z",
+  "sourceFilesChecked": [
+    "C:\\Falcon\\Source_of_truth_theme\\HTML\\T2 Falcon Admin - Offline.html",
+    "C:\\Falcon\\Source_of_truth_theme\\React\\Organization page (folder, contents extracted via report 01)"
+  ],
+  "destinationFilesChecked": [
+    "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\apps\\admin-console\\src\\app\\features\\org-hierarchy-page\\components\\org-hierarchy-page-menu.component.ts",
+    "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\apps\\admin-console\\src\\app\\features\\org-hierarchy-page\\components\\org-hierarchy-page-menu.component.html",
+    "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\apps\\admin-console\\src\\app\\features\\org-hierarchy-page\\components\\falcon-custom-table-footer\\falcon-custom-table-footer.component.html",
+    "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\apps\\admin-console\\src\\app\\features\\org-hierarchy-page\\components\\falcon-status\\falcon-status.component.ts",
+    "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\libs\\falcon-ui-core\\src\\angular-wrapper\\components\\falcon-data-table\\falcon-data-table.component.html",
+    "C:\\Falcon\\Falcon\\falcon-web-platform-ui\\libs\\falcon-ui-core\\src\\angular-wrapper\\components\\falcon-data-table\\falcon-data-table.component.ts"
+  ],
+  "reportsIngested": [
+    "C:\\Falcon\\Brain Outputs\\reports\\org-hierarchy-page-night-shift-2026-05-14\\01-html-source-discovery.md",
+    "C:\\Falcon\\Brain Outputs\\reports\\org-hierarchy-page-night-shift-2026-05-14\\02-react-source-discovery.md",
+    "C:\\Falcon\\Brain Outputs\\reports\\org-hierarchy-page-night-shift-2026-05-14\\05-component-knowledge-check.md",
+    "C:\\Falcon\\Brain Outputs\\reports\\org-hierarchy-page-night-shift-2026-05-14\\visual-parity-report.md",
+    "C:\\Falcon\\Brain Outputs\\reports\\org-hierarchy-page-night-shift-2026-05-14\\gaps-and-next-actions.md",
+    "C:\\Falcon\\Brain Outputs\\reports\\org-hierarchy-page-night-shift-2026-05-14\\component-knowledge-log.md",
+    "C:\\Falcon\\Brain Outputs\\reports\\falcon-ui-library-learnings\\2026-05-14-org-hierarchy-data-table\\index.md"
+  ],
+  "currentScores": {
+    "pageUnderstandingPct": 16,
+    "dimensions": {
+      "uiux": 25,
+      "business": 10,
+      "validation": 5,
+      "gapsResolved": 20
+    },
+    "auxiliary": {
+      "sourceUnderstandingPct": 70,
+      "destinationImplementationPct": 55,
+      "visualParityPct": 35,
+      "businessRuleCoveragePct": 10,
+      "validationCoveragePct": 5,
+      "gapResolutionPct": 20,
+      "componentReusePct": 80,
+      "testCoveragePct": 0
+    },
+    "weights": {
+      "uiux": 0.35,
+      "business": 0.25,
+      "validation": 0.20,
+      "gapsResolved": 0.20
+    },
+    "needsAttentionFlag": true,
+    "needsAttentionReason": "All four dimensions below 60% threshold"
+  },
+  "ruleCounts": {
+    "totalRules": 69,
+    "appliedRules": 16,
+    "notAppliedRules": 16,
+    "applicableRules": 23,
+    "notApplicableRules": 5,
+    "partiallyAppliedRules": 3,
+    "unknownRules": 6,
+    "blockedRules": 0
+  },
+  "gapCounts": {
+    "totalGaps": 14,
+    "resolved": 3,
+    "openBlocking": 0,
+    "openPending": 9,
+    "deferred": 2
+  },
+  "componentsTracked": [
+    "<falcon-angular-data-table>",
+    "<falcon-angular-paginator>",
+    "<falcon-angular-tabs>",
+    "<falcon-tree-panel>",
+    "<falcon-angular-menu>",
+    "<app-falcon-status>",
+    "<app-falcon-custom-table-footer>"
+  ],
+  "approvalState": "PENDING",
+  "approvalHistory": [],
+  "nextScheduledScan": "incremental — on next change",
+  "incrementalRules": {
+    "triggerOnSourceChange": true,
+    "triggerOnDestinationChange": true,
+    "triggerOnComponentRegistryChange": true,
+    "reEvaluateOnlyImpactedRules": true,
+    "fullRescanIfNoMetadata": false
+  },
+  "blockers": [
+    "Chrome MCP browser selection (multi-browser disambiguation) blocks the W17 visual parity sweep",
+    "No PRD found specific to org-hierarchy — marked MISSING/GAP",
+    "No specific Wiki doc for org-hierarchy — marked MISSING/GAP"
+  ]
+}
