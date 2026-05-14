@@ -265,6 +265,26 @@ Confirmed identical behavior with AND without consumer-side CSS workaround — c
 
 ---
 
+## BUG-2026-05-14-011 — Falcon button `link` variant adds `hover:underline` + tight `--falcon-button-gap-*` defaults
+
+**Severity:** Quirk (design-system tuning)
+**Status:** **RESOLVED 2026-05-14** — library tokens updated
+
+### Previous state
+- `libs/falcon-ui-core/.../button-tailwind-classes.ts` line 95 set `hover:underline` on `variant="link"`. This added an underline to action buttons like "Information" on hover that visually competed with the surrounding chrome.
+- `libs/falcon-ui-tokens/.../button.tokens.css` line 55-57 defined `--falcon-button-gap-{sm,md,lg}: 6/8/10 px` — too tight; icon glyphs visually pressed against the label.
+
+### Current state
+- Library `link` variant line 95: `hover:underline` → `hover:no-underline`.
+  - Link variant now: transparent bg + text-color-change on hover, NO underline.
+- Library token defaults bumped by +4px each: `--falcon-button-gap-sm: 6→8`, `gap-md: 8→12`, `gap-lg: 10→14`.
+  - Visible breathing room between icon and label, matches source-of-truth.
+
+### Affected components
+- ALL Falcon button consumers across the platform (library-wide token change).
+
+---
+
 ## BUG-2026-05-14-010 — `<falcon-tabs-tw>` auto-renders empty `<div role="tabpanel">` per tab with default padding
 
 **Severity:** Quirk
