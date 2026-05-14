@@ -48,6 +48,7 @@ Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardle
 | 2026-05-14 09:00 | First seed (post-ingestion of 5 reports + live regression on Users table) | **16%** | 25% | 10% | 5% | 20% | APPROVED (Ammar 2026-05-14) |
 | 2026-05-14 13:30 | After Wave 17.5 visual parity sweep (12 sections, live HTML vs Angular comparison) | **23%** | **40%** | 10% | 5% | **25%** | PENDING |
 | 2026-05-14 13:45 | After Wave 18 fix of GAP-PARITY-001 (page title) + GAP-PARITY-002 (sidebar cleanup) — live verified | **25%** | **45%** | 10% | 5% | **29%** | PENDING |
+| 2026-05-14 14:00 | **PAGE APPROVED** by Ammar ("approve the page") — 6 components auto-promoted to 100%; menu stays at 60% (BUG-004 blocks). Page % unchanged because dimensions still earn the score, not the approval. | **25%** | 45% | 10% | 5% | 29% | **APPROVED** (component-level) |
 
 Headline numbers in the tables above are now the post-Wave-17.5 values.
 

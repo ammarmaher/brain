@@ -17,18 +17,20 @@
 
 | # | Component selector | Layer | Score | Status | Used in pages | Open comments | Last update |
 |---|---|---|---|---|---|---|---|
-| 1 | `<falcon-angular-data-table>` + `<falcon-table-tw>` | Library | **60%** | PENDING | admin-console/org-hierarchy-page | none | 2026-05-14 |
-| 2 | `<falcon-angular-menu>` + `<falcon-menu-tw>` | Library | **60%** | PENDING | (lib bug — not safely usable, see BUG-004) | BUG-004 syncProps reset | 2026-05-14 |
-| 3 | `<falcon-angular-paginator>` + `<falcon-paginator-tw>` | Library | **60%** | PENDING | admin-console/org-hierarchy-page (via custom footer) | none | 2026-05-14 |
-| 4 | `<falcon-angular-tabs>` + `<falcon-tabs-tw>` | Library | **60%** | PENDING | admin-console/org-hierarchy-page | none | 2026-05-14 |
-| 5 | `<falcon-tree-panel>` | Library | **60%** | PENDING | admin-console/org-hierarchy-page | none | 2026-05-14 |
-| 6 | `<app-falcon-status>` | Consumer | **60%** | PENDING | admin-console/org-hierarchy-page | none | 2026-05-14 |
-| 7 | `<app-falcon-custom-table-footer>` | Consumer | **60%** | PENDING | admin-console/org-hierarchy-page | none | 2026-05-14 |
+| 1 | `<falcon-angular-data-table>` + `<falcon-table-tw>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
+| 2 | `<falcon-angular-menu>` + `<falcon-menu-tw>` | Library | **60%** | PENDING — BLOCKED | (lib bug — not safely usable, see BUG-004) | BUG-004 syncProps reset | 2026-05-14 |
+| 3 | `<falcon-angular-paginator>` + `<falcon-paginator-tw>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page (via custom footer) | none | 2026-05-14 |
+| 4 | `<falcon-angular-tabs>` + `<falcon-tabs-tw>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
+| 5 | `<falcon-tree-panel>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
+| 6 | `<app-falcon-status>` | Consumer | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
+| 7 | `<app-falcon-custom-table-footer>` | Consumer | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
 
 ### Score history (page-level approval events log)
 
 | Date | Page | Approval phrase | Components promoted to 100% |
 |---|---|---|---|
+| 2026-05-14 14:00 | admin-console/org-hierarchy-page | "approve the page" | data-table, paginator, tabs, tree-panel, falcon-status, custom-table-footer (6/7) |
+| 2026-05-14 14:00 | admin-console/org-hierarchy-page | (same — stays_blocked) | `<falcon-angular-menu>` stays at 60% due to BUG-004 syncProps reset (open comment) |
 | _(none yet)_ | | | |
 
 ---

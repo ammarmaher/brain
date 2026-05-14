@@ -83,7 +83,7 @@
     "<app-falcon-status>",
     "<app-falcon-custom-table-footer>"
   ],
-  "approvalState": "BASELINE_APPROVED__WAVE17.5_PENDING",
+  "approvalState": "PAGE_APPROVED_COMPONENT_LEVEL__DIMENSIONS_STILL_NEEDS_ATTENTION",
   "approvalHistory": [
     {
       "date": "2026-05-14T13:01:11Z",
@@ -92,6 +92,25 @@
       "scope": "baseline",
       "pagePctAtApproval": 16,
       "commitHash": "ce33cb29e597230be60d64d3bb132439576507d1"
+    },
+    {
+      "date": "2026-05-14T14:00:00Z",
+      "approver": "Ammar",
+      "phrase": "approve the page",
+      "scope": "page-level component auto-promotion",
+      "pagePctAtApproval": 25,
+      "componentsPromotedTo100": [
+        "<falcon-angular-data-table>",
+        "<falcon-angular-paginator>",
+        "<falcon-angular-tabs>",
+        "<falcon-tree-panel>",
+        "<app-falcon-status>",
+        "<app-falcon-custom-table-footer>"
+      ],
+      "componentsStayedBlocked": [
+        {"selector": "<falcon-angular-menu>", "reason": "BUG-2026-05-14-004 syncProps reset bug"}
+      ],
+      "note": "Page % stayed at 25% because the 4 dimensions still NEEDS-ATTENTION below 60%; component-level scores reflect that admin-console/org-hierarchy-page renders these components correctly in their current scope."
     }
   ],
   "nextScheduledScan": "incremental — on next change",
