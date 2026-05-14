@@ -265,6 +265,33 @@ Confirmed identical behavior with AND without consumer-side CSS workaround — c
 
 ---
 
+## BUG-2026-05-14-010 — `<falcon-tabs-tw>` auto-renders empty `<div role="tabpanel">` per tab with default padding
+
+**Severity:** Quirk
+**Status:** PENDING (CSS-var override is the standard workaround)
+
+### Previous state
+- Stencil `<falcon-tabs-tw>` (mode=navigation) renders a `<div class="falcon-tabs-panels">` container with one `<div role="tabpanel">` per tab option, each with `py-[var(--falcon-tabs-panel-padding-y)]`.
+- Default `--falcon-tabs-panel-padding-y = 16px` (from `tabs.tokens.css` line 233) → 32px empty gap below the tab strip for consumers that DON'T use the Stencil's `<slot name="panel-${value}">` projection model.
+- Affects any consumer that renders tab content as a sibling (not a projected slot).
+
+### Current state
+- **Workaround**: set `--falcon-tabs-panel-padding-y: 0px` (and `padding-x` too) on the `<falcon-tabs-tw>` element imperatively in the consumer effect. Panels stay in DOM for a11y (`role="tabpanel"` preserved) but collapse to 0px.
+  ```ts
+  tabsEls.forEach((t) => {
+    t.style.setProperty('--falcon-tabs-panel-padding-y', '0px');
+    t.style.setProperty('--falcon-tabs-panel-padding-x', '0px');
+  });
+  ```
+
+### Recommended next action
+- Library should expose a `[renderPanels]="false"` mode for consumers that handle content rendering themselves. OR change the default panel-padding-y to 0 (current padding only useful in Stencil-slot consumers).
+
+### Affected components
+- `<falcon-tabs-tw>` (consumers that render tab content as siblings)
+
+---
+
 ## Catalog growth rules
 
 1. Every new bug/quirk discovered during a session MUST be appended here BEFORE the session report is finalized.
