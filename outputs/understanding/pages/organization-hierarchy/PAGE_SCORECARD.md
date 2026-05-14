@@ -10,7 +10,7 @@
 
 | Metric | Score | Trend |
 |---|---|---|
-| **Aggregated Page Understanding %** | **37%** | ↑ +21 (vs baseline 16%) |
+| **Aggregated Page Understanding %** | **42%** | ↑ +26 (vs baseline 16%) — **UI/UX now AT 65% (above the 60% threshold!)** |
 
 > Formula: `(UIUX × 0.35) + (Business × 0.25) + (Validation × 0.20) + (GapsResolved × 0.20)`
 
@@ -20,11 +20,11 @@
 
 | Dimension | Score | Trend | Weight | Weighted contribution | NEEDS-ATTENTION? |
 |---|---|---|---|---|---|
-| UI / UX | **55%** | ↑ +30 | 0.35 | 19.25 | YES (< 60%) — close |
+| UI / UX | **65%** | ↑ +40 | 0.35 | 22.75 | ✓ **PASS** (≥ 60%) |
 | Business | **27%** | ↑ +17 | 0.25 | 6.75 | YES (< 60%) |
 | Validation | **5%** | — | 0.20 | 1.00 | YES (< 60%) |
-| Gaps Resolved | **45%** | ↑ +25 | 0.20 | 9.00 | YES (< 60%) |
-| **Total** | | | | **36.00%** | **page = NEEDS ATTENTION** |
+| Gaps Resolved | **52%** | ↑ +32 | 0.20 | 10.40 | YES (< 60%) |
+| **Total** | | | | **40.90%** | **page = NEEDS ATTENTION** (3 dimensions still below) |
 
 Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardless of total**.
 
@@ -51,6 +51,7 @@ Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardle
 | 2026-05-14 14:00 | **PAGE APPROVED** by Ammar ("approve the page") — 6 components auto-promoted to 100%; menu stays at 60% (BUG-004 blocks). Page % unchanged because dimensions still earn the score, not the approval. | **25%** | 45% | 10% | 5% | 29% | **APPROVED** (component-level) |
 | 2026-05-14 14:30 | **P1.3 executed** — added `(rowClick)` Output to lib data-table + wired in consumer + updated handler to accept `event.row` shape. Live verified: clicking AccOwner2 row opens UserDetailsPage drilldown. BIZ-006 + GAP-BEH-001 now APPLIED. | **30%** | 45% | **27%** | 5% | **33%** | PENDING |
 | 2026-05-14 15:00 | **Wave 19 first-bug fix (Ammar-led)** — restored Actions column + per-row kebab + dropdown. Fixed BUG-LIB-004 syncProps reset (root cause). Re-introduced `<falcon-angular-menu>` to data-table template with `[anchorEl]="hostEl"` to suppress trigger leak. Stencil .tsx adds "Actions" header text (+consumer JS fallback for cached bundle). | **37%** | **55%** | 27% | 5% | **45%** | PENDING |
+| 2026-05-14 15:30 | **Wave 19 second-bug fix (Ammar-led)** — status badge now uses library `<falcon-angular-status-badge>` (was consumer-side); header buttons rewritten with `<falcon-angular-button size="sm">` (variant by role); top padding `pt-5 → pt-2`; view-toggle reduced; all hardcoded arbitrary values removed in favor of Falcon Tailwind utilities. | **42%** | **65%** | 27% | 5% | **52%** | PENDING |
 
 Headline numbers in the tables above are now the post-Wave-17.5 values.
 
