@@ -24,6 +24,7 @@
 | 5 | `<falcon-tree-panel>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
 | 6 | `<app-falcon-status>` | Consumer | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
 | 7 | `<app-falcon-custom-table-footer>` | Consumer | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
+| 8 | `<falcon-node-details-section>` + `FalconNodeDetailsActionsDirective` | **Library (NEW)** | **70%** | PENDING | admin-console/org-hierarchy-page (node header + info-panel header) | none | 2026-05-14 |
 
 ### Score history (page-level approval events log)
 
