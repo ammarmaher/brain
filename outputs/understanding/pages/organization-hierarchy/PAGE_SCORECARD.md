@@ -10,7 +10,7 @@
 
 | Metric | Score | Trend |
 |---|---|---|
-| **Aggregated Page Understanding %** | **42%** | ↑ +26 (vs baseline 16%) — **UI/UX now AT 65% (above the 60% threshold!)** |
+| **Aggregated Page Understanding %** | **47%** | ↑ +31 (vs baseline 16%) — **UI/UX 75% PASS · Gaps 58% close · Business 40% climbing** |
 
 > Formula: `(UIUX × 0.35) + (Business × 0.25) + (Validation × 0.20) + (GapsResolved × 0.20)`
 
@@ -20,11 +20,11 @@
 
 | Dimension | Score | Trend | Weight | Weighted contribution | NEEDS-ATTENTION? |
 |---|---|---|---|---|---|
-| UI / UX | **65%** | ↑ +40 | 0.35 | 22.75 | ✓ **PASS** (≥ 60%) |
-| Business | **27%** | ↑ +17 | 0.25 | 6.75 | YES (< 60%) |
+| UI / UX | **75%** | ↑ +50 | 0.35 | 26.25 | ✓ **PASS** (≥ 60%) |
+| Business | **40%** | ↑ +30 | 0.25 | 10.00 | YES (< 60%) |
 | Validation | **5%** | — | 0.20 | 1.00 | YES (< 60%) |
-| Gaps Resolved | **52%** | ↑ +32 | 0.20 | 10.40 | YES (< 60%) |
-| **Total** | | | | **40.90%** | **page = NEEDS ATTENTION** (3 dimensions still below) |
+| Gaps Resolved | **58%** | ↑ +38 | 0.20 | 11.60 | YES (< 60%) — close |
+| **Total** | | | | **48.85%** | **page = NEEDS ATTENTION** (Validation 5% still blocking) |
 
 Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardless of total**.
 
@@ -52,6 +52,7 @@ Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardle
 | 2026-05-14 14:30 | **P1.3 executed** — added `(rowClick)` Output to lib data-table + wired in consumer + updated handler to accept `event.row` shape. Live verified: clicking AccOwner2 row opens UserDetailsPage drilldown. BIZ-006 + GAP-BEH-001 now APPLIED. | **30%** | 45% | **27%** | 5% | **33%** | PENDING |
 | 2026-05-14 15:00 | **Wave 19 first-bug fix (Ammar-led)** — restored Actions column + per-row kebab + dropdown. Fixed BUG-LIB-004 syncProps reset (root cause). Re-introduced `<falcon-angular-menu>` to data-table template with `[anchorEl]="hostEl"` to suppress trigger leak. Stencil .tsx adds "Actions" header text (+consumer JS fallback for cached bundle). | **37%** | **55%** | 27% | 5% | **45%** | PENDING |
 | 2026-05-14 15:30 | **Wave 19 second-bug fix (Ammar-led)** — status badge now uses library `<falcon-angular-status-badge>` (was consumer-side); header buttons rewritten with `<falcon-angular-button size="sm">` (variant by role); top padding `pt-5 → pt-2`; view-toggle reduced; all hardcoded arbitrary values removed in favor of Falcon Tailwind utilities. | **42%** | **65%** | 27% | 5% | **52%** | PENDING |
+| 2026-05-14 16:00 | **Wave 19 third-bug fix (Ammar-led)** — NEW shared component `<app-org-node-details-section>` with `<ng-template falconNodeDetailsActions>` projection slot. Replaces `<app-org-node-header>` (deleted from imports). Used in BOTH table view AND info-panel view. 3-mode flow wired: Default → Info-view → Info-edit with Cancel/Save. Added `infoEditMode` signal + `openInfoEdit/cancelInfoEdit/saveInfoEdit` methods to state service. Wired `[editable]` to signal. Added `hierarchy.actions.cancel/save` to en+ar. **All 3 modes verified live**: 17 editable input fields render in edit mode. | **47%** | **75%** | **40%** | 5% | **58%** | PENDING |
 
 Headline numbers in the tables above are now the post-Wave-17.5 values.
 
