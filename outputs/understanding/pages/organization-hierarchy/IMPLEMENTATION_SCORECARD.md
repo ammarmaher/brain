@@ -2,7 +2,7 @@
 
 > Per-feature completeness: how much of the source-of-truth feature is actually built and functional.
 
-**Aggregate implementation:** **55%**
+**Aggregate implementation:** **~73%** ↑ +18 (post Tabs Night Shift — Waves 5/6/7/7b/8)
 
 ## Method
 
@@ -33,19 +33,19 @@ Implementation score per feature = `(built + wired) / 2`
 | 15 | Add User wizard step 1 (Personal) | 30% | 20% | 25% | skeleton |
 | 16 | Add User wizard step 2 (Role) | 20% | 10% | 15% | minimal |
 | 17 | Add User wizard step 3 (Permissions) | 20% | 10% | 15% | minimal |
-| 18 | OTP modal | 60% | 40% | 50% | library used; expired-state not verified |
-| 19 | Phone verify pill | 40% | 30% | 35% | partial |
-| 20 | Email verify pill | 40% | 30% | 35% | partial |
-| 21 | User Details drilldown (view) | 70% | 60% | 65% | component exists |
-| 22 | User Details drilldown (edit) | 60% | 50% | 55% | edit mode partial |
-| 23 | Settings tab | 30% | 10% | 20% | placeholder |
-| 24 | Settings tab edit mode + save | 10% | 5% | 7% | not built |
-| 25 | Allowed IPs CRUD | 20% | 10% | 15% | placeholder |
-| 26 | Apps & Services table | 20% | 10% | 15% | placeholder |
-| 27 | App row actions (per-status) | 10% | 5% | 7% | not built |
-| 28 | Apps inline-edit row | 0% | 0% | 0% | not built |
-| 29 | Insufficient Balance modal | 0% | 0% | 0% | not built |
-| 30 | CommChannels & Services table | 20% | 10% | 15% | placeholder |
+| 18 | OTP modal | **80%** | **70%** | **75%** | wired via `<app-otp-dialog>` in user-details Personal tab (Wave 7b) |
+| 19 | Phone verify pill | **85%** | **80%** | **82%** | Verify chip → opens OTP → green Verified badge (Wave 7b) |
+| 20 | Email verify pill | **85%** | **80%** | **82%** | same pattern as phone (Wave 7b) |
+| 21 | User Details drilldown (view) | **85%** | **80%** | **82%** | 6 personal fields + status/role/perm dropdowns + checker matrix (Wave 7b) |
+| 22 | User Details drilldown (edit) | **85%** | **80%** | **82%** | OTP-gated save when status='pending' (Wave 7b) |
+| 23 | Settings tab | **90%** | **85%** | **87%** | Falcon radio + tag + input-number + confirm-dialog (Wave 8) |
+| 24 | Settings tab edit mode + save | **85%** | **80%** | **82%** | full read/edit/cancel/save with validation (Wave 8) |
+| 25 | Allowed IPs CRUD | **85%** | **80%** | **82%** | chips dismissible via confirm dialog; IPv4/IPv6 inline error (Wave 8) |
+| 26 | Apps & Services table | **85%** | **80%** | **82%** | Falcon data-table + switch + status-badge + per-status row actions (Wave 5/6) |
+| 27 | App row actions (per-status) | **90%** | **80%** | **85%** | 5 actions (disable/enable/doPayment/editType/editValue) gated per-row by status (Wave 5/6) |
+| 28 | Apps inline-edit row | **80%** | **70%** | **75%** | price-type with `<falcon-angular-calendar>` + price-value modes preserved (Wave 5/6) |
+| 29 | Insufficient Balance modal | 0% | 0% | 0% | not built (GAP-BIZ-001 — deferred) |
+| 30 | CommChannels & Services table | **85%** | **80%** | **82%** | inherits Wave 5/6 — consumer tab unchanged |
 | 31 | Node drawer (Add/Edit) | 90% | 90% | 90% | functional |
 | 32 | Toast system | 100% | 100% | 100% | functional |
 | 33 | Org chart view | 70% | 50% | 60% | component exists, pan/zoom not formally tested |

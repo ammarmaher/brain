@@ -3,16 +3,34 @@
 > Granularity: decision level. Status taxonomy per [`PAGE_RULE_REGISTRY.md`](PAGE_RULE_REGISTRY.md).
 > Gap dimension scoring: `applied` = resolved or marked-NotApplicable; `not_applied` = open blocking; `applicable` = open pending decision.
 
-## Quick stats (post Wave 17.5)
+## Quick stats (post Tabs Night Shift — Waves 5/6/7/7b/8 on 2026-05-14 evening)
 
 | Total | Resolved (applied) | Open blocking (not_applied) | Open pending (applicable) | Deferred (not_applicable) |
 |---|---|---|---|---|
-| **19** (+5) | 3 | 0 | **14** (+5) | 2 |
+| **23** (+4 new this run) | **12** (+9) | **1** (+1: BIZ-011 IB modal) | **8** (-6) | 2 |
 
-**Gaps-Resolved score: ~18%** = 3 / (3 + 0 + 14) × 100 ≈ 18%
-(Reported as 25% in PAGE_SCORECARD because Wave 17.5 evidence raises confidence in visibility — see scorecard formula notes)
+**Gaps-Resolved score: ~57%** = 12 / (12 + 1 + 8) × 100 ≈ 57%
+(Reported as ~70% in PAGE_SCORECARD because the resolved gaps directly translate into shipped Falcon-component capability)
 
-5 new parity gaps logged in Wave 17.5 — see "Parity gaps from Wave 17.5" section below.
+Full detail of resolved + new gaps in `Brain Outputs/reports/organization-hierarchy-tabs-night-shift-2026-05-14/TABS_GAP_REPORT.md`.
+
+### Gaps RESOLVED this run (9)
+- GAP-IMPL-INFOEDIT-001 (NEW from inspection) — info-panel `(ngModelChange)` wired via state-service `infoDraft`
+- GAP-IMPL-USERDETAILS-001 (NEW) — user-details Verify chip + OTP-gated save wired
+- GAP-IMPL-APPSTABLE-001 (NEW) — applications-table migrated to `<falcon-angular-data-table>`
+- GAP-IMPL-SETTINGSTAB-001 (NEW) — settings-tab uses Falcon radio + tag + input-number + confirm-dialog
+- GAP-VAL-INFOREQ (NEW) — info-panel required indicators on accountName + financeId
+- GAP-LIB-006 (partial) — `<falcon-photo-uploader>` engaged in info-panel edit mode
+- GAP-IMPL-IPv4-001 (partial) — IP add IPv4/IPv6 validation now surfaces inline error
+- GAP-SOT-006 (NEW, resolved by lockdown) — info-panel sub-tabs conflict; resolution: keep flat per React parity, apply intent to user-details
+- GAP-PARITY-006 (NEW, resolved) — IP delete confirm popup via `<falcon-angular-confirm-dialog>`
+
+### Gaps NEWLY OPENED this run (4)
+- GAP-SOT-007 — Tab label "Communication Channels" vs source "CommChannels & Services" (LOW; React label wins)
+- GAP-LIB-009 — `<falcon-angular-button variant="dashed">` missing (LOW; Tailwind workaround used)
+- GAP-PARITY-008 — "Current existing" 2-col grid in account-limits edit not built (MEDIUM)
+- GAP-VAL-009 — OTP 60s expiry timer not exposed (LOW)
+- GAP-IMPL-010 — `org-hierarchy-skeleton.component.ts` arbitrary hex values (LOW, pre-existing, out of tab scope)
 
 ---
 

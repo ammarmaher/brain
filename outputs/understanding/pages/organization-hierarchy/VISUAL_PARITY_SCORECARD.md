@@ -2,7 +2,7 @@
 
 > Per-section visual fidelity score: source-of-truth render vs Angular destination render.
 
-**Aggregate visual parity:** **52%** ↑ +17 (post Wave 17.5 sweep)
+**Aggregate visual parity:** **~75%** ↑ +23 (post Tabs Night Shift — Waves 5/6/7/7b/8) — was 52% after Wave 17.5
 
 ## Methodology
 
@@ -25,16 +25,16 @@ When live screenshots not available: score derived from code-level match + spot 
 | 6 | Node header | HTML §3 | 75% | screenshot | 2026-05-14 |
 | 7 | Users table (header + body + footer) | HTML §6 | **90%** | live measurement today (within 0.94px) | 2026-05-14 |
 | 8 | Status badges (8 statuses) | HTML §7 | 60% | partial — 6 of 8 verified | 2026-05-14 |
-| 9 | Info panel | HTML §11 | 30% | unknown | needs sweep |
-| 10 | Settings tab | HTML §9 | 20% | placeholder | needs sweep |
-| 11 | Apps & Services tab | HTML §7 | 10% | placeholder | needs sweep |
-| 12 | CommChannels tab | HTML §8 | 10% | placeholder | needs sweep |
+| 9 | Info panel | HTML §11 | **80%** ↑+50 | code-level (post-Wave-7) | 2026-05-14 |
+| 10 | Settings tab | HTML §9 | **85%** ↑+65 | code-level (post-Wave-8) | 2026-05-14 |
+| 11 | Apps & Services tab | HTML §7 | **85%** ↑+75 | code-level (post-Wave-5/6) | 2026-05-14 |
+| 12 | CommChannels tab | HTML §8 | **85%** ↑+75 | code-level (post-Wave-5/6) | 2026-05-14 |
 | 13 | Add Client wizard step 1 | HTML §12 | 30% | partial | needs sweep |
 | 14 | Add Client wizard steps 2-5 | HTML §12 | 10% | minimal | needs sweep |
 | 15 | Add User wizard | HTML §13 | 25% | skeleton | needs sweep |
-| 16 | User Details drill-in | HTML §22 | 50% | component exists | needs sweep |
+| 16 | User Details drill-in | HTML §22 | **80%** ↑+30 | code-level (post-Wave-7b) | 2026-05-14 |
 | 17 | Node drawer (Add/Edit) | HTML §15 | 70% | code-match | needs sweep |
-| 18 | OTP modal | HTML §14 | 40% | library used, exact match not verified | needs sweep |
+| 18 | OTP modal | HTML §14 | **65%** ↑+25 | wired into user-details via `<app-otp-dialog>` (Wave 7b) | 2026-05-14 |
 | 19 | Send Credentials modal | HTML §12, §13 | unknown | not implemented? | needs sweep |
 | 20 | Success modal | HTML §12, §13 | unknown | not verified | needs sweep |
 | 21 | Insufficient Balance modal | HTML §7 | 0% | not implemented | — |

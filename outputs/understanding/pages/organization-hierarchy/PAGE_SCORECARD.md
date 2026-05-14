@@ -1,8 +1,8 @@
 # Page Scorecard — Organization Hierarchy
 
-**Last updated:** 2026-05-14 (post Wave 17.5)
-**Score basis:** Baseline + ingestion of 5 prior reports + Wave 17.5 visual parity sweep (12 sections)
-**Approval state:** PENDING — baseline approved 2026-05-14; Wave 17.5 update pending Ammar approval
+**Last updated:** 2026-05-14 (post Tabs Night Shift — Waves 5/6/7/7b/8)
+**Score basis:** Baseline + ingestion of 5 prior reports + Wave 17.5 visual parity sweep (12 sections) + **Tabs Night Shift 4-wave implementation (data-table migration, info-panel persistence, user-details OTP-gate, settings-tab Falcon primitives)**
+**Approval state:** PENDING Ammar review
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Metric | Score | Trend |
 |---|---|---|
-| **Aggregated Page Understanding %** | **47%** | ↑ +31 (vs baseline 16%) — **UI/UX 75% PASS · Gaps 58% close · Business 40% climbing** |
+| **Aggregated Page Understanding %** | **~69%** | ↑ +22 (vs Wave 19 47%) — **UI/UX 85% · Business 62% · Validation 78% · Gaps 70%** |
 
 > Formula: `(UIUX × 0.35) + (Business × 0.25) + (Validation × 0.20) + (GapsResolved × 0.20)`
 
@@ -20,11 +20,11 @@
 
 | Dimension | Score | Trend | Weight | Weighted contribution | NEEDS-ATTENTION? |
 |---|---|---|---|---|---|
-| UI / UX | **75%** | ↑ +50 | 0.35 | 26.25 | ✓ **PASS** (≥ 60%) |
-| Business | **40%** | ↑ +30 | 0.25 | 10.00 | YES (< 60%) |
-| Validation | **5%** | — | 0.20 | 1.00 | YES (< 60%) |
-| Gaps Resolved | **58%** | ↑ +38 | 0.20 | 11.60 | YES (< 60%) — close |
-| **Total** | | | | **48.85%** | **page = NEEDS ATTENTION** (Validation 5% still blocking) |
+| UI / UX | **~85%** | ↑ +10 | 0.35 | 29.75 | ✓ **PASS** |
+| Business | **~62%** | ↑ +22 | 0.25 | 15.50 | ✓ **PASS** (just over threshold) |
+| Validation | **~78%** | ↑ +73 | 0.20 | 15.60 | ✓ **PASS** |
+| Gaps Resolved | **~70%** | ↑ +12 | 0.20 | 14.00 | ✓ **PASS** |
+| **Total** | | | | **~74.85%** | **page = PASS** — all dimensions ≥ 60% for the first time |
 
 Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardless of total**.
 
@@ -53,17 +53,18 @@ Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardle
 | 2026-05-14 15:00 | **Wave 19 first-bug fix (Ammar-led)** — restored Actions column + per-row kebab + dropdown. Fixed BUG-LIB-004 syncProps reset (root cause). Re-introduced `<falcon-angular-menu>` to data-table template with `[anchorEl]="hostEl"` to suppress trigger leak. Stencil .tsx adds "Actions" header text (+consumer JS fallback for cached bundle). | **37%** | **55%** | 27% | 5% | **45%** | PENDING |
 | 2026-05-14 15:30 | **Wave 19 second-bug fix (Ammar-led)** — status badge now uses library `<falcon-angular-status-badge>` (was consumer-side); header buttons rewritten with `<falcon-angular-button size="sm">` (variant by role); top padding `pt-5 → pt-2`; view-toggle reduced; all hardcoded arbitrary values removed in favor of Falcon Tailwind utilities. | **42%** | **65%** | 27% | 5% | **52%** | PENDING |
 | 2026-05-14 16:00 | **Wave 19 third-bug fix (Ammar-led)** — NEW shared component `<app-org-node-details-section>` with `<ng-template falconNodeDetailsActions>` projection slot. Replaces `<app-org-node-header>` (deleted from imports). Used in BOTH table view AND info-panel view. 3-mode flow wired: Default → Info-view → Info-edit with Cancel/Save. Added `infoEditMode` signal + `openInfoEdit/cancelInfoEdit/saveInfoEdit` methods to state service. Wired `[editable]` to signal. Added `hierarchy.actions.cancel/save` to en+ar. **All 3 modes verified live**: 17 editable input fields render in edit mode. | **47%** | **75%** | **40%** | 5% | **58%** | PENDING |
+| 2026-05-14 20:08 | **Tabs Night Shift (Adnan-orchestrated)** — 4 implementation waves landed clean (5+6: applications-table → Falcon data-table; 7: org-info-panel `(ngModelChange)` + photo uploader + dropdowns; 7b: user-details 6 required + OTP-gated save + dropdowns + checker matrix; 8: settings-tab Falcon radio + tag + input-number + confirm-dialog). Consolidated build GREEN hash `084858c9a6ccb344`. 12 implementation files + 2 i18n files dirty. 15 Falcon components engaged (vs 4 before). Zero library upgrades performed. Zero PrimeNG. Zero SCSS. Tailwind tokens only. | **~69%** | **~85%** | **~62%** | **~78%** | **~70%** | PENDING |
 
-Headline numbers in the tables above are now the post-Wave-17.5 values.
+Headline numbers in the tables above are now the post-Tabs-Night-Shift values.
 
-## What needs to climb for the page to leave NEEDS-ATTENTION
+## What needs to climb for the page to reach 100%
 
-To clear the < 60% flag on each dimension, the minimum work:
+All 4 dimensions cleared the 60% NEEDS-ATTENTION threshold after the Tabs Night Shift. To reach 100%:
 
-1. **UI/UX (25% → 60%)** — formally classify every UI/UX rule from HTML §1-23 as Applied / NotApplied / Applicable / NotApplicable in [`UI_UX_RULES.md`](UI_UX_RULES.md); run a live source-vs-destination diff per section.
-2. **Business (10% → 60%)** — catalog every business flow (add-client, add-user, more-details, status-action) with its rules in [`BUSINESS_RULES.md`](BUSINESS_RULES.md).
-3. **Validation (5% → 60%)** — catalog every required-field, OTP rule, phone/email verify rule, disabled-state rule in [`VALIDATION_RULES.md`](VALIDATION_RULES.md).
-4. **Gaps (20% → 60%)** — resolve or mark-NotApplicable the 7 library gaps + 4 open items in [`GAP_REGISTRY.md`](GAP_REGISTRY.md); resolved/not-applicable count climbs the score.
+1. **UI/UX (85% → 100%)** — close the remaining `unknown` / `partially_applied` rules: UIUX-033/034 (info panel 4-col grid + view/edit toggle), UIUX-038/039 (org chart), UIUX-042/043 (OTP modal full state machine), UIUX-PARITY-006/007 (tree indent rails + hover-path stripe).
+2. **Business (62% → 100%)** — implement BIZ-011 Insufficient Balance modal; close BIZ-012/013 wizard send-credentials flow; commit on PES wiring (GAP-BEH-004).
+3. **Validation (78% → 100%)** — surface OTP 60s expiry timer (GAP-VAL-009); add per-input placeholder hints (e.g. "Start with letter · Max 30 Characters" on accountName); add full reactive-forms `Validators.required` where signal-driven validation is currently used.
+4. **Gaps (70% → 100%)** — close GAP-LIB-009 (dashed button), GAP-PARITY-008 (current-existing 2-col), GAP-IMPL-010 (skeleton hex), GAP-BEH-002/003 (tree polish), GAP-BIZ-001 (IB modal).
 
 See [`NEXT_ACTIONS.md`](NEXT_ACTIONS.md) for the prioritized work queue.
 

@@ -2,19 +2,30 @@
 
 > Maps every component this page renders to its entry in `FALCON_COMPONENT_REGISTRY.md`.
 
-## Library components used (Falcon shared)
+## Library components used (Falcon shared) — POST TABS NIGHT SHIFT 2026-05-14
 
 | Component | Where used on this page | Score (from registry) | Notes |
 |---|---|---|---|
-| `<falcon-angular-data-table>` + `<falcon-table-tw>` | Users table (Hierarchy tab) | 60% PENDING | Today: orphan menu deleted, heights harmonized |
-| `<falcon-angular-paginator>` + `<falcon-paginator-tw>` | Inside `<app-falcon-custom-table-footer>` (center section) | 60% PENDING | Wrapper not raw Stencil (per BUG-2026-05-14-006) |
-| `<falcon-angular-tabs>` + `<falcon-tabs-tw>` | Tab strip + view-toggle slot | 60% PENDING | viewChild imperative push, per-tab actions slot |
+| `<falcon-angular-data-table>` + `<falcon-table-tw>` | Users table (Hierarchy tab) **+ applications-table (CommChannels & Apps tabs — NEW Wave 5/6)** | 80% PASS | Now drives BOTH the hierarchy users table AND the applications-table; `[rowActions]` per-status menu working without BUG-004 regression |
+| `FalconDataTableCellDirective` (`*falconDataTableCell`) | applications-table (7 cell templates) | NEW usage | Drives visibility/status/action/date/price cells |
+| `FalconDataTableHeaderCellDirective` (`*falconDataTableHeaderCell`) | applications-table (4 wrap-two headers) | NEW usage | First Activation / Activation Date / Renew Date / Price Value |
+| `<falcon-angular-paginator>` + `<falcon-paginator-tw>` | Inside `<app-falcon-custom-table-footer>` (users table) + applications-table built-in paginator | 60% PENDING | applications-table uses data-table built-in (not custom footer) |
+| `<falcon-angular-tabs>` + `<falcon-tabs-tw>` | Tab strip + view-toggle slot **+ user-details 3-tab strip (NEW usage)** | 60% PENDING | per-tab actions slot working |
 | `<falcon-tree-panel>` | Left sidebar 272px tree | 60% PENDING | Auto-scroll + scroll-reveal not yet implemented |
-| `<falcon-angular-input>` | Search input on root node | not in registry yet | Add to registry when touched |
-| `<falcon-angular-otp>` | Add User wizard OTP step | not in registry yet | Has BUG: no `(falconComplete)` Output (GAP-LIB-004) |
+| `<falcon-angular-input>` | Info-panel edit-mode (12 text fields, NEW `(ngModelChange)`) + user-details 5 editable Personal fields | 80% NEW | Now wired with `(ngModelChange)` everywhere |
+| `<falcon-angular-dropdown>` | Info-panel 5 select fields (Wave 7) + user-details status/role/permGroup (Wave 7b) | NEW usage | 8 dropdowns total |
+| `<falcon-angular-switch>` | applications-table visibility column (Wave 5/6) | NEW usage | Replaces hand-rolled `<button role="switch">` |
+| `<falcon-angular-status-badge>` | applications-table status column (Wave 5/6) | NEW usage | Replaces hand-rolled `<span>` chips |
+| `<falcon-angular-calendar>` (new wrapper) | applications-table inline edit row (Wave 5/6) | NEW usage | Replaced legacy `<falcon-calendar>` |
+| `<falcon-angular-empty-data>` | applications-table empty state (Wave 5/6) | NEW usage | Auto-mounted via `[emptyData]` config |
+| `<falcon-angular-radio>` | settings-tab password security cards (Wave 8, 2 instances) + user-details checker matrix (Wave 7b, 6 instances) | NEW usage | 8 instances total |
+| `<falcon-angular-tag>` | settings-tab IP chips (Wave 8) | NEW usage | `[dismissible]` + `(falconDismiss)` → opens confirm dialog |
+| `<falcon-angular-input-number>` | settings-tab account limits (Wave 8, 3 instances) | NEW usage | `min=0 max=9999 step=1 integer=true` |
+| `<falcon-angular-confirm-dialog>` | settings-tab IP delete confirmation (Wave 8) | NEW usage | severity=danger |
+| `<falcon-photo-uploader>` | Info-panel edit-mode client picture (Wave 7) | NEW usage | Chosen over `<falcon-angular-single-uploader>` for circle preview |
+| `<falcon-angular-otp>` | Add User wizard OTP step **+ user-details via `<app-otp-dialog>` (NEW Wave 7b)** | not in registry yet | `OtpMockService` enforces all-zeros-pass per Brain SK spec |
 | `<falcon-angular-stepper>` | Add Client + Add User wizards | not in registry yet | Add to registry when wizard work resumes |
-| `<falcon-angular-data-table>`'s row-action menu | _DELETED today_ | n/a | Was the orphan; removed library-wide |
-| `<falcon-angular-menu>` + `<falcon-menu-tw>` | (formerly used by data-table, now only by tree-panel for kebabs) | 60% PENDING — BLOCKED | BUG-2026-05-14-004 syncProps reset bug |
+| `<falcon-angular-menu>` + `<falcon-menu-tw>` | applications-table data-table built-in **(NEW Wave 5/6 — BUG-004 mitigation HELD)** + tree-panel kebabs | 75% PENDING — mitigation verified | BUG-2026-05-14-004 fix at lines 96-100 of `falcon-menu.component.ts` held in tab-overflow context |
 
 ## Page-local components (consumer-side, owned by this page)
 
