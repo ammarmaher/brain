@@ -31,20 +31,20 @@
     "C:\\Falcon\\Brain Outputs\\reports\\falcon-ui-library-learnings\\2026-05-14-org-hierarchy-data-table\\index.md"
   ],
   "currentScores": {
-    "pageUnderstandingPct": 23,
+    "pageUnderstandingPct": 25,
     "dimensions": {
-      "uiux": 40,
+      "uiux": 45,
       "business": 10,
       "validation": 5,
-      "gapsResolved": 25
+      "gapsResolved": 29
     },
     "auxiliary": {
       "sourceUnderstandingPct": 80,
-      "destinationImplementationPct": 55,
-      "visualParityPct": 52,
+      "destinationImplementationPct": 57,
+      "visualParityPct": 58,
       "businessRuleCoveragePct": 10,
       "validationCoveragePct": 5,
-      "gapResolutionPct": 25,
+      "gapResolutionPct": 29,
       "componentReusePct": 80,
       "testCoveragePct": 0
     },

@@ -70,8 +70,8 @@ A gap moves to `not_applicable` when:
 
 | gapId | Title | Source A | Source B | Status | Severity | Reason | Next action | Last checked |
 |---|---|---|---|---|---|---|---|---|
-| GAP-PARITY-001 | Page title mismatch | HTML "Organization Hierarchy" | Angular "Org Hierarchy" | applicable | LOW | Truncated form in Angular | Update header/breadcrumb binding | 2026-05-14 |
-| GAP-PARITY-002 | Sidebar has 3 org-hierarchy entries | HTML 1 entry | Angular shows `Org Hierarchy (Admin)` + `Organization Hierarchy (New Page)` + `Organization Hierarchy` | applicable | MEDIUM | Dev/migration pollution | Clean host-shell nav config | 2026-05-14 |
+| GAP-PARITY-001 | Page title mismatch | HTML "Organization Hierarchy" | Angular **"Organization Hierarchy"** | **applied (resolved 2026-05-14)** | LOW | Updated breadcrumb in `org-hierarchy-page.routes.ts` + `app.routes.ts` | — | 2026-05-14 |
+| GAP-PARITY-002 | Sidebar had 3 org-hierarchy entries | HTML 1 entry | Angular now **1 entry** "Organization Hierarchy" | **applied (resolved 2026-05-14)** | MEDIUM | Collapsed 3 FalconUser entries → 1 in `host-shell/layout.component.ts`; renamed to match source. ClientUser variant untouched. | — | 2026-05-14 |
 | GAP-PARITY-003 | Tree seed data does not match React reference seed | HTML: Al-Rajhi/SNB/Bupa/Aramco/BMW | Angular: dev test data | applicable | MEDIUM (demo/QA scope) | Dev seed loaded instead of production seed | Decide: production seed vs demo seed | 2026-05-14 |
 | GAP-PARITY-004 | BrandLogo per client not rendered | HTML: BMW conic, Bupa red circle, custom SVG per client | Angular: generic letter icons | applicable | LOW | Tied to seed data choice | Implement BrandLogo when seed is aligned | 2026-05-14 |
 | GAP-PARITY-005 | Default-selected user row not implemented | HTML §6 line 1136 `setSelected(new Set(['u3']))` | not implemented | applicable | LOW | Optional UX polish | Decide if needed in production | 2026-05-14 |

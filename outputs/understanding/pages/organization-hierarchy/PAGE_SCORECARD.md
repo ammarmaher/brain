@@ -10,7 +10,7 @@
 
 | Metric | Score | Trend |
 |---|---|---|
-| **Aggregated Page Understanding %** | **23%** | ↑ +7 (vs baseline 16%) |
+| **Aggregated Page Understanding %** | **25%** | ↑ +9 (vs baseline 16%) |
 
 > Formula: `(UIUX × 0.35) + (Business × 0.25) + (Validation × 0.20) + (GapsResolved × 0.20)`
 
@@ -20,11 +20,11 @@
 
 | Dimension | Score | Trend | Weight | Weighted contribution | NEEDS-ATTENTION? |
 |---|---|---|---|---|---|
-| UI / UX | **40%** | ↑ +15 | 0.35 | 14.00 | YES (< 60%) |
+| UI / UX | **45%** | ↑ +20 | 0.35 | 15.75 | YES (< 60%) |
 | Business | **10%** | — | 0.25 | 2.50 | YES (< 60%) |
 | Validation | **5%** | — | 0.20 | 1.00 | YES (< 60%) |
-| Gaps Resolved | **25%** | ↑ +5 | 0.20 | 5.00 | YES (< 60%) |
-| **Total** | | | | **22.50%** | **page = NEEDS ATTENTION** |
+| Gaps Resolved | **29%** | ↑ +9 | 0.20 | 5.80 | YES (< 60%) |
+| **Total** | | | | **25.05%** | **page = NEEDS ATTENTION** |
 
 Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardless of total**.
 
@@ -34,7 +34,7 @@ Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardle
 |---|---|---|---|
 | Source understanding % | **80%** | ↑ +10 | Live HTML vs Angular comparison adds verification confidence (Wave 17.5) |
 | Destination implementation % | **55%** | — | Unchanged — sweep was measurement only |
-| Visual parity % | **52%** | ↑ +17 | 12 sections measured in Wave 17.5 |
+| Visual parity % | **58%** | ↑ +23 | 12 sections measured in Wave 17.5; page-shell + sidebar sections now near 90%+ after Wave 18 fixes |
 | Business rule coverage % | **10%** | — | Few business rules explicitly documented |
 | Validation coverage % | **5%** | — | Validation analysis effectively not done |
 | Gap resolution % | **25%** | ↑ +5 | 5 new parity gaps logged (GAP-PARITY-001 to 005); some baseline gaps confirmed as deferred |
@@ -47,6 +47,7 @@ Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardle
 |---|---|---|---|---|---|---|---|
 | 2026-05-14 09:00 | First seed (post-ingestion of 5 reports + live regression on Users table) | **16%** | 25% | 10% | 5% | 20% | APPROVED (Ammar 2026-05-14) |
 | 2026-05-14 13:30 | After Wave 17.5 visual parity sweep (12 sections, live HTML vs Angular comparison) | **23%** | **40%** | 10% | 5% | **25%** | PENDING |
+| 2026-05-14 13:45 | After Wave 18 fix of GAP-PARITY-001 (page title) + GAP-PARITY-002 (sidebar cleanup) — live verified | **25%** | **45%** | 10% | 5% | **29%** | PENDING |
 
 Headline numbers in the tables above are now the post-Wave-17.5 values.
 
