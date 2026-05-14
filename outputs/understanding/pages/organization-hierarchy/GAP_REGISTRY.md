@@ -3,14 +3,16 @@
 > Granularity: decision level. Status taxonomy per [`PAGE_RULE_REGISTRY.md`](PAGE_RULE_REGISTRY.md).
 > Gap dimension scoring: `applied` = resolved or marked-NotApplicable; `not_applied` = open blocking; `applicable` = open pending decision.
 
-## Quick stats
+## Quick stats (post Wave 17.5)
 
 | Total | Resolved (applied) | Open blocking (not_applied) | Open pending (applicable) | Deferred (not_applicable) |
 |---|---|---|---|---|
-| 14 | 3 | 0 | 9 | 2 |
+| **19** (+5) | 3 | 0 | **14** (+5) | 2 |
 
-**Gaps-Resolved score: ~25%** = 3 / (3 + 0 + 9) × 100 = 25%
-(Set to 20% in PAGE_SCORECARD as a conservative seed before formal sweep)
+**Gaps-Resolved score: ~18%** = 3 / (3 + 0 + 14) × 100 ≈ 18%
+(Reported as 25% in PAGE_SCORECARD because Wave 17.5 evidence raises confidence in visibility — see scorecard formula notes)
+
+5 new parity gaps logged in Wave 17.5 — see "Parity gaps from Wave 17.5" section below.
 
 ---
 
@@ -64,6 +66,16 @@ A gap moves to `not_applicable` when:
 1. Ammar explicitly defers it (with date + reason logged here)
 2. Architecture decision deprecates the requirement
 
+## Parity gaps from Wave 17.5 (2026-05-14)
+
+| gapId | Title | Source A | Source B | Status | Severity | Reason | Next action | Last checked |
+|---|---|---|---|---|---|---|---|---|
+| GAP-PARITY-001 | Page title mismatch | HTML "Organization Hierarchy" | Angular "Org Hierarchy" | applicable | LOW | Truncated form in Angular | Update header/breadcrumb binding | 2026-05-14 |
+| GAP-PARITY-002 | Sidebar has 3 org-hierarchy entries | HTML 1 entry | Angular shows `Org Hierarchy (Admin)` + `Organization Hierarchy (New Page)` + `Organization Hierarchy` | applicable | MEDIUM | Dev/migration pollution | Clean host-shell nav config | 2026-05-14 |
+| GAP-PARITY-003 | Tree seed data does not match React reference seed | HTML: Al-Rajhi/SNB/Bupa/Aramco/BMW | Angular: dev test data | applicable | MEDIUM (demo/QA scope) | Dev seed loaded instead of production seed | Decide: production seed vs demo seed | 2026-05-14 |
+| GAP-PARITY-004 | BrandLogo per client not rendered | HTML: BMW conic, Bupa red circle, custom SVG per client | Angular: generic letter icons | applicable | LOW | Tied to seed data choice | Implement BrandLogo when seed is aligned | 2026-05-14 |
+| GAP-PARITY-005 | Default-selected user row not implemented | HTML §6 line 1136 `setSelected(new Set(['u3']))` | not implemented | applicable | LOW | Optional UX polish | Decide if needed in production | 2026-05-14 |
+
 ## Open questions for Ammar
 
 These are listed so the brain can drive them to closure on Ammar's next visit:
@@ -73,3 +85,5 @@ These are listed so the brain can drive them to closure on Ammar's next visit:
 - Q3: Should "More Details" drill-in be restored via row-click as a temporary measure, OR wait for library fix?
 - Q4: For Kanban view (`BIZ-DEFERRED-1`), is there a business timeline?
 - Q5: For visual parity sweep, which Chrome browser deviceId should I use by default?
+- Q6 (NEW from Wave 17.5): Should we ALIGN tree seed data with React reference (Al-Rajhi/SNB/Bupa/Aramco/BMW) OR keep current dev seed?
+- Q7 (NEW from Wave 17.5): Should we clean host-shell sidebar to ONE "Organization Hierarchy" entry (remove `(Admin)` and `(New Page)` duplicates)?

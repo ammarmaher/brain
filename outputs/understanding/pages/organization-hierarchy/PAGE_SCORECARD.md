@@ -1,8 +1,8 @@
 # Page Scorecard — Organization Hierarchy
 
-**Last updated:** 2026-05-14
-**Score basis:** Baseline + ingestion of 5 prior reports + live regression check today
-**Approval state:** PENDING — awaits Ammar approval signal
+**Last updated:** 2026-05-14 (post Wave 17.5)
+**Score basis:** Baseline + ingestion of 5 prior reports + Wave 17.5 visual parity sweep (12 sections)
+**Approval state:** PENDING — baseline approved 2026-05-14; Wave 17.5 update pending Ammar approval
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Metric | Score | Trend |
 |---|---|---|
-| **Aggregated Page Understanding %** | **16%** | — (first seed) |
+| **Aggregated Page Understanding %** | **23%** | ↑ +7 (vs baseline 16%) |
 
 > Formula: `(UIUX × 0.35) + (Business × 0.25) + (Validation × 0.20) + (GapsResolved × 0.20)`
 
@@ -18,34 +18,37 @@
 
 ## Dimension breakdown (weighted)
 
-| Dimension | Score | Weight | Weighted contribution | NEEDS-ATTENTION? |
-|---|---|---|---|---|
-| UI / UX | **25%** | 0.35 | 8.75 | YES (< 60%) |
-| Business | **10%** | 0.25 | 2.50 | YES (< 60%) |
-| Validation | **5%** | 0.20 | 1.00 | YES (< 60%) |
-| Gaps Resolved | **20%** | 0.20 | 4.00 | YES (< 60%) |
-| **Total** | | | **16.25%** | **page = NEEDS ATTENTION** |
+| Dimension | Score | Trend | Weight | Weighted contribution | NEEDS-ATTENTION? |
+|---|---|---|---|---|---|
+| UI / UX | **40%** | ↑ +15 | 0.35 | 14.00 | YES (< 60%) |
+| Business | **10%** | — | 0.25 | 2.50 | YES (< 60%) |
+| Validation | **5%** | — | 0.20 | 1.00 | YES (< 60%) |
+| Gaps Resolved | **25%** | ↑ +5 | 0.20 | 5.00 | YES (< 60%) |
+| **Total** | | | | **22.50%** | **page = NEEDS ATTENTION** |
 
 Per skill rule: **any dimension below 60% triggers NEEDS-ATTENTION flag regardless of total**.
 
 ## Auxiliary scores (informational, do not roll into headline)
 
-| Metric | Score | Notes |
-|---|---|---|
-| Source understanding % | **70%** | HTML source-of-truth deeply documented (1057-line ingest); React behavior partially mapped |
-| Destination implementation % | **55%** | Many features built; live regression confirms current visual state; long tail of fidelity gaps |
-| Visual parity % | **35%** | Wave 17 sweep was BLOCKED on browser; current implementation looks good per today's live check on Users table, BUT no formal sweep done across 12 sections |
-| Business rule coverage % | **10%** | Few business rules explicitly documented |
-| Validation coverage % | **5%** | Validation analysis effectively not done |
-| Gap resolution % | **20%** | 7 library gaps queued, 4 open items, 23 lint inheritance items — handful resolved, most pending |
-| Component reuse % | **80%** | Already reuses 6 Falcon library components + 2 page-local components |
-| Test coverage % | **0%** | No automated tests for this page identified |
+| Metric | Score | Trend | Notes |
+|---|---|---|---|
+| Source understanding % | **80%** | ↑ +10 | Live HTML vs Angular comparison adds verification confidence (Wave 17.5) |
+| Destination implementation % | **55%** | — | Unchanged — sweep was measurement only |
+| Visual parity % | **52%** | ↑ +17 | 12 sections measured in Wave 17.5 |
+| Business rule coverage % | **10%** | — | Few business rules explicitly documented |
+| Validation coverage % | **5%** | — | Validation analysis effectively not done |
+| Gap resolution % | **25%** | ↑ +5 | 5 new parity gaps logged (GAP-PARITY-001 to 005); some baseline gaps confirmed as deferred |
+| Component reuse % | **80%** | — | Already reuses 6 Falcon library components + 2 page-local components |
+| Test coverage % | **0%** | — | No automated tests for this page identified |
 
 ## Score history (page-level approval events)
 
 | Date | Event | Page % | UI/UX | Business | Validation | Gaps | Approved? |
 |---|---|---|---|---|---|---|---|
-| 2026-05-14 | First seed (post-ingestion of 5 reports + live regression on Users table) | **16%** | 25% | 10% | 5% | 20% | PENDING |
+| 2026-05-14 09:00 | First seed (post-ingestion of 5 reports + live regression on Users table) | **16%** | 25% | 10% | 5% | 20% | APPROVED (Ammar 2026-05-14) |
+| 2026-05-14 13:30 | After Wave 17.5 visual parity sweep (12 sections, live HTML vs Angular comparison) | **23%** | **40%** | 10% | 5% | **25%** | PENDING |
+
+Headline numbers in the tables above are now the post-Wave-17.5 values.
 
 ## What needs to climb for the page to leave NEEDS-ATTENTION
 

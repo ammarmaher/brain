@@ -2,13 +2,15 @@
 
 > Granularity: element/section level. Status taxonomy per [`PAGE_RULE_REGISTRY.md`](PAGE_RULE_REGISTRY.md).
 
-## Quick stats
+## Quick stats (post Wave 17.5)
 
 | Total | Applied | Not Applied | Applicable | Not Applicable | Partial | Unknown |
 |---|---|---|---|---|---|---|
-| 32 | 11 | 8 | 5 | 2 | 3 | 3 |
+| **39** (+7) | **13** (+2) | **14** (+6) | **7** (+2) | 2 | 3 | 0 (-3) |
 
-**Dimension score: 25%** = 11 / (11 + 8 + 5 + 0.5×3 + 0.5×3) / × 100 ≈ 25%
+**Dimension score: 40%** = (13 + 0.5×3) / (13 + 14 + 7 + 0.5×3 + 0.5×3) × 100 = 14.5 / 36 × 100 ≈ 40%
+
+Previous: 25% — climbed +15 due to Wave 17.5 visual parity sweep evidence.
 
 ---
 
@@ -110,3 +112,18 @@ These are host-shell concerns. Listed for completeness but not blocking org-hier
 | ruleId | Title | Source | Destination | Status | Reason | Next action | Last checked | Related |
 |---|---|---|---|---|---|---|---|---|
 | UIUX-042 | 6-digit OTP boxes split 3+3 with separator | HTML §14 | uses lib OTP | partially_applied | Lib component used, exact 3+3 split needs verify | Visual sweep | 2026-05-14 | `<falcon-angular-otp>` |
+| UIUX-043 | OTP modal reachable for verification | HTML §14 | not exercised | blocked | Wave 17.5 sweep did NOT open the OTP modal to avoid mutating test state | Schedule dedicated OTP test pass with a clean user | 2026-05-14 | `<falcon-angular-otp>` |
+
+## Parity findings from Wave 17.5 sweep (2026-05-14)
+
+These 7 rules were logged during the live HTML-vs-Angular comparison.
+
+| ruleId | Title | Source | Destination | Status | Reason | Next action | Last checked | Related |
+|---|---|---|---|---|---|---|---|---|
+| UIUX-PARITY-001 | Page title text reads "Organization Hierarchy" | HTML page title + sidebar entry | "Org Hierarchy" | not_applied | Mismatch — Angular truncated form | Update `i18n.module.title` or page header binding | 2026-05-14 | host-shell |
+| UIUX-PARITY-002 | Sidebar has SINGLE "Organization Hierarchy" entry | HTML §2 | Angular sidebar shows 3 entries (`Org Hierarchy (Admin)`, `Organization Hierarchy (New Page)`, `Organization Hierarchy`) | not_applied | Dev/migration pollution in host-shell nav | Remove the 2 extra entries from host-shell nav config | 2026-05-14 | host-shell |
+| UIUX-PARITY-003 | Tree uses React reference seed (Al-Rajhi, SNB, Bupa, Aramco w/ 5 children incl. Contact Center sub-tree, BMW Group) | HTML §4 + data.jsx | Tree uses dev test data (`ammar/Ammar×3/ARB1/RB/BMW/mercedes/Aramco×2/Account1/...`) | not_applied | Dev seed different from source | If demo/QA use case: align seed; if production seed: out of scope | 2026-05-14 | none |
+| UIUX-PARITY-004 | BrandLogo per client (BMW conic gradient, Bupa red circle, etc.) renders | HTML §4 + data.jsx BrandLogo | dev seed uses generic letter icons | not_applied | Linked to seed-data gap; BrandLogo component may also be missing | Implement BrandLogo per brand OR align seed first | 2026-05-14 | none |
+| UIUX-PARITY-005 | Default-selected user row (Hajeer/u3 highlighted on first load) | HTML §6 line 1136 | not implemented | not_applied | Source `setSelected(new Set(['u3']))` not mirrored | Optional polish — implement if business value | 2026-05-14 | `<falcon-angular-data-table>` |
+| UIUX-PARITY-006 | Tree indent connector rails (elbow + rail-empty + rail-last spans) | HTML §4 | not visible | applicable | Visual indent connectors enhance hierarchy readability | Library upgrade to `<falcon-tree-panel>` (or override via consumer CSS) | 2026-05-14 | `<falcon-tree-panel>` |
+| UIUX-PARITY-007 | Hover-path teal stripe on ancestor rails | HTML §4 | not visible | applicable | Visual feedback for which ancestor chain belongs to hovered node | Library upgrade | 2026-05-14 | `<falcon-tree-panel>` |

@@ -2,6 +2,57 @@
 
 > Every page-level edit, dated. Source: git working tree + session reports + this brain log.
 
+## 2026-05-14 (afternoon) — Wave 17.5 Visual Parity Sweep
+
+### What happened
+
+Ammar approved the baseline registry, then directed the P1.1 sweep. Live HTML-vs-Angular comparison across 12 priority sections completed.
+
+### Sources verified live
+
+- HTML @ `http://localhost:8765` — 200 OK
+- React @ `http://localhost:5500` — 200 OK
+- Angular @ `http://localhost:4200` — 200 OK, logged in
+
+### Score deltas
+
+| Metric | Before | After | Δ |
+|---|---|---|---|
+| Page Understanding % | 16% | **23%** | +7 |
+| UI/UX | 25% | **40%** | +15 |
+| Business | 10% | 10% | — |
+| Validation | 5% | 5% | — |
+| Gaps Resolved | 20% | **25%** | +5 |
+| Visual Parity | 35% | **52%** | +17 |
+| Source Understanding | 70% | **80%** | +10 |
+
+### Rules added (7 new UI/UX rules)
+
+UIUX-PARITY-001 through UIUX-PARITY-007 — see `UI_UX_RULES.md`.
+
+### Gaps added (5 new)
+
+GAP-PARITY-001 through GAP-PARITY-005 — see `GAP_REGISTRY.md`.
+
+### Approval state
+
+PENDING — Wave 17.5 update awaits Ammar approval signal.
+
+### Wave report
+
+`C:\Falcon\Brain Outputs\reports\org-hierarchy-page-night-shift-2026-05-14\wave-17.5-visual-parity-sweep.md`
+
+---
+
+## 2026-05-14 (morning) — Approval of baseline registry
+
+- Ammar approved the baseline registry (commit `ce33cb2`)
+- Mirrored 22 files to `Brain SK\outputs\`
+- Updated `_obsidian\AMMAR_BRAIN_HOME.md` + created `_obsidian\PAGES_INDEX.md`
+- Pushed to `github.com/ammarmaher/brain` `main` branch
+
+---
+
 ## 2026-05-14 — Wave 18 + Brain SK page-knowledge bootstrap
 
 ### Code edits (visual polish + library cleanup)

@@ -68,4 +68,18 @@
 4. Update each section's parity %
 5. Update timestamps in `_scan-state/page-scan-metadata.json`
 
-Currently BLOCKED on browser selection from Chrome MCP — same as `visual-parity-report.md` reports.
+## Wave 17.5 sweep — completed 2026-05-14
+
+Live HTML-vs-Angular comparison ran across 12 priority sections. Full findings in:
+`Brain Outputs\reports\org-hierarchy-page-night-shift-2026-05-14\wave-17.5-visual-parity-sweep.md`
+
+### Key mismatches captured
+
+1. **Page title** — "Organization Hierarchy" (source) vs "Org Hierarchy" (Angular)
+2. **Sidebar** — 1 entry (source) vs 3 entries in Angular (Admin/NewPage/regular)
+3. **Tree seed** — React reference seed (Al-Rajhi/SNB/Bupa/Aramco/BMW) vs Angular dev test seed
+4. **BrandLogo** — Per-brand custom icons (source) vs generic letters (Angular)
+5. **Default-selected user** — Hajeer/u3 highlighted on load (source) vs no default (Angular)
+6. **Tree indent rails** — Visible connector lines (source) vs not visible (Angular)
+7. **Hover-path teal stripe** — Visible (source) vs not visible (Angular)
+8. **Row kebab + More Details** — Working (source) vs DELETED (Angular per Wave 18 intentional)

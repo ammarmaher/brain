@@ -4,11 +4,20 @@
 
 ## Priority 1 — Unblock dimension scores (each currently below 60% NEEDS-ATTENTION threshold)
 
-### P1.1 — Run the Wave 17 visual parity sweep (12 sections)
-- **Why**: unblocks UIUX dimension from 25% → ~55%; unblocks Visual Parity scorecard from 35% → ~70%
-- **How**: Ammar picks a Chrome MCP browser deviceId; then say "run W17 visual parity sweep"
-- **Output**: per-section pass/fail with screenshots → updates `VISUAL_PARITY_SCORECARD.md`
-- **Estimated impact**: lift ~30 unknown UI/UX rules to applied/not_applied
+### P1.1 — ✅ DONE — Wave 17.5 Visual Parity Sweep (12 sections)
+- **Completed**: 2026-05-14
+- **Result**: UIUX 25% → 40%, Visual Parity 35% → 52%, Page % 16% → 23%
+- **Report**: `Brain Outputs\reports\org-hierarchy-page-night-shift-2026-05-14\wave-17.5-visual-parity-sweep.md`
+- **Status**: PENDING Ammar approval
+
+### P1.1b — Fix parity gaps discovered in Wave 17.5 (in priority order)
+1. **GAP-PARITY-002** (MEDIUM) — Clean host-shell sidebar to ONE org-hierarchy entry (remove `Org Hierarchy (Admin)` and `Organization Hierarchy (New Page)` duplicates). Requires Ammar confirmation.
+2. **GAP-PARITY-001** (LOW) — Fix page title "Org Hierarchy" → "Organization Hierarchy" + breadcrumb.
+3. **GAP-PARITY-003** (MEDIUM, demo scope) — Decide: align tree seed with React reference OR keep dev seed.
+4. **GAP-PARITY-004** (LOW) — BrandLogo per client (BMW conic, Bupa red, etc.) — only if seed aligned first.
+5. **GAP-PARITY-005** (LOW) — Default-selected user row (Hajeer/u3) — optional polish.
+6. **UIUX-PARITY-006** (applicable) — Tree indent connector rails — library upgrade.
+7. **UIUX-PARITY-007** (applicable) — Hover-path teal stripe — library upgrade.
 
 ### P1.2 — Validate every wizard step against React source
 - **Why**: unblocks UIUX + Validation + Business dimensions

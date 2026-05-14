@@ -13,7 +13,7 @@
 
 | Page | Status | Page % | UI/UX | Business | Validation | Gaps Resolved | Last updated |
 |---|---|---|---|---|---|---|---|
-| [organization-hierarchy](../../Brain%20Outputs/understanding/pages/organization-hierarchy/PAGE_OVERVIEW.md) | PENDING — NEEDS ATTENTION | 16% | 25% | 10% | 5% | 20% | 2026-05-14 |
+| [organization-hierarchy](../../Brain%20Outputs/understanding/pages/organization-hierarchy/PAGE_OVERVIEW.md) | baseline APPROVED + Wave 17.5 PENDING — NEEDS ATTENTION | **23%** ↑ | **40%** ↑ | 10% | 5% | **25%** ↑ | 2026-05-14 (post Wave 17.5) |
 
 ## Latest baseline — `organization-hierarchy` (2026-05-14)
 

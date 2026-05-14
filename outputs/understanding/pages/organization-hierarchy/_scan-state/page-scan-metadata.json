@@ -2,9 +2,11 @@
   "page": "admin-console/org-hierarchy-page",
   "registryVersion": "1.0.0",
   "schemaVersion": "page-knowledge.v1",
-  "lastPageScanAt": "2026-05-14T08:35:00Z",
-  "lastSourceTruthCheckedAt": "2026-05-14T08:30:00Z",
-  "lastDestinationCheckedAt": "2026-05-14T08:32:00Z",
+  "lastPageScanAt": "2026-05-14T13:30:00Z",
+  "lastSourceTruthCheckedAt": "2026-05-14T13:25:00Z",
+  "lastDestinationCheckedAt": "2026-05-14T13:28:00Z",
+  "lastWaveSweepAt": "2026-05-14T13:30:00Z",
+  "lastWaveSweepReport": "C:\\Falcon\\Brain Outputs\\reports\\org-hierarchy-page-night-shift-2026-05-14\\wave-17.5-visual-parity-sweep.md",
   "lastEditedBy": "Ammar Mk",
   "lastEditedAt": "2026-05-14T08:32:00Z",
   "sourceFilesChecked": [
@@ -29,20 +31,20 @@
     "C:\\Falcon\\Brain Outputs\\reports\\falcon-ui-library-learnings\\2026-05-14-org-hierarchy-data-table\\index.md"
   ],
   "currentScores": {
-    "pageUnderstandingPct": 16,
+    "pageUnderstandingPct": 23,
     "dimensions": {
-      "uiux": 25,
+      "uiux": 40,
       "business": 10,
       "validation": 5,
-      "gapsResolved": 20
+      "gapsResolved": 25
     },
     "auxiliary": {
-      "sourceUnderstandingPct": 70,
+      "sourceUnderstandingPct": 80,
       "destinationImplementationPct": 55,
-      "visualParityPct": 35,
+      "visualParityPct": 52,
       "businessRuleCoveragePct": 10,
       "validationCoveragePct": 5,
-      "gapResolutionPct": 20,
+      "gapResolutionPct": 25,
       "componentReusePct": 80,
       "testCoveragePct": 0
     },
@@ -53,23 +55,23 @@
       "gapsResolved": 0.20
     },
     "needsAttentionFlag": true,
-    "needsAttentionReason": "All four dimensions below 60% threshold"
+    "needsAttentionReason": "All four dimensions still below 60% threshold post Wave 17.5"
   },
   "ruleCounts": {
-    "totalRules": 69,
-    "appliedRules": 16,
-    "notAppliedRules": 16,
-    "applicableRules": 23,
+    "totalRules": 76,
+    "appliedRules": 18,
+    "notAppliedRules": 22,
+    "applicableRules": 25,
     "notApplicableRules": 5,
     "partiallyAppliedRules": 3,
-    "unknownRules": 6,
-    "blockedRules": 0
+    "unknownRules": 1,
+    "blockedRules": 2
   },
   "gapCounts": {
-    "totalGaps": 14,
+    "totalGaps": 19,
     "resolved": 3,
     "openBlocking": 0,
-    "openPending": 9,
+    "openPending": 14,
     "deferred": 2
   },
   "componentsTracked": [
@@ -81,8 +83,17 @@
     "<app-falcon-status>",
     "<app-falcon-custom-table-footer>"
   ],
-  "approvalState": "PENDING",
-  "approvalHistory": [],
+  "approvalState": "BASELINE_APPROVED__WAVE17.5_PENDING",
+  "approvalHistory": [
+    {
+      "date": "2026-05-14T13:01:11Z",
+      "approver": "Ammar",
+      "phrase": "Approved. The Organization Hierarchy Page Registry baseline is accepted.",
+      "scope": "baseline",
+      "pagePctAtApproval": 16,
+      "commitHash": "ce33cb29e597230be60d64d3bb132439576507d1"
+    }
+  ],
   "nextScheduledScan": "incremental — on next change",
   "incrementalRules": {
     "triggerOnSourceChange": true,

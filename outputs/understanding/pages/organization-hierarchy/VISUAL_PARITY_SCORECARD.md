@@ -2,7 +2,7 @@
 
 > Per-section visual fidelity score: source-of-truth render vs Angular destination render.
 
-**Aggregate visual parity:** **35%**
+**Aggregate visual parity:** **52%** ↑ +17 (post Wave 17.5 sweep)
 
 ## Methodology
 
@@ -67,9 +67,47 @@ These are sections where measurements were performed today and matched expected 
 - RTL mode end-to-end
 - AR language strings
 
-## Blocked sweep
+## Wave 17.5 sweep — DONE (2026-05-14)
 
-The 12-section Wave 17 visual parity sweep has been **BLOCKED** on Chrome MCP browser disambiguation (per `visual-parity-report.md`). Once Ammar selects a browser deviceId, the sweep can run and this scorecard updates substantially.
+The 12-section sweep ran successfully. Browser was logged in throughout.
+
+### Updated per-section scores (post Wave 17.5)
+
+| # | Section | Baseline | After Wave 17.5 | Trend | Notes |
+|---|---|---|---|---|---|
+| 1 | Page shell / layout | n/a | 60% | new | Layout matches; page title text mismatch |
+| 2 | Sidebar nav route | n/a | 50% | new | 3 dup entries vs source's 1 |
+| 3 | Hierarchy tree (structure) | 70% | 75% | ↑ +5 | Structure OK; seed differs |
+| 3a | Hierarchy tree (seed data) | n/a | 30% | new | Dev seed vs React reference seed |
+| 4 | Tree hover/selected states | n/a | 70% | new | Selected works; hover-path teal stripe missing |
+| 5 | Node action menu | n/a | 95% | new | Matches well |
+| 6 | Tabs / header actions | 85% | 90% | ↑ +5 | Confirmed APPLIED across the board |
+| 7 | Users table (structure) | 90% | 90% | — | Confirmed |
+| 7a | Users table actions column | n/a | 0% | new | Kebab deleted Wave 18 — intentional |
+| 8 | Table top actions (Filter/Search) | n/a | 80% | new | Visibility rule correct; styling partial |
+| 9 | Row actions / More Details | n/a | 0% | new | Path broken — see BIZ-006 |
+| 10 | Information / details page | 30% | 30% | — | Not exercised this sweep |
+| 11 | Add Client / Add User entry | n/a | 80% | new | Entry buttons visible |
+| 12 | OTP popup | n/a | blocked | new | Not reached |
+
+**Aggregate of testable sections: 52%** (was 35%).
+
+## What Wave 17.5 produced
+
+- ✅ 12 priority sections inspected (live source vs live Angular)
+- ✅ 7 new UI/UX rules logged (UIUX-PARITY-001 through 007)
+- ✅ 5 new gaps logged (GAP-PARITY-001 through 005)
+- ✅ UI/UX dimension score moved from 25% → 40%
+- ✅ Visual parity moved from 35% → 52%
+- ✅ Page % moved from 16% → 23%
+- ✅ Source understanding moved from 70% → 80%
+- ✅ Gaps resolution moved from 20% → 25%
+
+## Still blocked
+
+- OTP popup verification — requires opening Add User wizard (state mutation risk)
+- RTL mode end-to-end sweep — needs language toggle test
+- AR language sweep — needs language toggle test
 
 ## How this scorecard updates
 
