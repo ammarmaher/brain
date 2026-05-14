@@ -98,8 +98,8 @@
 
 ## BUG-2026-05-14-004 — `<falcon-angular-menu>` wrapper `syncProps()` resets `open` + `anchorEl` on every change *(HIGH SEVERITY)*
 
-**Severity:** Bug — HIGH (makes popup mechanism non-functional in reactive scenarios)
-**Status:** PENDING — partially mitigated by deleting the menu from `<falcon-angular-data-table>` template (2026-05-14)
+**Severity:** Bug — HIGH (was making popup mechanism non-functional in reactive scenarios)
+**Status:** **RESOLVED 2026-05-14 Wave 19** — `ngOnChanges` now uses `SimpleChanges` to sync ONLY the changed inputs; full sync only happens once in `ngAfterViewInit`. Empirically verified: row kebab → popup opens → STAYS open (no programmatic auto-close); "More Details" item clickable → drilldown opens.
 
 ### Previous state
 - `falcon-menu.component.ts` `ngOnChanges() → syncProps()` (line 96-124) unconditionally writes ALL inputs to the Stencil element on every change cycle:

@@ -18,7 +18,7 @@
 | # | Component selector | Layer | Score | Status | Used in pages | Open comments | Last update |
 |---|---|---|---|---|---|---|---|
 | 1 | `<falcon-angular-data-table>` + `<falcon-table-tw>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
-| 2 | `<falcon-angular-menu>` + `<falcon-menu-tw>` | Library | **60%** | PENDING — BLOCKED | (lib bug — not safely usable, see BUG-004) | BUG-004 syncProps reset | 2026-05-14 |
+| 2 | `<falcon-angular-menu>` + `<falcon-menu-tw>` | Library | **80%** | **UNBLOCKED — pending re-approval** | admin-console/org-hierarchy-page (data-table row actions) | BUG-004 syncProps reset **RESOLVED** Wave 19; menu now opens row-action popup correctly | 2026-05-14 |
 | 3 | `<falcon-angular-paginator>` + `<falcon-paginator-tw>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page (via custom footer) | none | 2026-05-14 |
 | 4 | `<falcon-angular-tabs>` + `<falcon-tabs-tw>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
 | 5 | `<falcon-tree-panel>` | Library | **100%** | **APPROVED** | admin-console/org-hierarchy-page | none | 2026-05-14 |
