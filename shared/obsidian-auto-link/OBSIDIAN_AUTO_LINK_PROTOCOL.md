@@ -114,3 +114,25 @@ Every time `domains/frontend/component-knowledge/incremental-scan/SKILL.md` prod
   - The same metadata + latest report links so the component dossier index always exposes the freshness state
 
 **Hard constraint:** never touch `_obsidian/.obsidian/` plugin data files (Copilot/autopilot API keys, workspace state). Limit additive edits to the human-readable Markdown indexes listed above.
+
+## Page Learning System — Obsidian Link Block
+
+Every time `domains/frontend/page-learning/SKILL.md` runs (Light or Deep), the auto-link layer must additively refresh:
+
+- `_obsidian/PAGE_KNOWLEDGE_INDEX.md` — per-page links to:
+  - `[PAGE_LEARNING.md](../../Brain%20Outputs/understanding/pages/<page>/PAGE_LEARNING.md)`
+  - `[LIGHT_LEARNING_EVENTS.md](../../Brain%20Outputs/understanding/pages/<page>/LIGHT_LEARNING_EVENTS.md)`
+  - `[PENDING_PAGE_PATTERNS.md](../../Brain%20Outputs/understanding/pages/<page>/PENDING_PAGE_PATTERNS.md)`
+  - `[APPROVED_PAGE_PATTERNS.md](../../Brain%20Outputs/understanding/pages/<page>/APPROVED_PAGE_PATTERNS.md)`
+  - `[PROMOTION_CANDIDATES.md](../../Brain%20Outputs/understanding/pages/<page>/PROMOTION_CANDIDATES.md)`
+  - `[EVIDENCE_INDEX.md](../../Brain%20Outputs/understanding/pages/<page>/EVIDENCE_INDEX.md)`
+  - `[COMPONENT_USAGE_DECISIONS.md](../../Brain%20Outputs/understanding/pages/<page>/COMPONENT_USAGE_DECISIONS.md)`
+  - `[LEARNING_CHANGE_HISTORY.md](../../Brain%20Outputs/understanding/pages/<page>/LEARNING_CHANGE_HISTORY.md)`
+
+- `_obsidian/PAGES_INDEX.md` — adds a "Learning System" sub-block per page listing the same files.
+
+- `_obsidian/FRONTEND_INDEX.md` — under a heading `## Global Frontend Patterns`, links every file in `Brain Outputs/understanding/frontend/patterns/`.
+
+**Pending-only marker:** when a page has `PENDING_PAGE_PATTERNS.md` non-empty, append `(N pending)` next to the page name in `PAGE_KNOWLEDGE_INDEX.md`. Never auto-promote.
+
+**Hard constraint repeated:** no edits to `_obsidian/.obsidian/`, Copilot `data.json`, plugin workspace files, or any secret file. Page Learning operates on Markdown indexes only.

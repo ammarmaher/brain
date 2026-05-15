@@ -6,10 +6,25 @@
 
 > Page-level knowledge sits under `C:\Falcon\Brain Outputs\understanding\pages\`. This index links the pages Falcon Eyes commonly compares.
 
-## Organization Hierarchy page
+## Organization Hierarchy page (1 pending)
 
 - [Page knowledge folder](../../Brain%20Outputs/understanding/pages/organization-hierarchy/)
 - Falcon Eyes default scope target — see [[FALCON_EYES_INDEX]].
+
+### Page Learning System files
+
+- [PAGE_LEARNING](../../Brain%20Outputs/understanding/pages/organization-hierarchy/PAGE_LEARNING.md) — entry point + mode + scoring
+- [LIGHT_LEARNING_EVENTS](../../Brain%20Outputs/understanding/pages/organization-hierarchy/LIGHT_LEARNING_EVENTS.md)
+- [PENDING_PAGE_PATTERNS](../../Brain%20Outputs/understanding/pages/organization-hierarchy/PENDING_PAGE_PATTERNS.md) — **PP-001** Falcon Data Table mandate (pending Ammar approval)
+- [APPROVED_PAGE_PATTERNS](../../Brain%20Outputs/understanding/pages/organization-hierarchy/APPROVED_PAGE_PATTERNS.md)
+- [REJECTED_PAGE_PATTERNS](../../Brain%20Outputs/understanding/pages/organization-hierarchy/REJECTED_PAGE_PATTERNS.md)
+- [PROMOTION_CANDIDATES](../../Brain%20Outputs/understanding/pages/organization-hierarchy/PROMOTION_CANDIDATES.md) — PP-001 proposed for global `TABLE_PATTERN.md`
+- [API_RULES](../../Brain%20Outputs/understanding/pages/organization-hierarchy/API_RULES.md)
+- [EVIDENCE_INDEX](../../Brain%20Outputs/understanding/pages/organization-hierarchy/EVIDENCE_INDEX.md)
+- [COMPONENT_USAGE_DECISIONS](../../Brain%20Outputs/understanding/pages/organization-hierarchy/COMPONENT_USAGE_DECISIONS.md)
+- [LEARNING_CHANGE_HISTORY](../../Brain%20Outputs/understanding/pages/organization-hierarchy/LEARNING_CHANGE_HISTORY.md)
+
+Skill: [page-learning](../domains/frontend/page-learning/SKILL.md). Approval gate: [APPROVAL_LEARNING_GATE](../protocols/APPROVAL_LEARNING_GATE.md). Global patterns: see [[FRONTEND_INDEX]] → "Global Frontend Patterns".
 
 ### Default Falcon Eyes sections for this page
 

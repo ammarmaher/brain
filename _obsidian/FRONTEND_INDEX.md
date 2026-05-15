@@ -124,3 +124,22 @@ The `parallel-agents\` subtree under the legacy `component-registry` is intentio
 - `C:\Falcon\Brain Outputs\frontend-understanding`
 - `C:\Falcon\Brain SK\outputs\component-registry`
 - `C:\Falcon\Brain SK\outputs\frontend-understanding`
+
+## Global Frontend Patterns
+
+> Promoted page patterns only — promotion requires Ammar to say `promote this globally`. See [page-learning SKILL.md](../domains/frontend/page-learning/SKILL.md) and [APPROVAL_LEARNING_GATE.md](../protocols/APPROVAL_LEARNING_GATE.md).
+
+- [patterns README](../../Brain%20Outputs/understanding/frontend/patterns/README.md)
+- [TABLE_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/TABLE_PATTERN.md) — _seed; pending promotion candidates inbound from `organization-hierarchy / PP-001`_
+- [TABS_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/TABS_PATTERN.md) — seed
+- [FORM_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/FORM_PATTERN.md) — seed
+- [BUTTON_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/BUTTON_PATTERN.md) — seed
+- [POPUP_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/POPUP_PATTERN.md) — seed
+- [VALIDATION_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/VALIDATION_PATTERN.md) — seed
+- [API_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/API_PATTERN.md) — seed
+- [PAGE_SECTION_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/PAGE_SECTION_PATTERN.md) — seed
+- [FALCON_COMPONENT_CUSTOMIZATION_PATTERN](../../Brain%20Outputs/understanding/frontend/patterns/FALCON_COMPONENT_CUSTOMIZATION_PATTERN.md) — seed (carries the canonical customization order)
+
+## Page Learning System (2026-05-15)
+
+Two-mode learning (Light + Deep) keyed per page under `Brain Outputs/understanding/pages/<page>/`. Skill: [page-learning](../domains/frontend/page-learning/SKILL.md). Per-page index: [[PAGE_KNOWLEDGE_INDEX]].

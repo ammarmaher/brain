@@ -16,6 +16,7 @@ When a task touches Angular/frontend implementation, always apply:
 
 ## Specialist skill sources
 
+- `domains/frontend/page-learning/SKILL.md` — **Page Learning** two-mode learning (Light Learning Intake + Deep Page Learning). Always-on for every prompt/screenshot/bug/correction. Deep mode triggers: `deep learn this page`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page`. Writes to `Brain Outputs/understanding/pages/<page>/`.
 - `domains/frontend/falcon-eyes/SKILL.md` — **Falcon Eyes** semantic visual difference QA (canonical). Aliases: `domains/frontend/visual-difference-qa/SKILL.md`, `domains/frontend/visual-parity/SKILL.md`. Pre-requisite for any UI fix when visual parity < 90 % or when Ammar asks about source-vs-destination screenshot differences.
 - `skills/frontend-master-router/SKILL.md`
 - `skills/html-to-angular/SKILL.md`

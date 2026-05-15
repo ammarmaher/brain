@@ -203,3 +203,22 @@ Aliases: [`domains/frontend/visual-difference-qa/SKILL.md`](domains/frontend/vis
 Tool: `tools/falcon-eyes/` — isolated `package.json`. Reports land at `C:\Falcon\Brain Outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\`.
 
 Falcon Eyes is the **semantic** layer over screenshots. It maps every mismatch to a Falcon component, asks which dynamic input / `ng-template` / slot / token / upgrade is needed, and enforces the customization order (inputs → templates → slots → tokens → shared upgrade → new component → wrapper → raw as GAP). It NEVER repairs UI automatically — repair is a separate explicit task.
+
+## Permanent Rule: Page Learning System
+
+Every page Ammar works on has a learning folder under `C:\Falcon\Brain Outputs\understanding\pages\<page-name>\`. Brain SK runs two modes:
+
+- **Light Learning Intake** — automatic on every prompt, screenshot, bug, correction, red X, green tick. Saves evidence, classifies, writes a `pending` event to `LIGHT_LEARNING_EVENTS.md` and (if a rule emerges) to `PENDING_PAGE_PATTERNS.md`. NEVER approves or promotes.
+- **Deep Page Learning** — explicit only. Triggers: `deep learn this page`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page`. Moves rules from pending → approved/rejected/promoted, recomputes `PAGE_SCORECARD.md`, appends to `LEARNING_CHANGE_HISTORY.md`, refreshes Obsidian indexes.
+
+Canonical skill: [`domains/frontend/page-learning/SKILL.md`](domains/frontend/page-learning/SKILL.md).
+Global patterns folder (promotion target): `C:\Falcon\Brain Outputs\understanding\frontend\patterns\`.
+Approval gate: [`protocols/APPROVAL_LEARNING_GATE.md`](protocols/APPROVAL_LEARNING_GATE.md) — nothing becomes approved without Ammar saying so in words; nothing becomes global without `promote this globally`.
+
+Hard constraints:
+
+- Scores in `PAGE_SCORECARD.md` are computed from APPROVED files only — pending entries never count.
+- Any dimension < 60 % → `NEEDS ATTENTION` regardless of aggregate.
+- Screenshot interpretation is NEVER an approval.
+- Page-specific rules stay page-specific by default.
+- Mirror to `Brain SK\outputs\` is additive only (`robocopy /E /XO`, never `/MIR`).

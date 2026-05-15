@@ -8,6 +8,8 @@
 | Convert HTML to Angular | Frontend | html-to-angular, Angular best practice, Tailwind-only, Falcon component registry, visual parity |
 | Convert React to Angular | Frontend | react-to-angular, Angular best practice, Tailwind-only, component upgrade, visual parity |
 | Visual difference / parity / source-vs-destination screenshots / "why this table doesn't look like that" / Night Shift visual repair | Frontend | **falcon-eyes** (canonical) — aliases `visual-difference-qa` and `visual-parity` route here. Pre-requisite for any UI fix when parity < 90 %. |
+| Any prompt / screenshot / bug / correction touching a page | Frontend | **page-learning** Light Learning Intake (always-on). Writes a `pending` event to `Brain Outputs/understanding/pages/<page>/LIGHT_LEARNING_EVENTS.md`. Never approves. |
+| `deep learn this page`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page` | Frontend | **page-learning** Deep Page Learning. Walks pending events and applies Ammar's approve / reject / promote / deprecate per item. |
 | Analyze controller / DTO / API | Backend | backend-api-understanding, DTO dictionary, validation/error map, gateway map |
 | UI is done, link backend | Full Stack | backend API understanding, FE/BE contract mapping, validation sync, integration tests |
 | Generate report | Shared | task-report-generator, data-visualization (analytics), PDF/report skill |
