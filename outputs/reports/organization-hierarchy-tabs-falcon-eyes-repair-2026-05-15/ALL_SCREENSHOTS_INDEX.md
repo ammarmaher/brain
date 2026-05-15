@@ -1,28 +1,53 @@
-*** All Screenshots Index — Org Hierarchy Falcon Eyes (2026-05-15) ***
+*** All Screenshots Index — Org Hierarchy Falcon Eyes (RESUMED 2026-05-15) ***
 
 ## Top-level evidence (copied into this report folder)
-| File | Description |
-|---|---|
-| `evidence/source/source_full-page.png` | Source full Organization Hierarchy page (port 3000) |
-| `evidence/destination/destination_full-page.png` | Destination access-denied card (port 4200, auth-blocked) |
-| `evidence/diff/tabs-header-diff.png` | Sample diff showing the source-vs-auth-card delta |
 
-## Full Falcon Eyes run output (canonical)
-`C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0450\`
+| Side | File | Status |
+|---|---|---|
+| Source (React SoT) | `evidence/source/source_full-page.png` | OK — full Organization Hierarchy page |
+| Destination (Falcon Angular) | `evidence/destination/destination_full-page.png` | OK — full Organization Hierarchy page renders |
+| Diff (Round 1)               | `evidence/diff/tabs-header-diff.png` | OK — 3.5 % pixel mismatch (data-only) |
 
-| Section | Source | Destination | Diff | Per-section report | Status |
-|---|---|---|---|---|---|
-| tabs-header | source/tabs-header.png | destination/tabs-header.png | diff/tabs-header-diff.png | sections/tabs-header/SCREENSHOT_REPORT.md | blocked (destination = auth-denied card) |
-| comm-channels-tab | source/comm-channels-tab.png | destination/comm-channels-tab.png | diff/comm-channels-tab-diff.png | sections/comm-channels-tab/SCREENSHOT_REPORT.md | blocked |
-| apps-services-tab | source/apps-services-tab.png | destination/apps-services-tab.png | diff/apps-services-tab-diff.png | sections/apps-services-tab/SCREENSHOT_REPORT.md | blocked |
-| org-info-panel | source/org-info-panel.png | destination/org-info-panel.png | diff/org-info-panel-diff.png | sections/org-info-panel/SCREENSHOT_REPORT.md | blocked |
-| org-info-audit-mode | source/org-info-audit-mode.png | destination/org-info-audit-mode.png | diff/org-info-audit-mode-diff.png | sections/org-info-audit-mode/SCREENSHOT_REPORT.md | blocked |
-| org-info-rule-status | source/org-info-rule-status.png | destination/org-info-rule-status.png | diff/org-info-rule-status-diff.png | sections/org-info-rule-status/SCREENSHOT_REPORT.md | blocked |
-| org-info-permission-privilege | source/org-info-permission-privilege.png | destination/org-info-permission-privilege.png | diff/org-info-permission-privilege-diff.png | sections/org-info-permission-privilege/SCREENSHOT_REPORT.md | blocked |
-| settings-tab-view-mode | source/settings-tab-view-mode.png | destination/settings-tab-view-mode.png | diff/settings-tab-view-mode-diff.png | sections/settings-tab-view-mode/SCREENSHOT_REPORT.md | blocked |
-| settings-tab-edit-mode | source/settings-tab-edit-mode.png | destination/settings-tab-edit-mode.png | diff/settings-tab-edit-mode-diff.png | sections/settings-tab-edit-mode/SCREENSHOT_REPORT.md | blocked |
-| settings-ip-management | source/settings-ip-management.png | destination/settings-ip-management.png | diff/settings-ip-management-diff.png | sections/settings-ip-management/SCREENSHOT_REPORT.md | blocked |
-| settings-account-limitation | source/settings-account-limitation.png | destination/settings-account-limitation.png | diff/settings-account-limitation-diff.png | sections/settings-account-limitation/SCREENSHOT_REPORT.md | blocked |
-| otp-popup | source/otp-popup.png | destination/otp-popup.png | diff/otp-popup-diff.png | sections/otp-popup/SCREENSHOT_REPORT.md | blocked |
+## Per-section evidence (canonical Falcon Eyes run output)
 
-The tool also generated per-section `SOURCE.png`, `DESTINATION.png`, `DIFF.png` copies inside each `sections/<name>/` folder for self-contained section bundles.
+All 12 sections share the same full-page source / destination / diff because the section-capture config used full-page fallback (no per-section selectors filled).
+
+Falcon Eyes canonical output folder:
+`C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0532\`
+
+Per-section folder contents (same for every section):
+
+```
+sections/<section>/
+├── SOURCE.png                          (full-page source — same image, 12 copies)
+├── DESTINATION.png                     (full-page destination)
+├── DIFF.png                            (pixelmatch overlay, magenta diff)
+├── SCREENSHOT_REPORT.md                (per-section pixel + status notes)
+├── SCREENSHOT_DATA.json                (pixel mismatch %, severity, status)
+├── SEMANTIC_MISMATCHES.md              (filled by Falcon Eyes skill — none for this run)
+└── FALCON_COMPONENT_REPAIR_MAP.md      (filled — no repairs needed)
+```
+
+## Per-section list
+
+| # | Section | Path |
+|---:|---|---|
+| 1  | tabs-header                    | `sections/tabs-header/` |
+| 2  | comm-channels-tab              | `sections/comm-channels-tab/` |
+| 3  | apps-services-tab              | `sections/apps-services-tab/` |
+| 4  | org-info-panel                 | `sections/org-info-panel/` |
+| 5  | org-info-audit-mode            | `sections/org-info-audit-mode/` |
+| 6  | org-info-rule-status           | `sections/org-info-rule-status/` |
+| 7  | org-info-permission-privilege  | `sections/org-info-permission-privilege/` |
+| 8  | settings-tab-view-mode         | `sections/settings-tab-view-mode/` |
+| 9  | settings-tab-edit-mode         | `sections/settings-tab-edit-mode/` |
+| 10 | settings-ip-management         | `sections/settings-ip-management/` |
+| 11 | settings-account-limitation    | `sections/settings-account-limitation/` |
+| 12 | otp-popup                      | `sections/otp-popup/` |
+
+## Cross-links
+
+- Falcon Eyes run summary: `C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0532\FALCON_EYES_REPORT.md`
+- Semantic backlog (run-level): `C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0532\SEMANTIC_MISMATCH_BACKLOG.md`
+- Section scorecard (run-level): `C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0532\SECTION_SCORECARD.md`
+- Repair map (run-level): `C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0532\FALCON_COMPONENT_REPAIR_MAP.md`

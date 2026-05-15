@@ -5,8 +5,8 @@
     "label": "T2 Falcon Admin (reference)"
   },
   "destination": {
-    "url": "http://localhost:4200/#/admin-console/org-hierarchy-page",
-    "label": "Falcon Angular admin-console/org-hierarchy-page"
+    "url": "http://localhost:4200/admin-console/org-hierarchy-page?visual-test=1",
+    "label": "Falcon Angular admin-console/org-hierarchy-page (visual-test bypass)"
   },
   "viewport": {
     "width": 1440,
@@ -15,7 +15,7 @@
   },
   "wait": {
     "state": "networkidle",
-    "extraDelayMs": 750
+    "extraDelayMs": 4500
   },
   "pixelmatch": {
     "threshold": 0.1,
@@ -32,7 +32,7 @@
     "writeMarkdown": true
   },
   "navigation": {
-    "preWaitForSelector": null,
+    "preWaitForSelector": "app-org-hierarchy-page-menu",
     "scrollToTopBeforeCapture": true
   },
   "headless": true

@@ -1,0 +1,223 @@
+{
+  "generatedAt": "2026-05-15T02:33:30.980Z",
+  "source": {
+    "url": "http://localhost:3000/T2%20Falcon%20Admin",
+    "label": "T2 Falcon Admin (reference)"
+  },
+  "destination": {
+    "url": "http://localhost:4200/#/admin-console/org-hierarchy-page",
+    "label": "Falcon Angular admin-console/org-hierarchy-page (visual-test bypass)"
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "deviceScaleFactor": 1
+  },
+  "wait": {
+    "state": "networkidle",
+    "extraDelayMs": 4500
+  },
+  "pixelmatch": {
+    "threshold": 0.1,
+    "includeAA": false,
+    "diffColor": [
+      255,
+      0,
+      255
+    ]
+  },
+  "sections": [
+    {
+      "name": "tabs-header",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\tabs-header.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\tabs-header.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\tabs-header-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "comm-channels-tab",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\comm-channels-tab.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\comm-channels-tab.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\comm-channels-tab-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "apps-services-tab",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\apps-services-tab.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\apps-services-tab.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\apps-services-tab-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "org-info-panel",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\org-info-panel.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\org-info-panel.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\org-info-panel-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "org-info-audit-mode",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\org-info-audit-mode.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\org-info-audit-mode.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\org-info-audit-mode-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "org-info-rule-status",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\org-info-rule-status.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\org-info-rule-status.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\org-info-rule-status-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "org-info-permission-privilege",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\org-info-permission-privilege.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\org-info-permission-privilege.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\org-info-permission-privilege-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "settings-tab-view-mode",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\settings-tab-view-mode.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\settings-tab-view-mode.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\settings-tab-view-mode-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "settings-tab-edit-mode",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\settings-tab-edit-mode.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\settings-tab-edit-mode.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\settings-tab-edit-mode-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "settings-ip-management",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\settings-ip-management.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\settings-ip-management.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\settings-ip-management-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "settings-account-limitation",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\settings-account-limitation.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\settings-account-limitation.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\settings-account-limitation-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    },
+    {
+      "name": "otp-popup",
+      "sourcePath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\source\\otp-popup.png",
+      "destinationPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\destination\\otp-popup.png",
+      "diffPath": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532\\diff\\otp-popup-diff.png",
+      "width": 1440,
+      "height": 900,
+      "diffPixels": 45318,
+      "totalPixels": 1296000,
+      "mismatchPercent": 3.4967592592592593,
+      "capturedAt": "2026-05-15T02:32:45.017Z",
+      "notes": [
+        "source: used full-page fallback",
+        "destination: used full-page fallback"
+      ]
+    }
+  ]
+}

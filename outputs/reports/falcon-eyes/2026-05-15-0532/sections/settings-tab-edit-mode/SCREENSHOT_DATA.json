@@ -1,0 +1,45 @@
+{
+  "section": "settings-tab-edit-mode",
+  "sourceUrl": "http://localhost:3000/T2%20Falcon%20Admin",
+  "destinationUrl": "http://localhost:4200/#/admin-console/org-hierarchy-page",
+  "capturedAt": "2026-05-15T02:32:45.017Z",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "deviceScaleFactor": 1
+  },
+  "pixel": {
+    "sourcePath": "source/settings-tab-edit-mode.png",
+    "destinationPath": "destination/settings-tab-edit-mode.png",
+    "diffPath": "diff/settings-tab-edit-mode-diff.png",
+    "sectionSourcePath": "sections/settings-tab-edit-mode/SOURCE.png",
+    "sectionDestinationPath": "sections/settings-tab-edit-mode/DESTINATION.png",
+    "sectionDiffPath": "sections/settings-tab-edit-mode/DIFF.png",
+    "width": 1440,
+    "height": 900,
+    "diffPixels": 45318,
+    "totalPixels": 1296000,
+    "mismatchPercent": 3.4967592592592593,
+    "perceptualScore": null
+  },
+  "semantic": {
+    "visualParityScore": null,
+    "differenceSummary": null,
+    "falconComponentsInvolved": [],
+    "tailwindOrTokenIssues": [],
+    "dynamicApiIssues": [],
+    "missingSharedComponentCapabilities": [],
+    "repairRecommendations": []
+  },
+  "severity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "status": "needs repair",
+  "notes": [
+    "source: used full-page fallback",
+    "destination: used full-page fallback"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "runStamp": "2026-05-15-0532",
+  "runRoot": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes\\2026-05-15-0532",
+  "generatedAt": "2026-05-15T02:33:30.977Z",
+  "source": {
+    "url": "http://localhost:3000/T2%20Falcon%20Admin",
+    "label": "T2 Falcon Admin (reference)"
+  },
+  "destination": {
+    "url": "http://localhost:4200/#/admin-console/org-hierarchy-page",
+    "label": "Falcon Angular admin-console/org-hierarchy-page (visual-test bypass)"
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "deviceScaleFactor": 1
+  },
+  "wait": {
+    "state": "networkidle",
+    "extraDelayMs": 4500
+  },
+  "pixelmatch": {
+    "threshold": 0.1,
+    "includeAA": false,
+    "diffColor": [
+      255,
+      0,
+      255
+    ]
+  },
+  "sectionCount": 12
+}

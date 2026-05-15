@@ -1,0 +1,47 @@
+# Screenshot Report — org-info-panel
+
+> Generated: 2026-05-15T02:33:30.998Z
+
+## Capture
+
+- **Section:** org-info-panel
+- **Source URL:** http://localhost:3000/T2%20Falcon%20Admin
+- **Destination URL:** http://localhost:4200/#/admin-console/org-hierarchy-page
+- **Capture timestamp:** 2026-05-15T02:32:45.017Z
+- **Viewport:** 1440x900 @ 1x
+- **Source screenshot (flat):** `source/org-info-panel.png`
+- **Destination screenshot (flat):** `destination/org-info-panel.png`
+- **Diff screenshot (flat):** `diff/org-info-panel-diff.png`
+- **Section folder screenshots:** `sections/org-info-panel/SOURCE.png`, `sections/org-info-panel/DESTINATION.png`, `sections/org-info-panel/DIFF.png`
+
+## Pixel layer (produced by Falcon Eyes tool)
+
+- **Pixel mismatch %:** 3.50%
+- **Diff pixels / total pixels:** 45318 / 1296000
+- **Diff image size:** 1440 x 900
+- **Perceptual score:** _(unavailable — install `odiff-bin` to populate)_
+
+## Semantic layer (filled by Falcon Eyes skill)
+
+- **Visual parity score for this section:** _TBD_
+- **Semantic difference summary:** _TBD_
+- **Falcon components involved:** _TBD_
+- **Tailwind / token issues:** _TBD_
+- **Dynamic API issues:** _TBD_
+- **Missing shared component capabilities:** _TBD_
+- **Repair recommendations:** _TBD_
+
+## Severity counters
+
+| P0 | P1 | P2 | P3 |
+|---:|---:|---:|---:|
+| 0 | 0 | 0 | 0 |
+
+## Status — needs repair
+
+`pass` / `needs repair` / `blocked` / `unknown` — the tool defaults this from pixel mismatch %. Falcon Eyes (the skill) overrides it after semantic review.
+
+## Notes
+
+- source: used full-page fallback
+- destination: used full-page fallback
