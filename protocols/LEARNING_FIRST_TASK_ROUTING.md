@@ -41,10 +41,10 @@ Before implementation, **load** (do not skip any). All paths anchor at the canon
 **Step 1:** If the user action has a **flow playbook** at `understanding/pages/<page>/flows/<Flow Name>.md`, load it FIRST. The playbook is the most concentrated source — it pre-cross-references PRD + backend + V-rules + components + permissions for that specific flow.
 
 Available Organization Hierarchy flow playbooks (Phase 2G):
-- `understanding/pages/organization-hierarchy/flows/Add Client.md` (5-step wizard)
-- `understanding/pages/organization-hierarchy/flows/Add User.md` (3-tab wizard)
-- `understanding/pages/organization-hierarchy/flows/Add Node.md` (sub-node creation)
-- `understanding/pages/organization-hierarchy/flows/Edit Node.md` (rename + scheduled rename)
+- `understanding/pages/organization-hierarchy/Add Client/` — **folder form (17 files)**. Load `README.md` first; drill into section files per task type. Sections: `00-OVERVIEW` · `01-PERMISSIONS` · `02-STEP_1_BASIC_INFO` · `03-STEP_2_SETTINGS` · `04-STEP_3_COMM_CHANNELS` · `05-STEP_4_APPS_SERVICES` · `06-STEP_5_ACCOUNT_OWNER` · `07-VALIDATIONS` · `08-BACKEND_API` · `09-COMPONENTS` · `10-KAFKA_SIDE_EFFECTS` · `11-STATE_TRANSITIONS` · `12-ERROR_STATES` · `13-GAPS_AND_DRIFTS` · `14-IMPLEMENTATION_CHECKLIST` · `PLAYBOOK` (full single-doc).
+- `understanding/pages/organization-hierarchy/flows/Add User.md` (3-tab wizard) — single file
+- `understanding/pages/organization-hierarchy/flows/Add Node.md` (sub-node creation) — single file
+- `understanding/pages/organization-hierarchy/flows/Edit Node.md` (rename + scheduled rename) — single file
 
 **Step 2-13:** then the standard load list:
 

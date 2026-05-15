@@ -1,16 +1,21 @@
 *** Flow Playbook — Add Client (5-step wizard) ***
-*** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\flows\Add Client.md ***
+*** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\Add Client\ (folder, 17 files) ***
 *** Page: Organization Hierarchy · PRD: PRD-01 Account Management · 2026-05-15 ***
 
 # Add Client — implementation playbook
 
-> Authoritative spec for the **Add Client** wizard on the Organization Hierarchy page. **Brain Outputs is the source of truth.** This vault note is the graph node that links the SoT to the rest of the typed knowledge graph (page · entities · V-rules · components · services).
+> Authoritative spec for the **Add Client** wizard on the Organization Hierarchy page. **Brain Outputs is the source of truth.** This vault note is the graph node that links the SoT folder to the rest of the typed knowledge graph (page · entities · V-rules · components · services).
 >
-> Scope: this playbook covers Add Client only. Sister flows — Add User, Add Node, Edit Node — live in adjacent files in the same `flows/` directory under Brain Outputs and are owned by separate specialists.
+> **The SoT is now a folder, not a single file.** Load `README.md` first; then drill into the section file matching your task. The original 62 KB single-doc playbook is preserved at `PLAYBOOK.md` inside the same folder.
+>
+> Scope: this playbook covers Add Client only. Sister flows — Add User, Add Node, Edit Node — still live as single files in the `flows/` directory under Brain Outputs and are owned by separate specialists.
 
 ## Source-of-truth pointers
 
-- [SoT playbook](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Add%20Client.md) — canonical implementation spec
+- **[SoT folder entry — README](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/README.md)** — folder index + per-task load order
+- [00-OVERVIEW](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/00-OVERVIEW.md) · [01-PERMISSIONS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/01-PERMISSIONS.md) · [02-STEP_1_BASIC_INFO](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/02-STEP_1_BASIC_INFO.md) · [03-STEP_2_SETTINGS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/03-STEP_2_SETTINGS.md) · [04-STEP_3_COMM_CHANNELS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/04-STEP_3_COMM_CHANNELS.md) · [05-STEP_4_APPS_SERVICES](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/05-STEP_4_APPS_SERVICES.md) · [06-STEP_5_ACCOUNT_OWNER](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/06-STEP_5_ACCOUNT_OWNER.md) · [07-VALIDATIONS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/07-VALIDATIONS.md) · [08-BACKEND_API](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/08-BACKEND_API.md) · [09-COMPONENTS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/09-COMPONENTS.md) · [10-KAFKA_SIDE_EFFECTS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/10-KAFKA_SIDE_EFFECTS.md) · [11-STATE_TRANSITIONS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/11-STATE_TRANSITIONS.md) · [12-ERROR_STATES](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/12-ERROR_STATES.md) · [13-GAPS_AND_DRIFTS](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/13-GAPS_AND_DRIFTS.md) · [14-IMPLEMENTATION_CHECKLIST](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/14-IMPLEMENTATION_CHECKLIST.md)
+- [PLAYBOOK (full single-doc copy)](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/PLAYBOOK.md)
+- [Legacy single-file SoT (now a redirect)](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Add%20Client.md) — superseded by the folder above; kept as a redirect for backwards compatibility
 - [PRD-01 OVERVIEW](../../../Brain%20Outputs/prd/modules/01-account-management/OVERVIEW.md)
 - [PRD-01 BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/01-account-management/BUSINESS_RULES.md)
 - [PRD-01 WORKFLOWS (W1)](../../../Brain%20Outputs/prd/modules/01-account-management/WORKFLOWS.md)

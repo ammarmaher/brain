@@ -24,7 +24,7 @@ When a session begins implementation work on a Falcon page, **load these artifac
 
 | Flow | Vault graph node | SoT file (canonical) | Page | PRD |
 |---|---|---|---|---|
-| Add Client (5-step wizard) | [[Add Client Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/flows/Add Client.md`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Add%20Client.md) | [[Organization Hierarchy]] | [[01 Account Management]] |
+| Add Client (5-step wizard) | [[Add Client Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/Add Client/`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/Add%20Client/) **folder** — 17 files (`README` + 14 section files + `PLAYBOOK`). Load `README.md` first; drill into section files per task type. | [[Organization Hierarchy]] | [[01 Account Management]] |
 | Add User (3-tab wizard) | [[Add User Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/flows/Add User.md`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Add%20User.md) | [[Organization Hierarchy]] | [[02 User Management]] |
 | Add Node (sub-node) | [[Add Node Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/flows/Add Node.md`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Add%20Node.md) | [[Organization Hierarchy]] | [[01 Account Management]] |
 | Edit Node (rename · scheduled rename · move ❌ · archive ❌) | [[Edit Node Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/flows/Edit Node.md`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Edit%20Node.md) | [[Organization Hierarchy]] | [[01 Account Management]] |

@@ -298,13 +298,34 @@ Hard constraints:
 
 When any session begins **implementation work** (frontend / backend / full-stack / validation) on a Falcon user action that has a flow playbook, the playbook IS the source-of-truth spec. Load the playbook FIRST.
 
-Flow playbooks live at:
+Flow playbooks live at one of two locations:
+
+**Folder form (preferred — Add Client uses this):**
+
+```text
+C:\Falcon\Brain Outputs\understanding\pages\<page>\<Flow Name>\
+  README.md                       ← entry point; folder index + per-task load order
+  00-OVERVIEW.md
+  01-PERMISSIONS.md
+  02-STEP_<N>_<NAME>.md (per step)
+  07-VALIDATIONS.md
+  08-BACKEND_API.md
+  09-COMPONENTS.md
+  10-KAFKA_SIDE_EFFECTS.md
+  11-STATE_TRANSITIONS.md
+  12-ERROR_STATES.md
+  13-GAPS_AND_DRIFTS.md
+  14-IMPLEMENTATION_CHECKLIST.md
+  PLAYBOOK.md                     ← full single-doc version
+```
+
+**Single-file form (legacy — Add User / Add Node / Edit Node still use this):**
 
 ```text
 C:\Falcon\Brain Outputs\understanding\pages\<page>\flows\<Flow Name>.md
 ```
 
-with vault graph nodes at:
+Both forms have a vault graph node at:
 
 ```text
 C:\Falcon\Brain SK\_obsidian\10-Pages\<Flow Name> Flow.md
@@ -314,10 +335,10 @@ Each playbook ties together: PRD lines · backend DTOs · V-rules · Falcon comp
 
 ### Available flow playbooks (Organization Hierarchy)
 
-- [[Add Client Flow]] — 5-step wizard creating Account + Settings + CommChannels + Apps + AO User (PRD-01 primary, PRD-02 via Step 5)
-- [[Add User Flow]] — 3-tab wizard creating a User (PRD-02)
-- [[Add Node Flow]] — sub-node creation (PRD-01)
-- [[Edit Node Flow]] — rename + scheduled rename (move ❌ + archive ❌ flagged MISSING) (PRD-01)
+- [[Add Client Flow]] — 5-step wizard creating Account + Settings + CommChannels + Apps + AO User (PRD-01 primary, PRD-02 via Step 5). **Folder structure** at `understanding/pages/organization-hierarchy/Add Client/`. Load `README.md` first.
+- [[Add User Flow]] — 3-tab wizard creating a User (PRD-02). Single file at `understanding/pages/organization-hierarchy/flows/Add User.md`.
+- [[Add Node Flow]] — sub-node creation (PRD-01). Single file at `understanding/pages/organization-hierarchy/flows/Add Node.md`.
+- [[Edit Node Flow]] — rename + scheduled rename (move ❌ + archive ❌ flagged MISSING) (PRD-01). Single file at `understanding/pages/organization-hierarchy/flows/Edit Node.md`.
 
 ### Load order for implementation tasks
 
