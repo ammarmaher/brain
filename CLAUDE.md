@@ -241,3 +241,18 @@ Every component note must back-link Pages using it + Gaps + Approved patterns + 
 A sister vault exists at `C:\Falcon\falcon-wiki` (Falcon SoT vault). Do not switch to it without explicit Ammar approval.
 
 Hard constraints: no edits to `_obsidian/.obsidian/`, Copilot `data.json`, `workspace.json`, plugin config, or any secret file. Obsidian must never become a competing source of truth.
+
+## Permanent Rule: Learning-First Task Routing
+
+**Brain SK must not jump directly into implementation when the user provides screenshots, source pages, visual bugs, or page instructions. It must first create a Light Learning event and load page/component knowledge before producing any code, plan, or fix.**
+
+Six routing modes — apply the decision tree on every turn:
+
+1. **Quick prompt / screenshot / red X / green tick** → Light Learning Intake first. Save prompt, screenshot, visible notes, red-border focus, ❌ as wrong/rejected candidate, ✅ as approved/correct candidate, page/section/component guesses, a single `pending` event. Do not deep-analyse the whole page unless explicitly asked.
+2. **Page implementation** → load all 12 page artifacts (PAGE_LEARNING, pending+approved patterns, global patterns, component knowledge, Falcon Eyes, UI/UX / Validation / API / Business rules, Gaps, Evidence, Page Scorecard), produce a plan, then code.
+3. **Bug fix** → save bug as evidence; map to page/section/component; check approved patterns + gaps + component knowledge; fix only the required scope; update learning only if reusable.
+4. **Screenshot comparison** → Falcon Eyes first; save source/destination/diff; produce semantic mismatch backlog; map to Falcon components; **do not repair unless the prompt asks for repair**.
+5. **Deep learning** → ONLY on explicit phrases: `deep learn`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page`, `this is the approved way`. Reviews pending events, updates rules + scorecard + Obsidian graph, promotes only approved rules.
+6. **Global promotion** → ONLY on explicit `promote this globally` (or equivalent). Page-specific never becomes global automatically.
+
+Canonical protocol: [`protocols/LEARNING_FIRST_TASK_ROUTING.md`](protocols/LEARNING_FIRST_TASK_ROUTING.md). Routes registered in [`shared/SKILL_ROUTING_MANIFEST.md`](shared/SKILL_ROUTING_MANIFEST.md). Skill: [`domains/frontend/page-learning/SKILL.md`](domains/frontend/page-learning/SKILL.md). Approval gate: [`protocols/APPROVAL_LEARNING_GATE.md`](protocols/APPROVAL_LEARNING_GATE.md).

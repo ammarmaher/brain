@@ -12,6 +12,17 @@
 - [Alias — visual-difference-qa](../domains/frontend/visual-difference-qa/SKILL.md)
 - [Alias — visual-parity](../domains/frontend/visual-parity/SKILL.md)
 
+## Routing (mode 4 of Learning-First Task Routing)
+
+Canonical: [LEARNING_FIRST_TASK_ROUTING](../protocols/LEARNING_FIRST_TASK_ROUTING.md).
+
+| Trigger | Command | Behaviour |
+|---|---|---|
+| "Run Falcon Eyes, no repair" / screenshot comparison request | [`/falcon-eyes-norepair`](../.claude/commands/falcon-eyes-norepair.md) | Full report (source/destination/diff + semantic mismatch backlog + component repair map). **No UI repair.** |
+| "Run Falcon Eyes and repair only the table" (or any named section) | [`/falcon-eyes-repair-scoped`](../.claude/commands/falcon-eyes-repair-scoped.md) | Run the no-repair report first, then repair limited strictly to `<section>` using the customization order. Re-run Falcon Eyes on the section to confirm. |
+
+**Permanent rule:** Falcon Eyes never repairs UI unless the prompt explicitly says repair AND names the scope. Out-of-scope edits are forbidden — every observed mismatch outside the named scope stays as a `pending` learning event.
+
 ## Tool
 
 - [Tool README](../tools/falcon-eyes/README.md)

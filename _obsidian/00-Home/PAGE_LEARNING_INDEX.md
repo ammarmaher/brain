@@ -26,4 +26,20 @@
 
 ## Slash commands
 
-- `/light-learn` · `/deep-learn-page <page>` · `/approve-pattern <id>` · `/reject-pattern <id> <reason>` · `/promote-pattern <id>` · `/learn-screenshot`
+- `/light-learn` · `/deep-learn-page <page>` · `/approve-pattern <id>` · `/reject-pattern <id> <reason>` · `/promote-pattern <id>` · `/learn-screenshot` · `/falcon-eyes-norepair` · `/falcon-eyes-repair-scoped <section>`
+
+## Learning-First Task Routing
+
+Canonical: [LEARNING_FIRST_TASK_ROUTING](../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Every page task starts here.
+
+| Mode | Use when | Command / alias |
+|---|---|---|
+| 1 Light Learning | any prompt with page/screenshot/bug | `/light-learn`, "Light learn this screenshot" |
+| 2 Page implementation | implement / build / convert | (no command — load 12 artifacts, plan, code) |
+| 3 Bug fix | fix / broken | (save evidence first; learning event before fix) |
+| 4 Falcon Eyes (no repair) | compare screenshots | `/falcon-eyes-norepair`, "Run Falcon Eyes, no repair" |
+| 4b Falcon Eyes (scoped repair) | repair only a named section | `/falcon-eyes-repair-scoped <section>`, "Run Falcon Eyes and repair only the table" |
+| 5 Deep learning | `deep learn`, `update vault`, `approve this pattern`, `learn this page`, `this is the approved way` | `/deep-learn-page <page>` |
+| 6 Global promotion | `promote this globally` | `/promote-pattern <id>` |
+
+**Permanent rule:** Brain SK must not jump directly into implementation when the user provides screenshots, source pages, visual bugs, or page instructions. It must first create a Light Learning event and load page/component knowledge.

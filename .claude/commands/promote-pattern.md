@@ -2,7 +2,7 @@
 
 # /promote-pattern <learningId>
 
-Promote an APPROVED page pattern to the global frontend patterns folder.
+Promote an APPROVED page pattern to the global frontend patterns folder. Mode 6 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Aliases: `promote this globally`, `Promote this to global <pattern> pattern` (e.g. `Promote this to global Falcon table pattern`). Page-specific rules never become global automatically — this command runs only on explicit Ammar approval.
 
 Behavior:
 

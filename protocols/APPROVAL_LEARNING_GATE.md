@@ -67,3 +67,18 @@ It recomputes `PAGE_SCORECARD.md` from APPROVED files only, appends an audit ent
 ## Canonical skill
 
 [`domains/frontend/page-learning/SKILL.md`](../domains/frontend/page-learning/SKILL.md)
+
+## Learning-First Task Routing (must read on every task)
+
+Every implementation, edit, bug fix, screenshot analysis, visual repair, or page task runs through the Learning-First Task Routing protocol BEFORE any code or fix is produced. Canonical: [`protocols/LEARNING_FIRST_TASK_ROUTING.md`](LEARNING_FIRST_TASK_ROUTING.md).
+
+Six routing modes:
+
+1. **Quick prompt / quick bug / screenshot / red X / green tick** → Light Learning Intake first. Save prompt + image + visible notes + red-border focus + ❌ wrong/rejected candidate + ✅ approved/correct candidate + page/section/component guesses + a pending event. No deep page analysis unless explicitly asked.
+2. **Page implementation** → load PAGE_LEARNING + pending/approved page patterns + global patterns + component knowledge + Falcon Eyes (if relevant) + UI/UX/Validation/API/Business rules + Gaps + Evidence + Page Scorecard → plan → code.
+3. **Bug fix** → evidence → map to page/section/component → check approved patterns + gaps + component knowledge → fix only required scope → update learning only if reusable.
+4. **Screenshot comparison** → Falcon Eyes first → save source/destination/diff + per-screenshot reports → semantic mismatch backlog → map to Falcon components → no repair unless prompt asks for repair.
+5. **Deep learning** → ONLY on `deep learn`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page`, `this is the approved way`.
+6. **Global promotion** → ONLY on explicit Ammar approval.
+
+Permanent rule (re-stated): **Brain SK must not jump directly into implementation when the user provides screenshots, source pages, visual bugs, or page instructions. It must first create a Light Learning event and load page/component knowledge.**

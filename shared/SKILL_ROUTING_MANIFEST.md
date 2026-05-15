@@ -1,5 +1,16 @@
 # Skill Routing Manifest
 
+## Learning-first ordering (read first)
+
+Every task in Brain SK routes through the Learning-First Task Routing protocol before any implementation step. Canonical: [`protocols/LEARNING_FIRST_TASK_ROUTING.md`](../protocols/LEARNING_FIRST_TASK_ROUTING.md). Six modes:
+
+1. Quick prompt / screenshot / red X / green tick → Light Learning Intake first.
+2. Page implementation → load page learning + patterns + component knowledge + Falcon Eyes + 4 rule registries + gaps + evidence + scorecard → plan → code.
+3. Bug fix → save evidence, map to page/section/component, check patterns + gaps + component dossier, fix only required scope.
+4. Screenshot comparison → Falcon Eyes first, no repair unless prompt asks for it.
+5. Deep learning → ONLY on `deep learn`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page`, `this is the approved way`.
+6. Global promotion → ONLY on explicit Ammar approval.
+
 ## Auto-detection
 
 | Ammar says | Domain | Required skills |
@@ -9,7 +20,12 @@
 | Convert React to Angular | Frontend | react-to-angular, Angular best practice, Tailwind-only, component upgrade, visual parity |
 | Visual difference / parity / source-vs-destination screenshots / "why this table doesn't look like that" / Night Shift visual repair | Frontend | **falcon-eyes** (canonical) — aliases `visual-difference-qa` and `visual-parity` route here. Pre-requisite for any UI fix when parity < 90 %. |
 | Any prompt / screenshot / bug / correction touching a page | Frontend | **page-learning** Light Learning Intake (always-on). Writes a `pending` event to `Brain Outputs/understanding/pages/<page>/LIGHT_LEARNING_EVENTS.md`. Never approves. |
-| `deep learn this page`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page` | Frontend | **page-learning** Deep Page Learning. Walks pending events and applies Ammar's approve / reject / promote / deprecate per item. |
+| `deep learn this page`, `update vault`, `approve this pattern`, `promote this globally`, `learn this page`, `this is the approved way` | Frontend | **page-learning** Deep Page Learning. Walks pending events and applies Ammar's approve / reject / promote / deprecate per item. |
+| `Light learn this screenshot` | Frontend | `/learn-screenshot` — force screenshot intake on the last image, no whole-page re-analysis. |
+| `Run Falcon Eyes, no repair` | Frontend | Falcon Eyes report only — produce source/destination/diff + semantic mismatch backlog. Do NOT repair. |
+| `Run Falcon Eyes and repair only the <section>` | Frontend | Falcon Eyes + scoped repair limited to the named section. No broader edits. |
+| `Promote this to global <pattern> pattern` | Frontend | `/promote-pattern <id>` → append to matching file in `Brain Outputs/understanding/frontend/patterns/`. Requires the pattern to be already APPROVED at page level. |
+| `This is the approved way` | Frontend | Treat the most recent pending pattern as an approval candidate; ask Ammar for the explicit id before moving status. |
 | Analyze controller / DTO / API | Backend | backend-api-understanding, DTO dictionary, validation/error map, gateway map |
 | UI is done, link backend | Full Stack | backend API understanding, FE/BE contract mapping, validation sync, integration tests |
 | Generate report | Shared | task-report-generator, data-visualization (analytics), PDF/report skill |

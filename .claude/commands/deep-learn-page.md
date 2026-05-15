@@ -2,7 +2,7 @@
 
 # /deep-learn-page <page>
 
-Run the Deep Page Learning workflow against `<page>`. Aliases: `deep learn this page`, `learn this page`, `update vault`.
+Run the Deep Page Learning workflow against `<page>`. Mode 5 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Aliases: `deep learn this page`, `deep learn`, `learn this page`, `update vault`, `this is the approved way` (asks Ammar for the explicit pattern id before moving status). Example: `Deep learn Organization Hierarchy`.
 
 Behavior:
 

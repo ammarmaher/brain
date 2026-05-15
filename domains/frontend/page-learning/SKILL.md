@@ -6,6 +6,24 @@
 
 Two-mode learning system that turns every prompt, screenshot, bug note, red X, green tick, validation rule, API rule, business rule, and UI/UX correction into structured per-page knowledge for Falcon — without auto-approving anything.
 
+## Learning-First Task Routing (mandatory entry point)
+
+This skill is invoked through the **Learning-First Task Routing** protocol — [`protocols/LEARNING_FIRST_TASK_ROUTING.md`](../../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Permanent rule:
+
+> **Brain SK must not jump directly into implementation when the user provides screenshots, source pages, visual bugs, or page instructions. It must first create a Light Learning event and load page/component knowledge.**
+
+Six routing modes drive every task. This skill owns modes 1 (Light Learning Intake), 5 (Deep Page Learning), and the page-side of mode 6 (Global promotion). Modes 2 (Page implementation), 3 (Bug fix), and 4 (Screenshot comparison via Falcon Eyes) call into this skill before producing code or fixes.
+
+Trigger-phrase examples:
+
+- "Light learn this screenshot" → mode 1
+- "Run Falcon Eyes, no repair" → mode 4 (no repair)
+- "Run Falcon Eyes and repair only the table" → mode 4 + scoped repair
+- "Deep learn Organization Hierarchy" → mode 5
+- "Approve this table pattern" → mode 5
+- "Promote this to global Falcon table pattern" → mode 6
+- "This is the approved way" → mode 5 (asks Ammar for explicit pattern id before moving status)
+
 ## Modes
 
 ### 1. Light Learning Intake (always-on, automatic)

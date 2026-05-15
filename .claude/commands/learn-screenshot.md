@@ -2,7 +2,7 @@
 
 # /learn-screenshot
 
-Force a screenshot intake pass on the most recent image Ammar dropped, even if auto-detection skipped it.
+Force a screenshot intake pass on the most recent image Ammar dropped, even if auto-detection skipped it. Mode 1 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Aliases: `Light learn this screenshot`. For the "no repair" or "scoped repair" Falcon Eyes flow, use [`/falcon-eyes-norepair`](falcon-eyes-norepair.md) or [`/falcon-eyes-repair-scoped`](falcon-eyes-repair-scoped.md).
 
 Behavior:
 

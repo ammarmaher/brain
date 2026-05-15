@@ -8,6 +8,29 @@
 > Top-level vault: `C:\Falcon\Brain SK\_obsidian`
 > Source-of-truth tree: `C:\Falcon\Brain Outputs\`
 
+## Learning-First Task Routing (read every turn)
+
+> **Permanent rule:** Brain SK must not jump directly into implementation when the user provides screenshots, source pages, visual bugs, or page instructions. It must first create a Light Learning event and load page/component knowledge.
+
+Canonical protocol: [LEARNING_FIRST_TASK_ROUTING](../../protocols/LEARNING_FIRST_TASK_ROUTING.md).
+
+| Mode | Trigger | First step |
+|---|---|---|
+| 1 — Light Learning Intake | any prompt/screenshot/bug/red X/green tick on a page | `/light-learn` or `/learn-screenshot` |
+| 2 — Page implementation | "implement…", "build…", "convert this page…" | Load all 12 page artifacts → plan → code |
+| 3 — Bug fix | "fix…", "this is broken…" | Save evidence → map to page/section/component → fix narrow scope |
+| 4 — Screenshot comparison | "compare…", "why does this look different…" | `/falcon-eyes-norepair` — no repair unless asked |
+| 5 — Deep learning | `deep learn`, `update vault`, `approve this pattern`, `learn this page`, `this is the approved way` | `/deep-learn-page <page>` |
+| 6 — Global promotion | `promote this globally` | `/promote-pattern <id>` — page-specific never auto-promotes |
+
+Example phrases:
+- "Light learn this screenshot"
+- "Deep learn Organization Hierarchy"
+- "Approve this table pattern"
+- "Promote this to global Falcon table pattern"
+- "Run Falcon Eyes, no repair"
+- "Run Falcon Eyes and repair only the table"
+
 ## Vault layout
 
 | Folder | Holds |

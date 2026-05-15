@@ -143,3 +143,19 @@ The `parallel-agents\` subtree under the legacy `component-registry` is intentio
 ## Page Learning System (2026-05-15)
 
 Two-mode learning (Light + Deep) keyed per page under `Brain Outputs/understanding/pages/<page>/`. Skill: [page-learning](../domains/frontend/page-learning/SKILL.md). Per-page index: [[PAGE_KNOWLEDGE_INDEX]].
+
+## Learning-First Task Routing (2026-05-15)
+
+Every frontend task must route through [LEARNING_FIRST_TASK_ROUTING](../protocols/LEARNING_FIRST_TASK_ROUTING.md) before any code, plan, or fix is produced.
+
+| Mode | First step | Command |
+|---|---|---|
+| 1 Light Learning Intake | save evidence, classify, write pending event | `/light-learn`, `/learn-screenshot` |
+| 2 Page implementation | load 12 page artifacts → plan → code | (no command) |
+| 3 Bug fix | save bug evidence → map → fix narrow | (no command) |
+| 4 Falcon Eyes no-repair | report only | `/falcon-eyes-norepair` |
+| 4b Falcon Eyes scoped repair | repair only the named section | `/falcon-eyes-repair-scoped <section>` |
+| 5 Deep Page Learning | walk pending events with Ammar | `/deep-learn-page <page>` |
+| 6 Global promotion | append to global pattern file | `/promote-pattern <id>` |
+
+**Permanent rule:** never jump directly into implementation when given screenshots / source pages / visual bugs / page instructions. Light Learning event + load page/component knowledge first.

@@ -2,7 +2,7 @@
 
 # /reject-pattern <learningId> <reason>
 
-Reject one pending pattern.
+Reject one pending pattern. Mode 5 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Aliases: `reject this pattern`, `reject <id> <reason>`.
 
 Behavior:
 

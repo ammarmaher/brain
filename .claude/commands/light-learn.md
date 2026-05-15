@@ -2,7 +2,7 @@
 
 # /light-learn
 
-Force the Page Learning Light Intake to run on the most recent user input even if auto-detection skipped it.
+Force the Page Learning Light Intake to run on the most recent user input even if auto-detection skipped it. Mode 1 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md) — always runs first whenever the user provides screenshots, source pages, visual bugs, or page instructions. Aliases: `"Light learn this screenshot"`.
 
 Behavior:
 

@@ -4,15 +4,16 @@ Use this domain for Angular, Tailwind, Falcon components, HTML/React/screenshot 
 
 ## Always-on frontend chain
 
-When a task touches Angular/frontend implementation, always apply:
+When a task touches Angular/frontend implementation, always apply (in this order):
 
-1. Angular best-practice skill and current Angular project conventions.
-2. Tailwind-only rule: no CSS/SCSS unless impossible and documented.
-3. Falcon component-first rule: reuse or upgrade Falcon components before page-specific code.
-4. Frontend folder structure governance: local models/services by feature; promote only when reused.
-5. Component registry lookup/update.
-6. Visual parity repair loop when HTML/React/screenshot is source of truth.
-7. Task report and Git sync.
+1. **Learning-First Task Routing** — [`protocols/LEARNING_FIRST_TASK_ROUTING.md`](../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Never jump straight into implementation. For any screenshot, source page, visual bug, or page instruction: Light Learning Intake first → load 12 page artifacts → plan → code. Deep Learning + Global Promotion run only on explicit Ammar trigger phrases.
+2. Angular best-practice skill and current Angular project conventions.
+3. Tailwind-only rule: no CSS/SCSS unless impossible and documented.
+4. Falcon component-first rule: reuse or upgrade Falcon components before page-specific code.
+5. Frontend folder structure governance: local models/services by feature; promote only when reused.
+6. Component registry lookup/update.
+7. Visual parity repair loop when HTML/React/screenshot is source of truth (run Falcon Eyes first; repair only if Ammar asks for repair).
+8. Task report and Git sync.
 
 ## Specialist skill sources
 

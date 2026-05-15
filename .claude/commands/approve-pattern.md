@@ -2,7 +2,7 @@
 
 # /approve-pattern <learningId>
 
-Approve one pending pattern by its `learningId` (e.g. `LE-20260515-organization-hierarchy-001`).
+Approve one pending pattern by its `learningId` (e.g. `LE-20260515-organization-hierarchy-001`). Mode 5 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md). Aliases: `approve this pattern`, `approve <id>`, `Approve this table pattern` (asks for the explicit id if more than one pending table pattern exists).
 
 Behavior:
 
