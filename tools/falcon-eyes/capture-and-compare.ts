@@ -40,8 +40,13 @@
 import { chromium, Browser, Page } from '@playwright/test';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
+
+// *** ESM shim for __dirname (capture-and-compare runs as ESM via tsx) ***
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 type SectionConfig = {
   name: string;
