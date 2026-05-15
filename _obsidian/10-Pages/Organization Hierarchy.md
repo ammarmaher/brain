@@ -13,6 +13,13 @@
 - [PAGE_OVERVIEW.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/PAGE_OVERVIEW.md)
 - [SOURCE_OF_TRUTH.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/SOURCE_OF_TRUTH.md)
 
+## Implements PRDs
+
+- [[01 Account Management]] — **primary**. Hierarchy, CommChannels & Services, Apps & Services, Settings, Account Limitations, IP Management. Wave 20 shadow-rows feature is the Account-Mgmt scheduled-change edit row.
+- [[02 User Management]] — Add User flow + OTP popup section (`otp-popup` is shared)
+- [[03 Contract Packaging Charging Billing]] — pricing rows in CommChannels & Services come from Contract Rate-Card; Account-Limitation edits enforce contract caps
+- [[PRD_INDEX]] — full PRD navigation hub
+
 ## Rules (linked, not duplicated)
 
 | Domain | File |

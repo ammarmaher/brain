@@ -48,6 +48,21 @@
 - Mirror to `Brain SK\outputs\` is additive only (`/E /XO`; never `/MIR`).
 - No commits/pushes without an explicit `commit` / `push` in the current message.
 
+## PRD upstream layer (`Brain Outputs/prd/`)
+
+PRDs are **upstream** of every active folder under `understanding/`. Business rules, validation rules, API contracts, page screens, and component choices all derive from PRDs. The PRD tree is a peer to `understanding/` (not a child), but every PRD module feeds artifacts into `understanding/`.
+
+| PRD module | SoT folder | Feeds (vault graph) | Backend services |
+|---|---|---|---|
+| 01 Account Management | [`prd/modules/01-account-management/`](../prd/modules/01-account-management/) | [[01 Account Management]] · [[Organization Hierarchy]] · all 10 component notes | commerce · charging · identity |
+| 02 User Management | [`prd/modules/02-user-management/`](../prd/modules/02-user-management/) | [[02 User Management]] · login + user pages | identity · access · commerce |
+| 03 Contract / Packaging / Charging / Billing | [`prd/modules/03-contract-packaging-charging-billing-management/`](../prd/modules/03-contract-packaging-charging-billing-management/) | [[03 Contract Packaging Charging Billing]] · contracts pages | commerce · charging · provisioning |
+| 04 Contact Group Management | [`prd/modules/04-contact-group-management/`](../prd/modules/04-contact-group-management/) | [[04 Contact Group Management]] · contact-group pages | contact-group · access · templates |
+| 05 Templates | [`prd/modules/05-templates/`](../prd/modules/05-templates/) | [[05 Templates]] · templates pages | templates _(architectural decision pending)_ |
+| — Root meta | [`prd/modules/root-documents/`](../prd/modules/root-documents/) | [[Root Documents]] | platform |
+
+PRD-knowledge skill: [`brain-skills/business-skills/prd-knowledge/Skill.md`](../../brain-skills/business-skills/prd-knowledge/Skill.md). Trigger: `take latest from PRD`. Last sync: 2026-04-24 — **STALE** at 21 days (14-day threshold). Coverage: 48.3 % effective.
+
 ## Routing reference
 
 Every task routes through [`Brain SK/protocols/LEARNING_FIRST_TASK_ROUTING.md`](../../Brain%20SK/protocols/LEARNING_FIRST_TASK_ROUTING.md) before any code, plan, or fix:

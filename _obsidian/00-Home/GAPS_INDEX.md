@@ -26,6 +26,20 @@ Every gap entry in any `GAP_REGISTRY.md` MUST link:
 | Next action | freeform text + ownership |
 | Category | one of `UI/UX · Validation · API · Business · Component · Source-Truth` |
 
+## PRD gaps (upstream gap source)
+
+| PRD | Gaps file (SoT) | COVERED | PARTIAL | MISSING | UNVERIFIABLE | Vault note |
+|---|---|---:|---:|---:|---:|---|
+| 01 — Account Management | [GAPS](../../../Brain%20Outputs/prd/modules/01-account-management/GAPS.md) | 18 | 3 | 3 | 9 | [[01 Account Management]] |
+| 02 — User Management | [GAPS](../../../Brain%20Outputs/prd/modules/02-user-management/GAPS.md) | 20 | 6 | 2 | 9 | [[02 User Management]] |
+| 03 — Contract / Packaging / Charging / Billing | [GAPS](../../../Brain%20Outputs/prd/modules/03-contract-packaging-charging-billing-management/GAPS.md) | 13 | 7 | 6 | 14 | [[03 Contract Packaging Charging Billing]] |
+| 04 — Contact Group Management | [GAPS](../../../Brain%20Outputs/prd/modules/04-contact-group-management/GAPS.md) | 14 | 2 | 5 | 8 | [[04 Contact Group Management]] |
+| 05 — Templates | [GAPS](../../../Brain%20Outputs/prd/modules/05-templates/GAPS.md) | 3 | 2 | 21 | 1 | [[05 Templates]] |
+| — Root meta | [GAPS](../../../Brain%20Outputs/prd/modules/root-documents/GAPS.md) | 1 | 1 | 8 | 1 | [[Root Documents]] |
+| **TOTAL** | [PRD_GAP_SUMMARY](../../../Brain%20Outputs/prd/PRD_GAP_SUMMARY.md) | **69** | **21** | **45** | **42** | — |
+
+**Effective measurable rows:** 143 → **Coverage 48.3 %** · **Coverage+Partial 63.0 %**
+
 ## Related hubs
 
-- [[PAGE_LEARNING_INDEX]] · [[UI_UX_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[BUSINESS_INDEX]] · [[COMPONENT_INDEX]] · [[EVIDENCE_INDEX]]
+- [[PAGE_LEARNING_INDEX]] · [[UI_UX_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[BUSINESS_INDEX]] · [[COMPONENT_INDEX]] · [[EVIDENCE_INDEX]] · [[PRD_INDEX]]

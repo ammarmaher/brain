@@ -20,6 +20,15 @@
 
 - [[Organization Hierarchy]] — multi-section (comm-channels, apps-services, rule-status, permission-privilege, ip-management, account-limitation). PP-001 mandate pending. **Wave 20 shadow-rows feature applied** to `comm-channels-tab` + `apps-services-tab` scheduled-change edit rows.
 
+## PRDs that use this component
+
+- [[01 Account Management]] — CommChannels list, Apps list, Permission/Privilege rows, IP list, Account-Limitation rows
+- [[02 User Management]] — Users list, Status history, Login attempts
+- [[03 Contract Packaging Charging Billing]] — Contracts list, Rate Card matrix, Contract Details matrix, Addons list
+- [[04 Contact Group Management]] — Contact Groups list, column configurator, preview rows
+- [[05 Templates]] — Templates list, Approval trail
+- [[PRD_INDEX]] — full PRD navigation hub
+
 ## Learning events touching this component
 
 - [[LE-20260515-commchannels-shadow-row-notch-alignment]] — **approved** Wave 20. Notch-alignment bug → 5 UI/UX rules (UIUX-SHADOW-001..005) + 8 follow-ups (FDT-SHADOW-FU-01..08).

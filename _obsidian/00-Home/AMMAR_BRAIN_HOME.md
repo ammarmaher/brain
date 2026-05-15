@@ -38,6 +38,7 @@ Example phrases:
 |---|---|
 | `00-Home/` | Top-level hubs (this file, brain home) |
 | `10-Pages/` | One note per Falcon page (links to its rules, gaps, evidence, components) |
+| `15-PRD/` | **One note per PRD module (upstream of pages/components/rules)** |
 | `20-UI-UX/` | UI/UX rule indexes pointing into per-page `UI_UX_RULES.md` |
 | `30-Validation/` | Validation rule indexes pointing into per-page `VALIDATION_RULES.md` |
 | `40-API/` | API/DTO/contract indexes pointing into per-page `API_RULES.md` |
@@ -47,8 +48,18 @@ Example phrases:
 | `80-Evidence/` | Cross-page evidence index pointing into per-page `EVIDENCE_INDEX.md` |
 | `90-Approved-Patterns/` | Approved + globally-promoted patterns index |
 
+## PRD-first navigation (upstream of everything)
+
+**PRDs feed Business · Validation · API · Pages · Components · Gaps.** When a task touches a page or component, load the implementing PRD FIRST.
+
+- [[PRD_INDEX]] — 6 modules: [[01 Account Management]] · [[02 User Management]] · [[03 Contract Packaging Charging Billing]] · [[04 Contact Group Management]] · [[05 Templates]] · [[Root Documents]]
+- Coverage today: 48.3 % (69/143 effective rows) · 63.0 % including partial
+- Drive folder (canonical): `https://drive.google.com/drive/folders/1ww3nICya-CjW4_5mzoVpzTaaMz9nNTtH`
+- Refresh: `take latest from PRD`
+
 ## Top-level indexes
 
+- [[PRD_INDEX]] — PRD modules (upstream)
 - [[PAGE_LEARNING_INDEX]] — page-level learning entry point (Light + Deep modes)
 - [[FRONTEND_INDEX]] — frontend knowledge hub (registries, scans, patterns)
 - [[COMPONENT_INDEX]] — Falcon component catalog (60+ components)
