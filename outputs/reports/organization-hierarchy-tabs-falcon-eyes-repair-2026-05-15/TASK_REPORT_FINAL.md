@@ -1,10 +1,25 @@
-# Falcon Specs v1.0 — Organization Hierarchy Visual Repair
+# Falcon Specs v1.1 — Organization Hierarchy Visual Repair
 
-**Date:** 2026-05-15
+**Date:** 2026-05-15 (Round 2 night shift appended)
 **Owner:** Adnan Orchestrator (Brain SK Night Shift)
-**Scope:** Organization Hierarchy tabs + tab content
-**Round:** 1 of max 5 (target 90 / ideal 95 — both reached)
+**Scope:** Organization Hierarchy tabs + tab content (Round 2: comm-channels-tab)
+**Round:** 2 of max 5 (R1 baseline 96.5 %; R2 comm-channels-tab +3 pp)
 **Project:** falcon-web-platform-ui — Admin Console
+
+## Round 2 Addendum (top of file)
+
+- **Defects fixed:** Title (en+ar) + Action header copy (singular per SoT). Both live-verified via chrome MCP.
+- **Defects verified-already-OK:** Edit affordance row-expansion pattern (Wave 14) + table chrome footer bg parity (Wave 19).
+- **Build:** `nx build admin-console --skip-nx-cache` GREEN — hash `e72a7cdfc86272d1`, 13.6s.
+- **New defects logged (NOT fixed in this pass):**
+  - DEFECT-CCS-R2-001 HIGH — `falcon-table-tw` row-expansion slot projection regression (edit panel renders above table, not inline).
+  - DEFECT-CCS-R2-002 LOW — pre-existing `import.meta` SyntaxError in styles.js.
+- **Interactive tests:** 4 pass / 1 fail / 5 blocked (out-of-section) on comm-channels-tab.
+
+See `ROUND_2_REPORT.md` for full Round 2 breakdown. Original Round 1 content below.
+
+---
+
 
 ---
 

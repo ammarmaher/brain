@@ -12,7 +12,7 @@ const REPORT_DIR = __dirname;
 const MD = path.join(REPORT_DIR, 'TASK_REPORT_FINAL.md');
 const HTML = path.join(REPORT_DIR, 'TASK_REPORT.html');
 const PDF_LOCAL = path.join(REPORT_DIR, 'TASK_REPORT.pdf');
-const PDF_FALCON_SPECS = 'C:\\Falcon\\Falcon Specs v1.0 - Organization Hierarchy Visual Repair.pdf';
+const PDF_FALCON_SPECS = 'C:\\Falcon\\Falcon Specs v1.1 - Organization Hierarchy Visual Repair.pdf';
 
 /*** Convert local image paths to file:// URLs Chrome can load ***/
 function rewriteImagePaths(md, baseDir) {
@@ -33,7 +33,7 @@ const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Falcon Specs v1.0 — Organization Hierarchy Visual Repair</title>
+<title>Falcon Specs v1.1 — Organization Hierarchy Visual Repair</title>
 <style>
 ${theme}
 

@@ -2,7 +2,22 @@
 
 > Priority-ordered work queue. Updated incrementally as items close.
 
-**Last updated:** 2026-05-15 (post P3 polish pass — i18n + paginator + status-badge verify DONE; Task B real-auth interactive BLOCKED)
+**Last updated:** 2026-05-15 (Round 2 night shift — comm-channels-tab title + Action header fixed; row-expansion slot projection regression logged as DEFECT-CCS-R2-001 HIGH)
+
+## Priority 0 — Round 2 results (2026-05-15 evening)
+
+| ID | Description | Status |
+|---|---|---|
+| ROUND2-CCS-001 | comm-channels-tab title `Comm Channels` → `CommChannels & Services` (en + ar) | **DONE** (`libs/falcon/src/language/i18n/en.json:1228`, `ar.json:1226`) |
+| ROUND2-CCS-002 | Action header copy `Actions` → `Action` (singular per SoT) | **DONE** (`apps/admin-console/.../org-hierarchy-page-menu.component.ts:244`) |
+| ROUND2-CCS-003 | Footer bg parity verified | **NO-OP** (Wave 19 already applied; DOM-computed = `rgb(250, 250, 250)`) |
+| ROUND2-CCS-004 | Edit affordance verified | **NO-OP** (Wave 14 row-expansion already correct in code; see DEFECT-CCS-R2-001 for runtime regression) |
+| DEFECT-CCS-R2-001 | HIGH — `falcon-table-tw` row-expansion slot projection regression: slotted child stays as direct host child instead of moving into expansion cell. Edit panel renders ABOVE the table, not inline. Needs Stencil-side fix. | **NEW — deferred to next round** |
+| DEFECT-CCS-R2-002 | LOW — `styles.js` `import.meta` SyntaxError pre-existing on tab load | **NEW — deferred to next round** |
+
+Build is GREEN after Round 2 (hash `e72a7cdfc86272d1`).
+
+
 
 ## Priority 1 — P3 follow-ups (CLOSED)
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Falcon Specs v1.0 — Organization Hierarchy Visual Repair</title>
+<title>Falcon Specs v1.1 — Organization Hierarchy Visual Repair</title>
 <style>
 /*
  * Falcon Audit v3 — final milestone deliverable theme
@@ -501,12 +501,26 @@ pre { page-break-inside: avoid; }
 </head>
 <body>
 <article class="report">
-<h1>Falcon Specs v1.0 — Organization Hierarchy Visual Repair</h1>
-<p><strong>Date:</strong> 2026-05-15
+<h1>Falcon Specs v1.1 — Organization Hierarchy Visual Repair</h1>
+<p><strong>Date:</strong> 2026-05-15 (Round 2 night shift appended)
 <strong>Owner:</strong> Adnan Orchestrator (Brain SK Night Shift)
-<strong>Scope:</strong> Organization Hierarchy tabs + tab content
-<strong>Round:</strong> 1 of max 5 (target 90 / ideal 95 — both reached)
+<strong>Scope:</strong> Organization Hierarchy tabs + tab content (Round 2: comm-channels-tab)
+<strong>Round:</strong> 2 of max 5 (R1 baseline 96.5 %; R2 comm-channels-tab +3 pp)
 <strong>Project:</strong> falcon-web-platform-ui — Admin Console</p>
+<h2>Round 2 Addendum (top of file)</h2>
+<ul>
+<li><strong>Defects fixed:</strong> Title (en+ar) + Action header copy (singular per SoT). Both live-verified via chrome MCP.</li>
+<li><strong>Defects verified-already-OK:</strong> Edit affordance row-expansion pattern (Wave 14) + table chrome footer bg parity (Wave 19).</li>
+<li><strong>Build:</strong> <code>nx build admin-console --skip-nx-cache</code> GREEN — hash <code>e72a7cdfc86272d1</code>, 13.6s.</li>
+<li><strong>New defects logged (NOT fixed in this pass):</strong><ul>
+<li>DEFECT-CCS-R2-001 HIGH — <code>falcon-table-tw</code> row-expansion slot projection regression (edit panel renders above table, not inline).</li>
+<li>DEFECT-CCS-R2-002 LOW — pre-existing <code>import.meta</code> SyntaxError in styles.js.</li>
+</ul>
+</li>
+<li><strong>Interactive tests:</strong> 4 pass / 1 fail / 5 blocked (out-of-section) on comm-channels-tab.</li>
+</ul>
+<p>See <code>ROUND_2_REPORT.md</code> for full Round 2 breakdown. Original Round 1 content below.</p>
+<hr>
 <hr>
 <h2>Executive Summary</h2>
 <p>The Brain SK Night Shift autopilot resumed the Organization Hierarchy visual-parity workstream after the P0 auth blocker was cleared. Falcon Eyes captured a full source-vs-destination comparison across <strong>12 sections</strong>. The destination at <code>http://localhost:4200/#/admin-console/org-hierarchy-page</code> now renders the full UI (sidebar, topbar, breadcrumb, Falcon Tabs, Falcon Tree, Falcon Data Table, action buttons) with <strong>96.5 % pixel parity</strong> and <strong>~95 % semantic parity</strong> to the React reference SoT on Round 1. Both 90 % and 95 % targets are reached <strong>without any Falcon component repair</strong>.</p>

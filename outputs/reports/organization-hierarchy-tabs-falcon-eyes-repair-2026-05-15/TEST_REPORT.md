@@ -1,4 +1,23 @@
-*** Test Report — Org Hierarchy Falcon Eyes Repair (RESUMED 2026-05-15) ***
+*** Test Report — Org Hierarchy Falcon Eyes Repair (RESUMED 2026-05-15, Round 2 appended) ***
+
+## Round 2 (2026-05-15 evening) — comm-channels-tab interactive tests
+
+| # | Test | Result | Notes |
+|---|------|--------|-------|
+| R2-T1 | Tab switching (Hierarchy ↔ CommChannels ↔ Apps ↔ Settings) | PASS | i18n labels resolve; tab strip restored to active row |
+| R2-T2 | Header hover                                                | PASS | Non-sortable; no visual change (expected) |
+| R2-T3 | Visibility toggle (SMS Gateway)                             | PASS | Off → status dashes; on → status restored |
+| R2-T4 | Row-action kebab                                            | PASS | 3 items for Active rows (Disable / Edit Price Type / Edit Price Value) |
+| R2-T5 | New inline edit-row                                         | **FAIL (HIGH)** | Slot projection regression — edit panel renders ABOVE the table chrome instead of inline `<tr>`. Repros on c1 + c3. DEFECT-CCS-R2-001 |
+| R2-T6 | Org info uploader                                           | BLOCKED | Section out-of-scope |
+| R2-T7 | OTP popup                                                   | BLOCKED | Section out-of-scope |
+| R2-T8 | Status/role dropdowns                                       | BLOCKED | Section out-of-scope |
+| R2-T9 | Settings view↔edit                                          | BLOCKED | Section out-of-scope |
+| R2-T10 | IP management                                              | BLOCKED | Section out-of-scope |
+
+**Round 2 tally: 4 pass · 1 fail · 5 blocked · 2 new defects logged (1 HIGH + 1 LOW).**
+
+---
 
 ## Status
 

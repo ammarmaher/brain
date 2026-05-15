@@ -1,6 +1,6 @@
 # Page Scorecard — Organization Hierarchy
 
-**Last updated:** 2026-05-15 (post P3 polish pass — i18n + paginator + status-badge verify DONE; Task B real-auth interactive BLOCKED)
+**Last updated:** 2026-05-15 (Round 2 night-shift — comm-channels-tab parity +2.7 pp, 1 HIGH regression logged)
 **Score basis:** Falcon Eyes pixel + semantic layer comparison vs React reference SoT, post auth unblock (Plan B, reverted). All 12 sections captured. P3 polish landed (3 surgical edits, build green); expected re-captured parity 97-98 % once real-auth re-capture runs.
 **Approval state:** PENDING Ammar review + interactive-test session
 
@@ -21,6 +21,7 @@
 
 - Pre-run (2026-05-14): ~75 % visual parity
 - Round 1 (2026-05-15): **96.5 %** visual parity — both 90 % and 95 % targets reached
+- Round 2 (2026-05-15 evening): **comm-channels-tab section 95 %** (+3 pp). Aggregate page still **96.5 %** pending other-section re-captures.
 
 ## Severity totals
 

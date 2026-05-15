@@ -19,7 +19,7 @@
 | Section | Pixel parity % | Semantic parity % | Notes |
 |---|---:|---:|---|
 | tabs-header                    | 96.50 | 100 | Falcon Tabs row + List/Tree toggle |
-| comm-channels-tab              | 96.50 | 95  | Renders, no content under dev bypass |
+| comm-channels-tab              | 97.20 | 97  | R2 (2026-05-15 evening): title + Action header copy fixed (en+ar); footer bg parity verified (Wave 19); slot-projection regression DEFECT-CCS-R2-001 HIGH logged |
 | apps-services-tab              | 96.50 | 95  | Renders, no content under dev bypass |
 | org-info-panel                 | 96.50 | 95  | Information button renders; panel deferred |
 | org-info-audit-mode            | 96.50 | 90  | Deferred to interactive run |
