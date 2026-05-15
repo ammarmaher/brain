@@ -2,17 +2,19 @@
 
 > Priority-ordered work queue. Updated incrementally as items close.
 
-**Last updated:** 2026-05-15 (post Falcon Eyes Round 1, auth-unblock complete, 96.5 % visual parity reached)
+**Last updated:** 2026-05-15 (post P3 polish pass — i18n + paginator + status-badge verify DONE; Task B real-auth interactive BLOCKED)
 
-## Priority 1 — P3 follow-ups (1 implementation pass, ~5 minutes total)
+## Priority 1 — P3 follow-ups (CLOSED)
 
-| ID | Description | File | Effort |
+| ID | Description | File | Status |
 |---|---|---|---|
-| GAP-i18n-001 | Add `hierarchy.users.emptyTitle` + `hierarchy.users.emptyBody` translation keys | `apps/admin-console/src/assets/i18n/en.json` | 1 min |
-| GAP-i18n-002 | Same in `ar.json` | `apps/admin-console/src/assets/i18n/ar.json` | 1 min |
-| GAP-paginator-001 | Set Users table default rows-per-page to 20 to match source SoT | `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.html` | 1 min |
+| GAP-i18n-001 | Add `hierarchy.users.emptyTitle` + `hierarchy.users.emptyBody` translation keys | `libs/falcon/src/language/i18n/en.json` (canonical source; was incorrectly attributed to `apps/admin-console/src/assets/i18n/en.json` which is the build output) | **DONE** |
+| GAP-i18n-002 | Same in `ar.json` | `libs/falcon/src/language/i18n/ar.json` | **DONE** |
+| GAP-paginator-001 | Set Users table default rows-per-page to 20 to match source SoT | `apps/admin-console/src/app/features/org-hierarchy-page/services/hierarchy-page-state.service.ts` (signal default lives in state service, not HTML) | **DONE** |
+| GAP-status-badge-001 | Status-badge token re-verify | `libs/falcon-ui-tokens/src/components/status-badge.tokens.css` | **VERIFIED** — bucket mapping matches source SoT; no change required |
 
-When these land, expected pixel parity rises to ~97-98 %.
+Build is GREEN after the P3 pass (hash `439d98a8dd333f51`).
+Falcon Eyes re-capture of the affected sections is **pending real-auth session** — see Priority 2.
 
 ## Priority 2 — Real-data re-verification (deferred to next backend-available run)
 

@@ -2,7 +2,7 @@
 
 > Per-section visual fidelity score: source-of-truth render vs Angular destination render.
 
-**Aggregate visual parity:** **96.5 %** ↑ +21.5 (post Falcon Eyes Round 1 — 2026-05-15, auth-unblock + full destination render)
+**Aggregate visual parity:** **96.5 %** ↑ +21.5 (post Falcon Eyes Round 1 — 2026-05-15, auth-unblock + full destination render). P3 polish pass landed 2026-05-15 evening — i18n keys + paginator default fixed; re-capture pending real-auth session (Task B BLOCKED). Expected on re-capture: **97-98 %**.
 
 ## Most recent measurement
 

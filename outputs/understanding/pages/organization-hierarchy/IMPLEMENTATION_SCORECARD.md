@@ -2,7 +2,7 @@
 
 > Per-feature completeness: how much of the source-of-truth feature is actually built and functional.
 
-**Aggregate implementation:** **~73%** ↑ +18 (post Tabs Night Shift — Waves 5/6/7/7b/8)
+**Aggregate implementation:** **~74%** ↑ +1 (post P3 polish pass 2026-05-15 — i18n keys for users empty-state + paginator default = 20 landed; status-badge tokens re-verified, no change needed; build green)
 
 ## Method
 

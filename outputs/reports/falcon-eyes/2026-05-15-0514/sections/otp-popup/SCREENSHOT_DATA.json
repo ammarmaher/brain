@@ -1,0 +1,45 @@
+{
+  "section": "otp-popup",
+  "sourceUrl": "http://localhost:3000/T2%20Falcon%20Admin",
+  "destinationUrl": "http://localhost:4200/?visual-test=1#/admin-console/org-hierarchy-page",
+  "capturedAt": "2026-05-15T02:14:27.137Z",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "deviceScaleFactor": 1
+  },
+  "pixel": {
+    "sourcePath": "source/otp-popup.png",
+    "destinationPath": "destination/otp-popup.png",
+    "diffPath": "diff/otp-popup-diff.png",
+    "sectionSourcePath": "sections/otp-popup/SOURCE.png",
+    "sectionDestinationPath": "sections/otp-popup/DESTINATION.png",
+    "sectionDiffPath": "sections/otp-popup/DIFF.png",
+    "width": 1440,
+    "height": 900,
+    "diffPixels": 1042038,
+    "totalPixels": 1296000,
+    "mismatchPercent": 80.40416666666667,
+    "perceptualScore": null
+  },
+  "semantic": {
+    "visualParityScore": null,
+    "differenceSummary": null,
+    "falconComponentsInvolved": [],
+    "tailwindOrTokenIssues": [],
+    "dynamicApiIssues": [],
+    "missingSharedComponentCapabilities": [],
+    "repairRecommendations": []
+  },
+  "severity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "status": "needs repair",
+  "notes": [
+    "source: used full-page fallback",
+    "destination: used full-page fallback"
+  ]
+}

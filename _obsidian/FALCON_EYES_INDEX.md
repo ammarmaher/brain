@@ -90,3 +90,15 @@ When visual parity is below **90 %**, or when Ammar asks why source and destinat
 ## Tailwind / token rule
 
 Tailwind utilities + Falcon tokens only. No SCSS. No inline styles. No PrimeNG. No PrimeIcons. No hardcoded colors / spacing / radii / shadows.
+
+## Latest run — Organization Hierarchy tabs (2026-05-15)
+
+- Falcon Eyes pixel + semantic capture: `C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0532\`
+- Repair bundle (final + PDF): `C:\Falcon\Brain Outputs\reports\organization-hierarchy-tabs-falcon-eyes-repair-2026-05-15\`
+  - `TASK_REPORT_FINAL.md` — merged final report
+  - `TASK_REPORT.pdf` — PDF (338 KB, 1.0 spec version)
+  - `TASK_B_BLOCKED.md` — real-auth interactive blocker doc
+- Falcon Specs PDF: `C:\Falcon\Falcon Specs v1.0 - Organization Hierarchy Visual Repair.pdf`
+- Round 1 pixel parity: **96.5 %** (both 90 % and 95 % targets reached)
+- P3 polish landed: i18n keys + paginator default + status-badge re-verify; build green (hash `439d98a8dd333f51`)
+- Task B status: **BLOCKED** — needs seeded Zitadel test user OR signed-in browser session

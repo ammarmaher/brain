@@ -41,6 +41,25 @@
 
 **Net:** 17 pass, 1 partial, 2 fail (P3 — i18n missing), 10 deferred (interactive flows for next pass).
 
+---
+
+## Update 2026-05-15 evening — Post P3 polish pass
+
+The 3 P3 follow-ups landed and `nx build admin-console` is GREEN (hash `439d98a8dd333f51`).
+
+| # | Test | Previous | Now | Notes |
+|---|---|---|---|---|
+| 17 | Build green (`nx build admin-console`) | NOT RUN | **PASS** | Hash `439d98a8dd333f51` |
+| 24 | i18n strings resolved | FAIL | **PASS** (static) | Keys `hierarchy.users.emptyTitle` + `hierarchy.users.emptyBody` added to canonical `libs/falcon/src/language/i18n/{en,ar}.json`. Real-auth re-capture pending. |
+
+### Task B — Real-auth interactive test pass: BLOCKED
+
+The 10 deferred interactive tests (tab switching, header hover/active, comm-channels toggles, row actions menus, org info uploader, OTP popup, status/role dropdowns, permissions dropdown/checkboxes, settings view↔edit toggle, dashed Add IP button + IPv4/IPv6 valid+invalid + Enter + Clear/Cancel + chip delete + delete-confirm popup, account limitation +/-) cannot be exercised — no seeded portal-login credentials are findable on this machine (no `falcon-essentials`, no `.env*`, no Zitadel seed JSON). Per the brief, the dev bypass was NOT re-applied because it would produce false positives on interactive flows.
+
+Full blocker doc: `TASK_B_BLOCKED.md`.
+
+**Updated net:** 18 pass, 1 partial, 1 fail (now PASS-static), 10 BLOCKED (real-auth required).
+
 ## Deferred / next-pass test plan
 
 When the three P3 follow-ups land (add 2 i18n keys, set paginator default rows-per-page to 20):

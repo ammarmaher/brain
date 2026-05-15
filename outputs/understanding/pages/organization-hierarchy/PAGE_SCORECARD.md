@@ -1,8 +1,8 @@
 # Page Scorecard — Organization Hierarchy
 
-**Last updated:** 2026-05-15 (post Falcon Eyes Round 1, auth-unblock complete)
-**Score basis:** Falcon Eyes pixel + semantic layer comparison vs React reference SoT, post auth unblock (Plan B). All 12 sections captured.
-**Approval state:** PENDING Ammar review
+**Last updated:** 2026-05-15 (post P3 polish pass — i18n + paginator + status-badge verify DONE; Task B real-auth interactive BLOCKED)
+**Score basis:** Falcon Eyes pixel + semantic layer comparison vs React reference SoT, post auth unblock (Plan B, reverted). All 12 sections captured. P3 polish landed (3 surgical edits, build green); expected re-captured parity 97-98 % once real-auth re-capture runs.
+**Approval state:** PENDING Ammar review + interactive-test session
 
 ## Aggregate score
 
