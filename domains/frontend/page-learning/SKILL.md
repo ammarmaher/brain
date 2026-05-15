@@ -192,7 +192,24 @@ When Ammar says `promote this globally`:
 - Reads from `domains/frontend/component-knowledge/SKILL.md` to resolve `relatedComponent`.
 - Honors `protocols/APPROVAL_LEARNING_GATE.md` — nothing becomes approved without Ammar.
 - Honors `protocols/SAFE_CHANGE_PROTOCOL.md` and the no-commit/no-push standing rules.
-- Updates Obsidian indexes via `shared/obsidian-auto-link/PAGE_LEARNING_OBSIDIAN.md`.
+- Updates Obsidian indexes via `shared/obsidian-auto-link/OBSIDIAN_AUTO_LINK_PROTOCOL.md` ("Page Learning System — Obsidian Link Block" + "Knowledge Graph Vault Structure" sections).
+
+## Obsidian graph layer
+
+The vault at `C:\Falcon\Brain SK\_obsidian` is the navigation graph for this skill. Folder map:
+
+- `00-Home/` — hubs (`PAGE_LEARNING_INDEX.md`, `COMPONENT_INDEX.md`, `UI_UX_INDEX.md`, `VALIDATION_INDEX.md`, `API_INDEX.md`, `BUSINESS_INDEX.md`, `GAPS_INDEX.md`, `EVIDENCE_INDEX.md`, `APPROVED_PATTERNS_INDEX.md`).
+- `10-Pages/<Page Title>.md` — one note per Falcon page. Must link to every required artifact for that page (see OBSIDIAN_AUTO_LINK_PROTOCOL.md → "Required links on every page note").
+- `60-Components/<Component Title>.md` — one note per Falcon component. Must back-link pages, gaps, approved patterns, Brain Outputs dossier, and Falcon Eyes reports.
+
+When a Deep Page Learning run approves/promotes/rejects an item, the skill must additively refresh:
+
+1. The page's `10-Pages/<Page>.md` note (links to new approved/promoted rules).
+2. The matching domain hub in `00-Home/` (counts + page row).
+3. The `60-Components/<Component>.md` note when `relatedComponent` is set.
+4. `_obsidian/PAGE_KNOWLEDGE_INDEX.md` per the existing block.
+
+The skill must NEVER create or edit files inside `_obsidian/.obsidian/`, `_obsidian/.smart-env/`, or any plugin/secret file. It MUST NOT duplicate rule content into vault notes — vault notes are link-only.
 
 ## Mirror + Git sync
 

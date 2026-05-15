@@ -222,3 +222,22 @@ Hard constraints:
 - Screenshot interpretation is NEVER an approval.
 - Page-specific rules stay page-specific by default.
 - Mirror to `Brain SK\outputs\` is additive only (`robocopy /E /XO`, never `/MIR`).
+
+## Permanent Rule: Obsidian Knowledge Graph Vault Structure
+
+The Obsidian vault at `C:\Falcon\Brain SK\_obsidian` is the graph/navigation/view layer over Brain Outputs. Brain Outputs is the source of truth; Obsidian notes hold links + minimal context, never duplicated rule content.
+
+Vault folders:
+- `00-Home/` — top-level hubs
+- `10-Pages/` — one note per Falcon page
+- `20-UI-UX/`, `30-Validation/`, `40-API/`, `50-Business/` — domain rule indexes
+- `60-Components/` — one note per Falcon component
+- `70-Gaps/`, `80-Evidence/`, `90-Approved-Patterns/` — cross-page graphs
+
+Every page note must link UI/UX, Validation, API, Business rules + Falcon components + Gaps + Evidence + Approved patterns + Pending patterns + Promotion candidates + Page scorecard + Latest reports + Tests (when available) + Global frontend patterns.
+
+Every component note must back-link Pages using it + Gaps + Approved patterns + Brain Outputs dossier + Falcon Eyes reports.
+
+A sister vault exists at `C:\Falcon\falcon-wiki` (Falcon SoT vault). Do not switch to it without explicit Ammar approval.
+
+Hard constraints: no edits to `_obsidian/.obsidian/`, Copilot `data.json`, `workspace.json`, plugin config, or any secret file. Obsidian must never become a competing source of truth.

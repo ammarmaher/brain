@@ -136,3 +136,65 @@ Every time `domains/frontend/page-learning/SKILL.md` runs (Light or Deep), the a
 **Pending-only marker:** when a page has `PENDING_PAGE_PATTERNS.md` non-empty, append `(N pending)` next to the page name in `PAGE_KNOWLEDGE_INDEX.md`. Never auto-promote.
 
 **Hard constraint repeated:** no edits to `_obsidian/.obsidian/`, Copilot `data.json`, plugin workspace files, or any secret file. Page Learning operates on Markdown indexes only.
+
+## Knowledge Graph Vault Structure (2026-05-15)
+
+The Obsidian vault at `C:\Falcon\Brain SK\_obsidian` is organised as the graph/navigation layer over Brain Outputs (the source of truth). Folders:
+
+| Folder | Holds |
+|---|---|
+| `00-Home/` | Top-level hubs (`AMMAR_BRAIN_HOME.md`, `PAGE_LEARNING_INDEX.md`, `COMPONENT_INDEX.md`, `UI_UX_INDEX.md`, `VALIDATION_INDEX.md`, `API_INDEX.md`, `BUSINESS_INDEX.md`, `GAPS_INDEX.md`, `EVIDENCE_INDEX.md`, `APPROVED_PATTERNS_INDEX.md`) |
+| `10-Pages/` | One note per Falcon page — name = `<Page Title>.md` |
+| `20-UI-UX/` | UI/UX rule indexes linking into per-page `UI_UX_RULES.md` |
+| `30-Validation/` | Validation rule indexes linking into per-page `VALIDATION_RULES.md` |
+| `40-API/` | API rule indexes linking into per-page `API_RULES.md` |
+| `50-Business/` | Business rule indexes linking into per-page `BUSINESS_RULES.md` |
+| `60-Components/` | One note per Falcon component — name = `<Component Title>.md` |
+| `70-Gaps/` | Cross-page gap index linking into per-page `GAP_REGISTRY.md` |
+| `80-Evidence/` | Cross-page evidence index linking into per-page `EVIDENCE_INDEX.md` |
+| `90-Approved-Patterns/` | Approved + globally-promoted pattern index |
+
+Pre-existing vault-root indexes (`AMMAR_BRAIN_HOME.md`, `FRONTEND_INDEX.md`, `FALCON_EYES_INDEX.md`, `PAGE_KNOWLEDGE_INDEX.md`, `PAGES_INDEX.md`, etc.) remain in place for backwards compatibility and are reachable via wiki-links from the `00-Home/` hubs.
+
+### Required links on every page note (`10-Pages/<Page>.md`)
+
+| Required link | Target |
+|---|---|
+| UI/UX rules | `Brain Outputs/understanding/pages/<page>/UI_UX_RULES.md` |
+| Validation rules | `Brain Outputs/understanding/pages/<page>/VALIDATION_RULES.md` |
+| API rules | `Brain Outputs/understanding/pages/<page>/API_RULES.md` |
+| Business rules | `Brain Outputs/understanding/pages/<page>/BUSINESS_RULES.md` |
+| Falcon components used | wiki-links to `60-Components/<Component>.md` |
+| Gaps | `Brain Outputs/understanding/pages/<page>/GAP_REGISTRY.md` |
+| Evidence | `Brain Outputs/understanding/pages/<page>/EVIDENCE_INDEX.md` |
+| Approved page patterns | `Brain Outputs/understanding/pages/<page>/APPROVED_PAGE_PATTERNS.md` |
+| Pending page patterns | `Brain Outputs/understanding/pages/<page>/PENDING_PAGE_PATTERNS.md` |
+| Promotion candidates | `Brain Outputs/understanding/pages/<page>/PROMOTION_CANDIDATES.md` |
+| Page scorecard | `Brain Outputs/understanding/pages/<page>/PAGE_SCORECARD.md` |
+| Latest reports | `Brain SK/outputs/reports/<...>` |
+| Global frontend patterns | `Brain SK/outputs/understanding/frontend/patterns/<PATTERN>.md` |
+| Tests | output of `test-case-authoring` skill when available |
+
+### Required links on every component note (`60-Components/<Component>.md`)
+
+- Pages using it — wiki-links to `10-Pages/<Page>.md`
+- Gaps — `Brain Outputs/understanding/pages/<page>/GAP_REGISTRY.md` filtered by component
+- Approved patterns (page-level + global)
+- Component knowledge dossier — `Brain Outputs/understanding/frontend/components/<component>/` (OVERVIEW / API / USAGE / TOKENS / GAPS_AND_UPGRADES / DECISION)
+- Falcon Eyes visual reports when present
+
+### Evidence entry rule
+
+Every screenshot/report appended to any `EVIDENCE_INDEX.md` MUST link: page, section, component, rule/gap id, and (when applicable) source/destination/diff image paths under `Brain Outputs/reports/falcon-eyes/<run>/sections/<section>/`.
+
+### Gap entry rule
+
+Every gap appended to any `GAP_REGISTRY.md` MUST carry: page, component, evidence, status (`open · in-progress · resolved · accepted-debt`), next action, and category (`UI/UX · Validation · API · Business · Component · Source-Truth`).
+
+### Do-not-duplicate rule
+
+Obsidian must not become a competing source of truth. Notes hold the graph (links + minimal context). Rule content lives in Brain Outputs.
+
+### Sister vault (NOT switched)
+
+A second configured Obsidian vault exists at `C:\Falcon\falcon-wiki`. This protocol does NOT switch to it without explicit Ammar approval. Cross-vault graph queries are out of scope until decided.
