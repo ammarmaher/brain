@@ -85,30 +85,78 @@ Severity tags add a second layer of meaning, visible in the inline tag badges:
 | Severity emphasis | Same CSS → section 3 (severity rules) | Bold + color for high; muted for low |
 | Cross-cutting flags | Same CSS → section 3 (`#drift`, `#gap`, `#blocked`, `#security` rules) | Strong colors to grab attention |
 
-## 🖤 Venom theme — optional symbiote aesthetic
+## 🖤 Venom theme — Marvel-movie symbiote aesthetic (v2, animated)
 
-A second CSS snippet `venom-theme.css` ships with the vault for users who want **a glossy black symbiote look** on top of the functional palette above.
+A second CSS snippet `venom-theme.css` ships with the vault for the full **Marvel Venom symbiote look** — deep purples, hot violet, electric magenta, tongue-red — with **animated color cycling** on every accent.
 
 **Enable:** Settings → Appearance → CSS snippets → toggle **`venom-theme`** ON (alongside `falcon-vault`).
 
-What you get:
-- 🖤 Deep symbiote-black canvas (radial gradient from `#0a0a14` → `#000000`) — replaces all backgrounds
-- 🤍 Silver/white primary text with subtle pearlescent glow
-- 🔴 Venom-red glints on `#severity/high`, `#gap`, `#blocked`, `#status/deprecated` tags
-- 🟡 Venom-gold treatment for `#security` tags (poisonous warning)
-- ✨ **Pulse animation** on the 3 brain entry points (`🟢 Start Here` · `AMMAR_BRAIN_HOME` · `IMPLEMENTATION_KNOWLEDGE_MAP`) — soft 3.5 s breathing pulse normally, 1.2 s urgent pulse on hover
-- 🩸 Wiki-links glow white-on-hover with red undertone shadow (tendril effect)
-- 💉 Selected text gets venom-bite red highlight
-- 🌑 Glossy gradient h1 headings (white → silver → gray)
-- ⚡ Animated tendril sliding down the left edge of blockquotes
-- 📊 Tables with red-bottom-border thead + hover row glow
-- 🎯 Active note in file tree gets a venom-red left border + claim-glow
-- 💻 Code blocks with embossed inset shadow
-- 🪲 Scrollbar styled as venom tendrils
+### Movie palette (v2 — replaces the older red-only v1)
+
+| Role | Hex | Used for |
+|---|---|---|
+| Symbiote-black | `#0A0014` | Canvas / file-tree / sidebar |
+| Symbiote-purple | `#1A0A2E` | Deep panels / shadows |
+| Venom-purple | `#4C1D95` | Tables thead, code-block borders, selection |
+| Hot-violet | `#9333EA` | H1/H2 headings, scrollbar, wiki-link underlines |
+| Electric-magenta | `#D946EF` | Hover glow, severity flags, terminal cursor |
+| Tongue-red | `#DC2626` | `#severity/high` · `#gap` · `#blocked` · errors |
+| Teeth-white / silver | `#E9D5FF` | Body text |
+
+### Animations (the "color changes" you asked for)
+
+| Animation | Duration | Where |
+|---|---|---|
+| `symbiote-shift` | 6 s loop | Hub-note titles cycle through 4 purple shades + magenta |
+| `canvas-symbiote` | 14 s loop | Background radial gradient slowly drifts between symbiote-purple and venom-purple |
+| `gradient-shift` | 8 s loop | H1 headings have a 200%-width gradient that slides position |
+| `venom-pulse-fast` | **1.8 s** loop | 3 brain entry points (`🟢 Start Here`, `AMMAR_BRAIN_HOME`, `IMPLEMENTATION_KNOWLEDGE_MAP`) — **much faster than v1's 3.5 s** |
+| `venom-pulse-urgent` | 0.9 s | Hover-state pulse on the same hubs |
+| `venom-tendril-slide` | 2.4 s | Vertical neon-magenta tendril sliding down blockquote left edges |
+| `selection-pulse` | 1.2 s | Selected text pulses between venom-purple and magenta |
+| `cursor-blink` | 1.2 s | Terminal-style blinking caret on code blocks |
+| `tongue-pulse` | 1.6 s | `#severity/high` / `#gap` / `#blocked` tags glow red |
+| `gold-pulse` | 1.8 s | `#security` tags glow gold (poisonous warning) |
+
+### What you get visually
+
+- 🖤 Animated symbiote-black canvas (slow purple gradient drift)
+- 🤍 Silver/violet primary text with subtle pearlescent glow
+- 🔮 **Brain entry points pulse fast** (1.8 s) and gain an urgent 0.9 s pulse on hover
+- 🩸 Wiki-links glow magenta-on-hover with violet tendril shadow
+- 💉 Selected text gets pulsing venom highlight
+- 🌑 Animated gradient H1 headings (purple → violet → magenta sliding loop)
+- ⚡ Animated magenta tendrils on blockquote left edges
+- 📊 Tables: venom-purple thead border + magenta hover row glow
+- 🎯 Active note in file tree: animated venom-purple left border + claim-glow
+- 💻 Code blocks rendered as **venom terminal**: scan-line overlay + blinking magenta cursor + neon-magenta inline code
+- 🪲 Scrollbar styled as venom tendrils (hot-violet thumb, magenta on hover)
 
 **Best with Obsidian's Dark theme** (Settings → Appearance → Base color scheme → Dark). The venom snippet does nothing in Light mode.
 
 **To disable just venom (keep functional styling):** toggle `venom-theme` OFF, keep `falcon-vault` ON. The functional palette + file-tree borders survive.
+
+## 🖥 Venom terminal — matching `claude` palette
+
+The Venom palette also ships as a **Windows Terminal / VS Code terminal color scheme** so your `claude` launcher window matches the vault.
+
+**Source:** [`tools/terminal/falcon-brain-venom.json`](../../tools/terminal/falcon-brain-venom.json)
+**Install guide:** [`tools/terminal/README.md`](../../tools/terminal/README.md)
+
+**Quick install — Windows Terminal:**
+
+1. `Ctrl + ,` in Windows Terminal → **Open JSON file** (bottom-left).
+2. From `falcon-brain-venom.json` → copy `windowsTerminalFragment.schemes_append[0]` into the top-level `"schemes": [ ... ]` array.
+3. Merge `windowsTerminalFragment.profiles_defaults_merge` into `"profiles" → "defaults"` (sets `colorScheme: "Falcon Brain — Venom"` everywhere).
+4. Save — hot-reloads.
+
+**Quick install — VS Code / Cursor / Windsurf:**
+
+`Ctrl + Shift + P` → "Open User Settings (JSON)" → merge `vscodeIntegratedTerminal.snippet`.
+
+**Optional — Venom PowerShell prompt** (magenta `❯`): copy `powerShellPrompt.snippet` into `$PROFILE`.
+
+The terminal uses the **same hex values** as the Obsidian theme → one symbiote palette across editor + terminal + brain vault.
 
 ## ⚙ Recent fix — tag-nodes disabled in graph view
 

@@ -1,0 +1,152 @@
+{
+  "$comment": "Falcon Brain — Venom (Marvel movie palette). Drop the `scheme` block into Windows Terminal Settings → Open JSON file → schemes[], then set defaults.colorScheme = 'Falcon Brain — Venom'. The full settings.json fragment below is also paste-ready.",
+
+  "scheme": {
+    "name": "Falcon Brain — Venom",
+    "background": "#0A0014",
+    "foreground": "#E9D5FF",
+    "cursorColor": "#D946EF",
+    "selectionBackground": "#4C1D95",
+
+    "black":          "#1A0A2E",
+    "red":            "#DC2626",
+    "green":          "#22D3A6",
+    "yellow":         "#F59E0B",
+    "blue":           "#7C3AED",
+    "purple":         "#9333EA",
+    "cyan":           "#06B6D4",
+    "white":          "#E9D5FF",
+
+    "brightBlack":    "#3B1F5B",
+    "brightRed":      "#F43F5E",
+    "brightGreen":    "#4ADE80",
+    "brightYellow":   "#FBBF24",
+    "brightBlue":     "#A78BFA",
+    "brightPurple":   "#D946EF",
+    "brightCyan":     "#67E8F9",
+    "brightWhite":    "#FFFFFF"
+  },
+
+  "windowsTerminalFragment": {
+    "$help": "Open Windows Terminal → Settings → 'Open JSON file' → merge the keys below. The scheme name MUST match exactly.",
+
+    "schemes_append": [
+      {
+        "name": "Falcon Brain — Venom",
+        "background": "#0A0014",
+        "foreground": "#E9D5FF",
+        "cursorColor": "#D946EF",
+        "selectionBackground": "#4C1D95",
+        "black": "#1A0A2E",
+        "red": "#DC2626",
+        "green": "#22D3A6",
+        "yellow": "#F59E0B",
+        "blue": "#7C3AED",
+        "purple": "#9333EA",
+        "cyan": "#06B6D4",
+        "white": "#E9D5FF",
+        "brightBlack": "#3B1F5B",
+        "brightRed": "#F43F5E",
+        "brightGreen": "#4ADE80",
+        "brightYellow": "#FBBF24",
+        "brightBlue": "#A78BFA",
+        "brightPurple": "#D946EF",
+        "brightCyan": "#67E8F9",
+        "brightWhite": "#FFFFFF"
+      }
+    ],
+
+    "profiles_defaults_merge": {
+      "colorScheme": "Falcon Brain — Venom",
+      "font": {
+        "face": "Cascadia Code",
+        "size": 11,
+        "weight": "normal"
+      },
+      "cursorShape": "filledBox",
+      "intenseTextStyle": "bright",
+      "opacity": 96,
+      "useAcrylic": true,
+      "experimental.retroTerminalEffect": false,
+      "padding": "12, 10, 12, 10"
+    }
+  },
+
+  "vscodeIntegratedTerminal": {
+    "$help": "Add to your user settings.json — applies the Venom palette to the VS Code / Cursor / Windsurf integrated terminal.",
+    "snippet": {
+      "workbench.colorCustomizations": {
+        "terminal.background": "#0A0014",
+        "terminal.foreground": "#E9D5FF",
+        "terminalCursor.background": "#0A0014",
+        "terminalCursor.foreground": "#D946EF",
+        "terminal.selectionBackground": "#4C1D95",
+        "terminal.ansiBlack":         "#1A0A2E",
+        "terminal.ansiRed":           "#DC2626",
+        "terminal.ansiGreen":         "#22D3A6",
+        "terminal.ansiYellow":        "#F59E0B",
+        "terminal.ansiBlue":          "#7C3AED",
+        "terminal.ansiMagenta":       "#9333EA",
+        "terminal.ansiCyan":          "#06B6D4",
+        "terminal.ansiWhite":         "#E9D5FF",
+        "terminal.ansiBrightBlack":   "#3B1F5B",
+        "terminal.ansiBrightRed":     "#F43F5E",
+        "terminal.ansiBrightGreen":   "#4ADE80",
+        "terminal.ansiBrightYellow":  "#FBBF24",
+        "terminal.ansiBrightBlue":    "#A78BFA",
+        "terminal.ansiBrightMagenta": "#D946EF",
+        "terminal.ansiBrightCyan":    "#67E8F9",
+        "terminal.ansiBrightWhite":   "#FFFFFF"
+      }
+    }
+  },
+
+  "powerShellPrompt": {
+    "$help": "Optional — adds a Venom prompt with magenta ❯ and purple path. Paste into your $PROFILE (Microsoft.PowerShell_profile.ps1).",
+    "snippet": "function global:prompt {\n  $esc = [char]27\n  $purple   = \"$esc[38;2;147;51;234m\"\n  $magenta  = \"$esc[38;2;217;70;239m\"\n  $silver   = \"$esc[38;2;233;213;255m\"\n  $reset    = \"$esc[0m\"\n  $path = (Get-Location).Path\n  \"$silver[$purple$($env:USERNAME)$silver]$reset $purple$path$reset $magenta❯$reset \"\n}"
+  },
+
+  "ohMyPoshTheme": {
+    "$help": "Optional — Oh My Posh theme variant. Save as falcon-brain-venom.omp.json and load via `oh-my-posh init pwsh --config <path> | Invoke-Expression`.",
+    "snippet": {
+      "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+      "version": 2,
+      "final_space": true,
+      "blocks": [
+        {
+          "type": "prompt",
+          "alignment": "left",
+          "segments": [
+            { "type": "text",   "style": "plain", "foreground": "#9333EA", "template": "🕷 " },
+            { "type": "path",   "style": "plain", "foreground": "#A78BFA", "properties": { "style": "folder" } },
+            { "type": "git",    "style": "plain", "foreground": "#D946EF", "template": " {{ .HEAD }}" },
+            { "type": "text",   "style": "plain", "foreground": "#D946EF", "template": " ❯" }
+          ]
+        }
+      ]
+    }
+  },
+
+  "install": {
+    "windowsTerminal": [
+      "1. Open Windows Terminal.",
+      "2. Ctrl+, to open Settings → click 'Open JSON file' at the bottom-left.",
+      "3. Find the top-level \"schemes\": [...] array.",
+      "4. Append the object under windowsTerminalFragment.schemes_append to that array.",
+      "5. Find \"profiles\" → \"defaults\". Merge windowsTerminalFragment.profiles_defaults_merge into it.",
+      "6. Save the JSON file. Windows Terminal hot-reloads.",
+      "7. Confirm the Falcon Brain — Venom scheme is now active on every profile."
+    ],
+    "vscodeOrCursor": [
+      "1. Ctrl+Shift+P → 'Preferences: Open User Settings (JSON)'.",
+      "2. Merge vscodeIntegratedTerminal.snippet into the top-level object.",
+      "3. Reopen the integrated terminal to see the Venom palette."
+    ],
+    "powerShellProfile": [
+      "1. In PowerShell run:   notepad $PROFILE",
+      "2. Paste the powerShellPrompt.snippet near the end.",
+      "3. Reload:   . $PROFILE",
+      "4. The terminal prompt now shows the Venom magenta ❯."
+    ]
+  }
+}

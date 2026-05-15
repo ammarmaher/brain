@@ -1,245 +1,402 @@
 /* ═══════════════════════════════════════════════════════════════════════
- * VENOM THEME — symbiote-dark aesthetic for the Falcon Brain SK vault
+ * VENOM THEME v2 — Marvel "Venom" (2018/2021) movie palette
  *
- * Companion to `falcon-vault.css` (functional styling). This snippet
- * adds: deep symbiote-black canvas · silver/white primary text ·
- * red glints (Venom's tongue) · glowing tendrils on hover ·
- * pulse animation on hub nodes.
+ * Real movie palette:
+ *   Symbiote-black     #0a0014   (deep void with purple bias)
+ *   Symbiote-purple    #1a0a2e   (skin midtone)
+ *   Venom-purple       #4c1d95   (Eddie Brock's symbiote)
+ *   Hot-violet         #9333ea   (highlights · glow)
+ *   Electric-magenta   #d946ef   (peak energy · selection)
+ *   Teeth-white        #ffffff   (text · headings)
+ *   Tongue-red         #dc2626   (danger · severity-high)
  *
- * Enable in Obsidian: Settings → Appearance → CSS snippets → toggle
- * "venom-theme" ON (alongside or instead of "falcon-vault").
+ * Includes animated color cycling on hubs, headings, links — the
+ * symbiote literally shifts color in front of you.
  *
- * Best paired with Obsidian's Dark theme. Falls back gracefully if you
- * switch to Light theme.
+ * Enable: Settings → Appearance → CSS snippets → toggle "venom-theme" ON.
+ * Best paired with Obsidian Dark theme.
  * ═══════════════════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────────────────────────────────────────
- * 1. Symbiote canvas — deep black with subtle radial gradient
- *    Mimics Venom's glossy skin
+ * KEYFRAMES — animated color shifts
  * ─────────────────────────────────────────────────────────── */
-body.theme-dark {
-  --background-primary: #08080d;
-  --background-primary-alt: #0a0a12;
-  --background-secondary: #12121a;
-  --background-secondary-alt: #1a1a25;
-  --background-modifier-border: #2a2a3a;
-  --background-modifier-hover: #1f1f2a;
-  --background-modifier-active: #25253a;
 
-  --text-normal: #e8e8f0;
-  --text-muted: #a8a8b8;
-  --text-faint: #686878;
-  --text-accent: #d0d0e0;
-  --text-accent-hover: #ffffff;
+/* Symbiote-shift — color cycles through the Venom palette over 6 seconds */
+@keyframes symbiote-shift {
+  0%, 100% {
+    color: #d0c0ff;
+    text-shadow:
+      0 0 8px rgba(147, 51, 234, 0.6),
+      0 0 16px rgba(76, 29, 149, 0.3);
+  }
+  25% {
+    color: #e8d0ff;
+    text-shadow:
+      0 0 10px rgba(217, 70, 239, 0.7),
+      0 0 20px rgba(147, 51, 234, 0.4);
+  }
+  50% {
+    color: #ffffff;
+    text-shadow:
+      0 0 14px rgba(255, 255, 255, 0.6),
+      0 0 24px rgba(217, 70, 239, 0.5);
+  }
+  75% {
+    color: #c8a0ff;
+    text-shadow:
+      0 0 10px rgba(168, 85, 247, 0.7),
+      0 0 20px rgba(76, 29, 149, 0.4);
+  }
+}
 
-  --text-on-accent: #08080d;
-  --interactive-accent: #c0c0d0;
-  --interactive-accent-hover: #ffffff;
+/* Venom-pulse — fast 1.8s breathing pulse for hubs */
+@keyframes venom-pulse-fast {
+  0%, 100% {
+    text-shadow:
+      0 0 6px rgba(255, 255, 255, 0.4),
+      0 0 12px rgba(147, 51, 234, 0.3);
+    filter: brightness(1);
+  }
+  50% {
+    text-shadow:
+      0 0 14px rgba(255, 255, 255, 0.9),
+      0 0 22px rgba(217, 70, 239, 0.6),
+      0 0 32px rgba(76, 29, 149, 0.5);
+    filter: brightness(1.2);
+  }
+}
+
+/* Hub urgent — 0.9s ultra-fast pulse on hover */
+@keyframes venom-pulse-urgent {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(255, 255, 255, 0.7),
+      0 0 18px rgba(217, 70, 239, 0.6);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 1),
+      0 0 30px rgba(220, 38, 38, 0.8),
+      0 0 40px rgba(217, 70, 239, 0.7);
+    transform: scale(1.02);
+  }
+}
+
+/* Background-shift — canvas slowly shifts between symbiote shades, 14s cycle */
+@keyframes canvas-symbiote {
+  0%, 100% {
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(76, 29, 149, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(217, 70, 239, 0.08) 0%, transparent 50%),
+      linear-gradient(135deg, #0a0014 0%, #000000 100%);
+  }
+  33% {
+    background:
+      radial-gradient(ellipse at 60% 40%, rgba(147, 51, 234, 0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 70%, rgba(76, 29, 149, 0.12) 0%, transparent 50%),
+      linear-gradient(135deg, #0d001a 0%, #000000 100%);
+  }
+  66% {
+    background:
+      radial-gradient(ellipse at 80% 60%, rgba(217, 70, 239, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 30%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, #1a0a2e 0%, #000000 100%);
+  }
+}
+
+/* Tendril slide — animated edge of blockquotes */
+@keyframes venom-tendril-slide {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+/* Symbiote-pulse on selection — bright magenta breath */
+@keyframes selection-pulse {
+  0%, 100% { background-color: rgba(217, 70, 239, 0.35); }
+  50% { background-color: rgba(217, 70, 239, 0.55); }
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 2. Graph view — symbiote canvas + glowing nodes + tendril edges
+ * 1. Symbiote canvas — Venom-purple darkness with subtle shift
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark {
+  --background-primary: #0a0014;
+  --background-primary-alt: #0d001a;
+  --background-secondary: #14082a;
+  --background-secondary-alt: #1a0a2e;
+  --background-modifier-border: #2d1858;
+  --background-modifier-border-focus: #4c1d95;
+  --background-modifier-hover: #1f0e3a;
+  --background-modifier-active: #2a1255;
+
+  --text-normal: #e8e0f5;
+  --text-muted: #a890c8;
+  --text-faint: #6a5085;
+  --text-accent: #c8a8ff;
+  --text-accent-hover: #d946ef;
+
+  --text-on-accent: #0a0014;
+  --interactive-accent: #9333ea;
+  --interactive-accent-hover: #d946ef;
+}
+
+/* Animate the main workspace background */
+body.theme-dark .workspace,
+body.theme-dark .workspace-leaf-content {
+  animation: canvas-symbiote 14s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 2. Graph view — symbiote canvas with bright Venom-purple
  * ─────────────────────────────────────────────────────────── */
 body.theme-dark .graph-view.color-fill,
 body.theme-dark .workspace-leaf-content[data-type="graph"] {
-  background: radial-gradient(ellipse at center, #0a0a14 0%, #000000 100%);
+  background:
+    radial-gradient(ellipse at center, rgba(76, 29, 149, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 40%, rgba(217, 70, 239, 0.08) 0%, transparent 40%),
+    linear-gradient(135deg, #0a0014 0%, #000000 100%) !important;
+  animation: canvas-symbiote 14s ease-in-out infinite;
 }
 
-/* Subtle white glow around every node — venom's pearlescent skin */
 body.theme-dark .graph-view text {
-  fill: #d0d0e0 !important;
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+  fill: #d0c0ff !important;
+  text-shadow:
+    0 0 4px rgba(147, 51, 234, 0.4),
+    0 0 8px rgba(76, 29, 149, 0.2);
   font-weight: 500;
   font-size: 12px;
 }
 
-/* Hover: bright white glow + slightly larger text — the symbiote's reaction */
 body.theme-dark .graph-view text:hover {
   fill: #ffffff !important;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 6px rgba(220, 38, 38, 0.4);
+  text-shadow:
+    0 0 14px rgba(255, 255, 255, 0.9),
+    0 0 22px rgba(217, 70, 239, 0.7),
+    0 0 32px rgba(76, 29, 149, 0.5);
   font-weight: 700;
   cursor: pointer;
 }
 
-/* Edge styling — tendrils */
+/* Edges — venom-purple tendrils */
 body.theme-dark .graph-view .link {
-  stroke-opacity: 0.35 !important;
-  stroke: #4a4a5a !important;
-  filter: drop-shadow(0 0 1px rgba(220, 220, 240, 0.3));
+  stroke-opacity: 0.4 !important;
+  stroke: #4c1d95 !important;
+  filter: drop-shadow(0 0 2px rgba(147, 51, 234, 0.4));
 }
 
 body.theme-dark .graph-view .link:hover {
-  stroke: #ffffff !important;
-  stroke-opacity: 0.9 !important;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+  stroke: #d946ef !important;
+  stroke-opacity: 1 !important;
+  filter: drop-shadow(0 0 8px rgba(217, 70, 239, 0.9));
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 3. Tendril pulse — animated glow on hub-class file names in tree
+ * 3. Hub entry points — fast color-shifting pulse
  * ─────────────────────────────────────────────────────────── */
-@keyframes venom-pulse {
-  0%, 100% {
-    text-shadow:
-      0 0 4px rgba(255, 255, 255, 0.3),
-      0 0 8px rgba(192, 192, 220, 0.2);
-  }
-  50% {
-    text-shadow:
-      0 0 12px rgba(255, 255, 255, 0.7),
-      0 0 18px rgba(220, 38, 38, 0.35),
-      0 0 24px rgba(192, 192, 220, 0.4);
-  }
-}
 
-@keyframes venom-tendril-slide {
-  0% { transform: translateX(-2px); opacity: 0.3; }
-  50% { transform: translateX(2px); opacity: 1; }
-  100% { transform: translateX(-2px); opacity: 0.3; }
-}
-
-/* The 3 brain entry points always pulse softly */
 .nav-file-title[data-path*="🟢 Start Here"],
 .nav-file-title[data-path*="AMMAR_BRAIN_HOME"],
-.nav-file-title[data-path*="IMPLEMENTATION_KNOWLEDGE_MAP"] {
-  animation: venom-pulse 3.5s ease-in-out infinite;
-  color: #f0f0ff !important;
+.nav-file-title[data-path*="IMPLEMENTATION_KNOWLEDGE_MAP"],
+.nav-file-title[data-path*="Color Legend"] {
+  animation:
+    venom-pulse-fast 1.8s ease-in-out infinite,
+    symbiote-shift 6s linear infinite;
   font-weight: 700 !important;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(147, 51, 234, 0.08) 40%,
+    rgba(217, 70, 239, 0.12) 60%,
+    transparent 100%);
 }
 
-/* On hover, the pulse speeds up + tendril glow becomes red */
 .nav-file-title[data-path*="🟢 Start Here"]:hover,
 .nav-file-title[data-path*="AMMAR_BRAIN_HOME"]:hover,
-.nav-file-title[data-path*="IMPLEMENTATION_KNOWLEDGE_MAP"]:hover {
-  animation: venom-pulse 1.2s ease-in-out infinite;
-  text-shadow:
-    0 0 14px rgba(255, 255, 255, 0.9),
-    0 0 22px rgba(220, 38, 38, 0.6) !important;
+.nav-file-title[data-path*="IMPLEMENTATION_KNOWLEDGE_MAP"]:hover,
+.nav-file-title[data-path*="Color Legend"]:hover {
+  animation:
+    venom-pulse-urgent 0.9s ease-in-out infinite,
+    symbiote-shift 2s linear infinite;
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 4. Glossy/wet headings — Venom's skin
+ * 4. Headings — animated symbiote color shift
  * ─────────────────────────────────────────────────────────── */
 body.theme-dark .markdown-reading-view h1 {
-  background: linear-gradient(135deg, #ffffff 0%, #c0c0d0 50%, #808090 100%);
+  background: linear-gradient(135deg,
+    #ffffff 0%,
+    #d946ef 25%,
+    #9333ea 50%,
+    #c8a8ff 75%,
+    #ffffff 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+  border-bottom: 2px solid rgba(217, 70, 239, 0.4);
+  padding-bottom: 0.3em;
+  animation: gradient-shift 8s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 body.theme-dark .markdown-reading-view h2 {
-  color: #d0d0e0 !important;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  color: #c8a8ff !important;
+  text-shadow:
+    0 0 8px rgba(147, 51, 234, 0.4),
+    0 0 16px rgba(76, 29, 149, 0.2);
+  border-bottom: 1px dashed rgba(147, 51, 234, 0.4);
   padding-bottom: 4px;
+  animation: symbiote-shift 8s linear infinite;
 }
 
 body.theme-dark .markdown-reading-view h3 {
-  color: #a8a8c8 !important;
+  color: #d946ef !important;
+  font-weight: 600;
+  text-shadow: 0 0 6px rgba(217, 70, 239, 0.5);
+}
+
+body.theme-dark .markdown-reading-view h4 {
+  color: #a878d8 !important;
   font-weight: 600;
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 5. Wiki-link tendrils — glow on hover
+ * 5. Wiki-links — venom-purple tendrils
  * ─────────────────────────────────────────────────────────── */
 body.theme-dark .markdown-reading-view a.internal-link {
-  color: #d0d0e0 !important;
-  border-bottom: 1px solid rgba(208, 208, 224, 0.4);
+  color: #c8a8ff !important;
+  border-bottom: 1px solid rgba(147, 51, 234, 0.5);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.theme-dark .markdown-reading-view a.internal-link:hover {
   color: #ffffff !important;
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid #d946ef;
   text-shadow:
     0 0 8px rgba(255, 255, 255, 0.7),
-    0 0 14px rgba(220, 38, 38, 0.3);
-  background-color: rgba(255, 255, 255, 0.04);
+    0 0 16px rgba(217, 70, 239, 0.6);
+  background-color: rgba(147, 51, 234, 0.1);
 }
 
-/* Unresolved links — red tongue */
+/* Unresolved — venom-red tongue */
 body.theme-dark .markdown-reading-view a.internal-link.is-unresolved {
-  color: #ff4444 !important;
-  border-bottom-color: rgba(255, 68, 68, 0.6);
-  text-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
+  color: #ff5555 !important;
+  border-bottom-color: rgba(220, 38, 38, 0.6);
+  text-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+}
+
+/* External Brain Outputs links — softer purple */
+body.theme-dark .markdown-reading-view a.external-link[href*="Brain%20Outputs"] {
+  color: #c8a8ff;
+  font-family: var(--font-monospace);
+  font-size: 0.92em;
+  background: rgba(76, 29, 149, 0.15);
+  padding: 1px 5px;
+  border-radius: 3px;
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 6. Tag badges — symbiote-dark with venom-red highlights
+ * 6. Tag badges — symbiote-dark with venom highlights
  * ─────────────────────────────────────────────────────────── */
 body.theme-dark .tag {
-  background: linear-gradient(135deg, #1a1a25 0%, #0e0e15 100%);
-  color: #c8c8d8 !important;
-  border: 1px solid rgba(192, 192, 220, 0.2);
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #1a0a2e 0%, #0a0014 100%) !important;
+  color: #c8a8ff !important;
+  border: 1px solid rgba(147, 51, 234, 0.4);
+  text-shadow: 0 0 4px rgba(147, 51, 234, 0.3);
   transition: all 0.2s ease;
+  padding: 2px 8px;
+  border-radius: 12px;
 }
 
 body.theme-dark .tag:hover {
-  background: linear-gradient(135deg, #2a2a3a 0%, #1a1a25 100%);
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #4c1d95 0%, #1a0a2e 100%) !important;
+  border-color: #d946ef;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(217, 70, 239, 0.5);
 }
 
-/* High-severity tags pulse red — Venom's anger */
+/* Severity HIGH — Carnage red */
 body.theme-dark .tag[href="#severity/high"],
 body.theme-dark .tag[href="#status/deprecated"],
 body.theme-dark .tag[href="#gap"],
 body.theme-dark .tag[href="#blocked"] {
-  background: linear-gradient(135deg, #2a0a0a 0%, #1a0505 100%) !important;
-  color: #ff6868 !important;
-  border-color: rgba(220, 38, 38, 0.5);
-  text-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
-  font-weight: 700;
-}
-
-body.theme-dark .tag[href="#severity/high"]:hover,
-body.theme-dark .tag[href="#gap"]:hover {
-  box-shadow: 0 0 12px rgba(220, 38, 38, 0.6);
+  background: linear-gradient(135deg, #4a0a0a 0%, #1a0505 100%) !important;
   color: #ff8888 !important;
+  border-color: rgba(220, 38, 38, 0.6);
+  text-shadow: 0 0 6px rgba(220, 38, 38, 0.5);
+  font-weight: 700;
+  animation: tongue-pulse 2s ease-in-out infinite;
 }
 
-/* Security tag — venom gold (poisonous warning) */
+@keyframes tongue-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(220, 38, 38, 0); }
+  50% { box-shadow: 0 0 12px rgba(220, 38, 38, 0.5); }
+}
+
+/* Security — venom-gold (poisonous) */
 body.theme-dark .tag[href="#security"] {
   background: linear-gradient(135deg, #2a1f05 0%, #1a1505 100%) !important;
-  color: #f5c552 !important;
-  border-color: rgba(245, 197, 82, 0.5);
-  text-shadow: 0 0 6px rgba(245, 197, 82, 0.4);
+  color: #ffd96b !important;
+  border-color: rgba(245, 197, 82, 0.6);
+  text-shadow: 0 0 8px rgba(245, 197, 82, 0.6);
   font-weight: 700;
+  animation: gold-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(245, 197, 82, 0); }
+  50% { box-shadow: 0 0 14px rgba(245, 197, 82, 0.5); }
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 7. File tree — symbiote skin with venom-red folder borders
+ * 7. File tree — symbiote skin
  * ─────────────────────────────────────────────────────────── */
 body.theme-dark .nav-files-container,
 body.theme-dark .nav-folder-children {
-  background-color: var(--background-primary);
+  background-color: transparent;
+}
+
+body.theme-dark .nav-folder-title,
+body.theme-dark .nav-file-title {
+  color: #b8a0d8;
+  transition: all 0.2s ease;
 }
 
 body.theme-dark .nav-folder-title:hover,
 body.theme-dark .nav-file-title:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+  background: linear-gradient(90deg, rgba(147, 51, 234, 0.15) 0%, transparent 100%);
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(217, 70, 239, 0.4);
 }
 
-/* Active note — venom-claimed */
+/* Active note — venom-claimed (claimed by the symbiote) */
 body.theme-dark .nav-file-title.is-active {
-  background: linear-gradient(90deg, rgba(220, 38, 38, 0.15) 0%, transparent 100%);
-  border-left: 3px solid #dc2626 !important;
+  background: linear-gradient(90deg,
+    rgba(217, 70, 239, 0.25) 0%,
+    rgba(76, 29, 149, 0.15) 50%,
+    transparent 100%) !important;
+  border-left: 3px solid #d946ef !important;
   color: #ffffff !important;
   font-weight: 600;
+  text-shadow: 0 0 8px rgba(217, 70, 239, 0.6);
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 8. Quote / callout — venom's whisper
+ * 8. Blockquote — symbiote whisper with animated tendril
  * ─────────────────────────────────────────────────────────── */
 body.theme-dark .markdown-reading-view blockquote {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
-  border-left: 3px solid rgba(192, 192, 220, 0.6);
-  color: #c8c8d8;
+  background: linear-gradient(90deg,
+    rgba(147, 51, 234, 0.06) 0%,
+    rgba(76, 29, 149, 0.03) 50%,
+    transparent 100%);
+  border-left: 3px solid rgba(147, 51, 234, 0.6);
+  color: #c8a8ff;
   position: relative;
+  overflow: hidden;
 }
 
 body.theme-dark .markdown-reading-view blockquote::before {
@@ -249,100 +406,172 @@ body.theme-dark .markdown-reading-view blockquote::before {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, transparent 0%, #ffffff 50%, transparent 100%);
-  animation: venom-tendril-slide 4s ease-in-out infinite;
-  opacity: 0.6;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    #d946ef 50%,
+    transparent 100%);
+  animation: venom-tendril-slide 3s ease-in-out infinite;
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 9. Tables — sleek symbiote panels
+ * 9. Tables — sleek venom panels
  * ─────────────────────────────────────────────────────────── */
 body.theme-dark .markdown-reading-view table {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5), inset 0 0 6px rgba(255, 255, 255, 0.02);
+  background: linear-gradient(135deg, rgba(76, 29, 149, 0.05) 0%, transparent 100%);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  box-shadow:
+    0 0 20px rgba(76, 29, 149, 0.2),
+    inset 0 0 12px rgba(147, 51, 234, 0.05);
 }
 
 body.theme-dark .markdown-reading-view table thead th {
-  background: linear-gradient(135deg, #1a1a25 0%, #0e0e15 100%);
+  background: linear-gradient(135deg, #1a0a2e 0%, #0a0014 100%);
   color: #ffffff;
-  border-bottom: 2px solid rgba(220, 38, 38, 0.3);
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+  border-bottom: 2px solid rgba(217, 70, 239, 0.5);
+  text-shadow: 0 0 6px rgba(217, 70, 239, 0.4);
 }
 
 body.theme-dark .markdown-reading-view table tbody tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.015);
+  background-color: rgba(147, 51, 234, 0.03);
 }
 
 body.theme-dark .markdown-reading-view table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 0 8px rgba(220, 38, 38, 0.1);
+  background: linear-gradient(90deg,
+    rgba(147, 51, 234, 0.1) 0%,
+    rgba(217, 70, 239, 0.05) 50%,
+    transparent 100%);
+  box-shadow: inset 0 0 12px rgba(217, 70, 239, 0.1);
 }
 
-/* ─────────────────────────────────────────────────────────────
- * 10. Code blocks — symbiote terminal
- * ─────────────────────────────────────────────────────────── */
-body.theme-dark .markdown-reading-view pre {
-  background: linear-gradient(135deg, #0e0e15 0%, #08080d 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
-}
+/* ═══════════════════════════════════════════════════════════════════════
+ * 10. CODE BLOCKS — VENOM TERMINAL
+ *     Symbiote-dark terminal aesthetic with neon-purple text
+ * ═══════════════════════════════════════════════════════════════════════ */
 
+body.theme-dark .markdown-reading-view pre,
 body.theme-dark .markdown-reading-view code {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #f0d090;
-  text-shadow: 0 0 2px rgba(240, 208, 144, 0.2);
+  font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
 }
 
-/* ─────────────────────────────────────────────────────────────
- * 11. Side panes — sleek dark with subtle separator glow
- * ─────────────────────────────────────────────────────────── */
-body.theme-dark .workspace-tab-header.is-active {
-  background-color: var(--background-primary);
-  box-shadow: 0 -2px 6px rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+body.theme-dark .markdown-reading-view pre {
+  background:
+    linear-gradient(180deg, rgba(76, 29, 149, 0.15) 0%, rgba(10, 0, 20, 0.95) 100%),
+    repeating-linear-gradient(0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(217, 70, 239, 0.015) 2px,
+      rgba(217, 70, 239, 0.015) 3px) !important;
+  border: 1px solid rgba(147, 51, 234, 0.5);
+  box-shadow:
+    inset 0 0 20px rgba(76, 29, 149, 0.3),
+    0 0 16px rgba(147, 51, 234, 0.15);
+  border-radius: 6px;
+  padding: 16px 18px;
+  position: relative;
 }
 
-body.theme-dark .workspace-leaf {
-  border-color: rgba(255, 255, 255, 0.05) !important;
+/* Terminal-prompt vibe — small symbol top-left */
+body.theme-dark .markdown-reading-view pre::before {
+  content: "▌";
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  color: #d946ef;
+  text-shadow: 0 0 6px rgba(217, 70, 239, 0.7);
+  animation: cursor-blink 1.2s steps(2) infinite;
+  font-size: 1.1em;
 }
 
-/* ─────────────────────────────────────────────────────────────
- * 12. Status bar — minimal symbiote
- * ─────────────────────────────────────────────────────────── */
-body.theme-dark .status-bar {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  color: #888898;
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-/* ─────────────────────────────────────────────────────────────
- * 13. Scrollbar — venom tendrils
- * ─────────────────────────────────────────────────────────── */
-body.theme-dark ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+body.theme-dark .markdown-reading-view pre code {
+  background: transparent !important;
+  color: #e0c8ff !important;
+  text-shadow: 0 0 4px rgba(147, 51, 234, 0.4);
 }
 
-body.theme-dark ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-body.theme-dark ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #2a2a35 0%, #1a1a25 100%);
+/* Inline code — neon magenta */
+body.theme-dark .markdown-reading-view code {
+  background-color: rgba(76, 29, 149, 0.25) !important;
+  color: #ffb8ff !important;
+  text-shadow: 0 0 4px rgba(217, 70, 239, 0.4);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  padding: 1px 6px;
   border-radius: 4px;
 }
 
-body.theme-dark ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #4a4a55 0%, #2a2a35 100%);
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+/* ─────────────────────────────────────────────────────────────
+ * 11. Selection — venom bite (animated breath)
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark ::selection {
+  background-color: rgba(217, 70, 239, 0.45);
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
 }
 
 /* ─────────────────────────────────────────────────────────────
- * 14. Selected text — venom bite
+ * 12. Scrollbar — venom tendrils
  * ─────────────────────────────────────────────────────────── */
-body.theme-dark ::selection {
-  background-color: rgba(220, 38, 38, 0.4);
+body.theme-dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+body.theme-dark ::-webkit-scrollbar-track {
+  background: rgba(10, 0, 20, 0.5);
+}
+
+body.theme-dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    #4c1d95 0%,
+    #9333ea 50%,
+    #4c1d95 100%);
+  border-radius: 5px;
+  border: 1px solid rgba(217, 70, 239, 0.3);
+}
+
+body.theme-dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+    #9333ea 0%,
+    #d946ef 50%,
+    #9333ea 100%);
+  box-shadow: 0 0 8px rgba(217, 70, 239, 0.7);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 13. Workspace tabs + status bar — minimal symbiote chrome
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .workspace-tab-header.is-active {
+  background: linear-gradient(180deg, #1a0a2e 0%, #0a0014 100%);
+  box-shadow: 0 -2px 8px rgba(217, 70, 239, 0.3);
   color: #ffffff;
-  text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  border-bottom: 2px solid #d946ef;
+}
+
+body.theme-dark .status-bar {
+  background: linear-gradient(180deg, rgba(76, 29, 149, 0.2) 0%, rgba(0, 0, 0, 0.7) 100%);
+  border-top: 1px solid rgba(147, 51, 234, 0.3);
+  color: #a890c8;
+  text-shadow: 0 0 4px rgba(147, 51, 234, 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 14. Properties / frontmatter panel — venom card
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .metadata-container {
+  background: linear-gradient(135deg, rgba(76, 29, 149, 0.1) 0%, rgba(10, 0, 20, 0.5) 100%);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  border-radius: 6px;
+}
+
+body.theme-dark .metadata-property-key {
+  color: #a890c8;
+  text-shadow: 0 0 4px rgba(147, 51, 234, 0.3);
+}
+
+body.theme-dark .metadata-property-value {
+  color: #e0c8ff;
 }
