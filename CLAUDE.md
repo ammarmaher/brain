@@ -293,3 +293,46 @@ Hard constraints:
 - Legacy mirrors (`Brain Outputs/component-registry/`, `Brain Outputs/frontend-understanding/`, the Brain SK counterparts) remain for archival provenance — readers must use `understanding/` only.
 - Mirror to `Brain SK/outputs/understanding/` is additive only (`robocopy /E /XO`; never `/MIR`).
 - Do NOT delete legacy folders in this pass.
+
+## Permanent Rule: Flow Playbooks Are the Implementation Spec
+
+When any session begins **implementation work** (frontend / backend / full-stack / validation) on a Falcon user action that has a flow playbook, the playbook IS the source-of-truth spec. Load the playbook FIRST.
+
+Flow playbooks live at:
+
+```text
+C:\Falcon\Brain Outputs\understanding\pages\<page>\flows\<Flow Name>.md
+```
+
+with vault graph nodes at:
+
+```text
+C:\Falcon\Brain SK\_obsidian\10-Pages\<Flow Name> Flow.md
+```
+
+Each playbook ties together: PRD lines · backend DTOs · V-rules · Falcon components · permission matrices · entity drift · Kafka side-effects · error states · implementation checklists — all for one specific user action.
+
+### Available flow playbooks (Organization Hierarchy)
+
+- [[Add Client Flow]] — 5-step wizard creating Account + Settings + CommChannels + Apps + AO User (PRD-01 primary, PRD-02 via Step 5)
+- [[Add User Flow]] — 3-tab wizard creating a User (PRD-02)
+- [[Add Node Flow]] — sub-node creation (PRD-01)
+- [[Edit Node Flow]] — rename + scheduled rename (move ❌ + archive ❌ flagged MISSING) (PRD-01)
+
+### Load order for implementation tasks
+
+1. **`_obsidian/00-Home/IMPLEMENTATION_KNOWLEDGE_MAP.md`** — top-of-session entry point listing every flow + load order per task type.
+2. **The flow playbook** for the user action (the most concentrated source).
+3. Page note + relevant backend service notes + V-rules + E-* entity notes from the playbook's wiki-links.
+
+Future-session trigger phrases:
+- `implement Add Client wizard` → load [[Add Client Flow]]
+- `implement Add User` → load [[Add User Flow]]
+- `validate Organization Hierarchy validations` → load [[Organization Hierarchy]] + linked V-rules
+- `what backend changes does Add Client require?` → [[Add Client Flow]] → backend section
+
+Hard constraints (re-stated for implementation):
+
+- A session has not loaded enough context until it can answer all 8 verification questions in `IMPLEMENTATION_KNOWLEDGE_MAP.md` ("How to verify a session is correctly grounded").
+- The playbook IS the spec. Drill deeper only when the playbook surfaces a gap or drift.
+- Adding a new flow → add a new file under `understanding/pages/<page>/flows/` + a vault graph node + a row in `IMPLEMENTATION_KNOWLEDGE_MAP.md`.

@@ -36,6 +36,18 @@ Do NOT deeply analyse the whole page unless explicitly requested. Do NOT approve
 
 Before implementation, **load** (do not skip any). All paths anchor at the canonical knowledge root [`Brain Outputs/understanding/`](../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md):
 
+**Step 0 (read first):** [`_obsidian/00-Home/IMPLEMENTATION_KNOWLEDGE_MAP.md`](../_obsidian/00-Home/IMPLEMENTATION_KNOWLEDGE_MAP.md) — top-of-session entry that tells you which flow playbook to load + per-task load order.
+
+**Step 1:** If the user action has a **flow playbook** at `understanding/pages/<page>/flows/<Flow Name>.md`, load it FIRST. The playbook is the most concentrated source — it pre-cross-references PRD + backend + V-rules + components + permissions for that specific flow.
+
+Available Organization Hierarchy flow playbooks (Phase 2G):
+- `understanding/pages/organization-hierarchy/flows/Add Client.md` (5-step wizard)
+- `understanding/pages/organization-hierarchy/flows/Add User.md` (3-tab wizard)
+- `understanding/pages/organization-hierarchy/flows/Add Node.md` (sub-node creation)
+- `understanding/pages/organization-hierarchy/flows/Edit Node.md` (rename + scheduled rename)
+
+**Step 2-13:** then the standard load list:
+
 1. `understanding/pages/<page>/PAGE_LEARNING.md` for the target page
 2. `understanding/pages/<page>/PENDING_PAGE_PATTERNS.md` + `APPROVED_PAGE_PATTERNS.md`
 3. Global patterns under `understanding/frontend/patterns/`
@@ -52,6 +64,8 @@ Before implementation, **load** (do not skip any). All paths anchor at the canon
 For full-stack work, additionally load `understanding/backend/<service>/` (`SERVICE_OVERVIEW.md`, `ENDPOINT_REGISTRY.md`, `DTO_DICTIONARY.md`, `VALIDATIONS.md`, `ERRORS.md`, `FRONTEND_CONTRACT.md`) and `understanding/integration/` (`INTEGRATION_OVERVIEW.md`, `API_TO_COMPONENT_TRACE.md`, `READINESS_MATRIX.md`, `GAP_LIST.md`).
 
 Then create a plan before coding. Implementation begins only after the plan exists.
+
+**Verification gate:** before producing code, the session must be able to answer all 8 verification questions in [`IMPLEMENTATION_KNOWLEDGE_MAP.md`](../_obsidian/00-Home/IMPLEMENTATION_KNOWLEDGE_MAP.md) ("How to verify a session is correctly grounded"). If it can't, it has not loaded enough context.
 
 ### Canonical knowledge root — per-task load order
 

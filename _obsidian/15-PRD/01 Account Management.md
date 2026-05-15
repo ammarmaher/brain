@@ -23,6 +23,13 @@
   - Sections: `tabs-header`, `comm-channels-tab`, `apps-services-tab`, `org-info-panel`, `settings-tab-view-mode`, `settings-tab-edit-mode`, `settings-ip-management`, `settings-account-limitation`, `otp-popup`
 - Wallets & Balance Management page — not yet seeded under `10-Pages/`
 
+## Flow playbooks (implementation specs)
+
+- [[Add Client Flow]] — 5-step wizard creating Account + Settings + CommChannels + Apps + AO User
+- [[Add Node Flow]] — sub-node creation
+- [[Edit Node Flow]] — rename + scheduled rename (move + archive flagged MISSING)
+- Hub: [[IMPLEMENTATION_KNOWLEDGE_MAP]]
+
 ## Falcon components used by this PRD
 
 - [[Falcon Data Table]] — CommChannels list, Apps list, Permission/Privilege rows, IP list, Account-Limitation rows

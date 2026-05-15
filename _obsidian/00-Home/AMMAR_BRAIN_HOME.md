@@ -58,8 +58,20 @@ Example phrases:
 - Drive folder (canonical): `https://drive.google.com/drive/folders/1ww3nICya-CjW4_5mzoVpzTaaMz9nNTtH`
 - Refresh: `take latest from PRD`
 
+## Implementation Knowledge Map (Phase 2G — flow playbooks)
+
+> **Read first when starting a new session for implementation / validation work.** [[IMPLEMENTATION_KNOWLEDGE_MAP]] tells you which flow playbook to load and the exact per-task load order so your work is grounded in the canonical source-of-truth.
+
+Organization Hierarchy flow playbooks:
+
+- [[Add Client Flow]] — 5-step wizard (PRD-01) · 40 fields · 6 endpoints · 9 V-rules · 21 components
+- [[Add User Flow]] — 3-tab wizard (PRD-02) · 14 fields · 6 endpoints · 6 V-rules · 13 components
+- [[Add Node Flow]] — sub-node creation (PRD-01)
+- [[Edit Node Flow]] — rename · scheduled rename (move + archive MISSING) (PRD-01)
+
 ## Top-level indexes
 
+- [[IMPLEMENTATION_KNOWLEDGE_MAP]] — **flow playbooks + load order (Phase 2G)**
 - [[PRD_INDEX]] — PRD modules (upstream)
 - [[BACKEND_INDEX]] — 9 backend services
 - [[PAGE_LEARNING_INDEX]] — page-level learning entry point (Light + Deep modes)

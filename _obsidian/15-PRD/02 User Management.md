@@ -25,6 +25,12 @@
 - OTP popups (`otp-popup` section also appears in [[Organization Hierarchy]])
 - _Pages not yet seeded under `10-Pages/` — will join as Light Learning events accrue_
 
+## Flow playbooks (implementation specs)
+
+- [[Add User Flow]] — 3-tab wizard (Personal Info · Role & Permissions · Notification & Credentials)
+- [[Add Client Flow]] — Step 5 of that wizard creates an Account-Owner user via Kafka `UserCreationRequested` event (cross-flow dependency)
+- Hub: [[IMPLEMENTATION_KNOWLEDGE_MAP]]
+
 ## Falcon components used by this PRD
 
 - [[Falcon Input]] (email · phone · password) · [[Falcon Dropdown]] (role · status) · [[Falcon Dialog]] (OTP popup) · [[Falcon Button]]

@@ -20,6 +20,17 @@
 - [[03 Contract Packaging Charging Billing]] — pricing rows in CommChannels & Services come from Contract Rate-Card; Account-Limitation edits enforce contract caps
 - [[PRD_INDEX]] — full PRD navigation hub
 
+## Flow playbooks (implementation specs — load these FIRST for any code work)
+
+These are the **source-of-truth specs** for implementing each user action. Each playbook cross-references PRD + backend DTOs + V-rules + Falcon components + permission gates + error states for that one flow. Hub: [[IMPLEMENTATION_KNOWLEDGE_MAP]].
+
+| Flow | Vault note | Trigger phrase |
+|---|---|---|
+| Add Client (5-step wizard) | [[Add Client Flow]] | `implement Add Client wizard` |
+| Add User (3-tab wizard) | [[Add User Flow]] | `implement Add User` |
+| Add Node (sub-node) | [[Add Node Flow]] | `implement Add Node` |
+| Edit Node (rename · scheduled rename · move ❌ · archive ❌) | [[Edit Node Flow]] | `implement Edit Node` |
+
 ## Rules (linked, not duplicated)
 
 | Domain | File |
