@@ -51,6 +51,16 @@ Per [VALIDATIONS.md](../../../Brain%20Outputs/understanding/backend/templates/VA
 
 Consumer-heavy: receives events from [[Commerce Service]] (CommChannelConfig changes) and [[Identity Service]] (checker user assignments).
 
+## Validation rules enforced here (2 — limited by GAP-TM-01/02)
+
+PRD-05 Templates:
+- [[V-template-checker-level-integrity]] — CheckerLevels must be sequential 1..N, ≥1 user each, no duplicates · 8 bundled error codes
+- [[V-template-levels-count-required-for-restricted]] — `BodyType=Restricted` requires non-null `LevelsCount` matching `CheckerLevels.Count` · 4 error codes
+
+**Honest gap:** ~23 of ~25 candidate PRD-05 validation rules (Template name format · variable rules · Body/Header/Footer caps · button count · etc.) have NO backend enforcement today because **GAP-TM-01** (Template entity has no public API) and **GAP-TM-02** (no gateway route). These can't be triangulated until the architectural decision lands.
+
+Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
 - [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[GAPS_INDEX]]

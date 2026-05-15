@@ -63,6 +63,17 @@ Per [VALIDATIONS.md](../../../Brain%20Outputs/understanding/backend/contact-grou
 - Client traffic → [[Core Gateway Service]]
 - Admin traffic → [[System Gateway Service]] (view-only per Permission matrix)
 
+## Validation rules enforced here (5)
+
+PRD-04 Contact Group Management:
+- [[V-contact-group-file-type-allowlist]] — handler · `InvalidFileType`. Allowlist from `UploadConfigResponse.AllowedExtensions[]`
+- [[V-contact-group-file-size-cap]] — validator + handler · `InvalidFileSize` / `FileSizeExceeded`. Server cap from `UploadConfigResponse.MaxFileSizeMB`
+- [[V-contact-group-name-required-format]] — `ContactGroupNameRequired` / `ContactGroupNameInvalidFormat`. **⚠ `ContactGroupRules.NamePattern` is symbolic — literal regex not in VALIDATIONS.md; FE should mirror via a shared-constants file**
+- [[V-contact-group-column-name-shape]] — **⚠ no dedicated error code; uses generic `RequiredFieldMissing`/`MaxLengthExceeded`/`InvalidOperation` (BR-CGM-06 gap)**
+- [[V-contact-group-share-policy-mode-mutex]] — **⚠ silent drop, no error code at all. When `SharedWithAllUsers=true`, `SharedUsers[]` is silently ignored. Surfaced as gap: needs `InvalidShareMode` code.**
+
+Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
 - [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]]

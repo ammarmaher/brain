@@ -54,6 +54,15 @@ All — Core Gateway is the entry point for every Falcon component's data fetche
 
 > *"Internal services NEVER call each other through gateways"* — use gRPC/Kafka directly. Gateway is for FE↔BE only.
 
+## Validation rules enforced here (1 — gateway layer)
+
+PRD-01 Account Management:
+- [[V-account-ip-allowlist-enforcement]] — Redis-cached per-tenant allowlist · refreshed on `commerce.tenant-ip-allowlist-changed.v1` Kafka events · companion to [[Identity Service]] `IpAllowlistPreProcessor`. This is the **gateway layer** of the IP check (the data owner is Commerce; the per-request enforcement happens here and at Identity).
+
+Plus cross-cutting per-tenant rate limiting (`PerTenant` policy: 100 req / 60s / no queue) — not a PRD rule, but a gateway-level guardrail.
+
+Full validation index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
-- [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[GAPS_INDEX]]
+- [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[GAPS_INDEX]]

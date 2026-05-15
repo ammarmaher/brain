@@ -53,6 +53,17 @@ Per [VALIDATIONS.md](../../../Brain%20Outputs/understanding/backend/charging/VAL
 - Client traffic → [[Core Gateway Service]]
 - Admin traffic → [[System Gateway Service]] (Testing Charging BFF is here — 10 admin-only endpoints)
 
+## Validation rules enforced here (3)
+
+PRD-03 Charging:
+- [[V-charging-insufficient-balance]] — `InsufficientBalance` (handler-side, no DTO attribute — Charging DTOs are intentionally bare; all rules handler-enforced)
+- [[V-charging-transfer-source-destination]] — `InvalidTransferWallets` / `InvalidWalletIdentity` (BR-CC-35)
+- [[V-charging-no-applicable-rate]] — `NoApplicableRate` (422) — Send Transaction requires matching (App × Channel × Priority × Destination × Unit) cell
+
+**Drift note:** [[V-contract-currency-enum]] — Commerce binds `eCurrency` with `[EnumDataType]`; Charging same field has **no enum binding**. Same domain concept, different rigour. Frontend should not expect 400 from binder on currency mismatch in Charging requests.
+
+Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
 - [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]]

@@ -58,6 +58,23 @@ Per-DTO examples in [VALIDATIONS.md](../../../Brain%20Outputs/understanding/back
 - Client traffic → [[Core Gateway Service]] (proxy + aggregations on `/api/commerce/*`)
 - Admin traffic → [[System Gateway Service]]
 
+## Validation rules enforced here (9)
+
+PRD-01 Account Management:
+- [[V-account-name-format-uniqueness]] — `Info.AccountName` `[ThrowIfNotPassed][ThrowIfMaxLengthExceed(30)]` + `DuplicateTenantName`
+- [[V-password-security-level-enum]] — `Settings.PasswordSecurityLevel` `[ThrowIfNotEnumValue<ePasswordSecurityLevel>]`
+- [[V-account-limits-zero-means-no-limit]] — handler-level `InvalidAccountLimits` / `MaxNodeLevelReached` / `NormalUserLimitReached`
+- [[V-service-visibility-pricing-required]] — `PriceValueNotConfigured` / `PricingTypeNotConfigured` / `HiddenProductMustNotHavePricing`
+
+PRD-03 Contract:
+- [[V-contract-committed-value-positive]] — `[Range(decimal, "0.0000001", max)]` on `CommittedValue`
+- [[V-contract-rate-per-unit-non-negative]] — `[Range(decimal, "0", max)]` on `RatePerUnit` + `PriceValue` + `IncludedAmount` + `IncludedUnits` + `UnitPrice`
+- [[V-contract-currency-enum]] — `[EnumDataType(typeof(eCurrency))]`. Note: Charging same field has no enum binding (drift)
+- [[V-contract-expiration-after-start]] — handler-time · `EffectiveDateMustBeInFuture` / `InvalidContractConfiguration` (422)
+- [[V-contract-edit-status-aware-fields]] — handler-time gate · `ContractEditOnlyAllowedWhenPending` (422). `ContractResponse.CanEdit` bool exposed for FE
+
+Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
 - [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]]

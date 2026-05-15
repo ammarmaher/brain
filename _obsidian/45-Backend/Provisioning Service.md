@@ -42,6 +42,14 @@ Per [VALIDATIONS.md](../../../Brain%20Outputs/understanding/backend/provisioning
 - Client traffic → [[Core Gateway Service]]
 - Admin traffic → [[System Gateway Service]]
 
+## Validation rules enforced here (shared)
+
+PRD-01 / PRD-03 — state-transition gates rather than field-shape attributes:
+
+- [[V-service-visibility-pricing-required]] — Provisioning's `CannotHideActiveService` / `CannotEnableNonDisabledService` state-transition gates participate when a Falcon user toggles visibility / status. Commerce owns the price-required side; Provisioning owns the state-transition side.
+
+Full validation index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
 - [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[GAPS_INDEX]]

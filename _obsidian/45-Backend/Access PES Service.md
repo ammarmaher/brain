@@ -45,6 +45,19 @@ Per [VALIDATIONS.md](../../../Brain%20Outputs/understanding/backend/access/VALID
 
 PES is called internally by every service that gates access. Not directly exposed via gateway routes for end-user traffic — it's an internal decision point.
 
+## Validation rules consulted here (cross-cutting)
+
+PES does NOT validate field shape — that's per-service `[ThrowIf*]` work. PES validates **authorization decisions** when a service asks "can this subject do this action on this resource?". The triangulated validation rules that include a role-conditional gate consult PES at runtime:
+
+- [[V-account-ip-allowlist-enforcement]] — IP allowlist is owned by [[Commerce Service]] but enforced jointly by [[Identity Service]] preprocessor + [[Core Gateway Service]] (Redis cache). PES doesn't see the IP check; it's pre-authentication.
+- [[V-account-limits-zero-means-no-limit]] — limit enforcement is Commerce-side; PES gates WHO can edit Account Limitations (Falcon usertype only per Permission list - Jawad)
+- [[V-username-format-uniqueness-immutable]] — username immutability is Identity-side; PES gates WHO can edit a user record
+- Any rule whose owner DTO is reachable only through a permission-gated page → PES is consulted at the page level (button visible/hidden, edit/view-only)
+
+The role × action matrix that PES enforces is [[Falcon Roles Permission Matrix]] (PRD-02 source) + [[Contact Group Permission Matrix]] (PRD-04 source).
+
+Full validation index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
 - [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]]

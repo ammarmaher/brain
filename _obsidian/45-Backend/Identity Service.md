@@ -55,6 +55,21 @@ Per [VALIDATIONS.md](../../../Brain%20Outputs/understanding/backend/identity/VAL
 - Client traffic → [[Core Gateway Service]]
 - Admin traffic → [[System Gateway Service]]
 
+## Validation rules enforced here (6)
+
+PRD-02 User Management:
+- [[V-user-first-last-name-letters-only]] — FluentValidation · `FirstNameLettersOnly` / `LastNameLettersOnly` / `MaxLengthExceeded` (BR-UM-11)
+- [[V-username-format-uniqueness-immutable]] — `UsernameMustStartWithLetter` / `DuplicateUsername`. **⚠ PRD says ≤30; backend says ≤100 — drift**
+- [[V-normal-user-limit-enforcement]] — `UserQuotaPolicy` · `NormalUserLimitReached` (BR-UM-07/09/17/38)
+- [[V-login-lockout-3-wrong-attempts]] — `LoginEligibilityPolicy` + `VerificationRateLimitPolicy` + Zitadel · `UserLocked` (423) / `OtpResendLimitExceeded` / `OtpStillValid` (429)
+- [[V-password-complexity-per-security-level]] — `PasswordPolicy` · `PasswordTooShort` / `PasswordRequiresUppercase` / `PasswordsDoNotMatch`
+
+PRD-01 Account Management (Identity consumer / preprocessor):
+- [[V-account-ip-allowlist-enforcement]] — `IpAllowlistPreProcessor` · `IpNotAllowed` (403) / `InvalidIpAddress` (403). Companion layer: [[Core Gateway Service]] caches the allowlist in Redis.
+- [[V-password-security-level-enum]] — Identity consumes the enum set by Commerce on `Settings.PasswordSecurityLevel`.
+
+Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
 ## Hubs
 
 - [[BACKEND_INDEX]] · [[API_INDEX]] · [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[VALIDATION_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]]
