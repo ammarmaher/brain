@@ -16,6 +16,7 @@ When a task touches Angular/frontend implementation, always apply:
 
 ## Specialist skill sources
 
+- `domains/frontend/falcon-eyes/SKILL.md` — **Falcon Eyes** semantic visual difference QA (canonical). Aliases: `domains/frontend/visual-difference-qa/SKILL.md`, `domains/frontend/visual-parity/SKILL.md`. Pre-requisite for any UI fix when visual parity < 90 % or when Ammar asks about source-vs-destination screenshot differences.
 - `skills/frontend-master-router/SKILL.md`
 - `skills/html-to-angular/SKILL.md`
 - `skills/react-to-angular/SKILL.md`

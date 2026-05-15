@@ -181,3 +181,25 @@ Reports live in two places:
 
 - Per-run dated folder: `C:\Falcon\Brain Outputs\reports\component-scans\<YYYY-MM-DD-HHmm>\`
 - Mirrored after sync: `C:\Falcon\Brain SK\outputs\reports\component-scans\<YYYY-MM-DD-HHmm>\`
+
+## Permanent Rule: Falcon Eyes for Visual Difference QA
+
+When Ammar asks for any of the following, Brain SK MUST run **Falcon Eyes** before suggesting UI fixes:
+
+- screenshot comparison
+- visual difference analysis
+- visual parity diagnosis
+- source-vs-destination UI comparison
+- screenshot understanding
+- *"why this table does not look like that table"*
+- visual repair planning
+- Night Shift visual repair
+- Organization Hierarchy tabs visual repair
+
+When visual parity is below **90 %**, the same rule applies even without an explicit phrase.
+
+Canonical skill: [`domains/frontend/falcon-eyes/SKILL.md`](domains/frontend/falcon-eyes/SKILL.md).
+Aliases: [`domains/frontend/visual-difference-qa/SKILL.md`](domains/frontend/visual-difference-qa/SKILL.md) and [`domains/frontend/visual-parity/SKILL.md`](domains/frontend/visual-parity/SKILL.md).
+Tool: `tools/falcon-eyes/` — isolated `package.json`. Reports land at `C:\Falcon\Brain Outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\`.
+
+Falcon Eyes is the **semantic** layer over screenshots. It maps every mismatch to a Falcon component, asks which dynamic input / `ng-template` / slot / token / upgrade is needed, and enforces the customization order (inputs → templates → slots → tokens → shared upgrade → new component → wrapper → raw as GAP). It NEVER repairs UI automatically — repair is a separate explicit task.

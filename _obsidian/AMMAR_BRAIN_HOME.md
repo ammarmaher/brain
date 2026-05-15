@@ -11,6 +11,9 @@ Welcome to Brain SK knowledge vault.
 - [[WIKI_INDEX]]
 - [[TASK_REPORT_INDEX]]
 - [[PAGES_INDEX]] — Page-level registries (NEEDS-ATTENTION pages, scoring, 4 dimensions per page)
+- [[PAGE_KNOWLEDGE_INDEX]] — Page-level knowledge folders under `Brain Outputs/understanding/pages/`
+- [[FALCON_EYES_INDEX]] — Falcon Eyes semantic visual difference QA hub
+- [[VISUAL_QA_INDEX]] — Visual QA index (Falcon Eyes + aliases + screenshot-to-angular)
 
 ## Main outputs
 

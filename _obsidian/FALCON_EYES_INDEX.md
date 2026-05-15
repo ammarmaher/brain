@@ -1,0 +1,81 @@
+*** Brain SK Obsidian — Falcon Eyes Hub ***
+*** Path: _obsidian/FALCON_EYES_INDEX.md ***
+*** Created: 2026-05-15 ***
+
+# Falcon Eyes — Semantic Visual Difference QA
+
+> Falcon Eyes is the **semantic** analysis layer over source-vs-destination screenshots. It does not just say "pixels are different." It explains **what** is different, **why**, **which Falcon component owns the mismatch**, and what dynamic Falcon input / template / slot / token / upgrade is needed.
+
+## Skill
+
+- [Falcon Eyes — canonical SKILL.md](../domains/frontend/falcon-eyes/SKILL.md)
+- [Alias — visual-difference-qa](../domains/frontend/visual-difference-qa/SKILL.md)
+- [Alias — visual-parity](../domains/frontend/visual-parity/SKILL.md)
+
+## Tool
+
+- [Tool README](../tools/falcon-eyes/README.md)
+- [Tool package.json](../tools/falcon-eyes/package.json)
+- [Tool config — falcon-eyes.config.json](../tools/falcon-eyes/falcon-eyes.config.json)
+- [Tool config — section-capture.config.json](../tools/falcon-eyes/section-capture.config.json)
+- [Tool — capture-and-compare.ts](../tools/falcon-eyes/capture-and-compare.ts)
+- [Tool — compare-images.ts](../tools/falcon-eyes/compare-images.ts)
+- [Single-mismatch template](../tools/falcon-eyes/semantic-mismatch-template.md)
+- [Installation-validation example](../tools/falcon-eyes/example-run.md)
+
+## Slash command
+
+- [/falcon-eyes](../.claude/commands/falcon-eyes.md)
+
+## Reports root
+
+```text
+C:\Falcon\Brain Outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\
+```
+
+Required per-run artifacts:
+
+- `source/`
+- `destination/`
+- `diff/`
+- `metadata/`
+- `FALCON_EYES_REPORT.md`
+- `FALCON_EYES_DATA.json`
+- `SEMANTIC_MISMATCH_BACKLOG.md`
+- `SECTION_SCORECARD.md`
+- `FALCON_COMPONENT_REPAIR_MAP.md`
+
+## Default future targets
+
+| Side | URL |
+|---|---|
+| Source | `http://localhost:3000/T2%20Falcon%20Admin` |
+| Destination | `http://localhost:4200/#/admin-console/org-hierarchy-page` |
+
+## Linked knowledge
+
+- [[FRONTEND_INDEX]] — frontend knowledge entry point
+- [[VISUAL_QA_INDEX]] — visual QA sibling index
+- [[PAGE_KNOWLEDGE_INDEX]] — page-level registries
+- [[Frontend Components Index]] — 60-component master index
+- [[FALCON_COMPONENT_INDEX]] — Falcon component dossiers
+- [Organization Hierarchy page knowledge](../../Brain%20Outputs/understanding/pages/organization-hierarchy/)
+
+## Standing rule
+
+When visual parity is below **90 %**, or when Ammar asks why source and destination screenshots differ, Brain SK MUST run Falcon Eyes before suggesting any UI fix.
+
+## Customization order (Falcon component-first)
+
+1. Existing Falcon component inputs / config
+2. Existing Falcon `ng-template` support
+3. Existing Falcon slots / content projection
+4. Existing Falcon Tailwind / token variants
+5. Shared Falcon component upgrade
+6. New reusable Falcon component in the library
+7. Feature-local wrapper (page-specific only)
+8. Raw implementation (last resort — document as GAP)
+
+## Tailwind / token rule
+
+Tailwind utilities + Falcon tokens only. No SCSS. No inline styles. No PrimeNG. No PrimeIcons. No hardcoded colors / spacing / radii / shadows.

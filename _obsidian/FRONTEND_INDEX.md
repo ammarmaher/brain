@@ -8,6 +8,8 @@
 > Old paths under `Brain Outputs\component-registry` and `Brain Outputs\frontend-understanding` are archival only — never used as active source.
 >
 > Hub notes: [[Frontend Understanding]] (top-level index) and [[Frontend Components Index]] (60 dossiers).
+>
+> **Visual QA:** Falcon Eyes is the semantic visual difference QA layer — see [[FALCON_EYES_INDEX]] and [[VISUAL_QA_INDEX]]. Brain SK MUST run Falcon Eyes before suggesting UI fixes when visual parity is below 90 % or when Ammar asks about source-vs-destination screenshot differences.
 
 ## Latest
 

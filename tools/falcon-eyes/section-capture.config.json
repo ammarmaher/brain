@@ -1,0 +1,91 @@
+{
+  "$schema": "./section-capture.schema.json",
+  "page": "organization-hierarchy",
+  "notes": "Default named sections for Organization Hierarchy tabs. Selectors are placeholders — Ammar fills them in per run once the destination DOM is finalized. The 'sourceSelector' is the selector on the reference UI; 'destinationSelector' is the selector on the Falcon Angular app. If either is empty, Falcon Eyes falls back to the full-page screenshot for that section.",
+  "sections": [
+    {
+      "name": "tabs-header",
+      "description": "Tabs header bar across the top of the Organization Hierarchy page",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "comm-channels-tab",
+      "description": "Communication Channels tab content (table + actions)",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "apps-services-tab",
+      "description": "Applications / Services tab content",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "org-info-panel",
+      "description": "Organization Info side panel (display mode)",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "org-info-audit-mode",
+      "description": "Organization Info panel in audit mode",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "org-info-rule-status",
+      "description": "Organization Info — rule status block",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "org-info-permission-privilege",
+      "description": "Organization Info — permissions and privileges block",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "settings-tab-view-mode",
+      "description": "Settings tab in view mode",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "settings-tab-edit-mode",
+      "description": "Settings tab in edit mode",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "settings-ip-management",
+      "description": "Settings tab — IP management section",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "settings-account-limitation",
+      "description": "Settings tab — account limitation section",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "otp-popup",
+      "description": "OTP confirmation popup",
+      "sourceSelector": "",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    }
+  ]
+}
