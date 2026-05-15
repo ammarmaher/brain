@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Rate Card
+prd: PRD-03
+is-entity: false
+created: 2026-05-15
+---
 *** Glossary — Rate Card ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - **Rate Card ↔ ContractDetail** — different. RateCard = SAR↔Points conversion. ContractDetail = matrix cell cost.
+
+## Tags
+
+#type/glossary-term #prd/03 #service/charging #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

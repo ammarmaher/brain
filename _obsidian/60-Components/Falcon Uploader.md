@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Uploader
+folder-name: falcon-angular-photo-uploader
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Uploader ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\frontend\components\falcon-angular-photo-uploader\ ***
 
@@ -29,6 +37,10 @@ Navigation note. Brain Outputs holds the dossier.
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-uploader`.
+
+## Tags
+
+#type/falcon-component #gap
 
 ## Hubs
 

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: CommChannel
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — CommChannel ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -29,6 +36,10 @@
 ## Common confusions
 - **CommChannel ↔ Application** — Same Config shape, different entities. CommChannel = bearer (SMS/WhatsApp/Voice). Application = app product (AI/Nabaa).
 - **CommChannel ↔ CommChannelConfig** — CommChannel = catalog master; CommChannelConfig = per-account row.
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/03 #prd/05 #service/charging #service/commerce #service/provisioning #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Addon
+prd: PRD-03
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Addon ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - **Addon ↔ Quota** — Quota is one half of an Addon (the free-credit side).
+
+## Tags
+
+#type/glossary-term #prd/03 #service/charging #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

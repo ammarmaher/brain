@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: upload-session
+prd: PRD-04
+service: contact-group
+drift-count: 10
+created: 2026-05-15
+---
 *** Entity Reconciliation E-upload-session — UploadSession ***
 *** PRD: PRD-04 Contact Group Management · Backend service: contact-group · 2026-05-15 ***
 
@@ -89,6 +97,10 @@ _frontend pending Story 115329_ — UploadSession is consumed during the Create 
 - **S3** — backend issues a pre-signed PUT URL; client uploads file directly to S3. `S3CopyFailed` error indicates the post-upload validation copy step failed.
 - **Hangfire** — backend background job cleans orphaned upload sessions and soft-deleted groups.
 - **Contact Group create** — `CreateContactGroupRequest.UploadSessionId` joins to the completed upload session. Session transitions to `Used` after a successful join.
+
+## Tags
+
+#type/e-entity #prd/04 #service/contact-group #severity/high #drift #security
 
 ## Hubs
 

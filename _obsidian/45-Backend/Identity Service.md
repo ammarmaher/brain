@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: identity
+primary-prds: [PRD-02, PRD-01]
+repo: falcon-core-identity-svc
+created: 2026-05-15
+---
 *** Backend Service — Identity ***
 *** SoT: Brain Outputs/understanding/backend/identity/ ***
 *** Repository: C:\Falcon\Falcon\falcon-core-identity-svc ***
@@ -69,6 +76,10 @@ PRD-01 Account Management (Identity consumer / preprocessor):
 - [[V-password-security-level-enum]] — Identity consumes the enum set by Commerce on `Settings.PasswordSecurityLevel`.
 
 Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/01 #prd/02 #prd/04 #prd/05 #service/core-gateway #service/system-gateway #drift #security
 
 ## Hubs
 

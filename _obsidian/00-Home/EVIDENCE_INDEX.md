@@ -1,3 +1,8 @@
+---
+type: hub
+hub: evidence
+created: 2026-05-15
+---
 *** Evidence Index — graph hub ***
 *** Updated 2026-05-15 ***
 
@@ -36,3 +41,7 @@ Every screenshot / report appended to any `EVIDENCE_INDEX.md` MUST link:
 ## Related hubs
 
 - [[PAGE_LEARNING_INDEX]] · [[GAPS_INDEX]] · [[COMPONENT_INDEX]] · [[FALCON_EYES_INDEX]]
+
+## Tags
+
+#type/index #gap

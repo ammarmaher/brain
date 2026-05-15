@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: ocs:realtime-events
+channel: redis
+producer-service: charging
+consumer-services: []
+idempotency-documented: true
+created: 2026-05-15
+---
 *** Channel — OCS Realtime Events (Redis stream) ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/ocs-realtime-events.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -33,6 +42,10 @@
 - Redis durability vs Kafka — weaker guarantees on a financially-impactful path
 - Interplay with [[Charging OCS Wallet Events]] outbox unclear
 - Frontend never subscribes — documented but worth re-verifying
+
+## Tags
+
+#type/kafka-event #prd/03 #service/charging
 
 ## Hubs
 

@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Workspace Topology
+rule-count: 11
+created: 2026-05-15
+---
 *** Architecture Rule Set — Workspace Topology ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/WORKSPACE_TOPOLOGY.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -75,6 +81,10 @@
 - management-console missing `provideAnimationsAsync()`.
 - host-shell still on Karma (others Vitest).
 - host-shell has 2 sibling `remote-route.service.ts` (the one at app root is DEAD CODE — see [[Routes and Module Federation]]).
+
+## Tags
+
+#type/architecture-rules
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

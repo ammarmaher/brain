@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Account
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Account ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -31,6 +38,10 @@
 - **Account ↔ Tenant** — Account is the PRD/business term; Tenant is the Identity-system (Zitadel) term for the same concept. Both refer to one Falcon client.
 - **Account ↔ User Account** — "User Account" is a banned synonym for [[User]]. An Account is a *client company* (1:N users); a User Account is just a user.
 - Banned synonym: **"Customer"** → use Account (or Tenant in platform/Identity context). Source: `falcon-wiki/Glossary.md:67`.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[API_INDEX]] · [[AMMAR_BRAIN_HOME]]

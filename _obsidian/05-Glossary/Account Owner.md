@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Account Owner
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Account Owner ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -29,6 +36,10 @@
 ## Common confusions
 - **Account Owner ↔ Node Admin** — Both are client-side admin roles. AO has full Main+Sub scope; NA has Sub-only scope.
 - **Account Owner ↔ System Administrator** — Sys Admin is a Falcon-side (T2 internal) role; AO is client-side.
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/02 #service/commerce #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Grid Input
+folder-name: falcon-angular-data-table
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Grid Input ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-grid-input/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-grid-input`._
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/03
 
 ## Hubs
 

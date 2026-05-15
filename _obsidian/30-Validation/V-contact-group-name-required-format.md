@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contact-group-name-required-format
+prd: PRD-04
+service: contact-group
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contact-group-name-required-format — Group Name required, ≤50, matches NamePattern ***
 *** Origin: PRD-04 Contact Group Management · Backend: contact-group · 2026-05-15 ***
 
@@ -46,6 +56,10 @@
 - **Business rule cluster:** [[04 Contact Group Management]] BR-CGM-02 + BR-CGM-26 (edit allows the same field)
 - **Sister rule:** [[V-account-name-format-uniqueness]] — analogous "name required + length + format" pattern at the Account level
 - **Related learning events:** none yet
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/04 #service/contact-group #severity/medium #gap
 
 ## Hubs
 

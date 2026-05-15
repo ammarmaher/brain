@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Tabs
+folder-name: falcon-angular-tabs
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Tabs ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\frontend\components\falcon-angular-tabs\ ***
 
@@ -29,6 +37,10 @@ Navigation note. Brain Outputs holds the dossier.
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — `tabs-header` section per run.
+
+## Tags
+
+#type/falcon-component
 
 ## Hubs
 

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Dialog
+folder-name: falcon-angular-dialog
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Dialog / Popup ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\frontend\components\falcon-angular-dialog\ ***
 
@@ -29,6 +37,10 @@ Navigation note. Brain Outputs holds the dossier.
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — section `otp-popup` per run.
+
+## Tags
+
+#type/falcon-component
 
 ## Hubs
 

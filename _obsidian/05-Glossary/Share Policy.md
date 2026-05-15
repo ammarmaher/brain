@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Share Policy
+prd: PRD-04
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Share Policy ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -24,6 +31,10 @@
 
 ## Common confusions
 - `sharedWithAllUsers` is scope-bound, not Falcon-wide.
+
+## Tags
+
+#type/glossary-term #prd/04 #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: templates
+primary-prds: [PRD-05]
+repo: falcon-core-templates-svc
+created: 2026-05-15
+---
 *** Backend Service — Templates ***
 *** SoT: Brain Outputs/understanding/backend/templates/ ***
 *** Repository: C:\Falcon\Falcon\falcon-core-templates-svc ***
@@ -60,6 +67,10 @@ PRD-05 Templates:
 **Honest gap:** ~23 of ~25 candidate PRD-05 validation rules (Template name format · variable rules · Body/Header/Footer caps · button count · etc.) have NO backend enforcement today because **GAP-TM-01** (Template entity has no public API) and **GAP-TM-02** (no gateway route). These can't be triangulated until the architectural decision lands.
 
 Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/01 #prd/04 #prd/05 #service/commerce #service/identity #gap #blocked
 
 ## Hubs
 

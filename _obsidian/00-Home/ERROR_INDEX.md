@@ -1,3 +1,8 @@
+---
+type: hub
+hub: error
+created: 2026-05-15
+---
 *** Error Index — graph hub ***
 *** Created 2026-05-15 by Brain SK Phase 3D ***
 
@@ -6,6 +11,34 @@
 > Brain Outputs holds the master catalog of every `FalconKeys.Error.*` code across the 9 backend services. This note holds the graph.
 >
 > **Source of truth:** [`Brain Outputs/understanding/integration/errors/CATALOG.md`](../../../Brain%20Outputs/understanding/integration/errors/CATALOG.md). Per-code notes live at [`Brain Outputs/understanding/integration/errors/<code>.md`](../../../Brain%20Outputs/understanding/integration/errors/).
+
+## 🔍 Live queries (Dataview)
+
+_If Dataview plugin is installed, queries return live results._
+
+### All individual error-code notes
+
+```dataview
+TABLE http-status, throwing-services, v-rule-linked, cross-service FROM ""
+WHERE type = "error-code"
+SORT file.name ASC
+```
+
+### Errors with V-rule triangulation
+
+```dataview
+LIST FROM ""
+WHERE type = "error-code" AND v-rule-linked = true
+SORT file.name ASC
+```
+
+### Cross-service error codes
+
+```dataview
+LIST FROM ""
+WHERE type = "error-code" AND cross-service = true
+SORT file.name ASC
+```
 
 ## Summary
 
@@ -80,6 +113,10 @@ Triangulated rules with explicit error codes (15 of 25 V-rules):
 - **PES error catalog absent** — Access (PES) does not use `FalconException`. FE cannot pattern-match.
 - **Gateway-emitted codes outside `FalconKeys`** — `TestingChargingDisabled`, `IdentityTenantIdMissing` need either gateway-side localization or FE hard-codes.
 - **No inter-service code propagation** — Commerce → Identity HTTP failure becomes `ExternalServiceError` (500); original code is lost.
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #service/access #service/charging #service/commerce #service/contact-group #service/core-gateway #service/identity #service/provisioning #service/system-gateway #service/templates #drift #security
 
 ## Hubs
 

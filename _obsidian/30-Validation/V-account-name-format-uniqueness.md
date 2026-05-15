@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-account-name-format-uniqueness
+prd: PRD-01
+service: commerce
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-account-name-format-uniqueness — Account Name format + uniqueness ***
 *** Origin: PRD-01 Account Management · Backend: Commerce · 2026-05-15 ***
 
@@ -47,6 +57,10 @@
 - **Business rule cluster:** [[01 Account Management]] BR-AM-03 → BR-AM-08 (Step 1 field rules)
 - **Related learning events:** none yet
 - **Sister rule:** [[V-subnode-name-maxlength-30]] — same 30-char cap on `CreateSubNodeRequest.Name`
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #service/commerce #severity/medium #gap
 
 ## Hubs
 

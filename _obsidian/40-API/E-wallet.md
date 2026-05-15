@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: wallet
+prd: PRD-03
+service: charging
+drift-count: 17
+created: 2026-05-15
+---
 *** Entity Reconciliation E-wallet — Wallet ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: charging · 2026-05-15 ***
 
@@ -106,6 +114,10 @@ _no pages seeded yet_ — Wallets & Balance Mgmt page + Organization Hierarchy C
 - **Commerce → Charging:** `WalletConfigured` Kafka event creates wallets at account create / sub-node create. `ContractLifecycle` event triggers Master Wallet funding on contract `Pending → Active`.
 - **Commerce gateway aggregations** read wallet balances and project them onto `GetAccountHierarchyResponse.WalletBalanceType` / `WalletType` for hierarchy UI.
 - **Charging Lab / Testing Charging** (admin-only, gated by `Settings:TestingCharging:Enabled`) returns `TestingChargingWalletSnapshotResponse` and `TestingChargingBalancesResponse` for simulator runs.
+
+## Tags
+
+#type/e-entity #prd/01 #prd/03 #service/charging #service/commerce #severity/high #drift
 
 ## Hubs
 

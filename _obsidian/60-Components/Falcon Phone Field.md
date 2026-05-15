@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Phone Field
+folder-name: falcon-phone-field
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Phone Field ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-phone-field/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-phone-field`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02
 
 ## Hubs
 

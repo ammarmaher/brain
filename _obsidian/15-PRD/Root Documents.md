@@ -1,3 +1,12 @@
+---
+type: prd-module
+prd-id: 
+module-name: Root Documents
+coverage-percent: 0
+sync-date: 2026-04-24
+status: fresh
+created: 2026-05-15
+---
 *** PRD — Root Documents (meta backlog) ***
 *** SoT: Brain Outputs/prd/modules/root-documents/ ***
 
@@ -20,6 +29,10 @@
 
 - **GAP-RD-06** — DB-editable user messages (cross-platform i18n) — platform-level feature, not a module feature. Budget decision pending.
 - Backlog lifecycle definition — how items in `Points to be covered later` graduate into module PRDs.
+
+## Tags
+
+#type/prd-module #prd/root #gap
 
 ## Hubs
 

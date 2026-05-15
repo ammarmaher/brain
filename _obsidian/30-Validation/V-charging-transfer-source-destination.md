@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-charging-transfer-source-destination
+prd: PRD-03
+service: charging
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-charging-transfer-source-destination — transfer source ≠ destination + currency match ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: charging · 2026-05-15 ***
 
@@ -44,6 +54,10 @@
 - **Business rule cluster:** [[V-charging-insufficient-balance]] (sibling failure mode) · `BR-CC-31` (transfer also obeys nearest-expiring within the source) · `BR-CC-30` (every balance move keeps its contract ID linkage)
 - **Related learning events:** none in this vault
 - **Open question:** `BR-CC-43` (concurrent transfer locking — silent; handled by Charging's optimistic-retry pattern with `WalletVersionConflict`)
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #prd/03 #service/charging #severity/medium
 
 ## Hubs
 

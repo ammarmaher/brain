@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-charging-insufficient-balance
+prd: PRD-03
+service: charging
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-charging-insufficient-balance — charge requires sufficient nearest-expiring balance ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: charging · 2026-05-15 ***
 
@@ -41,6 +51,10 @@
 - **Business rule cluster:** [[V-charging-no-applicable-rate]] (sibling failure on the same Reserve call — different cause) · [[V-charging-transfer-source-destination]] (transfer is one route to *cause* an Insufficient Balance) · `BR-CC-31` (nearest-expiring cascade) · `BR-CC-38` (Expired records excluded from lump-sum, shrinking available balance)
 - **Related learning events:** none in this vault — the Do Payment Priority Popup wrapper pattern is recorded under `feedback_library_skeleton_app_api.md` in MEMORY.md.
 - **Open question:** `BR-CC-43` (concurrent send-transaction locking on shared wallet — silent in PRD; backend uses optimistic concurrency with 3 retries per [Charging VALIDATIONS](../../../Brain%20Outputs/understanding/backend/charging/VALIDATIONS.md))
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/02 #prd/03 #service/charging #severity/medium
 
 ## Hubs
 

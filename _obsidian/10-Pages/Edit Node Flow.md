@@ -1,3 +1,11 @@
+---
+type: flow
+flow-name: Edit Node
+page-slug: organization-hierarchy
+prd: PRD-01
+form: single-file
+created: 2026-05-15
+---
 *** Flow note — Edit Node (rename · scheduled rename · move · archive · settings) ***
 *** Vault file: 10-Pages/Edit Node Flow.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\flows\Edit Node.md ***
@@ -95,6 +103,10 @@
 - ❓ OPEN — audit trail on rename — PRD silent
 - ⚠ DRIFT — `passwordSecurityLevel` enum vocabulary (Operation 5; Q-UM-12)
 - ⚠ TYPO — backend error key `NewNodeNameNotApplyed` (should be `NewNodeNameNotApplied`)
+
+## Tags
+
+#type/flow #prd/01 #service/access #service/commerce #service/core-gateway #service/system-gateway #drift #gap #security
 
 ## Hubs
 

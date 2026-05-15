@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Message Host
+folder-name: falcon-angular-toast
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Message Host ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-message-host/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -30,6 +38,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-message-host`._
+
+## Tags
+
+#type/falcon-component
 
 ## Hubs
 

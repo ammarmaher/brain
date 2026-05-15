@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contact-group-column-name-shape
+prd: PRD-04
+service: contact-group
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contact-group-column-name-shape — Column names: EN letters, no special chars, no duplicates, ≤20, spaces → _ ***
 *** Origin: PRD-04 Contact Group Management · Backend: contact-group · 2026-05-15 ***
 
@@ -50,6 +60,10 @@
 - **Sister rule:** [[V-template-checker-level-integrity]] — sibling within the templates flow that consumes these column names
 - **Related learning events:** none yet
 - **Open gap:** GAP-CGM-08 (UNVERIFIABLE: handler validator shape) — surface as "needs dedicated error code"
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/04 #prd/05 #service/contact-group #severity/medium #gap
 
 ## Hubs
 

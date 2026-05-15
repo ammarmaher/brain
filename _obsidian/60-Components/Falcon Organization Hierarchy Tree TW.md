@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Organization Hierarchy Tree TW
+folder-name: falcon-organization-hierarchy-tree-tw
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Organization Hierarchy Tree TW ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-organization-hierarchy-tree-tw/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -30,6 +38,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-organization-hierarchy-tree-tw`.
+
+## Tags
+
+#type/falcon-component #prd/01
 
 ## Hubs
 

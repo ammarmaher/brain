@@ -1,3 +1,11 @@
+---
+type: page
+slug: wallets-and-balance-management
+prd-implements: [PRD-01]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Wallets & Balance Management ***
 *** Vault file: 10-Pages/Wallets and Balance Management.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\wallets-and-balance-management\ ***
@@ -23,6 +31,10 @@
 
 ## Related V-rules
 - _None promoted yet_ — likely candidates: `V-account-limits-zero-means-no-limit` (cross-cuts org-hierarchy Settings); transfer-matrix permission V-rules.
+
+## Tags
+
+#type/page #status/stub #prd/01 #prd/03 #service/charging #service/commerce
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Contracts List]] · [[Organization Hierarchy]]

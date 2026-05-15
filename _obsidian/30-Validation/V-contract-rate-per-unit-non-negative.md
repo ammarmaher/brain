@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contract-rate-per-unit-non-negative
+prd: PRD-03
+service: commerce
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contract-rate-per-unit-non-negative — RatePerUnit must be ≥ 0 ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: commerce · 2026-05-15 ***
 
@@ -35,6 +45,10 @@
 - **Permission gate:** Falcon-only edit (`BR-CC-01`). Account Owner sees the matrix view-only (`BR-CC-40`).
 - **Business rule cluster:** [[V-charging-no-applicable-rate]] (a missing matrix cell → `NoApplicableRate` at charge time, not at contract save) · `BR-CC-23`/`BR-CC-24`/`BR-CC-25` (Priority taxonomies per CommChannel) · `BR-CC-32` (Send Transaction reads from this matrix)
 - **Related learning events:** none
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/03 #service/commerce #severity/medium
 
 ## Hubs
 

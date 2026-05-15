@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: IP Allowlist
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — IP Allowlist ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - IP Allowlist is enforced at the **Gateway**, not at Commerce. Commerce only owns the data and the cache-refresh endpoint.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/commerce #service/core-gateway #service/identity #gap #security
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

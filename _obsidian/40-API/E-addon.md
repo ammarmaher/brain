@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: addon
+prd: PRD-03
+service: commerce
+drift-count: 10
+created: 2026-05-15
+---
 *** Entity Reconciliation E-addon — Addon ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: commerce · 2026-05-15 ***
 
@@ -83,6 +91,10 @@ _no pages seeded yet_ — Add Contract wizard Step 4 (Addons) + Edit Contract ar
 
 - **Provisioning** activates sub-services (`Activate Sub-Service` workflow) and consumes `ServiceOrderCreated` Kafka events that carry the Addon's `SubService` reference.
 - **Charging** evaluates `Quotas` first (free-credit) then falls back to `OverageRates` per the nearest-expiring-first cascade.
+
+## Tags
+
+#type/e-entity #prd/03 #service/commerce #severity/high #drift
 
 ## Hubs
 

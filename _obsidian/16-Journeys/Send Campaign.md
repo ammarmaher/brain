@@ -1,3 +1,10 @@
+---
+type: journey
+journey-name: Send Campaign
+crosses-pages: [contact-groups, templates, send-transaction, implementationknowledgemap, backendindex, validationindex]
+prds-involved: [PRD-04, PRD-05]
+created: 2026-05-15
+---
 *** Journey note — Send Campaign ***
 *** Vault file: 16-Journeys/Send Campaign.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\journeys\send-campaign\ ***
@@ -34,3 +41,7 @@
 ## Hub backlinks
 
 [[IMPLEMENTATION_KNOWLEDGE_MAP]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[PAGES_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[16-Journeys/README|16-Journeys]]
+
+## Tags
+
+#type/journey #prd/04 #prd/05

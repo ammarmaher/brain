@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: comm-channel-config
+prd: PRD-01
+service: commerce
+drift-count: 13
+created: 2026-05-15
+---
 *** Entity Reconciliation E-comm-channel-config — CommChannelConfig ***
 *** PRD: PRD-01 Account Management · Backend service: Commerce · 2026-05-15 ***
 
@@ -89,6 +97,10 @@
 - [[Templates Service]] — also reads CommChannel master + per-account `CommChannelConfig` (shared concern per [[Commerce Service]] note PRDs row)
 - Kafka — `ServiceOrderCreated` event flows from Commerce after `DoPayment`
 - [[Charging Service]] — wallet topology + balance affects pricing logic (out-of-batch)
+
+## Tags
+
+#type/e-entity #prd/01 #service/charging #service/commerce #service/templates #severity/high #drift #gap
 
 ## Hubs
 

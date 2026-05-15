@@ -1,0 +1,132 @@
+/* Falcon Brain SK Vault — visual polish snippet
+ * Enable in Obsidian: Settings → Appearance → CSS snippets → toggle "falcon-vault"
+ *
+ * Provides:
+ *   1. Hides 3-line *** banner *** headers in reading mode (keeps them in edit mode for grep)
+ *   2. Wider reading width for big playbooks (Add Client PLAYBOOK is 64 KB)
+ *   3. Colored type-tag badges in reading view (#type/v-rule = red, #type/page = blue, etc.)
+ *   4. Compact YAML frontmatter display
+ *   5. Sticky `## Hubs` section styling
+ */
+
+/* ─────────────────────────────────────────────────────────────
+ * 1. Hide the 3-line *** banner *** in reading mode
+ *    (Edit mode still shows them — useful for grep + search)
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view p:has(> strong:only-child) strong:has(em) {
+  /* Heuristic: paragraph that is just <strong><em>***...***</em></strong> */
+}
+.markdown-reading-view p strong em:first-child:last-child {
+  color: var(--text-faint);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 2. Wider reading width for long playbooks
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view .markdown-preview-section {
+  max-width: 1100px !important;
+  margin: 0 auto;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 3. Type-tag color coding (visible in reading view)
+ *    Apply via Style Settings plugin OR works as-is when tags are inline.
+ * ─────────────────────────────────────────────────────────── */
+.tag[href^="#type/v-rule"]            { background-color: #fee2e2; color: #991b1b; }
+.tag[href^="#type/e-entity"]          { background-color: #fef3c7; color: #92400e; }
+.tag[href^="#type/page"]              { background-color: #dbeafe; color: #1e40af; }
+.tag[href^="#type/flow"]              { background-color: #bfdbfe; color: #1e3a8a; }
+.tag[href^="#type/journey"]           { background-color: #c7d2fe; color: #3730a3; }
+.tag[href^="#type/backend-service"]   { background-color: #d1fae5; color: #065f46; }
+.tag[href^="#type/kafka-event"]       { background-color: #fed7aa; color: #9a3412; }
+.tag[href^="#type/falcon-component"]  { background-color: #e0e7ff; color: #3730a3; }
+.tag[href^="#type/glossary-term"]     { background-color: #ccfbf1; color: #115e59; }
+.tag[href^="#type/error-code"]        { background-color: #fecaca; color: #7f1d1d; }
+.tag[href^="#type/architecture-rules"] { background-color: #e9d5ff; color: #581c87; }
+.tag[href^="#type/permission-matrix"] { background-color: #fde68a; color: #78350f; }
+.tag[href^="#type/prd-module"]        { background-color: #f3e8ff; color: #6b21a8; }
+.tag[href^="#type/hub"]               { background-color: #f3f4f6; color: #1f2937; font-weight: 600; }
+.tag[href^="#type/onboarding"]        { background-color: #bbf7d0; color: #14532d; font-weight: 600; }
+.tag[href^="#type/learning-event"]    { background-color: #fef9c3; color: #713f12; }
+.tag[href^="#type/template"]          { background-color: #f1f5f9; color: #475569; }
+.tag[href^="#type/index"]             { background-color: #f3f4f6; color: #4b5563; }
+
+/* Severity badges */
+.tag[href="#severity/high"]   { background-color: #fee2e2; color: #991b1b; font-weight: 600; }
+.tag[href="#severity/medium"] { background-color: #fef3c7; color: #92400e; }
+.tag[href="#severity/low"]    { background-color: #e5e7eb; color: #374151; }
+
+/* Status badges */
+.tag[href="#status/approved"]    { background-color: #d1fae5; color: #065f46; font-weight: 600; }
+.tag[href="#status/promoted"]    { background-color: #a7f3d0; color: #064e3b; font-weight: 700; }
+.tag[href="#status/draft"]       { background-color: #f3f4f6; color: #6b7280; }
+.tag[href="#status/stub"]        { background-color: #f3f4f6; color: #9ca3af; }
+.tag[href="#status/deprecated"]  { background-color: #fee2e2; color: #991b1b; text-decoration: line-through; }
+.tag[href="#status/rejected"]    { background-color: #fef2f2; color: #b91c1c; text-decoration: line-through; }
+
+/* Cross-cutting flag badges */
+.tag[href="#drift"]    { background-color: #fef3c7; color: #92400e; font-weight: 600; }
+.tag[href="#gap"]      { background-color: #fecaca; color: #7f1d1d; font-weight: 600; }
+.tag[href="#blocked"]  { background-color: #fee2e2; color: #7f1d1d; font-weight: 700; }
+.tag[href="#security"] { background-color: #fde68a; color: #78350f; font-weight: 700; }
+
+/* ─────────────────────────────────────────────────────────────
+ * 4. Compact YAML frontmatter display
+ * ─────────────────────────────────────────────────────────── */
+.metadata-container {
+  font-size: 0.85em;
+  padding: 8px 12px;
+  background-color: var(--background-secondary);
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+.metadata-property-key { color: var(--text-muted); }
+.metadata-property-value { color: var(--text-normal); font-weight: 500; }
+
+/* ─────────────────────────────────────────────────────────────
+ * 5. `## Hubs` section subtle distinction (always at the bottom)
+ *    Looks like a footer rather than another regular section
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view h2:has(+ p) {
+  /* General h2 styling stays default */
+}
+.markdown-reading-view h2 + ul + h2 {
+  /* No change */
+}
+
+/* Target specifically a heading literally named "Hubs" or "See also" */
+.markdown-reading-view h2:is([data-heading="Hubs"], [data-heading="See also"]) {
+  border-top: 1px solid var(--background-modifier-border);
+  padding-top: 1rem;
+  margin-top: 2.5rem;
+  color: var(--text-muted);
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+.markdown-reading-view h2:is([data-heading="Hubs"], [data-heading="See also"]) + p,
+.markdown-reading-view h2:is([data-heading="Hubs"], [data-heading="See also"]) + ul {
+  font-size: 0.9em;
+  color: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 6. Subtle highlight for `forward-ref` and `inferred` markers
+ *    (used inside vault notes to flag uncertain content)
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view code:is(:contains("forward-ref"), :contains("inferred")) {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 7. Drift / Gap inline emoji enhancement
+ *    Emojis ⚠ ❌ ➕ ✅ get a slight scale bump
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view td:has(em:first-child) em:first-child {
+  font-size: 1.1em;
+}

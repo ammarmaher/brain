@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: all` runs 7 of them: 01 lint, 02 typecheck, 07 token-naming, 08 hardcoded-value, 09 a11y-baseline, 10 noor-naming, 12 component-token-scope. Build gates 03-06 + bundle gate 11 run independently. Pre-finish requirement for Brain SK: `npm run gate:all`.
+rule-count: 9
+created: 2026-05-15
+---
 *** Architecture Rule Set — Quality Gates ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/QUALITY_GATES_AUDIT.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -58,6 +64,10 @@ gate-01-lint && gate-02-typecheck && gate-07-token-naming-lint && gate-08-hardco
 - 10 grandfathered token-naming violations capped (gate-07 local prints, CI passes on new code only).
 - 46 a11y-grandfathered components (gate-09 DEFERRED set).
 - admin-console main.js: 568 → 335 KB after PrimeNG removal (gate-11 within budget).
+
+## Tags
+
+#type/architecture-rules
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

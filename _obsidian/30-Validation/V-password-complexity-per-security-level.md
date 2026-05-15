@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-password-complexity-per-security-level
+prd: PRD-02
+service: identity
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-password-complexity-per-security-level — Password complexity tier resolved per account security level ***
 *** Origin: PRD-02 User Management · Backend: Identity (PasswordPolicy) · 2026-05-15 ***
 
@@ -69,6 +79,10 @@
   - Sister validation: [[V-password-security-level-enum]]
 - **Related learning events:** none yet
 - **Open question:** `Q-UM-12` — Normal/Advanced vs Low/Medium/High vocabulary lock
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #prd/02 #service/commerce #service/identity #severity/medium #security
 
 ## Hubs
 

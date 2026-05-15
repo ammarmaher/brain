@@ -1,3 +1,8 @@
+---
+type: hub
+hub: frontend
+created: 2026-05-15
+---
 *** Brain SK Frontend Index ***
 *** Auto-updated by Brain SK TouchBase and report generation ***
 *** Canonical-path repointed 2026-05-13 by Agent 6 (Obsidian Link Agent) — see migration audit ***
@@ -160,3 +165,7 @@ Every frontend task must route through [LEARNING_FIRST_TASK_ROUTING](../protocol
 | 6 Global promotion | append to global pattern file | `/promote-pattern <id>` |
 
 **Permanent rule:** never jump directly into implementation when given screenshots / source pages / visual bugs / page instructions. Light Learning event + load page/component knowledge first.
+
+## Tags
+
+#type/index #gap

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Calendar
+folder-name: falcon-angular-date-picker
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Calendar ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-calendar/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -30,6 +38,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-calendar`._
+
+## Tags
+
+#type/falcon-component #prd/03
 
 ## Hubs
 

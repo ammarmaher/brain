@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Password Security Level
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Password Security Level ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **PRD wording vs Backend enum** — PRD says `Normal | Advanced` (2 values); backend uses `Low | Medium | High | Strict` (4 values). Q-UM-12 calls out this drift.
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/02 #service/commerce #service/identity #drift #gap #security
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

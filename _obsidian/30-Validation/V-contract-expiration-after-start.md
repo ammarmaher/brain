@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contract-expiration-after-start
+prd: PRD-03
+service: commerce
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contract-expiration-after-start — Expiration > Start AND > now ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: commerce · 2026-05-15 ***
 
@@ -36,6 +46,10 @@
 - **Workflow dependency:** §W2 (Pending → Active auto-transition) · §W3 (Active → Expired auto-transition) · §W4 (Extension) — all three workflows depend on this validator holding at write-time.
 - **Related learning events:** none
 - **Open question:** `BR-CC-47` (retroactive treatment when Expired→Active extension covers an Expired window) — OPEN.
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/03 #service/commerce #severity/medium
 
 ## Hubs
 

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Visibility
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Visibility ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - Setting `Visibility = Show` requires both [[Price Type]] and [[Price Value]] — they are conditionally mandatory.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

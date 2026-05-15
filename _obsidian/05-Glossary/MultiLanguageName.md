@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: MultiLanguageName
+prd: 
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — MultiLanguageName ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -22,6 +29,10 @@
 
 ## Common confusions
 - Mandatory on user-facing fields. Inventing translations = drift warning.
+
+## Tags
+
+#type/glossary-term #drift #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[BACKEND_INDEX]] · [[API_INDEX]] · [[AMMAR_BRAIN_HOME]]

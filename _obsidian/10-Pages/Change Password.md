@@ -1,3 +1,11 @@
+---
+type: page
+slug: change-password
+prd-implements: [PRD-02]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Change Password ***
 *** Vault file: 10-Pages/Change Password.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\change-password\ ***
@@ -21,6 +29,10 @@
 
 ## Related V-rules
 - _None promoted yet_ — password-complexity V-rules are gated by `AccountSettings.passwordSecurityLevel` (Normal / Advanced).
+
+## Tags
+
+#type/page #status/stub #prd/02 #service/identity #security
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Login]] · [[Forgot Password]] · [[My Profile]] · [[Organization Hierarchy]]

@@ -1,3 +1,11 @@
+---
+type: page
+slug: organization-hierarchy
+prd-implements: []
+has-flow-folder: false
+status: seeded
+created: 2026-05-15
+---
 *** Page note — Organization Hierarchy ***
 *** Vault file: 10-Pages/Organization Hierarchy.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\ ***
@@ -114,6 +122,10 @@ _Not yet wired into this page note. When the [test-case-authoring](../../../brai
 |---|---|
 | Source | `http://localhost:3000/T2%20Falcon%20Admin` |
 | Destination | `http://localhost:4200/#/admin-console/org-hierarchy-page` |
+
+## Tags
+
+#type/page #status/seeded #prd/01 #prd/02 #prd/03 #gap #security
 
 ## Hubs
 

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Single Uploader
+folder-name: falcon-single-uploader
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Single Uploader ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-single-uploader/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-single-uploader`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/04
 
 ## Hubs
 

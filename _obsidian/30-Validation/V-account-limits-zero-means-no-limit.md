@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-account-limits-zero-means-no-limit
+prd: PRD-01
+service: commerce
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-account-limits-zero-means-no-limit — Account Limits accept 0 as "no limit"; empty disallowed ***
 *** Origin: PRD-01 Account Management · Backend: Commerce · 2026-05-15 ***
 
@@ -55,6 +65,10 @@
   - [[02 User Management]] BR-UM-09 + BR-UM-17 + BR-UM-38 (the Normal-User limit half of this rule is read every time a user transitions to Active or a role changes to Normal User — `UserQuotaPolicy` in Identity)
 - **Related learning events:** none yet
 - **Open question:** `BR-AM-39` — shrinking the limit below current usage
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #prd/02 #service/commerce #severity/medium #gap
 
 ## Hubs
 

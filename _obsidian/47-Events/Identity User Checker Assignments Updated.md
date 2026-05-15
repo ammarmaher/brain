@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: identity.user-checker-assignments-updated.v1
+channel: kafka
+producer-service: identity
+consumer-services: [templates]
+idempotency-documented: false
+created: 2026-05-15
+---
 *** Event — Identity User Checker Assignments Updated (bulk) ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/identity.user-checker-assignments-updated.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -30,6 +39,10 @@
 - KAFKA-GAP-05 — producer-side docs gap
 - Bulk partial-failure semantics undefined
 - No version/ordering scheme for concurrent bulks documented
+
+## Tags
+
+#type/kafka-event #prd/05 #service/identity #service/templates #gap
 
 ## Hubs
 

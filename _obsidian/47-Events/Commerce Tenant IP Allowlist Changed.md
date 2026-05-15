@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.tenant-ip-allowlist-changed.v1
+channel: kafka
+producer-service: commerce
+consumer-services: [core-gateway]
+idempotency-documented: false
+created: 2026-05-15
+---
 *** Event — Commerce Tenant IP Allowlist Changed ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.tenant-ip-allowlist-changed.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -31,6 +40,10 @@
 - Fail-open on Redis error (`FailOpenOnRedisError: true`) — liveness over security
 - DLQ not defined
 - System Gateway has no consumer (intentional — admin traffic is tenant-less)
+
+## Tags
+
+#type/kafka-event #prd/01 #prd/02 #service/commerce #service/core-gateway #security
 
 ## Hubs
 

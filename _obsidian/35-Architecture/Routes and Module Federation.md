@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: [authGuard, shellPrimeAccessGuard]` and empty `children: []` — remote routes get pushed in at runtime. | high | `apps/host-shell/src/app/app.routes.ts` |
+rule-count: 2
+created: 2026-05-15
+---
 *** Architecture Rule Set — Routes and Module Federation ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/ROUTES_AND_MF_AUDIT.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -62,6 +68,10 @@
 ## Related
 - See [[Module Federation]] for share-map and manifest schema.
 - See [[Auth and Facade Patterns]] for `SHELL_CORE_ACCESS` factory + interceptor chain.
+
+## Tags
+
+#type/architecture-rules #gap
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

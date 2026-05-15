@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-template-checker-level-integrity
+prd: PRD-05
+service: templates
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-template-checker-level-integrity — Checker levels must be sequential, unique, populated, and within bounds ***
 *** Origin: PRD-05 Templates · Backend: templates · 2026-05-15 ***
 
@@ -63,6 +73,10 @@
 - **Sister rule:** [[V-template-levels-count-required-for-restricted]] — the BodyType / LevelsCount gate that decides whether this whole rule applies
 - **Related learning events:** none yet
 - **Open gaps:** `GAP-TM-01` (Template entity has no public API), `GAP-TM-02` (CommChannelConfig route not gateway-routed) — both block the frontend surface today
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/05 #service/templates #severity/medium #gap #blocked
 
 ## Hubs
 

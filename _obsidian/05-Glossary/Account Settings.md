@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Account Settings
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Account Settings ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **Account Settings ↔ Account Limitations** — Settings is the *whole* bundle (security + limits); Limitations is just the limits subset.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/commerce #gap #security
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

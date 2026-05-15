@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: State and Signals
+rule-count: 9
+created: 2026-05-15
+---
 *** Architecture Rule Set — State and Signals ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/STATE_AND_SIGNAL_PATTERNS.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -86,6 +92,10 @@ export class MyFeatureComponent {
 ## Related component notes
 - [[Falcon Input]] — see explicit `falcon-input.component.ts:106-108` comment on methods-vs-computed.
 - [[Falcon Drawer]] · [[Falcon Data Table]] — typical consumers of page-scoped state.
+
+## Tags
+
+#type/architecture-rules
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

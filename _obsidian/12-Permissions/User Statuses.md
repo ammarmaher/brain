@@ -1,3 +1,11 @@
+---
+type: permission-matrix
+matrix-name: User Statuses
+prd: PRD-02
+sheet-source: User Statuses
+fully-captured: false
+created: 2026-05-15
+---
 *** User Statuses — Pending · Active · Suspended · Locked · Deleted ***
 *** SoT: Brain Outputs/prd/modules/02-user-management/latest-prd.md (User statuses) + understanding.md ***
 *** Created 2026-05-15 by Brain SK Phase 2B permission-matrix install ***
@@ -89,6 +97,10 @@ Source: [`understanding.md` § Main workflows / Regular login + Edge cases](../.
 
 - Status transitions must match the matrix above — frontend dropdown must only offer reachable target statuses based on current.
 - Normal-User → Active transition triggers the Commerce limit check before save.
+
+## Tags
+
+#type/permission-matrix #prd/01 #prd/02 #service/access #service/commerce #service/identity #security
 
 ## Hubs
 

@@ -1,3 +1,8 @@
+---
+type: hub
+hub: component
+created: 2026-05-15
+---
 *** Falcon Component Index — graph hub ***
 *** Updated 2026-05-15 ***
 
@@ -79,3 +84,7 @@
 ## Related hubs
 
 - [[FRONTEND_INDEX]] · [[PAGE_LEARNING_INDEX]] · [[APPROVED_PATTERNS_INDEX]] · [[FALCON_EYES_INDEX]] · [[GAPS_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[PRD_INDEX]]
+
+## Tags
+
+#type/index #status/deprecated #security

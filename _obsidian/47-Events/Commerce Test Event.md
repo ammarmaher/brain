@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.test-event
+channel: kafka
+producer-service: 
+consumer-services: [commerce, charging]
+idempotency-documented: false
+created: 2026-05-15
+---
 *** Event — Commerce Test Event (dev) ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.test-event.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -30,6 +39,10 @@
 
 - KAFKA-GAP-06 — dev topic in production config; `AllowAnonymous` on a publishing endpoint that's also in production code
 - Topic name violates `.v<n>` versioning convention
+
+## Tags
+
+#type/kafka-event #service/charging #service/commerce #gap
 
 ## Hubs
 

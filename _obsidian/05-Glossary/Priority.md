@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Priority
+prd: PRD-03
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Priority ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - Priority values are per-CommChannel — different taxonomies.
+
+## Tags
+
+#type/glossary-term #prd/03 #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

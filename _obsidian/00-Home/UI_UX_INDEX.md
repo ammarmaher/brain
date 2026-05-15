@@ -1,3 +1,8 @@
+---
+type: hub
+hub: ui_ux
+created: 2026-05-15
+---
 *** UI/UX Index — graph hub ***
 *** Updated 2026-05-15 ***
 
@@ -24,3 +29,7 @@
 ## Related hubs
 
 - [[PAGE_LEARNING_INDEX]] · [[COMPONENT_INDEX]] · [[APPROVED_PATTERNS_INDEX]] · [[GAPS_INDEX]] · [[FALCON_EYES_INDEX]]
+
+## Tags
+
+#type/index #gap

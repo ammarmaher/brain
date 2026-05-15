@@ -1,3 +1,8 @@
+---
+type: index
+folder: _obsidian
+created: 2026-05-15
+---
 # Obsidian Vault
 
 Open the Brain SK repo folder as an Obsidian vault.
@@ -12,3 +17,7 @@ Use Obsidian for:
 - graph/backlink navigation
 
 Git remains the source of truth.
+
+## Tags
+
+#type/index

@@ -1,3 +1,8 @@
+---
+type: hub
+hub: api
+created: 2026-05-15
+---
 *** API Index — graph hub ***
 *** Updated 2026-05-15 ***
 
@@ -93,3 +98,7 @@ All 8 PRD-05 entities (Template · TemplateHeader/Body/Footer/Button/Variable ·
 ## Related hubs
 
 - [[PAGE_LEARNING_INDEX]] · [[VALIDATION_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]]
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #service/access #service/charging #service/commerce #service/contact-group #service/core-gateway #service/identity #service/provisioning #service/system-gateway #service/templates #drift #gap #blocked #security

@@ -1,3 +1,8 @@
+---
+type: hub
+hub: page_knowledge
+created: 2026-05-15
+---
 *** Brain SK Obsidian — Page Knowledge Index ***
 *** Path: _obsidian/PAGE_KNOWLEDGE_INDEX.md ***
 *** Created: 2026-05-15 ***
@@ -70,3 +75,7 @@ Each page run produces under `Brain Outputs/reports/falcon-eyes/<YYYY-MM-DD-HHmm
 - Pages live at `Brain Outputs/understanding/pages/<page-name>/`.
 - Falcon Eyes reports are page-scoped — one run per page snapshot.
 - The Falcon Eyes section list in `tools/falcon-eyes/section-capture.config.json` mirrors the section names listed in the page knowledge folder.
+
+## Tags
+
+#type/index

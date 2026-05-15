@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-normal-user-limit-enforcement
+prd: PRD-02
+service: identity
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-normal-user-limit-enforcement — Normal-User account-limit gate ***
 *** Origin: PRD-02 User Management · Backend: Identity (UserQuotaPolicy) reads Commerce limit · 2026-05-15 ***
 
@@ -59,6 +69,10 @@
   - Sister validation: [[V-account-limits-zero-means-no-limit]]
 - **Related learning events:** none yet
 - **Open question:** `BR-AM-39` — what happens when an admin shrinks the cap below current usage is silent in PRD
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #prd/02 #service/commerce #service/identity #severity/medium
 
 ## Hubs
 

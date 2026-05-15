@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: account-settings
+prd: PRD-01
+service: commerce
+drift-count: 14
+created: 2026-05-15
+---
 *** Entity Reconciliation E-account-settings — AccountSettings ***
 *** PRD: PRD-01 Account Management · Backend service: Commerce · 2026-05-15 ***
 
@@ -76,6 +84,10 @@
 - [[Identity Service]] — `IpAllowlistPreProcessor` reads the allowlist (via Redis cache populated from `/Security/ip-allowlists`) and rejects requests with `IpNotAllowed` (403)
 - [[Core Gateway Service]] — Redis cache for the allowlist; refreshed via `commerce.tenant-ip-allowlist-changed.v1` Kafka topic
 - [[Access PES Service]] — reads settings as part of permission-decision context
+
+## Tags
+
+#type/e-entity #prd/01 #service/access #service/commerce #service/core-gateway #service/identity #severity/high #drift #gap #security
 
 ## Hubs
 

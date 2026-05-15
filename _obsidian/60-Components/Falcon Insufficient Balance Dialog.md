@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Insufficient Balance Dialog
+folder-name: falcon-insufficient-balance-dialog
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Insufficient Balance Dialog ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-insufficient-balance-dialog/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-insufficient-balance-dialog`._
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/03
 
 ## Hubs
 

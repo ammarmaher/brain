@@ -1,3 +1,8 @@
+---
+type: hub
+hub: project
+created: 2026-05-15
+---
 # Project Index
 
 This index is auto-updated by Brain SK TouchBase and report generation.
@@ -58,3 +63,7 @@ Headline additions:
 - **185 PRD↔code GAP rows** (≈ 48% covered)
 - **9 of 12 fallback UNVERIFIED items resolved** against the wiki
 - **7 new conflicts** the wiki surfaced (X-MicroApp-Key, third gateway, Outbox, FeatureManagement, ClickHouse, …)
+
+## Tags
+
+#type/index #gap

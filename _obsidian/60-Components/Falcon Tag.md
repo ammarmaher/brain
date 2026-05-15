@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Tag
+folder-name: falcon-tag
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Tag ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-tag/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-tag`.
+
+## Tags
+
+#type/falcon-component #prd/04
 
 ## Hubs
 

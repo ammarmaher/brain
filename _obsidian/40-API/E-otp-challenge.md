@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: otp-challenge
+prd: PRD-02
+service: identity
+drift-count: 11
+created: 2026-05-15
+---
 *** Entity Reconciliation E-otp-challenge — OtpChallenge ***
 *** PRD: PRD-02 User Management · Backend service: Identity · 2026-05-15 ***
 
@@ -110,6 +118,10 @@
 - [[Access PES Service]] — not directly involved at OTP layer; engages once `Stage == Authenticated` and `Tokens` issued
 - [[E-session]] — created on successful OTP verification + password check
 - Zitadel — Identity Service's adapter delegates OTP send to Zitadel infrastructure
+
+## Tags
+
+#type/e-entity #prd/02 #service/access #service/core-gateway #service/identity #severity/high #drift #security
 
 ## Hubs
 

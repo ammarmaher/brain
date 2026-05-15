@@ -1,3 +1,11 @@
+---
+type: permission-matrix
+matrix-name: Falcon Roles Permission Matrix
+prd: PRD-02
+sheet-source: Falcon Roles Permission Matrix
+fully-captured: false
+created: 2026-05-15
+---
 *** Permission Matrix — Falcon Roles (System Administrator · Operation · Products) ***
 *** SoT: Brain Outputs/prd/modules/02-user-management/understanding.md (Permission rules) + attachments.md ***
 *** Created 2026-05-15 by Brain SK Phase 2B permission-matrix install ***
@@ -73,6 +81,10 @@ The sheet is **read by PES at startup / on policy-refresh**; live enforcement is
 ## Validation tie-in
 
 Permission decisions intersect with validation: if a role lacks `Allow` for an action, the corresponding form/dialog must not render, and the API endpoint must reject the call. The PES decision is the gate; validation rules govern what's accepted once gated.
+
+## Tags
+
+#type/permission-matrix #prd/01 #prd/02 #service/access #service/identity #gap #security
 
 ## Hubs
 

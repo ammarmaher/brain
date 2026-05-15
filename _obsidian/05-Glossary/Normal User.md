@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Normal User
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Normal User ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **Normal User ↔ System User** — In Account Limitations, `maxNormalUserLimit` and `maxSystemUserLimit` are independent counters. PRD-02 treats System User as a Normal User with a system flag (assumption — see PRD-AM understanding.md:128).
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/02 #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

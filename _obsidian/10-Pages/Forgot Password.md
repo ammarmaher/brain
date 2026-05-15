@@ -1,3 +1,11 @@
+---
+type: page
+slug: forgot-password
+prd-implements: [PRD-02]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Forgot Password ***
 *** Vault file: 10-Pages/Forgot Password.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\forgot-password\ ***
@@ -21,6 +29,10 @@
 
 ## Related V-rules
 - _None promoted yet_
+
+## Tags
+
+#type/page #status/stub #prd/02 #service/identity
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Login]] · [[Change Password]] · [[Organization Hierarchy]]

@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.subnode-wallet-create.v1
+channel: kafka
+producer-service: commerce
+consumer-services: [charging]
+idempotency-documented: true
+created: 2026-05-15
+---
 *** Event — Commerce SubNode Wallet Create ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.subnode-wallet-create.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -29,6 +38,10 @@
 
 - Consumer idempotency not documented
 - KAFKA-GAP-02 — shared consumer group
+
+## Tags
+
+#type/kafka-event #prd/01 #service/charging #service/commerce #gap
 
 ## Hubs
 

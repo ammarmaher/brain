@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Table
+folder-name: falcon-angular-table
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Table ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-table/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -32,6 +40,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-table`.
+
+## Tags
+
+#type/falcon-component #status/deprecated #prd/01 #prd/02 #prd/03 #prd/04 #prd/05
 
 ## Hubs
 

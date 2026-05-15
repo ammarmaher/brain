@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.identity-settings-sync.v1
+channel: kafka
+producer-service: commerce
+consumer-services: [identity]
+idempotency-documented: false
+created: 2026-05-15
+---
 *** Event — Commerce Identity Settings Sync ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.identity-settings-sync.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -29,6 +38,10 @@
 
 - Zitadel propagation failure path not documented (3-way split-brain risk)
 - UI confirms "settings saved" but actual policy is eventually consistent
+
+## Tags
+
+#type/kafka-event #prd/01 #prd/02 #service/commerce #service/identity #security
 
 ## Hubs
 

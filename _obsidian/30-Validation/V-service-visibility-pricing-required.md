@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-service-visibility-pricing-required
+prd: PRD-01
+service: commerce
+severity: high
+status: triangulated
+drift: true
+created: 2026-05-15
+---
 *** Validation V-service-visibility-pricing-required — Visibility=Show requires Pricing Type + Price Value ***
 *** Origin: PRD-01 Account Management · Backend: Commerce · 2026-05-15 ***
 
@@ -64,6 +74,10 @@
   - W4 activation depends on Show + paid Master Wallet
   - Open: `BR-AM-40` — behavior when Visibility flips Show → Hide while Status is Active is silent (PRD); see [[GAPS_INDEX]]
 - **Related learning events:** [[LE-20260515-commchannels-shadow-row-notch-alignment]] (same UI surface — inline-edit shadow rows on the CommChannels/Apps tables)
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #service/commerce #severity/high #drift
 
 ## Hubs
 

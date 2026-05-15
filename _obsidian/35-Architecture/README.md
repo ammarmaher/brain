@@ -1,3 +1,8 @@
+---
+type: index
+folder: 35-Architecture
+created: 2026-05-15
+---
 *** Architecture Rule Set — Frontend ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/*.md (13 audits) ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -47,6 +52,10 @@
 8. Token CSS files declared under `:root` (gate-12 — freezes Chrome DevTools).
 9. `@Injectable({ providedIn: 'root' })` for page-scoped state services.
 10. SCSS files with declared rules in component folders (Tailwind-only rule).
+
+## Tags
+
+#type/index #status/deprecated
 
 ## Hubs
 

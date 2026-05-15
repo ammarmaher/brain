@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.contract-lifecycle.v1
+channel: kafka
+producer-service: 
+consumer-services: [charging]
+idempotency-documented: true
+created: 2026-05-15
+---
 *** Event — Commerce Contract Lifecycle ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.contract-lifecycle.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -29,6 +38,10 @@
 
 - Two publishers / one topic — verify Avro union or discriminator dispatching is correct
 - Consumer idempotency by ContractId is conventional but undocumented
+
+## Tags
+
+#type/kafka-event #prd/03 #service/charging #service/commerce
 
 ## Hubs
 

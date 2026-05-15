@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Send Credentials Popup
+folder-name: falcon-angular-dialog
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Send Credentials Popup ***
 *** SoT: Brain Outputs/understanding/frontend/components/send-credentials-popup/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -33,6 +41,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `send-credentials-popup`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02 #security
 
 ## Hubs
 

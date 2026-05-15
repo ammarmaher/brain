@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Shared Directives
+folder-name: falcon-component
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Shared Directives ***
 *** SoT: Brain Outputs/understanding/frontend/components/shared-directives/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -32,6 +40,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `shared-directives` (note: directives are behavioral — visual reports rare).
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #security
 
 ## Hubs
 

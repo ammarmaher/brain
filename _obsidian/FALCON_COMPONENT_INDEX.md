@@ -1,3 +1,8 @@
+---
+type: hub
+hub: falcon_component
+created: 2026-05-15
+---
 *** Falcon Component Knowledge Index — 60 component dossiers ***
 *** Generated 2026-05-13 by the Brain SK Deep Frontend Component Knowledge Build ***
 *** Canonical-path repointed 2026-05-13 by Agent 6 (Obsidian Link Agent) — see migration audit ***
@@ -133,3 +138,7 @@ Before the 2026-05-13 canonical-path repointing, every link in this index resolv
 - `C:\Falcon\Brain Outputs\frontend-understanding\`
 - `C:\Falcon\Brain SK\outputs\component-registry\components\`
 - `C:\Falcon\Brain SK\outputs\frontend-understanding\`
+
+## Tags
+
+#type/index #status/deprecated #security

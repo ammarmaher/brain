@@ -1,3 +1,11 @@
+---
+type: page
+slug: contracts-list
+prd-implements: [PRD-03]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Contracts List ***
 *** Vault file: 10-Pages/Contracts List.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\contracts-list\ ***
@@ -23,6 +31,10 @@
 
 ## Related V-rules
 - _None promoted yet_
+
+## Tags
+
+#type/page #status/stub #prd/01 #prd/03 #service/charging #service/commerce
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Add Contract]] · [[Edit Contract]] · [[Wallets and Balance Management]] · [[Organization Hierarchy]]

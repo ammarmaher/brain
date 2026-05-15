@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Component Usage Matrix
+rule-count: 8
+created: 2026-05-15
+---
 *** Architecture Rule Set — Component Usage Matrix ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/COMPONENT_USAGE_MATRIX.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -39,6 +45,10 @@
 
 ## Related component notes
 - [[Falcon Data Table]] · [[Falcon Drawer]] · [[Falcon Dropdown]] · [[Falcon Input]] · [[Falcon Button]] · [[Falcon Tabs]] · [[Falcon Search Input]] · [[Falcon Popup]] · [[Falcon Stepper]] · [[Falcon Stepper Legacy]] · [[Falcon Mobile Number]] · [[Falcon Phone Field]] · [[Falcon Toast]] · [[Falcon Dialog]] · [[Falcon Notification]] · [[Falcon Status Badge]] · [[Falcon Tag]] · [[Falcon Avatar]] · [[Falcon Icon]]
+
+## Tags
+
+#type/architecture-rules #status/deprecated
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Password
+folder-name: falcon-angular-input
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Password ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-password/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-password`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02 #security
 
 ## Hubs
 

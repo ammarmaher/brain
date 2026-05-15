@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: 1 inline `style="..."`, ~19 Tailwind arbitrary `bg-[#hex]`/`text-[#hex]`/`border-[#hex]`, ~24 Tailwind arbitrary `rounded-[Npx]`. The 50+ arbitrary Tailwind classes are the single biggest forward-looking cleanup task.
+rule-count: 8
+created: 2026-05-15
+---
 *** Architecture Rule Set — Forbidden Patterns ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/FORBIDDEN_PATTERNS_OBSERVED.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -49,6 +55,10 @@
 
 ## Related component notes
 - [[Falcon Data Table]] · [[Falcon Drawer]] — used inside files containing hex/px arbitrary violations.
+
+## Tags
+
+#type/architecture-rules #gap
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

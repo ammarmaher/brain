@@ -1,3 +1,12 @@
+---
+type: prd-module
+prd-id: PRD-02
+module-name: User Management
+coverage-percent: 0
+sync-date: 2026-04-24
+status: fresh
+created: 2026-05-15
+---
 *** PRD-02 — User Management ***
 *** SoT: Brain Outputs/prd/modules/02-user-management/ ***
 *** Drive source: `User Management Module - V2` (sync 2026-04-24) ***
@@ -68,6 +77,10 @@ Email/phone format · password complexity tiers · OTP validity windows · locko
 - **Status:** Well-built
 - **Top concerns:** Password security vocabulary mismatch (Q-UM-12); admin-driven email/phone OTP path unclear (Q-UM-13). Permission sheet Tab 2 not captured (Q-UM-07).
 - **Coverage:** 20 ✅ · 6 ⚠️ · 2 ❌ · 9 ❓
+
+## Tags
+
+#type/prd-module #prd/01 #prd/02 #prd/04 #service/access #service/commerce #service/core-gateway #service/identity #security
 
 ## Hubs
 

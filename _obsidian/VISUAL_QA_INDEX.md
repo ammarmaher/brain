@@ -1,3 +1,8 @@
+---
+type: hub
+hub: visual_qa
+created: 2026-05-15
+---
 *** Brain SK Obsidian — Visual QA Index ***
 *** Path: _obsidian/VISUAL_QA_INDEX.md ***
 *** Created: 2026-05-15 ***
@@ -63,3 +68,7 @@ Every run produces:
 - [[Frontend Components Index]]
 - [[FALCON_COMPONENT_INDEX]]
 - [[AMMAR_BRAIN_HOME]]
+
+## Tags
+
+#type/index

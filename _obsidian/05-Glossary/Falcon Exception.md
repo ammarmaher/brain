@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Falcon Exception
+prd: 
+is-entity: false
+created: 2026-05-15
+---
 *** Glossary — Falcon Exception ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -22,6 +29,10 @@
 
 ## Common confusions
 - FalconException = class; FalconError = code; FalconKeys.Error = i18n key registry. Same pipeline.
+
+## Tags
+
+#type/glossary-term #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[BACKEND_INDEX]] · [[API_INDEX]] · [[AMMAR_BRAIN_HOME]]

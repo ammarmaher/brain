@@ -1,3 +1,8 @@
+---
+type: hub
+hub: backend
+created: 2026-05-15
+---
 *** Backend Index — graph hub ***
 *** Created 2026-05-15 by Brain SK Phase 2A — backend service vault layer ***
 
@@ -6,6 +11,35 @@
 > 9 Falcon backend services. Brain Outputs holds the deep contracts (6 files per service); this hub holds the graph.
 >
 > **Canonical knowledge root:** [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). Per-service: `understanding/backend/<service>/` carries `SERVICE_OVERVIEW` · `ENDPOINT_REGISTRY` · `DTO_DICTIONARY` · `VALIDATIONS` · `ERRORS` · `FRONTEND_CONTRACT`.
+
+## 🔍 Live queries (Dataview)
+
+_If Dataview plugin is installed, queries return live results._
+
+### All 9 services with their primary PRDs
+
+```dataview
+TABLE service AS "Service", primary-prds AS "Primary PRDs", repo AS "Repo" FROM "45-Backend"
+WHERE type = "backend-service"
+SORT service ASC
+```
+
+### Kafka events per service (producer side)
+
+```dataview
+TABLE producer-service AS "Producer", topic AS "Topic", consumer-services AS "Consumers" FROM "47-Events"
+WHERE type = "kafka-event"
+SORT producer-service ASC
+```
+
+### V-rules enforced per service
+
+```dataview
+TABLE length(rows) AS "V-rules" FROM "30-Validation"
+WHERE type = "validation-rule"
+GROUP BY service
+SORT length(rows) DESC
+```
 
 ## Services tracked
 
@@ -55,3 +89,7 @@
 ## Related hubs
 
 - [[API_INDEX]] · [[VALIDATION_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]] · [[PRD_INDEX]] · [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]]
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #service/access #service/charging #service/commerce #service/contact-group #service/core-gateway #service/identity #service/provisioning #service/system-gateway #service/templates #gap #blocked #security

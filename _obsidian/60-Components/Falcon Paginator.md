@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Paginator
+folder-name: falcon-angular-data-table
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Paginator ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-paginator/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-paginator`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02 #prd/03 #prd/04 #prd/05
 
 ## Hubs
 

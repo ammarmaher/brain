@@ -1,3 +1,11 @@
+---
+type: flow
+flow-name: Add Node
+page-slug: organization-hierarchy
+prd: PRD-01
+form: single-file
+created: 2026-05-15
+---
 *** Flow note — Add Node (sub-node creation) ***
 *** Vault file: 10-Pages/Add Node Flow.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\flows\Add Node.md ***
@@ -72,6 +80,10 @@
 - ❌ MISSING — PRD-implied per-node `settings` has no backend DTO (per [[E-node]])
 - ❓ OPEN — uniqueness scope of `Name` (per-parent / per-account / global) — PRD silent
 - ❓ OPEN — letter-prefix rule on sub-node names — PRD silent; backend does not enforce
+
+## Tags
+
+#type/flow #prd/01 #service/access #service/commerce #service/core-gateway #service/system-gateway #drift #gap
 
 ## Hubs
 

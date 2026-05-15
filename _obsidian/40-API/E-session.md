@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: session
+prd: PRD-02
+service: identity
+drift-count: 10
+created: 2026-05-15
+---
 *** Entity Reconciliation E-session — Session ***
 *** PRD: PRD-02 User Management · Backend service: Identity · 2026-05-15 ***
 
@@ -87,6 +95,10 @@
 - [[E-user]] — `UserResponse` is the first fetch after `Stage == Authenticated` (typically `GET /user/me`)
 - [[Access PES Service]] — engaged on every authenticated request for permission decisions (sees JWT claims, not the session record directly)
 - Zitadel — token issuance + refresh delegated; Identity proxies (FE never calls Zitadel directly)
+
+## Tags
+
+#type/e-entity #prd/02 #service/access #service/core-gateway #service/identity #service/system-gateway #severity/high #drift #security
 
 ## Hubs
 

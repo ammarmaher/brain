@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Application
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Application ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **Application ↔ CommChannel** — Both share Config shape. Application is the app product; CommChannel is the bearer.
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/03 #service/commerce #service/provisioning #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

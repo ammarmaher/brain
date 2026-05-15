@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Wizard
+folder-name: falcon-wizard
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Wizard ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-wizard/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -33,6 +41,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-wizard`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02 #prd/03 #prd/04 #gap
 
 ## Hubs
 

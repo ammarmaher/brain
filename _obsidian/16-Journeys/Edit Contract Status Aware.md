@@ -1,3 +1,10 @@
+---
+type: journey
+journey-name: Edit Contract Status Aware
+crosses-pages: [contracts, contract-detail, edit-contract, contract-detail-refreshed, implementationknowledgemap, backendindex]
+prds-involved: []
+created: 2026-05-15
+---
 *** Journey note — Edit Contract (status-aware) ***
 *** Vault file: 16-Journeys/Edit Contract Status Aware.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\journeys\edit-contract-status-aware\ ***
@@ -33,3 +40,7 @@
 ## Hub backlinks
 
 [[IMPLEMENTATION_KNOWLEDGE_MAP]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[PAGES_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[16-Journeys/README|16-Journeys]]
+
+## Tags
+
+#type/journey

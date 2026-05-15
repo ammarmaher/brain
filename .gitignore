@@ -20,6 +20,9 @@ obj/
 .tmp/
 temp/
 
+# vault-search ONNX model cache (downloaded on first run, ~33MB)
+scripts/vault-search/model-cache/
+
 # Logs
 *.log
 
@@ -29,11 +32,18 @@ Obsidian Vault/
 
 # Any Obsidian plugin / workspace state (plugin auth tokens / API keys live here).
 **/.obsidian/plugins/*/data.json
+**/.obsidian/plugins/*/main.js
 **/.obsidian/plugins/*/main.js.map
+**/.obsidian/plugins/*/styles.css
+**/.obsidian/plugins/*/manifest.json
 **/.obsidian/plugins/*/.env
 **/.obsidian/workspace.json
 **/.obsidian/workspace-mobile.json
 **/.obsidian/cache/**
+
+# Obsidian Smart Connections / Smart Lookup vector cache (large, machine-specific)
+**/.smart-env/
+**/.smart-connections/
 
 # Generic credential filename guards. Negations below keep templates,
 # example files, and Markdown documentation committable.

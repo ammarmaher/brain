@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Role
+prd: PRD-02
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Role ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **Role ↔ Permission Group** — Role = job. Permission Group = bundle of policies. Not synonyms in strict reading despite falcon-wiki banned-row.
+
+## Tags
+
+#type/glossary-term #prd/02 #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

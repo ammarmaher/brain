@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: wallet-record
+prd: PRD-03
+service: charging
+drift-count: 12
+created: 2026-05-15
+---
 *** Entity Reconciliation E-wallet-record — WalletRecord ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: charging · 2026-05-15 ***
 
@@ -74,6 +82,10 @@ _no pages seeded yet_ — Wallets & Balance Mgmt page (wallet ledger rows) + Con
 - **Commerce → Charging:** `Active → Expired` triggers exclusion of records from lump-sums (BR-CC-38 in PRD-03 BUSINESS_RULES).
 - **Charging Lab / Testing Charging** (admin-only) surfaces per-record ledger rows via `TestingChargingLedgerEntryResponse` (paged).
 - **Frontend** Wallets & Balance Mgmt page reads `GetAccountWalletsResponse` for balances + `GetContractBalanceSummariesResponse` for per-contract attribution.
+
+## Tags
+
+#type/e-entity #prd/01 #prd/03 #service/charging #severity/high #drift #gap
 
 ## Hubs
 

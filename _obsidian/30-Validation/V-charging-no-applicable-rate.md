@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-charging-no-applicable-rate
+prd: PRD-03
+service: charging
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-charging-no-applicable-rate — every charge must resolve a Contract Details matrix cell ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: charging · 2026-05-15 ***
 
@@ -42,6 +52,10 @@
 - **Business rule cluster:** [[V-contract-rate-per-unit-non-negative]] (the cells whose absence triggers this) · [[V-charging-insufficient-balance]] (the *next* possible failure after the rate resolves) · `BR-CC-23`/`BR-CC-24`/`BR-CC-25` (Priority taxonomies that define the matrix axes) · `BR-CC-26` (Destinations come from the International Phone# Destination List)
 - **Related learning events:** none
 - **Open question:** `BR-CC-50` (Addons rate-card fallback when no matching addon — silent, flagged in root-documents)
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/03 #service/charging #service/commerce #severity/medium #gap
 
 ## Hubs
 

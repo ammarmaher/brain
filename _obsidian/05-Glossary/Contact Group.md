@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Contact Group
+prd: PRD-04
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Contact Group ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - `softDeleted` ≠ status. Two independent flags.
+
+## Tags
+
+#type/glossary-term #prd/04 #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

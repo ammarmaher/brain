@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: PES
+prd: 
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — PES ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - "Permission Enforcement System" (wiki) vs "Policy Enforcement System" (other docs) — same module.
+
+## Tags
+
+#type/glossary-term #prd/02 #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

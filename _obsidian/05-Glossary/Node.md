@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Node
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Node ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -29,6 +36,10 @@
 ## Common confusions
 - **Root Node ↔ Main Node ↔ Sub Node** — three distinct kinds. Root is the platform root (Falcon-side only); Main is the Account level (1:1 Account); Sub is recursive under Main.
 - **Node ↔ Account** — Node is the *tree slot*; Account is the *business container* bound to a Main Node. Users belong to Nodes; Accounts own Nodes.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

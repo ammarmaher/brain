@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: core-gateway
+primary-prds: [PRD-01]
+repo: falcon-int-core-gateway-svc
+created: 2026-05-15
+---
 *** Backend Service — Core Gateway (Client-facing) ***
 *** SoT: Brain Outputs/understanding/backend/core-gateway/ ***
 *** Repository: C:\Falcon\Falcon\falcon-int-core-gateway-svc ***
@@ -62,6 +69,10 @@ PRD-01 Account Management:
 Plus cross-cutting per-tenant rate limiting (`PerTenant` policy: 100 req / 60s / no queue) — not a PRD rule, but a gateway-level guardrail.
 
 Full validation index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #service/charging #service/commerce #service/contact-group #service/identity #service/provisioning #service/templates #gap #blocked #security
 
 ## Hubs
 

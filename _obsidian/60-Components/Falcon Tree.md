@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Tree
+folder-name: falcon-angular-tree
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Tree ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-tree/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -32,6 +40,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-tree`.
+
+## Tags
+
+#type/falcon-component #prd/01
 
 ## Hubs
 

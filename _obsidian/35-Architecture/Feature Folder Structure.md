@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Feature Folder Structure
+rule-count: 9
+created: 2026-05-15
+---
 *** Architecture Rule Set — Feature Folder Structure ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/FEATURE_FOLDER_STRUCTURE.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -57,6 +63,10 @@ apps/<app>/src/app/features/<feature-name>/
 
 ## Related component notes
 - [[Falcon Data Table]] · [[Falcon Drawer]] — components consumed inside organization-hierarchy feature folders.
+
+## Tags
+
+#type/architecture-rules
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

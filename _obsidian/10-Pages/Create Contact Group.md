@@ -1,3 +1,11 @@
+---
+type: page
+slug: create-contact-group
+prd-implements: [PRD-04]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Create Contact Group ***
 *** Vault file: 10-Pages/Create Contact Group.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\create-contact-group\ ***
@@ -24,6 +32,10 @@
 
 ## Related V-rules
 - _None promoted yet_ — BR-CGM-04 (max upload size) is a Business rule, not a V-rule.
+
+## Tags
+
+#type/page #status/stub #prd/01 #prd/04 #prd/05 #service/access #service/contact-group
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Contact Groups List]] · [[Organization Hierarchy]]

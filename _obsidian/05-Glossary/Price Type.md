@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Price Type
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Price Type ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **PRD "Price Type" vs DTO `pricingType`** — same concept.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/charging #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

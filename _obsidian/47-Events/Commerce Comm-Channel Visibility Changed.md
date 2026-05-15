@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.comm-channel-visibility-changed.v1
+channel: kafka
+producer-service: commerce
+consumer-services: [templates]
+idempotency-documented: false
+created: 2026-05-15
+---
 *** Event — Commerce Comm-Channel Visibility Changed ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.comm-channel-visibility-changed.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -29,6 +38,10 @@
 
 - Producer-side docs gap (same shape as [[Commerce Comm-Channel Init]])
 - Paired with [[Commerce Comm-Channel Shown]] (Charging-side); two events from one trigger — fragility risk
+
+## Tags
+
+#type/kafka-event #prd/01 #prd/05 #service/commerce #service/templates #gap
 
 ## Hubs
 

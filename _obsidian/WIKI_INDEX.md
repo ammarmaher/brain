@@ -1,3 +1,8 @@
+---
+type: hub
+hub: wiki
+created: 2026-05-15
+---
 # Wiki Index
 
 This index is auto-updated by Brain SK TouchBase and report generation.
@@ -45,3 +50,7 @@ The wiki repo is the authority. To refresh: `git -C C:\Falcon\falcon-wiki pull` 
 - MED — Mongo default creds in non-Development `appsettings.json` (Templates + Access)
 - MED — Domain layer leaks MongoDB (`[BsonElement]` on entities)
 - MED — Endpoint-style split (Controllers vs FastEndpoints vs Minimal API) without documented policy
+
+## Tags
+
+#type/index #drift #security

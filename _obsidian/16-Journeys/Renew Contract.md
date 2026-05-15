@@ -1,3 +1,10 @@
+---
+type: journey
+journey-name: Renew Contract
+crosses-pages: [send-campaign, contracts, add-contract, contract-detail, implementationknowledgemap, backendindex]
+prds-involved: []
+created: 2026-05-15
+---
 *** Journey note — Renew Contract ***
 *** Vault file: 16-Journeys/Renew Contract.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\journeys\renew-contract\ ***
@@ -34,3 +41,7 @@
 ## Hub backlinks
 
 [[IMPLEMENTATION_KNOWLEDGE_MAP]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[PAGES_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[16-Journeys/README|16-Journeys]]
+
+## Tags
+
+#type/journey

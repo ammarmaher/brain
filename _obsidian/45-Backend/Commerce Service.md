@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: commerce
+primary-prds: [PRD-01, PRD-03]
+repo: falcon-core-commerce-svc
+created: 2026-05-15
+---
 *** Backend Service — Commerce ***
 *** SoT: Brain Outputs/understanding/backend/commerce/ ***
 *** Repository: C:\Falcon\Falcon\falcon-core-commerce-svc ***
@@ -74,6 +81,10 @@ PRD-03 Contract:
 - [[V-contract-edit-status-aware-fields]] — handler-time gate · `ContractEditOnlyAllowedWhenPending` (422). `ContractResponse.CanEdit` bool exposed for FE
 
 Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/01 #prd/02 #prd/03 #prd/05 #service/core-gateway #service/system-gateway #drift #security
 
 ## Hubs
 

@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-template-levels-count-required-for-restricted
+prd: PRD-05
+service: templates
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-template-levels-count-required-for-restricted — BodyType=Restricted requires LevelsCount + matching CheckerLevels ***
 *** Origin: PRD-05 Templates · Backend: templates · 2026-05-15 ***
 
@@ -60,6 +70,10 @@
 - **Sister rule:** [[V-template-checker-level-integrity]] — the inner structural rules that only apply when this outer gate is `Restricted`
 - **Related learning events:** none yet
 - **Open gaps:** `GAP-TM-01` + `GAP-TM-02` (template entity + gateway route both missing) — block any UI today; canonical BodyType enum list also not recorded in `DTO_DICTIONARY.md`
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/05 #service/templates #severity/medium #gap #blocked
 
 ## Hubs
 

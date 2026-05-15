@@ -1,3 +1,11 @@
+---
+type: page
+slug: contact-groups-list
+prd-implements: [PRD-04]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Contact Groups List ***
 *** Vault file: 10-Pages/Contact Groups List.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\contact-groups-list\ ***
@@ -24,6 +32,10 @@
 
 ## Related V-rules
 - _None promoted yet_
+
+## Tags
+
+#type/page #status/stub #prd/02 #prd/04 #prd/05 #service/access #service/contact-group
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Create Contact Group]] · [[Templates List]] · [[Organization Hierarchy]]

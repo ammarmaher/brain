@@ -1,3 +1,8 @@
+---
+type: hub
+hub: ammar-brain-home
+created: 2026-05-15
+---
 *** Ammar Brain — Home (graph navigation layer) ***
 *** Updated 2026-05-15 by Brain SK obsidian-knowledge-graph install ***
 
@@ -120,3 +125,7 @@ Skill: [page-learning](../../domains/frontend/page-learning/SKILL.md). Approval 
 - Page-specific rules stay page-specific unless Ammar says `promote this globally`.
 - Scorecards count APPROVED entries only.
 - Any dimension < 60 % → `NEEDS ATTENTION`.
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/root #gap #security

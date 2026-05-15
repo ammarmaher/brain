@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Multiselect Legacy
+folder-name: falcon-angular-multi-select
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Multiselect Legacy ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-multiselect-legacy/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -30,6 +38,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-multiselect-legacy`._
+
+## Tags
+
+#type/falcon-component #status/deprecated
 
 ## Hubs
 

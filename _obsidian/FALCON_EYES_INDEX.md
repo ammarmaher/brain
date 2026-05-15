@@ -1,3 +1,8 @@
+---
+type: hub
+hub: falcon_eyes
+created: 2026-05-15
+---
 *** Brain SK Obsidian — Falcon Eyes Hub ***
 *** Path: _obsidian/FALCON_EYES_INDEX.md ***
 *** Created: 2026-05-15 ***
@@ -113,3 +118,7 @@ Tailwind utilities + Falcon tokens only. No SCSS. No inline styles. No PrimeNG. 
 - Round 1 pixel parity: **96.5 %** (both 90 % and 95 % targets reached)
 - P3 polish landed: i18n keys + paginator default + status-badge re-verify; build green (hash `439d98a8dd333f51`)
 - Task B status: **BLOCKED** — needs seeded Zitadel test user OR signed-in browser session
+
+## Tags
+
+#type/index #gap #blocked

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Wallet Record
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Wallet Record ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -26,6 +33,10 @@
 ## Common confusions
 - **Wallet Record ↔ Wallet** — bucket vs atomic credit-line.
 - **Wallet Record ↔ Transfer Tx** — TransferTx moves; WalletRecord is the ledger.
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/03 #service/charging #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

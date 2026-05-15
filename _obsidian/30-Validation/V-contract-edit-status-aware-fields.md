@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contract-edit-status-aware-fields
+prd: PRD-03
+service: commerce
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contract-edit-status-aware-fields — edit gates differ by contract status ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: commerce · 2026-05-15 ***
 
@@ -41,6 +51,10 @@
 - **Business rule cluster:** [[V-contract-expiration-after-start]] (re-runs on every status — locked Start vs. open End in Active/Expired) · [[V-contract-committed-value-positive]] (locked in Active/Expired, editable in Pending) · `BR-CC-10` (status is auto-derived — frontend never edits status directly)
 - **Related learning events:** none
 - **Open question:** `BR-CC-46` (audit log granularity for contract edits — MISSING) · `BR-CC-48` (cancellation of Pending contracts — silent)
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/03 #service/commerce #severity/medium
 
 ## Hubs
 

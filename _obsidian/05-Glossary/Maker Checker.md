@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Maker Checker
+prd: PRD-05
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Maker / Checker ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - Pattern, not entity. Role unchanged.
+
+## Tags
+
+#type/glossary-term #prd/05 #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

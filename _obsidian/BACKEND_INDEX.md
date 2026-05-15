@@ -1,3 +1,8 @@
+---
+type: hub
+hub: backend
+created: 2026-05-15
+---
 # Backend Index
 
 This index is auto-updated by Brain SK TouchBase and report generation.
@@ -28,3 +33,7 @@ This index is auto-updated by Brain SK TouchBase and report generation.
 - Zitadel JWT Bearer auth everywhere.
 - Endpoint-style split: Commerce/Charging/Provisioning use Controllers; Identity/Contact Group/Templates use FastEndpoints; Access uses Minimal API.
 - Serilog universally, except Access uses log4net.
+
+## Tags
+
+#type/index #gap

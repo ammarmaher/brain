@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: contact-group
+prd: PRD-04
+service: contact-group
+drift-count: 19
+created: 2026-05-15
+---
 *** Entity Reconciliation E-contact-group — ContactGroup ***
 *** PRD: PRD-04 Contact Group Management · Backend service: contact-group · 2026-05-15 ***
 
@@ -99,6 +107,10 @@ _frontend pending Story 115329_ — Contact Groups list (own node), Contact Grou
 - **Access PES** — share policy gating cross-checks with the Access service; sharing rules read tenant + node hierarchy.
 - **Identity** — `IdentityServiceError` / `IdentityServiceConnectionError` / `IdentityServiceTimeout` errors surface when resolving `SharedUserIds[]` against Identity.
 - **Kafka:** Contact Group produces `contactgroup.import-requested.v1` for downstream consumers.
+
+## Tags
+
+#type/e-entity #prd/04 #prd/05 #service/contact-group #severity/high #drift #gap #security
 
 ## Hubs
 

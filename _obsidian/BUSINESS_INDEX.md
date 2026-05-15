@@ -1,3 +1,8 @@
+---
+type: hub
+hub: business
+created: 2026-05-15
+---
 # Business Index
 
 This index is auto-updated by Brain SK TouchBase and report generation.
@@ -54,3 +59,7 @@ The Drive folder is the authority. To refresh: run `take latest from PRD` agains
 - [Cross-service endpoint inventory](../outputs/understanding/backend/BACKEND_SERVICE_MAP.md) — the surface area of business features the platform exposes
 - [API-to-component trace](../outputs/understanding/integration/API_TO_COMPONENT_TRACE.md) — which UI features consume which backend operations
 - [Falcon component registry](../../Brain%20Outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY.md) — the UI vocabulary available for new business features (see also [[Frontend Components Index]] and [[Frontend Understanding]])
+
+## Tags
+
+#type/index #gap #security

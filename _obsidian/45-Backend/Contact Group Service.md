@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: contact-group
+primary-prds: [PRD-04]
+repo: falcon-core-contact-group-svc
+created: 2026-05-15
+---
 *** Backend Service — Contact Group ***
 *** SoT: Brain Outputs/understanding/backend/contact-group/ ***
 *** Repository: C:\Falcon\Falcon\falcon-core-contact-group-svc ***
@@ -73,6 +80,10 @@ PRD-04 Contact Group Management:
 - [[V-contact-group-share-policy-mode-mutex]] — **⚠ silent drop, no error code at all. When `SharedWithAllUsers=true`, `SharedUsers[]` is silently ignored. Surfaced as gap: needs `InvalidShareMode` code.**
 
 Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/04 #service/core-gateway #service/system-gateway #gap #security
 
 ## Hubs
 

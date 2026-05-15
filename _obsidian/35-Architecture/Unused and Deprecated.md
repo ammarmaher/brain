@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Unused and Deprecated
+rule-count: 8
+created: 2026-05-15
+---
 *** Architecture Rule Set — Unused and Deprecated ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/UNUSED_AND_DEPRECATED_COMPONENTS.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -57,6 +63,10 @@
 - [[Falcon Stepper Legacy]] · [[Falcon Stepper]] — migration pair.
 - [[Falcon Mobile Number]] · [[Falcon Phone Field]] — migration pair.
 - [[Falcon Calendar Legacy]] · [[Falcon Multiselect Legacy]] — delete-safe.
+
+## Tags
+
+#type/architecture-rules #status/deprecated #security
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contract-currency-enum
+prd: PRD-03
+service: commerce
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contract-currency-enum — Contract Currency must be eCurrency member ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: commerce · 2026-05-15 ***
 
@@ -36,6 +46,10 @@
 - **Business rule cluster:** [[V-contract-committed-value-positive]] (Currency scopes the unit of value) · `BR-CC-19` (SAR↔Points conversion is currency-scoped)
 - **Related learning events:** none
 - **Open question:** PRD silent on multi-currency contracts within one account — `BR-CC-44` (Tax / VAT silent) is the closest open gap
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/03 #service/commerce #severity/medium #gap
 
 ## Hubs
 

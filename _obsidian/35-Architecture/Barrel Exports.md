@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: `core`, `language`, `shared-ui`, `shared-data-access`, `shared-types`, `shared-utils`. Theme is CSS-only and lives at `@falcon/theme` (no TS exports). | medium | `libs/falcon/src/index.ts` |
+rule-count: 8
+created: 2026-05-15
+---
 *** Architecture Rule Set — Barrel Exports ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/BARREL_EXPORTS_AUDIT.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -44,6 +50,10 @@
 
 ## Related component notes
 - [[Falcon Data Table]] · [[Falcon Drawer]] · [[Falcon Search Input]] — examples of wrappers reachable only via `@falcon/ui-core/angular`.
+
+## Tags
+
+#type/architecture-rules
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

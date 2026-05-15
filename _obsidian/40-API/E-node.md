@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: node
+prd: PRD-01
+service: commerce
+drift-count: 8
+created: 2026-05-15
+---
 *** Entity Reconciliation E-node — Node (hierarchy element) ***
 *** PRD: PRD-01 Account Management · Backend service: Commerce · 2026-05-15 ***
 
@@ -69,6 +77,10 @@
 - [[Identity Service]] — Users carry `NodeId` (see [[E-user]]); node deletion has cascade implications
 - [[Access PES Service]] — node-path is part of PES tenant scoping (`Path` field in [[E-user]])
 - Q-AM-18 (PRD QUESTIONS.md) — move-node operation not yet implemented; GAP-AM-29 (account archive) tied here
+
+## Tags
+
+#type/e-entity #prd/01 #service/access #service/commerce #service/identity #severity/high #drift #gap
 
 ## Hubs
 

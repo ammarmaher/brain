@@ -1,3 +1,12 @@
+---
+type: learning-event
+le-id: LE-20260515-commchannels-shadow-row-notch-alignment
+page-slug: organization-hierarchy
+source-type: bug
+category: api
+status: approved
+created: 2026-05-15
+---
 *** Learning Event — commchannels shadow-row notch alignment ***
 *** Vault file: 80-Evidence/LE-20260515-commchannels-shadow-row-notch-alignment.md ***
 *** Brain Outputs SoT: understanding/pages/organization-hierarchy/LIGHT_LEARNING_EVENTS.md + light-learning/2026-05-15-commchannels-shadow-row-notch-alignment.md ***
@@ -77,6 +86,10 @@ Tracked in [falcon-data-table / GAPS_AND_UPGRADES.md](../../outputs/understandin
 ## SoT sync note
 
 `APPROVED_PAGE_PATTERNS.md` is still empty in Brain Outputs — the 5 UIUX-SHADOW rules landed directly in `UI_UX_RULES.md`, but a corresponding row in `APPROVED_PAGE_PATTERNS.md` was not added in the same pass. Recording here so the next Deep Learning run can reconcile.
+
+## Tags
+
+#type/learning-event #status/promoted #severity/medium #gap
 
 ## Hubs
 

@@ -1,3 +1,10 @@
+---
+type: journey
+journey-name: Suspend Client
+crosses-pages: [organization-hierarchy, org-settings, login, implementationknowledgemap, backendindex, validationindex]
+prds-involved: []
+created: 2026-05-15
+---
 *** Journey note — Suspend Client ***
 *** Vault file: 16-Journeys/Suspend Client.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\journeys\suspend-client\ ***
@@ -36,3 +43,7 @@
 ## Hub backlinks
 
 [[IMPLEMENTATION_KNOWLEDGE_MAP]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[PAGES_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[16-Journeys/README|16-Journeys]]
+
+## Tags
+
+#type/journey #security

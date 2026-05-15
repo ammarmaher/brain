@@ -1,3 +1,11 @@
+---
+type: page
+slug: my-profile
+prd-implements: [PRD-02]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — My Profile ***
 *** Vault file: 10-Pages/My Profile.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\my-profile\ ***
@@ -21,6 +29,10 @@
 
 ## Related V-rules
 - _None promoted yet_ — likely candidate: `V-user-first-last-name-letters-only` (shared with Edit User / Add User).
+
+## Tags
+
+#type/page #status/stub #prd/02 #service/identity
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Edit User]] · [[Change Password]] · [[Organization Hierarchy]]

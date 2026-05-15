@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Multi Select
+folder-name: falcon-angular-dropdown
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Multi Select ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-multi-select/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -33,6 +41,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-multi-select`._
+
+## Tags
+
+#type/falcon-component #status/deprecated #prd/01 #prd/02 #prd/04
 
 ## Hubs
 

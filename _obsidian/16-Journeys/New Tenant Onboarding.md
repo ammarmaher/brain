@@ -1,3 +1,10 @@
+---
+type: journey
+journey-name: New Tenant Onboarding
+crosses-pages: [organization-hierarchy, login, force-change-password, otp-challenge, org-settings, contracts]
+prds-involved: []
+created: 2026-05-15
+---
 *** Journey note — New Tenant Onboarding ***
 *** Vault file: 16-Journeys/New Tenant Onboarding.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\journeys\new-tenant-onboarding\ ***
@@ -43,3 +50,7 @@
 ## Hub backlinks
 
 [[IMPLEMENTATION_KNOWLEDGE_MAP]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[PAGES_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[16-Journeys/README|16-Journeys]]
+
+## Tags
+
+#type/journey #security

@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-user-first-last-name-letters-only
+prd: PRD-02
+service: identity
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-user-first-last-name-letters-only — First/Last Name ≤50 chars, letters only ***
 *** Origin: PRD-02 User Management · Backend: Identity · 2026-05-15 ***
 
@@ -56,6 +66,10 @@
   - [[02 User Management]] BR-UM-11 ↔ BR-UM-12 ↔ BR-UM-13 ↔ BR-UM-14 (Tab 1 field rules)
   - BR-UM-36 ↔ BR-UM-41 (admin vs self edit scopes)
 - **Related learning events:** none yet
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/02 #service/identity #severity/medium #security
 
 ## Hubs
 

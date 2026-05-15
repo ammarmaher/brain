@@ -1,3 +1,11 @@
+---
+type: page
+slug: edit-contract
+prd-implements: [PRD-03]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Edit Contract ***
 *** Vault file: 10-Pages/Edit Contract.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\edit-contract\ ***
@@ -23,6 +31,10 @@
 
 ## Related V-rules
 - _None promoted yet_
+
+## Tags
+
+#type/page #status/stub #prd/01 #prd/03 #service/charging #service/commerce
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Contracts List]] · [[Add Contract]] · [[Organization Hierarchy]]

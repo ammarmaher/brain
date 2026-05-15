@@ -1,3 +1,11 @@
+---
+type: page
+slug: templates-list
+prd-implements: [PRD-05]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Templates List ***
 *** Vault file: 10-Pages/Templates List.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\templates-list\ ***
@@ -24,6 +32,10 @@
 
 ## Related V-rules
 - _None promoted yet_
+
+## Tags
+
+#type/page #status/stub #prd/02 #prd/04 #prd/05 #service/access #service/templates
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Create Template WhatsApp]] · [[Contact Groups List]] · [[Organization Hierarchy]]

@@ -1,9 +1,52 @@
+---
+type: hub
+hub: validation
+created: 2026-05-15
+---
 *** Validation Index — graph hub ***
 *** Updated 2026-05-15 ***
 
 # Validation Index
 
 > Brain Outputs holds the rules. This note holds the graph.
+
+## 🔍 Live queries (Dataview)
+
+_If Dataview plugin is installed, the queries below return live results. Otherwise see the static lists further down._
+
+### All HIGH-severity V-rules
+
+```dataview
+TABLE prd, service, drift FROM "30-Validation"
+WHERE type = "validation-rule" AND severity = "high"
+SORT prd ASC
+```
+
+### V-rules by PRD
+
+```dataview
+TABLE rows.file.link AS "Rules" FROM "30-Validation"
+WHERE type = "validation-rule"
+GROUP BY prd
+SORT prd ASC
+```
+
+### V-rules with documented drift
+
+```dataview
+LIST FROM "30-Validation"
+WHERE type = "validation-rule" AND drift = true
+SORT severity ASC, file.name ASC
+```
+
+### V-rules by service
+
+```dataview
+TABLE length(rows) AS "Count" FROM "30-Validation"
+WHERE type = "validation-rule"
+GROUP BY service
+SORT length(rows) DESC
+```
 
 ## Per-page validation registries
 
@@ -87,3 +130,7 @@ Each rule is traced through 3 layers: **PRD line evidence → Backend `[ThrowIf*
 ## Related hubs
 
 - [[PAGE_LEARNING_INDEX]] · [[API_INDEX]] · [[BUSINESS_INDEX]] · [[GAPS_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]]
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #drift #gap #blocked #security

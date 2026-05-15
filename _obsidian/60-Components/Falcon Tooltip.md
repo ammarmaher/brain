@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Tooltip
+folder-name: falcon-tooltip
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Tooltip ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-tooltip/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -30,6 +38,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-tooltip`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02 #prd/03 #prd/04 #prd/05
 
 ## Hubs
 

@@ -1,3 +1,8 @@
+---
+type: index
+folder: 16-Journeys
+created: 2026-05-15
+---
 *** 16-Journeys hub — cross-page user journey graph ***
 *** Vault folder: 16-Journeys/ · Created 2026-05-15 by Brain SK Phase 3B ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\journeys\ ***
@@ -28,6 +33,10 @@
 - [First Login playbook](../../../Brain%20Outputs/understanding/journeys/first-login/PLAYBOOK.md)
 - [Wallet Transfer playbook](../../../Brain%20Outputs/understanding/journeys/wallet-transfer/PLAYBOOK.md)
 - [Edit Contract status-aware playbook](../../../Brain%20Outputs/understanding/journeys/edit-contract-status-aware/PLAYBOOK.md)
+
+## Tags
+
+#type/index
 
 ## Hubs
 

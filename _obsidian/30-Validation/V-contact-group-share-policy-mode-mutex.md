@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contact-group-share-policy-mode-mutex
+prd: PRD-04
+service: contact-group
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contact-group-share-policy-mode-mutex — SharedWithAllUsers flag overrides SharedUsers[] ***
 *** Origin: PRD-04 Contact Group Management · Backend: contact-group · 2026-05-15 ***
 
@@ -53,6 +63,10 @@
 - **Sister rule:** [[V-contact-group-name-required-format]] — same wizard
 - **Related learning events:** none yet
 - **Open gaps:** `BR-CGM-38` (self-share UI guard), `BR-CGM-32` (behavior when shared-with Normal User is deleted), `GAP-CGM-33` ("All Users" semantic expansion timing)
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/04 #service/contact-group #severity/medium #gap
 
 ## Hubs
 

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Stepper Legacy
+folder-name: falcon-stepper-legacy
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Stepper Legacy ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-stepper-legacy/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -33,6 +41,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-stepper-legacy`.
+
+## Tags
+
+#type/falcon-component #status/deprecated #prd/01 #prd/02
 
 ## Hubs
 

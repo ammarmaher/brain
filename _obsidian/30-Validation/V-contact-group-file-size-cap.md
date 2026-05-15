@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contact-group-file-size-cap
+prd: PRD-04
+service: contact-group
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contact-group-file-size-cap — Upload file size must be ≤ MaxFileSizeMB ***
 *** Origin: PRD-04 Contact Group Management · Backend: contact-group · 2026-05-15 ***
 
@@ -45,6 +55,10 @@
 - **Sister rule:** [[V-contact-group-file-type-allowlist]] — same upload, paired type allowlist
 - **Related learning events:** none yet
 - **Open gap:** `GAP-CGM-27` — default `MaxFileSizeMB` value not documented
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/04 #service/contact-group #severity/medium #gap #security
 
 ## Hubs
 

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Checkbox Group
+folder-name: falcon-angular-checkbox
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Checkbox Group ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-checkbox-group/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -31,6 +39,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-checkbox-group`._
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02
 
 ## Hubs
 

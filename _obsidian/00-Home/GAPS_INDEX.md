@@ -1,3 +1,8 @@
+---
+type: hub
+hub: gaps
+created: 2026-05-15
+---
 *** Gaps Index — graph hub ***
 *** Updated 2026-05-15 ***
 
@@ -43,3 +48,7 @@ Every gap entry in any `GAP_REGISTRY.md` MUST link:
 ## Related hubs
 
 - [[PAGE_LEARNING_INDEX]] · [[UI_UX_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[BUSINESS_INDEX]] · [[COMPONENT_INDEX]] · [[EVIDENCE_INDEX]] · [[PRD_INDEX]]
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/root #gap

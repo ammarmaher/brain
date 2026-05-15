@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Master Wallet
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Master Wallet ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -26,6 +33,10 @@
 ## Common confusions
 - Master Wallet has **no physical row** — its balance is derived.
 - On Contract `Expired`, records persist but are subtracted from Master Wallet (BR-AM-38).
+
+## Tags
+
+#type/glossary-term #prd/01 #service/charging #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

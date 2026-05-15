@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-login-lockout-3-wrong-attempts
+prd: PRD-02
+service: identity
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-login-lockout-3-wrong-attempts — 3 wrong logins or 3 wrong OTPs → Locked ***
 *** Origin: PRD-02 User Management · Backend: Identity (LoginEligibilityPolicy + Zitadel) · 2026-05-15 ***
 
@@ -64,6 +74,10 @@
   - Sister gate: IP allowlist (BR-AM-10 / BR-UM-24) runs BEFORE this lockout counter — see [[V-account-ip-allowlist-enforcement]]
 - **Related learning events:** none yet
 - **Open question:** PRD-02 BR-UM-45 — whether system notifies the user when status flips to Locked is silent
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/02 #service/identity #severity/medium #security
 
 ## Hubs
 

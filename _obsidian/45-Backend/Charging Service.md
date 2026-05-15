@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: charging
+primary-prds: [PRD-03]
+repo: falcon-core-charging-svc
+created: 2026-05-15
+---
 *** Backend Service — Charging (OCS) ***
 *** SoT: Brain Outputs/understanding/backend/charging/ ***
 *** Repository: C:\Falcon\Falcon\falcon-core-charging-svc ***
@@ -63,6 +70,10 @@ PRD-03 Charging:
 **Drift note:** [[V-contract-currency-enum]] — Commerce binds `eCurrency` with `[EnumDataType]`; Charging same field has **no enum binding**. Same domain concept, different rigour. Frontend should not expect 400 from binder on currency mismatch in Charging requests.
 
 Full index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/01 #prd/03 #service/commerce #service/core-gateway #service/system-gateway #drift
 
 ## Hubs
 

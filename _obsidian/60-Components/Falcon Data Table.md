@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Data Table
+folder-name: falcon-angular-data-table
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Data Table ***
 *** Vault file: 60-Components/Falcon Data Table.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\frontend\components\falcon-angular-data-table\ ***
@@ -54,6 +62,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-data-table` per run.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #gap
 
 ## Hubs
 

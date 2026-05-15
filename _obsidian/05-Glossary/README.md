@@ -1,3 +1,8 @@
+---
+type: index
+folder: 05-Glossary
+created: 2026-05-15
+---
 *** Glossary — Vault Graph Index ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -71,6 +76,10 @@
 ## Known gap (platform-level)
 
 **Arabic translations are not captured for any of the 44 terms.** Source PRD files are English-only. `multilanguage-rules.md` requires both En + Ar before merge — this is a single structural gap, not 44 per-term gaps. See [[#known-gaps]] section in the source-of-truth README.
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #gap #security
 
 ## Hubs
 

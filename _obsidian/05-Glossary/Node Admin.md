@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Node Admin
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Node Admin ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **Node Admin ↔ Account Owner** — AO has the whole Main Node + all Sub-Nodes; NA is scoped to a single Sub-Node subtree.
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/02 #service/commerce #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

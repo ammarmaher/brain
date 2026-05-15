@@ -1,3 +1,10 @@
+---
+type: journey
+journey-name: First Login
+crosses-pages: [login, force-change-password, otp-challenge, implementationknowledgemap, backendindex, validationindex]
+prds-involved: []
+created: 2026-05-15
+---
 *** Journey note — First Login ***
 *** Vault file: 16-Journeys/First Login.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\journeys\first-login\ ***
@@ -36,3 +43,7 @@
 ## Hub backlinks
 
 [[IMPLEMENTATION_KNOWLEDGE_MAP]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[PAGES_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[16-Journeys/README|16-Journeys]]
+
+## Tags
+
+#type/journey #security

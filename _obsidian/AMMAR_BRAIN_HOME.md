@@ -1,3 +1,8 @@
+---
+type: hub
+hub: ammar-brain-home
+created: 2026-05-15
+---
 # Brain SK Home
 
 Welcome to Brain SK knowledge vault.
@@ -93,3 +98,7 @@ Phase 1+2 parallel discovery pipeline · overall readiness **68%** · decision *
 3. Convert PES GET-with-body endpoints (`policyrulesBySub`, `policyrulesByFilter`) to POST (GAP-006).
 4. Move Mongo default creds out of non-Development `appsettings.json` for Templates + Access (GAP-010, MED).
 5. Restore architecture wiki vault — unblocks 7 downstream actions (ACT-004).
+
+## Tags
+
+#type/index #status/deprecated #gap #security

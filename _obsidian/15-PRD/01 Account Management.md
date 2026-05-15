@@ -1,3 +1,12 @@
+---
+type: prd-module
+prd-id: PRD-01
+module-name: Account Management
+coverage-percent: 0
+sync-date: 2026-04-24
+status: fresh
+created: 2026-05-15
+---
 *** PRD-01 — Account Management ***
 *** SoT: Brain Outputs/prd/modules/01-account-management/ ***
 *** Drive source: `Account Management Module VB4` (sync 2026-04-24) ***
@@ -65,6 +74,10 @@ Hub: [[VALIDATION_INDEX]].
 - **Status:** Mostly built
 - **Top concerns:** Wallet topology edit mid-life (BR-AM-41 OPEN); move-node (Q-AM-18 MISSING); account archive (GAP-AM-29 MISSING)
 - **Coverage:** 18 ✅ · 3 ⚠️ · 3 ❌ · 9 ❓
+
+## Tags
+
+#type/prd-module #prd/01 #prd/02 #prd/03 #service/charging #service/commerce #service/core-gateway #service/identity #service/provisioning #service/system-gateway #gap #security
 
 ## Hubs
 

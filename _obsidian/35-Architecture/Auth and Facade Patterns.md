@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Auth and Facade Patterns
+rule-count: 8
+created: 2026-05-15
+---
 *** Architecture Rule Set — Auth and Facade Patterns ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/AUTH_AND_FACADE_PATTERNS.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -40,6 +46,10 @@
 
 ## Related backend service
 - [[Identity Service]] — owns auth + Zitadel federation.
+
+## Tags
+
+#type/architecture-rules #service/identity
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: system-gateway
+primary-prds: []
+repo: falcon-int-system-gateway-svc
+created: 2026-05-15
+---
 *** Backend Service — System Gateway (Falcon-admin-facing) ***
 *** SoT: Brain Outputs/understanding/backend/system-gateway/ ***
 *** Repository: C:\Falcon\Falcon\falcon-int-system-gateway-svc ***
@@ -39,6 +46,10 @@ All Falcon-admin pages — Admin Console UI, Testing Charging Lab, etc.
 - [[Identity Service]] → user admin
 - [[Charging Service]] → **Testing Charging BFF (10 endpoints)** — only exposed here
 - [[Provisioning Service]] · [[Contact Group Service]] · [[Templates Service]]
+
+## Tags
+
+#type/backend-service #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #service/charging #service/commerce #service/contact-group #service/core-gateway #service/identity #service/provisioning #service/templates #security
 
 ## Hubs
 

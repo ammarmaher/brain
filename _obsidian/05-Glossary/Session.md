@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Session
+prd: PRD-02
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Session ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - Idle timeout reads as fixed 30-min from createdAt — verify if sliding.
+
+## Tags
+
+#type/glossary-term #prd/02 #service/identity #gap #security
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Input
+folder-name: falcon-angular-input
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Input ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\frontend\components\falcon-angular-input\ ***
 
@@ -29,6 +37,10 @@ Navigation note. Brain Outputs holds the dossier.
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-input`.
+
+## Tags
+
+#type/falcon-component
 
 ## Hubs
 

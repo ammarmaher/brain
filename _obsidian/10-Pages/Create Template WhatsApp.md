@@ -1,3 +1,11 @@
+---
+type: page
+slug: create-template-whatsapp
+prd-implements: [PRD-05]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Create Template (WhatsApp) ***
 *** Vault file: 10-Pages/Create Template WhatsApp.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\create-template-whatsapp\ ***
@@ -23,6 +31,10 @@
 
 ## Related V-rules
 - _None promoted yet_ — Meta WhatsApp template rules are a likely cluster (header / footer / button limits).
+
+## Tags
+
+#type/page #status/stub #prd/04 #prd/05 #service/contact-group #service/templates
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Templates List]] · [[Contact Groups List]] · [[Organization Hierarchy]]

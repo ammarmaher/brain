@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: contactgroup.import-requested.v1
+channel: kafka
+producer-service: contact-group
+consumer-services: [contact-group]
+idempotency-documented: false
+created: 2026-05-15
+---
 *** Event — Contact Group Import Requested ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/contactgroup.import-requested.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -30,6 +39,10 @@
 
 - KAFKA-GAP-10 — no documented external consumer (campaign tooling)
 - Self-consume pattern is unusual — verify consumer group is intentional
+
+## Tags
+
+#type/kafka-event #prd/04 #service/contact-group #gap #security
 
 ## Hubs
 

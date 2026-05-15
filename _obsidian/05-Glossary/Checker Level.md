@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Checker Level
+prd: PRD-05
+is-entity: false
+created: 2026-05-15
+---
 *** Glossary — Checker Level ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - Per (Tenant × CommChannel), not global.
+
+## Tags
+
+#type/glossary-term #prd/05 #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

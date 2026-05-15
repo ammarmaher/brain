@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: account
+prd: PRD-01
+service: commerce
+drift-count: 16
+created: 2026-05-15
+---
 *** Entity Reconciliation E-account — Account (Client) ***
 *** PRD: PRD-01 Account Management · Backend service: Commerce · 2026-05-15 ***
 
@@ -86,6 +94,10 @@
 - [[Charging Service]] — Account is the owner of `Wallet × N` records (out-of-scope batch — different specialist)
 - [[Core Gateway Service]] — IP-allowlist cache keyed by account/tenant id
 - Kafka — Commerce produces `UserCreationRequested`, `WalletConfigured`, `ServiceOrderCreated` events that downstream services pick up after account create
+
+## Tags
+
+#type/e-entity #prd/01 #service/charging #service/commerce #service/core-gateway #service/identity #severity/high #drift #gap #security
 
 ## Hubs
 

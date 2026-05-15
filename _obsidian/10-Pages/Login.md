@@ -1,3 +1,11 @@
+---
+type: page
+slug: login
+prd-implements: [PRD-02]
+has-flow-folder: false
+status: stub
+created: 2026-05-15
+---
 *** Page note — Login ***
 *** Vault file: 10-Pages/Login.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\login\ ***
@@ -21,6 +29,10 @@
 
 ## Related V-rules
 - _None promoted yet_ — V-rules will land in `VALIDATION_RULES.md` after Light/Deep Learning.
+
+## Tags
+
+#type/page #status/stub #prd/02 #service/identity #security
 
 ## Hubs
 - [[AMMAR_BRAIN_HOME]] · [[PAGE_LEARNING_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[Organization Hierarchy]] · [[Forgot Password]] · [[Change Password]]

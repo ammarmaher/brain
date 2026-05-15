@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Select
+folder-name: falcon-angular-dropdown
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Select ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-select/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -32,6 +40,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-select` (alias of `falcon-dropdown`).
+
+## Tags
+
+#type/falcon-component
 
 ## Hubs
 

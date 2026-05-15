@@ -1,3 +1,8 @@
+---
+type: hub
+hub: frontend-understanding
+created: 2026-05-15
+---
 *** Brain SK — Frontend Understanding (canonical index) ***
 *** Generated 2026-05-13 by Agent 6 (Obsidian Link Agent) — frontend component knowledge migration ***
 
@@ -87,3 +92,7 @@ These legacy locations are kept for archival provenance only. New writes go ONLY
 - `C:\Falcon\Brain SK\outputs\frontend-understanding`
 
 Config keys: `outputs.frontendUnderstanding` and `outputs.frontendComponents` in `../config/brain.config.json`. Legacy keys live under `outputs.legacy.*`.
+
+## Tags
+
+#type/index #status/deprecated

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: User Type
+prd: PRD-02
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — User Type ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - **Falcon User ↔ Client User** — different gateways, different scopes.
+
+## Tags
+
+#type/glossary-term #prd/02 #service/core-gateway #service/identity #service/system-gateway #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: app-config
+prd: PRD-01
+service: commerce
+drift-count: 13
+created: 2026-05-15
+---
 *** Entity Reconciliation E-app-config — AppConfig ***
 *** PRD: PRD-01 Account Management · Backend service: Commerce · 2026-05-15 ***
 
@@ -88,6 +96,10 @@
 - [[Provisioning Service]] — Applications are provisioned via separate service lifecycle (out-of-batch — different specialist)
 - Kafka — `ServiceOrderCreated` event after `DoPayment`
 - [[Charging Service]] — billing logic for application charges (out-of-batch)
+
+## Tags
+
+#type/e-entity #prd/01 #service/charging #service/commerce #service/provisioning #severity/high #drift #gap
 
 ## Hubs
 

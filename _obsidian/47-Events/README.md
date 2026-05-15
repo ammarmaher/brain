@@ -1,3 +1,8 @@
+---
+type: index
+folder: 47-Events
+created: 2026-05-15
+---
 *** 47-Events folder index ***
 *** Created 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
 *** Vault graph layer over Brain Outputs/understanding/integration/events/ ***
@@ -44,6 +49,10 @@ See [Event Topology README in Brain Outputs](../../../Brain%20Outputs/understand
 
 - [[OCS Realtime Events Stream]] — Redis stream `ocs:realtime-events` for Charging hot path
 - [[Zitadel Webhook]] — inbound HTTP webhook → Identity
+
+## Tags
+
+#type/index #gap #security
 
 ## Hubs
 

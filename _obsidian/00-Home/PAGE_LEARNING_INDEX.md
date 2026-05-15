@@ -1,3 +1,8 @@
+---
+type: hub
+hub: page_learning
+created: 2026-05-15
+---
 *** Page Learning — vault entry point ***
 *** Updated 2026-05-15 ***
 
@@ -48,3 +53,7 @@ Canonical: [LEARNING_FIRST_TASK_ROUTING](../../protocols/LEARNING_FIRST_TASK_ROU
 | 6 Global promotion | `promote this globally` | `/promote-pattern <id>` |
 
 **Permanent rule:** Brain SK must not jump directly into implementation when the user provides screenshots, source pages, visual bugs, or page instructions. It must first create a Light Learning event and load page/component knowledge.
+
+## Tags
+
+#type/index

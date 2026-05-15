@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.comm-channel-init.v1
+channel: kafka
+producer-service: commerce
+consumer-services: [templates]
+idempotency-documented: true
+created: 2026-05-15
+---
 *** Event — Commerce Comm-Channel Init ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.comm-channel-init.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -29,6 +38,10 @@
 
 - Producer-side docs gap — Commerce SERVICE_OVERVIEW doesn't enumerate this on the produce side
 - Consumer idempotency not documented
+
+## Tags
+
+#type/kafka-event #prd/01 #prd/05 #service/commerce #service/templates #gap
 
 ## Hubs
 

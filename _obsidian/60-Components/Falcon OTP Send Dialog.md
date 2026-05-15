@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon OTP Send Dialog
+folder-name: falcon-angular-dialog
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon OTP Send Dialog ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-otp-send-dialog/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -32,6 +40,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-otp-send-dialog`.
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02
 
 ## Hubs
 

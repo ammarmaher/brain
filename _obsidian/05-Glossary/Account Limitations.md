@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Account Limitations
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Account Limitations ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -28,6 +35,10 @@
 
 ## Common confusions
 - `maxNormalUserLimit = 0` means **no limit** (not "zero users"). Same for System User and node-level counters.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-password-security-level-enum
+prd: PRD-01
+service: commerce
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-password-security-level-enum — Password Security Level enum membership ***
 *** Origin: PRD-01 Account Management · Backend: Commerce + Identity · 2026-05-15 ***
 
@@ -45,6 +55,10 @@
   - [[01 Account Management]] BR-AM-09 (enum) ↔ BR-AM-11 (account limits — same Step 2)
   - [[02 User Management]] BR-UM-15 + BR-UM-22 + BR-UM-34 (downstream: every user create/login/change-password applies the resolved tier)
 - **Related learning events:** none yet
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #prd/02 #service/commerce #service/identity #severity/medium #security
 
 ## Hubs
 

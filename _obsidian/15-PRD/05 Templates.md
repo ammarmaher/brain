@@ -1,3 +1,12 @@
+---
+type: prd-module
+prd-id: PRD-05
+module-name: Templates
+coverage-percent: 0
+sync-date: 2026-04-24
+status: fresh
+created: 2026-05-15
+---
 *** PRD-05 — Templates ***
 *** SoT: Brain Outputs/prd/modules/05-templates/ ***
 *** Drive source: `Copy of Template Module` (unknown version; sync 2026-04-24, head-only ~250/982 lines) ***
@@ -60,6 +69,10 @@ Per-CommChannel field schema · variable-token format · quality-drift detection
 - **Status:** Architectural surprise
 - **Top concerns:** Template has no public API (GAP-TM-01 cascade); service not gateway-routed (GAP-TM-02); Meta integration MISSING; full role matrix deferred; ~73% of GAPS still MISSING
 - **Coverage:** 3 ✅ · 2 ⚠️ · 21 ❌ · 1 ❓ — **lowest coverage of all modules**
+
+## Tags
+
+#type/prd-module #prd/01 #prd/02 #prd/04 #prd/05 #service/commerce #service/templates #drift #gap #blocked
 
 ## Hubs
 

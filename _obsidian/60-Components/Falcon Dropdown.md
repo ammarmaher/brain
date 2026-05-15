@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Dropdown
+folder-name: falcon-angular-dropdown
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Dropdown ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\frontend\components\falcon-angular-dropdown\ ***
 
@@ -30,6 +38,10 @@ Navigation note. Brain Outputs holds the dossier.
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-dropdown`.
+
+## Tags
+
+#type/falcon-component
 
 ## Hubs
 

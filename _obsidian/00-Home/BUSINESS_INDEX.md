@@ -1,3 +1,8 @@
+---
+type: hub
+hub: business
+created: 2026-05-15
+---
 *** Business Index — graph hub ***
 *** Updated 2026-05-15 ***
 
@@ -29,3 +34,7 @@ Hub: [[PRD_INDEX]]. ~180 business rules extracted with cited PRD-line evidence (
 ## Related hubs
 
 - [[PAGE_LEARNING_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[GAPS_INDEX]] · [[PRD_INDEX]]
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/root

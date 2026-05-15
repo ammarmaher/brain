@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Zitadel
+prd: 
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Zitadel ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -26,6 +33,10 @@
 ## Common confusions
 - Zitadel = external provider. Identity Service = Falcon-owned front.
 - HARD RULE: FE → Identity Service (never Zitadel direct).
+
+## Tags
+
+#type/glossary-term #prd/02 #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

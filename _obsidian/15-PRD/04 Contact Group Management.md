@@ -1,3 +1,12 @@
+---
+type: prd-module
+prd-id: PRD-04
+module-name: Contact Group Management
+coverage-percent: 0
+sync-date: 2026-04-24
+status: fresh
+created: 2026-05-15
+---
 *** PRD-04 — Contact Group Management ***
 *** SoT: Brain Outputs/prd/modules/04-contact-group-management/ ***
 *** Drive source: `Contact Group Management Module_V2` (sync 2026-04-24) ***
@@ -63,6 +72,10 @@ File type · file size · column shape · share-target hierarchy bounds · soft-
 - **Status:** Backend ready; frontend pending
 - **Top concerns:** Story 115329 unfinished (GAP-CGM-34); Failed status missing (GAP-CGM-26); audit log + retention policy missing
 - **Coverage:** 14 ✅ · 2 ⚠️ · 5 ❌ · 8 ❓
+
+## Tags
+
+#type/prd-module #prd/02 #prd/04 #prd/05 #service/access #service/contact-group #service/core-gateway #service/templates #gap
 
 ## Hubs
 

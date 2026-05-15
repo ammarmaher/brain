@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contact-group-file-type-allowlist
+prd: PRD-04
+service: contact-group
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contact-group-file-type-allowlist — Upload file type must be CSV / XLS / XLSX ***
 *** Origin: PRD-04 Contact Group Management · Backend: contact-group · 2026-05-15 ***
 
@@ -44,6 +54,10 @@
 - **Business rule cluster:** [[04 Contact Group Management]] BR-CGM-04 + BR-CGM-08 (file gated on TYPE only, not content)
 - **Sister rule:** [[V-contact-group-file-size-cap]] — same upload, paired size cap
 - **Related learning events:** none yet
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/04 #service/contact-group #severity/medium #gap #security
 
 ## Hubs
 

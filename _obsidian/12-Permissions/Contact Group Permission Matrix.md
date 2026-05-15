@@ -1,3 +1,11 @@
+---
+type: permission-matrix
+matrix-name: Contact Group Permission Matrix
+prd: PRD-04
+sheet-source: Contact Group Permission Matrix
+fully-captured: true
+created: 2026-05-15
+---
 *** Permission Matrix — Contact Groups (Falcon view-only + Client roles × CRUD/share/download) ***
 *** SoT: Brain Outputs/prd/modules/04-contact-group-management/understanding.md (Permission matrix) ***
 *** Created 2026-05-15 by Brain SK Phase 2B permission-matrix install ***
@@ -91,6 +99,10 @@ Permission gating runs **before** validation:
 - Create gated → button hidden; backend rejects `POST /contact-groups`.
 - Edit / Share / Delete gated per-record at PES — the three-dots menu hides actions the user can't perform.
 - Download CG / Download Original — both gated identically; either both `Y` or both follow Falcon view-only rules.
+
+## Tags
+
+#type/permission-matrix #prd/02 #prd/04 #service/access #service/contact-group #service/identity #gap
 
 ## Hubs
 

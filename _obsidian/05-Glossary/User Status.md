@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: User Status
+prd: PRD-02
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — User Status ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -29,6 +36,10 @@
 ## Common confusions
 - **Locked ≠ Suspended** — Locked = automatic; Suspended = manual.
 - **Deleted is reversible by Falcon** — not a hard delete.
+
+## Tags
+
+#type/glossary-term #prd/02 #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,8 @@
+---
+type: hub
+hub: prd
+created: 2026-05-15
+---
 *** PRD Index — graph hub ***
 *** Created 2026-05-15 by Brain SK PRD-into-vault build ***
 
@@ -60,3 +65,7 @@
 
 - 14-day re-sync threshold from PRD-knowledge skill.
 - Last sync: 2026-04-24. **Current age: 21 days** as of 2026-05-15 — **STALE**. Recommend running `take latest from PRD` before promoting any new PRD-derived rule.
+
+## Tags
+
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/root #gap

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Balance Type
+prd: PRD-01
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Balance Type ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -29,6 +36,10 @@
 ## Common confusions
 - **Balance Type ↔ Wallet Type** — Orthogonal. Don't mix.
 - Migration mid-life is PRD-unclear.
+
+## Tags
+
+#type/glossary-term #prd/01 #service/charging #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

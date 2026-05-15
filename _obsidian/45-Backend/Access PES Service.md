@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: access-pes
+primary-prds: [PRD-02, PRD-04]
+repo: falcon-core-access-svc
+created: 2026-05-15
+---
 *** Backend Service — Access (PES — Policy Enforcement System) ***
 *** SoT: Brain Outputs/understanding/backend/access/ ***
 *** Repository: C:\Falcon\Falcon\falcon-core-access-svc ***
@@ -57,6 +64,10 @@ PES does NOT validate field shape — that's per-service `[ThrowIf*]` work. PES 
 The role × action matrix that PES enforces is [[Falcon Roles Permission Matrix]] (PRD-02 source) + [[Contact Group Permission Matrix]] (PRD-04 source).
 
 Full validation index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #service/commerce #service/core-gateway #service/identity #security
 
 ## Hubs
 

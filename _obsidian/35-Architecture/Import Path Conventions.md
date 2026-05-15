@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Import Path Conventions
+rule-count: 8
+created: 2026-05-15
+---
 *** Architecture Rule Set — Import Path Conventions ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/IMPORT_PATH_CONVENTIONS.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -60,6 +66,10 @@
 ## Related
 - See [[Wrapper Import Decision Tree]] for full decision flow when picking a wrapper.
 - See [[Barrel Exports]] for which symbols live where.
+
+## Tags
+
+#type/architecture-rules #security
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Accordion
+folder-name: falcon-accordion
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Accordion ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-accordion/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -30,6 +38,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-accordion`._
+
+## Tags
+
+#type/falcon-component
 
 ## Hubs
 

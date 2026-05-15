@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Menu
+folder-name: falcon-menu
+deprecated: false
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Menu ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-menu/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -32,6 +40,10 @@
 ## Visual difference reports
 
 - _[[FALCON_EYES_INDEX]] — filter by component `falcon-menu`._
+
+## Tags
+
+#type/falcon-component #prd/01 #prd/02
 
 ## Hubs
 

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: User
+prd: PRD-02
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — User ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -29,6 +36,10 @@
 ## Common confusions
 - Banned synonym: **"User Account"** → use **User**.
 - **User ↔ Account** — Account = client company; User = one person.
+
+## Tags
+
+#type/glossary-term #prd/02 #service/identity #gap #security
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

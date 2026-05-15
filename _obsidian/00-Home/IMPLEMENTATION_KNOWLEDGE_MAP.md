@@ -1,3 +1,8 @@
+---
+type: hub
+hub: implementation-knowledge-map
+created: 2026-05-15
+---
 *** Implementation Knowledge Map — source-of-truth load order ***
 *** Created 2026-05-15 by Brain SK Phase 2G — flow playbooks ***
 
@@ -151,6 +156,10 @@ When you start a new Claude session and want to implement something:
 | `validate Organization Hierarchy validations` | Session loads [[Organization Hierarchy]] page note + all linked V-rules |
 | `what backend changes does Add Client require?` | Session loads [[Add Client Flow]] → backend-endpoint section + drilled E-* entities |
 | `which V-rules apply to Settings tab?` | Session loads [[Organization Hierarchy]] → V-rules section |
+
+## Tags
+
+#type/index #prd/01 #prd/02 #service/commerce #service/identity #drift #gap
 
 ## Hubs
 

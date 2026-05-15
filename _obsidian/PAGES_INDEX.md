@@ -1,3 +1,8 @@
+---
+type: hub
+hub: pages
+created: 2026-05-15
+---
 *** Falcon Page Registries Index — page-level knowledge ***
 *** Created 2026-05-14 by Brain SK page-knowledge workflow ***
 
@@ -58,3 +63,7 @@ Page registries are maintained by the [component-capability-upgrade](../skills/c
 4. Append to CHANGE_HISTORY.md.
 5. WAIT for Ammar approval trigger phrase.
 6. On approval → promote PENDING → APPROVED, mirror to `Brain SK\outputs\`, git push.
+
+## Tags
+
+#type/index

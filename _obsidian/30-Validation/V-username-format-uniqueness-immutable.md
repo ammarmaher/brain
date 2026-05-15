@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-username-format-uniqueness-immutable
+prd: PRD-02
+service: identity
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-username-format-uniqueness-immutable — Username starts with letter, ≤30 chars, unique, immutable after create ***
 *** Origin: PRD-02 User Management · Backend: Identity · 2026-05-15 ***
 
@@ -62,6 +72,10 @@
   - [[02 User Management]] BR-UM-12 (create-time) ↔ BR-UM-19 (immutability) ↔ BR-UM-37 (admin cannot edit) — three-rule cluster pinned to Username
   - [[01 Account Management]] BR-AM-19 (Step 5 creates Account Owner — username flows through identical validator) — same constraint applies via shared `CreateUserRequest`
 - **Related learning events:** none yet
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #prd/02 #service/identity #severity/medium #security
 
 ## Hubs
 

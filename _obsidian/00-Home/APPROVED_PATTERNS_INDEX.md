@@ -1,3 +1,8 @@
+---
+type: hub
+hub: approved_patterns
+created: 2026-05-15
+---
 *** Approved Patterns Index — graph hub ***
 *** Updated 2026-05-15 ***
 
@@ -38,3 +43,7 @@ The shadow-row event `LE-20260515-commchannels-shadow-row-notch-alignment` carri
 ## Related hubs
 
 - [[PAGE_LEARNING_INDEX]] · [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[UI_UX_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[BUSINESS_INDEX]]
+
+## Tags
+
+#type/index #gap

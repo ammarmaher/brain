@@ -1,3 +1,11 @@
+---
+type: flow
+flow-name: Add Client
+page-slug: organization-hierarchy
+prd: PRD-01
+form: folder
+created: 2026-05-15
+---
 *** Flow Playbook — Add Client (5-step wizard) ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\Add Client\ (folder, 17 files) ***
 *** Page: Organization Hierarchy · PRD: PRD-01 Account Management · 2026-05-15 ***
@@ -444,6 +452,10 @@ Admin (Falcon System Admin / Product)
 | BR-AM-39 (open) | Limit-edit enforcement when usage exceeds new cap | Settings tab edit flow |
 | Documentation gap | `CreateAccountRequest.Info` per-field list | Per-field validation needs backend drill-down |
 | Documentation gap | `Service` nested type field list (only `AppId, PriceType` enumerated) | Steps 3+4 binding needs verification |
+
+## Tags
+
+#type/flow #prd/01 #prd/02 #prd/03 #service/access #service/charging #service/commerce #service/core-gateway #service/identity #service/provisioning #service/system-gateway #drift #gap #security
 
 ## Hubs
 

@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Falcon
+prd: 
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Falcon ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -25,6 +32,10 @@
 
 ## Common confusions
 - "Falcon" platform vs Falcon User Type — don't conflate.
+
+## Tags
+
+#type/glossary-term #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

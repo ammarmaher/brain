@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Tenant
+prd: PRD-02
+is-entity: true
+created: 2026-05-15
+---
 *** Glossary — Tenant ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -29,6 +36,10 @@
 ## Common confusions
 - **Tenant ↔ Account** — Same business concept, two surfaces. Account = PRD/business term; Tenant = Identity/Zitadel/multi-tenancy term. Use the term that matches your context.
 - Banned synonym: **"Customer"** → use Tenant (in platform context) or Account (in PRD context).
+
+## Tags
+
+#type/glossary-term #prd/01 #prd/02 #service/commerce #service/identity #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

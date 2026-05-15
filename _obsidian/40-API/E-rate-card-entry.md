@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: rate-card-entry
+prd: PRD-03
+service: commerce
+drift-count: 8
+created: 2026-05-15
+---
 *** Entity Reconciliation E-rate-card-entry — RateCardEntry ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: commerce · 2026-05-15 ***
 
@@ -61,6 +69,10 @@ _no pages seeded yet_ — Add Contract wizard Step 2 (Rate Card matrix) + Edit C
 
 - **Charging** consumes the rate card via `ContractLifecycle` Kafka events to drive `NoApplicableRate` evaluation in `ReserveWalletChargeRequest`. See [[V-charging-no-applicable-rate]] and [[Charging Service]].
 - Frontend Add Contract wizard pre-loads `PriceUnit` lookup from Commerce `/Lookup/{id}` (Hook-wrapped).
+
+## Tags
+
+#type/e-entity #prd/03 #service/charging #service/commerce #severity/high #drift #gap
 
 ## Hubs
 

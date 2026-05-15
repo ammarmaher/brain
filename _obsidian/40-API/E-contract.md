@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: contract
+prd: PRD-03
+service: commerce
+drift-count: 19
+created: 2026-05-15
+---
 *** Entity Reconciliation E-contract — Contract ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: commerce · 2026-05-15 ***
 
@@ -87,6 +95,10 @@ _no pages seeded yet_ — Contracts & Cost Mng list + Add Contract wizard (4 ste
 - **Charging** consumes Contract via `ContractLifecycle` Kafka topic (produced by Commerce). Charging materializes per-contract balances visible through `GET contract-balance-summaries` returning `ContractBalanceSummary { ContractId, AvailableAmount, ... }`. See [[Charging Service]] DTO_DICTIONARY.
 - **Provisioning** consumes `ServiceOrderCreated` from Commerce for contract activations of sub-services.
 - **Master Wallet** funding triggered on `Pending → Active` transition — see [[E-wallet-record]] for the wallet-record linkage.
+
+## Tags
+
+#type/e-entity #prd/03 #service/charging #service/commerce #severity/high #drift #gap
 
 ## Hubs
 

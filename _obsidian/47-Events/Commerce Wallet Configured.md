@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: commerce.wallet-configured.v1
+channel: kafka
+producer-service: commerce
+consumer-services: [charging]
+idempotency-documented: true
+created: 2026-05-15
+---
 *** Event — Commerce Wallet Configured ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/commerce.wallet-configured.v1.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -30,6 +39,10 @@
 - Eventual-consistency window not specified (frontend polls Charging until wallet appears)
 - Provisioning not on the Kafka chain — direct HTTP only (KAFKA-GAP-09)
 - Idempotency not documented
+
+## Tags
+
+#type/kafka-event #prd/01 #prd/03 #service/charging #service/commerce #gap
 
 ## Hubs
 

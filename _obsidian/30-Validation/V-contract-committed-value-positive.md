@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-contract-committed-value-positive
+prd: PRD-03
+service: commerce
+severity: high
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-contract-committed-value-positive — Contract Value must be strictly positive ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: commerce · 2026-05-15 ***
 
@@ -36,6 +46,10 @@
 - **Permission gate:** Falcon usertype only (`BR-CC-01`) — Account Owner / Node Admin never see the field as editable. Backend enforces via `[Authorize(Policy = AuthorizationPolicies.FalconOnly)]` on `POST /Contracts`.
 - **Business rule cluster:** [[V-contract-expiration-after-start]] (same wizard step) · `BR-CC-37` (Contract Value flows into Master Wallet on Active) · `BR-CC-31` (nearest-expiring cascade depends on a non-zero remaining)
 - **Related learning events:** none
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/03 #service/commerce #severity/medium #gap
 
 ## Hubs
 

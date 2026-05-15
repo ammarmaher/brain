@@ -1,3 +1,11 @@
+---
+type: entity-reconciliation
+entity: user
+prd: PRD-02
+service: identity
+drift-count: 9
+created: 2026-05-15
+---
 *** Entity Reconciliation E-user — User ***
 *** PRD: PRD-02 User Management · Backend service: Identity · 2026-05-15 ***
 
@@ -119,6 +127,10 @@
 - [[Access PES Service]] — consumes User identity for permission decisions; `PermissionGroupId` is the join
 - [[Core Gateway Service]] / [[System Gateway Service]] — JWT forwarding; `tenantId` + `path` extracted from JWT and routed
 - Zitadel — user backend (Identity proxies; FE never calls Zitadel directly)
+
+## Tags
+
+#type/e-entity #prd/02 #service/access #service/commerce #service/core-gateway #service/identity #service/system-gateway #severity/high #drift #security
 
 ## Hubs
 

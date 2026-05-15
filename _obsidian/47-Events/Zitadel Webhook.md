@@ -1,3 +1,12 @@
+---
+type: kafka-event
+topic: POST /api/webhook/zitadel
+channel: webhook
+producer-service: zitadel
+consumer-services: [identity]
+idempotency-documented: false
+created: 2026-05-15
+---
 *** Webhook — Zitadel → Identity ***
 *** Vault graph node — SoT: Brain Outputs/understanding/integration/events/zitadel-webhook.md ***
 *** Discovered 2026-05-15 by Brain SK Phase 3C — Kafka topology ***
@@ -34,6 +43,10 @@
 - Whether handler re-emits [[Identity User Events]] for PES sync on lock/delete is undocumented
 - HMAC key rotation procedure undocumented
 - Anonymous endpoint — full trust hinges on HMAC secret hygiene
+
+## Tags
+
+#type/kafka-event #prd/02 #service/identity #security
 
 ## Hubs
 

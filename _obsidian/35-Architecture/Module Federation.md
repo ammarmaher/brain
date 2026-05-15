@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Module Federation
+rule-count: 11
+created: 2026-05-15
+---
 *** Architecture Rule Set — Module Federation ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/MODULE_FEDERATION_PATTERNS.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -79,6 +85,10 @@ interface RemoteDefinition {
 ## Related
 - See [[Routes and Module Federation]] for the runtime route-injection flow.
 - See [[Workspace Topology]] for the 4-remote manifest inventory (2 active, 2 inactive).
+
+## Tags
+
+#type/architecture-rules
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

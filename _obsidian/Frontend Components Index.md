@@ -1,3 +1,8 @@
+---
+type: hub
+hub: frontend components
+created: 2026-05-15
+---
 *** Brain SK — Frontend Components Index (canonical, 60 dossiers) ***
 *** Generated 2026-05-13 by Agent 6 (Obsidian Link Agent) — frontend component knowledge migration ***
 
@@ -98,3 +103,7 @@ Migrated 2026-05-13 from `C:\Falcon\Brain Outputs\component-registry\components\
 - `C:\Falcon\Brain SK\outputs\component-registry\components\`
 
 These are byte-identical archival copies of the consolidated component tier. New dossier writes go ONLY into the canonical `Brain Outputs\understanding\frontend\components\` tree.
+
+## Tags
+
+#type/index #status/deprecated #security

@@ -1,3 +1,13 @@
+---
+type: validation-rule
+id: V-account-ip-allowlist-enforcement
+prd: PRD-01
+service: 
+severity: medium
+status: triangulated
+drift: false
+created: 2026-05-15
+---
 *** Validation V-account-ip-allowlist-enforcement — IP allowlist gate at gateway ***
 *** Origin: PRD-01 Account Management · Backend: Commerce (source) + Identity (enforcer) · 2026-05-15 ***
 
@@ -53,6 +63,10 @@
   - [[01 Account Management]] BR-AM-10 (source) ↔ [[02 User Management]] BR-UM-24 (enforce-before-credentials)
   - Cross-references W2 step 2 + W3 step 1 + W4 step 2 in PRD-02 [WORKFLOWS](../../../Brain%20Outputs/prd/modules/02-user-management/WORKFLOWS.md)
 - **Related learning events:** none yet
+
+## Tags
+
+#type/v-rule #status/triangulated #prd/01 #prd/02 #service/commerce #service/identity #severity/medium #security
 
 ## Hubs
 

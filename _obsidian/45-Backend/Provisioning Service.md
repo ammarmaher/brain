@@ -1,3 +1,10 @@
+---
+type: backend-service
+service: provisioning
+primary-prds: [PRD-01, PRD-03]
+repo: falcon-core-provisioning-svc
+created: 2026-05-15
+---
 *** Backend Service — Provisioning ***
 *** SoT: Brain Outputs/understanding/backend/provisioning/ ***
 *** Repository: C:\Falcon\Falcon\falcon-core-provisioning-svc ***
@@ -49,6 +56,10 @@ PRD-01 / PRD-03 — state-transition gates rather than field-shape attributes:
 - [[V-service-visibility-pricing-required]] — Provisioning's `CannotHideActiveService` / `CannotEnableNonDisabledService` state-transition gates participate when a Falcon user toggles visibility / status. Commerce owns the price-required side; Provisioning owns the state-transition side.
 
 Full validation index: [[VALIDATION_INDEX]] → "Triangulated validation rules" section.
+
+## Tags
+
+#type/backend-service #prd/01 #prd/03 #service/core-gateway #service/system-gateway
 
 ## Hubs
 

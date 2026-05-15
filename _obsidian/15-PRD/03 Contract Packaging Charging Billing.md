@@ -1,3 +1,12 @@
+---
+type: prd-module
+prd-id: PRD-03
+module-name: Contract Packaging Charging Billing
+coverage-percent: 0
+sync-date: 2026-04-24
+status: fresh
+created: 2026-05-15
+---
 *** PRD-03 — Contract / Packaging / Charging / Billing ***
 *** SoT: Brain Outputs/prd/modules/03-contract-packaging-charging-billing-management/ ***
 *** Drive source: `Contract & Cost Management V2` (sync 2026-04-24) ***
@@ -58,6 +67,10 @@ Status-aware edit gates · rate-card numeric ranges · destination-priority uniq
 - **Status:** Core built; periphery missing
 - **Top concerns:** Packaging + Billing not in PRD (Q-CC-01); refund flow MISSING (GAP-CC-36); audit log MISSING (GAP-CC-30); VAT MISSING (GAP-CC-31)
 - **Coverage:** 13 ✅ · 7 ⚠️ · 6 ❌ · 14 ❓
+
+## Tags
+
+#type/prd-module #prd/01 #prd/02 #prd/03 #service/charging #service/commerce #service/provisioning #gap
 
 ## Hubs
 

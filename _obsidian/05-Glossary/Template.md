@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Template
+prd: PRD-05
+is-entity: false
+created: 2026-05-15
+---
 *** Glossary — Template ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -26,6 +33,10 @@
 ## Common confusions
 - WhatsApp templates have TWO state machines: Falcon `status` + Meta `metaState`.
 - Variable types: `{{1}}` (Number) vs `{{name}}` (Name).
+
+## Tags
+
+#type/glossary-term #prd/05 #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

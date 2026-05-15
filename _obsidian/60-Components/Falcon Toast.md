@@ -1,3 +1,11 @@
+---
+type: falcon-component
+component: Falcon Toast
+folder-name: falcon-angular-notification
+deprecated: true
+primary-prds: []
+created: 2026-05-15
+---
 *** Component note — Falcon Toast ***
 *** SoT: Brain Outputs/understanding/frontend/components/falcon-toast/ ***
 *** Created 2026-05-15 by Brain SK Phase 2F — component vault layer ***
@@ -32,6 +40,10 @@
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-toast`.
+
+## Tags
+
+#type/falcon-component #status/deprecated #prd/01 #prd/02 #prd/03 #prd/04 #prd/05
 
 ## Hubs
 

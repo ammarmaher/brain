@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: ServiceOperationResult
+prd: 
+is-entity: false
+created: 2026-05-15
+---
 *** Glossary — ServiceOperationResult<T> ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -22,6 +29,10 @@
 
 ## Common confusions
 - ServiceOperationResult = response wrapper; FalconException = error content on failure.
+
+## Tags
+
+#type/glossary-term #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[BACKEND_INDEX]] · [[API_INDEX]] · [[AMMAR_BRAIN_HOME]]

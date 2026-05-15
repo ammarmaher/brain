@@ -1,3 +1,11 @@
+---
+type: flow
+flow-name: Add User
+page-slug: organization-hierarchy
+prd: PRD-02
+form: single-file
+created: 2026-05-15
+---
 *** Flow note — Add User (3-tab wizard) ***
 *** Vault file: 10-Pages/Add User Flow.md ***
 *** Brain Outputs SoT: C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\flows\Add User.md ***
@@ -116,6 +124,10 @@ After Add User finishes, the new user enters [[First Login Flow]] (Pending → A
 ## Page parent
 
 - [[Organization Hierarchy]] — Add User is launched from the Users list on the Hierarchy tab (or from the node right-pane). The page's [PAGE_OVERVIEW](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/PAGE_OVERVIEW.md) lists "Add User wizard" as HTML §13 — 3-step full-page replacement.
+
+## Tags
+
+#type/flow #prd/01 #prd/02 #service/access #service/commerce #service/core-gateway #service/identity #service/system-gateway #drift #gap #security
 
 ## Hubs
 

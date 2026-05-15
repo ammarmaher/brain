@@ -1,3 +1,10 @@
+---
+type: glossary-term
+term: Contract
+prd: PRD-03
+is-entity: false
+created: 2026-05-15
+---
 *** Glossary — Contract ***
 *** Canonical Falcon vocabulary · 2026-05-15 ***
 
@@ -26,6 +33,10 @@
 ## Common confusions
 - **PRD "Expiration Date" ↔ Backend "EndDate"** — same field.
 - `status` field name shared with User, CommChannelConfig — different state machines.
+
+## Tags
+
+#type/glossary-term #prd/03 #service/charging #service/commerce #gap
 
 ## Hubs
 - [[GLOSSARY_INDEX]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]

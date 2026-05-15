@@ -1,3 +1,8 @@
+---
+type: index
+folder: 12-Permissions
+created: 2026-05-15
+---
 *** 12-Permissions — folder context ***
 *** Created 2026-05-15 by Brain SK Phase 2B permission-matrix install ***
 *** SoT: Brain Outputs/prd/modules/02-user-management/ + 04-contact-group-management/ ***
@@ -25,6 +30,10 @@ The permission system spans **two axes** that intersect at the **Access (PES) Se
 - [[Falcon Roles Permission Matrix]] — System Administrator × Operation × Products across Org Hierarchy + CommChannels & Services + Apps & Services + Settings
 - [[Contact Group Permission Matrix]] — Falcon (view-only) + 3 Client roles (creator/not-creator) × {View, Create, Edit, Share, Delete, Download CG, Download Original}
 - [[User Statuses]] — 5 statuses (Pending / Active / Suspended / Locked / Deleted) + counts-against-limit flag
+
+## Tags
+
+#type/index #prd/02 #prd/04 #service/access #gap
 
 ## Hubs
 

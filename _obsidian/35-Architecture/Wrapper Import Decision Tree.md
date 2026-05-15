@@ -1,3 +1,9 @@
+---
+type: architecture-rules
+audit-source: Wrapper Import Decision Tree
+rule-count: 10
+created: 2026-05-15
+---
 *** Architecture Rule Set — Wrapper Import Decision Tree ***
 *** SoT: Brain Outputs/understanding/frontend/architecture/WRAPPER_IMPORT_DECISION_TREE.md ***
 *** Indexed 2026-05-15 by Brain SK Phase 3F ***
@@ -113,6 +119,10 @@ Reference: `apps/admin-console/.../client-information-step.component.html:16-17`
 
 ## Related component notes
 - [[Falcon Input]] · [[Falcon Dropdown]] · [[Falcon Button]] · [[Falcon Data Table]] — primary CVA wrappers.
+
+## Tags
+
+#type/architecture-rules #security
 
 ## Hubs
 - [[FRONTEND_INDEX]] · [[COMPONENT_INDEX]] · [[BACKEND_INDEX]] · [[AMMAR_BRAIN_HOME]]
