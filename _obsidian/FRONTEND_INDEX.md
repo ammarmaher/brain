@@ -5,6 +5,7 @@
 # Frontend Index
 
 > **Canonical source for all frontend component knowledge:** `C:\Falcon\Brain Outputs\understanding\frontend`
+> Canonical knowledge root (verified 2026-05-15): [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). 5 active folders: `frontend/`, `backend/`, `integration/`, `pages/`, `wiki/`.
 > Old paths under `Brain Outputs\component-registry` and `Brain Outputs\frontend-understanding` are archival only — never used as active source.
 >
 > Hub notes: [[Frontend Understanding]] (top-level index) and [[Frontend Components Index]] (60 dossiers).

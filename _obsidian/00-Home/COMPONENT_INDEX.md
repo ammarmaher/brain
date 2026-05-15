@@ -5,7 +5,9 @@
 
 > Each component note lives under `60-Components/`. Notes hold back-links (pages using it, gaps, approved patterns, Brain Outputs dossier, Falcon Eyes reports). Notes do NOT duplicate dossier content — link only.
 >
-> Full dossier registry (60 components, 6 files each): [`outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY_DEEP.md`](../../outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY_DEEP.md) · per-component folders at [`outputs/understanding/frontend/components/`](../../outputs/understanding/frontend/components/).
+> **Canonical knowledge root:** [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). Component dossiers live at [`understanding/frontend/components/`](../../../Brain%20Outputs/understanding/frontend/components/) (62 components, 6 files each).
+>
+> Full dossier registry: [`outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY_DEEP.md`](../../outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY_DEEP.md) · per-component folders at [`outputs/understanding/frontend/components/`](../../outputs/understanding/frontend/components/).
 >
 > Legacy full catalog: [[FALCON_COMPONENT_INDEX]] (60-component dossier links).
 

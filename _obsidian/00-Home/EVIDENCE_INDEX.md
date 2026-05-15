@@ -4,6 +4,8 @@
 # Evidence Index
 
 > Brain Outputs holds the evidence files. This note holds the graph. The legacy [[EVIDENCE_INDEX]] note inside `90-Tests` would be a duplicate — never duplicate, always link.
+>
+> **Canonical knowledge root:** [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). Evidence lives at `understanding/pages/<page>/evidence/<learningId>/` (page-scoped) and [`Brain Outputs/reports/falcon-eyes/<run>/`](../../../Brain%20Outputs/reports/) (screenshot comparisons).
 
 ## Per-page evidence pointers
 

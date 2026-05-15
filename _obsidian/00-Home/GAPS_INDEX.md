@@ -4,6 +4,8 @@
 # Gaps Index
 
 > Brain Outputs holds the gaps. This note holds the graph.
+>
+> **Canonical knowledge root:** [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). Gaps live at `understanding/pages/<page>/GAP_REGISTRY.md` (page-specific) and [`understanding/integration/GAP_LIST.md`](../../../Brain%20Outputs/understanding/integration/GAP_LIST.md) (cross-cutting).
 
 ## Per-page gap registries
 

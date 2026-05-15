@@ -3,8 +3,9 @@
 
 # Page Learning Index
 
-> Two-mode learning per page. Brain Outputs holds rules; this note holds the graph.
+> Two-mode learning per page. Brain Outputs holds rules; this note holds the graph. The `pages/` tree is the source of truth, not Obsidian.
 
+- Canonical knowledge root: [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md) (pages live at `understanding/pages/<page>/`)
 - Skill: [page-learning](../../domains/frontend/page-learning/SKILL.md)
 - Approval gate: [APPROVAL_LEARNING_GATE](../../protocols/APPROVAL_LEARNING_GATE.md)
 - Global patterns: [[APPROVED_PATTERNS_INDEX]]

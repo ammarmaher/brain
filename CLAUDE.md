@@ -256,3 +256,40 @@ Six routing modes — apply the decision tree on every turn:
 6. **Global promotion** → ONLY on explicit `promote this globally` (or equivalent). Page-specific never becomes global automatically.
 
 Canonical protocol: [`protocols/LEARNING_FIRST_TASK_ROUTING.md`](protocols/LEARNING_FIRST_TASK_ROUTING.md). Routes registered in [`shared/SKILL_ROUTING_MANIFEST.md`](shared/SKILL_ROUTING_MANIFEST.md). Skill: [`domains/frontend/page-learning/SKILL.md`](domains/frontend/page-learning/SKILL.md). Approval gate: [`protocols/APPROVAL_LEARNING_GATE.md`](protocols/APPROVAL_LEARNING_GATE.md).
+
+## Permanent Rule: Canonical Knowledge Root `understanding/`
+
+`C:\Falcon\Brain Outputs\understanding\` is the canonical root for ALL Brain SK knowledge. Index: [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). Verification report: [`Brain Outputs/reports/understanding-root-verification-2026-05-15/UNDERSTANDING_ROOT_REPORT.md`](../Brain%20Outputs/reports/understanding-root-verification-2026-05-15/UNDERSTANDING_ROOT_REPORT.md).
+
+Active folders (verified 2026-05-15):
+
+- `understanding/frontend/` — frontend / component / UI knowledge (62 component dossiers + `patterns/` + `architecture/` + `migration/` + `theme/`)
+- `understanding/backend/` — per-service knowledge (`SERVICE_OVERVIEW.md` · `ENDPOINT_REGISTRY.md` · `DTO_DICTIONARY.md` · `VALIDATIONS.md` · `ERRORS.md` · `FRONTEND_CONTRACT.md` per service)
+- `understanding/integration/` — full-stack integration knowledge (overview · API↔component trace · readiness · gap list · blockers · next actions)
+- `understanding/pages/` — Page Learning System (one folder per Falcon page, 14+ files each)
+- `understanding/wiki/` — Falcon architecture-wiki references
+
+Concept mappings (no dedicated top-level folder — these are NOT missing):
+
+- service / domain-service → `backend/<short-name>/`
+- business rules → per-page `BUSINESS_RULES.md` + (shared) `frontend/patterns/PAGE_SECTION_PATTERN.md`
+- api / endpoint / DTO → `backend/<service>/ENDPOINT_REGISTRY.md` + `DTO_DICTIONARY.md` · per-page `API_RULES.md`
+- gaps → per-page `GAP_REGISTRY.md` + `integration/GAP_LIST.md`
+- evidence → per-page `evidence/<learningId>/` + `reports/falcon-eyes/<run>/`
+
+Per-task load order:
+
+| Task type | Loads (in order) |
+|---|---|
+| Frontend task | `frontend/` (registries + `patterns/` + per-component dossier) + relevant `pages/<page>/` if a page is named |
+| Backend task | `backend/<service>/` + `integration/` if cross-service |
+| Full-stack task | `frontend/` + `backend/<service>/` + `integration/` + `pages/<page>/` |
+| Page task | `pages/<page-name>/` (all 14+ files) + relevant component dossiers from `frontend/components/` + Falcon Eyes reports if any |
+| Screenshot / bug task | `pages/<page>/evidence/<learningId>/` (save first) + relevant component dossier + Falcon Eyes report if generated |
+
+Hard constraints:
+
+- Brain Outputs is the source of truth. Obsidian holds the graph only.
+- Legacy mirrors (`Brain Outputs/component-registry/`, `Brain Outputs/frontend-understanding/`, the Brain SK counterparts) remain for archival provenance — readers must use `understanding/` only.
+- Mirror to `Brain SK/outputs/understanding/` is additive only (`robocopy /E /XO`; never `/MIR`).
+- Do NOT delete legacy folders in this pass.

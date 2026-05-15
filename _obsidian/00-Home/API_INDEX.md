@@ -4,6 +4,8 @@
 # API Index
 
 > Brain Outputs holds approved API contract rules. This note holds the graph.
+>
+> **Canonical knowledge root:** [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). API contracts live at [`understanding/backend/<service>/ENDPOINT_REGISTRY.md`](../../../Brain%20Outputs/understanding/backend/) + [`understanding/backend/<service>/DTO_DICTIONARY.md`](../../../Brain%20Outputs/understanding/backend/). Page-level API rules live at `understanding/pages/<page>/API_RULES.md`.
 
 ## Per-page API rule registries
 

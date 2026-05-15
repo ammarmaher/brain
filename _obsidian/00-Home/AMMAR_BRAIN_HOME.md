@@ -7,6 +7,7 @@
 >
 > Top-level vault: `C:\Falcon\Brain SK\_obsidian`
 > Source-of-truth tree: `C:\Falcon\Brain Outputs\`
+> **Canonical knowledge root:** [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). 5 active folders: `frontend/`, `backend/`, `integration/`, `pages/`, `wiki/`. Verification report (2026-05-15): [`reports/understanding-root-verification-2026-05-15`](../../../Brain%20Outputs/reports/understanding-root-verification-2026-05-15/UNDERSTANDING_ROOT_REPORT.md).
 
 ## Learning-First Task Routing (read every turn)
 

@@ -1,5 +1,19 @@
 # Skill Routing Manifest
 
+## Canonical knowledge root (read first)
+
+All Brain SK knowledge lives under `C:\Falcon\Brain Outputs\understanding\`. Index: [`understanding/KNOWLEDGE_ROOT_INDEX.md`](../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). Five active folders: `frontend/`, `backend/`, `integration/`, `pages/`, `wiki/`. Per-task load order:
+
+| Task type | Loads (in order) |
+|---|---|
+| Frontend | `understanding/frontend/` (registries + `patterns/` + per-component dossier) + page `understanding/pages/<page>/` if named |
+| Backend | `understanding/backend/<service>/` + `understanding/integration/` if cross-service |
+| Full-stack | `understanding/frontend/` + `understanding/backend/<service>/` + `understanding/integration/` + `understanding/pages/<page>/` |
+| Page | `understanding/pages/<page-name>/` (all 14+ files) + relevant component dossiers + Falcon Eyes reports |
+| Screenshot / bug | `understanding/pages/<page>/evidence/<learningId>/` (save first) + relevant component dossier + Falcon Eyes report if generated |
+
+Concept mappings (no dedicated top-level folder): service → `backend/<short-name>/` · business → per-page `BUSINESS_RULES.md` · api → `backend/<service>/ENDPOINT_REGISTRY.md` + per-page `API_RULES.md` · gaps → per-page `GAP_REGISTRY.md` + `integration/GAP_LIST.md` · evidence → per-page `evidence/<learningId>/` + `reports/falcon-eyes/<run>/`.
+
 ## Learning-first ordering (read first)
 
 Every task in Brain SK routes through the Learning-First Task Routing protocol before any implementation step. Canonical: [`protocols/LEARNING_FIRST_TASK_ROUTING.md`](../protocols/LEARNING_FIRST_TASK_ROUTING.md). Six modes:

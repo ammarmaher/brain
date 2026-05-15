@@ -34,22 +34,36 @@ Do NOT deeply analyse the whole page unless explicitly requested. Do NOT approve
 
 ### 2. Page implementation task
 
-Before implementation, **load** (do not skip any):
+Before implementation, **load** (do not skip any). All paths anchor at the canonical knowledge root [`Brain Outputs/understanding/`](../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md):
 
-1. `PAGE_LEARNING.md` for the target page
-2. `PENDING_PAGE_PATTERNS.md` + `APPROVED_PAGE_PATTERNS.md`
-3. Global patterns under `Brain Outputs/understanding/frontend/patterns/`
-4. Component knowledge dossiers for every Falcon component touched (`OVERVIEW`, `API`, `USAGE`, `TOKENS`, `GAPS_AND_UPGRADES`, `DECISION`)
-5. Falcon Eyes reports if relevant
-6. `UI_UX_RULES.md`
-7. `VALIDATION_RULES.md`
-8. `API_RULES.md`
-9. `BUSINESS_RULES.md`
-10. `GAP_REGISTRY.md`
-11. `EVIDENCE_INDEX.md`
-12. `PAGE_SCORECARD.md`
+1. `understanding/pages/<page>/PAGE_LEARNING.md` for the target page
+2. `understanding/pages/<page>/PENDING_PAGE_PATTERNS.md` + `APPROVED_PAGE_PATTERNS.md`
+3. Global patterns under `understanding/frontend/patterns/`
+4. Component knowledge dossiers for every Falcon component touched — `understanding/frontend/components/<component>/` (`OVERVIEW`, `API`, `USAGE`, `TOKENS`, `GAPS_AND_UPGRADES`, `DECISION`)
+5. Falcon Eyes reports if relevant — `Brain Outputs/reports/falcon-eyes/<run>/`
+6. `understanding/pages/<page>/UI_UX_RULES.md`
+7. `understanding/pages/<page>/VALIDATION_RULES.md`
+8. `understanding/pages/<page>/API_RULES.md`
+9. `understanding/pages/<page>/BUSINESS_RULES.md`
+10. `understanding/pages/<page>/GAP_REGISTRY.md`
+11. `understanding/pages/<page>/EVIDENCE_INDEX.md`
+12. `understanding/pages/<page>/PAGE_SCORECARD.md`
+
+For full-stack work, additionally load `understanding/backend/<service>/` (`SERVICE_OVERVIEW.md`, `ENDPOINT_REGISTRY.md`, `DTO_DICTIONARY.md`, `VALIDATIONS.md`, `ERRORS.md`, `FRONTEND_CONTRACT.md`) and `understanding/integration/` (`INTEGRATION_OVERVIEW.md`, `API_TO_COMPONENT_TRACE.md`, `READINESS_MATRIX.md`, `GAP_LIST.md`).
 
 Then create a plan before coding. Implementation begins only after the plan exists.
+
+### Canonical knowledge root — per-task load order
+
+Every task anchors at the canonical knowledge root [`Brain Outputs/understanding/`](../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md):
+
+| Task type | Loads (in order) |
+|---|---|
+| Frontend | `understanding/frontend/` (registries + `patterns/` + per-component dossier) + page `understanding/pages/<page>/` if named |
+| Backend | `understanding/backend/<service>/` + `understanding/integration/` if cross-service |
+| Full-stack | `understanding/frontend/` + `understanding/backend/<service>/` + `understanding/integration/` + `understanding/pages/<page>/` |
+| Page | `understanding/pages/<page-name>/` (all 14+ files) + relevant component dossiers + Falcon Eyes reports |
+| Screenshot / bug | `understanding/pages/<page>/evidence/<learningId>/` (save first) + relevant component dossier + Falcon Eyes report if generated |
 
 ### 3. Bug fix task
 
