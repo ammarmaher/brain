@@ -84,6 +84,8 @@ npx tsx compare-images.ts --source ./tmp/a.png --destination ./tmp/b.png --out .
 
 ## Output layout
 
+Falcon Eyes always generates **one report per screenshot section**, plus a combined run report and a run-level screenshot index.
+
 ```
 reports/falcon-eyes/<YYYY-MM-DD-HHmm>/
 ├── source/
@@ -97,8 +99,21 @@ reports/falcon-eyes/<YYYY-MM-DD-HHmm>/
 │   ├── comm-channels-tab.png
 │   └── ...
 ├── diff/
-│   ├── _full-page.diff.png
-│   ├── tabs-header.diff.png
+│   ├── _full-page-diff.png
+│   ├── tabs-header-diff.png
+│   ├── comm-channels-tab-diff.png
+│   └── ...
+├── sections/
+│   ├── tabs-header/
+│   │   ├── SOURCE.png
+│   │   ├── DESTINATION.png
+│   │   ├── DIFF.png
+│   │   ├── SCREENSHOT_REPORT.md
+│   │   ├── SCREENSHOT_DATA.json
+│   │   ├── SEMANTIC_MISMATCHES.md
+│   │   └── FALCON_COMPONENT_REPAIR_MAP.md
+│   ├── comm-channels-tab/
+│   │   └── (same seven files)
 │   └── ...
 ├── metadata/
 │   ├── run.json
@@ -107,8 +122,22 @@ reports/falcon-eyes/<YYYY-MM-DD-HHmm>/
 ├── FALCON_EYES_DATA.json
 ├── SEMANTIC_MISMATCH_BACKLOG.md
 ├── SECTION_SCORECARD.md
-└── FALCON_COMPONENT_REPAIR_MAP.md
+├── FALCON_COMPONENT_REPAIR_MAP.md
+├── ALL_SCREENSHOTS_INDEX.md
+└── ALL_SCREENSHOTS_SUMMARY_REPORT.md
 ```
+
+### Reporting contract — non-negotiable
+
+Every Falcon Eyes run must produce:
+
+1. One **per-section folder** under `sections/<section-name>/` with `SOURCE.png`, `DESTINATION.png`, `DIFF.png`, `SCREENSHOT_REPORT.md`, `SCREENSHOT_DATA.json`, `SEMANTIC_MISMATCHES.md`, `FALCON_COMPONENT_REPAIR_MAP.md`.
+2. One **combined run report** at `ALL_SCREENSHOTS_SUMMARY_REPORT.md` (averages, sections < 90 %, < 60 %, top 10 mismatches, top Falcon components, top Tailwind/token issues, top missing dynamic APIs, recommended repair order, full section table).
+3. One **screenshot index** at `ALL_SCREENSHOTS_INDEX.md` (every screenshot + per-section report linked).
+4. One run-level **semantic mismatch backlog** at `SEMANTIC_MISMATCH_BACKLOG.md`.
+5. One run-level **Falcon component repair map** at `FALCON_COMPONENT_REPAIR_MAP.md`.
+
+The PNGs inside `sections/<section-name>/` are copies of the flat-folder canonicals so each section folder is self-contained.
 
 ## Default sources
 

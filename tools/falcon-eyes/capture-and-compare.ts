@@ -6,9 +6,16 @@
  * Captures source + destination screenshots (full page + named sections),
  * runs pixelmatch per pair, and writes:
  *
- *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/source/*
- *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/destination/*
- *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/diff/*
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/source/<section>.png
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/destination/<section>.png
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/diff/<section>-diff.png
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/sections/<section>/SOURCE.png
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/sections/<section>/DESTINATION.png
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/sections/<section>/DIFF.png
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/sections/<section>/SCREENSHOT_REPORT.md
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/sections/<section>/SCREENSHOT_DATA.json
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/sections/<section>/SEMANTIC_MISMATCHES.md
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/sections/<section>/FALCON_COMPONENT_REPAIR_MAP.md
  *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/metadata/run.json
  *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/metadata/pixelmatch.json
  *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/FALCON_EYES_REPORT.md
@@ -16,6 +23,8 @@
  *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/SEMANTIC_MISMATCH_BACKLOG.md
  *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/SECTION_SCORECARD.md
  *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/FALCON_COMPONENT_REPAIR_MAP.md
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/ALL_SCREENSHOTS_INDEX.md
+ *   reports/falcon-eyes/<YYYY-MM-DD-HHmm>/ALL_SCREENSHOTS_SUMMARY_REPORT.md
  *
  * Falcon Eyes intentionally STOPS at the pixel layer. Semantic mismatch
  * analysis, Falcon component mapping, and repair recommendations are filled
@@ -262,20 +271,156 @@ function writeJsonReport(runRoot: string, cfg: FalconEyesConfig, results: PerSec
   fs.writeFileSync(path.join(runRoot, 'FALCON_EYES_DATA.json'), JSON.stringify(payload, null, 2), 'utf8');
 }
 
-function writeSemanticTemplates(runRoot: string, results: PerSectionResult[]): void {
+function rel(runRoot: string, p: string | null): string {
+  return p ? path.relative(runRoot, p).replace(/\\/g, '/') : '—';
+}
+
+function statusLabel(mismatchPercent: number): 'pass' | 'needs repair' | 'unknown' {
+  if (Number.isNaN(mismatchPercent)) return 'unknown';
+  if (mismatchPercent <= 1) return 'pass';
+  return 'needs repair';
+}
+
+function writePerSectionReports(
+  runRoot: string,
+  cfg: FalconEyesConfig,
+  results: PerSectionResult[],
+): void {
+  const sectionsRoot = path.join(runRoot, 'sections');
+  ensureDir(sectionsRoot);
+
+  for (const r of results) {
+    const sectionDir = path.join(sectionsRoot, r.name);
+    ensureDir(sectionDir);
+
+    const sourceCopy = path.join(sectionDir, 'SOURCE.png');
+    const destCopy = path.join(sectionDir, 'DESTINATION.png');
+    const diffCopy = path.join(sectionDir, 'DIFF.png');
+    if (r.sourcePath && fs.existsSync(r.sourcePath)) fs.copyFileSync(r.sourcePath, sourceCopy);
+    if (r.destinationPath && fs.existsSync(r.destinationPath)) fs.copyFileSync(r.destinationPath, destCopy);
+    if (r.diffPath && fs.existsSync(r.diffPath)) fs.copyFileSync(r.diffPath, diffCopy);
+
+    const status = statusLabel(r.mismatchPercent);
+
+    const md: string[] = [];
+    md.push(`# Screenshot Report — ${r.name}`);
+    md.push('');
+    md.push(`> Generated: ${new Date().toISOString()}`);
+    md.push('');
+    md.push('## Capture');
+    md.push('');
+    md.push(`- **Section:** ${r.name}`);
+    md.push(`- **Source URL:** ${cfg.source.url}`);
+    md.push(`- **Destination URL:** ${cfg.destination.url}`);
+    md.push(`- **Capture timestamp:** ${r.capturedAt}`);
+    md.push(`- **Viewport:** ${cfg.viewport.width}x${cfg.viewport.height} @ ${cfg.viewport.deviceScaleFactor ?? 1}x`);
+    md.push(`- **Source screenshot (flat):** \`${rel(runRoot, r.sourcePath)}\``);
+    md.push(`- **Destination screenshot (flat):** \`${rel(runRoot, r.destinationPath)}\``);
+    md.push(`- **Diff screenshot (flat):** \`${rel(runRoot, r.diffPath)}\``);
+    md.push(`- **Section folder screenshots:** \`sections/${r.name}/SOURCE.png\`, \`sections/${r.name}/DESTINATION.png\`, \`sections/${r.name}/DIFF.png\``);
+    md.push('');
+    md.push('## Pixel layer (produced by Falcon Eyes tool)');
+    md.push('');
+    md.push(`- **Pixel mismatch %:** ${r.mismatchPercent.toFixed(2)}%`);
+    md.push(`- **Diff pixels / total pixels:** ${r.diffPixels} / ${r.totalPixels}`);
+    md.push(`- **Diff image size:** ${r.width} x ${r.height}`);
+    md.push(`- **Perceptual score:** _(unavailable — install \`odiff-bin\` to populate)_`);
+    md.push('');
+    md.push('## Semantic layer (filled by Falcon Eyes skill)');
+    md.push('');
+    md.push('- **Visual parity score for this section:** _TBD_');
+    md.push('- **Semantic difference summary:** _TBD_');
+    md.push('- **Falcon components involved:** _TBD_');
+    md.push('- **Tailwind / token issues:** _TBD_');
+    md.push('- **Dynamic API issues:** _TBD_');
+    md.push('- **Missing shared component capabilities:** _TBD_');
+    md.push('- **Repair recommendations:** _TBD_');
+    md.push('');
+    md.push('## Severity counters');
+    md.push('');
+    md.push('| P0 | P1 | P2 | P3 |');
+    md.push('|---:|---:|---:|---:|');
+    md.push('| 0 | 0 | 0 | 0 |');
+    md.push('');
+    md.push(`## Status — ${status}`);
+    md.push('');
+    md.push('`pass` / `needs repair` / `blocked` / `unknown` — the tool defaults this from pixel mismatch %. Falcon Eyes (the skill) overrides it after semantic review.');
+    md.push('');
+    md.push('## Notes');
+    md.push('');
+    md.push(r.notes.length ? r.notes.map(n => `- ${n}`).join('\n') : '_None_');
+    fs.writeFileSync(path.join(sectionDir, 'SCREENSHOT_REPORT.md'), md.join('\n'), 'utf8');
+
+    const data = {
+      section: r.name,
+      sourceUrl: cfg.source.url,
+      destinationUrl: cfg.destination.url,
+      capturedAt: r.capturedAt,
+      viewport: cfg.viewport,
+      pixel: {
+        sourcePath: rel(runRoot, r.sourcePath),
+        destinationPath: rel(runRoot, r.destinationPath),
+        diffPath: rel(runRoot, r.diffPath),
+        sectionSourcePath: `sections/${r.name}/SOURCE.png`,
+        sectionDestinationPath: `sections/${r.name}/DESTINATION.png`,
+        sectionDiffPath: `sections/${r.name}/DIFF.png`,
+        width: r.width,
+        height: r.height,
+        diffPixels: r.diffPixels,
+        totalPixels: r.totalPixels,
+        mismatchPercent: r.mismatchPercent,
+        perceptualScore: null,
+      },
+      semantic: {
+        visualParityScore: null,
+        differenceSummary: null,
+        falconComponentsInvolved: [],
+        tailwindOrTokenIssues: [],
+        dynamicApiIssues: [],
+        missingSharedComponentCapabilities: [],
+        repairRecommendations: [],
+      },
+      severity: { P0: 0, P1: 0, P2: 0, P3: 0 },
+      status,
+      notes: r.notes,
+    };
+    fs.writeFileSync(path.join(sectionDir, 'SCREENSHOT_DATA.json'), JSON.stringify(data, null, 2), 'utf8');
+
+    const mismatches: string[] = [];
+    mismatches.push(`# Semantic Mismatches — ${r.name}`);
+    mismatches.push('');
+    mismatches.push(`> Add one block per visible defect using \`tools/falcon-eyes/semantic-mismatch-template.md\`. Source / destination / diff for this section are in this same folder: \`SOURCE.png\`, \`DESTINATION.png\`, \`DIFF.png\`.`);
+    mismatches.push('');
+    mismatches.push('### Mismatches');
+    mismatches.push('');
+    mismatches.push('_None recorded yet._');
+    fs.writeFileSync(path.join(sectionDir, 'SEMANTIC_MISMATCHES.md'), mismatches.join('\n'), 'utf8');
+
+    const sectionRepair: string[] = [];
+    sectionRepair.push(`# Falcon Component Repair Map — ${r.name}`);
+    sectionRepair.push('');
+    sectionRepair.push('| Mismatch ID | Falcon component | Repair path (input / template / slot / token / upgrade) | Likely file to change | Proof needed |');
+    sectionRepair.push('|---|---|---|---|---|');
+    sectionRepair.push(`| _FE-${r.name}-0001_ |  |  |  |  |`);
+    sectionRepair.push('');
+    sectionRepair.push('Customization order: inputs → ng-template → slots → tokens → shared component upgrade → new reusable lib component → feature-local wrapper → raw (document as GAP).');
+    fs.writeFileSync(path.join(sectionDir, 'FALCON_COMPONENT_REPAIR_MAP.md'), sectionRepair.join('\n'), 'utf8');
+  }
+}
+
+function writeRunLevelReports(runRoot: string, cfg: FalconEyesConfig, results: PerSectionResult[]): void {
   const backlog: string[] = [];
   backlog.push('# Semantic Mismatch Backlog');
   backlog.push('');
-  backlog.push('> Pixel diff is just evidence. For every visible defect below, replace the placeholder block with a full semantic-mismatch record using the format from `tools/falcon-eyes/semantic-mismatch-template.md`.');
+  backlog.push('> Pixel diff is just evidence. For every visible defect below, replace the placeholder block with a full semantic-mismatch record using `tools/falcon-eyes/semantic-mismatch-template.md`. Mirror each block into the matching `sections/<section>/SEMANTIC_MISMATCHES.md`.');
   backlog.push('');
   for (const r of results) {
-    backlog.push(`## ${r.name} (${r.mismatchPercent.toFixed(2)}% mismatch)`);
+    backlog.push(`## ${r.name} (${r.mismatchPercent.toFixed(2)}% pixel mismatch)`);
     backlog.push('');
-    backlog.push(`- source: \`${r.sourcePath ? path.relative(runRoot, r.sourcePath).replace(/\\/g, '/') : '—'}\``);
-    backlog.push(`- destination: \`${r.destinationPath ? path.relative(runRoot, r.destinationPath).replace(/\\/g, '/') : '—'}\``);
-    backlog.push(`- diff: \`${r.diffPath ? path.relative(runRoot, r.diffPath).replace(/\\/g, '/') : '—'}\``);
-    backlog.push('');
-    backlog.push('### Mismatches');
+    backlog.push(`- source: \`${rel(runRoot, r.sourcePath)}\``);
+    backlog.push(`- destination: \`${rel(runRoot, r.destinationPath)}\``);
+    backlog.push(`- diff: \`${rel(runRoot, r.diffPath)}\``);
+    backlog.push(`- per-section report: \`sections/${r.name}/SCREENSHOT_REPORT.md\``);
     backlog.push('');
     backlog.push('_Add one block per visible defect using the template skeleton._');
     backlog.push('');
@@ -285,10 +430,10 @@ function writeSemanticTemplates(runRoot: string, results: PerSectionResult[]): v
   const score: string[] = [];
   score.push('# Section Scorecard');
   score.push('');
-  score.push('| Section | Pixel mismatch % | Semantic parity % (filled by Falcon Eyes) | Severity caps | Notes |');
-  score.push('|---|---:|---:|---|---|');
+  score.push('| Section | Pixel mismatch % | Semantic parity % | Severity caps | Status | Notes |');
+  score.push('|---|---:|---:|---|---|---|');
   for (const r of results) {
-    score.push(`| ${r.name} | ${r.mismatchPercent.toFixed(2)} |  |  | ${r.notes.join('; ') || ''} |`);
+    score.push(`| ${r.name} | ${r.mismatchPercent.toFixed(2)} |  |  | ${statusLabel(r.mismatchPercent)} | ${r.notes.join('; ') || ''} |`);
   }
   score.push('');
   score.push('Rules:');
@@ -303,7 +448,9 @@ function writeSemanticTemplates(runRoot: string, results: PerSectionResult[]): v
   repair.push('');
   repair.push('| Mismatch ID | Section | Falcon component | Repair path (input / template / slot / token / upgrade) | Likely file to change | Proof needed |');
   repair.push('|---|---|---|---|---|---|');
-  repair.push('| _FE-...-0001_ |  |  |  |  |  |');
+  for (const r of results) {
+    repair.push(`| _FE-${r.name}-0001_ | ${r.name} |  |  |  |  |`);
+  }
   repair.push('');
   repair.push('Use the customization order from the skill:');
   repair.push('1. Existing Falcon component inputs / config');
@@ -315,6 +462,116 @@ function writeSemanticTemplates(runRoot: string, results: PerSectionResult[]): v
   repair.push('7. Feature-local wrapper (page-specific only)');
   repair.push('8. Raw implementation (last resort, document as GAP)');
   fs.writeFileSync(path.join(runRoot, 'FALCON_COMPONENT_REPAIR_MAP.md'), repair.join('\n'), 'utf8');
+}
+
+function writeAllScreenshotsIndex(runRoot: string, results: PerSectionResult[]): void {
+  const lines: string[] = [];
+  lines.push('# All Screenshots Index');
+  lines.push('');
+  lines.push('> Every screenshot captured in this run, with links to the matching per-section report, semantic mismatch file, and Falcon component repair map.');
+  lines.push('');
+  lines.push('| Section | Source | Destination | Diff | Report | Semantic mismatches | Repair map | Status |');
+  lines.push('|---|---|---|---|---|---|---|---|');
+  for (const r of results) {
+    lines.push(
+      `| ${r.name} ` +
+      `| [source](${rel(runRoot, r.sourcePath)}) ` +
+      `| [destination](${rel(runRoot, r.destinationPath)}) ` +
+      `| [diff](${rel(runRoot, r.diffPath)}) ` +
+      `| [report](sections/${r.name}/SCREENSHOT_REPORT.md) ` +
+      `| [mismatches](sections/${r.name}/SEMANTIC_MISMATCHES.md) ` +
+      `| [repair](sections/${r.name}/FALCON_COMPONENT_REPAIR_MAP.md) ` +
+      `| ${statusLabel(r.mismatchPercent)} |`,
+    );
+  }
+  fs.writeFileSync(path.join(runRoot, 'ALL_SCREENSHOTS_INDEX.md'), lines.join('\n'), 'utf8');
+}
+
+function writeAllScreenshotsSummaryReport(runRoot: string, cfg: FalconEyesConfig, results: PerSectionResult[]): void {
+  const lines: string[] = [];
+  const totalSections = results.length;
+  const totalScreenshots = results.reduce((acc, r) => {
+    return acc + (r.sourcePath ? 1 : 0) + (r.destinationPath ? 1 : 0) + (r.diffPath ? 1 : 0);
+  }, 0);
+  const visualParityValues = results
+    .map(r => 100 - r.mismatchPercent)
+    .filter(v => !Number.isNaN(v));
+  const averageVisualParity = visualParityValues.length
+    ? visualParityValues.reduce((a, b) => a + b, 0) / visualParityValues.length
+    : 0;
+  const below90 = results.filter(r => 100 - r.mismatchPercent < 90).map(r => r.name);
+  const below60 = results.filter(r => 100 - r.mismatchPercent < 60).map(r => r.name);
+  const top10 = [...results]
+    .sort((a, b) => b.mismatchPercent - a.mismatchPercent)
+    .slice(0, 10);
+
+  lines.push('# All Screenshots Summary Report');
+  lines.push('');
+  lines.push(`> Generated: ${new Date().toISOString()}`);
+  lines.push('');
+  lines.push('## Run');
+  lines.push('');
+  lines.push(`- **Source:** ${cfg.source.url}`);
+  lines.push(`- **Destination:** ${cfg.destination.url}`);
+  lines.push(`- **Viewport:** ${cfg.viewport.width}x${cfg.viewport.height} @ ${cfg.viewport.deviceScaleFactor ?? 1}x`);
+  lines.push(`- **Total sections compared:** ${totalSections}`);
+  lines.push(`- **Total screenshots captured:** ${totalScreenshots}`);
+  lines.push(`- **Average visual parity (pixel-derived):** ${averageVisualParity.toFixed(2)}%`);
+  lines.push(`- **Sections below 90% parity:** ${below90.length ? below90.join(', ') : 'none'}`);
+  lines.push(`- **Sections below 60% parity:** ${below60.length ? below60.join(', ') : 'none'}`);
+  lines.push('');
+  lines.push('## Section table');
+  lines.push('');
+  lines.push('| Section | Source Screenshot | Destination Screenshot | Diff Screenshot | Score | P0 | P1 | P2 | P3 | Status |');
+  lines.push('|---|---|---|---|---:|---:|---:|---:|---:|---|');
+  for (const r of results) {
+    const score = (100 - r.mismatchPercent).toFixed(2);
+    lines.push(
+      `| ${r.name} ` +
+      `| ${rel(runRoot, r.sourcePath)} ` +
+      `| ${rel(runRoot, r.destinationPath)} ` +
+      `| ${rel(runRoot, r.diffPath)} ` +
+      `| ${score} ` +
+      `| 0 | 0 | 0 | 0 ` +
+      `| ${statusLabel(r.mismatchPercent)} |`,
+    );
+  }
+  lines.push('');
+  lines.push('## Top 10 visual mismatches (pixel layer)');
+  lines.push('');
+  lines.push('| Rank | Section | Pixel mismatch % | Per-section report |');
+  lines.push('|---:|---|---:|---|');
+  top10.forEach((r, i) => {
+    lines.push(`| ${i + 1} | ${r.name} | ${r.mismatchPercent.toFixed(2)} | sections/${r.name}/SCREENSHOT_REPORT.md |`);
+  });
+  lines.push('');
+  lines.push('## Top Falcon components causing mismatch');
+  lines.push('');
+  lines.push('_Falcon Eyes (the skill) fills this — derived from each per-section `Falcon components involved` block._');
+  lines.push('');
+  lines.push('## Top Tailwind / token issues');
+  lines.push('');
+  lines.push('_Falcon Eyes (the skill) fills this — derived from each per-section `Tailwind / token issues` block._');
+  lines.push('');
+  lines.push('## Top missing dynamic APIs');
+  lines.push('');
+  lines.push('_Falcon Eyes (the skill) fills this — derived from each per-section `Dynamic API issues` and `Missing shared component capabilities` blocks._');
+  lines.push('');
+  lines.push('## Recommended repair order');
+  lines.push('');
+  lines.push('_Falcon Eyes (the skill) fills this once severities are finalized. Default ordering: P0 → P1 → P2 → P3, then by section weight._');
+  lines.push('');
+  lines.push('## Reporting contract');
+  lines.push('');
+  lines.push('Every run produces: one report per section under `sections/<name>/`, one combined summary (this file), one screenshot index (`ALL_SCREENSHOTS_INDEX.md`), one semantic mismatch backlog (`SEMANTIC_MISMATCH_BACKLOG.md`), and one Falcon component repair map (`FALCON_COMPONENT_REPAIR_MAP.md`).');
+  fs.writeFileSync(path.join(runRoot, 'ALL_SCREENSHOTS_SUMMARY_REPORT.md'), lines.join('\n'), 'utf8');
+}
+
+function writeSemanticTemplates(runRoot: string, cfg: FalconEyesConfig, results: PerSectionResult[]): void {
+  writePerSectionReports(runRoot, cfg, results);
+  writeRunLevelReports(runRoot, cfg, results);
+  writeAllScreenshotsIndex(runRoot, results);
+  writeAllScreenshotsSummaryReport(runRoot, cfg, results);
 }
 
 async function captureSide(
@@ -411,7 +668,7 @@ async function main(): Promise<void> {
       const srcPng = PNG.sync.read(fs.readFileSync(rec.sourcePath));
       const dstPng = PNG.sync.read(fs.readFileSync(rec.destinationPath));
       const { diff, diffPixels, totalPixels } = diffPair(srcPng, dstPng, cfg);
-      const diffPath = path.join(diffDir, `${s.name}.diff.png`);
+      const diffPath = path.join(diffDir, `${s.name}-diff.png`);
       fs.writeFileSync(diffPath, PNG.sync.write(diff));
       rec.diffPath = diffPath;
       rec.diffPixels = diffPixels;
@@ -442,7 +699,7 @@ async function main(): Promise<void> {
 
   if (cfg.output.writeMarkdown) writeMarkdownReport(runRoot, cfg, Object.values(perSection));
   if (cfg.output.writeJson) writeJsonReport(runRoot, cfg, Object.values(perSection));
-  writeSemanticTemplates(runRoot, Object.values(perSection));
+  writeSemanticTemplates(runRoot, cfg, Object.values(perSection));
 
   console.log(`Falcon Eyes run complete: ${runRoot}`);
 }

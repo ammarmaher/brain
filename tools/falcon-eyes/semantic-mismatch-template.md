@@ -4,7 +4,9 @@
 
 # Single Mismatch Record — Template
 
-> Copy this block once per visible defect into `SEMANTIC_MISMATCH_BACKLOG.md`. Pixel diff is just evidence; this block carries the **semantic** understanding.
+> Copy this block once per visible defect into `SEMANTIC_MISMATCH_BACKLOG.md` AND into the section-specific `sections/<section>/SEMANTIC_MISMATCHES.md`. Pixel diff is just evidence; this block carries the **semantic** understanding.
+>
+> **Reporting contract:** every Falcon Eyes run produces one report per screenshot section under `sections/<section-name>/`, one combined run report (`ALL_SCREENSHOTS_SUMMARY_REPORT.md`), one screenshot index (`ALL_SCREENSHOTS_INDEX.md`), one semantic mismatch backlog (`SEMANTIC_MISMATCH_BACKLOG.md`), and one Falcon component repair map (`FALCON_COMPONENT_REPAIR_MAP.md`). No exceptions.
 
 ---
 

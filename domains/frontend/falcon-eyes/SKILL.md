@@ -94,18 +94,99 @@ Default named sections:
 
 ## Required outputs (per run)
 
+Falcon Eyes MUST generate a report for **every** screenshot pair it captures. The run folder always contains:
+
+- one **per-section** folder (`sections/<section-name>/`) with its own screenshots, JSON, and Markdown reports
+- one **combined** summary report covering every section
+- one **screenshot index** listing every file
+- one **semantic mismatch backlog**
+- one **Falcon component repair map**
+
 ```
 reports/falcon-eyes/<YYYY-MM-DD-HHmm>/
-├── source/                              source screenshots (full page + per-section)
-├── destination/                         destination screenshots (full page + per-section)
-├── diff/                                pixelmatch diff PNGs per section
+├── source/                              flat source screenshots, one per section
+│   └── <section-name>.png
+├── destination/                         flat destination screenshots, one per section
+│   └── <section-name>.png
+├── diff/                                flat diff screenshots, one per section
+│   └── <section-name>-diff.png
+├── sections/                            per-section sub-reports (one folder per section)
+│   └── <section-name>/
+│       ├── SOURCE.png
+│       ├── DESTINATION.png
+│       ├── DIFF.png
+│       ├── SCREENSHOT_REPORT.md          per-section human report (this section only)
+│       ├── SCREENSHOT_DATA.json          per-section machine record
+│       ├── SEMANTIC_MISMATCHES.md        per-section mismatch backlog entry
+│       └── FALCON_COMPONENT_REPAIR_MAP.md per-section Falcon component repair map
 ├── metadata/                            run metadata (viewport, urls, sha, timing)
 ├── FALCON_EYES_REPORT.md                top-level human report
 ├── FALCON_EYES_DATA.json                machine-readable mismatch data
 ├── SEMANTIC_MISMATCH_BACKLOG.md         every mismatch with id + cause + repair
 ├── SECTION_SCORECARD.md                 per-section visual parity %
-└── FALCON_COMPONENT_REPAIR_MAP.md       mismatch → Falcon component → repair
+├── FALCON_COMPONENT_REPAIR_MAP.md       run-level mismatch → Falcon component → repair
+├── ALL_SCREENSHOTS_INDEX.md             every screenshot/report file with links
+└── ALL_SCREENSHOTS_SUMMARY_REPORT.md    combined summary across every section
 ```
+
+Naming rules:
+
+- Flat folders (`source/`, `destination/`, `diff/`) keep the lowercased section name as the filename — `comm-channels-tab.png`, `comm-channels-tab-diff.png`.
+- Per-section folders use **UPPERCASE** PNG filenames — `sections/comm-channels-tab/SOURCE.png`, `DESTINATION.png`, `DIFF.png`. The PNGs under `sections/` are copies of the canonical flat files so each section folder is self-contained.
+
+### Per-section `SCREENSHOT_REPORT.md` (one per section)
+
+Each per-section report MUST include:
+
+- section name
+- source screenshot path
+- destination screenshot path
+- diff screenshot path
+- source URL
+- destination URL
+- capture timestamp
+- viewport
+- pixel mismatch %
+- perceptual score (if available)
+- visual parity score for this section
+- semantic difference summary
+- Falcon components involved
+- Tailwind / token issues
+- dynamic API issues
+- missing shared component capabilities
+- repair recommendations
+- severity list — P0 / P1 / P2 / P3 counts
+- status — `pass` / `needs repair` / `blocked` / `unknown`
+
+The pixel layer (everything except *semantic difference summary*, *Falcon components involved*, *Tailwind/token issues*, *dynamic API issues*, *missing shared component capabilities*, *repair recommendations*, and *severity*) is produced by the tool. The semantic fields are filled by Claude using the Falcon Eyes skill.
+
+### Run-level `ALL_SCREENSHOTS_INDEX.md`
+
+Lists every screenshot file in the run with clickable links — source, destination, diff, per-section report, semantic mismatch file, component repair map:
+
+| Section | Source | Destination | Diff | Report | Status |
+|---|---|---|---|---|---|
+| comm-channels-tab | source/comm-channels-tab.png | destination/comm-channels-tab.png | diff/comm-channels-tab-diff.png | sections/comm-channels-tab/SCREENSHOT_REPORT.md | needs repair |
+
+### Run-level `ALL_SCREENSHOTS_SUMMARY_REPORT.md`
+
+Combined report covering every section. MUST include:
+
+- total screenshots captured
+- total sections compared
+- average visual parity %
+- sections below 90 %
+- sections below 60 %
+- top 10 visual mismatches
+- top Falcon components causing mismatch
+- top Tailwind / token issues
+- top missing dynamic APIs
+- recommended repair order
+
+Plus the combined section table:
+
+| Section | Source Screenshot | Destination Screenshot | Diff Screenshot | Score | P0 | P1 | P2 | P3 | Status |
+|---|---|---|---|---:|---:|---:|---:|---:|---|
 
 ## Skill process
 

@@ -35,15 +35,26 @@ C:\Falcon\Brain Outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\
 
 Required per-run artifacts:
 
-- `source/`
-- `destination/`
-- `diff/`
-- `metadata/`
+- `source/<section>.png` — flat source screenshots
+- `destination/<section>.png` — flat destination screenshots
+- `diff/<section>-diff.png` — flat diff screenshots
+- `sections/<section-name>/` — one folder per section, each with `SOURCE.png`, `DESTINATION.png`, `DIFF.png`, `SCREENSHOT_REPORT.md`, `SCREENSHOT_DATA.json`, `SEMANTIC_MISMATCHES.md`, `FALCON_COMPONENT_REPAIR_MAP.md`
+- `metadata/run.json`, `metadata/pixelmatch.json`
 - `FALCON_EYES_REPORT.md`
 - `FALCON_EYES_DATA.json`
 - `SEMANTIC_MISMATCH_BACKLOG.md`
 - `SECTION_SCORECARD.md`
 - `FALCON_COMPONENT_REPAIR_MAP.md`
+- `ALL_SCREENSHOTS_INDEX.md` — every screenshot file with links
+- `ALL_SCREENSHOTS_SUMMARY_REPORT.md` — combined report across every section
+
+### Reporting contract — every run
+
+1. One report per screenshot section under `sections/<section-name>/`.
+2. One combined run summary — `ALL_SCREENSHOTS_SUMMARY_REPORT.md`.
+3. One screenshot index — `ALL_SCREENSHOTS_INDEX.md`.
+4. One semantic mismatch backlog — `SEMANTIC_MISMATCH_BACKLOG.md`.
+5. One Falcon component repair map — `FALCON_COMPONENT_REPAIR_MAP.md`.
 
 ## Default future targets
 

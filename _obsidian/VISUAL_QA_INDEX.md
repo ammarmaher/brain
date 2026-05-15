@@ -27,6 +27,14 @@
 C:\Falcon\Brain Outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\
 ```
 
+Every run produces:
+
+- `sections/<section-name>/SCREENSHOT_REPORT.md` (one per section) — plus `SOURCE.png`, `DESTINATION.png`, `DIFF.png`, `SCREENSHOT_DATA.json`, `SEMANTIC_MISMATCHES.md`, `FALCON_COMPONENT_REPAIR_MAP.md`
+- `ALL_SCREENSHOTS_INDEX.md` — every screenshot + per-section report linked
+- `ALL_SCREENSHOTS_SUMMARY_REPORT.md` — combined section table, averages, sections below 90 / 60 %, top 10 mismatches, top Falcon components, top Tailwind/token issues, top missing dynamic APIs, recommended repair order
+- `SEMANTIC_MISMATCH_BACKLOG.md` and `FALCON_COMPONENT_REPAIR_MAP.md` at run level
+- `FALCON_EYES_REPORT.md`, `FALCON_EYES_DATA.json`, `SECTION_SCORECARD.md`, `metadata/`
+
 ## Trigger phrases (auto-route to Falcon Eyes)
 
 - screenshot comparison

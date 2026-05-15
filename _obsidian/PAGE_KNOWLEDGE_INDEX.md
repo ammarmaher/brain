@@ -33,6 +33,15 @@
 | Source | `http://localhost:3000/T2%20Falcon%20Admin` |
 | Destination | `http://localhost:4200/#/admin-console/org-hierarchy-page` |
 
+### Per-page Falcon Eyes report layout
+
+Each page run produces under `Brain Outputs/reports/falcon-eyes/<YYYY-MM-DD-HHmm>/`:
+
+- A `sections/<section-name>/` folder for every section listed above, each with `SOURCE.png`, `DESTINATION.png`, `DIFF.png`, `SCREENSHOT_REPORT.md`, `SCREENSHOT_DATA.json`, `SEMANTIC_MISMATCHES.md`, `FALCON_COMPONENT_REPAIR_MAP.md`.
+- `ALL_SCREENSHOTS_INDEX.md` linking every screenshot + per-section report.
+- `ALL_SCREENSHOTS_SUMMARY_REPORT.md` combining the entire page (averages, sections below 90/60 %, top 10 mismatches, top Falcon components, top Tailwind/token issues, top missing dynamic APIs, recommended repair order).
+- `SEMANTIC_MISMATCH_BACKLOG.md`, `SECTION_SCORECARD.md`, `FALCON_COMPONENT_REPAIR_MAP.md`, `FALCON_EYES_REPORT.md`, `FALCON_EYES_DATA.json`.
+
 ## Related indexes
 
 - [[FALCON_EYES_INDEX]]

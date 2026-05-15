@@ -36,12 +36,29 @@ npx tsx capture-and-compare.ts --only tabs-header,comm-channels-tab
 
 - A new dated folder appears at `C:\Falcon\Brain Outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\`.
 - The folder contains:
-  - `source/_full-page.png`, `source/tabs-header.png`, `source/comm-channels-tab.png`
-  - `destination/_full-page.png`, `destination/tabs-header.png`, `destination/comm-channels-tab.png`
-  - `diff/tabs-header.diff.png`, `diff/comm-channels-tab.diff.png`
-  - `metadata/run.json`, `metadata/pixelmatch.json`
-  - `FALCON_EYES_REPORT.md`, `FALCON_EYES_DATA.json`
-  - `SEMANTIC_MISMATCH_BACKLOG.md`, `SECTION_SCORECARD.md`, `FALCON_COMPONENT_REPAIR_MAP.md`
+  - **Flat screenshot folders** — `source/tabs-header.png`, `source/comm-channels-tab.png`, `destination/tabs-header.png`, `destination/comm-channels-tab.png`, `diff/tabs-header-diff.png`, `diff/comm-channels-tab-diff.png` (plus the optional `_full-page.png` set if enabled).
+  - **One per-section folder** for every captured section — `sections/tabs-header/` and `sections/comm-channels-tab/`. Each contains:
+    - `SOURCE.png`
+    - `DESTINATION.png`
+    - `DIFF.png`
+    - `SCREENSHOT_REPORT.md`
+    - `SCREENSHOT_DATA.json`
+    - `SEMANTIC_MISMATCHES.md`
+    - `FALCON_COMPONENT_REPAIR_MAP.md`
+  - **Run-level reports** — `FALCON_EYES_REPORT.md`, `FALCON_EYES_DATA.json`, `SEMANTIC_MISMATCH_BACKLOG.md`, `SECTION_SCORECARD.md`, `FALCON_COMPONENT_REPAIR_MAP.md`, `ALL_SCREENSHOTS_INDEX.md`, `ALL_SCREENSHOTS_SUMMARY_REPORT.md`.
+  - **Run metadata** — `metadata/run.json`, `metadata/pixelmatch.json`.
+
+### Reporting contract
+
+Every Falcon Eyes run MUST produce:
+
+1. One report per screenshot section (`sections/<section-name>/SCREENSHOT_REPORT.md`).
+2. One combined run summary (`ALL_SCREENSHOTS_SUMMARY_REPORT.md`).
+3. One screenshot index (`ALL_SCREENSHOTS_INDEX.md`).
+4. One run-level semantic mismatch backlog (`SEMANTIC_MISMATCH_BACKLOG.md`).
+5. One run-level Falcon component repair map (`FALCON_COMPONENT_REPAIR_MAP.md`).
+
+The pixel-layer pieces (paths, viewports, mismatch %, severity counters, status defaults) are produced by the tool. The semantic pieces (Falcon component involvement, Tailwind/token issues, dynamic API gaps, missing shared-component capabilities, repair recommendations, finalized severity) are filled in by Claude using the Falcon Eyes skill — see `domains/frontend/falcon-eyes/SKILL.md`.
 
 ### Default source / destination
 
