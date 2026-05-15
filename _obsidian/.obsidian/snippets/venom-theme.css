@@ -1,0 +1,348 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * VENOM THEME — symbiote-dark aesthetic for the Falcon Brain SK vault
+ *
+ * Companion to `falcon-vault.css` (functional styling). This snippet
+ * adds: deep symbiote-black canvas · silver/white primary text ·
+ * red glints (Venom's tongue) · glowing tendrils on hover ·
+ * pulse animation on hub nodes.
+ *
+ * Enable in Obsidian: Settings → Appearance → CSS snippets → toggle
+ * "venom-theme" ON (alongside or instead of "falcon-vault").
+ *
+ * Best paired with Obsidian's Dark theme. Falls back gracefully if you
+ * switch to Light theme.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────
+ * 1. Symbiote canvas — deep black with subtle radial gradient
+ *    Mimics Venom's glossy skin
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark {
+  --background-primary: #08080d;
+  --background-primary-alt: #0a0a12;
+  --background-secondary: #12121a;
+  --background-secondary-alt: #1a1a25;
+  --background-modifier-border: #2a2a3a;
+  --background-modifier-hover: #1f1f2a;
+  --background-modifier-active: #25253a;
+
+  --text-normal: #e8e8f0;
+  --text-muted: #a8a8b8;
+  --text-faint: #686878;
+  --text-accent: #d0d0e0;
+  --text-accent-hover: #ffffff;
+
+  --text-on-accent: #08080d;
+  --interactive-accent: #c0c0d0;
+  --interactive-accent-hover: #ffffff;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 2. Graph view — symbiote canvas + glowing nodes + tendril edges
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .graph-view.color-fill,
+body.theme-dark .workspace-leaf-content[data-type="graph"] {
+  background: radial-gradient(ellipse at center, #0a0a14 0%, #000000 100%);
+}
+
+/* Subtle white glow around every node — venom's pearlescent skin */
+body.theme-dark .graph-view text {
+  fill: #d0d0e0 !important;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* Hover: bright white glow + slightly larger text — the symbiote's reaction */
+body.theme-dark .graph-view text:hover {
+  fill: #ffffff !important;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 6px rgba(220, 38, 38, 0.4);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Edge styling — tendrils */
+body.theme-dark .graph-view .link {
+  stroke-opacity: 0.35 !important;
+  stroke: #4a4a5a !important;
+  filter: drop-shadow(0 0 1px rgba(220, 220, 240, 0.3));
+}
+
+body.theme-dark .graph-view .link:hover {
+  stroke: #ffffff !important;
+  stroke-opacity: 0.9 !important;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 3. Tendril pulse — animated glow on hub-class file names in tree
+ * ─────────────────────────────────────────────────────────── */
+@keyframes venom-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 4px rgba(255, 255, 255, 0.3),
+      0 0 8px rgba(192, 192, 220, 0.2);
+  }
+  50% {
+    text-shadow:
+      0 0 12px rgba(255, 255, 255, 0.7),
+      0 0 18px rgba(220, 38, 38, 0.35),
+      0 0 24px rgba(192, 192, 220, 0.4);
+  }
+}
+
+@keyframes venom-tendril-slide {
+  0% { transform: translateX(-2px); opacity: 0.3; }
+  50% { transform: translateX(2px); opacity: 1; }
+  100% { transform: translateX(-2px); opacity: 0.3; }
+}
+
+/* The 3 brain entry points always pulse softly */
+.nav-file-title[data-path*="🟢 Start Here"],
+.nav-file-title[data-path*="AMMAR_BRAIN_HOME"],
+.nav-file-title[data-path*="IMPLEMENTATION_KNOWLEDGE_MAP"] {
+  animation: venom-pulse 3.5s ease-in-out infinite;
+  color: #f0f0ff !important;
+  font-weight: 700 !important;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%);
+}
+
+/* On hover, the pulse speeds up + tendril glow becomes red */
+.nav-file-title[data-path*="🟢 Start Here"]:hover,
+.nav-file-title[data-path*="AMMAR_BRAIN_HOME"]:hover,
+.nav-file-title[data-path*="IMPLEMENTATION_KNOWLEDGE_MAP"]:hover {
+  animation: venom-pulse 1.2s ease-in-out infinite;
+  text-shadow:
+    0 0 14px rgba(255, 255, 255, 0.9),
+    0 0 22px rgba(220, 38, 38, 0.6) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 4. Glossy/wet headings — Venom's skin
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .markdown-reading-view h1 {
+  background: linear-gradient(135deg, #ffffff 0%, #c0c0d0 50%, #808090 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+body.theme-dark .markdown-reading-view h2 {
+  color: #d0d0e0 !important;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.08);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 4px;
+}
+
+body.theme-dark .markdown-reading-view h3 {
+  color: #a8a8c8 !important;
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 5. Wiki-link tendrils — glow on hover
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .markdown-reading-view a.internal-link {
+  color: #d0d0e0 !important;
+  border-bottom: 1px solid rgba(208, 208, 224, 0.4);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.theme-dark .markdown-reading-view a.internal-link:hover {
+  color: #ffffff !important;
+  border-bottom: 1px solid #ffffff;
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.7),
+    0 0 14px rgba(220, 38, 38, 0.3);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Unresolved links — red tongue */
+body.theme-dark .markdown-reading-view a.internal-link.is-unresolved {
+  color: #ff4444 !important;
+  border-bottom-color: rgba(255, 68, 68, 0.6);
+  text-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 6. Tag badges — symbiote-dark with venom-red highlights
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .tag {
+  background: linear-gradient(135deg, #1a1a25 0%, #0e0e15 100%);
+  color: #c8c8d8 !important;
+  border: 1px solid rgba(192, 192, 220, 0.2);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+body.theme-dark .tag:hover {
+  background: linear-gradient(135deg, #2a2a3a 0%, #1a1a25 100%);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* High-severity tags pulse red — Venom's anger */
+body.theme-dark .tag[href="#severity/high"],
+body.theme-dark .tag[href="#status/deprecated"],
+body.theme-dark .tag[href="#gap"],
+body.theme-dark .tag[href="#blocked"] {
+  background: linear-gradient(135deg, #2a0a0a 0%, #1a0505 100%) !important;
+  color: #ff6868 !important;
+  border-color: rgba(220, 38, 38, 0.5);
+  text-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
+  font-weight: 700;
+}
+
+body.theme-dark .tag[href="#severity/high"]:hover,
+body.theme-dark .tag[href="#gap"]:hover {
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.6);
+  color: #ff8888 !important;
+}
+
+/* Security tag — venom gold (poisonous warning) */
+body.theme-dark .tag[href="#security"] {
+  background: linear-gradient(135deg, #2a1f05 0%, #1a1505 100%) !important;
+  color: #f5c552 !important;
+  border-color: rgba(245, 197, 82, 0.5);
+  text-shadow: 0 0 6px rgba(245, 197, 82, 0.4);
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 7. File tree — symbiote skin with venom-red folder borders
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .nav-files-container,
+body.theme-dark .nav-folder-children {
+  background-color: var(--background-primary);
+}
+
+body.theme-dark .nav-folder-title:hover,
+body.theme-dark .nav-file-title:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Active note — venom-claimed */
+body.theme-dark .nav-file-title.is-active {
+  background: linear-gradient(90deg, rgba(220, 38, 38, 0.15) 0%, transparent 100%);
+  border-left: 3px solid #dc2626 !important;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 8. Quote / callout — venom's whisper
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .markdown-reading-view blockquote {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  border-left: 3px solid rgba(192, 192, 220, 0.6);
+  color: #c8c8d8;
+  position: relative;
+}
+
+body.theme-dark .markdown-reading-view blockquote::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent 0%, #ffffff 50%, transparent 100%);
+  animation: venom-tendril-slide 4s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 9. Tables — sleek symbiote panels
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .markdown-reading-view table {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5), inset 0 0 6px rgba(255, 255, 255, 0.02);
+}
+
+body.theme-dark .markdown-reading-view table thead th {
+  background: linear-gradient(135deg, #1a1a25 0%, #0e0e15 100%);
+  color: #ffffff;
+  border-bottom: 2px solid rgba(220, 38, 38, 0.3);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+body.theme-dark .markdown-reading-view table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.015);
+}
+
+body.theme-dark .markdown-reading-view table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 8px rgba(220, 38, 38, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 10. Code blocks — symbiote terminal
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .markdown-reading-view pre {
+  background: linear-gradient(135deg, #0e0e15 0%, #08080d 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-dark .markdown-reading-view code {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #f0d090;
+  text-shadow: 0 0 2px rgba(240, 208, 144, 0.2);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 11. Side panes — sleek dark with subtle separator glow
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .workspace-tab-header.is-active {
+  background-color: var(--background-primary);
+  box-shadow: 0 -2px 6px rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+body.theme-dark .workspace-leaf {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 12. Status bar — minimal symbiote
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark .status-bar {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #888898;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 13. Scrollbar — venom tendrils
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body.theme-dark ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+body.theme-dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #2a2a35 0%, #1a1a25 100%);
+  border-radius: 4px;
+}
+
+body.theme-dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #4a4a55 0%, #2a2a35 100%);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 14. Selected text — venom bite
+ * ─────────────────────────────────────────────────────────── */
+body.theme-dark ::selection {
+  background-color: rgba(220, 38, 38, 0.4);
+  color: #ffffff;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}

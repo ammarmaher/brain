@@ -1,7 +1,7 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": true,
+  "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
@@ -9,75 +9,129 @@
   "colorGroups": [
     {
       "query": "tag:#type/hub",
-      "color": { "a": 1, "rgb": 6583179 }
+      "color": {
+        "a": 1,
+        "rgb": 6583179
+      }
     },
     {
       "query": "tag:#type/onboarding",
-      "color": { "a": 1, "rgb": 8703766 }
+      "color": {
+        "a": 1,
+        "rgb": 8703766
+      }
     },
     {
       "query": "tag:#type/prd-module",
-      "color": { "a": 1, "rgb": 14239983 }
+      "color": {
+        "a": 1,
+        "rgb": 14239983
+      }
     },
     {
       "query": "tag:#type/page",
-      "color": { "a": 1, "rgb": 3901686 }
+      "color": {
+        "a": 1,
+        "rgb": 3901686
+      }
     },
     {
       "query": "tag:#type/flow",
-      "color": { "a": 1, "rgb": 959977 }
+      "color": {
+        "a": 1,
+        "rgb": 959977
+      }
     },
     {
       "query": "tag:#type/journey",
-      "color": { "a": 1, "rgb": 6513393 }
+      "color": {
+        "a": 1,
+        "rgb": 6513393
+      }
     },
     {
       "query": "tag:#type/v-rule",
-      "color": { "a": 1, "rgb": 15683396 }
+      "color": {
+        "a": 1,
+        "rgb": 15683396
+      }
     },
     {
       "query": "tag:#type/e-entity",
-      "color": { "a": 1, "rgb": 16097803 }
+      "color": {
+        "a": 1,
+        "rgb": 16097803
+      }
     },
     {
       "query": "tag:#type/backend-service",
-      "color": { "a": 1, "rgb": 1095617 }
+      "color": {
+        "a": 1,
+        "rgb": 1095617
+      }
     },
     {
       "query": "tag:#type/kafka-event",
-      "color": { "a": 1, "rgb": 16348438 }
+      "color": {
+        "a": 1,
+        "rgb": 16348438
+      }
     },
     {
       "query": "tag:#type/falcon-component",
-      "color": { "a": 1, "rgb": 9132790 }
+      "color": {
+        "a": 1,
+        "rgb": 9132790
+      }
     },
     {
       "query": "tag:#type/error-code",
-      "color": { "a": 1, "rgb": 16007006 }
+      "color": {
+        "a": 1,
+        "rgb": 16007006
+      }
     },
     {
       "query": "tag:#type/architecture-rules",
-      "color": { "a": 1, "rgb": 11032567 }
+      "color": {
+        "a": 1,
+        "rgb": 11032567
+      }
     },
     {
       "query": "tag:#type/permission-matrix",
-      "color": { "a": 1, "rgb": 15381768 }
+      "color": {
+        "a": 1,
+        "rgb": 15381768
+      }
     },
     {
       "query": "tag:#type/glossary-term",
-      "color": { "a": 1, "rgb": 1358502 }
+      "color": {
+        "a": 1,
+        "rgb": 1358502
+      }
     },
     {
       "query": "tag:#type/learning-event",
-      "color": { "a": 1, "rgb": 15484569 }
+      "color": {
+        "a": 1,
+        "rgb": 15484569
+      }
     },
     {
       "query": "tag:#type/template",
-      "color": { "a": 1, "rgb": 9741752 }
+      "color": {
+        "a": 1,
+        "rgb": 9741752
+      }
     },
     {
       "query": "tag:#type/index",
-      "color": { "a": 1, "rgb": 13358561 }
+      "color": {
+        "a": 1,
+        "rgb": 13358561
+      }
     }
   ],
   "collapse-display": false,
@@ -90,6 +144,6 @@
   "repelStrength": 12,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.067,
-  "close": true
+  "scale": 0.362901181467373,
+  "close": false
 }

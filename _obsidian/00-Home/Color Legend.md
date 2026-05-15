@@ -85,6 +85,39 @@ Severity tags add a second layer of meaning, visible in the inline tag badges:
 | Severity emphasis | Same CSS → section 3 (severity rules) | Bold + color for high; muted for low |
 | Cross-cutting flags | Same CSS → section 3 (`#drift`, `#gap`, `#blocked`, `#security` rules) | Strong colors to grab attention |
 
+## 🖤 Venom theme — optional symbiote aesthetic
+
+A second CSS snippet `venom-theme.css` ships with the vault for users who want **a glossy black symbiote look** on top of the functional palette above.
+
+**Enable:** Settings → Appearance → CSS snippets → toggle **`venom-theme`** ON (alongside `falcon-vault`).
+
+What you get:
+- 🖤 Deep symbiote-black canvas (radial gradient from `#0a0a14` → `#000000`) — replaces all backgrounds
+- 🤍 Silver/white primary text with subtle pearlescent glow
+- 🔴 Venom-red glints on `#severity/high`, `#gap`, `#blocked`, `#status/deprecated` tags
+- 🟡 Venom-gold treatment for `#security` tags (poisonous warning)
+- ✨ **Pulse animation** on the 3 brain entry points (`🟢 Start Here` · `AMMAR_BRAIN_HOME` · `IMPLEMENTATION_KNOWLEDGE_MAP`) — soft 3.5 s breathing pulse normally, 1.2 s urgent pulse on hover
+- 🩸 Wiki-links glow white-on-hover with red undertone shadow (tendril effect)
+- 💉 Selected text gets venom-bite red highlight
+- 🌑 Glossy gradient h1 headings (white → silver → gray)
+- ⚡ Animated tendril sliding down the left edge of blockquotes
+- 📊 Tables with red-bottom-border thead + hover row glow
+- 🎯 Active note in file tree gets a venom-red left border + claim-glow
+- 💻 Code blocks with embossed inset shadow
+- 🪲 Scrollbar styled as venom tendrils
+
+**Best with Obsidian's Dark theme** (Settings → Appearance → Base color scheme → Dark). The venom snippet does nothing in Light mode.
+
+**To disable just venom (keep functional styling):** toggle `venom-theme` OFF, keep `falcon-vault` ON. The functional palette + file-tree borders survive.
+
+## ⚙ Recent fix — tag-nodes disabled in graph view
+
+If you saw nodes named just `04`, `3`, `high`, `commerce` etc. in the graph view — those were **tag nodes**. Obsidian renders every tag in the vault as a small node when `showTags: true`.
+
+Fixed in `graph.json` by setting `showTags: false`. The file nodes are still colored by their tags (because color groups match notes that have the tag, not the tag-as-a-node itself).
+
+To re-enable tag-nodes: open the graph view → Settings panel (gear icon) → "Display" → toggle "Tags" ON.
+
 ## How to enable everything
 
 1. **Graph view colors:** open `Ctrl+G` — colors apply automatically (read from `graph.json`).
