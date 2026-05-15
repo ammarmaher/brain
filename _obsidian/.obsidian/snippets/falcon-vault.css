@@ -130,3 +130,178 @@
 .markdown-reading-view td:has(em:first-child) em:first-child {
   font-size: 1.1em;
 }
+
+/* ─────────────────────────────────────────────────────────────
+ * 8. File-tree folder colors (no plugin required)
+ *    Each top-level folder gets a colored left border + tinted hover
+ *    Colors match the graph.json color groups
+ * ─────────────────────────────────────────────────────────── */
+.nav-folder-title[data-path="00-Home"]              { border-left: 3px solid #64748B; padding-left: 9px; }
+.nav-folder-title[data-path="05-Glossary"]          { border-left: 3px solid #14B8A6; padding-left: 9px; }
+.nav-folder-title[data-path="10-Pages"]             { border-left: 3px solid #3B82F6; padding-left: 9px; }
+.nav-folder-title[data-path="12-Permissions"]       { border-left: 3px solid #EAB308; padding-left: 9px; }
+.nav-folder-title[data-path="15-PRD"]               { border-left: 3px solid #D946EF; padding-left: 9px; }
+.nav-folder-title[data-path="16-Journeys"]          { border-left: 3px solid #6366F1; padding-left: 9px; }
+.nav-folder-title[data-path="30-Validation"]        { border-left: 3px solid #EF4444; padding-left: 9px; }
+.nav-folder-title[data-path="35-Architecture"]      { border-left: 3px solid #A855F7; padding-left: 9px; }
+.nav-folder-title[data-path="40-API"]               { border-left: 3px solid #F59E0B; padding-left: 9px; }
+.nav-folder-title[data-path="45-Backend"]           { border-left: 3px solid #10B981; padding-left: 9px; }
+.nav-folder-title[data-path="47-Events"]            { border-left: 3px solid #F97316; padding-left: 9px; }
+.nav-folder-title[data-path="60-Components"]        { border-left: 3px solid #8B5CF6; padding-left: 9px; }
+.nav-folder-title[data-path="80-Evidence"]          { border-left: 3px solid #EC4899; padding-left: 9px; }
+.nav-folder-title[data-path="90-Approved-Patterns"] { border-left: 3px solid #84CC16; padding-left: 9px; }
+.nav-folder-title[data-path="_templates"]           { border-left: 3px solid #94A3B8; padding-left: 9px; }
+
+/* Bold top-level folder names for visual hierarchy */
+.nav-folder-title[data-path^="0"],
+.nav-folder-title[data-path^="1"],
+.nav-folder-title[data-path^="2"],
+.nav-folder-title[data-path^="3"],
+.nav-folder-title[data-path^="4"],
+.nav-folder-title[data-path^="5"],
+.nav-folder-title[data-path^="6"],
+.nav-folder-title[data-path^="7"],
+.nav-folder-title[data-path^="8"],
+.nav-folder-title[data-path^="9"],
+.nav-folder-title[data-path^="_"] {
+  font-weight: 600;
+}
+
+/* Pinned entry-point notes get a distinguishing emoji-friendly font */
+.nav-file-title[data-path*="🟢 Start Here"] {
+  font-weight: 700;
+  color: #15803d;
+}
+.nav-file-title[data-path*="AMMAR_BRAIN_HOME"] {
+  font-weight: 700;
+}
+.nav-file-title[data-path*="IMPLEMENTATION_KNOWLEDGE_MAP"] {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 9. Heading hierarchy — visual depth
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view h1 {
+  font-size: 1.9em;
+  border-bottom: 2px solid var(--background-modifier-border);
+  padding-bottom: 0.3em;
+  margin-bottom: 0.6em;
+}
+.markdown-reading-view h2 {
+  font-size: 1.45em;
+  margin-top: 1.8em;
+  margin-bottom: 0.5em;
+  color: var(--text-normal);
+}
+.markdown-reading-view h3 {
+  font-size: 1.2em;
+  color: var(--text-accent);
+  margin-top: 1.4em;
+}
+.markdown-reading-view h4 {
+  font-size: 1.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 1em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 10. Link polish — hover preview, wiki-link styling
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view a.internal-link {
+  text-decoration: none;
+  border-bottom: 1px dotted var(--text-accent);
+  padding: 1px 3px;
+  border-radius: 3px;
+  transition: background-color 0.15s ease;
+}
+.markdown-reading-view a.internal-link:hover {
+  background-color: var(--background-modifier-hover);
+  border-bottom-style: solid;
+}
+
+/* Unresolved wiki-links (pointing at notes that don't exist yet) */
+.markdown-reading-view a.internal-link.is-unresolved {
+  color: #ef4444;
+  border-bottom-color: #ef4444;
+  font-style: italic;
+}
+
+/* External markdown links to Brain Outputs SoT files */
+.markdown-reading-view a.external-link[href*="Brain%20Outputs"] {
+  color: #0891b2;
+  font-family: var(--font-monospace);
+  font-size: 0.92em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 11. Tables — refined cell borders + zebra striping
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+}
+.markdown-reading-view table thead th {
+  background-color: var(--background-secondary);
+  border-bottom: 2px solid var(--background-modifier-border);
+  padding: 8px 12px;
+  font-weight: 600;
+}
+.markdown-reading-view table tbody tr:nth-child(even) {
+  background-color: var(--background-secondary-alt);
+}
+.markdown-reading-view table tbody tr:hover {
+  background-color: var(--background-modifier-hover);
+}
+.markdown-reading-view table td {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 12. Code blocks — refined background + syntax visibility
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view pre {
+  border-radius: 8px;
+  padding: 14px 16px;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+}
+.markdown-reading-view code {
+  background-color: var(--background-secondary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 13. Graph view node sizing
+ * ─────────────────────────────────────────────────────────── */
+.graph-view.color-fill {
+  /* Default node fill — overridden by colorGroups in graph.json */
+}
+
+/* Make hub nodes slightly larger for visual hierarchy */
+.graph-view text {
+  font-size: 12px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * 14. Quote / callout — used for the > summary blocks in notes
+ * ─────────────────────────────────────────────────────────── */
+.markdown-reading-view blockquote {
+  border-left: 4px solid var(--text-accent);
+  background-color: var(--background-secondary);
+  padding: 12px 16px;
+  margin: 1em 0;
+  border-radius: 4px;
+  font-style: normal;
+  color: var(--text-normal);
+}
+.markdown-reading-view blockquote p:first-child::before {
+  content: "💡 ";
+  margin-right: 4px;
+}
