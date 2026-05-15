@@ -42,6 +42,7 @@ Example phrases:
 | `20-UI-UX/` | UI/UX rule indexes pointing into per-page `UI_UX_RULES.md` |
 | `30-Validation/` | Validation rule indexes pointing into per-page `VALIDATION_RULES.md` |
 | `40-API/` | API/DTO/contract indexes pointing into per-page `API_RULES.md` |
+| `45-Backend/` | **One note per backend service (9 services)** |
 | `50-Business/` | Business rule indexes pointing into per-page `BUSINESS_RULES.md` |
 | `60-Components/` | One note per Falcon component (back-links to pages using it) |
 | `70-Gaps/` | Cross-page gap index pointing into per-page `GAP_REGISTRY.md` |
@@ -60,6 +61,7 @@ Example phrases:
 ## Top-level indexes
 
 - [[PRD_INDEX]] — PRD modules (upstream)
+- [[BACKEND_INDEX]] — 9 backend services
 - [[PAGE_LEARNING_INDEX]] — page-level learning entry point (Light + Deep modes)
 - [[FRONTEND_INDEX]] — frontend knowledge hub (registries, scans, patterns)
 - [[COMPONENT_INDEX]] — Falcon component catalog (60+ components)

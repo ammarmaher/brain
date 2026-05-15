@@ -40,6 +40,8 @@
 | User ↔ Account binding | commerce | [`understanding/backend/commerce/`](../../../Brain%20Outputs/understanding/backend/commerce/) |
 | Auth gateway proxying | core-gateway | [`understanding/backend/core-gateway/`](../../../Brain%20Outputs/understanding/backend/core-gateway/) |
 
+**Vault service notes:** [[Identity Service]] · [[Access PES Service]] · [[Commerce Service]] · [[Core Gateway Service]] · [[BACKEND_INDEX]]
+
 ## Validation surface
 
 Email/phone format · password complexity tiers · OTP validity windows · lockout thresholds · idle-timeout. All live in [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/02-user-management/BUSINESS_RULES.md). Hub: [[VALIDATION_INDEX]].

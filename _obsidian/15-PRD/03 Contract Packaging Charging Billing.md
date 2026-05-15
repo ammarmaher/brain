@@ -42,6 +42,8 @@
 | Sub-service activation · provisioning lifecycle | provisioning | [`understanding/backend/provisioning/`](../../../Brain%20Outputs/understanding/backend/provisioning/) |
 | Auto-status job (Pending→Active, Active→Expired) | commerce (scheduler) | [`understanding/backend/commerce/`](../../../Brain%20Outputs/understanding/backend/commerce/) |
 
+**Vault service notes:** [[Commerce Service]] · [[Charging Service]] · [[Provisioning Service]] · [[BACKEND_INDEX]]
+
 ## Validation surface
 
 Status-aware edit gates · rate-card numeric ranges · destination-priority uniqueness · contract overlap rules. From [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/03-contract-packaging-charging-billing-management/BUSINESS_RULES.md). Hub: [[VALIDATION_INDEX]].

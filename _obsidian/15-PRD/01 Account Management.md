@@ -40,6 +40,8 @@
 | User-side onboarding from Step 5 | identity | [`understanding/backend/identity/`](../../../Brain%20Outputs/understanding/backend/identity/) |
 | Gateway routes | core-gateway · system-gateway | [`understanding/backend/core-gateway/`](../../../Brain%20Outputs/understanding/backend/core-gateway/) · [`understanding/backend/system-gateway/`](../../../Brain%20Outputs/understanding/backend/system-gateway/) |
 
+**Vault service notes:** [[Commerce Service]] · [[Charging Service]] · [[Provisioning Service]] · [[Identity Service]] · [[Core Gateway Service]] · [[System Gateway Service]] · [[BACKEND_INDEX]]
+
 ## Validation surface (lives in BUSINESS_RULES + WORKFLOWS)
 
 Field-level validations and cross-field rules are spread across [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/01-account-management/BUSINESS_RULES.md) (status-aware edits) and [WORKFLOWS](../../../Brain%20Outputs/prd/modules/01-account-management/WORKFLOWS.md) (wizard step gates). After PRD promotion: per-page [VALIDATION_RULES.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/VALIDATION_RULES.md).

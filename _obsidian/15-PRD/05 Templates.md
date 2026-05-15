@@ -43,6 +43,8 @@
 | Meta WhatsApp integration | templates (TBD) — currently MISSING | — |
 | Gateway route `/api/communication-channel-configs/*` | **MISSING** (GAP-TM-02) — should be added before any UI ships | — |
 
+**Vault service notes:** [[Templates Service]] · [[Commerce Service]] · [[BACKEND_INDEX]] _(GAP-TM-01 + GAP-TM-02 documented in [[Templates Service]])_
+
 ## Validation surface
 
 Per-CommChannel field schema · variable-token format · quality-drift detection thresholds · approval-trail integrity. From [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/05-templates/BUSINESS_RULES.md). Hub: [[VALIDATION_INDEX]].

@@ -15,7 +15,7 @@
 
 ## Backend hub
 
-- [[BACKEND_INDEX]] — service-level routing + DTO dictionary entry.
+- [[BACKEND_INDEX]] — 9 services tracked. Vault service notes: [[Commerce Service]] · [[Charging Service]] · [[Provisioning Service]] · [[Identity Service]] · [[Templates Service]] · [[Contact Group Service]] · [[Access PES Service]] · [[Core Gateway Service]] · [[System Gateway Service]].
 
 ## Global pattern (seed)
 

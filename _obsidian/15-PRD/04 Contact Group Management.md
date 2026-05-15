@@ -42,6 +42,8 @@
 | Link to Template (column → template variable) | templates | [`understanding/backend/templates/`](../../../Brain%20Outputs/understanding/backend/templates/) |
 | Gateway routing | core-gateway | [`understanding/backend/core-gateway/`](../../../Brain%20Outputs/understanding/backend/core-gateway/) |
 
+**Vault service notes:** [[Contact Group Service]] · [[Access PES Service]] · [[Templates Service]] · [[Core Gateway Service]] · [[BACKEND_INDEX]]
+
 ## Validation surface
 
 File type · file size · column shape · share-target hierarchy bounds · soft-delete reversibility window. From [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/04-contact-group-management/BUSINESS_RULES.md). Hub: [[VALIDATION_INDEX]].
