@@ -21,3 +21,14 @@ Related skills:
 - `skills/pes-permission-analysis/SKILL.md`
 - `skills/testing-qa/SKILL.md`
 - `skills/task-report-generator/SKILL.md`
+
+## Canonical knowledge load order
+
+Full-stack tasks load (in order) from the canonical knowledge root [`Brain Outputs/understanding/`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md):
+
+1. `understanding/frontend/` — Falcon component registries + `patterns/` + per-component dossiers
+2. `understanding/backend/<service>/` — `SERVICE_OVERVIEW.md` · `ENDPOINT_REGISTRY.md` · `DTO_DICTIONARY.md` · `VALIDATIONS.md` · `ERRORS.md` · `FRONTEND_CONTRACT.md`
+3. `understanding/integration/` — `INTEGRATION_OVERVIEW.md` · `API_TO_COMPONENT_TRACE.md` · `READINESS_MATRIX.md` · `GAP_LIST.md` · `BLOCKERS_AND_QUESTIONS.md` · `NEXT_ACTIONS.md`
+4. `understanding/pages/<page-name>/` — full Page Learning System set (14+ files)
+
+Skip Light Learning Intake only if the task touches neither a page nor a component. Otherwise mode 1 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md) runs first.
