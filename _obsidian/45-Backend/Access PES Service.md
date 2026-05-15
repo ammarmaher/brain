@@ -32,8 +32,10 @@
 
 ## Excel permission sources (upstream)
 
-- `Permission list - Jawad` sheet — authoritative per-action permission matrix for Falcon roles (180 rows · Tab 1 captured · Tab 2 export failed). Source: PRD-02. → these decisions are enforced here.
-- `Contact Group Permissions` sheet — explicit CRUD+Share+Download permission matrix. Source: PRD-04. → enforced here.
+- `Permission list - Jawad` sheet — authoritative per-action permission matrix for Falcon roles (180 rows · Tab 1 captured · Tab 2 export failed). Source: PRD-02. → these decisions are enforced here. Vault note: [[Falcon Roles Permission Matrix]].
+- `Contact Group Permissions` sheet — explicit CRUD+Share+Download permission matrix. Source: PRD-04. → enforced here. Vault note: [[Contact Group Permission Matrix]].
+- `Users statuses & others` sheet — 5 user statuses (Pending / Active / Suspended / Locked / Deleted) that gate login **before** PES is consulted. Source: PRD-02. Vault note: [[User Statuses]].
+- Folder hub: [[12-Permissions/README|12-Permissions]].
 
 ## Validation contract
 

@@ -46,6 +46,12 @@
 
 Email/phone format · password complexity tiers · OTP validity windows · lockout thresholds · idle-timeout. All live in [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/02-user-management/BUSINESS_RULES.md). Hub: [[VALIDATION_INDEX]].
 
+## Linked permission matrices
+
+- [[Falcon Roles Permission Matrix]] — `Permission list - Jawad` sheet (System Administrator · Operation · Products × Hierarchy + CommChannels + Apps + Settings); Tab 2 not captured
+- [[User Statuses]] — 5 statuses (Pending / Active / Suspended / Locked / Deleted) + counted-against-user-limit flag
+- Folder hub: [[12-Permissions/README|12-Permissions]]
+
 ## Module dependencies
 
 - **[[01 Account Management]]** — User is created in Account wizard Step 5 + user statuses gate logins

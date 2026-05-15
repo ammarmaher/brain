@@ -31,6 +31,8 @@
 | [[04 Contact Group Management]] | Contact Group (primary) · Access · Templates (link-to-template) |
 | [[05 Templates]] | Templates (primary, with GAP-TM-01/02) · Commerce (CommChannelConfig) |
 
+**Cross-cutting permission matrices** (enforced by [[Access PES Service]]): [[Falcon Roles Permission Matrix]] · [[Contact Group Permission Matrix]] · [[User Statuses]] · folder hub [[12-Permissions/README|12-Permissions]].
+
 ## Architecture rules (from Wiki)
 
 - **Clean Architecture** — Domain → Application → Infrastructure → Api (dependencies inward)
