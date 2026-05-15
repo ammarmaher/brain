@@ -42,6 +42,15 @@
 - [[Falcon Uploader]] — photo uploader on org-info
 - [[Falcon Status Badge]] — rule status + audit mode badges
 
+## Triangulated validation rules touching this page
+
+(PRD line → Backend `[ThrowIf*]` → Frontend hint — from Phase 2C)
+
+- [[V-account-name-format-uniqueness]] · [[V-password-security-level-enum]] · [[V-account-ip-allowlist-enforcement]] · [[V-account-limits-zero-means-no-limit]] · [[V-service-visibility-pricing-required]] — Settings tab + Add Client wizard + CommChannels/Apps tabs
+- [[V-user-first-last-name-letters-only]] · [[V-username-format-uniqueness-immutable]] — Step 5 of Add Client (AO user creation) + Add User flow
+- [[V-normal-user-limit-enforcement]] — gated by Settings → Account Limitations
+- Full list: [[VALIDATION_INDEX]]
+
 ## Learning events
 
 - [[LE-20260515-commchannels-shadow-row-notch-alignment]] — **approved** Wave 20. Bug → 5 UI/UX rules promoted (UIUX-SHADOW-001..005) + GAP-COMMCHANNELS-NOTCH-001 closed + 8 follow-ups opened in falcon-data-table dossier
