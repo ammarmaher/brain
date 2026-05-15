@@ -2,7 +2,12 @@
 
 > Per-feature completeness: how much of the source-of-truth feature is actually built and functional.
 
-**Aggregate implementation:** **~74%** ↑ +1 (post P3 polish pass 2026-05-15 — i18n keys for users empty-state + paginator default = 20 landed; status-badge tokens re-verified, no change needed; build green)
+**Aggregate implementation:** **~74%** (post Round 5 live-bundle audit, 2026-05-15).
+Save/Cancel wiring on all editable surfaces of the Org Hierarchy page audited as
+**LOCAL-STATE-ONLY** today (in-memory signal only, lost on reload). Source comment in
+`org-hierarchy-page-menu.component.ts:318` is explicit: `"In-memory only — backend persist
+deferred to a later wave."` Wave-15 in-flight refactor (UNSTAGED) is the first step toward
+real backend wiring on the IB-payment path only.
 
 ## Method
 

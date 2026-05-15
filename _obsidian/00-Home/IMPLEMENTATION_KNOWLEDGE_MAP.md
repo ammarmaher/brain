@@ -48,11 +48,13 @@ Each playbook contains:
 
 ```text
 1. IMPLEMENTATION_KNOWLEDGE_MAP (this note)
-2. The flow playbook (e.g. Add Client.md)
-3. Page note ([[Organization Hierarchy]])
+2. The flow playbook (e.g. Add Client/README.md)
+3. Page note ([[Organization Hierarchy]] or the seeded page stub)
 4. Falcon component notes wiki-linked in the playbook
 5. V-rules wiki-linked in the playbook
 6. E-* entity notes (only if drift is suspected)
+7. [[35-Architecture/README]] for any architectural rule the task touches (forbidden patterns / quality gates)
+8. [[ERROR_INDEX]] for any backend error code the FE must surface
 ```
 
 ### Backend implementation task
@@ -66,6 +68,27 @@ Each playbook contains:
 6. Brain Outputs/understanding/backend/<service>/ENDPOINT_REGISTRY.md
 7. E-* entity reconciliation notes
 8. V-rules wiki-linked in the playbook
+9. [[47-Events/README]] for Kafka events the service produces or consumes
+10. [[ERROR_INDEX]] for the error codes the service throws
+```
+
+### Cross-page / journey task
+
+```text
+1. IMPLEMENTATION_KNOWLEDGE_MAP (this note)
+2. The journey playbook ([[16-Journeys/README]] → pick journey)
+3. Each flow playbook the journey traverses
+4. [[47-Events/README]] for Kafka events fired during the journey
+5. [[ERROR_INDEX]] for failure-mode error codes
+```
+
+### Glossary / terminology task
+
+```text
+1. [[GLOSSARY_INDEX]] (or 05-Glossary/README.md)
+2. The specific term note (e.g. [[Account]] vs [[Tenant]])
+3. Related E-* entity note (if the term is an entity)
+4. Related PRD note
 ```
 
 ### Full-stack / integration task

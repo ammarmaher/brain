@@ -57,6 +57,12 @@ Full detail of resolved + new gaps in `Brain Outputs/reports/organization-hierar
 | GAP-LIB-007 (NEW today) | `<falcon-angular-menu>` syncProps reset bug breaks row-action popup | `<falcon-angular-menu>` | not_applicable (in admin-console) | Deleted from data-table library; affects direct consumers if any | See BUG-2026-05-14-004 in `FALCON_UI_BUGS_AND_QUIRKS.md` | 2026-05-14 |
 | GAP-LIB-008 (NEW today) | Library data-table no longer exposes row-action menu | `<falcon-angular-data-table>` | not_applicable | Intentional deletion per Ammar 2026-05-14 | Restore once syncProps bug fixed | 2026-05-14 |
 
+## Wave 20 — Shadow row notch alignment (CommChannels & Services)
+
+| gapId | Title | Source | Destination | Status | Severity | Resolution | Last checked |
+|---|---|---|---|---|---|---|---|
+| GAP-COMMCHANNELS-NOTCH-001 | Shadow row notch (▲) at top edge of scheduled-change edit row was not visible in CommChannels & Services tab | User screenshot annotation: "Notch not found" (`evidence/org-hierarchy/2026-05-15-commchannels-notch-missing/`) | `<falcon-table-tw>` arrow positioning | applied (resolved Wave 20, 2026-05-15) | MEDIUM | Library fix: replaced no-op `top-0 -translate-y-full` (Tailwind percentage translate against `h-0` element = 0 lift) with explicit `top-[calc(-1*var(--falcon-data-table-shadow-arrow-size))]`. Also: removed JSX inline-style reset, added rAF-coalesced position updates, added `window.resize` listener, added z-index token, added silent suppression on unresolved `targetColumn`. | 2026-05-15 |
+
 ## Behavior gaps (page-specific)
 
 | gapId | Title | Source | Destination | Status | Reason | Next action | Last checked |

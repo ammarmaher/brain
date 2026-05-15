@@ -5,8 +5,7 @@
 
 | evidenceId | learningId | type | section | path | capturedAt |
 |---|---|---|---|---|---|
-
-_No evidence captured yet. Light Learning Intake writes here automatically on every screenshot, bug note, or correction._
+| EV-20260515-commchannels-notch-missing | LE-20260515-commchannels-shadow-row-notch-alignment | annotated_screenshot + notes | commChannels-and-services tab | `evidence/org-hierarchy/2026-05-15-commchannels-notch-missing/SCREENSHOT_NOTES.md` (user-provided in-session screenshot referenced; image binaries not persisted to disk) | 2026-05-15 |
 
 ## Conventions
 

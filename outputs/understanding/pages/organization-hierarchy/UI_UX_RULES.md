@@ -114,6 +114,16 @@ These are host-shell concerns. Listed for completeness but not blocking org-hier
 | UIUX-042 | 6-digit OTP boxes split 3+3 with separator | HTML §14 | uses lib OTP | partially_applied | Lib component used, exact 3+3 split needs verify | Visual sweep | 2026-05-14 | `<falcon-angular-otp>` |
 | UIUX-043 | OTP modal reachable for verification | HTML §14 | not exercised | blocked | Wave 17.5 sweep did NOT open the OTP modal to avoid mutating test state | Schedule dedicated OTP test pass with a clean user | 2026-05-14 | `<falcon-angular-otp>` |
 
+## Shadow edit rows (Wave 20, 2026-05-15)
+
+| ruleId | Title | Source | Destination | Status | Reason | Next action | Last checked | Related |
+|---|---|---|---|---|---|---|---|---|
+| UIUX-SHADOW-001 | Shadow edit rows MUST use `falcon-angular-data-table` shadow row API (`[shadowRows]`, `[(expandedShadowRowIds)]`, `[(shadowRowModes)]`, `<ng-template falconDataTableShadow>`). Page-level hand-rolled `<tr>` edit-expanded rows are forbidden. | Wave 20 lib API | `applications-table.component.html` | applied | First consumer landed in admin-console CommChannels & Services tab (Wave 19) | — | 2026-05-15 | `<falcon-angular-data-table>` |
+| UIUX-SHADOW-002 | The notch (▲) on top of each shadow row MUST align dynamically to the target column header via `ShadowRow.targetColumn = '<columnField>'`. The library computes the x-offset from the column header's bounding rect — consumers MUST NEVER hardcode the notch position. | Library contract | Stencil `falcon-table-tw.updateShadowArrowPositions()` | applied | Library-owned positioning; consumers can only choose WHICH column to align to, not the x-offset. | — | 2026-05-15 | `<falcon-table-tw>` |
+| UIUX-SHADOW-003 | The notch colour, size, and z-index MUST come from the `--falcon-data-table-shadow-*` token surface — no inline styles, no hardcoded hex values. | Token SoT (`data-table.tokens.css`) | `falcon-table-tw.tsx` + `table-tailwind-classes.ts` | applied | 9 tokens cover bg / divider / padding / arrow-color / arrow-size / arrow-z / chevron-color / transition-duration | — | 2026-05-15 | tokens |
+| UIUX-SHADOW-004 | Shadow row trailing actions: default `Edit/Delete` (view) and `Save/Cancel` (edit) buttons are owned by the library. Override only via `<ng-template falconDataTableShadowActions>` when business needs differ. | Wave 20 lib API | applications-table — uses defaults | applied | Defaults serve the CommChannels & Services use case | — | 2026-05-15 | lib defaults |
+| UIUX-SHADOW-005 | Multiple shadow rows per parent row are supported. Use distinct `ShadowRow.id` per shadow + distinct `targetColumn` for visual disambiguation. | Wave 20 lib API | applications-table — N scheduled changes per app | applied | Each scheduled change gets its own shadow with `targetColumn: priceType` or `priceValue` | — | 2026-05-15 | `<falcon-angular-data-table>` |
+
 ## Parity findings from Wave 17.5 sweep (2026-05-14)
 
 These 7 rules were logged during the live HTML-vs-Angular comparison.

@@ -37,14 +37,18 @@ Example phrases:
 | Folder | Holds |
 |---|---|
 | `00-Home/` | Top-level hubs (this file, brain home) |
-| `10-Pages/` | One note per Falcon page (links to its rules, gaps, evidence, components) |
+| `05-Glossary/` | **One note per canonical Falcon term (En/Ar)** (Phase 3E — 44 terms) |
+| `10-Pages/` | One note per Falcon page (Org Hierarchy + 13 newly-stubbed pages, Phase 3A) |
 | `15-PRD/` | **One note per PRD module (upstream of pages/components/rules)** |
+| `16-Journeys/` | **One note per cross-page user journey** (Phase 3B — 7 journeys) |
 | `20-UI-UX/` | UI/UX rule indexes pointing into per-page `UI_UX_RULES.md` |
 | `30-Validation/` | Validation rule indexes pointing into per-page `VALIDATION_RULES.md` |
-| `40-API/` | API/DTO/contract indexes pointing into per-page `API_RULES.md` |
+| `35-Architecture/` | **Frontend architectural rule sets** (Phase 3F — 13 audits → ~116 rules) |
+| `40-API/` | API/DTO/contract indexes + entity reconciliation `E-*` notes |
 | `45-Backend/` | **One note per backend service (9 services)** |
+| `47-Events/` | **One note per Kafka/Redis/webhook event** (Phase 3C — 20 events) |
 | `50-Business/` | Business rule indexes pointing into per-page `BUSINESS_RULES.md` |
-| `60-Components/` | One note per Falcon component (back-links to pages using it) |
+| `60-Components/` | One note per Falcon component (62 components, back-links to pages using it) |
 | `70-Gaps/` | Cross-page gap index pointing into per-page `GAP_REGISTRY.md` |
 | `80-Evidence/` | Cross-page evidence index pointing into per-page `EVIDENCE_INDEX.md` |
 | `90-Approved-Patterns/` | Approved + globally-promoted patterns index |
@@ -69,14 +73,24 @@ Organization Hierarchy flow playbooks:
 - [[Add Node Flow]] — sub-node creation (PRD-01)
 - [[Edit Node Flow]] — rename · scheduled rename (move + archive MISSING) (PRD-01)
 
+## Phase 3 — Discovery layer (2026-05-15)
+
+- [[GLOSSARY_INDEX]] _(see [`05-Glossary/README`](../05-Glossary/README.md))_ — 44 canonical Falcon terms · En/Ar (Ar coverage ~1/44 — gap flagged)
+- [[16-Journeys/README]] — 7 cross-page user journeys (New Tenant Onboarding · Send Campaign · Suspend Client · Renew Contract · First Login · Wallet Transfer · Edit Contract status-aware)
+- [[47-Events/README]] — 20 Kafka/Redis/webhook events with producer/consumer/idempotency
+- [[ERROR_INDEX]] — 233 `FalconKeys.Error.*` codes catalogued · 40 high-frequency individual notes · 24-code cross-service overlap
+- [[35-Architecture/README]] — 13 frontend architecture audits → ~116 extracted rules (no PrimeNG · no `*ngIf` · tokens only · zoneless · etc.)
+
 ## Top-level indexes
 
 - [[IMPLEMENTATION_KNOWLEDGE_MAP]] — **flow playbooks + load order (Phase 2G)**
-- [[PRD_INDEX]] — PRD modules (upstream)
+- [[PRD_INDEX]] — 6 PRD modules (upstream)
 - [[BACKEND_INDEX]] — 9 backend services
+- [[ERROR_INDEX]] — 233 error codes catalogued (Phase 3D)
+- [[GLOSSARY_INDEX]] — 44 canonical terms (Phase 3E)
 - [[PAGE_LEARNING_INDEX]] — page-level learning entry point (Light + Deep modes)
 - [[FRONTEND_INDEX]] — frontend knowledge hub (registries, scans, patterns)
-- [[COMPONENT_INDEX]] — Falcon component catalog (60+ components)
+- [[COMPONENT_INDEX]] — Falcon component catalog (62 components)
 - [[UI_UX_INDEX]] — UI/UX rules across all pages
 - [[VALIDATION_INDEX]] — validation rules across all pages
 - [[API_INDEX]] — API rules across all pages

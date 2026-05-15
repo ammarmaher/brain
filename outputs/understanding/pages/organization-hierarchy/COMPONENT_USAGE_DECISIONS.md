@@ -17,8 +17,10 @@ For every section, record the chosen Falcon component path and which customizati
 | section | chosenComponent | customizationStep | decisionStatus | sourceLearningId |
 |---|---|---|---|---|
 | tables (multi-section) | `<falcon-data-table>` | 3 (`ng-template` for toggle/action/dropdown/input/status) | pending | LE-20260515-organization-hierarchy-001 |
-| comm-channels-tab | _undecided_ | — | open | — |
-| apps-services-tab | _undecided_ | — | open | — |
+| comm-channels-tab — scheduled-change edit row | `<falcon-angular-data-table>` shadow rows API (`[shadowRows]` + `<ng-template falconDataTableShadow>`) | 3 (`ng-template` projection) + lib upgrade Wave 20 (`falcon-data-table` shadow rows feature shipped) | applied (Wave 20, 2026-05-15) | LE-20260515-commchannels-shadow-row-notch-alignment |
+| apps-services-tab — scheduled-change edit row | `<falcon-angular-data-table>` shadow rows API (same as CommChannels — single shared `applications-table` component) | 3 (`ng-template` projection) | applied (Wave 20, 2026-05-15) | LE-20260515-commchannels-shadow-row-notch-alignment |
+| management-console comm-channels-tab — table | `<falcon-angular-data-table>` (apps/management-console/.../applications-table) — mirrors admin-console twin. Visibility → `<falcon-angular-switch>`, Status → `<falcon-angular-status-badge>`, Inline edit → `<app-falcon-table-edit-row>` via `slot="row-expansion"`, Empty → `[emptyData]`. Scheduled changes wired via `[shadowRows]` + `<ng-template falconDataTableShadow>`. | 3 (`ng-template` projection) + 7 (app-level `<app-falcon-table-edit-row>` wrapper duplicated into mgmt-console) | applied (Wave 22C, 2026-05-15) | FDT-SHADOW-FU-07 |
+| management-console apps-services-tab — table | Same shared `<app-applications-table>` as comm-channels — single mgmt-console wrapper backs both tabs (parity with admin-console pattern). | 3 (`ng-template` projection) | applied (Wave 22C, 2026-05-15) | FDT-SHADOW-FU-07 |
 | org-info-panel | _undecided_ | — | open | — |
 | org-info-audit-mode | _undecided_ | — | open | — |
 | org-info-rule-status | _undecided_ | — | open | — |

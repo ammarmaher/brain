@@ -2,7 +2,37 @@
 
 > Priority-ordered work queue. Updated incrementally as items close.
 
-**Last updated:** 2026-05-15 (Round 2 night shift — comm-channels-tab title + Action header fixed; row-expansion slot projection regression logged as DEFECT-CCS-R2-001 HIGH)
+**Last updated:** 2026-05-15 (Round 5 user rejection — score reset to 0 %, three new P0 defects, Round 6 pending spec sign-off)
+
+## 🔴 P0 BLOCKERS — Comm Channels edit flow (Round 5 user rejection, 2026-05-15)
+
+User inspected the live destination after dev-serve restart and rejected the edit-row implementation. Round 5 parity is **0 %**. See `ROUND_5_POSTMORTEM.md` for root cause analysis and `EDIT_ROW_SPEC.md` for the locked spec Round 6 must satisfy.
+
+| ID | Severity | Description | Required behavior |
+|---|---|---|---|
+| **DEFECT-CCS-R5-P0-A** | P0 | Edit-row renders as fixed drawer at top of table | Must render as **inline expand-row directly below the row being edited** via Falcon Data Table row-expansion API |
+| **DEFECT-CCS-R5-P0-B** | P0 | No post-save indicator on row | After Save, **chevron toggle** must appear in Actions column so user can re-expand and inspect staged change |
+| **DEFECT-CCS-R5-P0-C** | P0 | Edit-row fields not column-aligned with header | Edit-row structurally mirrors header — dropdown under Price Type column, calendar under Effective Date, value under Price Value |
+
+**Round 6 plan:** `ROUND_6_PLAN.md` (does not start until: spec signed off + test values confirmed + Wave-15 decision made).
+
+---
+
+## Priority 0 — Round 5 results (2026-05-15, ~14:00 local)
+
+| ID | Description | Status |
+|---|---|---|
+| ROUND5-CCS-001 | Verify Round 4 STILL-BROKEN trio against fresh dev-serve bundle | **DONE** — Defect 1 (table chrome) FIXED at runtime; Defect 2 (inline edit-row) FIXED first-open; Defect 3 (IB modal) REGRESSED via Wave-15 (see DEFECT-CCS-R5-002) |
+| ROUND5-CCS-002 | 57-case SoT matrix against live dest | **DONE** — 40 PASS / 2 FAIL / 3 PARTIAL / 12 NOT-VERIFIED (most NOT-VERIFIED gated by DEFECT-CCS-R5-002) |
+| ROUND5-CCS-003 | Save/Cancel deep-dive per editable surface | **DONE** — see `SAVE_CANCEL_AUDIT.md`. Verdict: all 4 surfaces LOCAL-STATE-ONLY today on this page; Wave-15 introduces backend wiring capability that isn't yet activated |
+| DEFECT-CCS-R5-001 | P2 — Edit-row above-table position regression on second/subsequent open. First open is correct (inline between rows). Suspect Stencil row-expansion slot redistribution losing projection target on close. | **NEW** |
+| DEFECT-CCS-R5-002 | P1 — IB modal renders with 0×0 dimensions. `<falcon-dialog-tw>` host hydrated + `open=true` + backdrop element exists with `position: fixed inset-0` but `getBoundingClientRect` width/height = 0. Introduced by Wave-15 wrapper `<falcon-insufficient-balance-dialog>` adding an extra composition layer. | **NEW** |
+| WAVE-15-IN-FLIGHT | Discovered mid-R5 — working tree contains a partial backend-wiring refactor (`comm-channel-payment.service.ts`, `OrderStatusService`, `SimplePollService`, `<falcon-insufficient-balance-dialog>` lib component, 240-line diff on `applications-table.component.ts`). NOT staged. Working tree builds green via `nx build admin-console`. | **REQUIRES USER DECISION** — continue/stash/revert |
+
+Build at the end of Round 5: GREEN (hash `8d2ea4c8c3255942`, 16.4s).
+Staged: 21 files (R3+R4 work) untouched. Unstaged: ~13 files (Wave-15 work) untouched.
+
+## Priority 0 — Round 2 results (2026-05-15 evening, retained)
 
 ## Priority 0 — Round 2 results (2026-05-15 evening)
 

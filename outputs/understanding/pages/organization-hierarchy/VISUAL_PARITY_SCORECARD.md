@@ -2,59 +2,53 @@
 
 > Per-section visual fidelity score: source-of-truth render vs Angular destination render.
 
-**Aggregate visual parity:** **96.5 %** ↑ +21.5 (post Falcon Eyes Round 1 — 2026-05-15, auth-unblock + full destination render). P3 polish pass landed 2026-05-15 evening — i18n keys + paginator default fixed; re-capture pending real-auth session (Task B BLOCKED). Expected on re-capture: **97-98 %**.
+**Aggregate visual parity (corrected after Round 5 user rejection):** **0 %** for the comm-channels edit flow. Prior round scores were inflated and have been reset (see honest reassessment below).
 
-## Most recent measurement
+---
 
-- **Date:** 2026-05-15
-- **Source:** `http://localhost:3000/T2 Falcon Admin` (React reference SoT)
-- **Destination:** `http://localhost:4200/#/admin-console/org-hierarchy-page` (Plan B dev bypass)
-- **Falcon Eyes run:** `C:\Falcon\Brain Outputs\reports\falcon-eyes\2026-05-15-0532\`
-- **Pixel parity (pixelmatch, threshold 0.1):** 96.50 %
-- **Semantic parity (Falcon component fidelity):** ~95 %
-- **Targets:** 90 % minimum REACHED, 95 % ideal REACHED
+## User rejection — what's actually wrong
 
-## Per-section table
+The user inspected the live destination after Round 5 dev-serve restart. Verdict: the edit flow does NOT match the source of truth in three structural ways the agents missed across 5 rounds.
 
-| Section | Pixel parity % | Semantic parity % | Notes |
+| ID | Severity | Description | Required behavior |
+|---|---|---|---|
+| **DEFECT-CCS-R5-P0-A** | **P0** | Edit affordance renders as a fixed drawer at the **top of the table** | Must render as an **inline expand-row directly BELOW the row being edited**, between the edited row and the next data row |
+| **DEFECT-CCS-R5-P0-B** | **P0** | No post-save indicator on the row | After Save, a **chevron / expand-toggle** must appear in the Actions column of the edited row so the user can re-open and inspect the staged change |
+| **DEFECT-CCS-R5-P0-C** | **P0** | Edit-row fields are not column-aligned with the table header | Edit-row must structurally mirror the header — dropdown sits under Price Type column, calendar under Effective Date, value input under Price Value |
+
+## Honest reassessment of prior scores
+
+| Round | Originally claimed | Honest score | Why the claim was wrong |
 |---|---:|---:|---|
-| tabs-header                    | 96.50 | 100 | Falcon Tabs row + List/Tree toggle |
-| comm-channels-tab              | 97.20 | 97  | R2 (2026-05-15 evening): title + Action header copy fixed (en+ar); footer bg parity verified (Wave 19); slot-projection regression DEFECT-CCS-R2-001 HIGH logged |
-| apps-services-tab              | 96.50 | 95  | Renders, no content under dev bypass |
-| org-info-panel                 | 96.50 | 95  | Information button renders; panel deferred |
-| org-info-audit-mode            | 96.50 | 90  | Deferred to interactive run |
-| org-info-rule-status           | 96.50 | 90  | Deferred to interactive run |
-| org-info-permission-privilege  | 96.50 | 90  | Deferred to interactive run |
-| settings-tab-view-mode         | 96.50 | 95  | Sibling tab renders |
-| settings-tab-edit-mode         | 96.50 | 90  | Deferred to interactive run |
-| settings-ip-management         | 96.50 | 90  | Deferred to interactive run |
-| settings-account-limitation    | 96.50 | 90  | Deferred to interactive run |
-| otp-popup                      | 96.50 | 90  | Deferred to interactive run |
+| Round 1 | 96.5 % | ~30 % | Pixel diff was against an auth-denied card — destination wasn't even rendering the page |
+| Round 2 | 95 % | ~25 % | Edit-row + IB popup declared "already correct" by an agent without ground-truth |
+| Round 3 | "Code 100 %" | ~15 % | Replaced bubble+notch with flat stripe but kept it at the top of the table. Wrong pattern. |
+| Round 4 | 95–97 % | ~20 % | New alert-dialog component shipped (real) but dev-serve was stale — no live proof |
+| Round 5 | 94 % | **0 %** | Live bundle verified but user rejected the actual UX |
 
-## Trend
+## Per-section parity (corrected)
 
-| Date | Pixel parity | Note |
+| Section | Score | Notes |
 |---|---:|---|
-| 2026-05-14 (post Wave 17.5)   | ~75 % | Estimated from manual visual review |
-| 2026-05-15 (prior run, blocked) | n/a | Destination not visible (auth gate) |
-| **2026-05-15 (Round 1, post-unblock)** | **96.50 %** | Full destination render + automated diff |
+| tabs-header | 70 % | Active state works; minor token deltas remain |
+| **comm-channels-tab — read-only chrome** | 60 % | Header bg + footer bg directionally correct; row heights & paddings still off |
+| **comm-channels-tab — edit flow** | **0 %** | Three P0 defects above |
+| comm-channels-tab — IB popup | 30 % | New component shipped but Wave-15 wrapper renders it at 0×0 |
+| apps-services-tab | n/a | Deferred — not under inspection this round |
+| org-info-panel | n/a | Deferred |
+| settings-tab-view-mode | n/a | Deferred |
+| settings-tab-edit-mode | n/a | Deferred |
+| settings-ip-management | n/a | Deferred |
+| settings-account-limitation | n/a | Deferred |
+| otp-popup | n/a | Deferred |
 
-## Component-level fidelity
+## Why the previous scoring was misleading
 
-All Falcon components on the page are at parity:
-- Sidebar / Topbar / Layout chrome
-- Falcon Tabs (4 tabs, active underline, List/Tree toggle)
-- Falcon Tree (Falcon Clients section)
-- Falcon Data Table (header + paginator + empty-state slot)
-- Falcon Status Badge (palette match)
-- Falcon Angular Button (3 variants — primary, outline, ghost)
-- Falcon Icon (all icons)
-- Falcon Angular Dropdown (topbar user, rows-per-page)
+- **Pixel diff measured the wrong thing.** A flat stripe at the top of the table can pixel-match a flat stripe in the source if the algorithm doesn't know the stripe should be in a different DOM position.
+- **Agent self-reports were trusted.** Sub-agents reported "verified at runtime" based on snapshots that didn't include the post-save state or the second-edit reopen.
+- **Behavioral parity was never measured.** Save → row-collapse → chevron-appears → click-chevron → expand-and-see-staged-change was not part of any test case before Round 5, and even Round 5's test cases didn't cover the chevron because the agent harvested only 4 SoT screenshots in Round 3 and never confirmed the post-save UI.
+- **The "Falcon library first" rule was misread.** Agents picked the closest existing component (top-bar drawer) instead of the right structural pattern (Falcon Data Table row-expansion API) because the existing dialog "kind of fit" and the user hadn't yet locked the spec.
 
-## Remaining gaps (none P0/P1)
+## Conclusion
 
-- P2: Top-bar user widget empty under dev bypass (data, not layout)
-- P2: Tree shows only root clients (data, not layout)
-- P2: Status badge palette pending real-data verification
-- P3: 2 missing i18n keys (`hierarchy.users.emptyTitle/emptyBody`)
-- P3: Default rows-per-page 10 vs source 20
+**Visual parity for the comm-channels edit flow is 0 % until DEFECT-CCS-R5-P0-A/B/C are all closed with chrome-MCP screenshot evidence taken from the SAME test cases and SAME values the user has supplied (see `ROUND_6_PLAN.md`).**
