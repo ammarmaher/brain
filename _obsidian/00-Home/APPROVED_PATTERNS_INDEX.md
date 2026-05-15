@@ -9,7 +9,11 @@
 
 | Page | File | Count |
 |---|---|---|
-| organization-hierarchy | [APPROVED_PAGE_PATTERNS.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/APPROVED_PAGE_PATTERNS.md) | 0 (PP-001 still pending — see [PENDING_PAGE_PATTERNS.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/PENDING_PAGE_PATTERNS.md)) |
+| organization-hierarchy | [APPROVED_PAGE_PATTERNS.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/APPROVED_PAGE_PATTERNS.md) | 0 rows in `APPROVED_PAGE_PATTERNS.md` _(SoT sync gap — see below)_. PP-001 still pending in [PENDING_PAGE_PATTERNS.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/PENDING_PAGE_PATTERNS.md). Effective approvals from [[LE-20260515-commchannels-shadow-row-notch-alignment]]: 5 (UIUX-SHADOW-001..005, promoted directly into `UI_UX_RULES.md` without an `APPROVED_PAGE_PATTERNS.md` row) |
+
+## SoT sync gap (logged 2026-05-15)
+
+The shadow-row event `LE-20260515-commchannels-shadow-row-notch-alignment` carries `status: approved` in `LIGHT_LEARNING_EVENTS.md` and its 5 promoted rules landed in `UI_UX_RULES.md` — but no matching row was added to `APPROVED_PAGE_PATTERNS.md`. Recording here so the next Deep Page Learning run reconciles the registry.
 
 ## Globally-promoted patterns
 

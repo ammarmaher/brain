@@ -11,7 +11,11 @@
 
 | Page | Evidence index | Captured items |
 |---|---|---|
-| organization-hierarchy | [EVIDENCE_INDEX.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/EVIDENCE_INDEX.md) | 0 (seed) |
+| organization-hierarchy | [EVIDENCE_INDEX.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/EVIDENCE_INDEX.md) | **1** — `EV-20260515-commchannels-notch-missing` (linked event: [[LE-20260515-commchannels-shadow-row-notch-alignment]]) |
+
+## Latest evidence
+
+- [[LE-20260515-commchannels-shadow-row-notch-alignment]] — annotated screenshot + transcribed notes on commChannels-and-services tab notch-missing bug (image binary not persisted to disk; notes captured in SCREENSHOT_NOTES.md)
 
 ## Evidence entry rule
 

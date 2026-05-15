@@ -15,7 +15,11 @@
 
 | Page | Note | Pending | Approved | Last update |
 |---|---|---|---|---|
-| organization-hierarchy | [[Organization Hierarchy]] | 1 (PP-001) | 0 | 2026-05-15 |
+| organization-hierarchy | [[Organization Hierarchy]] | 1 (PP-001) | 1 (LE-commchannels-shadow-row-notch — 5 UIUX-SHADOW rules) | 2026-05-15 |
+
+## Latest learning events
+
+- [[LE-20260515-commchannels-shadow-row-notch-alignment]] — `organization-hierarchy` · `comm-channels-tab` + `apps-services-tab` · `falcon-data-table` (shadow rows) · **approved** Wave 20
 
 ## Trigger phrases (Deep Mode)
 

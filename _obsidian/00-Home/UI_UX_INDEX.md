@@ -9,7 +9,11 @@
 
 | Page | UI/UX rules file | Approved count |
 |---|---|---|
-| organization-hierarchy | [UI_UX_RULES.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/UI_UX_RULES.md) | 32 rules (baseline) |
+| organization-hierarchy | [UI_UX_RULES.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/UI_UX_RULES.md) | 32 baseline + **5 new** (UIUX-SHADOW-001..005, Wave 20) = **37** |
+
+## Latest promoted rules
+
+- **UIUX-SHADOW-001..005** (organization-hierarchy, 2026-05-15) — Falcon Data Table shadow-row feature contract. Source event: [[LE-20260515-commchannels-shadow-row-notch-alignment]]. Component: [[Falcon Data Table]].
 
 ## Cross-cutting UI/UX rules
 

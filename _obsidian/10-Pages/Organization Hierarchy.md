@@ -35,13 +35,20 @@
 - [[Falcon Uploader]] — photo uploader on org-info
 - [[Falcon Status Badge]] — rule status + audit mode badges
 
+## Learning events
+
+- [[LE-20260515-commchannels-shadow-row-notch-alignment]] — **approved** Wave 20. Bug → 5 UI/UX rules promoted (UIUX-SHADOW-001..005) + GAP-COMMCHANNELS-NOTCH-001 closed + 8 follow-ups opened in falcon-data-table dossier
+- `LE-20260515-organization-hierarchy-001` — **pending** approval. Falcon Data Table mandate (`ng-template` cells); promotion candidate for global `TABLE_PATTERN.md`
+
 ## Gaps + Evidence + Patterns
 
-- [GAP_REGISTRY.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/GAP_REGISTRY.md) — 14 gaps (baseline)
-- [EVIDENCE_INDEX.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/EVIDENCE_INDEX.md) — 0 entries (seed)
-- [APPROVED_PAGE_PATTERNS.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/APPROVED_PAGE_PATTERNS.md) — 0 approved
+- [GAP_REGISTRY.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/GAP_REGISTRY.md) — 14 gaps baseline · `GAP-COMMCHANNELS-NOTCH-001` closed Wave 20
+- [EVIDENCE_INDEX.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/EVIDENCE_INDEX.md) — **1 entry** (`EV-20260515-commchannels-notch-missing`)
+- [APPROVED_PAGE_PATTERNS.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/APPROVED_PAGE_PATTERNS.md) — 0 promoted rows _(SoT sync gap: 5 shadow-row rules landed directly in `UI_UX_RULES.md`; APPROVED_PAGE_PATTERNS still empty — next Deep Learning run will reconcile)_
+- [UI_UX_RULES.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/UI_UX_RULES.md) — 32 baseline + **5 new** Wave 20 shadow-row rules (UIUX-SHADOW-001..005)
 - [PENDING_PAGE_PATTERNS.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/PENDING_PAGE_PATTERNS.md) — **PP-001** Falcon Data Table mandate (pending Ammar approval)
 - [PROMOTION_CANDIDATES.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/PROMOTION_CANDIDATES.md) — PP-001 candidate for global [TABLE_PATTERN.md](../../outputs/understanding/frontend/patterns/TABLE_PATTERN.md)
+- [`light-learning/`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/light-learning/) — detailed per-event files
 
 ## Component usage decisions
 
