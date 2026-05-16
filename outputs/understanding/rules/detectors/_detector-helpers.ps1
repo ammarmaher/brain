@@ -72,20 +72,36 @@ function Get-RuleFrontmatter {
 
 function Convert-GlobToRegex {
   param([string] $Glob)
+  # Gitignore-style globs:
+  #   **/X    matches X anywhere (including at root)
+  #   X/**    matches X or any path starting with X/
+  #   **      in the middle matches any path components
+  #   *       matches any chars except /
+  $leading = ''
+  $trailing = ''
+  if ($Glob.StartsWith('**/')) {
+    $Glob = $Glob.Substring(3)
+    $leading = '(?:.*/)?'   # zero-or-more path components + slash, OR nothing
+  }
+  if ($Glob.EndsWith('/**')) {
+    $Glob = $Glob.Substring(0, $Glob.Length - 3)
+    $trailing = '(?:/.*)?'  # slash + anything, OR nothing
+  }
   $rx = [regex]::Escape($Glob)
-  $rx = $rx -replace '\\\*\\\*', '.*'
-  $rx = $rx -replace '\\\*',     '[^/\\\\]*'
-  $rx = $rx -replace '\\\?',     '.'
-  return '^' + $rx + '$'
+  $rx = $rx -replace '\\\*\\\*', '.*'        # inner ** -> any
+  $rx = $rx -replace '\\\*',     '[^/\\\\]*' # *        -> non-slash
+  $rx = $rx -replace '\\\?',     '.'         # ?        -> any single
+  return '^' + $leading + $rx + $trailing + '$'
 }
 
 function Test-PathMatches {
   param([string] $RelPath, [string[]] $Globs)
   if (-not $Globs -or $Globs.Count -eq 0) { return $false }
-  $norm = $RelPath -replace '\\', '/'
+  # Windows file paths are case-insensitive; rule globs should match the same way.
+  $norm = ($RelPath -replace '\\', '/').ToLowerInvariant()
   foreach ($g in $Globs) {
     if ([string]::IsNullOrWhiteSpace($g)) { continue }
-    $rx = Convert-GlobToRegex $g
+    $rx = Convert-GlobToRegex ($g.ToLowerInvariant())
     if ($norm -match $rx) { return $true }
   }
   return $false

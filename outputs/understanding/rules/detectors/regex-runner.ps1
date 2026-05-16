@@ -101,21 +101,32 @@ function Get-RuleFrontmatter {
 
 function Convert-GlobToRegex {
   param([string] $Glob)
-  # Convert a path glob (e.g. apps/**/*.html) into a regex
+  # Gitignore-style globs: leading **/ matches at root, trailing /** matches subtree-or-self.
+  $leading = ''
+  $trailing = ''
+  if ($Glob.StartsWith('**/')) {
+    $Glob = $Glob.Substring(3)
+    $leading = '(?:.*/)?'
+  }
+  if ($Glob.EndsWith('/**')) {
+    $Glob = $Glob.Substring(0, $Glob.Length - 3)
+    $trailing = '(?:/.*)?'
+  }
   $rx = [regex]::Escape($Glob)
-  $rx = $rx -replace '\\\*\\\*', '.*'        # **  -> .*
-  $rx = $rx -replace '\\\*',     '[^/\\\\]*' # *   -> [^/\\]*
-  $rx = $rx -replace '\\\?',     '.'         # ?   -> .
-  return '^' + $rx + '$'
+  $rx = $rx -replace '\\\*\\\*', '.*'        # inner ** → any
+  $rx = $rx -replace '\\\*',     '[^/\\\\]*' # *        → non-slash
+  $rx = $rx -replace '\\\?',     '.'         # ?        → any single
+  return '^' + $leading + $rx + $trailing + '$'
 }
 
 function Test-PathMatches {
   param([string] $RelPath, [string[]] $Globs)
   if (-not $Globs -or $Globs.Count -eq 0) { return $false }
-  # Normalize separators to forward-slash for matching
-  $norm = $RelPath -replace '\\', '/'
+  # Windows paths are case-insensitive — match the same way.
+  $norm = ($RelPath -replace '\\', '/').ToLowerInvariant()
   foreach ($g in $Globs) {
-    $rx = Convert-GlobToRegex $g
+    if ([string]::IsNullOrWhiteSpace($g)) { continue }
+    $rx = Convert-GlobToRegex ($g.ToLowerInvariant())
     if ($norm -match $rx) { return $true }
   }
   return $false
