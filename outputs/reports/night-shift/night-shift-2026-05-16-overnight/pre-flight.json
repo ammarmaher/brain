@@ -1,0 +1,23 @@
+﻿{
+    "boundariesPresent":  true,
+    "rulesFolderPresent":  true,
+    "brainSkPresent":  true,
+    "falconRootPresent":  true,
+    "detectorsFolderPresent":  true,
+    "brainSkWorkingTreeDirty":  true,
+    "detectedRepos":  [
+                          "C:\\Falcon\\Falcon\\falcon-core-access-svc",
+                          "C:\\Falcon\\Falcon\\falcon-core-charging-svc",
+                          "C:\\Falcon\\Falcon\\falcon-core-commerce-svc",
+                          "C:\\Falcon\\Falcon\\falcon-core-contact-group-svc",
+                          "C:\\Falcon\\Falcon\\falcon-core-identity-svc",
+                          "C:\\Falcon\\Falcon\\falcon-core-provisioning-svc",
+                          "C:\\Falcon\\Falcon\\falcon-core-templates-svc",
+                          "C:\\Falcon\\Falcon\\falcon-int-core-gateway-svc",
+                          "C:\\Falcon\\Falcon\\falcon-int-system-gateway-svc",
+                          "C:\\Falcon\\Falcon\\falcon-portal",
+                          "C:\\Falcon\\Falcon\\falcon-web-platform-ui"
+                      ],
+    "startedAt":  "2026-05-16T00:19:28.7177799Z",
+    "brainSkDirtyFiles":  86
+}

@@ -1,0 +1,13 @@
+﻿{
+    "runId":  "night-shift-2026-05-16-overnight",
+    "startedAt":  "2026-05-16T00:19:28.7177799Z",
+    "finishedAt":  "2026-05-16T01:12:30.3581807Z",
+    "durationMin":  53,
+    "reposScanned":  11,
+    "totalViolations":  275,
+    "mustCount":  255,
+    "shouldCount":  20,
+    "fetchCount":  11,
+    "briefingFile":  "C:\\Falcon\\Brain Outputs\\reports\\night-shift\\night-shift-2026-05-16-overnight\\morning-briefing-2026-05-16.md",
+    "dryRun":  false
+}

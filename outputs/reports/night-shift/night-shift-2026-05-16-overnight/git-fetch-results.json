@@ -1,0 +1,123 @@
+﻿[
+    {
+        "repo":  "falcon-core-access-svc",
+        "durationSec":  1.4,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-core-charging-svc",
+        "durationSec":  1.7,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-core-commerce-svc",
+        "durationSec":  1.8,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-core-contact-group-svc",
+        "durationSec":  1.4,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-core-identity-svc",
+        "durationSec":  1.6,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-core-provisioning-svc",
+        "durationSec":  1.5,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-core-templates-svc",
+        "durationSec":  2,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  1,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-int-core-gateway-svc",
+        "durationSec":  1.4,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-int-system-gateway-svc",
+        "durationSec":  2.7,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-portal",
+        "durationSec":  1.5,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "main",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/main"
+                        }
+    },
+    {
+        "repo":  "falcon-web-platform-ui",
+        "durationSec":  1.6,
+        "output":  "",
+        "aheadBehind":  {
+                            "branch":  "polishing-v0.4",
+                            "ahead":  0,
+                            "behind":  0,
+                            "tracking":  "origin/polishing-v0.4"
+                        }
+    }
+]
