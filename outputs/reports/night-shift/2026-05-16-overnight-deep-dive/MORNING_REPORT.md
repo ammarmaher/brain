@@ -1,10 +1,10 @@
 ﻿---
 type: morning-report
 runId: 2026-05-16-overnight-deep-dive
-generatedAt: 2026-05-16T00:44:05.0497054Z
+generatedAt: 2026-05-16T00:51:20.5763062Z
 artifacts:
-  perRuleFixPlans: 11
-  perFileFixPlans: 0
+  perRuleFixPlans: 20
+  perFileFixPlans: 30
   refactorPatterns: 18
   appScorecards: 7
   totalViolations: 2734
@@ -13,14 +13,14 @@ artifacts:
 
 # 🌅 Falcon Overnight Brain — Morning Report
 
-> Generated 2026-05-16 03:44. Welcome back.
+> Generated 2026-05-16 03:51. Welcome back.
 
 ## TL;DR — what last night produced
 
 | Artifact | Count | Folder |
 |---|---|---|
-| Per-rule fix plans | **11** | `per-rule/` |
-| Per-file fix plans (top offenders) | **0** | `per-file/` |
+| Per-rule fix plans | **20** | `per-rule/` |
+| Per-file fix plans (top offenders) | **30** | `per-file/` |
 | Refactor pattern atlas | **18** | `patterns/` |
 | App + lib scorecards | **7** | `per-app/` |
 | Real violations detected | **2734** | `audit/violations.jsonl` |
