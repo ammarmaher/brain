@@ -1,0 +1,125 @@
+﻿---
+type: morning-report
+runId: 2026-05-16-overnight-deep-dive
+generatedAt: 2026-05-16T00:44:05.0497054Z
+artifacts:
+  perRuleFixPlans: 11
+  perFileFixPlans: 0
+  refactorPatterns: 18
+  appScorecards: 7
+  totalViolations: 2734
+  mustSeverity: 2734
+---
+
+# 🌅 Falcon Overnight Brain — Morning Report
+
+> Generated 2026-05-16 03:44. Welcome back.
+
+## TL;DR — what last night produced
+
+| Artifact | Count | Folder |
+|---|---|---|
+| Per-rule fix plans | **11** | `per-rule/` |
+| Per-file fix plans (top offenders) | **0** | `per-file/` |
+| Refactor pattern atlas | **18** | `patterns/` |
+| App + lib scorecards | **7** | `per-app/` |
+| Real violations detected | **2734** | `audit/violations.jsonl` |
+| ↳ Must-severity (act on first) | **2734** | `audit/high-severity.md` |
+
+## The 10 highest-violation rules (across all audited repos)
+
+| Rank | Rule | Count | Fix plan |
+|---|---|---|---|
+| 1 | `R-FE-004` Tokens only â€” no hardcoded hex, px, or palette names | 2271 | [→](per-rule/r-fe-004-fix-plan.md) |
+| 2 | `R-NOOR-003` Typography scale â€” only documented type tokens allowed | 148 | [→](per-rule/r-noor-003-fix-plan.md) |
+| 3 | `R-FE-003` No inline styles, ever | 120 | [→](per-rule/r-fe-003-fix-plan.md) |
+| 4 | `R-FE-005` Falcon library FIRST â€” no raw HTML replacements | 111 | [→](per-rule/r-fe-005-fix-plan.md) |
+| 5 | `R-FE-001` Tailwind utilities only on Angular templates | 38 | [→](per-rule/r-fe-001-fix-plan.md) |
+| 6 | `R-NOOR-005` Color naming â€” palette over intent (Admin Console) | 24 | [→](per-rule/r-noor-005-fix-plan.md) |
+| 7 | `R-NOOR-007` i18n & RTL â€” strings from catalog, logical spacing only | 20 | [→](per-rule/r-noor-007-fix-plan.md) |
+| 8 | `R-NOOR-008` Global selector hygiene â€” no naked body/*/:root overrides | 2 | [→](per-rule/r-noor-008-fix-plan.md) |
+
+## The 10 worst-offender files
+
+| Rank | File | Violations | Fix plan |
+|---|---|---|---|
+| 1 | `libs/falcon-studio/src/lib/registry/component-tokens.generated.ts` | 1086 | per-file/01-*.md |
+| 2 | `libs/falcon-theme/src/falcon-tailwind-tokens.css` | 154 | per-file/02-*.md |
+| 3 | `apps/host-shell/src/app/features/falcon-ui-showcase/showcase-data/skeletons.ts` | 154 | per-file/03-*.md |
+| 4 | `libs/falcon-theme/src/tokens.ts` | 94 | per-file/04-*.md |
+| 5 | `libs/falcon-studio/src/lib/registry/abstraction-map.registry.ts` | 91 | per-file/05-*.md |
+| 6 | `apps/host-shell/src/app/features/falcon-ui-showcase/library-section/library-section.component.ts` | 83 | per-file/06-*.md |
+| 7 | `apps/host-shell/src/app/features/falcon-ui-showcase/library-section/empty-data-section.component.ts` | 78 | per-file/07-*.md |
+| 8 | `apps/host-shell/src/app/features/falcon-ui-showcase/gallery/showcase-code-panel.component.ts` | 63 | per-file/08-*.md |
+| 9 | `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html` | 61 | per-file/09-*.md |
+| 10 | `apps/admin-console/src/app/features/org-hierarchy-page/components/user-details/user-details-page.component.html` | 56 | per-file/10-*.md |
+
+## By repo
+
+| Repo | Violations |
+|---|---|
+| `falcon-web-platform-ui` | 2734 |
+
+## What every artifact contains
+
+### `per-rule/` — 22 plans (R-FE-* + R-NOOR-*)
+
+For each frontend rule, a fix plan with:
+- Rule restatement · violation count · severity
+- Why this matters (architectural cost)
+- Step-by-step fix instructions
+- Rollback hint
+- Verification command
+- Risk flags + related rules
+
+### `per-file/` — top 30 worst offenders
+
+For each top-30 file:
+- Per-rule violation breakdown
+- Ordered fix plan
+- Refactor opportunities
+- Verification + risk + related plans
+
+### `patterns/` — refactor cluster atlas
+
+For each repeating anti-pattern (≥5 occurrences):
+- Pattern description
+- Top file paths exhibiting it
+- Canonical replacement code
+- Detection regex (so future audits catch new instances)
+- Migration steps + estimated total effort
+
+### `per-app/` — per-app scorecards
+
+For each Nx app + top libs:
+- Health score 0-100
+- Rule-by-rule + folder-by-folder breakdown
+- Top 10 violating files in THIS app
+- Rules with zero violations (the good news)
+- Prioritized morning todo list
+
+## How to use this report tomorrow
+
+1. **Open** `patterns/PATTERNS_INDEX.md` — pick the 2-3 highest-leverage refactors
+2. **Cross-reference** the per-rule and per-file plans for context
+3. **Dispatch** to `ammar-web-platform-ui` agent: one pattern at a time
+4. **Re-run** the audit after each batch to measure drift
+5. **Promote** any new learning back to the rulebook (Session 3.x)
+
+## What did NOT run last night
+
+- AST detectors (FE/BE) — scaffolded only; need TS Compiler API + Roslyn build wiring (Session 3.1)
+- Brain API semantic-judge — dry-run only; live calls deferred (Session 3.2)
+- Auto-apply patches — boundary doctrine forbids until explicit approval (always)
+
+## Verification
+
+This report was generated by `synthesize-morning-report.ps1` from artifacts in:
+- `C:\Falcon\Brain Outputs\reports\night-shift\2026-05-16-overnight-deep-dive`
+
+Re-run anytime with:
+`powershell -ExecutionPolicy Bypass -File "C:\Falcon\Brain Outputs\reports\night-shift\2026-05-16-overnight-deep-dive\synthesize-morning-report.ps1"`
+
+---
+
+🌙 *Generated by Falcon Overnight Brain — Session 2.x + 3.0*

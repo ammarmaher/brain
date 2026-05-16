@@ -20,8 +20,8 @@ function Count-Files {
 
 $perRuleCount = Count-Files (Join-Path $Root 'per-rule')
 $perFileCount = Count-Files (Join-Path $Root 'per-file')
-$patternCount = Count-Files (Join-Path $Root 'patterns') - 1  # exclude PATTERNS_INDEX.md
-if ($patternCount -lt 0) { $patternCount = 0 }
+# Patterns folder: count PATTERN-*.md only (excludes PATTERNS_INDEX.md and any other indexes)
+$patternCount = (Get-ChildItem (Join-Path $Root 'patterns') -Filter 'PATTERN-*.md' -ErrorAction SilentlyContinue | Measure-Object).Count
 $perAppCount  = Count-Files (Join-Path $Root 'per-app')
 
 # Pull totals from audit JSONL (the bigger of the two)
