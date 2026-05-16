@@ -148,9 +148,15 @@ Tier 4 makes the brain a **living organism** instead of a snapshot.
 ## Today's Tier 4 status
 
 - ✅ [Onboarding Playbook](../../../Brain%20Outputs/understanding/frontend/continuous/ONBOARDING_PLAYBOOK.md) — full draft, 12-reading sequence, 8 verification questions
-- 🟠 [Anti-Pattern Catalog](../../../Brain%20Outputs/understanding/frontend/continuous/ANTI_PATTERN_CATALOG.md) — agent harvesting (target 40+ anti-patterns)
+- ✅ [Anti-Pattern Catalog](../../../Brain%20Outputs/understanding/frontend/continuous/ANTI_PATTERN_CATALOG.md) — **71 anti-patterns** across 8 categories (12 🔴 · 46 🟠 · 13 🟢)
 - ✅ [Performance Budget Tracker](../../../Brain%20Outputs/understanding/frontend/continuous/PERFORMANCE_BUDGET_TRACKER.md) — baselines + ledger + proposed budgets + measurement protocol
 - ✅ [Visual Component Story](../../../Brain%20Outputs/understanding/frontend/continuous/VISUAL_COMPONENT_STORY.md) — schema + index scaffold for all 62 components (snapshots populate over time)
+
+### 🔴 Top 3 anti-patterns to fix FIRST (per Anti-Pattern agent)
+
+1. **A-AP-10** — `auth/logout` never called from frontend (security blast radius, ~30 min fix)
+2. **R-AP-06** — `adminConsoleGuard` commented out (defense-in-depth disabled, one-line fix)
+3. **C-AP-01** — Stencil `@Prop()` clashes with `HTMLElement` member names (silent dist-emission skip, needs build-time gate)
 
 ## Related
 
