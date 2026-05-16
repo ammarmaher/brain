@@ -1,0 +1,4 @@
+node_modules/
+build-be/bin/
+build-be/obj/
+*.tsbuildinfo

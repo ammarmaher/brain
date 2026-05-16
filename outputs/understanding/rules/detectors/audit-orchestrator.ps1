@@ -25,7 +25,7 @@ if (Test-Path $violationsAll) { Remove-Item $violationsAll -Force }
 New-Item -ItemType File -Force -Path $violationsAll | Out-Null
 
 $engineLog = Join-Path $OutputFolder 'engine-runtimes.md'
-"# Engine runtimes — $RunId`n" | Set-Content $engineLog
+"# Engine runtimes — $RunId`n" | Set-Content $engineLog -Encoding UTF8
 
 Write-Host ""
 Write-Host "================================================================"
@@ -79,23 +79,106 @@ if (-not $SkipStructural) {
 }
 
 if (-not $SkipAst) {
-  # AST runners shipped as scaffolds in Session 2; they emit a single FYI row noting they're not yet executed.
-  $out = Join-Path $OutputFolder 'violations-ast.jsonl'
-  Invoke-Engine 'ast-runner (scaffold)' {
-    @{
-      ruleId = '(scaffold)'
-      ruleName = 'AST runners scaffolded but not yet wired'
-      detectorType = 'ast'
-      filePath = '(scaffold)'
-      lineNumber = 0
-      lineContent = 'Session 3 will execute ast-runner-fe.ts and ast-runner-be.cs'
-      matchedPattern = ''
-      severity = 'fyi'
-      runId = $RunId
-      detectedAt = $nowIso
-    } | ConvertTo-Json -Compress | Set-Content $out
+  # *** AST runners — Session 3 LIVE wiring ***
+  # *** FE: tsx + ast-runner-fe.ts (TypeScript Compiler API) ***
+  # *** BE: dotnet + build-be/.../FalconAstRunnerBE.dll (Roslyn) ***
+  # *** Each runs once per target repo. Missing toolchain falls back to FYI row. ***
+
+  # --- Detect tooling once ---
+  $tsxAvailable = $false
+  $nodeModules = Join-Path $PSScriptRoot 'node_modules'
+  try {
+    $null = & node --version 2>$null
+    if ($LASTEXITCODE -eq 0 -and (Test-Path $nodeModules)) { $tsxAvailable = $true }
+  } catch { $tsxAvailable = $false }
+
+  $dotnetAvailable = $false
+  $beDll = Join-Path $PSScriptRoot 'build-be/bin/Debug/net8.0/FalconAstRunnerBE.dll'
+  try {
+    $null = & dotnet --version 2>$null
+    if ($LASTEXITCODE -eq 0 -and (Test-Path $beDll)) { $dotnetAvailable = $true }
+  } catch { $dotnetAvailable = $false }
+
+  # --- FE AST runner ---
+  $outFe = Join-Path $OutputFolder 'violations-ast-fe.jsonl'
+  if (Test-Path $outFe) { Remove-Item $outFe -Force }
+  New-Item -ItemType File -Force -Path $outFe | Out-Null
+
+  if ($tsxAvailable) {
+    $tsxCli = Join-Path $PSScriptRoot 'node_modules/tsx/dist/cli.cjs'
+    $feRunner = Join-Path $PSScriptRoot 'ast-runner-fe.ts'
+    Invoke-Engine 'ast-runner-fe' {
+      foreach ($repo in $TargetRepos) {
+        $tmp = Join-Path $OutputFolder ("violations-ast-fe-" + [System.IO.Path]::GetFileName($repo) + ".jsonl")
+        Push-Location $PSScriptRoot
+        try {
+          & node $tsxCli $feRunner `
+              --rules $RulesFolder `
+              --target $repo `
+              --output $tmp `
+              --runId $RunId 2>&1 | Out-Host
+        } finally { Pop-Location }
+        if (Test-Path $tmp) {
+          Get-Content $tmp | Where-Object { $_ } | Add-Content $outFe
+          Remove-Item $tmp -Force
+        }
+      }
+    }
+  } else {
+    Invoke-Engine 'ast-runner-fe (fallback FYI)' {
+      @{
+        ruleId       = '(fallback)'
+        ruleName     = 'ast-runner-fe skipped — node + tsx not available'
+        detectorType = 'ast'
+        filePath     = '(toolchain)'
+        lineNumber   = 0
+        lineContent  = 'Install Node.js + run `npm install` in detectors/ to enable FE AST scans'
+        matchedPattern = ''
+        severity     = 'fyi'
+        runId        = $RunId
+        detectedAt   = $nowIso
+      } | ConvertTo-Json -Compress | Set-Content $outFe
+    }
   }
-  if (Test-Path $out) { Get-Content $out | Add-Content $violationsAll }
+  if (Test-Path $outFe) { Get-Content $outFe | Where-Object { $_ } | Add-Content $violationsAll }
+
+  # --- BE AST runner ---
+  $outBe = Join-Path $OutputFolder 'violations-ast-be.jsonl'
+  if (Test-Path $outBe) { Remove-Item $outBe -Force }
+  New-Item -ItemType File -Force -Path $outBe | Out-Null
+
+  if ($dotnetAvailable) {
+    Invoke-Engine 'ast-runner-be' {
+      foreach ($repo in $TargetRepos) {
+        $tmp = Join-Path $OutputFolder ("violations-ast-be-" + [System.IO.Path]::GetFileName($repo) + ".jsonl")
+        & dotnet $beDll `
+            --rules $RulesFolder `
+            --target $repo `
+            --output $tmp `
+            --runId $RunId 2>&1 | Out-Host
+        if (Test-Path $tmp) {
+          Get-Content $tmp | Where-Object { $_ } | Add-Content $outBe
+          Remove-Item $tmp -Force
+        }
+      }
+    }
+  } else {
+    Invoke-Engine 'ast-runner-be (fallback FYI)' {
+      @{
+        ruleId       = '(fallback)'
+        ruleName     = 'ast-runner-be skipped — dotnet SDK or build artifact missing'
+        detectorType = 'ast'
+        filePath     = '(toolchain)'
+        lineNumber   = 0
+        lineContent  = 'Install .NET SDK + run `dotnet build` in detectors/build-be/ to enable BE AST scans'
+        matchedPattern = ''
+        severity     = 'fyi'
+        runId        = $RunId
+        detectedAt   = $nowIso
+      } | ConvertTo-Json -Compress | Set-Content $outBe
+    }
+  }
+  if (Test-Path $outBe) { Get-Content $outBe | Where-Object { $_ } | Add-Content $violationsAll }
 }
 
 if (-not $SkipSemantic) {
@@ -181,9 +264,9 @@ foreach ($v in $highSev) {
   $summary += "| ``$($v.ruleId)`` | ``$($v.filePath)`` | $($v.lineNumber) | ``$snippet`` |`n"
 }
 
-$summary += "`n## Outputs`n- ``violations.jsonl`` — every violation as JSONL`n- ``violations-regex.jsonl`` · ``violations-structural.jsonl`` · ``violations-ast.jsonl`` · ``violations-semantic.jsonl`` — per-engine streams`n- ``engine-runtimes.md`` — performance + failure reasons`n"
+$summary += "`n## Outputs`n- ``violations.jsonl`` — every violation as JSONL`n- ``violations-regex.jsonl`` · ``violations-structural.jsonl`` · ``violations-ast-fe.jsonl`` · ``violations-ast-be.jsonl`` · ``violations-semantic.jsonl`` — per-engine streams`n- ``engine-runtimes.md`` — performance + failure reasons`n"
 
-$summary | Set-Content (Join-Path $OutputFolder 'AUDIT_SUMMARY.md')
+$summary | Set-Content (Join-Path $OutputFolder 'AUDIT_SUMMARY.md') -Encoding UTF8
 
 # violations-by-rule.md
 $byRuleMd = "# Violations by rule — $RunId`n`n"
@@ -198,7 +281,7 @@ foreach ($g in ($realViolations | Group-Object ruleId | Sort-Object Count -Desce
   }
   $byRuleMd += "`n"
 }
-$byRuleMd | Set-Content (Join-Path $OutputFolder 'violations-by-rule.md')
+$byRuleMd | Set-Content (Join-Path $OutputFolder 'violations-by-rule.md') -Encoding UTF8
 
 # violations-by-file.md
 $byFileMd = "# Violations by file — $RunId`n`n"
@@ -211,7 +294,7 @@ foreach ($g in ($realViolations | Group-Object filePath | Sort-Object Count -Des
   }
   $byFileMd += "`n"
 }
-$byFileMd | Set-Content (Join-Path $OutputFolder 'violations-by-file.md')
+$byFileMd | Set-Content (Join-Path $OutputFolder 'violations-by-file.md') -Encoding UTF8
 
 # high-severity.md
 $highMd = "# High-severity violations — $RunId`n`nAll ``severity: must`` rows below need attention before next ship.`n`n"
@@ -221,7 +304,7 @@ foreach ($v in ($realViolations | Where-Object { $_.severity -eq 'must' } | Sort
   $fix = if ($v.suggestedFix) { $v.suggestedFix } else { '_see rule note_' }
   $highMd += "| ``$($v.ruleId)`` | ``$($v.filePath)`` | $($v.lineNumber) | ``$snippet`` | $fix |`n"
 }
-$highMd | Set-Content (Join-Path $OutputFolder 'high-severity.md')
+$highMd | Set-Content (Join-Path $OutputFolder 'high-severity.md') -Encoding UTF8
 
 # Append totals to engine log
 "`n## Totals`n- Total emitted: $totalCount`n- Real violations: $($realViolations.Count)`n- must: $mustCount · should: $shouldCount · nice: $niceCount" | Add-Content $engineLog
