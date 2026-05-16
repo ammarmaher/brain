@@ -96,6 +96,139 @@ status: active
 
 ---
 
+## 🔵 Tier 2 Architecture findings (added 2026-05-16 afternoon)
+
+### D-2026-05-16-11 — `auth/logout` is never called from the frontend 🔴 HIGH
+
+**Source:** Agent E (Auth Flow Architecture). The frontend `logout()` only clears local state (`sessionStorage` + facades). The Identity Service `auth/logout` endpoint is **never invoked**, so:
+- No backend audit trail of logout events
+- No Zitadel session revocation
+- Compromised tokens stay valid until expiry
+
+**Options:**
+- ☐ Fix — wire `AuthApiService.logout()` HTTP call BEFORE local cleanup (recommended)
+- ☐ Defer — accept the gap; document as known issue
+- ☐ Investigate — is the endpoint already wired but disabled? Check the AuthService
+
+**Recommended:** Fix. ~30 min change in `LoginService` / `AuthService`.
+
+---
+
+### D-2026-05-16-12 — `adminConsoleGuard` is commented out 🔴 HIGH (security)
+
+**Source:** Agent F (Routing Topology). At `apps/admin-console/src/app/app.routes.ts` the `adminConsoleGuard` import is present but the `canActivate` binding is commented out. This means direct standalone access at `http://localhost:4204/admin-console` is ungated — host-side `shellAccessMatchGuard` only protects the federation route.
+
+**Options:**
+- ☐ Restore — uncomment the canActivate binding (defense-in-depth)
+- ☐ Remove the import — accept host-only gating, delete the dead import
+- ☐ Keep as-is — only matters in dev (standalone mode for admin-console testing)
+
+**Recommended:** Restore. Defense-in-depth is the doctrine; dev convenience can use the MockAuth fallback Agent E surfaced.
+
+---
+
+### D-2026-05-16-13 — Dead redirect targets cause wildcard-bounce loops 🔴 HIGH
+
+**Source:** Agent F. Admin-console redirects `''` → `organization-hierarchy` (doesn't exist). Management-console redirects `''` → `dashboard` (doesn't exist). Both fall through to the wildcard `**` route, which redirects back to `''`, creating a bounce loop in the browser URL bar.
+
+**Options:**
+- ☐ Fix both — redirect to a real landing page in each app
+- ☐ Add the missing routes — make `organization-hierarchy` and `dashboard` actual routes
+- ☐ Investigate — are these the right landing targets but the components are renamed?
+
+**Recommended:** Investigate first (the redirect targets may be misnamed); then fix accordingly. Likely 30 min including the audit.
+
+---
+
+### D-2026-05-16-14 — Refresh-token race across host + MF remotes 🟠 MEDIUM
+
+**Source:** Agent E. Each app has its own `AuthService` with a per-app refresh mutex. When the access token expires, host-shell + admin-console + management-console can each detect it simultaneously. The first remote to call `auth/refresh-token` rotates the refresh token; a parallel call from a second app fails with `invalid_grant` and forces a logout.
+
+**Options:**
+- ☐ Centralize refresh in host-shell — remotes proxy through DI `FALCON_AUTH` for refresh
+- ☐ Use a `BroadcastChannel` mutex across tabs/apps
+- ☐ Accept — the race is rare in practice; document as known limitation
+
+**Recommended:** Centralize via DI. The federation pattern already gives us `FALCON_AUTH` as a singleton — refresh should be the host's responsibility.
+
+---
+
+### D-2026-05-16-15 — Typography scale is non-monotonic 🟠 MEDIUM (bug)
+
+**Source:** Agent A (Token Taxonomy). `--text-xl` = 28px but `--text-2xl` = 24px. The scale goes backwards at that step.
+
+**Options:**
+- ☐ Swap the values (likely intent: `text-xl` 24px, `text-2xl` 28px) — restores monotonicity
+- ☐ Investigate — was this intentional? Check git blame
+- ☐ Accept — designers wanted the bump; document with a comment
+
+**Recommended:** Investigate + swap. Probably a typo from an earlier edit.
+
+---
+
+### D-2026-05-16-16 — Zombie prime-ng routes (Wave PR-8 cleanup) 🟠 MEDIUM
+
+**Source:** Agent F. Static-MF preview routes in host-shell still reference `prime-ng/organization-hierarchy` and similar paths that were removed in the PrimeNG purge. Dead routes pointing at deleted components.
+
+**Options:**
+- ☐ Remove dead routes — clean up host-shell routes table
+- ☐ Verify first — make sure no dynamic code references these route paths
+- ☐ Leave as fallback for if PrimeNG re-enters
+
+**Recommended:** Remove. PrimeNG is gone for good per memory `project_falcon_primeng_total_removal_complete`.
+
+---
+
+### D-2026-05-16-17 — Stale duplicate services in host-shell root 🟠 MEDIUM
+
+**Source:** Agent D + Agent B both flagged `apps/host-shell/src/app/remote-config.ts` and `apps/host-shell/src/app/remote-route.service.ts` as duplicates of canonical versions in `apps/host-shell/src/app/core/services/`.
+
+**Options:**
+- ☐ Delete the duplicates — keep only `core/services/` versions
+- ☐ Verify imports — make sure nothing imports the duplicates
+- ☐ Investigate — was the split intentional for legacy?
+
+**Recommended:** Delete after import audit (~15 min).
+
+---
+
+### D-2026-05-16-18 — Stray semicolon typo in tokens.css 🟢 LOW (1-min fix)
+
+**Source:** Agent A. `libs/falcon-theme/src/falcon-tailwind-tokens.css:75` has `--color-falcon-green-50: #F3F8F5;;` (double semicolon).
+
+**Options:**
+- ☐ Fix — remove the extra semicolon
+- ☐ Leave — Tailwind v4 ignores it; harmless
+
+**Recommended:** Fix. Trivial cleanup.
+
+---
+
+### D-2026-05-16-19 — management-console scaffolded but features/ is empty 🟢 LOW
+
+**Source:** Agent D. The `management-console` app exists, builds, has a Module Federation expose, has 1 route — but `src/app/features/` is empty. Is this intentional?
+
+**Options:**
+- ☐ Confirm intentional — keep as scaffold for future features
+- ☐ Remove the app — if no features are planned, don't ship an empty app
+- ☐ Add first feature — give it a real reason to exist
+
+**Recommended:** Confirm with you (this is a product decision).
+
+---
+
+### D-2026-05-16-20 — `mf-diagnostic.service.ts` + `mf-contract.ts` unaudited 🟢 LOW
+
+**Source:** Agent B. These two files weren't fully audited in the Module Federation deep-dive. Need a follow-up audit pass to confirm whether they're production code or dev tools.
+
+**Options:**
+- ☐ Audit follow-up — spawn a focused agent to review both files
+- ☐ Defer — flag for next architectural review
+
+**Recommended:** Defer to Tier 3 ADR work (the diagnostic service might warrant its own ADR).
+
+---
+
 ## 🟡 Decisions awaiting closure (carry-over from last run)
 
 (none — this is the first Decisions Queue note)
