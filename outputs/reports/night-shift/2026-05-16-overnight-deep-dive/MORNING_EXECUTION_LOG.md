@@ -1,4 +1,4 @@
----
+﻿---
 type: execution-log
 runId: morning-2026-05-16-do-all-5
 startedAt: 2026-05-16T07:35:00+03:00
@@ -69,12 +69,24 @@ status: in-progress
 **Acceptance:** Violations ≤ 5; all 3 apps build green.
 **Update:** _populated when agent reports_
 
-## Item 5 — AST runners LIVE wiring
+## Item 5 — AST runners LIVE wiring ✅
 
-**Status:** general-purpose agent running.
-**Mid-flight evidence:** `audit-orchestrator.ps1` has been updated with full LIVE wiring for both FE (tsx) and BE (Roslyn) runners, with toolchain detection + graceful FYI fallback. That's already-shipped progress before the agent's final report.
-**Remaining:** `package.json` install, `dotnet build` of `build-be/`, new test-fixtures for R-FE-007 + R-BE-002, extended `test-runner.ps1`, commit + push.
-**Update:** _populated when agent reports_
+**Status:** ✅ shipped — commit 2f3839 pushed to brain repo
+**Result:** ALL 10/10 fixtures PASS including the two new AST tests:
+  - R-FE-007 library-skeleton-injects-service detector: PASS
+  - R-BE-002 app-service-to-app-service detector: PASS
+**Setup:**
+  - tsx install: SUCCESS (32 packages, ~3s)
+  - dotnet build of build-be/FalconAstRunnerBE.csproj: SUCCESS (net8.0, ~6s)
+  - Orchestrator wired with toolchain fallback — graceful FYI if node/dotnet missing
+**End-to-end dry run:** 4.2s for all 4 engines on test fixtures
+**Files landed in brain repo (11 changed, +1171/-45):**
+  - package.json + package-lock.json + .gitignore
+  - build-be/FalconAstRunnerBE.csproj + Program.cs
+  - audit-orchestrator.ps1 (LIVE wiring)
+  - test-runner.ps1 (extended for AST)
+  - test-fixtures/R-FE-007/ + test-fixtures/R-BE-002/
+**Hard budget:** completed in ~12 min of 60 min budget
 
 ## Boundaries honored so far
 
