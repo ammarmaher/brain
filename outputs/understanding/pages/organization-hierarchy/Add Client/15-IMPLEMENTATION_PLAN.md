@@ -1,12 +1,13 @@
 ---
 type: implementation-plan
-purpose: frontend-only-plan-disk-true
-version: 2 (refined 2026-05-16 PM after disk inspection)
-supersedes: v1 (committed in c206449, based on stale playbook component table)
+purpose: frontend-only-plan-disk-true-with-resolutions-applied
+version: 2.1 (resolutions applied 2026-05-16 PM after 9-question research)
+supersedes: v2 (committed in 8db6771), v1 (committed in c206449)
+absorbs: 16-OPEN_QUESTIONS_RESOLVED.md (commit 6b656dd)
 playbook: Add Client wizard
 page: Organization Hierarchy
 prd: PRD-01 Account Management (+ PRD-02 trigger via Step 5)
-status: locked-disk-true
+status: locked-fully-resolved
 scope: frontend only (no backend; no code in this doc)
 implementation-owner: Ammar Mk
 related-flows:
@@ -15,17 +16,17 @@ related-flows:
   - Edit Node (separate)
 ---
 
-*** Add Client — Implementation Plan v2 (disk-true, frontend only) ***
-*** Built from actual code inspection, not the stale playbook table ***
-*** Replaces v1 — same playbook, more accurate state + per-step validations folder design ***
+*** Add Client — Implementation Plan v2.1 (disk-true + resolutions, frontend only) ***
+*** All 9 open questions resolved · Drift #1 retired · Step 2/5 simplified ***
+*** Replaces v2 — same structure, applied corrections from the resolution doc ***
 
-# 🧭 Add Client — Frontend Implementation Plan (v2)
+# 🧭 Add Client — Frontend Implementation Plan (v2.1)
 
-> Disk-true implementation plan for the **Add Client** 5-step wizard. Built by inspecting the actual `falcon-web-platform-ui/apps/admin-console/.../add-client-wizard/` folder + the `validators.ts`/`validation-messages.ts`/`AccountValidationService` infrastructure that already exists.
+> Disk-true implementation plan for the **Add Client** 5-step wizard. Built by inspecting the actual `falcon-web-platform-ui/apps/admin-console/.../add-client-wizard/` folder + the `validators.ts`/`validation-messages.ts`/`AccountValidationService` infrastructure that already exists. **All 9 open questions resolved** per [16-OPEN_QUESTIONS_RESOLVED.md](16-OPEN_QUESTIONS_RESOLVED.md).
 >
 > **Frontend only. No code in this doc. Implementation by Ammar.**
 
-## What v1 got wrong (and v2 fixes)
+## What v1 + v2 got wrong (and v2.1 fixes)
 
 V1's "Tier 0 — Stepper unification" was based on the playbook's 09-COMPONENTS table that called the current consumer `<falcon-stepper-legacy>`. **That table is stale.** Disk inspection 2026-05-16 PM shows:
 
@@ -34,15 +35,18 @@ V1's "Tier 0 — Stepper unification" was based on the playbook's 09-COMPONENTS 
 - Add User additionally imports `FalconAngularStepperComponent` from `@falcon/ui-core/angular` as a "visual verification harness" (the swap is one-line revertable)
 - Both wizards have all per-step folders + `models/models.ts` + `services/services.ts`
 
-**The real work today is NOT component unification — it's:**
+V2 inherited drift #1 from the playbook (PRD Normal/Advanced vs backend Low/Medium/High/Strict, HIGH severity, Q-UM-12). **Q3 research proved this is also stale.** The actual TypeScript enum is `ePasswordSecurityLevel { Normal = 1, Advanced = 2 }` — backend takes the same 2-value enum, matching PRD exactly. **Drift #1 is RETIRED. No mapping needed.**
+
+**The real work today is NOT component unification, NOT password mapping — it's:**
 
 1. Adding the missing `validations/` folder per step (user's specific ask)
 2. Wiring `AccountValidationService` async validators into the actual steps (currently Step 1 uses mock-tree local check)
-3. Designing the step-init API loading pattern (password policy, PES roles, lookup catalogs)
-4. Filling the V-rule + drift handling gaps
-5. Making PRD-mandatory required fields enforce client-side
+3. Loading PES grantable roles in Step 5 via the existing `AccessControlFacade` (Q2 resolution)
+4. Loading cascade lookups for Step 1 dropdowns (Authority → Sector chain)
+5. Filling the V-rule gaps + Budget Number conditional logic
+6. Adding a wizard-level `AddClientWizardStateService` for cross-step shared state (Q9 resolution)
 
-This plan reflects that.
+This plan reflects all 9 resolutions.
 
 ---
 
@@ -278,27 +282,35 @@ Each step's `services/services.ts` exposes a single `init$` Observable (or `init
 3. Replaces skeleton with form when resolved
 4. Shows error fallback if rejected (cached defaults + Light Learning event)
 
-### Per-step init data table
+### Per-step init data table (updated per Q1, Q2, Q6 resolutions)
 
 | Step | What loads on init | Endpoint / source | Defensive fallback |
 |---|---|---|---|
 | 1 — Information | Authority Letter options + Country/City/Sector cascade | `LookupService.getLookup(authorityLookupId)` + cascade endpoints | Use hardcoded `AUTHORITY_OPTIONS` from models if API fails; surface Light Learning event |
 | 1 — Information | Classification Category / Subcategory | `LookupService.getLookup(classCatLookupId)` (per drift Q-AM-11) | Use hardcoded `CLASS_CAT_OPTIONS` if API fails |
 | 1 — Information | Profile-picture upload pre-signed URL | Not on init — on submit; out of scope here | n/a |
-| 2 — Settings | **Password Policy** (per security level: min length + complexity rules) | NEW endpoint — **needs backend confirmation** (gap: not in playbook 08-BACKEND_API.md) | Use hardcoded policy with `passwordsAtLeast8` as minimum |
+| 2 — Settings | _(no init API call)_ — Security Level is a static 2-value enum | n/a (per Q1 + Q3) — `ePasswordSecurityLevel { Normal = 1, Advanced = 2 }` | n/a |
 | 2 — Settings | IP-pattern validator config | Static — no API call needed | n/a |
-| 3 — CommChannels | CommChannels catalog (one row per channel) | `GET /api/Setting/comm-channel-configs` | Use `mock-applications.ts` fallback |
-| 4 — Applications | Apps catalog (one row per app) | `GET /api/Setting/application-configs` (per playbook) — **verify exists** | Use mock catalog fallback |
-| 5 — Account Owner | **PES grantable roles** for current actor + target node | `POST /pes/authorize` (per playbook 01-PERMISSIONS + Auth Flow Architecture) | Fall back to safest minimum (Normal User only); surface Light Learning event |
-| 5 — Account Owner | **Password Policy** (server-generated password preview) | Same endpoint as Step 2's policy load — share the result via wizard state | Same fallback as Step 2 |
+| 3 — CommChannels | CommChannels catalog (one row per channel) | **Endpoint NOT in Commerce ENDPOINT_REGISTRY** — backend confirmation needed (per Q6) | **Use `mock-applications.ts` fallback** — Light Learning event on first real use |
+| 4 — Applications | Apps catalog (one row per app) | `GET /api/Application` (verified in Commerce ENDPOINT_REGISTRY, returns `List<ApplicationResponse>`) — per Q6 | Use mock catalog fallback if API fails |
+| 5 — Account Owner | **PES grantable roles** for current actor + target node | `AccessControlFacade.authorize(...)` from `libs/falcon/src/core/lib/access-control/access-control.facade.ts` (per Q2) — NOT raw `POST /pes/authorize` | Facade's internal fallback + Light Learning event on error |
 | 5 — Account Owner | Delivery method options | Static enum (Email / SMS / Both) | n/a |
+| 5 — Account Owner | _(no password policy loader)_ — password is server-generated at submit (per Q1) | n/a — `POST /api/user/generate-password` is only called if previewing the generated password | n/a |
 
-### Where init data lives once loaded
+### Where init data lives once loaded (per Q9 resolution)
 
-- **Step-local data** (e.g., per-step catalog) → step component signal
-- **Wizard-shared data** (e.g., Password Policy used by Step 2 AND Step 5) → wizard-level signal in `add-client-wizard.component.ts` OR a wizard-level `AddClientStateService` (new) injected into both steps
+- **Step-local data** (e.g., Step 1 cascade lookups) → step's `services/services.ts` service-local signal
+- **Wizard-shared data** (e.g., tenant context, current step, cross-step form values) → new wizard-level `AddClientWizardStateService`
 
-**Decision recommendation:** put wizard-shared state in a new `add-client-wizard/services/add-client-state.service.ts` (provided at the wizard component level via `providers: [...]`, NEVER `providedIn: 'root'` — per the R-FE-009 + state-mgmt doctrine).
+**Locked decision (Q9):** Create `AddClientWizardStateService` as a sibling class in `add-client-wizard/services/services.ts` (per R-FE-009 one-file-per-type-folder). Provided at the wizard component level via `providers: [AddClientWizardStateService]` on the `add-client-wizard.component.ts` decorator. **NEVER `providedIn: 'root'`** (per Tier 2 state architecture — wizard-instance-scoped).
+
+**What the new state service owns:**
+
+- The 5 step form-value signals (moved out of the wizard component)
+- The 5 step valid + dirty signals
+- `currentStep: signal<number>`
+- `tenantContext: signal<TenantContext>` (set on wizard open)
+- `selectedPasswordSecurityLevel: signal<ePasswordSecurityLevel>` (from Step 2, optionally read by Step 5 if password preview is shown)
 
 ---
 
@@ -403,45 +415,46 @@ User said: *"the validation must always work"*. Concrete steps:
 - ❌ **F-AP-04** any localStorage persistence of wizard draft (component-scoped signals only)
 - ❌ **S-AP-02** using BehaviorSubject where a signal would do (use `signal()` + `computed()` throughout)
 
-### Step 2 — Account Settings
+### Step 2 — Account Settings (simplified per Q1 + Q3 resolutions)
 
-**Status today:** Step component exists; form fields present; password policy NOT loaded from backend.
+**Status today:** Step component exists; form fields present. **No password-policy bootstrap needed.**
 
 **Files to create:**
-- `client-settings-step/models/models.ts` — `ClientSettingsFormValue`, `PasswordSecurityLevel` enum (backend codes Low/Medium/High/Strict), display-label mapping (Normal/Advanced per drift #1)
+- `client-settings-step/models/models.ts` — `ClientSettingsFormValue`. **`ePasswordSecurityLevel` already exists at page-level (`Normal = 1, Advanced = 2`) — import, don't redefine.** No display-label mapping needed (enum values ARE the labels).
 - `client-settings-step/services/services.ts` — new step service:
-  - `loadPasswordPolicy(level: PasswordSecurityLevel)` — loads server-driven password rules for selected level
-  - `init$` — loads default policy + IP-allowlist defaults
+  - `init$` — no API call. Returns immediately with default values + IP-allowlist defaults (defensive contract).
+  - (No `loadPasswordPolicy` — see Q1 resolution; security level is just metadata, password is server-generated at account submit time)
 - `client-settings-step/validations/validations.ts`:
-  - `step2Validators` — composes `cidrOrIpValidator`, `intInRange(1, 999)`, `percentage(0, 100)`
-  - `dynamicPasswordValidator(policy)` — composes password rules from loaded policy
+  - `step2Validators` — composes `cidrOrIpValidator`, `intInRange(1, 999)`, `percentage(0, 100)` from page-level `validators.ts`
   - `step2IsValid` + `step2FieldErrors`
+  - **No `dynamicPasswordValidator`** — Step 2 has no password input
 
 **Validation matrix for Step 2:**
 
 | Field | Sync rules | Async rules | Init data dependency |
 |---|---|---|---|
-| Password Security Level | required · valid enum | none | none (static enum) |
+| Password Security Level | required · valid `ePasswordSecurityLevel` (Normal = 1 or Advanced = 2) | none | none (static enum) |
 | Allowed IPs | required (≥1) · each item must match IPv4/IPv6/CIDR regex | none | none |
 | Max Normal User Limit | required · int · 1-999 (drift #5 — FE enforces because BE missing `[ThrowIf*]`) | none | none |
 | Max System User Limit | required · int · 1-999 | none | none |
 | Max Node Level | required · int · 1-999 | none | none |
 | Balance Transfer Limit (%) | required · int · 0-100 (drift #13 — display `%` suffix, serialize bare) | none | none |
 
-**Drift handling (specific code-level notes):**
+**Drift handling (updated per resolutions):**
 
-- **Drift #1 (HIGH — password level vocabulary)**: Step 2's dropdown displays PRD labels (Normal/Advanced), submits backend codes (Low/Medium/High/Strict). Lock the mapping in validations.ts. Recommended: `Normal → Medium`, `Advanced → Strict`. **Light Learning event** if backend rejects the mapping.
+- ~~Drift #1 (password level vocabulary)~~ — **RETIRED per Q3.** The TS enum is 2-value (Normal=1, Advanced=2); backend takes the same. No mapping logic needed. Update 13-GAPS_AND_DRIFTS to retire drift #1 when convenient.
 - **Drift #5 (limit fields lack `[ThrowIf*]`)**: comment in validations.ts: `// per drift #5 — FE enforces strict; BE only handler-level validation via InvalidAccountLimits (422)`
 - **Drift #13 (BalanceTransferLimit%)**: UI input has `%` suffix indicator; serializer in wizard's `services.ts` strips the `%` before sending
 
-### Step 3 — Configuring CommChannels & Services
+### Step 3 — Configuring CommChannels & Services (per Q6 PARTIAL resolution)
 
 **Status today:** Step component exists + shared `client-service-row-table` already extracted.
 
 **Files to create:**
 - `client-comm-channels-step/models/models.ts` — `ClientCommChannelsFormValue` (array of row configs), `CommChannelRowConfig`
 - `client-comm-channels-step/services/services.ts`:
-  - `loadCommChannelsCatalog()` — fetches the channels list from backend
+  - `loadCommChannelsCatalog()` — **endpoint NOT in Commerce ENDPOINT_REGISTRY (Q6 OPEN)** — interim fallback to `mock-applications.ts` + Light Learning event on first real-use mismatch
+  - **Action item for Ammar:** confirm with backend (1) exact GET endpoint name and (2) response DTO shape before this step ships with real data
   - Returns observable of catalog + caches in signal
 - `client-comm-channels-step/validations/validations.ts`:
   - `step3Validators` — per-row visibility + price-required-when-shown
@@ -455,29 +468,32 @@ User said: *"the validation must always work"*. Concrete steps:
 | PricingType | required IF Visibility = Show | none |
 | PriceValue | required IF Visibility = Show · positive number | none |
 
-### Step 4 — Configuring Applications & Services
+### Step 4 — Configuring Applications & Services (per Q6 LOCKED resolution)
 
 **Status today:** Step component exists + shares `client-service-row-table` with Step 3.
 
 **Files to create:** mirror of Step 3 structure (`models/`, `services/`, `validations/`).
 
+**Endpoint (Q6 resolved):** `GET /api/Application` returns `List<ApplicationResponse>` — verified in Commerce ENDPOINT_REGISTRY (commerce `ApplicationController` row 51). Defensive fallback to mock catalog if request fails.
+
 **Key insight:** Step 3 + Step 4 should pass `kind: 'commChannel' | 'app'` to the shared `client-service-row-table` so the row component drives its validator behavior accordingly. **No duplicated validation logic between Step 3 and Step 4.**
 
-### Step 5 — Account Owner Creation
+### Step 5 — Account Owner Creation (simplified per Q1 + Q2 + Q7 + Q8 resolutions)
 
-**Status today:** Step component exists; uses some local validation; PES integration likely hardcoded.
+**Status today:** Step component exists; uses some local validation.
 
 **Files to create:**
 - `client-account-owner-step/models/models.ts` — `ClientAccountOwnerFormValue`, `UserRoleKey`, `DeliveryMethod` enum
 - `client-account-owner-step/services/services.ts`:
-  - `loadGrantableRoles()` — calls PES once on wizard open → caches in signal
-  - `loadPasswordPolicy()` — same as Step 2 (share via wizard state if implemented)
+  - `loadGrantableRoles()` — calls **`AccessControlFacade.authorize(...)`** (per Q2) → caches in signal. NOT raw HTTP. The facade owns dedup, caching, error fallback.
+  - **No `loadPasswordPolicy`** — per Q1 resolution, password is server-generated at submit, no policy preview needed on Step 5
+  - (Optional future enhancement: call `POST /api/user/generate-password` if a "password preview" feature is requested — out of scope today)
 - `client-account-owner-step/validations/validations.ts`:
-  - `step5Validators` — name validators, email format, phone format
-  - **`usernameUniqueValidator(svc)`** AsyncValidatorFn factory
+  - `step5Validators` — composes `lettersOnly`, `phoneValidator` (E.164 per Q8), `emailValidator`, `USERNAME_MAX = 30` cap (per Q7, already in `validators.ts`)
+  - **`usernameUniqueValidator(svc)`** AsyncValidatorFn factory wrapping `AccountValidationService.isUserExist`
   - **`emailUniqueValidator(svc)`** AsyncValidatorFn factory
   - **`phoneUniqueValidator(svc)`** AsyncValidatorFn factory
-  - `roleGateValidator(grantableRoles)` — rejects roles the actor cannot grant
+  - `roleGateValidator(grantableRoles)` — rejects roles not in the cached PES `Allow` list
   - `step5IsValid` + `step5FieldErrors`
 
 **Validation matrix for Step 5:**
@@ -486,12 +502,14 @@ User said: *"the validation must always work"*. Concrete steps:
 |---|---|---|---|
 | First Name | required · letters only · 2-50 chars (`lettersOnly` validator) | none | none |
 | Last Name | required · letters only · 2-50 chars | none | none |
-| Username | required · letters-digits-or-email pattern · **30 char max (drift #2 — FE tighter than BE 100)** · immutable hint | **`usernameUniqueValidator`** → `AccountValidationService.isUserExist(username)` | none |
+| Username | required · letters-digits-or-email pattern · **30 char max (Q7 LOCKED — FE tighter than BE 100)** · immutable hint | **`usernameUniqueValidator`** → `AccountValidationService.isUserExist(username)` | none |
 | Email | required (drift #14 — FE enforces because BE missing `[ThrowIfNotPassed]`) · valid RFC | **`emailUniqueValidator`** → `AccountValidationService.isUserExist(*, email, *)` | none |
-| Phone Number | required (drift #14) · E.164 / Saudi format | **`phoneUniqueValidator`** → `AccountValidationService.isUserExist(*, *, phone)` | none |
+| Phone Number | required (drift #14) · **E.164 format (Q8 LOCKED — `phoneValidator`, not `saudiPhoneValidator`)** | **`phoneUniqueValidator`** → `AccountValidationService.isUserExist(*, *, phone)` | none |
 | Profile Picture | optional | none | none |
-| Role | required · must be in grantable-roles list | none (PES gate sync via cached list) | PES `POST /pes/authorize` |
+| Role | required · must be in grantable-roles list | none (gate sync via cached `AccessControlFacade` list per Q2) | `AccessControlFacade.authorize(...)` |
 | Delivery Method | required · one of {Email, SMS, Both} | none | none |
+
+**Note (Q1):** There is NO password input on Step 5. The playbook 06-STEP_5 says "server-generated; not rendered" — the AO sees the password on the credential-delivery message sent via the chosen Delivery Method after account creation succeeds.
 
 ### Shared component — `client-service-row-table`
 
@@ -524,12 +542,14 @@ User said: *"the validation must always work"*. This list is the safety net.
 2. **No async validator blocks UX.** While async is pending, the form is `pending`, not `invalid` — submit button is disabled BUT user can keep typing.
 3. **Failed async = soft no-op.** Network failure on `isUserExist` does NOT block submission. Backend handler is the safety net. Surface as Light Learning event.
 4. **Stale results never surface.** `switchMap` cancels in-flight requests on every value change.
-5. **No silent disabled state.** Every disabled control has a UI reason next to it (e.g., "Loading password policy…" while init is pending).
+5. **No silent disabled state.** Every disabled control has a UI reason next to it (e.g., "Loading cascade options…" while init is pending).
 6. **i18n always works.** Every validator returns a key from `validation-messages.ts` — never a raw string. If a key is missing, fallback to `hierarchy.validation.unknown` (must exist in en + ar catalogs).
 7. **No regex-in-template.** All regexes live in `validators.ts` (page-level) or `<step>/validations/validations.ts` (step-level) — never inlined in components.
 8. **`hasLiveError` + `messageFor` always used together.** Pattern from existing `client-information-step` — don't deviate.
 9. **No double-trigger.** Sync validator failing must SKIP async (no API call when sync is already failing).
 10. **Defensive cancellation.** Every component injecting an async validator uses `takeUntilDestroyed(inject(DestroyRef))` to clean up on destroy.
+11. **Catalog fallback (per Q6).** Step 3's CommChannels catalog endpoint is unverified in the Commerce ENDPOINT_REGISTRY. If the load fails or the endpoint doesn't exist yet, fall back to `mock-applications.ts` + Light Learning event. The wizard MUST NOT block on a missing catalog — defensive offline path always available.
+12. **PES failure soft-fallback (per Q2).** If `AccessControlFacade.authorize(...)` fails on Step 5 init, fall back to the safest minimum grantable role (`Normal User` only) + Light Learning event. The user can still proceed — backend will re-validate at submit.
 
 ---
 
@@ -603,33 +623,47 @@ This is the foundation. Once Session 0 lands, every subsequent step follows the 
 - ❌ Wizard shell changes
 - ❌ Backend changes (no backend work in this entire plan)
 - ❌ New Falcon library components (none needed — disk truth proved this)
-- ❌ Cross-step state service (defer to Session 2 when Step 2 needs shared password policy)
+- ⚖️ `AddClientWizardStateService` (Q9 LOCKED — recommended created in Session 1 once Step 1 is complete and cross-step needs emerge; not strictly needed for Session 0's Step 1 isolation)
 
 ---
 
-## 🚨 Section 10 — Gaps that need YOUR decisions BEFORE code
+## ✅ Section 10 — Open questions: ALL RESOLVED
 
-These are real questions the implementation will hit immediately. Resolve before code.
+The 9 implementation blockers originally listed here have been researched and resolved. See **[16-OPEN_QUESTIONS_RESOLVED.md](16-OPEN_QUESTIONS_RESOLVED.md)** for the full evidence + recommendations. Summary:
 
-| ID | Question | Blocks which step | Recommendation |
+| ID | Question | Status | Key outcome |
 |---|---|---|---|
-| **D-2026-05-16-NEW-Q1** | Step 2 password policy: does the backend endpoint exist? If not, FE uses hardcoded defaults? | Step 2 init load | Default to hardcoded with `passwordsAtLeast8` + Light Learning event |
-| **D-2026-05-16-NEW-Q2** | PES `POST /pes/authorize` payload shape — confirm with backend (or use `AccessControlFacade` per State Management Architecture) | Step 5 init | Use existing `AccessControlFacade` from `libs/falcon/src/core/lib/access-control/access-control.facade.ts` |
-| **D-2026-05-16-NEW-Q3** | Q-UM-12 — Password level mapping (Normal↔Medium, Advanced↔Strict)? | Step 2 | Lock the mapping; Light Learning event the first time backend disagrees |
-| **D-2026-05-16-NEW-Q4** | Q-AM-06 — Finance ID free-text or system-driven? | Step 1 | Default to free-text required (current behavior) until clarified |
-| **D-2026-05-16-NEW-Q5** | Drift #4 — Budget Number conditional on Authority ∈ {Gov, Charity}? | Step 1 | Apply this rule; comment with reference |
-| **D-2026-05-16-NEW-Q6** | Step 3 + 4 catalog endpoints — verify `GET /api/Setting/comm-channel-configs` + `application-configs` work in dev | Steps 3 + 4 | Verify before Session 3; if missing, use mock fallback + raise gap |
-| **D-2026-05-16-NEW-Q7** | Step 5 username max — drift #2 says FE enforces 30 but BE allows 100 — confirm? | Step 5 | FE enforces 30 (tighter); comment |
-| **D-2026-05-16-NEW-Q8** | Step 5 phone format — Saudi-only (`+966\d{9}`) or international (`E.164`)? | Step 5 | E.164 — broader; allow Saudi as a hint format |
-| **D-2026-05-16-NEW-Q9** | Cross-step state — provide a wizard-level `AddClientStateService` for shared init data (password policy etc.)? | Sessions 2 + 5 | Yes — `providers: [AddClientStateService]` on the wizard component |
+| Q1 | Step 2 password policy endpoint | ✅ LOCKED | **No policy endpoint needed.** Security level is enum metadata; password is server-generated at submit. Step 2 init is now empty (no API call). |
+| Q2 | PES integration approach | ✅ LOCKED | Use existing `AccessControlFacade` from `@falcon`. Full production pipeline (cache + dedup + fallback) already lives at `libs/falcon/src/core/lib/access-control/access-control.facade.ts`. |
+| Q3 | Q-UM-12 password level mapping | ✅ LOCKED | **Drift #1 is dead.** `ePasswordSecurityLevel { Normal = 1, Advanced = 2 }`. Backend takes the same enum. No mapping. |
+| Q4 | Q-AM-06 Finance ID source | ✅ LOCKED | Free-text required (current behavior). `anyStringValidator(2, 50, true)`. |
+| Q5 | Drift #4 Budget Number conditional | ✅ LOCKED | Required when Authority ∈ {Government, Charity}. Implement in Step 1 validations.ts. |
+| Q6 | Step 3 + 4 catalog endpoints | 🟠 PARTIAL | Step 4 = `GET /api/Application` (verified in Commerce ENDPOINT_REGISTRY). Step 3 = mock fallback + open backend question (endpoint not in registry). |
+| Q7 | Username 30 vs 100 (drift #2) | ✅ LOCKED | FE enforces 30 (already in `validators.ts USERNAME_MAX = 30`). |
+| Q8 | Phone format Saudi vs E.164 | ✅ LOCKED | E.164 (`phoneValidator`). Saudi format stays available for tenant-specific use. |
+| Q9 | Wizard-level state service | ✅ LOCKED | Create `AddClientWizardStateService` as sibling class in `add-client-wizard/services/services.ts`. Provided at wizard component level, NEVER `providedIn: 'root'`. |
+
+**Result: 8 fully locked + 1 partial (Q6 Step 3). Session 0 can begin immediately.**
+
+### Single open backend question (Q6 follow-up)
+
+**Action item for Ammar:** before Step 3 ships with real data (Session 3), confirm with backend team:
+
+1. What is the exact GET endpoint that returns the CommChannels catalog (one row per channel)?
+2. What is the response DTO shape?
+
+Until confirmed, Step 3 uses `mock-applications.ts` as the catalog source.
 
 ---
 
 ## 🧠 Section 11 — Brain artifacts this plan consumes
 
 - ✅ Add Client playbook (16 files, 62 KB)
+- ✅ **16-OPEN_QUESTIONS_RESOLVED.md** (commit `6b656dd`) — all 9 implementation blockers resolved with disk evidence
 - ✅ `validators.ts` + `validation-messages.ts` from disk
 - ✅ `AccountValidationService` from `libs/falcon/.../shared-data-access`
+- ✅ `AccessControlFacade` from `libs/falcon/src/core/lib/access-control/` (for Q2 PES integration)
+- ✅ `ePasswordSecurityLevel` enum from page-level `models/models.ts` (for Q3 — 2-value enum, not 4)
 - ✅ Component Atlas + 62 dossiers (Tier 1)
 - ✅ Folder Structure Deep-Dive (Tier 2 — confirmed the `models/services/validations` pattern)
 - ✅ State Management Architecture (Tier 2 — signal-first + feature-scoped service)
@@ -638,14 +672,16 @@ These are real questions the implementation will hit immediately. Resolve before
 - ✅ ADR-005 (dual-render not needed — components already exist)
 - ✅ ADR-008 (feature folder pattern — extended with `validations/` per step)
 - ✅ Anti-Pattern Catalog (Tier 4 — 11 entries actively relevant to wizard)
-- ✅ 14 PRD↔DTO drifts from playbook 13-GAPS_AND_DRIFTS
+- ✅ 14 PRD↔DTO drifts from playbook 13-GAPS_AND_DRIFTS (drift #1 retired per Q3)
+- ✅ Commerce ENDPOINT_REGISTRY (for Q6 — confirmed `GET /api/Application`)
+- ✅ Identity ENDPOINT_REGISTRY (for Q1 — confirmed `POST /api/user/generate-password`)
 - ✅ Existing dirty working-tree from the morning's PATTERN-04 + R-NOOR-007 work (must respect it)
 
 ---
 
 ## ✅ Plan locked
 
-Disk-true. Implementation owner: **Ammar Mk**. No code in this doc. The implementation work follows session-by-session per Section 8.
+Disk-true + fully resolved. Implementation owner: **Ammar Mk**. No code in this doc. The implementation work follows session-by-session per Section 8.
 
 When you start a session, paste Section 5's row for that step + Section 4's relevant async-validator wiring spec + Section 6's acceptance criteria. That's the kickoff brief.
 
@@ -655,12 +691,15 @@ When you start a session, paste Section 5's row for that step + Section 4's rele
 
 - [Add Client Playbook README](README.md)
 - [00-OVERVIEW](00-OVERVIEW.md) through [14-IMPLEMENTATION_CHECKLIST](14-IMPLEMENTATION_CHECKLIST.md)
+- **[16-OPEN_QUESTIONS_RESOLVED.md](16-OPEN_QUESTIONS_RESOLVED.md)** — the 9-question research absorbed into this v2.1 plan
+- v2 of this plan (superseded — commit `8db6771` in brain repo)
 - v1 of this plan (superseded — commit `c206449` in brain repo)
 - Actual code: `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/`
 - `services/validators.ts` + `services/validation-messages.ts` (page-level validation library)
 - `AccountValidationService` at `libs/falcon/src/shared-data-access/lib/services/account-validation.service.ts`
+- `AccessControlFacade` at `libs/falcon/src/core/lib/access-control/access-control.facade.ts`
 - [[Frontend Architecture Atlas]] · [[Component Atlas]] · [[Decisions Queue]]
 
 ## Tags
 
-#type/implementation-plan #flow/add-client #page/organization-hierarchy #disk-true #v2 #frontend-only #plan-locked
+#type/implementation-plan #flow/add-client #page/organization-hierarchy #disk-true #v2.1 #resolutions-applied #frontend-only #plan-locked
