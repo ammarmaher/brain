@@ -1,612 +1,653 @@
 ---
 type: implementation-plan
-purpose: frontend-only-plan-zero-code
+purpose: frontend-only-plan-disk-true
+version: 2 (refined 2026-05-16 PM after disk inspection)
+supersedes: v1 (committed in c206449, based on stale playbook component table)
 playbook: Add Client wizard
 page: Organization Hierarchy
 prd: PRD-01 Account Management (+ PRD-02 trigger via Step 5)
-created: 2026-05-16
-status: locked-pending-tier-0-decisions
+status: locked-disk-true
 scope: frontend only (no backend; no code in this doc)
 implementation-owner: Ammar Mk
-estimated-effort: 5 sessions (1 per step), preceded by 1 Tier-0 session
 related-flows:
-  - Add User (must share stepper component with Add Client)
-  - Add Node (separate, post-create dependency)
+  - Add User (already uses FalconStepperComponent — shared pattern, not shared component work)
+  - Add Node (separate)
   - Edit Node (separate)
 ---
 
-*** Add Client — Implementation Plan (Frontend Only) ***
-*** Locks the canonical sequence and decisions BEFORE code is written ***
-*** Consumes the full Add Client playbook + brain knowledge graph ***
-*** Implementation by Ammar — this doc is the spec, not the code ***
+*** Add Client — Implementation Plan v2 (disk-true, frontend only) ***
+*** Built from actual code inspection, not the stale playbook table ***
+*** Replaces v1 — same playbook, more accurate state + per-step validations folder design ***
 
-# 🧭 Add Client — Frontend Implementation Plan
+# 🧭 Add Client — Frontend Implementation Plan (v2)
 
-> The end-to-end implementation plan for the **Add Client** 5-step wizard on Organization Hierarchy. Frontend only. No backend changes. Every step references the canonical playbook + Falcon library + rulebook + ADRs + anti-pattern catalog from the morning's brain build-out.
+> Disk-true implementation plan for the **Add Client** 5-step wizard. Built by inspecting the actual `falcon-web-platform-ui/apps/admin-console/.../add-client-wizard/` folder + the `validators.ts`/`validation-messages.ts`/`AccountValidationService` infrastructure that already exists.
+>
+> **Frontend only. No code in this doc. Implementation by Ammar.**
 
-## Why this plan exists
+## What v1 got wrong (and v2 fixes)
 
-The Add Client playbook (16 files, 62 KB) tells you **what to build**. This plan tells you **the exact order to build it, the exact components to use, the exact rules to obey, the exact gaps you'll hit, and what to do about them.** It is the bridge between the brain and the code editor.
+V1's "Tier 0 — Stepper unification" was based on the playbook's 09-COMPONENTS table that called the current consumer `<falcon-stepper-legacy>`. **That table is stale.** Disk inspection 2026-05-16 PM shows:
 
-Read once. Implement step by step. Stop after each step to verify acceptance.
+- `add-client-wizard.component.ts` already imports `FalconStepperComponent` from `@falcon`
+- `add-user-wizard.component.ts` already imports `FalconStepperComponent` from `@falcon`
+- Add User additionally imports `FalconAngularStepperComponent` from `@falcon/ui-core/angular` as a "visual verification harness" (the swap is one-line revertable)
+- Both wizards have all per-step folders + `models/models.ts` + `services/services.ts`
 
----
+**The real work today is NOT component unification — it's:**
 
-## 📋 Section 0 — Executive summary
+1. Adding the missing `validations/` folder per step (user's specific ask)
+2. Wiring `AccountValidationService` async validators into the actual steps (currently Step 1 uses mock-tree local check)
+3. Designing the step-init API loading pattern (password policy, PES roles, lookup catalogs)
+4. Filling the V-rule + drift handling gaps
+5. Making PRD-mandatory required fields enforce client-side
 
-| Thing | Value |
-|---|---|
-| Page | Organization Hierarchy (`apps/admin-console/.../organization-hierarchy-page`) |
-| Wizard | Add Client — 5 mandatory + optional steps |
-| Transport | One composite `CreateAccountRequest` POSTed to Commerce on Step 5 submit |
-| Cross-flow | Step 5 fires Kafka `UserCreationRequested` → Identity → Add User flow runs server-side |
-| Permission gate | PES `Allow` on `Add Client` action + Falcon role matrix (sys-admin / operation* / product) |
-| Implementation owner | Ammar Mk |
-| Estimated sessions | 6 (1 Tier-0 + 5 per-step) |
-| Code change scope | `apps/admin-console/**` + `libs/falcon-ui-core/**/falcon-wizard/` + `libs/falcon-ui-core/**/falcon-stepper/` |
-| Backend work needed | **None** for this flow's MVP |
-
-*Operation cannot add Client per the role matrix — `Add Client` is `Not Allow` for Operation per the Permission list. They CAN run Add User on existing clients.
+This plan reflects that.
 
 ---
 
-## 🚦 Section 1 — Pre-flight (load these before any work)
+## 📋 Section 0 — Disk-true current state
 
-Per Brain SK CLAUDE.md "Permanent Rule: Flow Playbooks Are the Implementation Spec," the canonical sequence is:
+### What already exists (verified 2026-05-16 PM)
 
-1. `_obsidian/00-Home/IMPLEMENTATION_KNOWLEDGE_MAP.md`
-2. The Add Client playbook folder (all 16 files) — `Brain Outputs/understanding/pages/organization-hierarchy/Add Client/`
-3. Cross-flow: Add User playbook (`flows/Add User.md`) — for stepper unification (Section 2)
-4. Component dossiers for every `<falcon-*>` in the components table
-5. The 39-rule rulebook (especially R-FE-* and R-NOOR-*)
-6. The 8 ADRs (especially ADR-005 dual-render, ADR-008 feature folders)
-7. The Anti-Pattern Catalog — 71 entries, scan for any matching this flow's surface
-8. Open Decisions Queue rows (R-NOOR-003 amendment, the 3 HIGH anti-patterns)
+```
+apps/admin-console/src/app/features/org-hierarchy-page/
+├── models/
+│   └── models.ts                     ✅ page-level types (ClientNode, BackendSOR, etc.)
+├── services/
+│   ├── services.ts                   ✅ HierarchyService
+│   ├── validators.ts                 ✅ sync ValidatorFn library
+│   ├── validation-messages.ts        ✅ i18n key catalog + messageFor() + hasLiveError()
+│   ├── hierarchy-page-state.service.ts  ✅ 675-line page state
+│   ├── mock-tree.ts                  ✅ mock data
+│   ├── mock-applications.ts          ✅ mock data
+│   └── otp-mock.service.ts           ✅ OTP mock
+└── components/
+    └── wizard-components/
+        ├── add-client-wizard/
+        │   ├── add-client-wizard.component.ts/html  ✅ SHELL (FalconStepperComponent + per-step signals)
+        │   ├── index.ts                              ✅
+        │   ├── models/models.ts                      ✅ wizard form-value types
+        │   ├── services/services.ts                  ✅ AddClientApiService (POST commerce/Node/create-account)
+        │   ├── client-information-step/              ✅ Step 1 — partial implementation
+        │   ├── client-settings-step/                 ✅ Step 2 — partial implementation
+        │   ├── client-comm-channels-step/            ✅ Step 3 — partial implementation
+        │   ├── client-applications-step/             ✅ Step 4 — partial implementation
+        │   ├── client-account-owner-step/            ✅ Step 5 — partial implementation
+        │   └── client-service-row-table/             ✅ shared row table (Steps 3 + 4 consumer)
+        └── add-user-wizard/
+            ├── add-user-wizard.component.ts/html     ✅ same FalconStepperComponent pattern
+            ├── models/models.ts
+            ├── services/services.ts
+            ├── user-personal-step/
+            ├── user-role-status-step/
+            └── user-permissions-step/
 
-### The 8 verification questions for "session correctly grounded"
+libs/falcon/src/shared-data-access/lib/services/
+├── account-validation.service.ts     ✅ THE backend-calling async source
+│   ├── checkAccountNameExists(name)  → POST commerce/Node/ValidateAccountName (SystemGateway), returns boolean
+│   └── isUserExist(username, email?, phoneNumber?) → POST user/exist (IdentityGateway), returns boolean
+├── http.service.ts                   ✅ shared HttpService (used by all wizards)
+├── lookup.service.ts                 ✅ for cascade dropdowns
+└── ...
+```
 
-If you cannot answer all 8 with file citations, you are not ready to implement.
+### What's STUBBED / SHALLOW today
 
-1. ✅ Where is the `CreateAccountRequest` shape canonically defined?
-2. ✅ Which Falcon components compose Step 1? Step 5?
-3. ✅ What is the customization order rule (R-FE-005)?
-4. ✅ Why must Add Client and Add User share the same stepper?
-5. ✅ What is the casing convention for Commerce-bound requests?
-6. ✅ Which V-rules fire on Step 1 Account Name?
-7. ✅ What happens to `UserCreationRequested` after Step 5 submit?
-8. ✅ Where do the 14 documented PRD↔DTO drifts surface in code?
+| Step | What's there | What's missing |
+|------|---|---|
+| 1 — Information | Form fields + sync validators + mock-tree duplicate check | **Backend async validator (`AccountValidationService.checkAccountNameExists`) — Step 1 currently only checks against `mock-tree.ts`** |
+| 2 — Settings | Form fields | **Password Policy not loaded on init** (no API call for password-level rules); 4 limit fields lack documented `[ThrowIf*]` enforcement on backend (drift #5) — must enforce FE-side |
+| 3 — CommChannels | Row table + per-row controls | **Catalog source unclear** — verify if `GET /api/Setting/comm-channel-configs` is wired or if mock-only |
+| 4 — Applications | Same shape as Step 3 (shares row table) | Same catalog concern |
+| 5 — Account Owner | Form fields + (likely) hardcoded role enum | **PES-driven role dropdown missing** (must call PES for grantable roles); **`isUserExist` async validator not wired**; **password policy bootstrap missing** |
+| All | Per-step `valid` signal in wizard shell | **No per-step `validations/` folder** — validation logic is inlined in step components |
 
 ---
 
-## 🛠 Section 2 — Tier 0: Stepper unification (BEFORE Step 1)
+## 📁 Section 1 — Target folder structure (after this plan)
 
-**This is the user's specific request and is the gating prerequisite for everything else.**
+The convention extends the existing one. Every step folder gains a `validations/` subfolder. Per the R-FE-009 rule "one file per type-folder" — all validators for a step go in **one** file.
 
-### The current state — three different step-indicator components in two flows
+```
+add-client-wizard/
+├── add-client-wizard.component.ts/html   (unchanged shell)
+├── index.ts
+├── models/
+│   └── models.ts                          (wizard-level types — unchanged)
+├── services/
+│   └── services.ts                        (AddClientApiService — unchanged)
+├── client-information-step/
+│   ├── client-information-step.component.ts/html
+│   ├── index.ts
+│   ├── models/
+│   │   └── models.ts                      (NEW — step-1-only types: ClientInfoFormValue, AUTHORITY_OPTIONS, etc.)
+│   │                                       (currently in ../models/models.ts — move here for locality)
+│   ├── services/
+│   │   └── services.ts                    (NEW — step-1 init data loading: cascade Sector dropdown, lookup tables)
+│   └── validations/
+│       └── validations.ts                 (NEW — step-1 sync + async validators + form schema)
+├── client-settings-step/
+│   ├── client-settings-step.component.ts/html
+│   ├── index.ts
+│   ├── models/models.ts                   (NEW — ClientSettingsFormValue + password-level enums)
+│   ├── services/
+│   │   └── services.ts                    (NEW — password-policy loader, IP-pattern lookup, limit defaults)
+│   └── validations/
+│       └── validations.ts                 (NEW — password-level mapping, IP validator, limit-range validators)
+├── client-comm-channels-step/
+│   ├── client-comm-channels-step.component.ts/html
+│   ├── index.ts
+│   ├── models/models.ts
+│   ├── services/
+│   │   └── services.ts                    (NEW — CommChannels catalog loader)
+│   └── validations/
+│       └── validations.ts                 (NEW — per-row visibility + price validators)
+├── client-applications-step/
+│   ├── client-applications-step.component.ts/html
+│   ├── index.ts
+│   ├── models/models.ts
+│   ├── services/
+│   │   └── services.ts                    (NEW — Apps catalog loader)
+│   └── validations/
+│       └── validations.ts                 (NEW — per-row validators, mirror of step-3)
+├── client-account-owner-step/
+│   ├── client-account-owner-step.component.ts/html
+│   ├── index.ts
+│   ├── models/models.ts                   (NEW — Step-5 types: UserPersonalFormValue, DeliveryMethod enum)
+│   ├── services/
+│   │   └── services.ts                    (NEW — PES role loader, password-policy bootstrap)
+│   └── validations/
+│       └── validations.ts                 (NEW — username/email/phone async validators, name validators, role gate)
+└── client-service-row-table/
+    ├── client-service-row-table.component.ts/html
+    ├── index.ts
+    ├── models/models.ts                    (NEW — shared RowConfig type)
+    └── validations/
+        └── validations.ts                  (NEW — per-row visibility-toggles-show / price-required validators)
+```
 
-| Flow | Step indicator | Shell | Location |
+**Convention rules:**
+- ✅ One `validations.ts` file per step folder — ALL step-specific validators live there
+- ✅ One `services/services.ts` per step folder — ALL step-specific HTTP / init data loaders live there
+- ✅ One `models/models.ts` per step folder — ALL step-specific types live there
+- ✅ All four type-folders (`models`, `services`, `validations`, plus the step component itself) follow R-FE-009 one-file-per-type-folder rule
+- ✅ Shared validators (used by 2+ steps OR by the page-level state service) stay in `services/validators.ts` at the page level
+- ✅ Shared HTTP services that the wizard itself uses end-to-end stay in `add-client-wizard/services/services.ts` (e.g., `AddClientApiService`)
+
+**What NOT to move:**
+- `services/validators.ts` at the page level — keep it; it's the shared library
+- `services/validation-messages.ts` at the page level — keep it; it's the i18n catalog all steps use
+- Backend-bound async services (`AccountValidationService`) — stay in `libs/falcon/src/shared-data-access/lib/services/` (universal singleton); each step's `validations.ts` wraps them in `AsyncValidatorFn`
+
+---
+
+## 🛡 Section 2 — Validation architecture (the centerpiece)
+
+### Five layers, well-defined responsibilities
+
+```
+                       UI / Step Component
+                              │
+                              ▼
+        ┌──────────────────────────────────────────┐
+        │  Layer 5: validation-messages.ts          │  ← i18n key resolver (ValidationErrors → ValidationMessage)
+        │           hasLiveError() + messageFor()   │     SHARED — DO NOT DUPLICATE per step
+        └──────────────────────────────────────────┘
+                              │
+                              ▼
+        ┌──────────────────────────────────────────┐
+        │  Layer 4: services/validators.ts          │  ← pure sync ValidatorFn library
+        │           (page-level shared)             │     accountNameValidator, lettersAndDigits, etc.
+        └──────────────────────────────────────────┘
+                              │
+                              ▼
+        ┌──────────────────────────────────────────┐
+        │  Layer 3: <step>/validations/             │  ← NEW per-step folder (this plan's deliverable)
+        │           validations.ts                  │     - composes shared sync validators
+        │                                           │     - declares step-specific cross-field rules
+        │                                           │     - exports AsyncValidatorFn factories that wrap Layer 2
+        └──────────────────────────────────────────┘
+                              │
+                              ▼
+        ┌──────────────────────────────────────────┐
+        │  Layer 2: <step>/services/services.ts     │  ← step-init data + per-call API wrappers
+        │           (NEW per-step service)          │     - loadPasswordPolicy(), loadSectorsForAuthority()
+        │                                           │     - per-step adapter over AccountValidationService
+        │                                           │       (debounced, signal-friendly, cancellable)
+        └──────────────────────────────────────────┘
+                              │
+                              ▼
+        ┌──────────────────────────────────────────┐
+        │  Layer 1: AccountValidationService et al  │  ← backend-bound singletons (already exists)
+        │           libs/falcon/.../shared-data-     │     - checkAccountNameExists()
+        │           access                          │     - isUserExist()
+        │                                           │     - (FUTURE) loadPasswordPolicy()
+        └──────────────────────────────────────────┘
+```
+
+### The 5 validation types we'll wire
+
+| Type | Where it runs | Trigger | Example |
 |---|---|---|---|
-| **Add Client** (legacy, current consumer) | `<falcon-stepper-legacy>` | `<falcon-dialog>` (modal) | `libs/falcon-ui-core/**/falcon-stepper-legacy/` |
-| **Add Client** (modern target) | `<falcon-stepper>` | `<falcon-wizard>` | `libs/falcon-ui-core/**/falcon-stepper/` + `falcon-wizard/` |
-| **Add User** (current target) | `<falcon-tabs>` | `<falcon-wizard>` | `libs/falcon-ui-core/**/falcon-tabs/` + `falcon-wizard/` |
+| **Sync — required + format** | Layer 4 → Layer 3 | on every keystroke (live errors per `LIVE_ERROR_KEYS`) | Account Name min/max + letters-prefix |
+| **Sync — cross-field** | Layer 3 | on form value change | Step 2: `MaxNormalUserLimit + MaxSystemUserLimit ≤ totalUserCap` if a cap rule exists |
+| **Async — backend uniqueness** | Layer 3 → Layer 2 → Layer 1 | on field blur (NOT every keystroke — costs API call) | Account Name uniqueness, Username uniqueness, Email already-in-use |
+| **Async — bootstrap rules** | Layer 2 (loader) | on step init | Password Policy: load rules, compose dynamic password validator |
+| **Cross-step** | wizard shell | on Submit pre-flight | Step 5 username must be different from any user added in this same wizard draft (rare) |
 
-**The user's directive:** Add Client must use the **same** stepper as Add User. Today they don't. Three components doing similar things creates drift, doubles maintenance, and prevents shared UX patterns (error states, progress, RTL, accessibility).
+### How errors surface to UI (don't re-invent — this already works)
 
-### The unification decision (resolves a Decisions Queue row)
+The current code uses this exact pattern in `client-information-step.component.ts`:
 
-Pick **ONE** step-indicator component to be canonical for both flows.
+1. Each form value is a **signal** (`model.required<ClientInfoFormValue>()`)
+2. Each error is a **computed** that returns `ValidationMessage | null`
+3. `hasLiveError(errors)` determines whether to show during typing or wait for blur
+4. `messageFor(errors)` resolves error key → translated message via i18n
+5. Template uses `*ngIf="error()"` to show error UI inline below field
 
-| Option | Pros | Cons | Recommendation |
+**This pattern WORKS. Don't redesign. Adopt it for every new step + every new validator.**
+
+### How async validators MUST be wired (the user's specific ask)
+
+The `AccountValidationService` exists with `checkAccountNameExists()` and `isUserExist()`. But Step 1 today checks via `collectAccountNames(treeRoot)` — that's a LOCAL mock check. Real implementation must:
+
+1. **Wrap the singleton call in an `AsyncValidatorFn`** at `client-information-step/validations/validations.ts`:
+   - signature: `accountNameUniqueValidator(svc: AccountValidationService): AsyncValidatorFn`
+   - inside: `(control) => svc.checkAccountNameExists(control.value).pipe(map(exists => exists ? { duplicateAccountName: true } : null))`
+2. **Debounce inside the wrapper** — 350ms `debounceTime` so it doesn't fire on every keystroke (user pause = check)
+3. **Cancel pending requests** when the value changes (`switchMap` not `mergeMap`)
+4. **Suppress error toaster** — already handled by `notShowToaster: 'true'` header in `AccountValidationService` — confirm it propagates through
+5. **Combine with sync validator** — if sync fails (e.g., name too short), DON'T call async (waste of API)
+6. **Loading state in UI** — show a small spinner next to the field while async is pending; resolve to ✓ or error message
+
+Same pattern for `isUserExist` in Step 5 for username/email/phone uniqueness.
+
+---
+
+## 🚀 Section 3 — Step-init API loading pattern
+
+Several steps need to load data on init. The pattern:
+
+### The init contract per step service
+
+Each step's `services/services.ts` exposes a single `init$` Observable (or `initSignal()` if signal-style preferred). The step component:
+
+1. Calls `init$` on `ngOnInit` (or `effect()` if signal)
+2. Shows loading skeleton while pending
+3. Replaces skeleton with form when resolved
+4. Shows error fallback if rejected (cached defaults + Light Learning event)
+
+### Per-step init data table
+
+| Step | What loads on init | Endpoint / source | Defensive fallback |
 |---|---|---|---|
-| **A. Both use `<falcon-stepper>`** (Add User migrates from `<falcon-tabs>`) | Clear progress indicator with step numbers + error state per step. Better for 5-step wizards like Add Client. | Add User's PRD says "tabs" — semantic drift. Need PRD reconciliation. | ⚖️ semi-recommended if 5-step UX is the target |
-| **B. Both use `<falcon-tabs>`** (Add Client migrates from `<falcon-stepper-legacy>`) | Matches PRD-02 wording for Add User. Tabs are friendlier for short flows. | Less suitable for 5 sequential mandatory steps with error states. Add Client loses progress affordance. | ❌ not recommended |
-| **C. New unified `<falcon-wizard-stepper>` component** that wraps both visual modes (stepper or tabs) via input | Best of both worlds. One canonical component. Single API surface. | Requires new library work. Adds complexity to `falcon-wizard` family. | ✅ **RECOMMENDED for long-term** |
-| **D. Status quo, document the divergence** | No work today. | Tech debt compounds. User explicitly rejected this. | ❌ ruled out by user |
+| 1 — Information | Authority Letter options + Country/City/Sector cascade | `LookupService.getLookup(authorityLookupId)` + cascade endpoints | Use hardcoded `AUTHORITY_OPTIONS` from models if API fails; surface Light Learning event |
+| 1 — Information | Classification Category / Subcategory | `LookupService.getLookup(classCatLookupId)` (per drift Q-AM-11) | Use hardcoded `CLASS_CAT_OPTIONS` if API fails |
+| 1 — Information | Profile-picture upload pre-signed URL | Not on init — on submit; out of scope here | n/a |
+| 2 — Settings | **Password Policy** (per security level: min length + complexity rules) | NEW endpoint — **needs backend confirmation** (gap: not in playbook 08-BACKEND_API.md) | Use hardcoded policy with `passwordsAtLeast8` as minimum |
+| 2 — Settings | IP-pattern validator config | Static — no API call needed | n/a |
+| 3 — CommChannels | CommChannels catalog (one row per channel) | `GET /api/Setting/comm-channel-configs` | Use `mock-applications.ts` fallback |
+| 4 — Applications | Apps catalog (one row per app) | `GET /api/Setting/application-configs` (per playbook) — **verify exists** | Use mock catalog fallback |
+| 5 — Account Owner | **PES grantable roles** for current actor + target node | `POST /pes/authorize` (per playbook 01-PERMISSIONS + Auth Flow Architecture) | Fall back to safest minimum (Normal User only); surface Light Learning event |
+| 5 — Account Owner | **Password Policy** (server-generated password preview) | Same endpoint as Step 2's policy load — share the result via wizard state | Same fallback as Step 2 |
+| 5 — Account Owner | Delivery method options | Static enum (Email / SMS / Both) | n/a |
 
-**RECOMMENDED PATH: Option C** — new unified `<falcon-wizard-stepper>` skeleton (Stencil) + Angular wrapper, with `[visualMode]="'stepper' | 'tabs'"` input. Both flows consume it; both call the same component; visual difference is a prop, not a different component.
+### Where init data lives once loaded
 
-### Tier 0 deliverables (1 session before any per-step work starts)
+- **Step-local data** (e.g., per-step catalog) → step component signal
+- **Wizard-shared data** (e.g., Password Policy used by Step 2 AND Step 5) → wizard-level signal in `add-client-wizard.component.ts` OR a wizard-level `AddClientStateService` (new) injected into both steps
 
-1. **Author the new `<falcon-wizard-stepper>` skeleton** in `libs/falcon-ui-core/src/components/falcon-wizard-stepper/`:
-   - Stencil component, dual-render (Shadow + `-tw` variant per ADR-005)
-   - Inputs: `steps: WizardStep[]`, `currentStep: number`, `visualMode: 'stepper' | 'tabs'`, `errorSteps: number[]`, `disabledSteps: number[]`
-   - Outputs: `stepChange` (with from + to + reason), `stepError`, `stepHover`
-   - Slots: `<slot name="step-content"/>` (per-step body), `<slot name="actions"/>` (footer buttons)
-   - Tokens: `falcon-wizard-stepper.tokens.css` (per Token Taxonomy convention)
-   - Falcon library tier: composite (composes `<falcon-button>` for nav + `<falcon-status-badge>` for error states)
-2. **Author the Angular wrapper** at `libs/falcon-ui-core/angular-wrapper/falcon-wizard-stepper/`:
-   - `<falcon-angular-wizard-stepper>` tag
-   - `useTailwind: boolean` input (default `true` per ADR-005)
-   - Type-safe `WizardStep` interface exported from wrapper
-3. **Write the 6-file dossier** at `Brain Outputs/understanding/frontend/components/falcon-wizard-stepper/`:
-   - OVERVIEW · API · USAGE · TOKENS · GAPS_AND_UPGRADES · DECISION
-4. **Migrate `<falcon-wizard>`** to compose `<falcon-wizard-stepper>` internally (so existing consumers benefit transparently)
-5. **Deprecate `<falcon-stepper-legacy>`** — set `status: deprecated` in DECISION.md, list the migration target as `<falcon-wizard-stepper>` with `visualMode='stepper'`
-6. **Update the Component Atlas** + Tier 1 dossier index
-7. **Add R-FE-NEW rule:** "Multi-step flows in admin-console must use `<falcon-wizard-stepper>`; new uses of `<falcon-stepper-legacy>` are violations"
-8. **Update both playbooks** (Add Client + Add User) to reference the unified component
-
-### Tier 0 acceptance criteria
-
-- ✅ `<falcon-wizard-stepper>` skeleton + Angular wrapper build green
-- ✅ Both `visualMode='stepper'` and `visualMode='tabs'` render correctly in showcase
-- ✅ RTL parity confirmed (both modes mirror correctly under `dir="rtl"`)
-- ✅ Component dossier complete (6 files) + Atlas updated
-- ✅ Legacy stepper marked deprecated with clear migration target
-- ✅ Add Client playbook (this folder's 09-COMPONENTS.md) updated to point at the unified component
-
-**Estimated effort:** 1 full session. The user implements; this plan is the spec.
+**Decision recommendation:** put wizard-shared state in a new `add-client-wizard/services/add-client-state.service.ts` (provided at the wizard component level via `providers: [...]`, NEVER `providedIn: 'root'` — per the R-FE-009 + state-mgmt doctrine).
 
 ---
 
-## 📐 Section 3 — Per-step implementation breakdown
+## 🔌 Section 4 — Async validator wiring (the user's specific custom-validation ask)
 
-Each step below is its own session. Build → verify → commit (per `feedback_never_commit_without_explicit_permission`) → next step.
+The two backend-bound checks the user mentioned:
 
-### Step 1 — Account Information (mandatory)
+### 4.1 Account Name uniqueness (Step 1)
 
-**Reference:** [02-STEP_1_BASIC_INFO.md](02-STEP_1_BASIC_INFO.md)
+**Current state:** Step 1 only checks `collectAccountNames(treeRoot)` — local mock data. Not safe for production.
 
-**Fields:**
-- Account Name (mandatory, letters-prefix per `V-account-name-format-uniqueness`)
-- Classification (dropdown: Government / Charity / Private — sourced from PRD-AM Classification)
-- Profile Picture (`<falcon-single-uploader>`)
-- Official Data section:
-  - Authority Letter (dropdown — drives conditional fields)
-  - Country / City / Sector (cascade dropdowns)
-  - VAT (text)
-  - Finance ID (free-text per Q-AM-06 default — until clarified)
-  - Address (text + `<falcon-textarea>` for "Additional Address")
-  - Budget Number (conditional on Authority Letter type, per gap #4)
+**Target state:**
 
-**Falcon components (customization order applied):**
+1. **`client-information-step/validations/validations.ts`** exports:
+   ```
+   accountNameUniqueValidator(svc: AccountValidationService): AsyncValidatorFn
+   ```
+2. **`client-information-step.component.ts`** injects `AccountValidationService` from `@falcon`
+3. **Account Name signal** has both sync (`accountNameValidator` from `services/validators.ts`) AND async wrapper applied
+4. **Trigger order**: sync first; if sync passes, async runs after 350ms debounce
+5. **UI state**: while async pending, show spinner; on result, show ✓ or `duplicateAccountName` error
+6. **Cancellation**: typing during pending check cancels the in-flight request (`switchMap`)
 
-| Use | Component | Tier |
-|---|---|---|
-| Form shell | Tailwind grid (`grid grid-cols-2 gap-4 ...`) per Noor R-NOOR-001 | n/a |
-| Text input | `<falcon-angular-input>` | wrapper |
-| Multi-line text | `<falcon-angular-textarea>` | wrapper |
-| Dropdown | `<falcon-angular-dropdown>` | wrapper |
-| Image upload | `<falcon-angular-single-uploader>` | wrapper |
+### 4.2 Username uniqueness (Step 5)
 
-**Validations (V-rules to enforce on FE):**
+**Current state:** Step 5's `usernameTaken()` is computed locally — need to verify what source it reads.
 
-| Field | Rule | Source |
-|---|---|---|
-| Account Name | letters-prefix + 100-char cap + uniqueness (server-checked) | `V-account-name-format-uniqueness` |
-| Classification | required | PRD-AM BR-* |
-| Authority Letter | required + cascade Sector dropdown | PRD-AM |
-| Finance ID | required (BR-AM-05) | drift gap #3 |
-| Budget Number | required if Authority Letter ∈ {Government, Charity} | drift gap #4 (undocumented) |
+**Target state:**
 
-**Drift handling (from 13-GAPS_AND_DRIFTS):**
+1. **`client-account-owner-step/validations/validations.ts`** exports:
+   ```
+   usernameUniqueValidator(svc: AccountValidationService): AsyncValidatorFn
+   emailUniqueValidator(svc: AccountValidationService): AsyncValidatorFn
+   phoneUniqueValidator(svc: AccountValidationService): AsyncValidatorFn
+   ```
+2. **Composite check via `isUserExist`** — the existing service takes `(username, email?, phoneNumber?)`. Two options:
+   - **Option A:** call `isUserExist` 3 times (once per field) — cheap to debounce, simple
+   - **Option B:** call `isUserExist` once with all 3 fields once any blur — saves API calls; needs composite error mapping
+   - **RECOMMENDATION: Option A** — simpler, debounce per field, individual error attribution
+3. **Same pattern as Account Name**: sync first, debounce, cancel-on-change, suppress toaster
 
-- **Drift #3 (Finance ID):** treat as free-text required input until Q-AM-06 resolves. Surface as Light Learning event the first time backend rejects.
-- **Drift #4 (Budget Number):** apply conditional required logic on FE. Comment in code: `// per drift #4 — undocumented PRD origin`.
+### 4.3 Backend-bound validators ALWAYS-WORK requirement
 
-**Anti-patterns to avoid (from Anti-Pattern Catalog):**
+User said: *"the validation must always work"*. Concrete steps:
 
-- ❌ **T-AP-01 — using arbitrary `text-[Npx]` typography** — use the token-backed `text-{xs..5xl}` scale
-- ❌ **C-AP-01 — Stencil @Prop name clashing with HTMLElement member** — verify field names like `title` are not used as Stencil @Prop (rename to `titleText` if needed, per the falcon-empty-data lesson)
-- ❌ **F-AP-02 — putting state in a service that should be a signal** — Step 1 form is component-local until submit; signals only
-
-**Acceptance criteria:**
-
-- ✅ All required fields enforce client-side `required` + length caps matching the PRD
-- ✅ Authority Letter dropdown change triggers Sector dropdown re-fetch
-- ✅ Profile Picture preview renders correctly + supports remove
-- ✅ Form state persists in component signals (NOT a service yet)
-- ✅ "Next" button disabled until Step 1 is valid
-- ✅ Build green: `nx build admin-console`
-- ✅ Re-run audit: zero new R-FE-* violations on touched files
-
-**Estimated effort:** 1 session.
+- ✅ **Defensive**: if `AccountValidationService` returns an error (network down, 500), treat as `null` (no error) — DON'T block the user. Server submit is the safety net. Light Learning event captures the failure.
+- ✅ **Idempotent**: same field value always yields same async result (cache by value if hit-rate is high)
+- ✅ **Race-safe**: switchMap cancels stale requests; in-flight requests don't override fresh values
+- ✅ **Observable cleanup**: every async validator uses `takeUntilDestroyed(inject(DestroyRef))` so it doesn't leak past component lifecycle
+- ✅ **Loading state**: UI shows pending state DURING the check; never silently waits
 
 ---
 
-### Step 2 — Account Settings (mandatory)
+## 📐 Section 5 — Per-step plan (5 steps + shared row table)
 
-**Reference:** [03-STEP_2_SETTINGS.md](03-STEP_2_SETTINGS.md)
+### Step 1 — Account Information
 
-**Fields:**
-- Password Security Level (dropdown — **DRIFT: backend uses Low/Medium/High/Strict, PRD uses Normal/Advanced**)
-- Allowed IPs (multi-input or chip-input — `<falcon-angular-multi-select>` with custom IP-pattern validator)
-- Max Normal User Limit (number)
-- Max System User Limit (number)
-- Max Node Level (number)
-- Balance Transfer Limit % (number, suffix `%` on display)
+**Status today:** Step component exists; uses sync validators from `services/validators.ts`; checks duplicate name against mock tree.
 
-**Falcon components:**
+**Files to create:**
+- `client-information-step/models/models.ts` — move step-1 types here (AUTHORITY_OPTIONS, CLASS_CAT_OPTIONS, sectorForAuthority(), budgetLabelKeyForAuthority(), ClientInfoFormValue, etc.) from `add-client-wizard/models/models.ts`. Keep models.ts at wizard level for cross-step shared types only.
+- `client-information-step/services/services.ts` — new step service:
+  - `init$` Observable: loads Authority + Classification + Country/City/Sector cascade via `LookupService`
+  - `loadSectorsForAuthority(authorityId)` — cascade endpoint
+  - Caches lookups in service-local signals
+- `client-information-step/validations/validations.ts` — new validation layer:
+  - `step1Validators` — composes `accountNameValidator`, `anyStringValidator(2, 100)`, `nationalIdValidator` etc. from shared library
+  - `accountNameUniqueValidator(svc)` AsyncValidatorFn factory (the user's specific custom validator)
+  - `step1IsValid(value)` — pure function: takes the form value, runs all validators, returns boolean (used by wizard shell's `step1Valid` signal)
+  - `step1FieldErrors(value)` — returns per-field error map for UI
 
-| Use | Component |
-|---|---|
-| Password level | `<falcon-angular-dropdown>` |
-| IP allowlist | `<falcon-angular-multi-select>` (with `[allowCreate]="true"` for chip-style entry) |
-| Numeric limits | `<falcon-angular-input-number>` |
+**Validation matrix for Step 1:**
 
-**Drift handling:**
-
-- **Drift #1 (HIGH — Q-UM-12):** display PRD labels (Normal / Advanced), submit backend codes (Low / Medium / High / Strict). Recommended mapping: `Normal → Medium`, `Advanced → Strict`. **Lock the mapping** before code; surface to user for sign-off.
-- **Drift #5 (limit fields lack `[ThrowIf*]`):** FE enforces empty/negative validation, comment with `// per drift #5 — handler-level only on BE`
-- **Drift #13 (BalanceTransferLimit% vs BalanceTransferLimit):** UI displays `%` suffix, serializer maps to bare `BalanceTransferLimit`. Document in code.
-
-**Anti-patterns to avoid:**
-
-- ❌ **T-AP-04 — non-monotonic typography** — use `text-base` for labels, not `text-xl` (G-02 gap)
-- ❌ **F-AP-04 — storing form state in localStorage** — component signal only
-
-**Acceptance criteria:**
-
-- ✅ Password level dropdown shows PRD labels, submits backend codes (verify via Network tab pre-flight)
-- ✅ IP allowlist accepts valid IPv4 / IPv6 / CIDR; rejects garbage
-- ✅ Numeric limits: empty + negative are blocked client-side
-- ✅ Build green
-- ✅ Zero R-FE-* + R-NOOR-* violations on touched files
-
-**Estimated effort:** 1 session.
-
----
-
-### Step 3 — Configuring CommChannels & Services (optional)
-
-**Reference:** [04-STEP_3_COMM_CHANNELS.md](04-STEP_3_COMM_CHANNELS.md)
-
-**Per-channel fields (one row per CommChannel — sourced from Commerce `GET /api/Setting/comm-channel-configs`):**
-- Visibility (toggle: Show / Hide)
-- PricingType (dropdown: enum from PRD-AM)
-- PriceValue (number, currency)
-
-**Falcon components:**
-
-| Use | Component |
-|---|---|
-| Row table | `<falcon-angular-data-table>` (NOT a custom HTML table — per R-FE-005) |
-| Per-row toggle | `<falcon-angular-switch>` (NOT `<falcon-angular-toggle>` — verify which exists) |
-| Per-row dropdown | `<falcon-angular-dropdown>` inside the table cell |
-| Per-row price | `<falcon-angular-input-number>` |
-| Channel icon | `<falcon-angular-icon>` |
-| Channel name | `<falcon-angular-tag>` |
-
-**Drift handling:**
-
-- **Drift #10 (status 6-value enum not exposed):** don't try to read status on Add Client — it doesn't surface until post-create. Out of scope.
-- **Drift #11 (`AppId` overloaded for CommChannels AND Apps):** type alias `type CommChannelOrAppId = string` with JSDoc. Used here AND in Step 4.
-
-**Anti-patterns to avoid:**
-
-- ❌ **C-AP-07 — raw `<table>` element** — must use `<falcon-data-table>`
-- ❌ **R-AP-03 — hardcoded route slugs** — table row navigation must use route constants
-
-**Acceptance criteria:**
-
-- ✅ `<falcon-data-table>` renders one row per CommChannel
-- ✅ Visibility toggle persists per-row in local form state
-- ✅ Skip step button works (this step is optional per PRD)
-- ✅ "Next" available even with all rows untouched
-- ✅ Build green
-
-**Estimated effort:** 1 session.
-
----
-
-### Step 4 — Configuring Applications & Services (optional)
-
-**Reference:** [05-STEP_4_APPS_SERVICES.md](05-STEP_4_APPS_SERVICES.md)
-
-**Same shape as Step 3** but for Apps (sourced from `GET /api/Setting/application-configs`).
-
-**Implementation note:** Step 3 and Step 4 are essentially identical UX with different data sources. Build them as **one reusable `<app-service-row-table>` Angular component** in `apps/admin-console/.../add-client/shared-components/service-row-table/`. Step 3 passes `kind="commChannel"`, Step 4 passes `kind="app"`. Single component, two consumers, zero duplication.
-
-**Anti-patterns to avoid:**
-
-- ❌ **F-AP-07 — copy-paste duplication** — Step 3 and Step 4 MUST share the row-table component, not be two separate templates
-- ❌ **C-AP-04 — nested Falcon component without slot** — if you need custom row content, use the data-table's row template slot (per `falcon-data-table` API.md)
-
-**Acceptance criteria:**
-
-- ✅ Step 3 + Step 4 share the same row-table component
-- ✅ App data source confirmed (verify `GET /api/Setting/application-configs` exists; if not, surface as gap)
-- ✅ Skip step button works
-- ✅ Build green
-
-**Estimated effort:** 0.5 session (because the row table is reused from Step 3).
-
----
-
-### Step 5 — Account Owner Creation (mandatory) — **the heaviest step**
-
-**Reference:** [06-STEP_5_ACCOUNT_OWNER.md](06-STEP_5_ACCOUNT_OWNER.md)
-
-**Cross-flow:** this step creates the **first Account Owner user** for the new account. Same `CreateUserRequest` shape as Add User flow, but transported via Commerce → Kafka → Identity (server-side); FE never calls Identity directly.
-
-**Fields:**
-- First Name
-- Last Name
-- Username (immutable, 30-char cap per drift #2 — **FE enforces tighter than backend's 100**)
-- Email (`<falcon-angular-email-field>` — built-in `Validators.email`)
-- Phone Number (`<falcon-angular-phone-field>` — E.164 / Saudi format)
-- Profile Picture (`<falcon-angular-single-uploader>`)
-- Role (PES-driven dropdown — call PES once on wizard open)
-- Delivery Method (`<falcon-angular-radio-group>` — Email / SMS / Both)
-
-**Falcon components:**
-
-| Use | Component |
-|---|---|
-| Text fields | `<falcon-angular-input>` |
-| Email | `<falcon-angular-email-field>` |
-| Phone | `<falcon-angular-phone-field>` |
-| Photo | `<falcon-angular-single-uploader>` |
-| Role dropdown | `<falcon-angular-dropdown>` populated from PES response |
-| Delivery Method | `<falcon-angular-radio-group>` |
-| Submit button | `<falcon-angular-button>` (variant: primary, loading state during submit) |
-
-**Drift handling:**
-
-- **Drift #2 (HIGH — Username cap 30 vs 100):** FE enforces 30. Comment: `// per drift #2 — FE tighter than backend`.
-- **Drift #14 (Phone/Email lack `[ThrowIfNotPassed]`):** FE enforces required. Comment: `// per drift #14 — handler-level on BE, FE enforces PRD`.
-- **PES integration:** call PES `POST /pes/authorize` once on wizard open. Cache the grantable roles. **NOT** static client-side enum.
-
-**Anti-patterns to avoid:**
-
-- ❌ **A-AP-10 — `auth/logout` not called** — irrelevant here but **A-AP-03 (don't store auth state in localStorage)** is relevant: don't cache PES response across wizards
-- ❌ **R-AP-06 — `adminConsoleGuard` commented out** — confirm route protection is active before testing in dev-serve
-
-**Submit-time work (the final form's hardest piece):**
-
-1. Compose the full `CreateAccountRequest` from Steps 1-5 local signals
-2. Apply casing mapping (Commerce PascalCase per drift #9 — verify runtime)
-3. POST to `/api/Node/create-account`
-4. Surface success: toast + close wizard + refresh hierarchy tree
-5. Surface failure: error mapping per [12-ERROR_STATES.md](12-ERROR_STATES.md), with step-level error badges via `<falcon-wizard-stepper>` errorSteps prop
-6. Loading state on `<falcon-button>` during inflight request
-
-**Acceptance criteria:**
-
-- ✅ Submit composes single `CreateAccountRequest` from all 5 steps
-- ✅ PES dropdown loads + caches per wizard session
-- ✅ Username 30-char cap enforced FE-side
-- ✅ Phone + Email required FE-side
-- ✅ Server errors map to the originating step's error badge
-- ✅ Success toast appears + wizard closes + tree refreshes
-- ✅ Build green
-- ✅ Re-run Falcon Eyes against the design reference (Round 6 plan reference in falcon-eyes reports)
-
-**Estimated effort:** 1.5 sessions (the heaviest step).
-
----
-
-## 🧰 Section 4 — Falcon component checklist
-
-Per the customization order (R-FE-005):
-**inputs → templates → slots → variants → upgrade → new lib component → wrapper → raw HTML as GAP**
-
-| Step | Component | Falcon library status | Customization layer needed |
+| Field | Sync rules | Async rules | Init data dependency |
 |---|---|---|---|
-| Tier 0 | `<falcon-wizard-stepper>` | **NEW** — needs library work | new lib component (Tier 0 deliverable) |
-| Shell | `<falcon-wizard>` | ✅ exists | inputs only |
-| Shell | `<falcon-dialog>` | ✅ exists | inputs only (modal mode) |
-| 1, 5 | `<falcon-input>` | ✅ exists | inputs |
-| 1, 5 | `<falcon-textarea>` | ✅ exists | inputs |
-| 1, 2, 3, 4, 5 | `<falcon-dropdown>` | ✅ exists | inputs + cascade pattern |
-| 1, 5 | `<falcon-single-uploader>` | ⚪ in `libs/falcon/src/shared-ui/` (unmapped per Component Atlas) | verify import path |
-| 2, 3, 4 | `<falcon-input-number>` | ✅ exists | inputs |
-| 3, 4 | `<falcon-data-table>` | ✅ exists | template slots for per-row cells |
-| 3, 4 | `<falcon-switch>` | ✅ exists | inputs |
-| 3, 4 | `<falcon-icon>` | ✅ exists | inputs |
-| 3, 4 | `<falcon-tag>` | ✅ exists | inputs |
-| 5 | `<falcon-email-field>` | ✅ exists | inputs |
-| 5 | `<falcon-phone-field>` | ✅ exists | inputs |
-| 5 | `<falcon-radio-group>` | ✅ exists | inputs |
-| Shell | `<falcon-button>` | ✅ exists | inputs (variant: primary/ghost/danger) |
-| Shell | `<falcon-notification>` / `<falcon-toast>` | ✅ exists | inputs |
+| Account Name | required · letters-prefix · 2-100 chars · `accountNameValidator` | **`accountNameUniqueValidator`** → `AccountValidationService.checkAccountNameExists` | none |
+| Classification Category | required | none | LookupService classification options |
+| Classification Subcategory | required when category selected | none | LookupService (cascade) |
+| Profile Picture | optional · max 2MB · image MIME types | none | none |
+| Authority Letter | required | none | LookupService authority options |
+| Country | required | none | LookupService countries |
+| City | required when country selected | none | LookupService (cascade by country) |
+| Sector | required (cascade from Authority Letter) | none | LookupService (cascade by authority) |
+| VAT | optional · format `\d{15}` (15-digit Saudi VAT) | none | none |
+| Finance ID | required (per drift #3) · 2-50 chars | none | none |
+| Address | optional · 0-250 chars | none | none |
+| Additional Address (textarea) | optional · 0-500 chars | none | none |
+| Budget Number | conditional required (Authority ∈ {Government, Charity}) · numeric | none | none |
 
-**Forbidden surface (raw HTML — must NOT appear):**
-- ❌ `<input>` · `<select>` · `<button>` · `<textarea>` · `<table>` · `<dialog>`
-- ❌ `<div style="...">` inline styles (R-FE-003)
-- ❌ Any `.scss` file (R-FE-002)
-- ❌ `text-[Npx]` arbitrary typography values (R-NOOR-003 after amendment)
-- ❌ `ml-N` / `mr-N` physical spacing (R-NOOR-007) — use `ms-N` / `me-N`
+**Falcon components (confirmed from existing code):**
 
----
+- `<falcon-angular-input>` (text fields)
+- `<falcon-angular-dropdown>` (all dropdowns)
+- `<falcon-angular-form-field>` (label + error wrapper — already in use)
+- `<falcon-angular-photo-uploader>` (Profile Picture — confirmed import from current code, NOT `<falcon-single-uploader>` as playbook said)
+- `TranslatePipe` (i18n strings)
 
-## ✅ Section 5 — Validation matrix
+**Anti-patterns to actively avoid** (from the 71-pattern catalog):
 
-Per [07-VALIDATIONS.md](07-VALIDATIONS.md). Every required field must enforce client-side validation BEFORE submit. Server validation is the safety net, not the gate.
+- ❌ **C-AP-07** raw `<select>` instead of `<falcon-angular-dropdown>`
+- ❌ **T-AP-01** arbitrary `text-[Npx]` typography — use `text-{xs..5xl}` (assuming R-NOOR-003 amendment lands; if not, current `text-base / text-sm / text-xs` still recommended)
+- ❌ **F-AP-04** any localStorage persistence of wizard draft (component-scoped signals only)
+- ❌ **S-AP-02** using BehaviorSubject where a signal would do (use `signal()` + `computed()` throughout)
 
-| Step | Field | Client-side rule | Source |
+### Step 2 — Account Settings
+
+**Status today:** Step component exists; form fields present; password policy NOT loaded from backend.
+
+**Files to create:**
+- `client-settings-step/models/models.ts` — `ClientSettingsFormValue`, `PasswordSecurityLevel` enum (backend codes Low/Medium/High/Strict), display-label mapping (Normal/Advanced per drift #1)
+- `client-settings-step/services/services.ts` — new step service:
+  - `loadPasswordPolicy(level: PasswordSecurityLevel)` — loads server-driven password rules for selected level
+  - `init$` — loads default policy + IP-allowlist defaults
+- `client-settings-step/validations/validations.ts`:
+  - `step2Validators` — composes `cidrOrIpValidator`, `intInRange(1, 999)`, `percentage(0, 100)`
+  - `dynamicPasswordValidator(policy)` — composes password rules from loaded policy
+  - `step2IsValid` + `step2FieldErrors`
+
+**Validation matrix for Step 2:**
+
+| Field | Sync rules | Async rules | Init data dependency |
 |---|---|---|---|
-| 1 | Account Name | required, letters-prefix, max 100 | V-account-name-format-uniqueness |
-| 1 | Classification | required | PRD-AM |
-| 1 | Authority Letter | required, drives Sector cascade | PRD-AM |
-| 1 | Finance ID | required (drift #3 — pending Q-AM-06) | PRD-AM BR-AM-05 |
-| 1 | Budget Number | required if Authority ∈ {Gov, Charity} | drift #4 |
-| 2 | Password Security Level | required, map labels↔codes (drift #1) | Q-UM-12 |
-| 2 | Allowed IPs | required (≥1), valid IPv4/IPv6/CIDR | PRD-AM |
-| 2 | All limits | required, >0 (drift #5 — FE enforces) | drift #5 |
-| 2 | Balance Transfer Limit | required, 0-100 (% suffix display, bare on wire) | drift #13 |
-| 3 | (optional step — no required fields) | — | — |
-| 4 | (optional step — no required fields) | — | — |
-| 5 | First Name | required, letters only, max 50 | V-user-first-last-name-letters-only |
-| 5 | Last Name | required, letters only, max 50 | V-user-first-last-name-letters-only |
-| 5 | Username | required, format, **max 30** (drift #2 — FE tighter) | V-username-format-uniqueness-immutable |
-| 5 | Email | required (drift #14 — FE enforces) | drift #14 |
-| 5 | Phone Number | required (drift #14 — FE enforces), E.164/Saudi format | drift #14 |
-| 5 | Role | required, populated from PES | PES-driven |
-| 5 | Delivery Method | required, one of {Email, SMS, Both} | PRD-UM BR-UM-18 |
+| Password Security Level | required · valid enum | none | none (static enum) |
+| Allowed IPs | required (≥1) · each item must match IPv4/IPv6/CIDR regex | none | none |
+| Max Normal User Limit | required · int · 1-999 (drift #5 — FE enforces because BE missing `[ThrowIf*]`) | none | none |
+| Max System User Limit | required · int · 1-999 | none | none |
+| Max Node Level | required · int · 1-999 | none | none |
+| Balance Transfer Limit (%) | required · int · 0-100 (drift #13 — display `%` suffix, serialize bare) | none | none |
 
----
+**Drift handling (specific code-level notes):**
 
-## 🚫 Section 6 — Anti-pattern avoidance checklist
+- **Drift #1 (HIGH — password level vocabulary)**: Step 2's dropdown displays PRD labels (Normal/Advanced), submits backend codes (Low/Medium/High/Strict). Lock the mapping in validations.ts. Recommended: `Normal → Medium`, `Advanced → Strict`. **Light Learning event** if backend rejects the mapping.
+- **Drift #5 (limit fields lack `[ThrowIf*]`)**: comment in validations.ts: `// per drift #5 — FE enforces strict; BE only handler-level validation via InvalidAccountLimits (422)`
+- **Drift #13 (BalanceTransferLimit%)**: UI input has `%` suffix indicator; serializer in wizard's `services.ts` strips the `%` before sending
 
-Before each step ships, scan the diff against the Anti-Pattern Catalog. The most-relevant entries for this wizard:
+### Step 3 — Configuring CommChannels & Services
 
-| ID | Anti-pattern | Where it would creep in |
+**Status today:** Step component exists + shared `client-service-row-table` already extracted.
+
+**Files to create:**
+- `client-comm-channels-step/models/models.ts` — `ClientCommChannelsFormValue` (array of row configs), `CommChannelRowConfig`
+- `client-comm-channels-step/services/services.ts`:
+  - `loadCommChannelsCatalog()` — fetches the channels list from backend
+  - Returns observable of catalog + caches in signal
+- `client-comm-channels-step/validations/validations.ts`:
+  - `step3Validators` — per-row visibility + price-required-when-shown
+  - This step is OPTIONAL per PRD — `step3IsValid` returns `true` by default if user skips
+
+**Validation matrix for Step 3:**
+
+| Field (per row) | Sync rules | Async rules |
 |---|---|---|
-| **C-AP-01** | Stencil `@Prop` clashes with `HTMLElement` member | If the new `<falcon-wizard-stepper>` declares a `@Prop` named `title` or `state` — rename to `stepTitle`/`stepState` |
-| **R-AP-03** | Hardcoded route slugs in LayoutComponent | When wiring the wizard's close/back navigation — use the org-hierarchy route constant |
-| **T-AP-01** | `text-noor-*` aspiration (now amended) | Use `text-{xs..5xl}` instead — verified by morning's Token Taxonomy |
-| **T-AP-04** | Non-monotonic typography (G-02) | Don't use `text-xl` for headings expecting it to be larger than `text-2xl` — it isn't |
-| **S-AP-02** | BehaviorSubject where signal would do | Wizard form state must be signals; BehaviorSubject only at facade boundaries |
-| **S-AP-04** | Storing form state in localStorage | Don't persist Add Client wizard draft to localStorage — component-local only (per playbook) |
-| **F-AP-02** | Wrong scope on service (using `providedIn: 'root'` when feature-scoped is correct) | Add Client services live at `apps/admin-console/.../add-client/services/services.ts`, providers registered on the wizard component |
-| **F-AP-07** | Copy-paste duplication between Step 3 + Step 4 | Build ONE `<app-service-row-table>` component, consumed by both steps |
-| **A-AP-03** | Storing auth state in localStorage | PES response cached in-memory only, not persisted |
-| **C-AP-07** | Raw `<table>` element | Use `<falcon-data-table>` for the rows-tables in Steps 3 + 4 |
-| **MF-AP-05** | Refresh-token race under federation | If the wizard runs into a 401 mid-submit, the auth interceptor handles refresh — don't try to retry from the wizard |
+| Visibility (toggle) | none — just a boolean | none |
+| PricingType | required IF Visibility = Show | none |
+| PriceValue | required IF Visibility = Show · positive number | none |
 
----
+### Step 4 — Configuring Applications & Services
 
-## 🧪 Section 7 — Acceptance criteria (end-to-end)
+**Status today:** Step component exists + shares `client-service-row-table` with Step 3.
 
-The Add Client wizard is **done** when ALL of these hold:
+**Files to create:** mirror of Step 3 structure (`models/`, `services/`, `validations/`).
 
-| # | Criterion | Verification |
-|---|---|---|
-| 1 | Tier 0 unified `<falcon-wizard-stepper>` exists + Add User migrated to use it | Component dossier complete; Add User playbook updated |
-| 2 | All 5 steps build green in `nx build admin-console` | `nx build admin-console --configuration=production` exit 0 |
-| 3 | Per-step audit: zero new R-FE-* and R-NOOR-* violations | `audit-orchestrator.ps1 -OnlyRules R-FE-*,R-NOOR-* -TargetRepos C:\Falcon\Falcon\falcon-web-platform-ui` |
-| 4 | Submit composes single `CreateAccountRequest` | Network tab inspection; matches `DTO_DICTIONARY.md` |
-| 5 | All required-field client validations fire BEFORE submit | Manual + Falcon Eyes |
-| 6 | PRD↔DTO drifts handled per the recommendations in [13-GAPS_AND_DRIFTS.md](13-GAPS_AND_DRIFTS.md) | Code review against the 14 drifts |
-| 7 | RTL mode: wizard mirrors correctly under `dir="rtl"` | Manual visual check + `<falcon-wizard-stepper>` accessibility |
-| 8 | i18n: every visible string comes from the i18n catalog (R-NOOR-007) | Grep for hardcoded strings in templates |
-| 9 | Error states: server failures route to the originating step's error badge | Simulate via Network tab error injection |
-| 10 | Success: toast + tree refresh + wizard closes | E2E manual run |
-| 11 | Falcon Eyes visual parity ≥ 90% vs the design reference | Run Falcon Eyes against round-6 plan |
-| 12 | Light Learning events captured for every gap encountered | `PAGE_LEARNING.md` updated for Org Hierarchy |
-| 13 | No anti-patterns from Section 6 introduced | Per-step anti-pattern grep |
-| 14 | No Falcon source committed until user explicitly says `commit` | Standing rule (R-XC-005) |
+**Key insight:** Step 3 + Step 4 should pass `kind: 'commChannel' | 'app'` to the shared `client-service-row-table` so the row component drives its validator behavior accordingly. **No duplicated validation logic between Step 3 and Step 4.**
 
----
+### Step 5 — Account Owner Creation
 
-## 🧠 Section 8 — Light Learning capture protocol
+**Status today:** Step component exists; uses some local validation; PES integration likely hardcoded.
 
-Per the Brain SK "Permanent Rule: Page Learning System":
+**Files to create:**
+- `client-account-owner-step/models/models.ts` — `ClientAccountOwnerFormValue`, `UserRoleKey`, `DeliveryMethod` enum
+- `client-account-owner-step/services/services.ts`:
+  - `loadGrantableRoles()` — calls PES once on wizard open → caches in signal
+  - `loadPasswordPolicy()` — same as Step 2 (share via wizard state if implemented)
+- `client-account-owner-step/validations/validations.ts`:
+  - `step5Validators` — name validators, email format, phone format
+  - **`usernameUniqueValidator(svc)`** AsyncValidatorFn factory
+  - **`emailUniqueValidator(svc)`** AsyncValidatorFn factory
+  - **`phoneUniqueValidator(svc)`** AsyncValidatorFn factory
+  - `roleGateValidator(grantableRoles)` — rejects roles the actor cannot grant
+  - `step5IsValid` + `step5FieldErrors`
 
-**Every surprise becomes a Light Learning event.** During implementation:
+**Validation matrix for Step 5:**
 
-1. **A field validates differently than the playbook says** → write a `pending` event to `Brain Outputs/understanding/pages/organization-hierarchy/LIGHT_LEARNING_EVENTS.md` with screenshot + classification
-2. **A Falcon component behaves unexpectedly** → file a `pending` PATTERN in `PENDING_PAGE_PATTERNS.md`
-3. **The PRD says X, backend does Y** → add to `13-GAPS_AND_DRIFTS.md`'s 14-drift list as drift #15+
-4. **The customization order rule fails for a real reason** → file a GAP in `GAP_REGISTRY.md`
-
-**NEVER promote to global pattern** unless Ammar says "promote this globally" (per APPROVAL_LEARNING_GATE.md).
-
----
-
-## 🥇 Section 9 — What to implement FIRST + sequencing
-
-### Session-by-session map
-
-| # | Session | Deliverable | Estimated effort | Build gate |
-|---|---|---|---|---|
-| **0** | Tier 0 — Stepper unification | `<falcon-wizard-stepper>` + dossier + Atlas update | 1 session | Both flows render in showcase |
-| **1** | Step 1 — Account Information | Form fields + validations + signals | 1 session | `nx build admin-console` green; audit clean |
-| **2** | Step 2 — Account Settings | Password level + IPs + limits | 1 session | Same |
-| **3** | Step 3 + Step 4 — CommChannels + Apps | Reusable `<app-service-row-table>` + both steps | 1.5 sessions | Same |
-| **4** | Step 5 — Account Owner Creation | PES integration + composite submit + error routing | 1.5 sessions | Same + simulated submit |
-| **5** | E2E polish | Falcon Eyes parity + i18n + RTL + accessibility | 1 session | Falcon Eyes ≥ 90% |
-
-**Total: 6 sessions.** Sessions are independent; you can pause between any two.
-
-### THE first move
-
-**Session 0 — author `<falcon-wizard-stepper>`** is the gating prerequisite. Without it:
-- Add Client stays on the legacy stepper
-- Add User stays on tabs
-- The two flows diverge further
-- The user's specific request goes unmet
-
-**Per the user's directive: Tier 0 must land before Step 1 starts.**
-
-After Tier 0:
-- Step 1 is the lowest-risk per-step session (single form, ~7 fields, no complex interactions)
-- It validates the unified stepper's API works for the Add Client shape
-- Light Learning events from Step 1 become inputs to Steps 2-5 planning
-
-### Optional shortcut
-
-If Tier 0 feels too big as the first move, you can do **Tier 0 lite**: skip authoring the new component and use `<falcon-wizard>` + `<falcon-stepper>` directly in Add Client. Update Add User in a separate later session. This gets Add Client moving faster at the cost of slightly-divergent step indicators for one sprint. Not recommended — but available if scheduling demands.
-
----
-
-## 🚧 Section 10 — Gaps that need YOUR decision BEFORE code
-
-Per playbook 13-GAPS_AND_DRIFTS, some questions are open. Resolve these BEFORE you start the affected step.
-
-| ID | Question | Blocks step | Recommendation |
+| Field | Sync rules | Async rules | Init data dependency |
 |---|---|---|---|
-| **D-2026-05-16-NEW-A** | Stepper unification path — Option A / B / **C (recommended)** / D? | Tier 0 + ALL | **Option C** (new unified component) |
-| **Q-UM-12** | Password Security Level mapping (`Normal ↔ Medium`, `Advanced ↔ Strict`?) | Step 2 | Lock the mapping; Light Learning the first time backend disagrees |
-| **Q-AM-06** | Finance ID — free-text input or system-driven readonly? | Step 1 | Default to free-text required; revisit if Finance system integration lands |
-| **Q-AM-11** | Classification Category — hardcoded enum or DB lookup? | Step 1 | Default to hardcoded enum; switch to lookup if business asks |
-| **Drift #4** | Budget Number conditional logic — exactly when required? | Step 1 | Apply "required if Authority ∈ {Gov, Charity}" until business clarifies |
-| **Drift #9** | Commerce PascalCase casing at runtime | Step 5 | Verify in Network tab during first submit |
-| **R-AP-06 fix** | Restore `adminConsoleGuard` on the admin-console route | Before testing in dev-serve | One-line uncomment; do as a separate small PR |
-| **G-02 fix** | Typography scale non-monotonic (`text-xl` 28px > `text-2xl` 24px) | Pre-implementation | Swap the two values in `falcon-tailwind-tokens.css` |
-| **G-04 fix** | Stray semicolon at `falcon-tailwind-tokens.css:75` | Pre-implementation | 1-min trivial fix |
+| First Name | required · letters only · 2-50 chars (`lettersOnly` validator) | none | none |
+| Last Name | required · letters only · 2-50 chars | none | none |
+| Username | required · letters-digits-or-email pattern · **30 char max (drift #2 — FE tighter than BE 100)** · immutable hint | **`usernameUniqueValidator`** → `AccountValidationService.isUserExist(username)` | none |
+| Email | required (drift #14 — FE enforces because BE missing `[ThrowIfNotPassed]`) · valid RFC | **`emailUniqueValidator`** → `AccountValidationService.isUserExist(*, email, *)` | none |
+| Phone Number | required (drift #14) · E.164 / Saudi format | **`phoneUniqueValidator`** → `AccountValidationService.isUserExist(*, *, phone)` | none |
+| Profile Picture | optional | none | none |
+| Role | required · must be in grantable-roles list | none (PES gate sync via cached list) | PES `POST /pes/authorize` |
+| Delivery Method | required · one of {Email, SMS, Both} | none | none |
+
+### Shared component — `client-service-row-table`
+
+**Status today:** Exists; consumed by Step 3 + Step 4.
+
+**Files to create:**
+- `client-service-row-table/models/models.ts` — `RowConfig` interface, `RowKind = 'commChannel' | 'app'`
+- `client-service-row-table/validations/validations.ts` — pure per-row validators (no async)
 
 ---
 
-## 📚 Section 11 — Brain artifacts this plan consumes
+## 🧪 Section 6 — Acceptance criteria (per step + overall)
 
-This plan is the consumer endpoint of the entire knowledge graph:
-
-| Tier | Artifact | Used for |
-|---|---|---|
-| Page | Add Client 16-file playbook | The canonical spec — every step references it |
-| Page | `flows/Add User.md` | Cross-flow context for stepper unification |
-| Page | `PAGE_LEARNING.md` · `LIGHT_LEARNING_EVENTS.md` · `GAP_REGISTRY.md` | Light Learning capture targets |
-| Page | `COMPONENT_MAPPING.md` · `VALIDATION_RULES.md` · `UI_UX_RULES.md` | Component + validation + layout rules |
-| **Tier 1** | Component Atlas + 62 dossiers | Every `<falcon-*>` choice cross-references its dossier |
-| **Tier 1** | Component Usage Matrix | Verify which components are already used in admin-console |
-| **Tier 1** | Component Dependency Graph | Understand compose chains (e.g., `<falcon-alert-dialog>` composes `<falcon-dialog>`) |
-| **Tier 2** | Folder Structure Deep-Dive | Where new wizard wrappers live (`apps/admin-console/.../add-client/`) |
-| **Tier 2** | State Management Architecture | Signal-first; service feature-scoped; no NgRx |
-| **Tier 2** | Token Taxonomy | Use real tokens (218 in @theme); NOT aspirational `text-noor-*` |
-| **Tier 2** | Auth Flow Architecture | PES integration on Step 5 |
-| **Tier 2** | Routing Topology | Wire wizard route + adminConsoleGuard reinstatement |
-| **Tier 2** | Module Federation Topology | Wizard runs inside admin-console remote |
-| **Tier 3** | ADR-001 | No PrimeNG anywhere |
-| **Tier 3** | ADR-002 | Tailwind utilities only |
-| **Tier 3** | ADR-004 | Stencil for the new `<falcon-wizard-stepper>` |
-| **Tier 3** | ADR-005 | Dual-render path for the new component |
-| **Tier 3** | ADR-008 | Feature folder pattern (`add-client/models/models.ts`, `add-client/services/services.ts`) |
-| **Tier 4** | Onboarding Playbook | Confirm session-grounding via the 8 verification questions |
-| **Tier 4** | Anti-Pattern Catalog | Section 6's avoidance checklist sources from here |
-| Rules | 39 rules in `understanding/rules/` | Audit enforces these on the touched files |
-| Detectors | `regex-runner.ps1` + `structural-walker.ps1` + LIVE AST runners | Audit gate after each step |
-
-**Every artifact pays dividends in this plan.** Without Tier 1-4, this plan would be ~50% as precise.
-
----
-
-## 🎯 Section 12 — Recommended next action
-
-**Tell me one of:**
-
-| You say | I do |
+| Step | Acceptance criteria (≥) |
 |---|---|
-| **"start Tier 0"** | Author the `<falcon-wizard-stepper>` skeleton + Angular wrapper + dossier + Atlas update plan (still no code — I deliver the per-file specs) |
-| **"start Step 1"** | Skip Tier 0 (legacy stepper stays), give detailed Step 1 file-by-file spec |
-| **"resolve gaps first"** | Dispatch decisions on Q-UM-12, Q-AM-06, Q-AM-11, Drift #4 BEFORE coding |
-| **"freeze the plan"** | Commit this plan to the brain repo as `15-IMPLEMENTATION_PLAN.md` in the playbook folder; you proceed at your own pace from here |
-| **"add to plan"** + topic | Extend a specific section |
+| 1 | All sync validators wired · `accountNameUniqueValidator` fires on blur after 350ms debounce · sector cascade reloads on Authority change · profile-picture upload preview renders · `step1Valid` signal correctly tracks all required fields · zero R-FE-* / R-NOOR-* violations on touched files · `nx build admin-console` green |
+| 2 | Password level dropdown shows PRD labels, submits backend codes · IPs validate against IPv4/IPv6/CIDR · 4 limits enforce drift #5 ranges · password policy loads on init (or graceful default) · `step2Valid` correct · build green · audit clean |
+| 3 | CommChannels catalog loads on init · per-row validators enforce visibility/price coupling · skip-step path works · `step3Valid` defaults to true when skipped · build green |
+| 4 | Apps catalog loads on init · shares `client-service-row-table` with Step 3 (zero duplicated row UI) · `kind: 'app'` driver works · skip-step path works · build green |
+| 5 | PES grantable roles load on init · `usernameUniqueValidator` + `emailUniqueValidator` + `phoneUniqueValidator` all wire to `AccountValidationService.isUserExist` · async validators debounce 350ms + switchMap cancel · loading spinner shows per field while pending · build green |
+| Overall | Composite `CreateAccountRequest` posted on Step 5 Submit · server errors route to originating step's error badge (use `<falcon-stepper>` errorSteps input) · success toast + tree refresh + wizard closes · RTL parity confirmed · all visible strings via `TranslatePipe` · Falcon Eyes ≥ 90% vs reference · no Falcon source committed until explicit "commit" |
 
-**My honest recommendation:** **"start Tier 0"** — the stepper unification is the gating piece per your directive, and it's the highest-leverage component work you can do (touches 2 flows + builds a reusable component for future wizards).
+---
 
-If Tier 0 feels heavy: **"start Step 1"** with the legacy stepper as a working scaffold, and migrate to the unified stepper after Step 5 is shipped. Pragmatic, with accepted tech debt.
+## 🛡 Section 7 — Validation defensive contract (the "always-works" requirement)
+
+User said: *"the validation must always work"*. This list is the safety net.
+
+1. **No validator throws.** Every validator returns `null` or `ValidationErrors` — never throws an exception. Async validators catch HTTP failures and resolve to `null` (not error).
+2. **No async validator blocks UX.** While async is pending, the form is `pending`, not `invalid` — submit button is disabled BUT user can keep typing.
+3. **Failed async = soft no-op.** Network failure on `isUserExist` does NOT block submission. Backend handler is the safety net. Surface as Light Learning event.
+4. **Stale results never surface.** `switchMap` cancels in-flight requests on every value change.
+5. **No silent disabled state.** Every disabled control has a UI reason next to it (e.g., "Loading password policy…" while init is pending).
+6. **i18n always works.** Every validator returns a key from `validation-messages.ts` — never a raw string. If a key is missing, fallback to `hierarchy.validation.unknown` (must exist in en + ar catalogs).
+7. **No regex-in-template.** All regexes live in `validators.ts` (page-level) or `<step>/validations/validations.ts` (step-level) — never inlined in components.
+8. **`hasLiveError` + `messageFor` always used together.** Pattern from existing `client-information-step` — don't deviate.
+9. **No double-trigger.** Sync validator failing must SKIP async (no API call when sync is already failing).
+10. **Defensive cancellation.** Every component injecting an async validator uses `takeUntilDestroyed(inject(DestroyRef))` to clean up on destroy.
+
+---
+
+## 🚦 Section 8 — Session-by-session sequencing
+
+| # | Session | Goal | Deliverable |
+|---|---|---|---|
+| **0** | Validation infrastructure foundation | Establish per-step `validations/` folder pattern + wire `accountNameUniqueValidator` for Step 1 | Step 1's `validations/validations.ts` + Step 1's `services/services.ts` (lookup loader) + Step 1 component refactored to use them |
+| **1** | Step 1 — Account Information (complete) | Full Step 1 implementation with async validator + cascade dropdowns + Profile Picture | Step 1 100% per acceptance criteria · build green · audit clean |
+| **2** | Step 2 — Account Settings | Add password-policy bootstrap loader + dynamic password validator + IP validator + limits | Step 2 100% per acceptance criteria |
+| **3** | Step 3 + Step 4 — CommChannels + Applications | Add shared row-table validation behavior driven by `kind` · per-row validators | Both Step 3 + Step 4 100% |
+| **4** | Step 5 — Account Owner | PES role loader + 3 async validators (username/email/phone) + delivery method + role gate | Step 5 100% |
+| **5** | Wizard shell + Submit | Composite `CreateAccountRequest` builder · error routing per step · success toast + tree refresh | End-to-end submit working |
+| **6** | Polish | Falcon Eyes vs reference · RTL · i18n catalog gaps · accessibility | ≥ 90% Falcon Eyes parity |
+
+**Total: 7 sessions.** Each session ends with a green build + audit pass + uncommitted working tree for your review.
+
+---
+
+## 🎯 Section 9 — What to implement NEXT
+
+### **Session 0 — Validation infrastructure for Step 1**
+
+This is the foundation. Once Session 0 lands, every subsequent step follows the same recipe.
+
+**Concrete deliverables (no code, just file-by-file specification):**
+
+1. **Create `client-information-step/services/services.ts`**:
+   - `Step1InitService` `@Injectable()` provided at the step component level (`providers: [Step1InitService]` on the step component decorator)
+   - `init$: Observable<Step1InitData>` — composes `LookupService.getLookup(authorityId)` + classification + countries
+   - `loadSectorsForAuthority(authority)` — cascade endpoint
+   - Cache last result in service-local signal
+   - Subscribe lifecycle via `takeUntilDestroyed`
+
+2. **Create `client-information-step/validations/validations.ts`**:
+   - Export `step1FormSchema` — declarative description of which validator applies to which field
+   - Export `accountNameUniqueValidator(svc: AccountValidationService): AsyncValidatorFn` factory
+   - Export `step1IsValid(value: ClientInfoFormValue): boolean` — pure check
+   - Export `step1FieldErrors(value: ClientInfoFormValue): Record<keyof ClientInfoFormValue, ValidationMessage | null>` — per-field error map
+
+3. **Refactor `client-information-step.component.ts`**:
+   - Replace the inline `accountNameError = computed(...)` that uses `collectAccountNames(treeRoot)` with the new async validator wired to `AccountValidationService`
+   - Inject `AccountValidationService` from `@falcon`
+   - Show pending spinner state while async is in flight
+   - All other field errors continue using existing pattern (`messageFor` + `hasLiveError`)
+   - The component's `valid` model output reads from `step1IsValid(value)` (sync) AND awaits async settle
+
+4. **Move step-1 types** from `add-client-wizard/models/models.ts` into `client-information-step/models/models.ts`:
+   - Move: `ClientInfoFormValue`, `AUTHORITY_OPTIONS`, `CLASS_CAT_OPTIONS`, `CLASS_SUB_OPTIONS`, `CITY_OPTIONS`, `COUNTRY_OPTIONS`, `sectorForAuthority`, `budgetLabelKeyForAuthority`, `emptyClientInfo`
+   - Keep: cross-step composite types in `add-client-wizard/models/models.ts` (e.g., `NewClientWizardPayload`)
+   - Update imports in:
+     - `add-client-wizard.component.ts` (now imports from step folder)
+     - any other consumer
+
+5. **Update `add-client-wizard.component.ts` shell** (no behavior change, just import path adjustments)
+
+6. **Documentation in component banner comments**: `*** client-information-step — Step 1 with validations/ folder pattern. ***`
+
+### Why Session 0 is the right first move
+
+- ✅ Smallest possible scope (one step, one folder)
+- ✅ Establishes the pattern for all 4 remaining steps
+- ✅ Closes the most visible drift (mock-tree check → real backend async validator)
+- ✅ Touches the most-active file in the wizard (Step 1 is the entry point)
+- ✅ Light Learning events from Session 0 inform Sessions 1-5 planning
+- ✅ Validates the `<falcon-stepper>` step-valid signal contract end-to-end
+
+### What's INTENTIONALLY out of scope for Session 0
+
+- ❌ Steps 2-5 changes
+- ❌ Wizard shell changes
+- ❌ Backend changes (no backend work in this entire plan)
+- ❌ New Falcon library components (none needed — disk truth proved this)
+- ❌ Cross-step state service (defer to Session 2 when Step 2 needs shared password policy)
+
+---
+
+## 🚨 Section 10 — Gaps that need YOUR decisions BEFORE code
+
+These are real questions the implementation will hit immediately. Resolve before code.
+
+| ID | Question | Blocks which step | Recommendation |
+|---|---|---|---|
+| **D-2026-05-16-NEW-Q1** | Step 2 password policy: does the backend endpoint exist? If not, FE uses hardcoded defaults? | Step 2 init load | Default to hardcoded with `passwordsAtLeast8` + Light Learning event |
+| **D-2026-05-16-NEW-Q2** | PES `POST /pes/authorize` payload shape — confirm with backend (or use `AccessControlFacade` per State Management Architecture) | Step 5 init | Use existing `AccessControlFacade` from `libs/falcon/src/core/lib/access-control/access-control.facade.ts` |
+| **D-2026-05-16-NEW-Q3** | Q-UM-12 — Password level mapping (Normal↔Medium, Advanced↔Strict)? | Step 2 | Lock the mapping; Light Learning event the first time backend disagrees |
+| **D-2026-05-16-NEW-Q4** | Q-AM-06 — Finance ID free-text or system-driven? | Step 1 | Default to free-text required (current behavior) until clarified |
+| **D-2026-05-16-NEW-Q5** | Drift #4 — Budget Number conditional on Authority ∈ {Gov, Charity}? | Step 1 | Apply this rule; comment with reference |
+| **D-2026-05-16-NEW-Q6** | Step 3 + 4 catalog endpoints — verify `GET /api/Setting/comm-channel-configs` + `application-configs` work in dev | Steps 3 + 4 | Verify before Session 3; if missing, use mock fallback + raise gap |
+| **D-2026-05-16-NEW-Q7** | Step 5 username max — drift #2 says FE enforces 30 but BE allows 100 — confirm? | Step 5 | FE enforces 30 (tighter); comment |
+| **D-2026-05-16-NEW-Q8** | Step 5 phone format — Saudi-only (`+966\d{9}`) or international (`E.164`)? | Step 5 | E.164 — broader; allow Saudi as a hint format |
+| **D-2026-05-16-NEW-Q9** | Cross-step state — provide a wizard-level `AddClientStateService` for shared init data (password policy etc.)? | Sessions 2 + 5 | Yes — `providers: [AddClientStateService]` on the wizard component |
+
+---
+
+## 🧠 Section 11 — Brain artifacts this plan consumes
+
+- ✅ Add Client playbook (16 files, 62 KB)
+- ✅ `validators.ts` + `validation-messages.ts` from disk
+- ✅ `AccountValidationService` from `libs/falcon/.../shared-data-access`
+- ✅ Component Atlas + 62 dossiers (Tier 1)
+- ✅ Folder Structure Deep-Dive (Tier 2 — confirmed the `models/services/validations` pattern)
+- ✅ State Management Architecture (Tier 2 — signal-first + feature-scoped service)
+- ✅ Auth Flow Architecture (Tier 2 — PES integration in Step 5)
+- ✅ Token Taxonomy (Tier 2 — typography after R-NOOR-003 amendment)
+- ✅ ADR-005 (dual-render not needed — components already exist)
+- ✅ ADR-008 (feature folder pattern — extended with `validations/` per step)
+- ✅ Anti-Pattern Catalog (Tier 4 — 11 entries actively relevant to wizard)
+- ✅ 14 PRD↔DTO drifts from playbook 13-GAPS_AND_DRIFTS
+- ✅ Existing dirty working-tree from the morning's PATTERN-04 + R-NOOR-007 work (must respect it)
 
 ---
 
 ## ✅ Plan locked
 
-This plan is now the single source of truth for **how** to implement Add Client. The playbook tells you **what** to implement; this plan tells you **how, in what order, with what tools, using what knowledge.**
+Disk-true. Implementation owner: **Ammar Mk**. No code in this doc. The implementation work follows session-by-session per Section 8.
 
-Implementation owner: **Ammar Mk**. Spec author: orchestrator (this doc). Brain artifacts consumed: ~all Tier 1-4 + Add Client playbook + Add User playbook + 39 rules + 71 anti-patterns + 218 tokens.
-
-When you start a session, paste this plan's Section 9 row for that session as the kickoff brief. The other sections are referenced as needed.
+When you start a session, paste Section 5's row for that step + Section 4's relevant async-validator wiring spec + Section 6's acceptance criteria. That's the kickoff brief.
 
 ---
 
@@ -614,14 +655,12 @@ When you start a session, paste this plan's Section 9 row for that session as th
 
 - [Add Client Playbook README](README.md)
 - [00-OVERVIEW](00-OVERVIEW.md) through [14-IMPLEMENTATION_CHECKLIST](14-IMPLEMENTATION_CHECKLIST.md)
-- [PLAYBOOK](PLAYBOOK.md) — single-doc version of the 16 files
-- [../flows/Add User.md](../flows/Add User.md) — cross-flow for stepper unification
-- [FRONTEND_KNOWLEDGE_PATH](../../../frontend/FRONTEND_KNOWLEDGE_PATH.md) — the master roadmap
-- [[Frontend Architecture Atlas]] · [[Component Atlas]]
-- [[Decisions Queue]] — D-2026-05-16-NEW-A added here
-- [[ANTI_PATTERN_CATALOG]]
-- [[ADR-005]] (dual-render for the new component) · [[ADR-008]] (feature folder layout)
+- v1 of this plan (superseded — commit `c206449` in brain repo)
+- Actual code: `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/`
+- `services/validators.ts` + `services/validation-messages.ts` (page-level validation library)
+- `AccountValidationService` at `libs/falcon/src/shared-data-access/lib/services/account-validation.service.ts`
+- [[Frontend Architecture Atlas]] · [[Component Atlas]] · [[Decisions Queue]]
 
 ## Tags
 
-#type/implementation-plan #flow/add-client #page/organization-hierarchy #frontend-only #plan-locked
+#type/implementation-plan #flow/add-client #page/organization-hierarchy #disk-true #v2 #frontend-only #plan-locked
