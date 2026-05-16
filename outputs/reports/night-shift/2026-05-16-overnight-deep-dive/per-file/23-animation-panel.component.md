@@ -1,10 +1,10 @@
 ---
-rank: 27
-filePath: libs/falcon-studio/src/lib/components/common-actions-rail.component.ts
-violationCount: 7
+rank: 23
+filePath: libs/falcon-studio/src/lib/components/animation-panel.component.ts
+violationCount: 8
 violatedRules:
-  - R-FE-003 (no inline styles) (7x)
-totalLines: 412
+  - R-FE-003 (no inline styles) (8x)
+totalLines: 472
 violationDensity: 1.7
 ammarAgent: ammar-web-platform-ui
 estimatedFixTimeMinutes: 15
@@ -14,13 +14,20 @@ app: falcon-studio (lib)
 
 ## File summary
 
-This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #27 (7 violations across 412 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
+This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #23 (8 violations across 472 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 65 | ` style="font-size: var(--falcon-icon-md);"` | see fix plan |
+| R-FE-003 | 116 | ` style="font-size: var(--falcon-icon-lg);"` | see fix plan |
+| R-FE-003 | 201 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 229 | ` [style.animation]="previewAnimation()"` | see fix plan |
+| R-FE-003 | 230 | ` [style.transition]="previewTransition()"` | see fix plan |
+| R-FE-003 | 238 | ` style="font-size: var(--falcon-icon-lg);"` | see fix plan |
+| R-FE-003 | 265 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 280 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
 
 ## Fix plan (ordered)
 

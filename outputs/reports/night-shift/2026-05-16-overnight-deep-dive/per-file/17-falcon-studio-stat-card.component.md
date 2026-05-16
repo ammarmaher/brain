@@ -1,11 +1,11 @@
 ---
-rank: 20
-filePath: libs/falcon-studio/src/lib/components/studio-page.component.ts
-violationCount: 8
+rank: 17
+filePath: libs/falcon-studio/src/lib/components/falcon-studio-stat-card.component.ts
+violationCount: 9
 violatedRules:
-  - R-FE-003 (no inline styles) (8x)
-totalLines: 638
-violationDensity: 1.3
+  - R-FE-003 (no inline styles) (9x)
+totalLines: 242
+violationDensity: 3.7
 ammarAgent: ammar-web-platform-ui
 estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
@@ -14,13 +14,21 @@ app: falcon-studio (lib)
 
 ## File summary
 
-This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #20 (8 violations across 638 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
+This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #17 (9 violations across 242 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 92 | ` [style.background]="bgStyle()"` | see fix plan |
+| R-FE-003 | 93 | ` [style.border]="borderStyle()"` | see fix plan |
+| R-FE-003 | 94 | ` [style.border-radius]="radiusStyle()"` | see fix plan |
+| R-FE-003 | 95 | ` [style.box-shadow]="shadowStyle()"` | see fix plan |
+| R-FE-003 | 100 | ` [style.background]="iconBgStyle()"` | see fix plan |
+| R-FE-003 | 101 | ` [style.color]="iconColor()"` | see fix plan |
+| R-FE-003 | 102 | ` style="font-size: var(--falcon-icon-lg);"` | see fix plan |
+| R-FE-003 | 113 | ` [style.background]="trendBgStyle()"` | see fix plan |
+| R-FE-003 | 114 | ` [style.color]="trendColor()"` | see fix plan |
 
 ## Fix plan (ordered)
 

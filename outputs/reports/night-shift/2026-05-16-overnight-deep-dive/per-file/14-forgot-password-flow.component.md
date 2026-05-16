@@ -21,7 +21,16 @@ This is an auth flow page (login / change-password / forgot-password / OTP). It 
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 26 | ` <input` | see fix plan |
+| R-FE-005 | 61 | ` <button` | see fix plan |
+| R-FE-005 | 182 | ` <button` | see fix plan |
+| R-FE-005 | 228 | ` <input` | see fix plan |
+| R-FE-005 | 237 | ` <button type="button" class="fpf-icon-right" (click)="toggleNewPasswordVisibility()" tabindex="-1">` | see fix plan |
+| R-FE-005 | 268 | ` <input` | see fix plan |
+| R-FE-005 | 277 | ` <button type="button" class="fpf-icon-right" (click)="toggleConfirmPasswordVisibility()" tabindex="...` | see fix plan |
+| R-FE-005 | 313 | ` <button` | see fix plan |
+| R-FE-004 | 94 | ` <circle cx="32" cy="32" r="30" stroke="var(--color-falcon-teal-700, #104C54)" stroke-width="2.5"/>` | see fix plan |
+| R-FE-004 | 95 | ` <path d="M20 33l8 8 16-16" stroke="var(--color-falcon-teal-700, #104C54)" stroke-width="3" stroke-l...` | see fix plan |
 
 ## Fix plan (ordered)
 

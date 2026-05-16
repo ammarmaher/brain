@@ -1,12 +1,12 @@
 ---
-rank: 15
-filePath: apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-chart/falcon-chart-toolbar/falcon-chart-toolbar.component.html
-violationCount: 10
+rank: 19
+filePath: apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-chart/falcon-chart-card/falcon-chart-card.component.html
+violationCount: 9
 violatedRules:
-  - R-FE-004 (tokens only) (6x)
-  - R-FE-005 (Falcon library first) (4x)
-totalLines: 45
-violationDensity: 22.2
+  - R-FE-004 (tokens only) (8x)
+  - R-FE-005 (Falcon library first) (1x)
+totalLines: 58
+violationDensity: 15.5
 ammarAgent: ammar-web-platform-ui
 estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
@@ -15,13 +15,21 @@ app: admin-console
 
 ## File summary
 
-This is part of the Org Chart visualization (the tree-graph view of clients). It uses raw `<button>` for zoom / expand / collapse / fit controls and hand-tuned sizing (`text-[12px]`, `w-[280px]`) for compact card layouts. Ranks #15 because each card / control re-implements the same pattern.
+This is part of the Org Chart visualization (the tree-graph view of clients). It uses raw `<button>` for zoom / expand / collapse / fit controls and hand-tuned sizing (`text-[12px]`, `w-[280px]`) for compact card layouts. Ranks #19 because each card / control re-implements the same pattern.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 1 | `<button` | see fix plan |
+| R-FE-004 | 3 | ` class="chart-card absolute flex items-center gap-2.5 px-3 py-2 rounded-[10px] border bg-white borde...` | see fix plan |
+| R-FE-004 | 30 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</div>` | see fix plan |
+| R-FE-004 | 35 | ` <span class="grid place-items-center w-7 h-7 rounded-full bg-falcon-teal-700 text-white text-[10px]...` | see fix plan |
+| R-FE-004 | 37 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</div>` | see fix plan |
+| R-FE-004 | 39 | ` <div class="text-[10.5px] text-falcon-neutral-600 leading-tight mt-0.5">` | see fix plan |
+| R-FE-004 | 47 | ` <span class="grid place-items-center w-7 h-7 rounded-full bg-falcon-mint-100 text-falcon-teal-700 t...` | see fix plan |
+| R-FE-004 | 49 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</div>` | see fix plan |
+| R-FE-004 | 51 | ` <div class="text-[10.5px] text-falcon-neutral-600 leading-tight mt-0.5">` | see fix plan |
 
 ## Fix plan (ordered)
 

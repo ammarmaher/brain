@@ -22,7 +22,16 @@ This is the page-level kebab menu (3-dot Actions dropdown at the top of the org-
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 217 | ` style="--falcon-table-header-bg: var(--color-falcon-neutral-30, #f7f8fa); --falcon-table-footer-bg:...` | see fix plan |
+| R-FE-005 | 192 | ` <button type="button"` | see fix plan |
+| R-FE-004 | 40 | ` <main class="bg-white border border-falcon-neutral-200 rounded-[14px] overflow-hidden flex flex-col...` | see fix plan |
+| R-FE-004 | 164 | ` <div class="mx-5 mb-6 border border-falcon-neutral-200 rounded-md overflow-hidden bg-white min-h-[5...` | see fix plan |
+| R-FE-004 | 187 | ` <div class="flex items-center justify-between gap-3 px-[18px] py-[14px] bg-white border-b border-fa...` | see fix plan |
+| R-FE-004 | 188 | ` <h2 class="text-[15px] font-semibold text-falcon-neutral-900 m-0">{{ 'hierarchy.users.title' ` | see fix plan |
+| R-FE-004 | 193 | ` class="inline-flex items-center gap-1.5 h-9 px-[14px] rounded-lg border border-falcon-neutral-200 b...` | see fix plan |
+| R-FE-004 | 196 | ` <i class="falcon-icon falcon-icon-filter text-[13px]"></i>` | see fix plan |
+| R-FE-004 | 200 | ` <i class="falcon-icon falcon-icon-search absolute left-2.5 text-falcon-neutral-500 text-[12px] poin...` | see fix plan |
+| R-FE-004 | 217 | ` style="--falcon-table-header-bg: var(--color-falcon-neutral-30, #f7f8fa); --falcon-table-footer-bg:...` | see fix plan |
 
 ## Fix plan (ordered)
 

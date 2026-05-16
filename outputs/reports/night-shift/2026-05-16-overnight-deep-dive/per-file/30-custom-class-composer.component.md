@@ -20,7 +20,12 @@ This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 65 | ` style="font-size: var(--falcon-icon-lg);"` | see fix plan |
+| R-FE-003 | 83 | ` style="font-size: var(--falcon-icon-md);"` | see fix plan |
+| R-FE-003 | 174 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 189 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 204 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 219 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
 
 ## Fix plan (ordered)
 

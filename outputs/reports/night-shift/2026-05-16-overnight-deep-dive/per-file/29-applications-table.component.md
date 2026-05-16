@@ -21,7 +21,13 @@ This is a sub-tab inside org-hierarchy showing applications/subscriptions for th
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 157 | ` To override per page, set \`style="--falcon-data-table-shadow-row-min-height: 48px"\`` | see fix plan |
+| R-FE-004 | 17 | ` component sets header-bg + footer-bg to the canonical SoT colour (#F5F5F5) via the` | see fix plan |
+| R-FE-004 | 19 | ` here was overriding the menu patch and producing a #FAFAFA header / #FAFAFA footer` | see fix plan |
+| R-FE-004 | 71 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
+| R-FE-004 | 80 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
+| R-FE-004 | 89 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
+| R-FE-004 | 101 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
 
 ## Fix plan (ordered)
 

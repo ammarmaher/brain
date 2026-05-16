@@ -21,7 +21,18 @@ This is an inline-edit row that appears inside the Falcon table when adding a ne
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 18 | ` style="background: #F3F8F5; padding-inline: 16px;">` | see fix plan |
+| R-FE-003 | 22 | ` <div class="flex-shrink-0" style="width: 96px;"></div>` | see fix plan |
+| R-FE-003 | 24 | ` <div class="flex-shrink-0" style="width: 140px;"></div>` | see fix plan |
+| R-FE-003 | 27 | ` <div class="flex flex-col gap-1" style="width: 180px;">` | see fix plan |
+| R-FE-003 | 39 | ` <div class="flex flex-col gap-1" style="width: 220px;">` | see fix plan |
+| R-FE-003 | 52 | ` <div class="flex-shrink-0" style="width: 96px;"></div>` | see fix plan |
+| R-FE-003 | 54 | ` <div class="flex-shrink-0" style="width: 140px;"></div>` | see fix plan |
+| R-FE-003 | 56 | ` <div class="flex-shrink-0" style="width: 180px;"></div>` | see fix plan |
+| R-FE-003 | 59 | ` <div class="flex flex-col gap-1" style="width: 260px;">` | see fix plan |
+| R-FE-004 | 4 | ` - Background = #F3F8F5 (light green-teal stripe).` | see fix plan |
+| R-FE-004 | 18 | ` style="background: #F3F8F5; padding-inline: 16px;">` | see fix plan |
+| R-FE-004 | 28 | ` <span class="text-[11px] font-medium text-falcon-neutral-500">` | see fix plan |
 | ... | ... | _(2 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)

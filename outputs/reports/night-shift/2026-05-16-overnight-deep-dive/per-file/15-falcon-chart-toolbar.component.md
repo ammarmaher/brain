@@ -1,12 +1,12 @@
 ---
-rank: 19
-filePath: apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-chart/falcon-chart-card/falcon-chart-card.component.html
-violationCount: 9
+rank: 15
+filePath: apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-chart/falcon-chart-toolbar/falcon-chart-toolbar.component.html
+violationCount: 10
 violatedRules:
-  - R-FE-004 (tokens only) (8x)
-  - R-FE-005 (Falcon library first) (1x)
-totalLines: 58
-violationDensity: 15.5
+  - R-FE-004 (tokens only) (6x)
+  - R-FE-005 (Falcon library first) (4x)
+totalLines: 45
+violationDensity: 22.2
 ammarAgent: ammar-web-platform-ui
 estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
@@ -15,13 +15,22 @@ app: admin-console
 
 ## File summary
 
-This is part of the Org Chart visualization (the tree-graph view of clients). It uses raw `<button>` for zoom / expand / collapse / fit controls and hand-tuned sizing (`text-[12px]`, `w-[280px]`) for compact card layouts. Ranks #19 because each card / control re-implements the same pattern.
+This is part of the Org Chart visualization (the tree-graph view of clients). It uses raw `<button>` for zoom / expand / collapse / fit controls and hand-tuned sizing (`text-[12px]`, `w-[280px]`) for compact card layouts. Ranks #15 because each card / control re-implements the same pattern.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 2 | ` <button` | see fix plan |
+| R-FE-005 | 13 | ` <button` | see fix plan |
+| R-FE-005 | 25 | ` <button` | see fix plan |
+| R-FE-005 | 35 | ` <button` | see fix plan |
+| R-FE-004 | 1 | `<div class="absolute bottom-3.5 end-3.5 z-[5] flex items-center gap-1 p-1 bg-white border border-fal...` | see fix plan |
+| R-FE-004 | 4 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
+| R-FE-004 | 15 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
+| R-FE-004 | 24 | ` <div class="px-2 h-6 flex items-center text-[11.5px] font-semibold text-falcon-neutral-600 tabular-...` | see fix plan |
+| R-FE-004 | 27 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
+| R-FE-004 | 37 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
 
 ## Fix plan (ordered)
 

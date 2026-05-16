@@ -21,7 +21,18 @@ This is the topbar layout chrome (present on every authenticated page). It viola
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 28 | ` <button` | see fix plan |
+| R-FE-005 | 39 | ` <button` | see fix plan |
+| R-FE-005 | 54 | ` <button` | see fix plan |
+| R-FE-005 | 93 | ` <button` | see fix plan |
+| R-FE-005 | 118 | ` <button` | see fix plan |
+| R-FE-005 | 133 | ` <button` | see fix plan |
+| R-FE-005 | 154 | ` <button` | see fix plan |
+| R-FE-004 | 27 | ` <div class="topbar-actions flex items-center gap-[18px] shrink-0">` | see fix plan |
+| R-FE-004 | 30 | ` class="icon-btn relative grid place-items-center size-[38px] rounded-[10px] text-falcon-neutral-800...` | see fix plan |
+| R-FE-004 | 41 | ` class="icon-btn relative grid place-items-center size-[38px] rounded-[10px] text-falcon-neutral-800...` | see fix plan |
+| R-FE-004 | 51 | ` <div class="topbar-divider w-px h-[30px] bg-falcon-neutral-200"></div>` | see fix plan |
+| R-FE-004 | 62 | ` <rect width="40" height="40" fill="#cfd8dc"/>` | see fix plan |
 | ... | ... | _(16 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)

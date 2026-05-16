@@ -1,11 +1,11 @@
 ---
-rank: 17
-filePath: libs/falcon-studio/src/lib/components/falcon-studio-stat-card.component.ts
-violationCount: 9
+rank: 20
+filePath: libs/falcon-studio/src/lib/components/studio-page.component.ts
+violationCount: 8
 violatedRules:
-  - R-FE-003 (no inline styles) (9x)
-totalLines: 242
-violationDensity: 3.7
+  - R-FE-003 (no inline styles) (8x)
+totalLines: 638
+violationDensity: 1.3
 ammarAgent: ammar-web-platform-ui
 estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
@@ -14,13 +14,20 @@ app: falcon-studio (lib)
 
 ## File summary
 
-This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #17 (9 violations across 242 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
+This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #20 (8 violations across 638 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 106 | ` style="font-size: var(--falcon-icon-md);"` | see fix plan |
+| R-FE-003 | 138 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 196 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 212 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 301 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 330 | ` <div class="grid h-full min-h-0" style="grid-template-rows: auto 1fr;">` | see fix plan |
+| R-FE-003 | 365 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 373 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
 
 ## Fix plan (ordered)
 

@@ -1,28 +1,35 @@
 ---
-rank: 7
-filePath: apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html
-violationCount: 35
+rank: 18
+filePath: apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-service-row-table/client-service-row-table.component.html
+violationCount: 9
 violatedRules:
-  - R-FE-004 (tokens only) (31x)
-  - R-FE-005 (Falcon library first) (4x)
-totalLines: 273
-violationDensity: 12.8
+  - R-FE-004 (tokens only) (7x)
+  - R-FE-005 (Falcon library first) (2x)
+totalLines: 81
+violationDensity: 11.1
 ammarAgent: ammar-web-platform-ui
-estimatedFixTimeMinutes: 52
+estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
 app: admin-console
 ---
 
 ## File summary
 
-This is part of the Add Client / Add User wizard (a multi-step modal). It violates R-FE-005 with raw `<input type="text">` + increment/decrement spinner `<button>`s for IP allowlist and service-row counts. R-FE-004 fires on hand-tuned font-sizes (`text-[13px]`, `text-[11.5px]`) and tracking (`tracking-[0.04em]`). Per Brain SK playbook `Brain Outputs/understanding/pages/organization-hierarchy/Add Client/`, the wizard predates the typography scale freeze. Ranks #7.
+This is part of the Add Client / Add User wizard (a multi-step modal). It violates R-FE-005 with raw `<input type="text">` + increment/decrement spinner `<button>`s for IP allowlist and service-row counts. R-FE-004 fires on hand-tuned font-sizes (`text-[13px]`, `text-[11.5px]`) and tracking (`tracking-[0.04em]`). Per Brain SK playbook `Brain Outputs/understanding/pages/organization-hierarchy/Add Client/`, the wizard predates the typography scale freeze. Ranks #18.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
-| ... | ... | _(23 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-005 | 16 | ` <button type="button" role="switch" [attr.aria-checked]="r.visible"` | see fix plan |
+| R-FE-005 | 56 | ` <input type="number" min="0"` | see fix plan |
+| R-FE-004 | 17 | ` class="relative inline-block w-[34px] h-4 rounded-full transition-colors"` | see fix plan |
+| R-FE-004 | 22 | ` [class.left-[18px]]="r.visible"` | see fix plan |
+| R-FE-004 | 44 | ` <span class="text-[10px] text-falcon-red-500 mt-1">*{{ 'hierarchy.validation.required' ` | see fix plan |
+| R-FE-004 | 57 | ` class="w-full h-[34px] pl-8 pr-3 rounded-md border border-falcon-neutral-200 bg-white text-sm focus...` | see fix plan |
+| R-FE-004 | 66 | ` <span class="text-[10px] text-falcon-red-500 mt-1">*{{ 'hierarchy.validation.required' ` | see fix plan |
+| R-FE-004 | 72 | ` <span class="inline-flex items-center h-6 px-3.5 rounded-full bg-white border border-falcon-neutral...` | see fix plan |
+| R-FE-004 | 76 | ` <span class="text-falcon-neutral-500 text-[13px] tracking-[0.5px]">------</span>` | see fix plan |
 
 ## Fix plan (ordered)
 

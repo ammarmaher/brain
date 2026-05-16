@@ -21,7 +21,18 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 579 | ` [style.--ib-mirror-anim-duration]="ibAnimDurationMs() + 'ms'"` | see fix plan |
+| R-FE-004 | 127 | ` <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-falcon-neutral-500">` | see fix plan |
+| R-FE-004 | 131 | ` <p class="text-[13px] text-falcon-neutral-500 leading-relaxed">` | see fix plan |
+| R-FE-004 | 188 | ` class="self-start text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full"` | see fix plan |
+| R-FE-004 | 197 | ` <p class="text-[12.5px] text-falcon-neutral-500 leading-relaxed flex-1">` | see fix plan |
+| R-FE-004 | 203 | ` <span class="text-[11.5px] text-falcon-neutral-400">Press to open</span>` | see fix plan |
+| R-FE-004 | 249 | ` <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-falcon-neutral-500">` | see fix plan |
+| R-FE-004 | 253 | ` <p class="text-[13px] text-falcon-neutral-500 leading-relaxed">` | see fix plan |
+| R-FE-004 | 267 | ` <span class="text-[11px] font-semibold uppercase tracking-wider text-falcon-neutral-500">` | see fix plan |
+| R-FE-004 | 270 | ` <span class="text-[11.5px] text-falcon-neutral-400">When to fade away</span>` | see fix plan |
+| R-FE-004 | 337 | ` <span class="text-[11px] font-semibold uppercase tracking-wider text-falcon-neutral-500">` | see fix plan |
+| R-FE-004 | 340 | ` <span class="text-[11.5px] text-falcon-neutral-400">Pick any combination</span>` | see fix plan |
 | ... | ... | _(67 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)

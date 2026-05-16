@@ -21,7 +21,18 @@ This is the user-details page (drill-down from org-hierarchy → user row). It h
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 7 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 24 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 126 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 157 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 284 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 289 | ` <button type="button"` | see fix plan |
+| R-FE-004 | 11 | ` <i class="falcon-icon falcon-icon-arrow-left text-[14px]"></i>` | see fix plan |
+| R-FE-004 | 17 | ` <span class="text-[15px] font-semibold text-falcon-neutral-900">` | see fix plan |
+| R-FE-004 | 25 | ` class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg text-[13px] font-medium"` | see fix plan |
+| R-FE-004 | 66 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | see fix plan |
+| R-FE-004 | 83 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | see fix plan |
+| R-FE-004 | 108 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | see fix plan |
 | ... | ... | _(3 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)

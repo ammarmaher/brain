@@ -20,7 +20,14 @@ This is an auth flow page (login / change-password / forgot-password / OTP). It 
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 29 | ` <input` | see fix plan |
+| R-FE-005 | 39 | ` <button type="button" class="cp-icon-right" (click)="toggleCurrentPasswordVisibility()" tabindex="-...` | see fix plan |
+| R-FE-005 | 71 | ` <button type="button" class="cp-verify-btn" (click)="onVerifyCurrentPassword()">` | see fix plan |
+| R-FE-005 | 100 | ` <input` | see fix plan |
+| R-FE-005 | 108 | ` <button type="button" class="cp-icon-right" (click)="toggleNewPasswordVisibility()" tabindex="-1" [...` | see fix plan |
+| R-FE-005 | 144 | ` <input` | see fix plan |
+| R-FE-005 | 152 | ` <button type="button" class="cp-icon-right" (click)="toggleConfirmPasswordVisibility()" tabindex="-...` | see fix plan |
+| R-FE-005 | 181 | ` <button` | see fix plan |
 
 ## Fix plan (ordered)
 

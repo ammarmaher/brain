@@ -22,7 +22,18 @@ This is the OTP verification dialog. It uses a native `<dialog>` element to leve
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 18 | ` style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 0; margin: ...` | see fix plan |
+| R-FE-003 | 44 | ` style="width: 100%; box-shadow: 0 30px 80px -20px rgba(13, 63, 68, 0.30);"` | see fix plan |
+| R-FE-003 | 48 | ` <div class="w-full bg-falcon-teal-700" style="height: 8px;" aria-hidden="true"></div>` | see fix plan |
+| R-FE-003 | 53 | ` style="top: 32px; inset-inline-end: 36px; width: 28px; height: 28px;"` | see fix plan |
+| R-FE-003 | 63 | ` style="padding: 72px 72px 64px 72px; gap: 36px;">` | see fix plan |
+| R-FE-003 | 67 | ` style="font-size: 40px;">` | see fix plan |
+| R-FE-003 | 72 | ` <div class="flex flex-col items-center text-center" style="gap: 6px;">` | see fix plan |
+| R-FE-003 | 73 | ` <p class="text-falcon-neutral-800 leading-relaxed" style="font-size: 18px;">` | see fix plan |
+| R-FE-003 | 76 | ` <p class="font-extrabold italic text-falcon-teal-700" style="font-size: 22px;">` | see fix plan |
+| R-FE-003 | 111 | ` <div class="relative" style="width: 140px; height: 140px; margin-top: 12px;" [attr.aria-label]="'hi...` | see fix plan |
+| R-FE-003 | 127 | ` style="font-size: 38px;">` | see fix plan |
+| R-FE-005 | 1 | `<!-- Wave 13m (2026-05-15) — OTP modal in native <dialog> top-layer.` | see fix plan |
 | ... | ... | _(11 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)

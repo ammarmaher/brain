@@ -21,7 +21,18 @@ This file is a loading skeleton (placeholder shimmer cards). It violates R-FE-00
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 71 | ` style="height: calc(95vh - 40px)">` | see fix plan |
+| R-FE-003 | 83 | ` [style]="indentStyle(row.indent)">` | see fix plan |
+| R-FE-004 | 20 | ` success: 'bg-emerald-100',` | see fix plan |
+| R-FE-004 | 21 | ` warning: 'bg-amber-100',` | see fix plan |
+| R-FE-004 | 22 | ` danger: 'bg-rose-100',` | see fix plan |
+| R-FE-004 | 23 | ` muted: 'bg-slate-200',` | see fix plan |
+| R-FE-004 | 70 | ` class="hidden lg:flex lg:col-span-1 flex-col gap-3 rounded-2xl border border-slate-200 shadow-sm p-...` | see fix plan |
+| R-FE-004 | 74 | ` <div class="h-3.5 w-1/2 rounded-md bg-slate-300/70 animate-pulse"></div>` | see fix plan |
+| R-FE-004 | 77 | ` <div class="h-3 w-2/5 rounded-md bg-slate-300/70 animate-pulse mb-1"></div>` | see fix plan |
+| R-FE-004 | 87 | ` <div class="w-3 h-3 rounded-sm bg-slate-300/70 animate-pulse"></div>` | see fix plan |
+| R-FE-004 | 89 | ` <div class="h-3.5 rounded-md bg-slate-300/70 animate-pulse" [class]="row.width"></div>` | see fix plan |
+| R-FE-004 | 94 | ` <main class="lg:col-span-4 min-w-0 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex...` | see fix plan |
 | ... | ... | _(34 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)

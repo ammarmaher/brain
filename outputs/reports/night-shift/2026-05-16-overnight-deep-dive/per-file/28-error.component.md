@@ -20,7 +20,13 @@ This is an error / unauthorized page (full-screen 404 / 500 / unauthorized layou
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-004 | 26 | ` background: linear-gradient(135deg, #f4f7fb 0%, #e7eef9 100%);` | see fix plan |
+| R-FE-004 | 32 | ` background: #ffffff;` | see fix plan |
+| R-FE-004 | 34 | ` box-shadow: 0 1.5rem 3rem rgba(24, 39, 75, 0.12);` | see fix plan |
+| R-FE-004 | 41 | ` color: #1f2937;` | see fix plan |
+| R-FE-004 | 47 | ` color: #4b5563;` | see fix plan |
+| R-FE-004 | 55 | ` background: #1d4ed8;` | see fix plan |
+| R-FE-004 | 56 | ` color: #ffffff;` | see fix plan |
 
 ## Fix plan (ordered)
 

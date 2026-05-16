@@ -1,11 +1,11 @@
 ---
-rank: 22
-filePath: libs/falcon-studio/src/lib/components/color-picker.component.ts
-violationCount: 8
+rank: 27
+filePath: libs/falcon-studio/src/lib/components/common-actions-rail.component.ts
+violationCount: 7
 violatedRules:
-  - R-FE-003 (no inline styles) (8x)
-totalLines: 608
-violationDensity: 1.3
+  - R-FE-003 (no inline styles) (7x)
+totalLines: 412
+violationDensity: 1.7
 ammarAgent: ammar-web-platform-ui
 estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
@@ -14,13 +14,19 @@ app: falcon-studio (lib)
 
 ## File summary
 
-This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #22 (8 violations across 608 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
+This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a designer drag-mutate every Falcon token live. Inline `[style.X]="..."` bindings here are the studio's RAISON D'ÊTRE: they bind preview elements to the user's in-flight token values BEFORE those values are committed back to `falcon.theme.css`. This file ranks #27 (7 violations across 412 lines) because Studio's dynamic preview model fundamentally requires runtime style bindings.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 60 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 76 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 103 | ` style="font-size: var(--falcon-icon-md);"` | see fix plan |
+| R-FE-003 | 137 | ` style="font-size: var(--falcon-icon-md);"` | see fix plan |
+| R-FE-003 | 166 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 181 | ` style="font-size: var(--falcon-icon-sm);"` | see fix plan |
+| R-FE-003 | 201 | ` style="font-size: var(--falcon-icon-lg);"` | see fix plan |
 
 ## Fix plan (ordered)
 

@@ -1,27 +1,33 @@
 ---
-rank: 4
-filePath: apps/host-shell/src/app/features/falcon-ui-showcase/gallery/showcase-code-panel.component.ts
-violationCount: 62
+rank: 24
+filePath: apps/host-shell/src/app/features/falcon-ui-showcase/gallery/showcase-hero.component.ts
+violationCount: 8
 violatedRules:
-  - R-FE-004 (tokens only) (62x)
-totalLines: 937
-violationDensity: 6.6
+  - R-FE-004 (tokens only) (8x)
+totalLines: 62
+violationDensity: 12.9
 ammarAgent: ammar-web-platform-ui
-estimatedFixTimeMinutes: 93
+estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
 app: host-shell
 ---
 
 ## File summary
 
-This file is part of the Falcon UI Showcase — a host-shell-internal preview page that renders the entire `<falcon-*>` component catalogue. It exists to demonstrate every component variant side-by-side; the bulk of its violations are arbitrary pixel values (`text-[9px]`, `max-w-[180px]`) used to fit miniature previews into showcase tiles. It ranks #4 because the file is dense with thumbnail-sized literal sizes that have no Falcon token equivalent. Total lines: 937. Violation density: 6.6/100 LOC.
+This file is part of the Falcon UI Showcase — a host-shell-internal preview page that renders the entire `<falcon-*>` component catalogue. It exists to demonstrate every component variant side-by-side; the bulk of its violations are arbitrary pixel values (`text-[9px]`, `max-w-[180px]`) used to fit miniature previews into showcase tiles. It ranks #24 because the file is dense with thumbnail-sized literal sizes that have no Falcon token equivalent. Total lines: 62. Violation density: 12.9/100 LOC.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
-| ... | ... | _(50 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-004 | 29 | ` <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-falcon-neutral-0/15 bor...` | see fix plan |
+| R-FE-004 | 35 | ` <p class="mt-1 text-[11px] text-falcon-teal-50/70 truncate max-w-[64ch]">` | see fix plan |
+| R-FE-004 | 43 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border border-falco...` | see fix plan |
+| R-FE-004 | 44 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Components</span>` | see fix plan |
+| R-FE-004 | 47 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border border-falco...` | see fix plan |
+| R-FE-004 | 48 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Stack</span>` | see fix plan |
+| R-FE-004 | 51 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border border-falco...` | see fix plan |
+| R-FE-004 | 52 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Port</span>` | see fix plan |
 
 ## Fix plan (ordered)
 

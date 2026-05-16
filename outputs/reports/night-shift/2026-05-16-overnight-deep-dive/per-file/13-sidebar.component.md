@@ -22,7 +22,16 @@ This is the sidebar layout chrome (collapsible nav rail). It violates R-FE-005 w
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-003 | 38 | ` [style.transform]="collapsed() ? 'rotate(180deg)' : 'rotate(0deg)'"` | see fix plan |
+| R-FE-003 | 39 | ` [style.transition]="'transform 0.2s ease'">` | see fix plan |
+| R-FE-005 | 28 | ` <button` | see fix plan |
+| R-FE-005 | 54 | ` <button` | see fix plan |
+| R-FE-005 | 74 | ` <button` | see fix plan |
+| R-FE-005 | 94 | ` <button` | see fix plan |
+| R-FE-005 | 118 | ` <button` | see fix plan |
+| R-FE-005 | 137 | ` <button` | see fix plan |
+| R-FE-004 | 19 | ` <div class="sidebar-logo flex items-center gap-2.5 text-xl font-bold tracking-[0.04em] text-white w...` | see fix plan |
+| R-FE-004 | 25 | ` <span class="text-lg leading-none tracking-[0.06em]">{{ brandText() }}</span>` | see fix plan |
 
 ## Fix plan (ordered)
 

@@ -21,7 +21,18 @@ This is a 4080-line `playground.page.html` — a private host-shell page used by
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 1667 | ` <button` | see fix plan |
+| R-FE-005 | 1848 | ` <button type="button" (click)="backLinearShadow()"` | see fix plan |
+| R-FE-005 | 1852 | ` <button type="button" (click)="advanceLinearShadow()"` | see fix plan |
+| R-FE-005 | 2429 | ` <input` | see fix plan |
+| R-FE-005 | 2451 | ` <button` | see fix plan |
+| R-FE-005 | 2537 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 2544 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 2551 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 2558 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 2565 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 2578 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 2585 | ` <button type="button"` | see fix plan |
 | ... | ... | _(39 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)

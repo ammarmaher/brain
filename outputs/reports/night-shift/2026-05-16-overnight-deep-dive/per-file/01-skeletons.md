@@ -1,27 +1,38 @@
 ---
-rank: 10
-filePath: apps/host-shell/src/app/features/falcon-ui-showcase/gallery/showcase-tabs-actions-demo.component.ts
-violationCount: 15
+rank: 1
+filePath: apps/host-shell/src/app/features/falcon-ui-showcase/showcase-data/skeletons.ts
+violationCount: 154
 violatedRules:
-  - R-FE-004 (tokens only) (15x)
-totalLines: 162
-violationDensity: 9.3
+  - R-FE-004 (tokens only) (154x)
+totalLines: 786
+violationDensity: 19.6
 ammarAgent: ammar-web-platform-ui
-estimatedFixTimeMinutes: 22
+estimatedFixTimeMinutes: 180
 runId: 2026-05-16-overnight-deep-dive
 app: host-shell
 ---
 
 ## File summary
 
-This file is part of the Falcon UI Showcase — a host-shell-internal preview page that renders the entire `<falcon-*>` component catalogue. It exists to demonstrate every component variant side-by-side; the bulk of its violations are arbitrary pixel values (`text-[9px]`, `max-w-[180px]`) used to fit miniature previews into showcase tiles. It ranks #10 because the file is dense with thumbnail-sized literal sizes that have no Falcon token equivalent. Total lines: 162. Violation density: 9.3/100 LOC.
+This file is part of the Falcon UI Showcase — a host-shell-internal preview page that renders the entire `<falcon-*>` component catalogue. It exists to demonstrate every component variant side-by-side; the bulk of its violations are arbitrary pixel values (`text-[9px]`, `max-w-[180px]`) used to fit miniature previews into showcase tiles. It ranks #1 because the file is dense with thumbnail-sized literal sizes that have no Falcon token equivalent. Total lines: 786. Violation density: 19.6/100 LOC.
 
 ## Violations breakdown
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
-| ... | ... | _(3 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-004 | 4 | `/*** Frame wrapper with bounded inner content (max-w-[180px]). ***/` | see fix plan |
+| R-FE-004 | 19 | ` <div class="w-full max-w-[180px]">` | see fix plan |
+| R-FE-004 | 21 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Label</span>` | see fix plan |
+| R-FE-004 | 23 | ` <span class="text-[9px] text-falcon-neutral-475">Placeholder</span>` | see fix plan |
+| R-FE-004 | 40 | ` <div class="w-full max-w-[180px]">` | see fix plan |
+| R-FE-004 | 42 | ` <span class="inline-flex items-center justify-center h-7 px-3 rounded-md bg-falcon-teal-500 text-fa...` | see fix plan |
+| R-FE-004 | 43 | ` <span class="inline-flex items-center justify-center h-7 px-3 rounded-md bg-falcon-neutral-0 border...` | see fix plan |
+| R-FE-004 | 58 | ` <div class="w-full max-w-[180px]">` | see fix plan |
+| R-FE-004 | 60 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Country</span>` | see fix plan |
+| R-FE-004 | 62 | ` <span class="text-[9px] text-falcon-neutral-900">Saudi Arabia</span>` | see fix plan |
+| R-FE-004 | 79 | ` <div class="w-full max-w-[180px]">` | see fix plan |
+| R-FE-004 | 81 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Stack</span>` | see fix plan |
+| ... | ... | _(142 more rows of the same rule families omitted)_ | apply same fix |
 
 ## Fix plan (ordered)
 

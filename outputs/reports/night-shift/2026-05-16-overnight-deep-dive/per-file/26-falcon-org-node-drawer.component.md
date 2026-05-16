@@ -21,7 +21,14 @@ This is part of the Org Chart visualization (the tree-graph view of clients). It
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| (none) | - | - | - |
+| R-FE-005 | 14 | ` <button type="button" aria-label="Close"` | see fix plan |
+| R-FE-005 | 25 | ` <input id="orgNodeNameInput" type="text"` | see fix plan |
+| R-FE-005 | 45 | ` <button type="button"` | see fix plan |
+| R-FE-005 | 50 | ` <button type="button"` | see fix plan |
+| R-FE-004 | 17 | ` <i class="falcon-icon falcon-icon-times text-[14px]"></i>` | see fix plan |
+| R-FE-004 | 38 | ` <p class="text-[11px] text-falcon-neutral-500 m-0 mt-1">` | see fix plan |
+| R-FE-004 | 46 | ` class="inline-flex items-center h-[34px] px-3 text-sm font-medium text-falcon-neutral-700 hover:tex...` | see fix plan |
+| R-FE-004 | 51 | ` class="inline-flex items-center h-[34px] px-5 rounded-md bg-falcon-teal-700 text-white text-sm font...` | see fix plan |
 
 ## Fix plan (ordered)
 
