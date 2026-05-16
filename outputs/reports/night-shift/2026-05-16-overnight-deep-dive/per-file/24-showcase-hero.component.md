@@ -20,14 +20,14 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-004 | 29 | ` <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-falcon-neutral-0/15 bor...` | see fix plan |
-| R-FE-004 | 35 | ` <p class="mt-1 text-[11px] text-falcon-teal-50/70 truncate max-w-[64ch]">` | see fix plan |
-| R-FE-004 | 43 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border border-falco...` | see fix plan |
-| R-FE-004 | 44 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Components</span>` | see fix plan |
-| R-FE-004 | 47 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border border-falco...` | see fix plan |
-| R-FE-004 | 48 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Stack</span>` | see fix plan |
-| R-FE-004 | 51 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border border-falco...` | see fix plan |
-| R-FE-004 | 52 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Port</span>` | see fix plan |
+| R-FE-004 | 29 | ` <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-falcon-neutra...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 35 | ` <p class="mt-1 text-[11px] text-falcon-teal-50/70 truncate max-w-[64ch]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 43 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border bo...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 44 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Components</sp...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 47 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border bo...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 48 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Stack</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 51 | ` <div class="flex flex-col items-end px-4 py-2 rounded-lg bg-falcon-neutral-0/10 border bo...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 52 | ` <span class="text-[10px] uppercase tracking-wider text-falcon-teal-100/90">Port</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -39,6 +39,15 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 ## Refactor opportunity
 
 Showcase tiles need a NEW token family: `text-falcon-preview-xxs` / `w-falcon-preview-tile` / `gap-falcon-preview-row`. Promote these to `libs/falcon-theme/src/falcon-tailwind-tokens.css` first, then sweep this file (and its 3 showcase-related siblings ranked #2-4) in one pass — they share the same anti-pattern. After that, consider adding an `exemptions/EXEMPTIONS.md` block listing the showcase folder for R-FE-004 if Theme Studio scope explicitly excludes preview tiles.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--text-falcon-preview-xxs: 9px` / `--text-falcon-preview-xs: 10px` (showcase tile labels)
+  - `--max-w-falcon-preview-tile: 180px` (showcase tile width)
+  - OR designate `apps/host-shell/src/app/features/falcon-ui-showcase/**` as R-FE-004 exempt
 
 ## Verification
 

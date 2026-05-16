@@ -21,19 +21,20 @@ This is an inline-edit row that appears inside the Falcon table when adding a ne
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-003 | 18 | ` style="background: #F3F8F5; padding-inline: 16px;">` | see fix plan |
-| R-FE-003 | 22 | ` <div class="flex-shrink-0" style="width: 96px;"></div>` | see fix plan |
-| R-FE-003 | 24 | ` <div class="flex-shrink-0" style="width: 140px;"></div>` | see fix plan |
-| R-FE-003 | 27 | ` <div class="flex flex-col gap-1" style="width: 180px;">` | see fix plan |
-| R-FE-003 | 39 | ` <div class="flex flex-col gap-1" style="width: 220px;">` | see fix plan |
-| R-FE-003 | 52 | ` <div class="flex-shrink-0" style="width: 96px;"></div>` | see fix plan |
-| R-FE-003 | 54 | ` <div class="flex-shrink-0" style="width: 140px;"></div>` | see fix plan |
-| R-FE-003 | 56 | ` <div class="flex-shrink-0" style="width: 180px;"></div>` | see fix plan |
-| R-FE-003 | 59 | ` <div class="flex flex-col gap-1" style="width: 260px;">` | see fix plan |
-| R-FE-004 | 4 | ` - Background = #F3F8F5 (light green-teal stripe).` | see fix plan |
-| R-FE-004 | 18 | ` style="background: #F3F8F5; padding-inline: 16px;">` | see fix plan |
-| R-FE-004 | 28 | ` <span class="text-[11px] font-medium text-falcon-neutral-500">` | see fix plan |
-| ... | ... | _(2 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-003 | 18 | ` style="background: #F3F8F5; padding-inline: 16px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 22 | ` <div class="flex-shrink-0" style="width: 96px;"></div>` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 24 | ` <div class="flex-shrink-0" style="width: 140px;"></div>` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 27 | ` <div class="flex flex-col gap-1" style="width: 180px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 39 | ` <div class="flex flex-col gap-1" style="width: 220px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 52 | ` <div class="flex-shrink-0" style="width: 96px;"></div>` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 54 | ` <div class="flex-shrink-0" style="width: 140px;"></div>` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 56 | ` <div class="flex-shrink-0" style="width: 180px;"></div>` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 59 | ` <div class="flex flex-col gap-1" style="width: 260px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-004 | 4 | ` - Background = #F3F8F5 (light green-teal stripe).` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 18 | ` style="background: #F3F8F5; padding-inline: 16px;">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 28 | ` <span class="text-[11px] font-medium text-falcon-neutral-500">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 40 | ` <span class="text-[11px] font-medium text-falcon-neutral-500">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 60 | ` <span class="text-[11px] font-medium text-falcon-neutral-500">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -45,6 +46,16 @@ This is an inline-edit row that appears inside the Falcon table when adding a ne
 ## Refactor opportunity
 
 Promote column widths to a per-table token map: `--falcon-table-col-icon: 96px`, `--falcon-table-col-tag: 140px`, `--falcon-table-col-name: 180px`, `--falcon-table-col-email: 220px`, `--falcon-table-col-actions: 96px`. Better still: expose `<falcon-table>` column-defs that the edit-row reads via a shared service — eliminate the duplication entirely. The `background: #F3F8F5` should become `bg-falcon-edit-row-stripe` (promote token). The 9 inline widths collapse to 1 wrapper attribute + 9 utility classes.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--width-falcon-table-col-icon/-tag/-name/-email/-actions` per-column widths
+  - `--color-falcon-edit-row-stripe: #F3F8F5`
+- Inline-style replacement strategy:
+  - Convert each `style="..."` to Tailwind class or token-driven CSS custom property per R-FE-003 fix recipe
 
 ## Verification
 

@@ -22,19 +22,29 @@ This is the OTP verification dialog. It uses a native `<dialog>` element to leve
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-003 | 18 | ` style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 0; margin: ...` | see fix plan |
-| R-FE-003 | 44 | ` style="width: 100%; box-shadow: 0 30px 80px -20px rgba(13, 63, 68, 0.30);"` | see fix plan |
-| R-FE-003 | 48 | ` <div class="w-full bg-falcon-teal-700" style="height: 8px;" aria-hidden="true"></div>` | see fix plan |
-| R-FE-003 | 53 | ` style="top: 32px; inset-inline-end: 36px; width: 28px; height: 28px;"` | see fix plan |
-| R-FE-003 | 63 | ` style="padding: 72px 72px 64px 72px; gap: 36px;">` | see fix plan |
-| R-FE-003 | 67 | ` style="font-size: 40px;">` | see fix plan |
-| R-FE-003 | 72 | ` <div class="flex flex-col items-center text-center" style="gap: 6px;">` | see fix plan |
-| R-FE-003 | 73 | ` <p class="text-falcon-neutral-800 leading-relaxed" style="font-size: 18px;">` | see fix plan |
-| R-FE-003 | 76 | ` <p class="font-extrabold italic text-falcon-teal-700" style="font-size: 22px;">` | see fix plan |
-| R-FE-003 | 111 | ` <div class="relative" style="width: 140px; height: 140px; margin-top: 12px;" [attr.aria-label]="'hi...` | see fix plan |
-| R-FE-003 | 127 | ` style="font-size: 38px;">` | see fix plan |
-| R-FE-005 | 1 | `<!-- Wave 13m (2026-05-15) — OTP modal in native <dialog> top-layer.` | see fix plan |
-| ... | ... | _(11 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-003 | 18 | ` style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 0...` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 44 | ` style="width: 100%; box-shadow: 0 30px 80px -20px rgba(13, 63, 68, 0.30);"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 48 | ` <div class="w-full bg-falcon-teal-700" style="height: 8px;" aria-hidden="true"></div>` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 53 | ` style="top: 32px; inset-inline-end: 36px; width: 28px; height: 28px;"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 63 | ` style="padding: 72px 72px 64px 72px; gap: 36px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 67 | ` style="font-size: 40px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 72 | ` <div class="flex flex-col items-center text-center" style="gap: 6px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 73 | ` <p class="text-falcon-neutral-800 leading-relaxed" style="font-size: 18px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 76 | ` <p class="font-extrabold italic text-falcon-teal-700" style="font-size: 22px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 111 | ` <div class="relative" style="width: 140px; height: 140px; margin-top: 12px;" [attr.aria-l...` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 127 | ` style="font-size: 38px;">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-005 | 1 | `<!-- Wave 13m (2026-05-15) — OTP modal in native <dialog> top-layer.` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 16 | `<dialog #dlg` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 51 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 134 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 28 | ` background: rgba(13, 63, 68, 0.55);` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 44 | ` style="width: 100%; box-shadow: 0 30px 80px -20px rgba(13, 63, 68, 0.30);"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 92 | ` <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-falcon-neut...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 99 | ` <span class="text-[13px] text-falcon-red-500 font-medium">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 104 | ` <span class="text-[13px] text-falcon-red-500 font-medium">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 115 | ` stroke="var(--color-falcon-neutral-150, #e6eaee)"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 119 | ` stroke="var(--color-falcon-teal-700, #0d3f44)"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 135 | ` class="inline-flex items-center gap-1.5 mt-1 text-[13px] font-medium disabled:cursor-not-...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -47,6 +57,21 @@ This is the OTP verification dialog. It uses a native `<dialog>` element to leve
 ## Refactor opportunity
 
 Two paths. **(A)** Keep the native `<dialog>` element (legitimate GAP — top-layer behavior is browser-native), add a `<!-- GAP: R-FE-005 native top-layer dialog -->` marker, and convert inline `style=` to classes. Sizes (`width: 750px`, `gap: 36px`, `font-size: 22px`) become `--falcon-otp-dialog-*` tokens; the circular timer (`width: 140px; height: 140px`) becomes `--falcon-otp-timer-size`. **(B)** Replace with a `<falcon-modal-dialog variant="otp">` skeleton + app wrapper following `feedback_library_skeleton_app_api`. Option A is the minimum-risk fix; B unlocks reuse for other top-layer dialogs.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-modal-dialog variant="otp">` (top-layer; may be Phase-2)
+  - `<falcon-otp-input>` (already shipped per memory note)
+  - `<falcon-button>`
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--width-falcon-otp-dialog: 750px`, `--gap-falcon-otp-content: 36px`
+  - `--size-falcon-otp-timer: 140px`, `--text-falcon-otp-code: 38px`
+- Inline-style replacement strategy:
+  - Map each inline `style="font-size: NNpx"` to a token-named class (`text-falcon-otp-code`, etc.)
+  - The `rgba(13, 63, 68, 0.30)` shadow → promote to `--shadow-falcon-otp-dialog`
 
 ## Verification
 

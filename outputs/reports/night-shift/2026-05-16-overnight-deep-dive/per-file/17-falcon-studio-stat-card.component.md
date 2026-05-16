@@ -20,15 +20,15 @@ This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-003 | 92 | ` [style.background]="bgStyle()"` | see fix plan |
-| R-FE-003 | 93 | ` [style.border]="borderStyle()"` | see fix plan |
-| R-FE-003 | 94 | ` [style.border-radius]="radiusStyle()"` | see fix plan |
-| R-FE-003 | 95 | ` [style.box-shadow]="shadowStyle()"` | see fix plan |
-| R-FE-003 | 100 | ` [style.background]="iconBgStyle()"` | see fix plan |
-| R-FE-003 | 101 | ` [style.color]="iconColor()"` | see fix plan |
-| R-FE-003 | 102 | ` style="font-size: var(--falcon-icon-lg);"` | see fix plan |
-| R-FE-003 | 113 | ` [style.background]="trendBgStyle()"` | see fix plan |
-| R-FE-003 | 114 | ` [style.color]="trendColor()"` | see fix plan |
+| R-FE-003 | 92 | ` [style.background]="bgStyle()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 93 | ` [style.border]="borderStyle()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 94 | ` [style.border-radius]="radiusStyle()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 95 | ` [style.box-shadow]="shadowStyle()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 100 | ` [style.background]="iconBgStyle()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 101 | ` [style.color]="iconColor()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 102 | ` style="font-size: var(--falcon-icon-lg);"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 113 | ` [style.background]="trendBgStyle()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 114 | ` [style.color]="trendColor()"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
 
 ## Fix plan (ordered)
 
@@ -40,6 +40,13 @@ This file lives in `libs/falcon-studio/` — the Theme Studio editor that lets a
 ## Refactor opportunity
 
 Two options. **(A)** Mark `libs/falcon-studio/**` as R-FE-003 exempt in `frontend/R-FE-003-no-inline-styles.md` `exemptPaths` — Studio is architecturally identical to `libs/falcon-ui-core/**` (the existing exemption) in that it owns its primitives. **(B)** Reroute every `[style.X]` through a single `[ngStyle]="previewStyles()"` computed signal, then add ONE exempt comment per file. Option A is cleaner and matches the spirit of the rule (the rule targets app-level theme bypass, not the theme tool itself).
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Inline-style replacement strategy:
+  - Resolve at the **rule level** — add `libs/falcon-studio/**` to `R-FE-003` `exemptPaths` (Studio is a theme tool, structurally analogous to `libs/falcon-ui-core/**`)
 
 ## Verification
 

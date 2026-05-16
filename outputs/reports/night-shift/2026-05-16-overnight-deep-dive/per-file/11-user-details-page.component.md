@@ -21,19 +21,21 @@ This is the user-details page (drill-down from org-hierarchy → user row). It h
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 7 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 24 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 126 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 157 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 284 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 289 | ` <button type="button"` | see fix plan |
-| R-FE-004 | 11 | ` <i class="falcon-icon falcon-icon-arrow-left text-[14px]"></i>` | see fix plan |
-| R-FE-004 | 17 | ` <span class="text-[15px] font-semibold text-falcon-neutral-900">` | see fix plan |
-| R-FE-004 | 25 | ` class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg text-[13px] font-medium"` | see fix plan |
-| R-FE-004 | 66 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | see fix plan |
-| R-FE-004 | 83 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | see fix plan |
-| R-FE-004 | 108 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | see fix plan |
-| ... | ... | _(3 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-005 | 7 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 24 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 126 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 157 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 284 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 289 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 11 | ` <i class="falcon-icon falcon-icon-arrow-left text-[14px]"></i>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 17 | ` <span class="text-[15px] font-semibold text-falcon-neutral-900">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 25 | ` class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg text-[13px] font-medium"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 66 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 83 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 108 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 139 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 170 | ` <span class="text-[11px] text-falcon-red-500">{{ 'hierarchy.userDetails.errorRequired' ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 229 | ` <span class="text-[13px] font-semibold text-falcon-neutral-900 uppercase tracking-wide">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -45,6 +47,16 @@ This is the user-details page (drill-down from org-hierarchy → user row). It h
 ## Refactor opportunity
 
 All `<button>` → `<falcon-button variant="ghost|primary|secondary">`. Header back-button → `<falcon-back-button>` (or `<falcon-button variant="ghost" icon="arrow-left">`). The Edit/Save/Cancel triplet is a repeating pattern — extract `<app-inline-edit-actions [editing]="..." (save)="..." (cancel)="..." (edit)="...">` shared component (3+ uses across user-details + client-details). Typography promotions: `--falcon-detail-row-title-size: 15px`, `--falcon-detail-row-meta-size: 14px`.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-button>` (variants: primary, ghost, secondary)
+  - `<app-inline-edit-actions>` shared wrapper (NEW, per refactor opportunity)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--text-falcon-detail-row-title: 15px`, `--text-falcon-detail-row-meta: 14px`
 
 ## Verification
 

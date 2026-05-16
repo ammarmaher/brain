@@ -21,16 +21,16 @@ This is an auth flow page (login / change-password / forgot-password / OTP). It 
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 26 | ` <input` | see fix plan |
-| R-FE-005 | 61 | ` <button` | see fix plan |
-| R-FE-005 | 182 | ` <button` | see fix plan |
-| R-FE-005 | 228 | ` <input` | see fix plan |
-| R-FE-005 | 237 | ` <button type="button" class="fpf-icon-right" (click)="toggleNewPasswordVisibility()" tabindex="-1">` | see fix plan |
-| R-FE-005 | 268 | ` <input` | see fix plan |
-| R-FE-005 | 277 | ` <button type="button" class="fpf-icon-right" (click)="toggleConfirmPasswordVisibility()" tabindex="...` | see fix plan |
-| R-FE-005 | 313 | ` <button` | see fix plan |
-| R-FE-004 | 94 | ` <circle cx="32" cy="32" r="30" stroke="var(--color-falcon-teal-700, #104C54)" stroke-width="2.5"/>` | see fix plan |
-| R-FE-004 | 95 | ` <path d="M20 33l8 8 16-16" stroke="var(--color-falcon-teal-700, #104C54)" stroke-width="3" stroke-l...` | see fix plan |
+| R-FE-005 | 26 | ` <input` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 61 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 182 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 228 | ` <input` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 237 | ` <button type="button" class="fpf-icon-right" (click)="toggleNewPasswordVisibility()" tabi...` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 268 | ` <input` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 277 | ` <button type="button" class="fpf-icon-right" (click)="toggleConfirmPasswordVisibility()" ...` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 313 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 94 | ` <circle cx="32" cy="32" r="30" stroke="var(--color-falcon-teal-700, #104C54)" stroke-widt...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 95 | ` <path d="M20 33l8 8 16-16" stroke="var(--color-falcon-teal-700, #104C54)" stroke-width="3...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -42,6 +42,17 @@ This is an auth flow page (login / change-password / forgot-password / OTP). It 
 ## Refactor opportunity
 
 Replace every `<input type="password">` with `<falcon-password>` (already exists per memory note `project_zindex_calendar_portal_root_cause_fix.md` — it has the eye-toggle built in). Replace `<input type="email|text">` with `<falcon-input>`. Replace every `<button>` with `<falcon-button>`. This removes the need for `cp-icon-right`, `cp-verify-btn`, `fpf-icon-right` ad-hoc CSS classes — they all become falcon variants. After the swap, the per-file CSS class budget should drop close to zero.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-password>` (with eye-toggle, [disabled], password-strength binding)
+  - `<falcon-input>` (with [label], [error], [hint])
+  - `<falcon-button>` (variants: primary, ghost, secondary)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - Map each hex / arbitrary-px in the violation table to an existing `--falcon-*` token or add a new one
 
 ## Verification
 

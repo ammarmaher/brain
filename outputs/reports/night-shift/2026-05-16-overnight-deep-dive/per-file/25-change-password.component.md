@@ -20,14 +20,14 @@ This is an auth flow page (login / change-password / forgot-password / OTP). It 
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 29 | ` <input` | see fix plan |
-| R-FE-005 | 39 | ` <button type="button" class="cp-icon-right" (click)="toggleCurrentPasswordVisibility()" tabindex="-...` | see fix plan |
-| R-FE-005 | 71 | ` <button type="button" class="cp-verify-btn" (click)="onVerifyCurrentPassword()">` | see fix plan |
-| R-FE-005 | 100 | ` <input` | see fix plan |
-| R-FE-005 | 108 | ` <button type="button" class="cp-icon-right" (click)="toggleNewPasswordVisibility()" tabindex="-1" [...` | see fix plan |
-| R-FE-005 | 144 | ` <input` | see fix plan |
-| R-FE-005 | 152 | ` <button type="button" class="cp-icon-right" (click)="toggleConfirmPasswordVisibility()" tabindex="-...` | see fix plan |
-| R-FE-005 | 181 | ` <button` | see fix plan |
+| R-FE-005 | 29 | ` <input` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 39 | ` <button type="button" class="cp-icon-right" (click)="toggleCurrentPasswordVisibility()" t...` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 71 | ` <button type="button" class="cp-verify-btn" (click)="onVerifyCurrentPassword()">` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 100 | ` <input` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 108 | ` <button type="button" class="cp-icon-right" (click)="toggleNewPasswordVisibility()" tabin...` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 144 | ` <input` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 152 | ` <button type="button" class="cp-icon-right" (click)="toggleConfirmPasswordVisibility()" t...` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 181 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
 
 ## Fix plan (ordered)
 
@@ -38,6 +38,15 @@ This is an auth flow page (login / change-password / forgot-password / OTP). It 
 ## Refactor opportunity
 
 Replace every `<input type="password">` with `<falcon-password>` (already exists per memory note `project_zindex_calendar_portal_root_cause_fix.md` — it has the eye-toggle built in). Replace `<input type="email|text">` with `<falcon-input>`. Replace every `<button>` with `<falcon-button>`. This removes the need for `cp-icon-right`, `cp-verify-btn`, `fpf-icon-right` ad-hoc CSS classes — they all become falcon variants. After the swap, the per-file CSS class budget should drop close to zero.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-password>` (with eye-toggle, [disabled], password-strength binding)
+  - `<falcon-input>` (with [label], [error], [hint])
+  - `<falcon-button>` (variants: primary, ghost, secondary)
 
 ## Verification
 

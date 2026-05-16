@@ -21,19 +21,32 @@ This is the topbar layout chrome (present on every authenticated page). It viola
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 28 | ` <button` | see fix plan |
-| R-FE-005 | 39 | ` <button` | see fix plan |
-| R-FE-005 | 54 | ` <button` | see fix plan |
-| R-FE-005 | 93 | ` <button` | see fix plan |
-| R-FE-005 | 118 | ` <button` | see fix plan |
-| R-FE-005 | 133 | ` <button` | see fix plan |
-| R-FE-005 | 154 | ` <button` | see fix plan |
-| R-FE-004 | 27 | ` <div class="topbar-actions flex items-center gap-[18px] shrink-0">` | see fix plan |
-| R-FE-004 | 30 | ` class="icon-btn relative grid place-items-center size-[38px] rounded-[10px] text-falcon-neutral-800...` | see fix plan |
-| R-FE-004 | 41 | ` class="icon-btn relative grid place-items-center size-[38px] rounded-[10px] text-falcon-neutral-800...` | see fix plan |
-| R-FE-004 | 51 | ` <div class="topbar-divider w-px h-[30px] bg-falcon-neutral-200"></div>` | see fix plan |
-| R-FE-004 | 62 | ` <rect width="40" height="40" fill="#cfd8dc"/>` | see fix plan |
-| ... | ... | _(16 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-005 | 28 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 39 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 54 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 93 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 118 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 133 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 154 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 27 | ` <div class="topbar-actions flex items-center gap-[18px] shrink-0">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 30 | ` class="icon-btn relative grid place-items-center size-[38px] rounded-[10px] text-falcon-n...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 41 | ` class="icon-btn relative grid place-items-center size-[38px] rounded-[10px] text-falcon-n...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 51 | ` <div class="topbar-divider w-px h-[30px] bg-falcon-neutral-200"></div>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 62 | ` <rect width="40" height="40" fill="#cfd8dc"/>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 63 | ` <circle cx="20" cy="16" r="7" fill="#8a9ea7"/>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 64 | ` <path d="M7 37c0-7 6-11 13-11s13 4 13 11" fill="#8a9ea7"/>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 68 | ` <div class="user-name text-[13px] font-semibold text-falcon-neutral-900 leading-[1.3] tru...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 69 | ` <div class="user-job text-[11px] font-medium text-falcon-neutral-600 leading-[1.3] trunca...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 78 | ` <div class="user-menu absolute top-[calc(100%+8px)] end-0 w-[260px] z-[200] overflow-hidd...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 79 | ` <div class="user-menu-head flex items-center gap-2.5 p-2.5 mb-1.5 rounded-[10px] bg-falco...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 82 | ` <rect width="40" height="40" fill="#cfd8dc"/>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 83 | ` <circle cx="20" cy="16" r="7" fill="#8a9ea7"/>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 84 | ` <path d="M7 37c0-7 6-11 13-11s13 4 13 11" fill="#8a9ea7"/>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 88 | ` <div class="user-name text-[13px] font-semibold text-white leading-[1.3] truncate">{{ eff...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 89 | ` <div class="user-job text-[11px] text-white/75 leading-[1.3] truncate">{{ effectiveJobTit...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 95 | ` class="user-menu-item flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-start te...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 106 | ` <span class="sub block text-[11px] text-falcon-neutral-600">{{ languageLabelKey() ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| ... | ... | _(3 more rows of the same rule families omitted — apply identical fix recipe per rule)_ | see Fix plan |
 
 ## Fix plan (ordered)
 
@@ -45,6 +58,16 @@ This is the topbar layout chrome (present on every authenticated page). It viola
 ## Refactor opportunity
 
 Replace every icon-only `<button>` with `<falcon-icon-button>` (or `<falcon-button variant="ghost" icon-only>`). Promote the recurring sizes to tokens: `--falcon-icon-button-size: 38px`, `--falcon-icon-button-radius: 10px`, `--falcon-topbar-action-gap: 18px`, then use `size-falcon-icon-btn rounded-falcon-icon-btn gap-falcon-topbar`. The `[style.transform]="rotate(180deg)"` for the collapse chevron must become `class="rotate-180"` + a transition utility. One topbar + one sidebar fix covers every authenticated page in the platform.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-icon-button>` (with badge slot, [icon], [variant])
+  - `<falcon-menu>` + `<falcon-menu-item>` (for profile + language dropdowns)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--size-falcon-icon-btn: 38px`, `--radius-falcon-icon-btn: 10px`, `--gap-falcon-topbar: 18px`
 
 ## Verification
 

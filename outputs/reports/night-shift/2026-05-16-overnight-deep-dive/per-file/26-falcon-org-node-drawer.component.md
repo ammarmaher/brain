@@ -21,14 +21,14 @@ This is part of the Org Chart visualization (the tree-graph view of clients). It
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 14 | ` <button type="button" aria-label="Close"` | see fix plan |
-| R-FE-005 | 25 | ` <input id="orgNodeNameInput" type="text"` | see fix plan |
-| R-FE-005 | 45 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 50 | ` <button type="button"` | see fix plan |
-| R-FE-004 | 17 | ` <i class="falcon-icon falcon-icon-times text-[14px]"></i>` | see fix plan |
-| R-FE-004 | 38 | ` <p class="text-[11px] text-falcon-neutral-500 m-0 mt-1">` | see fix plan |
-| R-FE-004 | 46 | ` class="inline-flex items-center h-[34px] px-3 text-sm font-medium text-falcon-neutral-700 hover:tex...` | see fix plan |
-| R-FE-004 | 51 | ` class="inline-flex items-center h-[34px] px-5 rounded-md bg-falcon-teal-700 text-white text-sm font...` | see fix plan |
+| R-FE-005 | 14 | ` <button type="button" aria-label="Close"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 25 | ` <input id="orgNodeNameInput" type="text"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 45 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 50 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 17 | ` <i class="falcon-icon falcon-icon-times text-[14px]"></i>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 38 | ` <p class="text-[11px] text-falcon-neutral-500 m-0 mt-1">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 46 | ` class="inline-flex items-center h-[34px] px-3 text-sm font-medium text-falcon-neutral-700...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 51 | ` class="inline-flex items-center h-[34px] px-5 rounded-md bg-falcon-teal-700 text-white te...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -40,6 +40,16 @@ This is part of the Org Chart visualization (the tree-graph view of clients). It
 ## Refactor opportunity
 
 Zoom / expand controls → `<falcon-icon-button variant="ghost" size="sm">`. Compact card sizing → promote `--falcon-org-card-width: 280px`, `--falcon-org-card-text-sm: 12px` to the theme file. The whole chart panel could be one shared `<falcon-org-chart>` shell with slotted toolbar — see `feedback_library_skeleton_app_api` for the canonical skeleton+wrapper pattern. Memory note `project_org_hierarchy_tree_shared_component.md` already shipped one shared wrapper (`<app-organization-hierarchy-tree>`); apply the same pattern here.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-icon-button variant="ghost" size="sm">`
+  - `<falcon-tooltip>` (for zoom/fit/expand action hints)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--width-falcon-org-card: 280px`, `--text-falcon-org-card-sm: 12px`
 
 ## Verification
 

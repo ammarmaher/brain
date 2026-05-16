@@ -22,16 +22,16 @@ This is the sidebar layout chrome (collapsible nav rail). It violates R-FE-005 w
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-003 | 38 | ` [style.transform]="collapsed() ? 'rotate(180deg)' : 'rotate(0deg)'"` | see fix plan |
-| R-FE-003 | 39 | ` [style.transition]="'transform 0.2s ease'">` | see fix plan |
-| R-FE-005 | 28 | ` <button` | see fix plan |
-| R-FE-005 | 54 | ` <button` | see fix plan |
-| R-FE-005 | 74 | ` <button` | see fix plan |
-| R-FE-005 | 94 | ` <button` | see fix plan |
-| R-FE-005 | 118 | ` <button` | see fix plan |
-| R-FE-005 | 137 | ` <button` | see fix plan |
-| R-FE-004 | 19 | ` <div class="sidebar-logo flex items-center gap-2.5 text-xl font-bold tracking-[0.04em] text-white w...` | see fix plan |
-| R-FE-004 | 25 | ` <span class="text-lg leading-none tracking-[0.06em]">{{ brandText() }}</span>` | see fix plan |
+| R-FE-003 | 38 | ` [style.transform]="collapsed() ? 'rotate(180deg)' : 'rotate(0deg)'"` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-003 | 39 | ` [style.transition]="'transform 0.2s ease'">` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-005 | 28 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 54 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 74 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 94 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 118 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 137 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 19 | ` <div class="sidebar-logo flex items-center gap-2.5 text-xl font-bold tracking-[0.04em] te...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 25 | ` <span class="text-lg leading-none tracking-[0.06em]">{{ brandText() }}</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -44,6 +44,18 @@ This is the sidebar layout chrome (collapsible nav rail). It violates R-FE-005 w
 ## Refactor opportunity
 
 Replace every icon-only `<button>` with `<falcon-icon-button>` (or `<falcon-button variant="ghost" icon-only>`). Promote the recurring sizes to tokens: `--falcon-icon-button-size: 38px`, `--falcon-icon-button-radius: 10px`, `--falcon-topbar-action-gap: 18px`, then use `size-falcon-icon-btn rounded-falcon-icon-btn gap-falcon-topbar`. The `[style.transform]="rotate(180deg)"` for the collapse chevron must become `class="rotate-180"` + a transition utility. One topbar + one sidebar fix covers every authenticated page in the platform.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-icon-button>` (with badge slot, [icon], [variant])
+  - `<falcon-menu>` + `<falcon-menu-item>` (for profile + language dropdowns)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--size-falcon-icon-btn: 38px`, `--radius-falcon-icon-btn: 10px`, `--gap-falcon-topbar: 18px`
+- Inline-style replacement strategy:
+  - `[style.transform]="...rotate(180deg)"` → `[class.rotate-180]="collapsed()"` + `transition-transform duration-200`
 
 ## Verification
 

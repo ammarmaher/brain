@@ -21,19 +21,32 @@ This is a 4080-line `playground.page.html` — a private host-shell page used by
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 1667 | ` <button` | see fix plan |
-| R-FE-005 | 1848 | ` <button type="button" (click)="backLinearShadow()"` | see fix plan |
-| R-FE-005 | 1852 | ` <button type="button" (click)="advanceLinearShadow()"` | see fix plan |
-| R-FE-005 | 2429 | ` <input` | see fix plan |
-| R-FE-005 | 2451 | ` <button` | see fix plan |
-| R-FE-005 | 2537 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 2544 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 2551 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 2558 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 2565 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 2578 | ` <button type="button"` | see fix plan |
-| R-FE-005 | 2585 | ` <button type="button"` | see fix plan |
-| ... | ... | _(39 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-005 | 1667 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 1848 | ` <button type="button" (click)="backLinearShadow()"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 1852 | ` <button type="button" (click)="advanceLinearShadow()"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2429 | ` <input` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2451 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2537 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2544 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2551 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2558 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2565 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2578 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2585 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2592 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2599 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2803 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2809 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2815 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2821 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2827 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2833 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2839 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2875 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2881 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2887 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 2893 | ` <button type="button"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| ... | ... | _(26 more rows of the same rule families omitted — apply identical fix recipe per rule)_ | see Fix plan |
 
 ## Fix plan (ordered)
 
@@ -46,6 +59,15 @@ This is a 4080-line `playground.page.html` — a private host-shell page used by
 ## Refactor opportunity
 
 Split this file. Move every `<button>` / `<input>` block intended as a 'before/after' demo into a dedicated showcase route, mark it with `<!-- GAP: R-FE-005 demo-only side-by-side -->`. The rest of the page (live wiring) should drop raw primitives entirely in favour of `<falcon-button>` / `<falcon-input>`. Consider also splitting playground.page.html into 4-6 lazy-loaded section components — its current size hurts editor performance and review.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - Every `<falcon-*>` already exists — playground is BY DESIGN a side-by-side raw-vs-falcon demo; expect GAP markers rather than swaps
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - Map each hex / arbitrary-px in the violation table to an existing `--falcon-*` token or add a new one
 
 ## Verification
 

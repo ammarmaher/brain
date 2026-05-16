@@ -21,13 +21,13 @@ This is a sub-tab inside org-hierarchy showing applications/subscriptions for th
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-003 | 157 | ` To override per page, set \`style="--falcon-data-table-shadow-row-min-height: 48px"\`` | see fix plan |
-| R-FE-004 | 17 | ` component sets header-bg + footer-bg to the canonical SoT colour (#F5F5F5) via the` | see fix plan |
-| R-FE-004 | 19 | ` here was overriding the menu patch and producing a #FAFAFA header / #FAFAFA footer` | see fix plan |
-| R-FE-004 | 71 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
-| R-FE-004 | 80 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
-| R-FE-004 | 89 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
-| R-FE-004 | 101 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | see fix plan |
+| R-FE-003 | 157 | ` To override per page, set \`style="--falcon-data-table-shadow-row-min-height: 48px"\`` | Move to Tailwind class or `--falcon-*` token-driven custom property |
+| R-FE-004 | 17 | ` component sets header-bg + footer-bg to the canonical SoT colour (#F5F5F5) via the` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 19 | ` here was overriding the menu patch and producing a #FAFAFA header / #FAFAFA footer` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 71 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 80 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 89 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 101 | ` <span class="text-falcon-neutral-400 tracking-[0.5px]">—————</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -39,6 +39,15 @@ This is a sub-tab inside org-hierarchy showing applications/subscriptions for th
 ## Refactor opportunity
 
 Replace the expand toggle `<button>` with `<falcon-icon-button>`. Column widths follow the same fix as falcon-table-edit-row above — promote to per-column tokens. The 1 `[style]` violation should become a class (likely a width or transform that already has a Tailwind utility).
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - Map each hex / arbitrary-px in the violation table to an existing `--falcon-*` token or add a new one
+- Inline-style replacement strategy:
+  - Convert each `style="..."` to Tailwind class or token-driven CSS custom property per R-FE-003 fix recipe
 
 ## Verification
 

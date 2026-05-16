@@ -21,15 +21,15 @@ This is part of the Add Client / Add User wizard (a multi-step modal). It violat
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 16 | ` <button type="button" role="switch" [attr.aria-checked]="r.visible"` | see fix plan |
-| R-FE-005 | 56 | ` <input type="number" min="0"` | see fix plan |
-| R-FE-004 | 17 | ` class="relative inline-block w-[34px] h-4 rounded-full transition-colors"` | see fix plan |
-| R-FE-004 | 22 | ` [class.left-[18px]]="r.visible"` | see fix plan |
-| R-FE-004 | 44 | ` <span class="text-[10px] text-falcon-red-500 mt-1">*{{ 'hierarchy.validation.required' ` | see fix plan |
-| R-FE-004 | 57 | ` class="w-full h-[34px] pl-8 pr-3 rounded-md border border-falcon-neutral-200 bg-white text-sm focus...` | see fix plan |
-| R-FE-004 | 66 | ` <span class="text-[10px] text-falcon-red-500 mt-1">*{{ 'hierarchy.validation.required' ` | see fix plan |
-| R-FE-004 | 72 | ` <span class="inline-flex items-center h-6 px-3.5 rounded-full bg-white border border-falcon-neutral...` | see fix plan |
-| R-FE-004 | 76 | ` <span class="text-falcon-neutral-500 text-[13px] tracking-[0.5px]">------</span>` | see fix plan |
+| R-FE-005 | 16 | ` <button type="button" role="switch" [attr.aria-checked]="r.visible"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 56 | ` <input type="number" min="0"` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 17 | ` class="relative inline-block w-[34px] h-4 rounded-full transition-colors"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 22 | ` [class.left-[18px]]="r.visible"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 44 | ` <span class="text-[10px] text-falcon-red-500 mt-1">*{{ 'hierarchy.validation.required' ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 57 | ` class="w-full h-[34px] pl-8 pr-3 rounded-md border border-falcon-neutral-200 bg-white tex...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 66 | ` <span class="text-[10px] text-falcon-red-500 mt-1">*{{ 'hierarchy.validation.required' ` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 72 | ` <span class="inline-flex items-center h-6 px-3.5 rounded-full bg-white border border-falc...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 76 | ` <span class="text-falcon-neutral-500 text-[13px] tracking-[0.5px]">------</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -41,6 +41,18 @@ This is part of the Add Client / Add User wizard (a multi-step modal). It violat
 ## Refactor opportunity
 
 Two-part refactor. **(1)** Promote the wizard typography to `--falcon-wizard-section-title-size: 13px`, `--falcon-wizard-helper-size: 11.5px`, `--falcon-wizard-section-tracking: 0.04em` — then the apps consume `text-falcon-wizard-section-title` / `text-falcon-wizard-helper`. **(2)** The IP-input `<input falconIpAddress>` already has a directive; create a `<falcon-input>` variant that accepts `[customDirective]` or specifically `[falconIpAddress]` — keeps the input within the library and removes the GAP. The spinner +/- `<button>`s should be wrapped as `<falcon-number-stepper>` skeleton.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-input>` with `[customDirective]` to accept `falconIpAddress`
+  - `<falcon-number-stepper>` for +/- spinners
+  - `<falcon-button>` (variant: ghost, size: sm)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--text-falcon-wizard-section-title: 13px`, `--text-falcon-wizard-helper: 11.5px`
+  - `--tracking-falcon-wizard-section: 0.04em`
 
 ## Verification
 

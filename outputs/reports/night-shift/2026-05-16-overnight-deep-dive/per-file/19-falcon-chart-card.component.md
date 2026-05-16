@@ -21,15 +21,15 @@ This is part of the Org Chart visualization (the tree-graph view of clients). It
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 1 | `<button` | see fix plan |
-| R-FE-004 | 3 | ` class="chart-card absolute flex items-center gap-2.5 px-3 py-2 rounded-[10px] border bg-white borde...` | see fix plan |
-| R-FE-004 | 30 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</div>` | see fix plan |
-| R-FE-004 | 35 | ` <span class="grid place-items-center w-7 h-7 rounded-full bg-falcon-teal-700 text-white text-[10px]...` | see fix plan |
-| R-FE-004 | 37 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</div>` | see fix plan |
-| R-FE-004 | 39 | ` <div class="text-[10.5px] text-falcon-neutral-600 leading-tight mt-0.5">` | see fix plan |
-| R-FE-004 | 47 | ` <span class="grid place-items-center w-7 h-7 rounded-full bg-falcon-mint-100 text-falcon-teal-700 t...` | see fix plan |
-| R-FE-004 | 49 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</div>` | see fix plan |
-| R-FE-004 | 51 | ` <div class="text-[10.5px] text-falcon-neutral-600 leading-tight mt-0.5">` | see fix plan |
+| R-FE-005 | 1 | `<button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 3 | ` class="chart-card absolute flex items-center gap-2.5 px-3 py-2 rounded-[10px] border bg-w...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 30 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</d...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 35 | ` <span class="grid place-items-center w-7 h-7 rounded-full bg-falcon-teal-700 text-white t...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 37 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</d...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 39 | ` <div class="text-[10.5px] text-falcon-neutral-600 leading-tight mt-0.5">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 47 | ` <span class="grid place-items-center w-7 h-7 rounded-full bg-falcon-mint-100 text-falcon-...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 49 | ` <div class="text-[12.5px] font-semibold leading-tight truncate">{{ card().data.name }}</d...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 51 | ` <div class="text-[10.5px] text-falcon-neutral-600 leading-tight mt-0.5">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -41,6 +41,16 @@ This is part of the Org Chart visualization (the tree-graph view of clients). It
 ## Refactor opportunity
 
 Zoom / expand controls → `<falcon-icon-button variant="ghost" size="sm">`. Compact card sizing → promote `--falcon-org-card-width: 280px`, `--falcon-org-card-text-sm: 12px` to the theme file. The whole chart panel could be one shared `<falcon-org-chart>` shell with slotted toolbar — see `feedback_library_skeleton_app_api` for the canonical skeleton+wrapper pattern. Memory note `project_org_hierarchy_tree_shared_component.md` already shipped one shared wrapper (`<app-organization-hierarchy-tree>`); apply the same pattern here.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-icon-button variant="ghost" size="sm">`
+  - `<falcon-tooltip>` (for zoom/fit/expand action hints)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--width-falcon-org-card: 280px`, `--text-falcon-org-card-sm: 12px`
 
 ## Verification
 

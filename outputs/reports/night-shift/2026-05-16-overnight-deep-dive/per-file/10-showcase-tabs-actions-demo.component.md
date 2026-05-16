@@ -20,19 +20,21 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-004 | 40 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px]` | see fix plan |
-| R-FE-004 | 43 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | see fix plan |
-| R-FE-004 | 44 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | see fix plan |
-| R-FE-004 | 53 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | see fix plan |
-| R-FE-004 | 54 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | see fix plan |
-| R-FE-004 | 67 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px]` | see fix plan |
-| R-FE-004 | 70 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | see fix plan |
-| R-FE-004 | 71 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | see fix plan |
-| R-FE-004 | 79 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | see fix plan |
-| R-FE-004 | 80 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | see fix plan |
-| R-FE-004 | 93 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md text-[11.5px] font-medium leadin...` | see fix plan |
-| R-FE-004 | 106 | ` <div class="p-4 text-[12px] text-falcon-neutral-700">` | see fix plan |
-| ... | ... | _(3 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-004 | 40 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px]` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 43 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 44 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 53 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 54 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 67 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px]` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 70 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 71 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 79 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 80 | ` text-[11.5px] font-medium leading-tight transition-colors border-0 cursor-pointer"` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 93 | ` class="inline-flex items-center gap-1.5 px-2.5 py-[5px] rounded-md text-[11.5px] font-med...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 106 | ` <div class="p-4 text-[12px] text-falcon-neutral-700">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 111 | ` <span class="ml-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-falcon-teal-50 ...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 120 | ` <span class="ml-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-falcon-teal-50 ...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 129 | ` <span class="ml-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-falcon-teal-50 ...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -44,6 +46,15 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 ## Refactor opportunity
 
 Showcase tiles need a NEW token family: `text-falcon-preview-xxs` / `w-falcon-preview-tile` / `gap-falcon-preview-row`. Promote these to `libs/falcon-theme/src/falcon-tailwind-tokens.css` first, then sweep this file (and its 3 showcase-related siblings ranked #2-4) in one pass — they share the same anti-pattern. After that, consider adding an `exemptions/EXEMPTIONS.md` block listing the showcase folder for R-FE-004 if Theme Studio scope explicitly excludes preview tiles.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--text-falcon-preview-xxs: 9px` / `--text-falcon-preview-xs: 10px` (showcase tile labels)
+  - `--max-w-falcon-preview-tile: 180px` (showcase tile width)
+  - OR designate `apps/host-shell/src/app/features/falcon-ui-showcase/**` as R-FE-004 exempt
 
 ## Verification
 

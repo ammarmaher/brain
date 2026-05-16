@@ -20,19 +20,32 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-004 | 4 | `/*** Frame wrapper with bounded inner content (max-w-[180px]). ***/` | see fix plan |
-| R-FE-004 | 19 | ` <div class="w-full max-w-[180px]">` | see fix plan |
-| R-FE-004 | 21 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Label</span>` | see fix plan |
-| R-FE-004 | 23 | ` <span class="text-[9px] text-falcon-neutral-475">Placeholder</span>` | see fix plan |
-| R-FE-004 | 40 | ` <div class="w-full max-w-[180px]">` | see fix plan |
-| R-FE-004 | 42 | ` <span class="inline-flex items-center justify-center h-7 px-3 rounded-md bg-falcon-teal-500 text-fa...` | see fix plan |
-| R-FE-004 | 43 | ` <span class="inline-flex items-center justify-center h-7 px-3 rounded-md bg-falcon-neutral-0 border...` | see fix plan |
-| R-FE-004 | 58 | ` <div class="w-full max-w-[180px]">` | see fix plan |
-| R-FE-004 | 60 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Country</span>` | see fix plan |
-| R-FE-004 | 62 | ` <span class="text-[9px] text-falcon-neutral-900">Saudi Arabia</span>` | see fix plan |
-| R-FE-004 | 79 | ` <div class="w-full max-w-[180px]">` | see fix plan |
-| R-FE-004 | 81 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Stack</span>` | see fix plan |
-| ... | ... | _(142 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-004 | 4 | `/*** Frame wrapper with bounded inner content (max-w-[180px]). ***/` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 19 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 21 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Label</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 23 | ` <span class="text-[9px] text-falcon-neutral-475">Placeholder</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 40 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 42 | ` <span class="inline-flex items-center justify-center h-7 px-3 rounded-md bg-falcon-teal-5...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 43 | ` <span class="inline-flex items-center justify-center h-7 px-3 rounded-md bg-falcon-neutra...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 58 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 60 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Country</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 62 | ` <span class="text-[9px] text-falcon-neutral-900">Saudi Arabia</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 79 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 81 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Stack</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 84 | ` <span class="inline-flex items-center h-4 px-1 rounded-sm bg-falcon-teal-50 text-falcon-t...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 85 | ` <span class="inline-flex items-center h-4 px-1 rounded-sm bg-falcon-teal-50 text-falcon-t...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 103 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 108 | ` <span class="text-[10px] text-falcon-neutral-900">Remember me</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 123 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 128 | ` <span class="text-[10px] text-falcon-neutral-900">Selected</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 143 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 148 | ` <span class="text-[10px] text-falcon-neutral-900">On</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 163 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 165 | ` <span class="text-[9px] font-medium text-falcon-neutral-700">Notes</span>` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 167 | ` <span class="text-[9px] text-falcon-neutral-900 leading-tight">Write a short message…</...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 185 | ` <div class="w-full max-w-[180px]">` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 187 | ` <span class="text-[9px] font-medium text-falcon-neutral-700 text-center">Enter the 6-digi...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| ... | ... | _(129 more rows of the same rule families omitted — apply identical fix recipe per rule)_ | see Fix plan |
 
 ## Fix plan (ordered)
 
@@ -44,6 +57,15 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 ## Refactor opportunity
 
 Showcase tiles need a NEW token family: `text-falcon-preview-xxs` / `w-falcon-preview-tile` / `gap-falcon-preview-row`. Promote these to `libs/falcon-theme/src/falcon-tailwind-tokens.css` first, then sweep this file (and its 3 showcase-related siblings ranked #2-4) in one pass — they share the same anti-pattern. After that, consider adding an `exemptions/EXEMPTIONS.md` block listing the showcase folder for R-FE-004 if Theme Studio scope explicitly excludes preview tiles.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--text-falcon-preview-xxs: 9px` / `--text-falcon-preview-xs: 10px` (showcase tile labels)
+  - `--max-w-falcon-preview-tile: 180px` (showcase tile width)
+  - OR designate `apps/host-shell/src/app/features/falcon-ui-showcase/**` as R-FE-004 exempt
 
 ## Verification
 

@@ -20,19 +20,32 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-004 | 9 | `/*** lights, filename pill, line-number gutter, #1A2424 body, Prism token tints tuned for low-contra...` | see fix plan |
-| R-FE-004 | 210 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px] border border-...` | see fix plan |
-| R-FE-004 | 225 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px] border border-...` | see fix plan |
-| R-FE-004 | 233 | ` class="px-2.5 py-[5px] rounded-md text-[11.5px] font-medium bg-falcon-teal-50 text-falcon-teal-700 ...` | see fix plan |
-| R-FE-004 | 515 | ` /*** • The deeply-nested \`<pre>\` / \`<code>\` / line-number gutter — the user must SEE the #1A242...` | see fix plan |
-| R-FE-004 | 527 | ` border: 1px solid #050a0a;` | see fix plan |
-| R-FE-004 | 528 | ` background: #1A2424;` | see fix plan |
-| R-FE-004 | 530 | ` 0 1px 2px rgba(0, 0, 0, 0.2),` | see fix plan |
-| R-FE-004 | 531 | ` 0 14px 36px -18px rgba(0, 0, 0, 0.55),` | see fix plan |
-| R-FE-004 | 532 | ` inset 0 1px 0 rgba(255, 255, 255, 0.04);` | see fix plan |
-| R-FE-004 | 540 | ` background: linear-gradient(to bottom, #202f2f 0%, #1a2727 100%);` | see fix plan |
-| R-FE-004 | 541 | ` border-bottom: 1px solid #050a0a;` | see fix plan |
-| ... | ... | _(50 more rows of the same rule families omitted)_ | apply same fix |
+| R-FE-004 | 9 | `/*** lights, filename pill, line-number gutter, #1A2424 body, Prism token tints tuned for ...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 210 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px] bord...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 225 | ` <div class="inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-md p-[2px] bord...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 233 | ` class="px-2.5 py-[5px] rounded-md text-[11.5px] font-medium bg-falcon-teal-50 text-falcon...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 515 | ` /*** • The deeply-nested \`<pre>\` / \`<code>\` / line-number gutter — the user must SEE ...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 527 | ` border: 1px solid #050a0a;` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 528 | ` background: #1A2424;` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 530 | ` 0 1px 2px rgba(0, 0, 0, 0.2),` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 531 | ` 0 14px 36px -18px rgba(0, 0, 0, 0.55),` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 532 | ` inset 0 1px 0 rgba(255, 255, 255, 0.04);` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 540 | ` background: linear-gradient(to bottom, #202f2f 0%, #1a2727 100%);` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 541 | ` border-bottom: 1px solid #050a0a;` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 555 | ` inset 0 0 0 1px rgba(0, 0, 0, 0.25),` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 556 | ` inset 0 1px 0 rgba(255, 255, 255, 0.2);` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 558 | ` .studio-code-shell .studio-code-dot--red { background: #ff5f56; }` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 559 | ` .studio-code-shell .studio-code-dot--amber { background: #ffbd2e; }` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 560 | ` .studio-code-shell .studio-code-dot--green { background: #27c93f; }` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 573 | ` color: #d6e0e0;` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 586 | ` background: rgba(0, 0, 0, 0.4);` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 587 | ` border: 1px solid rgba(255, 255, 255, 0.04);` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 601 | ` color: #93a8a8;` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 605 | ` color: #e6eded;` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 606 | ` background: rgba(255, 255, 255, 0.06);` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 609 | ` color: #ffffff;` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 610 | ` background: #0d3f44; /* falcon-teal-700 */` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| ... | ... | _(37 more rows of the same rule families omitted — apply identical fix recipe per rule)_ | see Fix plan |
 
 ## Fix plan (ordered)
 
@@ -44,6 +57,15 @@ This file is part of the Falcon UI Showcase — a host-shell-internal preview pa
 ## Refactor opportunity
 
 Showcase tiles need a NEW token family: `text-falcon-preview-xxs` / `w-falcon-preview-tile` / `gap-falcon-preview-row`. Promote these to `libs/falcon-theme/src/falcon-tailwind-tokens.css` first, then sweep this file (and its 3 showcase-related siblings ranked #2-4) in one pass — they share the same anti-pattern. After that, consider adding an `exemptions/EXEMPTIONS.md` block listing the showcase folder for R-FE-004 if Theme Studio scope explicitly excludes preview tiles.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--text-falcon-preview-xxs: 9px` / `--text-falcon-preview-xs: 10px` (showcase tile labels)
+  - `--max-w-falcon-preview-tile: 180px` (showcase tile width)
+  - OR designate `apps/host-shell/src/app/features/falcon-ui-showcase/**` as R-FE-004 exempt
 
 ## Verification
 

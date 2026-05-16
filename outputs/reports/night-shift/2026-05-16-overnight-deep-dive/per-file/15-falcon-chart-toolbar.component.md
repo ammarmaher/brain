@@ -5,8 +5,8 @@ violationCount: 10
 violatedRules:
   - R-FE-004 (tokens only) (6x)
   - R-FE-005 (Falcon library first) (4x)
-totalLines: 45
-violationDensity: 22.2
+totalLines: 46
+violationDensity: 21.7
 ammarAgent: ammar-web-platform-ui
 estimatedFixTimeMinutes: 15
 runId: 2026-05-16-overnight-deep-dive
@@ -21,16 +21,16 @@ This is part of the Org Chart visualization (the tree-graph view of clients). It
 
 | Rule | Line | Snippet | Suggested fix |
 |---|---|---|---|
-| R-FE-005 | 2 | ` <button` | see fix plan |
-| R-FE-005 | 13 | ` <button` | see fix plan |
-| R-FE-005 | 25 | ` <button` | see fix plan |
-| R-FE-005 | 35 | ` <button` | see fix plan |
-| R-FE-004 | 1 | `<div class="absolute bottom-3.5 end-3.5 z-[5] flex items-center gap-1 p-1 bg-white border border-fal...` | see fix plan |
-| R-FE-004 | 4 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
-| R-FE-004 | 15 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
-| R-FE-004 | 24 | ` <div class="px-2 h-6 flex items-center text-[11.5px] font-semibold text-falcon-neutral-600 tabular-...` | see fix plan |
-| R-FE-004 | 27 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
-| R-FE-004 | 37 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 transition-colo...` | see fix plan |
+| R-FE-005 | 2 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 13 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 25 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-005 | 35 | ` <button` | Replace with `<falcon-*>` equivalent OR mark with `<!-- GAP: R-FE-005 ... -->` |
+| R-FE-004 | 1 | `<div class="absolute bottom-3.5 end-3.5 z-[5] flex items-center gap-1 p-1 bg-white border ...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 4 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 trans...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 15 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 trans...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 24 | ` <div class="px-2 h-6 flex items-center text-[11.5px] font-semibold text-falcon-neutral-60...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 27 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 trans...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
+| R-FE-004 | 37 | ` class="grid place-items-center w-[30px] h-[30px] rounded-md text-falcon-neutral-800 trans...` | Replace with `falcon-{family}-{shade}` token or add new token to `falcon-tailwind-tokens.css` |
 
 ## Fix plan (ordered)
 
@@ -42,6 +42,16 @@ This is part of the Org Chart visualization (the tree-graph view of clients). It
 ## Refactor opportunity
 
 Zoom / expand controls → `<falcon-icon-button variant="ghost" size="sm">`. Compact card sizing → promote `--falcon-org-card-width: 280px`, `--falcon-org-card-text-sm: 12px` to the theme file. The whole chart panel could be one shared `<falcon-org-chart>` shell with slotted toolbar — see `feedback_library_skeleton_app_api` for the canonical skeleton+wrapper pattern. Memory note `project_org_hierarchy_tree_shared_component.md` already shipped one shared wrapper (`<app-organization-hierarchy-tree>`); apply the same pattern here.
+
+## Dependencies checklist
+
+Before touching the file, confirm the following exist (or queue their creation):
+
+- Falcon components needed:
+  - `<falcon-icon-button variant="ghost" size="sm">`
+  - `<falcon-tooltip>` (for zoom/fit/expand action hints)
+- Tokens to add or confirm in `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
+  - `--width-falcon-org-card: 280px`, `--text-falcon-org-card-sm: 12px`
 
 ## Verification
 
