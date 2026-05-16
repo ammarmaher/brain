@@ -1,0 +1,191 @@
+﻿[
+    {
+        "user":  "accowner",
+        "sub":  "373185575819149322",
+        "resource":  "app.management-console",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accowner",
+        "sub":  "373185575819149322",
+        "resource":  "acc.services",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accowner",
+        "sub":  "373185575819149322",
+        "resource":  "acc.contract",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accowner",
+        "sub":  "373185575819149322",
+        "resource":  "acc.org-hierarchy",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accowner",
+        "sub":  "373185575819149322",
+        "resource":  "acc.contact-group",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accowner",
+        "sub":  "373185575819149322",
+        "resource":  "app.admin-console",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accowner",
+        "sub":  "373185575819149322",
+        "resource":  "sys.account",
+        "action":  "add",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accadmin",
+        "sub":  "373185576859336714",
+        "resource":  "app.management-console",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accadmin",
+        "sub":  "373185576859336714",
+        "resource":  "acc.org-hierarchy",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accadmin",
+        "sub":  "373185576859336714",
+        "resource":  "acc.account",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accadmin",
+        "sub":  "373185576859336714",
+        "resource":  "acc.services",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accadmin",
+        "sub":  "373185576859336714",
+        "resource":  "acc.contract",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accadmin",
+        "sub":  "373185576859336714",
+        "resource":  "acc.account-allowed-ips",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accadmin",
+        "sub":  "373185576859336714",
+        "resource":  "app.admin-console",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accuser",
+        "sub":  "373185577933078538",
+        "resource":  "app.management-console",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accuser",
+        "sub":  "373185577933078538",
+        "resource":  "acc.contact-group",
+        "action":  "view",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accuser",
+        "sub":  "373185577933078538",
+        "resource":  "acc.contact-group",
+        "action":  "view-shared",
+        "expected":  "allow",
+        "actual":  "allow",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accuser",
+        "sub":  "373185577933078538",
+        "resource":  "acc.org-hierarchy",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accuser",
+        "sub":  "373185577933078538",
+        "resource":  "acc.services",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accuser",
+        "sub":  "373185577933078538",
+        "resource":  "acc.contract",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    },
+    {
+        "user":  "accuser",
+        "sub":  "373185577933078538",
+        "resource":  "app.admin-console",
+        "action":  "view",
+        "expected":  "deny",
+        "actual":  "deny",
+        "verdict":  "PASS"
+    }
+]
