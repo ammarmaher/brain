@@ -1,0 +1,14 @@
+{
+  "chart": "gap-severity",
+  "reportId": "2026-05-14-1730-gap-audit",
+  "chartId": "gap-severity-summary",
+  "title": "Gap audit — May 2026",
+  "source": "brain-gaps cross-reference (PRD ↔ Wiki ↔ understanding ↔ tests)",
+  "data": {
+    "HIGH":   { "count": 4,  "blocks": true,  "examples": ["GP-014", "GP-021"] },
+    "MEDIUM": { "count": 9,  "blocks": false, "examples": ["GP-008"] },
+    "LOW":    { "count": 17, "blocks": false }
+  },
+  "options": { "palette": "severity" },
+  "outputs": ["markdown", "svg"]
+}

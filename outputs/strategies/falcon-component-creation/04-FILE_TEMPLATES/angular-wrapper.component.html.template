@@ -1,0 +1,64 @@
+<!--
+  ============================================================================
+  TEMPLATE: Angular wrapper template for <{{AngularSelector}}>
+  ============================================================================
+  WHAT: Pure tag-switcher between the Tailwind sibling and the Shadow sibling.
+        Uses Angular 17+ control-flow @if. NO logic in the template beyond the
+        binary switch — all Inputs / Outputs forward to whichever custom
+        element is active.
+
+  PLACEHOLDERS TO FILL:
+    {{ComponentTagFull}}  → e.g. falcon-empty-state
+    {{ComponentTagTw}}    → e.g. falcon-empty-state-tw
+    {{AngularSelector}}   → e.g. falcon-angular-empty-state
+    {{PropBindingsBlock}} → list of `[attr.<kebab-prop>]="..."` bindings,
+                             one per Stencil @Prop()
+
+  RULES:
+    - Use `[attr.kebab-name]` not `[propName]` — Stencil custom elements
+      observe ATTRIBUTES at the DOM level. Direct property bindings can
+      desync with Stencil's internal state.
+    - Use `_signal() || null` for signal-backed required inputs — Angular
+      removes the attribute when the binding is null, which is what
+      Stencil expects for "unset".
+    - Use `size` (plain) for optional inputs that have non-null defaults.
+    - Custom events from Stencil bubble as kebab-case names — listen via
+      `(falcon-change)="onChange($event)"` not `(falconChange)`.
+    - Slots forward through `<ng-content select="[slot=NAME]"></ng-content>`.
+      Consumers project with `<button slot="action">...</button>`.
+    - BOTH branches must be kept structurally identical — only the tag
+      differs. If you find yourself adding logic to one branch only, the
+      logic belongs in the parent component (.ts) or the Stencil component.
+  ============================================================================
+-->
+<!--
+  Falcon Angular {{ComponentKebab}} template — pure tag-switcher.
+  Slot content projects from consumer markup via `slot="<name>"` attribute.
+-->
+@if (useTailwind) {
+  <{{ComponentTagTw}}
+    {{PropBindingsBlock}}>
+    <!-- Example slot — delete or replicate per real slots:
+    <ng-content select="[slot=action]"></ng-content>
+    -->
+    <ng-content></ng-content>
+  </{{ComponentTagTw}}>
+} @else {
+  <{{ComponentTagFull}}
+    {{PropBindingsBlock}}>
+    <!-- Same projected slots as the Tailwind branch — keep in sync. -->
+    <ng-content></ng-content>
+  </{{ComponentTagFull}}>
+}
+
+<!--
+  Example {{PropBindingsBlock}} expansion (delete the comment, expand inline):
+
+    [attr.title-text]="_titleText() || null"
+    [attr.description-text]="_descriptionText() || null"
+    [attr.size]="size"
+    [attr.disabled]="disabled ? '' : null"
+    (falcon-change)="falconChange.emit($event.detail)"
+-->
+
+<!-- Generated from strategy v1.0 — 2026-05-14 -->

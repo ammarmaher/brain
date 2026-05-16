@@ -1,4 +1,43 @@
-*** Test Report — Org Hierarchy Falcon Eyes Repair (RESUMED 2026-05-15, Round 2 appended) ***
+*** Test Report — Org Hierarchy Falcon Eyes Repair (RESUMED 2026-05-15, Round 5 appended) ***
+
+## Round 5 (2026-05-15 ~14:00 local) — live-bundle 57-case SoT matrix
+
+Run against fresh dev-serve bundle on Ammar PC Chrome via claude-in-chrome MCP.
+
+| Section | Pass | Fail | Partial | Not-Verified |
+|---|---:|---:|---:|---:|
+| 1. Tab strip (T01-T04) | 4 | 0 | 0 | 0 |
+| 2. Table chrome (T05-T12) | 6 | 0 | 2 | 0 |
+| 3. Row structure (T13-T20) | 7 | 0 | 1 | 0 |
+| 4. Row kebab menus (T21-T26) | 5 | 0 | 0 | 1 |
+| 5. Edit-row expansion (T27-T32) | 4 | 1 | 0 | 1 |
+| 6. IB modal (T33-T44) | 1 | 1 | 0 | 10 |
+| 7. Pagination + footer (T45-T50) | 6 | 0 | 0 | 0 |
+| 8. Currency + i18n (T51-T52) | 2 | 0 | 0 | 0 |
+| 9. Out-of-table assertions (T53-T57) | 5 | 0 | 0 | 0 |
+| **Totals** | **40** | **2** | **3** | **12** |
+
+Save/Cancel audit per editable surface (see `audit/SAVE_CANCEL_AUDIT.md`):
+
+| Surface | Save verdict | Cancel verdict | Network |
+|---|---|---|---|
+| S1 Inline edit-row 2-field | LOCAL-STATE-ONLY | CANCEL-WORKS | NONE |
+| S2 Inline edit-row 1-field | LOCAL-STATE-ONLY | CANCEL-WORKS (by source contract) | NONE |
+| S3 Visibility toggle | LOCAL-STATE-ONLY (immediate apply) | n/a | NONE |
+| S4 IB dialog | WIRED-TO-BACKEND in Wave-15 code (mock fallback on this page) | CANCEL-WORKS by source contract | NONE on Org Hierarchy page |
+
+**Round 5 new defects:**
+- DEFECT-CCS-R5-001 (P2) — edit-row above-table on second/subsequent open
+- DEFECT-CCS-R5-002 (P1) — IB modal 0×0 dimensions (Wave-15 regression)
+
+**Round 4 STILL-BROKEN trio resolution:**
+- Defect 1 (table chrome) → FIXED at runtime (header bg #F5F5F5 confirmed)
+- Defect 2 (inline edit-row) → FIXED at runtime (first-open; second-open has R5-001 regression)
+- Defect 3 (IB modal) → REGRESSED via Wave-15 (introduced R5-002)
+
+Build at end of Round 5: GREEN (hash `8d2ea4c8c3255942`, 16.4s).
+
+---
 
 ## Round 2 (2026-05-15 evening) — comm-channels-tab interactive tests
 

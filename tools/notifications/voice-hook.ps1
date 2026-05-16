@@ -37,10 +37,41 @@ if ($OnlyOnError) {
 }
 
 $here = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Path }
+
+# *** Resolve current notification mode (voice | silent | mute). Defaults to 'voice' if config missing/malformed. ***
+$mode = 'voice'
+$modePath = Join-Path $here 'mode.json'
+if (Test-Path -LiteralPath $modePath) {
+    try {
+        $cfg = Get-Content -LiteralPath $modePath -Raw | ConvertFrom-Json
+        if ($cfg.mode -in @('voice', 'silent', 'mute')) { $mode = $cfg.mode }
+    } catch { }
+}
+
+# *** mute: do nothing. ***
+if ($mode -eq 'mute') { exit 0 }
+
+# *** silent: emit a category-specific beep pattern via a detached PS process, then exit. ***
+if ($mode -eq 'silent') {
+    # *** finished = 3 beeps; waitingForInput / blocked = 1 beep (different pitches); other categories silent. ***
+    $beepCmd = $null
+    switch ($Category) {
+        'finished'        { $beepCmd = "[console]::beep(660,180); Start-Sleep -Milliseconds 80; [console]::beep(660,180); Start-Sleep -Milliseconds 80; [console]::beep(880,220)" }
+        'waitingForInput' { $beepCmd = "[console]::beep(880,250)" }
+        'blocked'         { $beepCmd = "[console]::beep(440,350)" }
+    }
+    if ($beepCmd) {
+        try {
+            Start-Process -FilePath 'powershell.exe' -ArgumentList @('-NoProfile', '-WindowStyle', 'Hidden', '-Command', $beepCmd) -WindowStyle Hidden | Out-Null
+        } catch { }
+    }
+    exit 0
+}
+
+# *** voice (default): spawn play-alert-context.ps1 detached so the hook returns immediately. ***
 $picker = Join-Path $here 'play-alert-context.ps1'
 if (-not (Test-Path -LiteralPath $picker)) { exit 0 }
 
-# *** Spawn detached so the hook returns immediately (fire-and-forget). ***
 $psArgs = '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "{0}" -Mindset {1} -Category {2}' -f $picker, $Mindset, $Category
 try {
     Start-Process -FilePath 'powershell.exe' -ArgumentList $psArgs -WindowStyle Hidden | Out-Null

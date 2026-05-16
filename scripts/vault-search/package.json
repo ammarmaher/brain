@@ -1,0 +1,20 @@
+{
+  "name": "brain-sk-vault-search",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Semantic search over the Brain SK Obsidian vault using Smart Connections embeddings (no Obsidian required).",
+  "main": "vault-search.mjs",
+  "bin": {
+    "vault-search": "./vault-search.mjs"
+  },
+  "scripts": {
+    "search": "node vault-search.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@xenova/transformers": "^2.17.2"
+  }
+}

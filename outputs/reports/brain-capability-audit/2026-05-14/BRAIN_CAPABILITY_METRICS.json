@@ -1,0 +1,238 @@
+{
+  "$schema": "ammar-brain-capability-audit/v1",
+  "auditDate": "2026-05-14",
+  "auditTimezone": "+03:00",
+  "skill": "ammar-brain-capability-audit",
+  "rule": "Every metric carries a 'source' file path. Where no source exists, the field is null and a HIGH-severity gap is recorded.",
+
+  "inventory": {
+    "brainOutputsRoot": {
+      "path": "C:/Falcon/Brain Outputs",
+      "topLevelFolders": [
+        "component-registry",
+        "discovery",
+        "frontend-understanding",
+        "prd",
+        "readiness",
+        "reports",
+        "scan-metadata",
+        "strategies",
+        "understanding",
+        "wiki-architect"
+      ],
+      "source": "filesystem scan 2026-05-14"
+    },
+    "folderFileCounts": [
+      { "folder": "component-registry",     "files": 770, "kb": 3060.7, "lastWrite": "2026-05-13 22:43" },
+      { "folder": "discovery",               "files": 5,   "kb": 14.6,   "lastWrite": "2026-05-13 21:40" },
+      { "folder": "frontend-understanding",  "files": 9,   "kb": 164.8,  "lastWrite": "2026-05-14 20:55" },
+      { "folder": "prd",                     "files": 39,  "kb": 218.6,  "lastWrite": "2026-05-13 21:38" },
+      { "folder": "readiness",               "files": 0,   "kb": 0,      "lastWrite": null },
+      { "folder": "reports",                 "files": 57,  "kb": 2549.1, "lastWrite": "2026-05-14 13:04" },
+      { "folder": "scan-metadata",           "files": 1,   "kb": 1.4,    "lastWrite": "2026-05-13 19:53" },
+      { "folder": "strategies",              "files": 25,  "kb": 173.8,  "lastWrite": "2026-05-14 20:54" },
+      { "folder": "understanding",           "files": 511, "kb": 2940.7, "lastWrite": "2026-05-14 15:51" },
+      { "folder": "wiki-architect",          "files": 21,  "kb": 189.7,  "lastWrite": "2026-05-13 21:34" }
+    ]
+  },
+
+  "frontendComponentKnowledge": {
+    "componentsDiscovered": 60,
+    "componentDirsWithAllRequiredFiles": 60,
+    "componentDirsIncomplete": 0,
+    "requiredFilesPerComponent": ["OVERVIEW.md", "API.md", "USAGE.md", "TOKENS.md", "GAPS_AND_UPGRADES.md", "DECISION.md"],
+    "totalKnowledgeFiles": 360,
+    "source": "C:/Falcon/Brain Outputs/understanding/frontend/components (filesystem scan 2026-05-14)",
+
+    "scanRuns": [
+      { "run": "2026-05-13-2355", "discovered": 60, "scanned": 0,  "skipped": 60, "needsScan": 0, "missingKnowledge": 0, "failed": 0, "coveragePct": 100, "metadataCompletenessPct": 93, "editTrackingPct": 93 },
+      { "run": "2026-05-13-2355", "discovered": 60, "scanned": 60, "skipped": 0,  "needsScan": 0, "missingKnowledge": 0, "failed": 0, "coveragePct": 100, "metadataCompletenessPct": 93, "editTrackingPct": 93 },
+      { "run": "2026-05-13-2353", "discovered": 60, "scanned": 0,  "skipped": 4,  "needsScan": 56, "missingKnowledge": 0, "failed": 0, "coveragePct": 7,   "metadataCompletenessPct": 93, "editTrackingPct": 93 },
+      { "run": "2026-05-13-2352", "discovered": 60, "scanned": 0,  "skipped": 4,  "needsScan": 56, "missingKnowledge": 0, "failed": 0, "coveragePct": 7,   "metadataCompletenessPct": 93, "editTrackingPct": 93 },
+      { "run": "2026-05-13-2337", "discovered": 60, "scanned": 60, "skipped": 0,  "needsScan": 0, "missingKnowledge": 0, "failed": 0, "coveragePct": 100, "metadataCompletenessPct": 88, "editTrackingPct": 88 }
+    ],
+    "scanRunsSource": "C:/Falcon/Brain Outputs/understanding/frontend/_scan-state/FRONTEND_COMPONENT_SCAN_RUN.md",
+
+    "componentStatusBreakdown": {
+      "READY": 22,
+      "NEEDS_UPGRADE": 22,
+      "DEPRECATED": 2,
+      "LEGACY": 7,
+      "REFERENCE_ONLY": 2,
+      "SHARED_DIRECTIVES_FOLDER": 1,
+      "total": 60,
+      "source": "C:/Falcon/Brain Outputs/understanding/frontend/FINAL_COVERAGE_REPORT.md (Status breakdown table)"
+    },
+
+    "readinessScores": {
+      "componentApiUnderstandingPct":    95,
+      "usageUnderstandingPct":           88,
+      "tokenThemeUnderstandingPct":      96,
+      "dynamicCapabilityUnderstandingPct": 92,
+      "upgradeGapConfidencePct":         93,
+      "testA11yConfidencePct":           70,
+      "overallFrontendReadinessPct":     91,
+      "source": "C:/Falcon/Brain Outputs/understanding/frontend/READINESS_SCORES.md (Summary table)"
+    },
+
+    "upgradeBacklog": {
+      "totalItems": 124,
+      "P0": 13,
+      "P1": 53,
+      "P2": 38,
+      "P3": 20,
+      "source": "C:/Falcon/Brain Outputs/understanding/frontend/READINESS_SCORES.md (§ Upgrade gap confidence) + FINAL_COVERAGE_REPORT.md"
+    },
+
+    "topRiskGaps": [
+      { "id": "UP-3-02",   "component": "popup",             "issue": "Focus trap missing (WCAG)",                     "priority": "P0" },
+      { "id": "UC-W02",    "component": "wizards",           "issue": "4 wizards still on legacy stepper",            "priority": "P0" },
+      { "id": "UC-P0-01",  "component": "table",             "issue": "PrimeIcons residual in row-action button",     "priority": "P0" },
+      { "id": "UC-W04",    "component": "uploader",          "issue": "PrimeIcons residual (4 occurrences)",          "priority": "P0" },
+      { "id": "UC-W01",    "component": "tree",              "issue": "No per-row template / actions slot",           "priority": "P0" },
+      { "id": "UP-01",     "component": "tokens",            "issue": "Component-token fallback hex drifts from SSOT", "priority": "P0" },
+      { "id": "UP-3-01",   "component": "tabs",              "issue": "MutationObserver lift is fragile",             "priority": "P0" },
+      { "id": "UP-03",     "component": "feature SCSS",      "issue": "20+ feature SCSS files violate no-SCSS rule",  "priority": "P0" },
+      { "id": "UC-D01",    "component": "shared-directives", "issue": "FalconFormValidateDirective heavy + console.log","priority": "P0" },
+      { "id": "UC-P1-06",  "component": "all",               "issue": "Zero *.spec.ts on Falcon UI core components",  "priority": "P1" }
+    ],
+    "topRiskGapsSource": "C:/Falcon/Brain Outputs/understanding/frontend/FINAL_COVERAGE_REPORT.md (Highest-risk gaps top 10)"
+  },
+
+  "backendApiUnderstanding": {
+    "servicesCovered": 9,
+    "perServiceFileCounts": [
+      { "service": "access",          "files": 6 },
+      { "service": "charging",        "files": 12 },
+      { "service": "commerce",        "files": 12 },
+      { "service": "contact-group",   "files": 6 },
+      { "service": "core-gateway",    "files": 6 },
+      { "service": "identity",        "files": 6 },
+      { "service": "provisioning",    "files": 12 },
+      { "service": "system-gateway",  "files": 6 },
+      { "service": "templates",       "files": 6 }
+    ],
+    "totalKnowledgeFiles": 74,
+    "rootDocs": ["BACKEND_SERVICE_MAP.md", "GATEWAY_ROUTE_MAP.md"],
+    "perServiceRequiredFiles": ["SERVICE_OVERVIEW.md","ENDPOINT_REGISTRY.md","DTO_DICTIONARY.md","VALIDATIONS.md","ERRORS.md","FRONTEND_CONTRACT.md"],
+    "servicesWithDeepControllerCoverage": ["charging", "commerce", "provisioning"],
+    "servicesWithoutDeepControllerCoverage": ["access","contact-group","core-gateway","identity","system-gateway","templates"],
+    "source": "C:/Falcon/Brain Outputs/understanding/backend (filesystem scan 2026-05-14)"
+  },
+
+  "prdBusinessUnderstanding": {
+    "modulesCovered": 6,
+    "perModuleFiles": [
+      { "module": "01-account-management",                              "files": 6, "gapRows": 33 },
+      { "module": "02-user-management",                                 "files": 6, "gapRows": 37 },
+      { "module": "03-contract-packaging-charging-billing-management",  "files": 6, "gapRows": 40 },
+      { "module": "04-contact-group-management",                        "files": 6, "gapRows": 36 },
+      { "module": "05-templates",                                       "files": 6, "gapRows": 28 },
+      { "module": "root-documents",                                     "files": 6, "gapRows": null }
+    ],
+    "perModuleRequiredFiles": ["OVERVIEW.md","ENTITIES.md","WORKFLOWS.md","BUSINESS_RULES.md","GAPS.md","QUESTIONS.md"],
+    "totalPrdGapRows": 174,
+    "source": "C:/Falcon/Brain Outputs/prd/modules (filesystem scan 2026-05-14)"
+  },
+
+  "registries": {
+    "populated": [
+      { "name": "FALCON_COMPONENT_REGISTRY.md", "lines": 501, "kb": 36.2 },
+      { "name": "FALCON_UI_BUGS_AND_QUIRKS.md", "lines": 324, "kb": 21.8 }
+    ],
+    "stubs": [
+      "API_DTO_DICTIONARY.md",
+      "API_ENDPOINT_REGISTRY.md",
+      "ARCHITECTURE_RULE_REGISTRY.md",
+      "BUSINESS_ENTITY_REGISTRY.md",
+      "BUSINESS_GAP_REGISTRY.md",
+      "BUSINESS_IMPACT_MAP.md",
+      "BUSINESS_RULE_REGISTRY.md",
+      "ERROR_MESSAGE_REGISTRY.md",
+      "FALCON_PATTERN_MEMORY.md",
+      "PES_PERMISSION_MATRIX.md",
+      "STATUS_LIFECYCLE_REGISTRY.md",
+      "TEST_SCENARIO_REGISTRY.md",
+      "VALIDATION_RULE_REGISTRY.md"
+    ],
+    "stubDefinition": "<=6 lines, <=0.3 KB",
+    "populatedCount": 2,
+    "stubCount": 13,
+    "totalCount": 15,
+    "populatedPct": 13.3,
+    "source": "C:/Falcon/Brain SK/registries (filesystem scan 2026-05-14)"
+  },
+
+  "wikiArchitect": {
+    "documentsMirrored": 21,
+    "consolidatedDocs": ["CONSOLIDATED_ARCHITECTURE_CONFLICTS.md", "CONSOLIDATED_ARCHITECTURE_RULES.md", "WIKI_OVERVIEW.md", "WIKI_TO_CODE_TRACE.md"],
+    "source": "C:/Falcon/Brain Outputs/wiki-architect (filesystem scan 2026-05-14)"
+  },
+
+  "bootstrapHealth": {
+    "status": "READY_WITH_WARNINGS",
+    "warnings": [
+      "PRD folder not found at C:/Falcon/PRD on first pass (mirrored content exists under Brain Outputs/prd)",
+      "Architecture wiki not found at C:/Falcon/falcon-wiki on first pass (mirrored content exists under Brain Outputs/wiki-architect)"
+    ],
+    "okChecks": ["Brain repo configured","Frontend repo clean","Backend repos clean","Gateway repos clean","Obsidian vault present","Git present","Node 22.19.0","npm 11.6.0",".NET SDK 9.0.201","Markdown/PDF tools"],
+    "source": "C:/Falcon/Brain Outputs/reports/bootstrap-touchbase/2026-05-13-health-check.md"
+  },
+
+  "reportsHistory": {
+    "totalReports": 57,
+    "knownReportClusters": [
+      { "cluster": "bootstrap-touchbase", "items": 2 },
+      { "cluster": "component-scans", "items": 4 },
+      { "cluster": "discovery-2026-05-13", "items": 1 },
+      { "cluster": "falcon-ui-library-learnings", "items": 1 },
+      { "cluster": "org-hierarchy-page-night-shift-2026-05-14", "items": 1 }
+    ],
+    "source": "C:/Falcon/Brain Outputs/reports (filesystem scan 2026-05-14)"
+  },
+
+  "strategies": {
+    "knownStrategies": [
+      { "name": "falcon-component-creation", "topLevelDocs": 10, "fileTemplates": 10, "runs": 1 }
+    ],
+    "source": "C:/Falcon/Brain Outputs/strategies (filesystem scan 2026-05-14)"
+  },
+
+  "knownUnknowns": [
+    { "id": "BCA-001", "area": "registries",            "fact": "13 of 15 registry files are stubs (<=6 lines)",                         "severity": "HIGH" },
+    { "id": "BCA-002", "area": "tests",                 "fact": "Zero *.spec.ts on Falcon UI core components (frontend readiness #70%)", "severity": "HIGH" },
+    { "id": "BCA-003", "area": "readiness folder",       "fact": "Brain Outputs/readiness/ is empty (no aggregated readiness JSON yet)",  "severity": "MEDIUM" },
+    { "id": "BCA-004", "area": "backend deep coverage", "fact": "6 of 9 backend services lack per-controller deep file coverage",       "severity": "MEDIUM" },
+    { "id": "BCA-005", "area": "PRD scan severity",     "fact": "PRD GAPS.md files do not use a HIGH/MEDIUM/LOW severity field",        "severity": "MEDIUM" },
+    { "id": "BCA-006", "area": "wiki-architect",        "fact": "Mirror is 2026-05-13; no automated freshness watcher recorded",        "severity": "LOW" },
+    { "id": "BCA-007", "area": "data-visualization",    "fact": "Skill was created 2026-05-14 — no automated chart-rendering harness wired in CI", "severity": "LOW" },
+    { "id": "BCA-008", "area": "scan-metadata root",     "fact": "Brain Outputs/scan-metadata/ has only bootstrap-health.json — no per-domain scan ledgers", "severity": "MEDIUM" }
+  ],
+
+  "whatBrainKnows": [
+    "60/60 Falcon UI components have all 6 required knowledge files",
+    "Frontend per-dimension readiness scores already computed by Agent 7 (91% overall)",
+    "9 backend services have at least the 6 required service-level files; commerce/charging/provisioning also have per-controller dossiers",
+    "5 PRD business modules each have 6 required files (174 PRD gap rows enumerated)",
+    "21 architecture wiki docs mirrored locally including consolidated rules + conflicts",
+    "FALCON_COMPONENT_REGISTRY (501 lines) and FALCON_UI_BUGS_AND_QUIRKS (324 lines) are populated"
+  ],
+
+  "whatBrainDoesNotKnow": [
+    "13 platform registries are still empty stubs (DTO, endpoint, business rule, validation, etc.)",
+    "No automated spec/test coverage signal exists for Falcon UI core",
+    "No aggregated readiness JSON in Brain Outputs/readiness/",
+    "6 backend services lack per-controller deep coverage",
+    "PRD severity (HIGH/MEDIUM/LOW) not yet classified in GAPS.md",
+    "No CI-wired chart-rendering harness for the new data-visualization skill"
+  ],
+
+  "whatBrainNeedsNext": [
+    { "next": "Populate the 13 stub registries from existing component/PRD/backend evidence", "owner": "domain skills", "priority": "HIGH" },
+    { "next": "Land at least 1 *.spec.ts per Falcon UI core component (target test/a11y dimension > 70%)", "owner": "frontend skills", "priority": "HIGH" },
+    { "next": "Extend backend per-controller deep coverage to access/contact-group/identity/system-gateway/core-gateway/templates", "owner": "backend-api-understanding", "priority": "MEDIUM" },
+    { "next": "Adopt HIGH/MEDIUM/LOW severity in every PRD GAPS.md (replace narrative severity)", "owner": "business-understanding", "priority": "MEDIUM" },
+    { "next": "Add a per-domain scan ledger under Brain Outputs/scan-metadata/", "owner": "shared/context-output", "priority": "MEDIUM" },
+    { "next": "Aggregate readiness into Brain Outputs/readiness/BRAIN_READINESS.json on each audit run", "owner": "ammar-brain-capability-audit", "priority": "MEDIUM" }
+  ]
+}

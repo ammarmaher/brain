@@ -297,3 +297,212 @@ The four projection directives are auto-imported via the component's content-chi
 - Don't bind `[reorderableColumns]` / `[resizableColumns]` expecting behaviour.
 - Don't ignore `<ng-template falconDataTableEmpty>` — empty pages benefit massively from `<falcon-angular-empty-state>` composition.
 - Don't put expensive computations in `[rowStyleClass]` — it runs once per row per render.
+
+---
+
+## Multi-shadow editable rows (Wave 20, 2026-05-15)
+
+Use shadow rows when a parent row owns ZERO-to-MANY auxiliary detail strips that should appear inline UNDER the parent row, each visually anchored to a specific column via a small upward notch.
+
+The notch alignment is **library-owned**. Set `ShadowRow.targetColumn = '<columnField>'` — the library measures the column header and renders the triangle centred above it. Do NOT hardcode the notch position in the consumer.
+
+```html
+<falcon-angular-data-table
+  [data]="applications()"
+  [columns]="columns"
+  [shadowRows]="shadowRowMap()"
+  [(expandedShadowRowIds)]="expandedShadowRowIds"
+  [(shadowRowModes)]="shadowRowModes"
+  (shadowRowSave)="onSave($event)"
+  (shadowRowCancel)="onCancel($event)"
+  (shadowRowDelete)="onDelete($event)">
+
+  <!-- Body template — same template for view + edit modes; branch on `mode`. -->
+  <ng-template
+    falconDataTableShadow
+    let-row="row"
+    let-shadow="shadow"
+    let-mode="mode">
+    @switch (mode) {
+      @case ('view') {
+        <div class="grid grid-cols-2 gap-x-12 gap-y-2 max-w-[520px]">
+          <div>
+            <div class="text-[11px] font-medium text-falcon-neutral-500">New Price Type</div>
+            <div class="font-semibold text-falcon-neutral-800">
+              {{ shadow.data.newPriceType | translate }}
+            </div>
+          </div>
+        </div>
+      }
+      @case ('edit') {
+        <form [formGroup]="getShadowEditForm(row, shadow)"
+              class="grid grid-cols-[minmax(0,220px)_minmax(0,220px)] gap-4">
+          <falcon-angular-dropdown
+            formControlName="newPriceType"
+            size="sm"
+            [options]="priceTypeDropdownOptions()" />
+          <falcon-angular-date-picker
+            size="sm"
+            [value]="getShadowEditForm(row, shadow).controls['effectiveDate'].value"
+            (valueChange)="setShadowEffectiveDate(row, shadow, $event)" />
+        </form>
+      }
+    }
+  </ng-template>
+</falcon-angular-data-table>
+```
+
+In the component:
+
+```ts
+// Build the shadow descriptor map keyed by parent row id.
+protected readonly shadowRowMap = computed(() => {
+  const map = new Map<string, ShadowRow[]>();
+  for (const app of this.apps()) {
+    const changes = app.scheduledChanges ?? [];
+    if (changes.length === 0) continue;
+    map.set(String(app.id), changes.map((c) => ({
+      id: c.id,
+      // *** The notch will align under whichever column this field maps to. ***
+      targetColumn: c.kind === 'price-type-change' ? 'priceType' : 'priceValue',
+      mode: 'view',
+      data: c,
+    })));
+  }
+  return map;
+});
+
+protected expandedShadowRowIds = signal<string[]>([]);
+protected shadowRowModes = signal(new Map<string, 'view' | 'edit'>());
+
+protected onSave(ev: { row: Application; shadow: ShadowRow; patch?: unknown }) {
+  // Persist patch, refresh data, etc.
+}
+
+protected onCancel(ev: { row: Application; shadow: ShadowRow }) {
+  // Discard local form state.
+}
+
+protected onDelete(ev: { row: Application; shadow: ShadowRow }) {
+  // Confirm + remove the shadow row from the parent.
+}
+```
+
+### When to use shadow rows vs row-expansion
+
+| Use case | Choice |
+|---|---|
+| One auxiliary form per row, full-width content, no column linkage needed | `[expandedRowId]` + `<slot name="row-expansion">` (the existing row-expansion API) |
+| Multiple scheduled changes per row, each tied to a specific column | **shadow rows** with `targetColumn` |
+| View + edit modes for the same auxiliary content | shadow rows (`shadowRowModes` is built-in two-way) |
+| Heavy non-column-linked detail (charts, multi-step wizards) | row-expansion (shadow rows are intentionally narrow-purpose) |
+
+### Custom trailing-action buttons
+
+When the default `Edit / Delete` (view) and `Save / Cancel` (edit) buttons aren't sufficient, project your own:
+
+```html
+<ng-template
+  falconDataTableShadowActions
+  let-row="row"
+  let-shadow="shadow"
+  let-mode="mode"
+  let-startEdit="startEdit"
+  let-save="save"
+  let-cancel="cancel">
+  @if (mode === 'view') {
+    <falcon-angular-button size="sm" variant="ghost" (falconClick)="startEdit()">
+      Override schedule
+    </falcon-angular-button>
+  } @else {
+    <falcon-angular-button size="sm" variant="primary"
+                           (falconClick)="save({ overridden: true })">
+      Confirm override
+    </falcon-angular-button>
+    <falcon-angular-button size="sm" variant="ghost" (falconClick)="cancel()">
+      Discard
+    </falcon-angular-button>
+  }
+</ng-template>
+```
+
+---
+
+## Wave 21 (2026-05-15) — Shadow row hardening usage
+
+### Sticky actions + shadow rows
+
+When `[stickyActions]="true"` AND a parent row has shadow descriptors, the library now leaves a parallel sticky cell at the row's inline-end so the trailing-action zone stays visible during horizontal scroll. No consumer change is required — the precedence is owned by the library.
+
+```html
+<falcon-angular-data-table
+  [data]="applications()"
+  [columns]="columns"
+  [stickyActions]="true"
+  [hasRowActions]="true"
+  [shadowRows]="shadowRowMap()"
+  [(expandedShadowRowIds)]="expandedShadowRowIds">
+
+  <!-- Body content for the shadow row — hosted in the main (non-sticky) body cell. -->
+  <ng-template falconDataTableShadow let-row="row" let-shadow="shadow" let-mode="mode">
+    <!-- … (same body template as before — no changes needed for sticky support) -->
+  </ng-template>
+</falcon-angular-data-table>
+```
+
+The default `Edit / Delete` (view) or `Save / Cancel` (edit) buttons (or your projected `falconDataTableShadowActions` template) now move into the trailing sticky cell automatically when both conditions are met. When `stickyActions=false` OR `hasRowActions=false`, the existing single-cell layout is preserved bit-for-bit.
+
+### Listening to `shadowRowDeleteRequest`
+
+The original `(shadowRowDelete)` emits `{ row, shadow }` — the simplest "this user clicked Delete" signal.
+
+`(shadowRowDeleteRequest)` is a richer convenience output that fires alongside. The payload includes a `proposedShadowsForRow` array — the parent row's current shadows minus the deleted one — so the consumer can apply the new collection as-is without rebuilding it manually:
+
+```ts
+protected shadowRowMap = signal(new Map<string, ShadowRow[]>());
+
+protected onShadowRowDeleteRequest(ev: {
+  row: Application;
+  shadow: ShadowRow;
+  proposedShadowsForRow: ReadonlyArray<ShadowRow>;
+}) {
+  // *** Apply the proposed new state. ***
+  this.shadowRowMap.update((current) => {
+    const next = new Map(current);
+    next.set(String(ev.row.id), ev.proposedShadowsForRow.slice());
+    return next;
+  });
+}
+```
+
+```html
+<falcon-angular-data-table
+  [shadowRows]="shadowRowMap()"
+  (shadowRowDeleteRequest)="onShadowRowDeleteRequest($event)">
+  <!-- … -->
+</falcon-angular-data-table>
+```
+
+Both events fire — wire whichever fits your data flow. If you need confirmation or persistence, use `(shadowRowDelete)` and ignore the proposal. If you want zero ceremony, use `(shadowRowDeleteRequest)`.
+
+### i18n-able aria-labels
+
+Pass pre-translated strings for the chevron toggle + default action button aria-labels:
+
+```html
+<falcon-angular-data-table
+  [shadowChevronAriaLabel]="'shadow.aria.toggle' | translate"
+  [shadowEditAriaLabel]="'shadow.aria.edit' | translate"
+  [shadowDeleteAriaLabel]="'shadow.aria.delete' | translate"
+  [shadowSaveAriaLabel]="'shadow.aria.save' | translate"
+  [shadowCancelAriaLabel]="'shadow.aria.cancel' | translate"
+  [shadowEditLabel]="'shadow.btn.edit' | translate"
+  [shadowDeleteLabel]="'shadow.btn.delete' | translate"
+  [shadowSaveLabel]="'shadow.btn.save' | translate"
+  [shadowCancelLabel]="'shadow.btn.cancel' | translate">
+  <!-- … -->
+</falcon-angular-data-table>
+```
+
+When a per-action aria-label input is `null` (the default), the visible label text is reused as the aria-label — so the simplest consumer can still just translate `shadow{Edit,Delete,Save,Cancel}Label` and get reasonable a11y.
+```

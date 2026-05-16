@@ -1,0 +1,131 @@
+/* ============================================================================
+   TEMPLATE: Angular dual-render-path wrapper for <{{ComponentTagFull}}>
+   ============================================================================
+   WHAT: Standalone Angular component that wraps both the Shadow and Tailwind
+         Stencil siblings behind a single `<{{AngularSelector}}>` selector.
+         The `useTailwind` Input flips between paths at runtime — the rest of
+         the API stays identical to the Stencil component.
+
+   PLACEHOLDERS TO FILL:
+     {{ComponentTagFull}}  → e.g. falcon-empty-state
+     {{ComponentTagTw}}    → e.g. falcon-empty-state-tw
+     {{ComponentKebab}}    → e.g. empty-state
+     {{ComponentPascal}}   → e.g. EmptyState
+     {{AngularSelector}}   → e.g. falcon-angular-empty-state
+     {{AngularClass}}      → e.g. FalconAngularEmptyStateComponent
+
+   SIBLING FILES:
+     - {{ComponentTagFull}}.component.html  (the @if useTailwind template)
+     - index.ts                              (re-exports the class + types)
+
+   COMPANION FILES:
+     - ../../../components/{{ComponentTagFull}}/{{ComponentKebab}}.types.ts
+       (types re-exported from this file — apps import from the wrapper path)
+     - ../../../define-falcon-tw-component.ts
+       (lazy-loads the Tailwind sibling on first render)
+
+   RULES:
+     - standalone: true — always.
+     - imports: [] — no Angular template imports needed; both children are
+       custom elements registered globally by Stencil.
+     - changeDetection: OnPush — required by Falcon UI Core platform standard.
+     - schemas: [CUSTOM_ELEMENTS_SCHEMA] — required for custom-element tags
+       in the template.
+     - Re-export Stencil types: `export type { Falcon{{ComponentPascal}}* };`.
+       Apps then import from `@falcon/ui-core` not deep paths.
+     - REQUIRED inputs use signal-backed setter/getter pairs so the
+       OnPush change detector sees the change AND so templates can read the
+       signal directly via `_inputName()`:
+           @Input() set inputName(v: T | null | undefined) {
+             this._inputName.set(v ?? defaultValue);
+           }
+           get inputName(): T { return this._inputName(); }
+           protected readonly _inputName = signal<T>(defaultValue);
+     - OPTIONAL Inputs can stay as plain `@Input() name: T = default;` —
+       no signal needed.
+     - @Input() useTailwind = true; — the render-path switch (default ON).
+     - @HostBinding('class') hostClass = '{{AngularSelector}} block';
+       (or another sensible display class). Token contract MUST already
+       include `{{AngularSelector}}` in its `:where()` selector list.
+     - ngOnInit calls `void defineFalconTwComponent('{{ComponentTagFull}}');`
+       to lazy-load the Tailwind sibling bundle on first use.
+   ============================================================================ */
+
+/*** Falcon Angular {{ComponentKebab}} — dual-render-path wrapper around the
+     Stencil <{{ComponentTagFull}}> / <{{ComponentTagTw}}> web components. ***/
+
+import {
+  ChangeDetectionStrategy,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnInit,
+  Output,
+  signal,
+} from '@angular/core';
+
+import { defineFalconTwComponent } from '../../../define-falcon-tw-component';
+import type {
+  /*** Pull every Stencil type used in the public API. ***/
+  Falcon{{ComponentPascal}}Size,
+  // Falcon{{ComponentPascal}}ChangeDetail,
+} from '../../../components/{{ComponentTagFull}}/{{ComponentKebab}}.types';
+
+/*** Re-export so apps import types from the wrapper path, not deep into core. ***/
+export type {
+  Falcon{{ComponentPascal}}Size,
+  // Falcon{{ComponentPascal}}ChangeDetail,
+};
+
+@Component({
+  selector: '{{AngularSelector}}',
+  standalone: true,
+  imports: [],
+  templateUrl: './{{ComponentTagFull}}.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class {{AngularClass}} implements OnInit {
+  /* === REQUIRED / SIGNAL-BACKED INPUTS ==================================== */
+
+  /*** Example — delete and replace.
+       Title required → empty-string default keeps the attribute reflectable. ***/
+  @Input() set titleText(v: string | null | undefined) {
+    this._titleText.set(v ?? '');
+  }
+  get titleText(): string {
+    return this._titleText();
+  }
+  protected readonly _titleText = signal<string>('');
+
+  /* === OPTIONAL INPUTS (plain @Input is fine) ============================= */
+
+  /*** Visual size. ***/
+  @Input() size: Falcon{{ComponentPascal}}Size = 'md';
+
+  /*** Render-path switch — Tailwind variant by default. ***/
+  @Input() useTailwind = true;
+
+  /* === OUTPUTS — mirror every Stencil @Event() one-to-one ================= */
+
+  /*** Example — delete if no events:
+  @Output('falcon-change') readonly falconChange =
+    new EventEmitter<Falcon{{ComponentPascal}}ChangeDetail>();
+  ***/
+
+  /* === HOST BINDING ======================================================= */
+
+  @HostBinding('class') readonly hostClass = '{{AngularSelector}} block';
+
+  /* === LIFECYCLE ========================================================== */
+
+  ngOnInit(): void {
+    /*** Lazy-load the Tailwind sibling bundle on first wrapper render.
+         The function is idempotent — subsequent calls are no-ops. ***/
+    void defineFalconTwComponent('{{ComponentTagFull}}');
+  }
+}
+
+/* Generated from strategy v1.0 — 2026-05-14 */

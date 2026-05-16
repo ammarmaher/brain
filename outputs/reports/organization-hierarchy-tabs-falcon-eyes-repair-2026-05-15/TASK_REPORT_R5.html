@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Falcon Specs v1.4 — Organization Hierarchy Visual Repair</title>
+<style>
+/*
+ * Falcon Audit v3 — final milestone deliverable theme
+ *
+ * Adds to v2:
+ *   - Audience badges (non-technical / technical / showcase)
+ *   - Component showcase card grid
+ *   - Reader's guide treatment
+ *   - Chart enhancements
+ *   - Tab-style section markers
+ */
+
+@page {
+    size: A4 landscape;
+    margin: 1.6cm 1.6cm 1.4cm 1.6cm;
+    @bottom-center {
+        content: counter(page) " / " counter(pages);
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 9pt;
+        color: #698e92;
+    }
+    @top-right {
+        content: "Falcon Specs v0.4 · Milestone Complete · For Everyone";
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 8.5pt;
+        color: #698e92;
+    }
+}
+
+@page :first {
+    margin: 0;
+    @bottom-center { content: none; }
+    @top-right { content: none; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 10pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+/* === Cover === */
+.cover {
+    page-break-after: always;
+    background: linear-gradient(135deg, #082a2e 0%, #124c52 50%, #0d3f44 100%);
+    color: #ffffff;
+    padding: 3.5cm 3cm;
+    min-height: 19cm;
+    margin: -1.6cm -1.6cm -1.4cm -1.6cm;
+}
+
+.cover h1 {
+    font-size: 42pt;
+    font-weight: 800;
+    margin: 0 0 0.2em 0;
+    color: #ffffff;
+    border: none;
+    padding: 0;
+    letter-spacing: -1pt;
+}
+
+.cover .subtitle {
+    font-size: 15pt;
+    color: #a8bec0;
+    margin: 0 0 1.5em 0;
+    font-weight: 400;
+}
+
+.cover .meta {
+    font-size: 10pt;
+    color: #698e92;
+    margin-top: 2em;
+    border-top: 1px solid #1c5e66;
+    padding-top: 1em;
+}
+
+.cover .score-block {
+    display: flex;
+    align-items: center;
+    gap: 2cm;
+    margin: 1em 0 2em 0;
+}
+
+.cover .score-detail h2 {
+    color: #ffffff;
+    font-size: 18pt;
+    margin: 0 0 0.4em 0;
+    border: none;
+    padding: 0;
+}
+
+.cover .score-detail p {
+    color: #c8d8da;
+    font-size: 11pt;
+    margin: 0.3em 0;
+}
+
+.cover .hero-stat {
+    display: inline-block;
+    margin: 8pt 16pt 8pt 0;
+    padding: 12pt 16pt;
+    background: rgba(255,255,255,0.08);
+    border-left: 3px solid #51cf66;
+    border-radius: 4pt;
+}
+.cover .hero-stat-num {
+    font-size: 28pt;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+.cover .hero-stat-lbl {
+    font-size: 9pt;
+    color: #a8bec0;
+    margin-top: 4pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+}
+
+/* === Audience badges === */
+.audience-badge {
+    display: inline-block;
+    padding: 4pt 10pt;
+    border-radius: 4pt;
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+    margin-right: 6pt;
+}
+.audience-non-tech {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+.audience-tech {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+}
+.audience-showcase {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+.audience-all {
+    background: #124c52;
+    color: #ffffff;
+}
+
+/* === Headings === */
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 24pt;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 0.4em;
+    color: #124c52;
+    border-bottom: 3px solid #124c52;
+    padding-bottom: 0.25em;
+    letter-spacing: -0.3pt;
+}
+h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 17pt;
+    font-weight: 700;
+    margin-top: 1.4em;
+    margin-bottom: 0.5em;
+    color: #124c52;
+    border-bottom: 1.5px solid #d1e0e2;
+    padding-bottom: 0.2em;
+}
+h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 13pt;
+    font-weight: 600;
+    margin-top: 1.2em;
+    margin-bottom: 0.4em;
+    color: #0d3f44;
+}
+h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5pt;
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+    color: #0a3338;
+}
+
+p { margin: 0.55em 0; }
+ul, ol { margin: 0.5em 0; padding-left: 1.6em; }
+li { margin: 0.25em 0; }
+
+/* === Tables === */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0.8em 0;
+    font-size: 9.5pt;
+    table-layout: fixed;
+}
+tr { page-break-inside: avoid; break-inside: avoid; }
+thead { display: table-header-group; }
+th, td {
+    border: 1px solid #c1d0d2;
+    padding: 6px 8px;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: normal;
+    vertical-align: top;
+}
+th {
+    background-color: #124c52;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 9.5pt;
+}
+tbody tr:nth-child(even) { background-color: #f3f8f5; }
+table colgroup col { width: auto !important; }
+
+/* === Section banners === */
+.section-banner {
+    background: linear-gradient(90deg, #124c52, #0d3f44);
+    color: #fff;
+    padding: 12pt 18pt;
+    border-radius: 6pt;
+    margin: 16pt 0 10pt 0;
+    page-break-after: avoid;
+}
+.section-banner h2 {
+    color: #fff !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.section-banner .subtitle {
+    font-size: 9.5pt;
+    color: #c8d8da;
+    margin-top: 4pt;
+}
+
+/* Tab-style section markers */
+.tab-marker {
+    display: inline-block;
+    background: #124c52;
+    color: #fff;
+    padding: 6pt 16pt;
+    border-radius: 4pt 4pt 0 0;
+    font-size: 11pt;
+    font-weight: 700;
+    margin-top: 1em;
+}
+.tab-marker.tab-nontech { background: #2f9e44; }
+.tab-marker.tab-tech    { background: #1c7ed6; }
+.tab-marker.tab-showcase { background: #d97706; }
+
+/* === Pills, bars, cards === */
+.pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10pt;
+    font-size: 9pt;
+    font-weight: 600;
+    color: #fff;
+}
+.pill-green { background: #2f9e44; }
+.pill-amber { background: #d97706; }
+.pill-red   { background: #c92a2a; }
+
+.big-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 56pt;
+    font-weight: 800;
+    color: #124c52;
+    line-height: 1;
+}
+
+/* === Component showcase cards === */
+.showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12pt;
+    margin: 1em 0;
+}
+
+.showcase-card {
+    border: 1px solid #d1e0e2;
+    border-left: 4px solid #124c52;
+    border-radius: 6pt;
+    padding: 12pt 14pt;
+    background: #fff;
+    page-break-inside: avoid;
+}
+.showcase-card-title {
+    font-size: 12pt;
+    font-weight: 700;
+    color: #0a3338;
+    margin: 0 0 4pt 0;
+}
+.showcase-card-purpose {
+    font-size: 9.5pt;
+    color: #698e92;
+    margin: 0 0 8pt 0;
+    font-style: italic;
+}
+.showcase-card-preview {
+    margin: 8pt 0;
+    padding: 12pt;
+    background: #f9fbfc;
+    border-radius: 4pt;
+    min-height: 60pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.showcase-card-api {
+    font-size: 8.5pt;
+    color: #1a1a1a;
+    margin-top: 6pt;
+}
+.showcase-card-api code {
+    font-size: 8pt;
+    background: #f3f8f5;
+    padding: 1px 4px;
+    border-radius: 2pt;
+}
+
+/* === Stat cards (for metrics pages) === */
+.stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12pt;
+    margin: 1em 0;
+}
+.stat-card {
+    border: 1px solid #d1e0e2;
+    border-radius: 6pt;
+    padding: 16pt;
+    text-align: center;
+    background: #fff;
+}
+.stat-card-num {
+    font-size: 32pt;
+    font-weight: 800;
+    color: #124c52;
+    line-height: 1;
+}
+.stat-card-num.green { color: #2f9e44; }
+.stat-card-num.amber { color: #d97706; }
+.stat-card-num.teal  { color: #124c52; }
+.stat-card-lbl {
+    font-size: 9pt;
+    color: #698e92;
+    margin-top: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+}
+.stat-card-sub {
+    font-size: 8.5pt;
+    color: #1a1a1a;
+    margin-top: 4pt;
+}
+
+/* === Reader's guide === */
+.reader-paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12pt;
+    margin: 1em 0;
+}
+.reader-path {
+    border: 1px solid #d1e0e2;
+    border-radius: 6pt;
+    padding: 14pt;
+    background: #f9fbfc;
+}
+.reader-path.non-tech { border-left: 4px solid #2f9e44; }
+.reader-path.tech     { border-left: 4px solid #1c7ed6; }
+.reader-path.showcase { border-left: 4px solid #d97706; }
+
+.reader-path h3 {
+    margin-top: 0;
+    font-size: 12pt;
+}
+.reader-path ul {
+    padding-left: 1.2em;
+    font-size: 9.5pt;
+}
+
+/* === Bar chart helpers === */
+.bar-chart-row {
+    display: grid;
+    grid-template-columns: 200pt 1fr 60pt;
+    gap: 10pt;
+    align-items: center;
+    margin: 6pt 0;
+}
+.bar-chart-label {
+    font-size: 9.5pt;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+.bar-chart-track {
+    height: 18pt;
+    background: #e8f0f1;
+    border-radius: 4pt;
+    overflow: hidden;
+    position: relative;
+}
+.bar-chart-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #124c52, #0d3f44);
+    border-radius: 4pt;
+}
+.bar-chart-fill.green { background: linear-gradient(90deg, #2f9e44, #51cf66); }
+.bar-chart-fill.red   { background: linear-gradient(90deg, #c92a2a, #fa5252); }
+.bar-chart-value {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #0a3338;
+    text-align: right;
+}
+
+/* === Code === */
+code {
+    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+    background: #f3f8f5;
+    color: #0d3f44;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9.2pt;
+}
+pre {
+    background: #082a2e;
+    color: #e8f0f1;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 0.9em 0;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 8.5pt;
+    line-height: 1.5;
+}
+pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    color: inherit;
+}
+
+blockquote {
+    border-left: 4px solid #124c52;
+    padding: 0.5em 1em;
+    margin: 0.9em 0;
+    background: #f3f8f5;
+    color: #0d3f44;
+}
+
+strong { color: #0a3338; font-weight: 700; }
+em { color: #0d3f44; }
+a { color: #124c52; text-decoration: underline; }
+
+hr {
+    border: none;
+    border-top: 1px solid #d1e0e2;
+    margin: 1.3em 0;
+}
+
+.page-break { page-break-before: always; }
+.no-break { page-break-inside: avoid; }
+
+/* Donut for cover */
+.donut-track { stroke: #1c5e66; fill: none; }
+.donut-fill  { stroke: #51cf66; fill: none; transform: rotate(-90deg); transform-origin: center; }
+.donut-label { fill: #fff; font-family: 'Inter', sans-serif; font-weight: 800; }
+
+@page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+html, body { background: #ffffff; }
+img { max-width: 100%; height: auto; page-break-inside: avoid; border: 1px solid #e0e6ed; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+table { page-break-inside: auto; }
+tr { page-break-inside: avoid; page-break-after: auto; }
+h1, h2, h3 { page-break-after: avoid; }
+pre { page-break-inside: avoid; }
+</style>
+</head>
+<body><article class="report"><h1>Falcon Specs v1.4 — Organization Hierarchy Visual Repair</h1>
+<p><strong>Date:</strong> 2026-05-15 (Round 5 night shift)
+<strong>Owner:</strong> Adnan Orchestrator (Brain SK Night Shift Round 5)
+<strong>Scope:</strong> Organization Hierarchy tabs → CommChannels &amp; Services — final live-bundle verification + Save/Cancel deep-dive
+<strong>Round:</strong> 5 of max 5
+<strong>Project:</strong> falcon-web-platform-ui — Admin Console + falcon-ui-core library</p>
+<h2>Round 5 Headline</h2>
+<ul>
+<li><strong>Fresh bundle confirmed live</strong> — Round 4 <code>&lt;falcon-angular-alert-dialog&gt;</code> chunk hydrated on Ammar PC Chrome.</li>
+<li><strong>57-case SoT matrix run vs live bundle</strong>: 40 PASS · 2 FAIL · 3 PARTIAL · 12 NOT-VERIFIED.</li>
+<li><strong>Round 4 STILL-BROKEN trio resolution:</strong><ul>
+<li>Defect 1 (table chrome) → <strong>FIXED at runtime</strong>: header bg <code>rgb(245,245,245)</code> = #F5F5F5 (SoT match)</li>
+<li>Defect 2 (inline edit-row) → <strong>FIXED on first-edit case</strong>: flat stripe <code>rgb(243,248,245)</code> = #F3F8F5, no bubble, no notch, inline between rows</li>
+<li>Defect 3 (IB modal) → <strong>REGRESSED</strong>: Wave-15 in-flight refactor introduced <strong>DEFECT-CCS-R5-002</strong> (modal mounts 0×0, invisible)</li>
+</ul>
+</li>
+<li><strong>Save/Cancel deep-dive</strong> (see <code>audit/SAVE_CANCEL_AUDIT.md</code>):<ul>
+<li>All 4 editable surfaces on Org Hierarchy page audit as <strong>LOCAL-STATE-ONLY</strong> today</li>
+<li>Zero network calls for Save / Cancel / Visibility toggle</li>
+<li>Cancel works cleanly (no leaks)</li>
+<li>Wave-15 introduces backend wiring CAPABILITY but it&#39;s not active on this page (no <code>nodeId+accountId</code> inputs passed)</li>
+</ul>
+</li>
+<li><strong>2 NEW defects:</strong><ul>
+<li><strong>DEFECT-CCS-R5-001 (P2)</strong> — edit-row above-thead position on 2nd+ open</li>
+<li><strong>DEFECT-CCS-R5-002 (P1)</strong> — IB modal 0×0 dimensions</li>
+</ul>
+</li>
+<li><strong>Wave-15 in-flight refactor discovered</strong>: separate agent modified working tree mid-R5 with partial migration of IB-modal flow to real backend services. NOT staged. Working tree builds GREEN. User must decide: continue / stash / revert.</li>
+<li><strong>Build at end of R5</strong>: GREEN (hash <code>8d2ea4c8c3255942</code>, 16.4s on <code>nx build admin-console --skip-nx-cache</code>).</li>
+<li><strong>Files staged</strong>: 21 total (R3+R4 work, untouched in R5). Unstaged: ~13 files (Wave-15).</li>
+<li><strong>Commit:</strong> NONE — user will commit + push if they choose.</li>
+<li><strong>Push:</strong> NONE.</li>
+</ul>
+<p>See <code>ROUND_5_REPORT.md</code> for full track-by-track narrative.
+See <code>audit/SAVE_CANCEL_AUDIT.md</code> for the per-surface wiring audit.</p>
+<hr>
+<h2>Final compact verdict table</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fresh bundle confirmed</td>
+<td>YES — <code>falcon-ui-alert-dialog-tw.js</code> chunk served 200 by remote on :4204; <code>&lt;falcon-angular-alert-dialog&gt;</code> hydrated in DOM</td>
+</tr>
+<tr>
+<td>57-case matrix verdict</td>
+<td>40 PASS · 2 FAIL · 3 PARTIAL · 12 NOT-VERIFIED</td>
+</tr>
+<tr>
+<td>Round 4 STILL-BROKEN trio</td>
+<td>Defect 1 FIXED · Defect 2 FIXED (1st-open) · Defect 3 REGRESSED (Wave-15)</td>
+</tr>
+<tr>
+<td>Round 4 NOT-VERIFIED (19)</td>
+<td>7 → PASS, 12 → still NOT-VERIFIED (most gated by DEFECT-CCS-R5-002)</td>
+</tr>
+<tr>
+<td>DEFECT-CCS-R2-001 status</td>
+<td>RESIDUAL — manifests as DEFECT-CCS-R5-001 on second/subsequent edit-row open</td>
+</tr>
+<tr>
+<td>Save audit S1 (2-field edit-row)</td>
+<td>LOCAL-STATE-ONLY · no network · persistence lost on reload</td>
+</tr>
+<tr>
+<td>Save audit S2 (1-field edit-row)</td>
+<td>LOCAL-STATE-ONLY · no network · persistence lost on reload</td>
+</tr>
+<tr>
+<td>Save audit S3 (visibility toggle)</td>
+<td>LOCAL-STATE-ONLY · immediate apply</td>
+</tr>
+<tr>
+<td>Save audit S4 (IB dialog)</td>
+<td>WIRED-TO-BACKEND in Wave-15 source · MOCK fallback on this page · currently INVISIBLE due to R5-002</td>
+</tr>
+<tr>
+<td>Cancel audit S1 / S2</td>
+<td>CANCEL-WORKS · zero changes leaked · no network</td>
+</tr>
+<tr>
+<td>Multi-lane edit</td>
+<td>Single-lane replace by design · matches SoT</td>
+</tr>
+<tr>
+<td>SoT-vs-dest Save/Cancel semantic delta</td>
+<td>NONE on local-state level</td>
+</tr>
+<tr>
+<td>Components rendered</td>
+<td>14 / 14 verified hydrated; only <code>&lt;falcon-dialog-tw&gt;</code> has 0×0 sizing defect</td>
+</tr>
+<tr>
+<td>New R5 defects</td>
+<td>DEFECT-CCS-R5-001 (P2 position regression), DEFECT-CCS-R5-002 (P1 IB-modal invisible)</td>
+</tr>
+<tr>
+<td>P0/P1 fixes applied in R5</td>
+<td>ZERO — fixes deferred to user decision on Wave-15</td>
+</tr>
+<tr>
+<td>Build green</td>
+<td>YES — <code>nx build admin-console</code>: hash <code>8d2ea4c8c3255942</code>, 16.4s</td>
+</tr>
+<tr>
+<td>Comm-channels-tab parity (evidence-backed)</td>
+<td><strong>94 %</strong></td>
+</tr>
+<tr>
+<td>Files staged total</td>
+<td>21 (unchanged from R4)</td>
+</tr>
+<tr>
+<td>Commit hash</td>
+<td>NONE</td>
+</tr>
+<tr>
+<td>Push status</td>
+<td>NONE</td>
+</tr>
+<tr>
+<td>Bypass markers</td>
+<td>NONE</td>
+</tr>
+<tr>
+<td>PDF version</td>
+<td>v1.4</td>
+</tr>
+<tr>
+<td>Brain SK mirror confirmed</td>
+<td>YES</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Round 4 Addendum (retained for chronology)</h2>
+<ul>
+<li><strong>New Falcon library component shipped:</strong> <code>&lt;falcon-alert-dialog&gt;</code> + <code>&lt;falcon-alert-dialog-tw&gt;</code> + <code>&lt;falcon-angular-alert-dialog&gt;</code> — Shadow + Light DOM Stencil components + Angular wrapper + 6-file knowledge dossier.</li>
+<li><strong>Build (R4):</strong> <code>nx build admin-console</code> GREEN — hash <code>12abe61de49a8543</code>, 16.2 s.</li>
+<li><strong>R4 dev-serve diagnostic:</strong> stale bundle issue resolved in R5 (user restarted dev-serve before R5 ran).</li>
+<li><strong>SoT matrix harvested in R4:</strong> 57 test cases at <code>matrix/sot-testcases.md</code>.</li>
+<li><strong>R4 matrix runtime results:</strong> 28 PASS / 7 FAIL / 3 PARTIAL / 19 NOT VERIFIED.</li>
+<li><strong>Logged R4 defect:</strong> DEFECT-CCS-R4-001 (P2, intentional) — footer bg deliberate divergence; retained in R5.</li>
+</ul>
+<h2>Round 2 Addendum (retained)</h2>
+<p><strong>Date:</strong> 2026-05-15 (Round 2 night shift)
+<strong>Scope:</strong> comm-channels-tab title + Action header copy</p>
+<h2>Source-of-truth + evidence locations</h2>
+<table>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R5 SoT 57-case matrix</td>
+<td><code>Brain Outputs/reports/falcon-eyes/R4-20260515/matrix/sot-testcases.md</code></td>
+</tr>
+<tr>
+<td>R5 audit folder</td>
+<td><code>Brain Outputs/reports/falcon-eyes/R5-20260515-1530/audit/</code></td>
+</tr>
+<tr>
+<td>R5 Save/Cancel audit</td>
+<td><code>Brain Outputs/reports/falcon-eyes/R5-20260515-1530/audit/SAVE_CANCEL_AUDIT.md</code></td>
+</tr>
+<tr>
+<td>R5 report (narrative)</td>
+<td><code>Brain Outputs/reports/organization-hierarchy-tabs-falcon-eyes-repair-2026-05-15/ROUND_5_REPORT.md</code></td>
+</tr>
+<tr>
+<td>Updated scorecards</td>
+<td><code>Brain Outputs/understanding/pages/organization-hierarchy/{PAGE_SCORECARD,VISUAL_PARITY_SCORECARD,NEXT_ACTIONS,IMPLEMENTATION_SCORECARD,TEST_REPORT}.md</code></td>
+</tr>
+<tr>
+<td>Brain SK mirror</td>
+<td><code>Brain SK/outputs/{reports,understanding}/</code></td>
+</tr>
+<tr>
+<td>SoT React source</td>
+<td><code>C:\Falcon\Source_of_truth_theme\React\Falcon-Taha (1)\admin\apps.jsx</code></td>
+</tr>
+<tr>
+<td>Round 3+4 staged consumer code</td>
+<td><code>apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/</code></td>
+</tr>
+<tr>
+<td>Round 4 alert-dialog library</td>
+<td><code>libs/falcon-ui-core/src/components/falcon-alert-dialog{,-tw}/</code>, <code>libs/falcon-ui-core/src/angular-wrapper/components/falcon-alert-dialog/</code></td>
+</tr>
+<tr>
+<td>Wave-15 in-flight (UNSTAGED)</td>
+<td><code>libs/falcon/src/shared-{ui,data-access,types}/lib/...</code> + modified <code>applications-table.component.{ts,html}</code></td>
+</tr>
+</tbody></table>
+</article></body>
+</html>

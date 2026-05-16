@@ -1,5 +1,11 @@
 # falcon-data-table — API
 
+> **Wave 20 (2026-05-15) — Shadow rows API added.** See the dedicated section below for the column-targeted shadow-row API surface.
+>
+> **Wave 21 (2026-05-15) — Shadow row hardening.** Five additive enhancements: dev-mode validation when `targetColumn` doesn't resolve (FU-02), per-`<th>` ResizeObserver hardening (FU-03), `(shadowRowDeleteRequest)` convenience output (FU-04 re-scoped), sticky-actions + shadow row precedence (FU-05), and i18n-able aria-labels (FU-06). All strictly additive — no breaking changes. See the **Wave 21 additions** subsection below.
+
+
+
 ## Selector + import
 
 ```typescript
@@ -206,3 +212,123 @@ Inherits everything from `<falcon-table-tw>`:
 - Per-`<tr>` `aria-selected` when selection is active
 - Row-action button labelled per row
 - The row-action menu is `<falcon-angular-menu>` (Falcon menu primitive with its own a11y)
+
+---
+
+## Shadow rows — column-targeted inline detail rows (Wave 20, 2026-05-15)
+
+> Shadow rows are full-width `<tr>` rows that appear UNDER an expanded parent row. Each shadow row has a small upward-pointing **notch** at its top edge that aligns to a target column header — visually linking the detail strip to a specific column. Multiple shadow rows per parent row are supported. View + edit modes share the same template via a `mode` context value.
+
+### Inputs
+
+| Input | Type | Default | Notes |
+|---|---|---|---|
+| `shadowRows` | `Map<RowKey, ReadonlyArray<ShadowRow>> \| Record<string, ReadonlyArray<ShadowRow>> \| ((row: T) => ReadonlyArray<ShadowRow>) \| null` | `null` | Per-parent-row shadow descriptors. Null/empty = feature OFF (zero render cost). |
+| `expandedShadowRowIds` | `ReadonlyArray<RowKey>` | `[]` | Two-way `[(expandedShadowRowIds)]`. Subset of parent row-ids whose shadows are currently rendered. |
+| `shadowRowModes` | `Map<string, 'view' \| 'edit'>` | new Map() | Two-way `[(shadowRowModes)]`. Composite key `"${rowId}::${shadowId}"` → mode override. |
+| `shadowEditLabel` | `string` | `'Edit'` | i18n-translated label for default trailing-action button (view mode). |
+| `shadowDeleteLabel` | `string` | `'Delete'` | i18n-translated label for default trailing-action button (view mode). |
+| `shadowSaveLabel` | `string` | `'Save'` | i18n-translated label for default trailing-action button (edit mode). |
+| `shadowCancelLabel` | `string` | `'Cancel'` | i18n-translated label for default trailing-action button (edit mode). |
+
+### Outputs
+
+| Output | Payload | When |
+|---|---|---|
+| `expandedShadowRowIdsChange` | `ReadonlyArray<RowKey>` | Chevron toggled → new set of expanded parents |
+| `shadowRowModesChange` | `Map<string, 'view' \| 'edit'>` | Mode mutated via `startEdit()` / `save()` / `cancel()` context callbacks |
+| `shadowRowEdit` | `{ row: T, shadow: ShadowRow }` | Default `Edit` button clicked OR `startEdit()` called from template |
+| `shadowRowDelete` | `{ row: T, shadow: ShadowRow }` | Default `Delete` button clicked |
+| `shadowRowSave` | `{ row: T, shadow: ShadowRow, patch?: unknown }` | Default `Save` button clicked OR `save(patch)` called from template |
+| `shadowRowCancel` | `{ row: T, shadow: ShadowRow }` | Default `Cancel` button clicked OR `cancel()` called from template |
+
+### TypeScript types
+
+```ts
+interface ShadowRow {
+  readonly id: string;                     // unique within the parent row
+  readonly targetColumn: string;           // ColumnDef.field key — notch aligns to this column header
+  readonly mode?: 'view' | 'edit';         // default initial mode (overridden by shadowRowModes)
+  readonly data?: unknown;                 // arbitrary payload, available in the template context
+}
+
+interface FalconDataTableShadowContext<T> {
+  readonly row: T;
+  readonly shadow: ShadowRow;
+  readonly mode: 'view' | 'edit';
+  readonly startEdit: () => void;
+  readonly save: (patch?: unknown) => void;
+  readonly cancel: () => void;
+  readonly delete: () => void;
+}
+```
+
+### Projection directives
+
+```ts
+@Directive({ selector: '[falconDataTableShadow]',         standalone: true })
+class FalconDataTableShadowDirective { /* template ref */ }
+
+@Directive({ selector: '[falconDataTableShadowActions]',  standalone: true })
+class FalconDataTableShadowActionsDirective { /* template ref */ }
+```
+
+Template context for both = `FalconDataTableShadowContext<T>` (see above).
+
+If `falconDataTableShadowActions` is NOT projected, the table renders default `Edit/Delete` (view) or `Save/Cancel` (edit) buttons. If it IS projected, the consumer takes full ownership of the action zone.
+
+### Notch / arrow positioning (lib-owned — Wave 20)
+
+- The notch is a CSS triangle (border-trick) rendered ABOVE the shadow row's top edge via `position: absolute; top: calc(-1 * var(--falcon-data-table-shadow-arrow-size))`.
+- `x` is computed by `falcon-table-tw.updateShadowArrowPositions()` after each render — measures the target column header's `getBoundingClientRect()` centre, subtracts the shadow `<td>`'s own left, subtracts half the arrow's `offsetWidth`.
+- Recomputes on: initial mount (sync, then `requestAnimationFrame`), `ResizeObserver` on the table host, `window.resize`.
+- Consumers MUST NEVER hardcode the notch position or render their own indicator — `targetColumn` is the only public contract.
+
+### Internal Stencil DOM contract
+
+| Attribute | Carrier | Purpose |
+|---|---|---|
+| `data-shadow-mount="${rowId}::${shadowId}"` | shadow `<td>` | Body mount-point for the consumer's `[falconDataTableShadow]` template |
+| `data-shadow-actions-mount=""` | actions `<div>` inside shadow `<td>` | Mount-point for the consumer's `[falconDataTableShadowActions]` template (or default buttons) |
+| `data-shadow-mode="view" \| "edit"` | shadow `<td>` | Mode hint readable by the wrapper |
+| `data-shadow-target-column="${field}"` | shadow `<td>` | Column-key the notch aligns to |
+| `data-shadow-arrow=""` | notch `<span>` inside shadow `<td>` | Targeted by `updateShadowArrowPositions` |
+| `data-shadow-arrow-ready=""` | notch `<span>` (post-position) | Set once the arrow has a real `left` value — visibility flip flag |
+| `data-shadow-row-id="${rowId}"` | shadow `<tr>` | Parent row id (string-coerced) |
+| `data-shadow-id="${shadowId}"` | shadow `<tr>` | Shadow descriptor id |
+| `data-shadow-chevron=""` | toggle button in the parent row's actions cell | Selector for E2E tests |
+
+### Stencil events (consumed by the Angular wrapper — not part of the public API)
+
+| Event | Payload | Purpose |
+|---|---|---|
+| `falcon-shadow-toggle` | `{ rowId }` | Chevron clicked |
+| `falcon-shadow-cells-mounted` | `{ shadowMounts: ShadowMount[] }` | Emitted after every render with one entry per `<td data-shadow-mount>` for Angular template projection |
+| `falcon-shadow-action` | `{ rowId, shadowId, action: 'edit' \| 'delete' \| 'save' \| 'cancel' }` | Default trailing-action button clicked |
+| `falcon-shadow-delete-request` *(Wave 21)* | `{ rowId, shadowId, proposedShadowsForRow }` | Convenience event — fires alongside `falcon-shadow-action` when default Delete clicked. Carries proposed-new-shadow-meta array (parent's shadows minus the deleted one). |
+
+---
+
+## Wave 21 additions (2026-05-15) — Shadow row hardening
+
+### New inputs (all opt-in, no breaking changes)
+
+| Input | Type | Default | Notes |
+|---|---|---|---|
+| `shadowChevronAriaLabel` | `string` | `'Toggle row detail'` | i18n-able aria-label for the parent-row chevron toggle. Forwarded to the Stencil `<falcon-table-tw>` element. |
+| `shadowEditAriaLabel` | `string \| null` | `null` | Aria-label override for the default `Edit` button (view mode). When null, falls back to `shadowEditLabel`. |
+| `shadowDeleteAriaLabel` | `string \| null` | `null` | Aria-label override for the default `Delete` button (view mode). When null, falls back to `shadowDeleteLabel`. |
+| `shadowSaveAriaLabel` | `string \| null` | `null` | Aria-label override for the default `Save` button (edit mode). When null, falls back to `shadowSaveLabel`. |
+| `shadowCancelAriaLabel` | `string \| null` | `null` | Aria-label override for the default `Cancel` button (edit mode). When null, falls back to `shadowCancelLabel`. |
+
+### New output
+
+| Output | Payload | When |
+|---|---|---|
+| `shadowRowDeleteRequest` | `{ row: T, shadow: ShadowRow, proposedShadowsForRow: ReadonlyArray<ShadowRow> }` | Default `Delete` button clicked. Fires ALONGSIDE the existing `shadowRowDelete` event — consumer chooses which to wire. The proposed array is the parent's current `shadowRows` minus the deleted one, in the same order. Apply as-is OR ignore and run your own logic. See `DECISION.md` for the rationale (consumer-derived collection state, ownership clarity). |
+
+### Behaviour changes (no API change)
+
+- **FU-02 — Dev-mode validation.** When `ShadowRow.targetColumn` doesn't resolve to a visible `<th data-column-key="…">`, the arrow is now hidden silently AND a single `console.warn` is emitted per `(targetColumn, parentRowId, shadowId)` tuple. Tree-shaken in production via Stencil's `Build.isDev`. Throttled — only ever warns once per misconfigured tuple, even on repeated resizes.
+- **FU-03 — Per-`<th>` ResizeObserver.** The existing host-level ResizeObserver now also observes every visible `<th data-column-key="…">`. Column-width changes (e.g. `width: auto` columns whose async content arrives later) trigger arrow re-positioning with one-frame latency. Uses the SAME ResizeObserver instance — no new allocations. The header set is synced inside `componentDidRender` and cleaned up in `disconnectedCallback`.
+- **FU-05 — Sticky actions + shadow row precedence.** When `[stickyActions]="true"` AND the parent row has trailing actions (`hasRowActions=true` OR `hasShadowRows=true`), each shadow `<tr>` now renders TWO `<td>`s: a main body cell spanning `(totalCols - 1)` (hosts the arrow + consumer template) AND a trailing sticky cell at the inline-end (hosts the default action buttons or projected `falconDataTableShadowActions` template). When `stickyActions=false` OR there are no row actions, the existing single-cell layout is preserved bit-for-bit.

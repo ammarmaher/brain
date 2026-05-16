@@ -1,0 +1,96 @@
+/* ============================================================================
+   TEMPLATE: Stencil light-DOM Tailwind sibling (Falcon UI Core)
+   ============================================================================
+   WHAT: Mirrors the Shadow component 1:1 in Props/Events, but renders into
+         LIGHT DOM (shadow: false) using Tailwind v4 arbitrary-value classes
+         that read the same token contract. The consumer app's Tailwind build
+         compiles these utilities — the component does NOT ship CSS of its own.
+
+   PLACEHOLDERS TO FILL:
+     {{ComponentTagFull}}  → e.g. falcon-empty-state
+     {{ComponentTagTw}}    → e.g. falcon-empty-state-tw
+     {{ComponentKebab}}    → e.g. empty-state
+     {{ComponentPascal}}   → e.g. EmptyState
+     {{TwClass}}           → e.g. FalconEmptyStateTw
+     {{TailwindHelperImports}} → destructured helper names from
+                                 ../../tailwind/{{ComponentKebab}}-tailwind-classes
+     {{PropList}}          → must MATCH the Shadow component Prop-for-Prop
+     {{EventList}}         → must MATCH the Shadow component Event-for-Event
+     {{RenderBody}}        → JSX inside <Host>...</Host>
+
+   SIBLING / COMPANION FILES:
+     - ../{{ComponentTagFull}}/{{ComponentTagFull}}.tsx  (Shadow twin)
+     - ../{{ComponentTagFull}}/{{ComponentKebab}}.types.ts (shared types — DO NOT duplicate)
+     - ../../tailwind/{{ComponentKebab}}-tailwind-classes.ts (class builders)
+
+   RULES:
+     - shadow: false — this is the LIGHT DOM render path.
+     - NO local CSS file — there is no .css companion for this variant.
+     - Import types from the Shadow sibling — never re-declare them here.
+     - Import class-builder helpers from ../../tailwind/ — never inline classes
+       with raw color/size values. Builders centralize token reads so theme
+       swapping changes the Tailwind variant in the same step.
+     - Optional Prop `rootExtraClass` is conventional — lets callers add
+       layout utilities (e.g. min-h-screen) without piercing internals.
+     - Action / content slots use plain <slot name="..."> — works in light DOM
+       because Stencil polyfills slot projection.
+   ============================================================================ */
+
+/*** <{{ComponentTagTw}}> — Light-DOM Stencil web component (Tailwind mode) ***/
+/*** Mirrors <{{ComponentTagFull}}> 1:1 in API. Light DOM consumes consumer Tailwind v4 build. ***/
+
+import { Component, Host, Prop, h } from '@stencil/core';
+import {
+  {{TailwindHelperImports}}
+  /*** Example — delete and replace:
+  falconEmptyStateRootClasses,
+  falconEmptyStateTitleClasses,
+  falconEmptyStateActionClasses,
+  ***/
+} from '../../tailwind/{{ComponentKebab}}-tailwind-classes';
+import type {
+  /*** Pull types from the SHADOW sibling — never duplicate ***/
+  Falcon{{ComponentPascal}}Size,
+} from '../{{ComponentTagFull}}/{{ComponentKebab}}.types';
+
+@Component({
+  tag: '{{ComponentTagTw}}',
+  shadow: false,
+})
+export class {{TwClass}} {
+  /* === PROPS — must match the Shadow component prop-for-prop ============== */
+  {{PropList}}
+  /*** Example — delete and replace:
+  @Prop() iconName?: string;
+  @Prop() titleText: string = '';
+  @Prop({ reflect: true }) size: Falcon{{ComponentPascal}}Size = 'md';
+  ***/
+
+  /*** Caller-supplied class extension on the root. ***/
+  @Prop() rootExtraClass?: string;
+
+  /* === EVENTS — must match the Shadow component event-for-event =========== */
+  {{EventList}}
+
+  render() {
+    /*** Compute class strings ONCE per render via the helper functions.
+         Helpers live in ../../tailwind/{{ComponentKebab}}-tailwind-classes.ts ***/
+    const rootClasses = /*** falconEmptyStateRootClasses({ size: this.size }) ***/ '';
+
+    return (
+      <Host>
+        {{RenderBody}}
+        {/*** Example body — delete and replace:
+        <div
+          class={`${rootClasses} ${this.rootExtraClass ?? ''}`.trim()}
+          data-size={this.size}
+        >
+          <slot></slot>
+        </div>
+        ***/}
+      </Host>
+    );
+  }
+}
+
+/* Generated from strategy v1.0 — 2026-05-14 */

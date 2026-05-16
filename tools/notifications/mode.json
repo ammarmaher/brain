@@ -1,0 +1,9 @@
+﻿{
+    "_meta":  "Notification mode for Falcon Brain voice hooks. voice = full MP3 alerts, silent = beeps only (3 beeps on finished, 1 beep on input-required), mute = no sound at all.",
+    "_allowed":  [
+                     "voice",
+                     "silent",
+                     "mute"
+                 ],
+    "mode":  "mute"
+}

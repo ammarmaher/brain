@@ -22,3 +22,4 @@ Generate compact Markdown/PDF-ready reports with charts, tables, scores, visual 
 - Follow architecture wiki governance.
 - Follow Git auto-sync governance.
 - Do not commit secrets or local-sensitive files.
+- **Never render charts, scorecards, progress bars, gap charts, readiness charts, or capability dashboards inline.** Always delegate visuals to `shared/analytics/data-visualization/SKILL.md` and embed the returned Markdown/Mermaid/SVG fragments. Generated visual files MUST land under `C:\Falcon\Brain Outputs\reports\<report-id>\charts\` — not inside the core skill package.

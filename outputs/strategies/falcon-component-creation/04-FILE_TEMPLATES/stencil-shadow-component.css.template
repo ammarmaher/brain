@@ -1,0 +1,86 @@
+/* ============================================================================
+   TEMPLATE: Shadow-DOM internal styles for <{{ComponentTagFull}}>
+   ============================================================================
+   WHAT: The CSS sibling of the Shadow component. Lives inside the shadow root
+         so selectors are scoped to this component only. Tokens-only — every
+         declaration must read a CSS custom property from the token contract.
+
+   PLACEHOLDERS TO FILL:
+     {{ComponentTagFull}}  → e.g. falcon-empty-state
+     {{ComponentKebab}}    → e.g. empty-state
+     {{TokenPrefix}}       → e.g. --falcon-empty-state
+     {{CssClassRules}}     → rule blocks for .falcon-{{ComponentKebab}}-* parts
+                             and :host([attr=value]) modifier states
+
+   SIBLING FILES:
+     - {{ComponentTagFull}}.tsx      (Shadow component)
+     - ../../falcon-ui-tokens/src/components/{{ComponentKebab}}.tokens.css
+         (declares every {{TokenPrefix}}-* value — DO NOT redeclare here)
+
+   HARD RULES:
+     - NO raw color / size / spacing values — only token reads.
+     - NO Tailwind utilities here — utilities belong in the -tw sibling +
+       tailwind-classes.ts helpers.
+     - NO @apply.
+     - The two @imports at the top are MANDATORY — they pull tailwind reset +
+       base typography into the shadow root.
+     - The .falcon-icon block must remain — font-face propagates from the
+       document but class definitions do NOT cross the shadow boundary, so
+       any icon usage inside this component requires the re-declaration.
+     - Keep `:host { display: block; }` (or replace with another sensible
+       default such as inline-flex) — components have no default display.
+   ============================================================================ */
+
+/* *** <{{ComponentTagFull}}> — internal styles (Shadow DOM)
+       Tokens-only. Override visuals via {{TokenPrefix}}-* — never edit this file. *** */
+
+@import '../../styles/tailwind.css';
+@import '../../styles/base.css';
+
+/* Re-declare the .falcon-icon class chain inside shadow (font-face propagates
+   from document; class definitions do NOT cross the shadow boundary). */
+.falcon-icon {
+  font-family: 'Falcon Icons';
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+:host {
+  display: block;
+}
+
+{{CssClassRules}}
+/* === EXAMPLE BLOCKS — delete and replace with real rules ===================
+
+.falcon-{{ComponentKebab}}-root {
+  display: flex;
+  flex-direction: column;
+  gap: var({{TokenPrefix}}-gap);
+  padding-block: var({{TokenPrefix}}-padding-y);
+  padding-inline: var({{TokenPrefix}}-padding-x);
+}
+
+.falcon-{{ComponentKebab}}-title {
+  margin: 0;
+  color: var({{TokenPrefix}}-title-color);
+  font-family: var({{TokenPrefix}}-font-family);
+  font-size: var({{TokenPrefix}}-title-size);
+  font-weight: var({{TokenPrefix}}-title-weight);
+  line-height: var({{TokenPrefix}}-title-line-height);
+}
+
+=== SIZE / VARIANT EXAMPLES (driven by reflected props) =====================
+
+:host([size='sm']) .falcon-{{ComponentKebab}}-title {
+  font-size: var({{TokenPrefix}}-title-size-sm);
+}
+:host([size='lg']) .falcon-{{ComponentKebab}}-title {
+  font-size: var({{TokenPrefix}}-title-size-lg);
+}
+
+============================================================================ */
+
+/* Generated from strategy v1.0 — 2026-05-14 */

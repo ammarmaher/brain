@@ -1,0 +1,104 @@
+/* ============================================================================
+   TEMPLATE: Falcon UI — Tailwind class-builder helpers for <{{ComponentTagFull}}>
+   ============================================================================
+   WHAT: Pure functions that return Tailwind v4 class strings. Each function
+         corresponds to ONE visual part (root, header, body, action, etc.) and
+         reads ONLY from the token contract via Tailwind arbitrary-value
+         brackets — e.g. `text-[color:var(--falcon-x-color)]`.
+
+   PLACEHOLDERS TO FILL:
+     {{ComponentTagFull}}  → e.g. falcon-empty-state
+     {{ComponentKebab}}    → e.g. empty-state
+     {{ComponentPascal}}   → e.g. EmptyState
+     {{TokenPrefix}}       → e.g. --falcon-empty-state
+
+   CONSUMED BY:
+     - ../components/{{ComponentTagFull}}-tw/{{ComponentTagFull}}-tw.tsx
+       (calls each helper once per render and joins the result)
+
+   TOKEN CONTRACT (SSOT):
+     - ../../../falcon-ui-tokens/src/components/{{ComponentKebab}}.tokens.css
+       Every var() referenced here MUST be declared there.
+
+   RULES:
+     - One exported function per visual part.
+     - Function name: falcon{{ComponentPascal}}<Part>Classes(ctx?).
+     - Return a SPACE-SEPARATED string (Tailwind expects whitespace).
+     - Read tokens via arbitrary-value classes — never inline raw colors.
+       Pattern:
+         text-[color:var({{TokenPrefix}}-color)]
+         text-[length:var({{TokenPrefix}}-size)]
+         font-[family-name:var({{TokenPrefix}}-font-family)]
+         font-[number:var({{TokenPrefix}}-title-weight)]
+         leading-[var({{TokenPrefix}}-line-height)]
+         max-w-[var({{TokenPrefix}}-max-width)]
+         gap-[var({{TokenPrefix}}-gap)]
+         px-[var({{TokenPrefix}}-padding-x)]
+         py-[var({{TokenPrefix}}-padding-y)]
+         mt-[var({{TokenPrefix}}-margin-top)]
+     - Branch on ctx (size/state/variant) by switching the size-bearing class:
+         const sizeClass =
+           ctx.size === 'sm' ? 'text-[length:var({{TokenPrefix}}-x-sm)]'
+           : ctx.size === 'lg' ? 'text-[length:var({{TokenPrefix}}-x-lg)]'
+           : 'text-[length:var({{TokenPrefix}}-x)]';
+     - When a helper takes no ctx, declare `(): string`.
+     - When the helper accepts ctx but ignores it (placeholder for future
+       variants), call `void ctx;` to silence noUnusedParameters.
+     - Re-export shared types at the bottom for convenience consumers.
+   ============================================================================ */
+
+/* ============================================================================
+   Falcon UI — Tailwind class-builder helpers for <{{ComponentTagFull}}>
+   ============================================================================
+   Mirrors the Stencil Shadow component 1:1 in tokens consumed.
+   Token contract: libs/falcon-ui-tokens/src/components/{{ComponentKebab}}.tokens.css
+   ============================================================================ */
+
+import type { Falcon{{ComponentPascal}}Size } from '../components/{{ComponentTagFull}}/{{ComponentKebab}}.types';
+
+
+/*** Root container — layout + padding + gap. ***/
+export function falcon{{ComponentPascal}}RootClasses(ctx: { size: Falcon{{ComponentPascal}}Size }): string {
+  void ctx;
+  return (
+    'flex flex-col items-center justify-center text-center ' +
+    'gap-[var({{TokenPrefix}}-gap)] ' +
+    'py-[var({{TokenPrefix}}-padding-y)] ' +
+    'px-[var({{TokenPrefix}}-padding-x)]'
+  );
+}
+
+
+/*** Example — title block driven by size. Delete or rename per real parts. ***/
+// export function falcon{{ComponentPascal}}TitleClasses(ctx: { size: Falcon{{ComponentPascal}}Size }): string {
+//   const sizeClass =
+//     ctx.size === 'sm'
+//       ? 'text-[length:var({{TokenPrefix}}-title-size-sm)]'
+//       : ctx.size === 'lg'
+//       ? 'text-[length:var({{TokenPrefix}}-title-size-lg)]'
+//       : 'text-[length:var({{TokenPrefix}}-title-size)]';
+//   return (
+//     'm-0 ' +
+//     'text-[color:var({{TokenPrefix}}-title-color)] ' +
+//     'font-[family-name:var({{TokenPrefix}}-font-family)] ' +
+//     'font-[number:var({{TokenPrefix}}-title-weight)] ' +
+//     'leading-[var({{TokenPrefix}}-title-line-height)] ' +
+//     sizeClass
+//   );
+// }
+
+
+/*** Example — slot/action region. ***/
+// export function falcon{{ComponentPascal}}ActionClasses(): string {
+//   return (
+//     'inline-flex items-center justify-center empty:hidden ' +
+//     'gap-[var({{TokenPrefix}}-action-gap)] ' +
+//     'mt-[var({{TokenPrefix}}-action-margin-top)]'
+//   );
+// }
+
+
+/* Re-export size type for callers that already import this module. */
+export type { Falcon{{ComponentPascal}}Size };
+
+/* Generated from strategy v1.0 — 2026-05-14 */

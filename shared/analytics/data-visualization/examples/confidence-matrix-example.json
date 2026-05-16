@@ -1,0 +1,16 @@
+{
+  "chart": "confidence-matrix",
+  "reportId": "2026-05-14-1730-capability-dashboard",
+  "chartId": "capability-confidence",
+  "title": "Capability confidence — Falcon components",
+  "source": "component-capability-upgrade + incremental-scan metadata",
+  "data": [
+    { "id": "CMP-001", "label": "<falcon-button>",       "impact": 5, "confidence": 5 },
+    { "id": "CMP-009", "label": "<falcon-view-toggle>",  "impact": 4, "confidence": 5 },
+    { "id": "CMP-014", "label": "<falcon-data-grid>",    "impact": 5, "confidence": 2 },
+    { "id": "CMP-022", "label": "<falcon-toast>",        "impact": 2, "confidence": 4 },
+    { "id": "CMP-031", "label": "<falcon-rich-editor>",  "impact": 3, "confidence": 1 }
+  ],
+  "options": { "palette": "confidence" },
+  "outputs": ["markdown", "svg"]
+}

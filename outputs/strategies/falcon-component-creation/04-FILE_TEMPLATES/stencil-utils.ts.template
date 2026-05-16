@@ -1,0 +1,118 @@
+/* ============================================================================
+   TEMPLATE: Pure helpers for <{{ComponentTagFull}}>
+   ============================================================================
+   WHAT: Framework-free pure functions shared by the Shadow + Tailwind paths,
+         and (optionally) by the Angular wrapper. Keeps render() small and
+         testable in isolation — no Stencil imports, no DOM, no state.
+
+   PLACEHOLDERS TO FILL:
+     {{ComponentTagFull}}  → e.g. falcon-empty-state
+     {{ComponentKebab}}    → e.g. empty-state
+     {{ComponentPascal}}   → e.g. EmptyState
+
+   DELETE THIS FILE ENTIRELY if the component has no helpers — simple visual
+   components (empty-state, badge, divider) don't need one.
+
+   IMPORTED BY:
+     - {{ComponentTagFull}}.tsx                       (Shadow)
+     - ../{{ComponentTagFull}}-tw/{{ComponentTagFull}}-tw.tsx (Tailwind sibling)
+
+   RULES:
+     - NO `import` from '@stencil/core' — these must be pure functions.
+     - NO DOM access (document, window, HTMLElement).
+     - NO side effects — every function is `f(input) → output`.
+     - Type-import the shared types via `import type { ... }` (zero cost).
+     - Prefer `ReadonlyArray<T>` for inputs and immutable returns.
+     - Wrap-around / boundary edge cases must be covered.
+   ============================================================================ */
+
+/* *** <{{ComponentTagFull}}> — pure helpers shared by Shadow + Tailwind paths *** */
+
+import type {
+  /*** Replace with real types from {{ComponentKebab}}.types.ts ***/
+  // Falcon{{ComponentPascal}}Item,
+  // Falcon{{ComponentPascal}}Mode,
+} from './{{ComponentKebab}}.types';
+
+
+/* === COMMON PATTERNS — keep what you need, delete the rest ================ */
+
+/*** Format a stable child id from a parent uid + a value + a role.
+     Useful for aria-controls / aria-labelledby. ***/
+// export function format{{ComponentPascal}}Id(
+//   uid: string,
+//   value: string | number,
+//   kind: 'trigger' | 'panel',
+// ): string {
+//   return `${uid}-${kind}-${String(value)}`;
+// }
+
+
+/*** Find item index by value. Returns -1 when missing. ***/
+// export function findItemIndex(
+//   items: ReadonlyArray<Falcon{{ComponentPascal}}Item>,
+//   value: string | number | null,
+// ): number {
+//   if (value === null || value === undefined) return -1;
+//   for (let i = 0; i < items.length; i += 1) {
+//     if (items[i].value === value) return i;
+//   }
+//   return -1;
+// }
+
+
+/*** Walk forward/backward from currentIndex, skipping disabled items,
+     wrapping at boundaries. Returns the new index or -1 when empty. ***/
+// export function getNextEnabledIndex(
+//   items: ReadonlyArray<Falcon{{ComponentPascal}}Item>,
+//   currentIndex: number,
+//   direction: 1 | -1,
+// ): number {
+//   if (items.length === 0) return -1;
+//   const len = items.length;
+//   let i = currentIndex;
+//   for (let step = 0; step < len; step += 1) {
+//     i = (i + direction + len) % len;
+//     if (!items[i].disabled) return i;
+//   }
+//   return currentIndex;
+// }
+
+
+/*** First non-disabled index, or -1 / 0 fallback. ***/
+// export function firstEnabledIndex(
+//   items: ReadonlyArray<Falcon{{ComponentPascal}}Item>,
+// ): number {
+//   for (let i = 0; i < items.length; i += 1) {
+//     if (!items[i].disabled) return i;
+//   }
+//   return items.length > 0 ? 0 : -1;
+// }
+
+
+/*** Last non-disabled index, or -1 / last fallback. ***/
+// export function lastEnabledIndex(
+//   items: ReadonlyArray<Falcon{{ComponentPascal}}Item>,
+// ): number {
+//   for (let i = items.length - 1; i >= 0; i -= 1) {
+//     if (!items[i].disabled) return i;
+//   }
+//   return items.length > 0 ? items.length - 1 : -1;
+// }
+
+
+/*** Toggle a value in a readonly array based on a mode discriminant.
+     Mode `single` → at most one entry. Mode `multiple` → any number. ***/
+// export function toggleValue(
+//   current: ReadonlyArray<string | number>,
+//   value: string | number,
+//   mode: Falcon{{ComponentPascal}}Mode,
+// ): ReadonlyArray<string | number> {
+//   const isActive = current.includes(value);
+//   if (mode === 'single') return isActive ? [] : [value];
+//   if (isActive) return current.filter((v) => v !== value);
+//   return [...current, value];
+// }
+
+
+/* Generated from strategy v1.0 — 2026-05-14 */

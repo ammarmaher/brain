@@ -1,5 +1,74 @@
 # falcon-data-table — DECISION
 
+## Wave 22D (2026-05-15) — Shadow rows are Angular-only by design
+
+**Decision:** The shadow-row feature ships as an **Angular-only** capability. The cross-framework showcase originally implied by FU-01 (a single `demos/component-docs/falcon-data-table-shadow-rows.md` reused by Angular + React + Vue demos) is replaced by an Angular-only demo at `demos/angular-playground/src/studio/shadow-rows/shadow-rows-demo.component.ts` (toggled from `app.component.ts`'s view switcher). Cross-framework parity is deferred indefinitely.
+
+**Why Angular-only:**
+
+1. **Projection lives in the Angular wrapper, not in Stencil.** The Stencil base `<falcon-table-tw>` emits structural meta + events (`falcon-shadow-toggle`, `falcon-shadow-action`, `falcon-shadow-delete-request`, `falcon-shadow-cells-mounted`) and renders empty mount-points (`<td data-shadow-cell>`). The actual consumer template projection — the bit that turns a `<ng-template falconDataTableShadow>` into a rendered DOM subtree — uses Angular's `ViewContainerRef.createEmbeddedView` (Strategy E2, see Wave 20 decision). That orchestrator is framework-specific.
+2. **React + Vue would each need their own orchestrator.** A React equivalent in `libs/falcon-ui-react/` would need a portal-style mounter that takes a `RenderFn<{ row, shadow, mode }>` and writes into the mount-point. A Vue equivalent in `libs/falcon-ui-vue/` would need a `<Teleport>`-based mounter with slot props. Both are separate features with their own consumer ergonomics — they cannot be authored from inside the Stencil base.
+3. **Raw events are framework-neutral; templates are not.** React/Vue consumers of `<falcon-table-tw>` CAN consume shadow rows today — they just have to (a) listen for `falcon-shadow-cells-mounted`, (b) imperatively write DOM (or mount a React/Vue tree) into the emitted `<td data-shadow-cell>` element themselves, (c) listen for `falcon-shadow-action` to drive their own state. That is a low-level integration path, not a high-level template-based one. Documented as a path forward, not implemented.
+4. **Scope discipline.** Shipping a high-level React/Vue projection orchestrator is a multi-day feature — equivalent in scope to the Angular projection rewrite that landed in Wave 20. The shadow-row feature itself is complete on its own merits; cross-framework parity is a separate program with its own design + test + token-parity work.
+
+**Implications:**
+
+- The earlier project memory entry `project_falcon_cross_framework_demos_inside_workspace` (which claimed cross-framework demos exist at `apps/demo/{angular,react,vue}/`) is inaccurate — those apps were never committed. Only `demos/angular-playground/` exists today. Memory file marked **SUPERSEDED** in this wave.
+- `libs/falcon-ui-showcase-data/` (cross-framework registry + 28 MD docs) is orphaned scaffolding; if cross-framework demos are revived it can be reused, but it has no consumer today.
+- The Vite + tsconfig alias for `@falcon/ui-core/angular` added in this wave gives `demos/angular-playground/` first-class access to the Angular wrapper layer — future Angular demos that need wrappers (not just raw Stencil tags) can extend this same pattern.
+
+**Status:** **SHIPPED Wave 22D.** Demo verified via `npx vite build` (Angular compiler green for the new component; pre-existing `tsc -b` errors in `main.ts` + `component-docs-panel.component.ts` are unrelated and predate this wave).
+
+---
+
+## Wave 21 (2026-05-15) — Why `(shadowRowDeleteRequest)` over `[(shadowRows)]` two-way binding
+
+**Decision:** The original Wave 20 follow-up FU-04 was "two-way `[(shadowRows)]`". After analysis it was re-scoped to a new convenience output `(shadowRowDeleteRequest)` emitting `{ row, shadow, proposedShadowsForRow }`.
+
+**Why two-way `[(shadowRows)]` is the wrong shape:**
+
+1. **Ownership clarity.** `shadowRows` is consumer-derived collection state — typically produced by a `computed()` over server data, a feature-flag selector, or a service query. The library never "owns" the shadow map; it only reads it as input. Two-way binding implies bidirectional ownership and would conflate sources of truth.
+2. **Mutation semantics.** Stencil receives a STRIPPED meta map (just `{ id, targetColumn, mode }` per shadow). The consumer payload (`data: D`) lives only in the Angular wrapper's input. If the library wrote back into `shadowRows`, the consumer's typed `D` payload would have to round-trip through the meta map — and the wrapper can't reconstruct a `D` it didn't author.
+3. **Three input shapes.** `FalconShadowRowsInput<T>` accepts a `Map`, a `Record`, OR a `(row) => ShadowRow[]` function. There is no canonical "writeable" shape — pushing mutations back through a function-shape input is nonsensical.
+4. **No two-way idiom for derived state.** Angular's two-way binding (`[(x)]="y"`) is a sugar over `[x]="y" (xChange)="y = $event"`. It works well for unidirectionally-owned primitives (selection, expanded ids, mode overrides). It does not work well for derived collections.
+
+**Why `(shadowRowDeleteRequest)` wins:**
+
+1. **Pure event.** The library proposes a new state, the consumer decides whether to apply, transform, persist, or ignore. Side-effects stay on the consumer side.
+2. **Composable with the existing API.** Fires ALONGSIDE the existing `(shadowRowDelete)`. Consumers picking only `(shadowRowDelete)` are unaffected. Consumers wanting the convenience pick up `(shadowRowDeleteRequest)` for zero-ceremony "splice and re-render" patterns.
+3. **No two-way ceremony.** The consumer's signal/observable/setter remains the source of truth. No need to reason about input-write loops or change-detection cycles in the wrapper.
+4. **Symmetric with future extensions.** If a future wave needs `(shadowRowAddRequest)` or `(shadowRowReorderRequest)`, the same pattern composes — each emits the proposed-new-state without taking ownership.
+
+**Status:** **SHIPPED Wave 21.** First consumer follow-up: management-console migration (FDT-SHADOW-FU-07) should adopt `(shadowRowDeleteRequest)` if its data-flow tolerates the optimistic "apply proposal" model.
+
+---
+
+## Wave 20 (2026-05-15) — Shadow rows: ng-template + Strategy E (Strategy E2)
+
+**Decision:** Multi-shadow editable rows use `<ng-template falconDataTableShadow>` + `<ng-template falconDataTableShadowActions>` projected through Strategy E (the same Stencil-emits-mount-points / Angular-creates-EmbeddedViewRef pattern used by the existing cell projection).
+
+**Alternatives considered:**
+
+| Strategy | Why rejected |
+|---|---|
+| **Light-DOM slots (`<slot name="shadow-row-{id}">`)** | Stencil `shadow: false` does NOT auto-redistribute slotted light-DOM children. Wave 14 already had to manually move `slot="row-expansion"` children in `componentDidRender`. Scaling that pattern to N-shadow-rows-per-N-parent-rows multiplies the manual-redistribution complexity. |
+| **`NgComponentOutlet` + per-shadow component class** | Forces every consumer to declare a one-off component per shadow shape. Loses the inline-template ergonomics designers + UI engineers expect. Heavy on `ComponentFactoryResolver` machinery. |
+| **`expandedRowId` (single-shadow row-expansion)** | Already exists. Only supports ONE auxiliary row per parent. The CommChannels & Services scenario needs N scheduled changes per app, each tied to a different column. |
+| **Per-page hand-rolled `<tr>` in app code** | Forbidden — UI/UX rule from `organization-hierarchy/UI_UX_RULES.md` (and standing Falcon library-first rule). Page-level layouts skip token + a11y + i18n. |
+
+**Why Strategy E wins:**
+
+1. Reuses the existing Stencil `falcon-cells-mounted` projection orchestrator pattern — proven in production.
+2. Consumer ergonomics — inline `<ng-template>` with typed context (`row`, `shadow`, `mode`, `startEdit`, `save`, `cancel`, `delete`).
+3. Mode toggling is library-owned (`shadowRowModes` two-way binding) — consumer never has to wire `view` ↔ `edit` button handlers manually unless they want to.
+4. Notch alignment is library-owned (`targetColumn` is the only public contract) — consumers can NEVER produce a misaligned notch.
+5. Tokens cover all visual chrome (9 tokens) — consumers tweak via per-instance host class.
+6. Regression-fenced — `hasShadowRows === false` skips ALL shadow code paths in Stencil (zero overhead for tables that don't use the feature).
+
+**Status:** **READY** for production use. First consumer: admin-console `applications-table` (CommChannels & Services tab on the organization-hierarchy page). management-console migration is pending (FDT-SHADOW-FU-07).
+
+
+
 ## Brain SK final recommendation
 
 ### USE THIS COMPONENT FOR

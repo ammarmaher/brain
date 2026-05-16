@@ -291,3 +291,47 @@ Once UC-W02 + UC-L01 / 02 / 03 / 04 / 05 + UC-W03 land:
 - Eventually: delete `libs/falcon/src/shared-ui/lib/components/falcon-form-field/` (after UC-W05 promotion OR U13 migrate consumers).
 - Eventually: delete `libs/falcon/src/shared-ui/lib/components/falcon-tree-panel/` (after UC-W01 + UC-TP07 convergence).
 - Eventually: deprecate `<falcon-angular-toast>` + `<falcon-angular-dialog>` (kept as substrate while migration adapter lands — UP-3-19).
+
+---
+
+## 8. `<falcon-angular-data-table>` integrates `<falcon-empty-data>` via `[emptyData]` shorthand (Wave 19 / 16th iter, 2026-05-14)
+
+*** Added 2026-05-14 — Strategy v1.0 run `2026-05-14_falcon-empty-data` — Author: Adnan (auto) ***
+
+### `<falcon-angular-data-table>` auto-mounts `<falcon-empty-data>` when `data.length === 0`
+- Source (host): `libs/falcon-ui-core/src/angular-wrapper/components/falcon-data-table/falcon-data-table.component.ts` (672 LOC + new emptyData logic)
+- Source (mount target): `libs/falcon-ui-core/src/angular-wrapper/components/falcon-empty-data/`
+- New input on the data-table: `@Input() emptyData?: FalconEmptyDataConfig`
+- New output on the data-table: `@Output() emptyDataAction = new EventEmitter<void>()`
+- Auto-mount precedence in `syncEmptyView()`:
+  - **Path 1 (precedence)** — `*falconDataTableEmpty` template projected → render that template
+  - **Path 2** — `[emptyData]` config provided + no template → dynamically `createComponent(FalconEmptyDataComponent)`, attach to `ApplicationRef`, mount root into Stencil's empty `<td>`
+  - **Path 3 (fallback)** — plain `emptyMessage` text
+- Chrome management (private methods): `applyEmptyDataChrome(td)` hides `<thead>` via inline `style.display='none'` and zeros `--falcon-data-table-empty-padding-{y,x}` so the themed card sits flush; `restoreEmptyDataChrome()` reverses both on path switches / data return.
+- Instance reuse: component instance is kept across re-renders; `ngOnChanges` patches inputs when the `emptyData` config object reference changes (live-tweak surfaces like the showcase).
+- Layering rule (`[BRAIN-SK]` BUG-2026-05-14-011): `<falcon-empty-data>` lives in `@falcon/ui-core/angular`, NOT `@falcon/shared-ui`, because the data-table (same layer) imports it. Reverse import would cycle.
+
+### Family of three tags
+| Tag | Render path | When to use |
+|---|---|---|
+| `<falcon-empty-data>` | Wrapper — picks via `[useTailwind]` (default `true`) | Default consumer-facing tag |
+| `<falcon-empty-data-tw>` | Tailwind Light-DOM | Token-driven theming with `<falcon-studio>` |
+| `<falcon-angular-empty-data>` | Shadow DOM (scoped CSS in `styles:` array) | When external style isolation matters |
+
+### Visual contract (provenance)
+- Source-of-truth HTML: `Source_of_truth_theme/HTML/Empty Table.html` (extracted from JS bundle `2_0a3fb89d…js` → React `EmptyState` component)
+- Token contract: `libs/falcon-ui-tokens/src/components/empty-data.tokens.css` (~35 CSS vars; registered in `libs/falcon-ui-tokens/src/index.css`)
+- Zero hardcoded literals in either render path — every color / size / spacing resolves via `color-mix()` from Falcon brand tokens
+
+### Replaces / supersedes (within data-table empty-state lineage)
+| Modern (READY) | Replaces |
+|---|---|
+| `<falcon-empty-data>` mounted via `[emptyData]` | ← `<falcon-angular-data-table [emptyMessage]>` plain-text fallback |
+| `<falcon-empty-data>` (canonical) | ← Earlier pre-Wave-19 attempts at empty-state cards inside shared-ui (10th–12th iter, deleted) |
+
+### Adopters
+- `apps/admin-console/.../organization-hierarchy-page/org-hierarchy-page-menu.component.html` — users table now binds `[emptyData]="usersEmptyDataConfig()"` + `(emptyDataAction)="state.onHeaderAddUser()"`; the config is a `computed` signal that re-translates on i18n `langTick` change.
+
+---
+
+_Last updated: 2026-05-14 — Strategy v1.0 — Run: 2026-05-14_falcon-empty-data — Author: Adnan (auto)_

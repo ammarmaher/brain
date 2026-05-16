@@ -85,6 +85,29 @@ Capabilities scored:
 | 58 | send-credentials-popup (legacy bespoke) | ❌ | n/a | n/a | n/a | ⚠ (form inside dialog) | n/a | ❌ | ❌ | ⚠ | ⚠ | ❌ | ❌ | n/a | ❌ (playground only) | ❌ |
 | 59 | falcon-organization-hierarchy-tree-tw | ❌ (Light DOM only) | n/a | n/a | n/a | ❌ | n/a | ❌ | ❌ | ⚠ | ⚠ | ✅ (organization-hierarchy.tokens.css) | ⚠ | ✅ | ❌ (verified zero) | ❌ |
 | 60 | shared-directives (12 directives) | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | ⚠ (FalconFormValidate ignores aria-invalid) | ❌ | ❌ | ⚠ | ✅ | ❌ |
+| 61 | falcon-angular-empty-data | ✅ | n/a | n/a | n/a | ❌ (props-driven; no slot — content is fully tokenized) | n/a | ❌ | ❌ | n/a | ⚠ | ✅ (empty-data.tokens.css, ~35 vars) | ⚠ | ✅ | ✅ (org-hierarchy-page users table) | ❌ |
+
+### Row #61 expanded — `falcon-angular-empty-data`
+
+*** Added 2026-05-14 — Wave 19 / 16th iter — Strategy v1.0 run `2026-05-14_falcon-empty-data` — Author: Adnan (auto) ***
+
+| Column | Value |
+|---|---|
+| Component tag | `<falcon-empty-data>` (wrapper) + `<falcon-empty-data-tw>` (Light) + `<falcon-angular-empty-data>` (Shadow) |
+| Family | empty-state |
+| Dual-render pattern | ✅ Yes (Shadow + Light + Angular wrapper; canonical 3-tag family) |
+| Tokens declared | ✅ Yes (`libs/falcon-ui-tokens/src/components/empty-data.tokens.css`, ~35 CSS vars; registered in `libs/falcon-ui-tokens/src/index.css`) |
+| Angular wrapper | ✅ Yes (`<falcon-angular-empty-data>`) |
+| Status | Shipped (2026-05-14, Wave 19, 16th iter) |
+| Inputs count | **22** (20 Stencil props + `useTailwind` wrapper switch + 4 outer-pad/margin overrides — note: 4 overrides counted in the 20-prop set: padX/padY/marginX/marginY; the remaining 16 prop-pairs total 20 with mode + containerFit) |
+| Outputs | **1** (`actionClick`) |
+| Source location | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-empty-data/` |
+| Layering | `@falcon/ui-core/angular` (NOT `@falcon/shared-ui` — see BUG-2026-05-14-011) |
+| Data-table integration | ✅ Auto-mount via `<falcon-angular-data-table [emptyData]>` shorthand when `data.length === 0` (Path 2 in `syncEmptyView()`) |
+| Production adoption | ✅ `admin-console/organization-hierarchy-page` users table (replaces legacy `[emptyMessage]` plain text) |
+| Theme Studio compatibility | ✅ Full (zero hardcoded literals; every visual property resolves via `color-mix()` from Falcon brand tokens like `--color-falcon-teal-800`) |
+| Showcase | ✅ `apps/host-shell/.../falcon-ui-showcase/library-section/empty-data-section.component.ts` (live-tweak panel: 5 toggles + opacity slider + 8-icon grid + button-size/border segmented + outer-pad/margin sliders + render-path toggle) |
+| Notes | themed empty state for data-tables + pages; full Studio-token compatibility; dual-render canonical; Stencil reserved-name trap fixed via `titleText` suffix (BUG-012) |
 
 ---
 
@@ -146,3 +169,7 @@ Capabilities scored:
 ### Test coverage
 - **Zero** `*.spec.ts` files found alongside any Falcon UI core component.
 - Vitest specs for Strategy E orchestrator (UC-P1-06), Stencil tables (UC-P1-07), and the paginator utils are all flagged as P1 gaps.
+
+---
+
+_Last updated: 2026-05-14 — Strategy v1.0 — Run: 2026-05-14_falcon-empty-data — Author: Adnan (auto)_

@@ -1,0 +1,124 @@
+/* ============================================================================
+   TEMPLATE: Stencil Shadow DOM web component (Falcon UI Core)
+   ============================================================================
+   WHAT: The primary Shadow-DOM Stencil component. Renders inside its own shadow
+         root with isolated styles (sibling .css file). Tokens-only paint —
+         every visual decision flows through CSS custom properties declared in
+         libs/falcon-ui-tokens/src/components/{{ComponentKebab}}.tokens.css.
+
+   PLACEHOLDERS TO FILL:
+     {{ComponentTagFull}}  → e.g. falcon-empty-state
+     {{ComponentKebab}}    → e.g. empty-state          (no falcon- prefix)
+     {{ComponentPascal}}   → e.g. EmptyState
+     {{ShadowClass}}       → e.g. FalconEmptyState
+     {{PropList}}          → @Prop() declarations
+     {{EventList}}         → @Event() declarations    (delete block if none)
+     {{StateList}}         → @State() declarations    (delete block if none)
+     {{RenderBody}}        → JSX inside <Host>...</Host>
+
+   SIBLING FILES NEEDED (same folder):
+     - {{ComponentTagFull}}.css      (from stencil-shadow-component.css.template)
+     - {{ComponentKebab}}.types.ts   (from stencil-types.ts.template)
+     - {{ComponentKebab}}.utils.ts   (optional, from stencil-utils.ts.template)
+
+   COMPANION FILES (other folders):
+     - components/{{ComponentTagFull}}-tw/{{ComponentTagFull}}-tw.tsx
+         (light-DOM Tailwind sibling — same Props API)
+     - tailwind/{{ComponentKebab}}-tailwind-classes.ts
+         (class-builder helpers consumed by the -tw variant)
+     - ../../falcon-ui-tokens/src/components/{{ComponentKebab}}.tokens.css
+         (token contract — SSOT)
+     - angular-wrapper/components/{{ComponentTagFull}}/
+         (dual-render Angular wrapper)
+
+   RULES:
+     - shadow: true (this file)
+     - Tokens-only — never set raw colors / sizes in render()
+     - Use @Element() host! only if you need DOM access (focus mgmt, refs)
+     - Use componentWillLoad() for one-time setup (e.g. generateId)
+     - Emit custom events with namespace prefix: 'falcon-<action>'
+     - All Events MUST set bubbles: true, composed: true to cross shadow boundary
+   ============================================================================ */
+
+/*** <{{ComponentTagFull}}> — Stencil web component (Shadow DOM) ***/
+/*** <ONE-LINE PURPOSE — replace this comment with what the component does>  ***/
+
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  Host,
+  Prop,
+  State,
+  Watch,
+  h,
+} from '@stencil/core';
+// import { generateId } from '../../utils/id';       /*** uncomment if you need a stable uid ***/
+// import { ariaBool } from '../../utils/a11y';       /*** uncomment for aria-expanded etc.  ***/
+// import { /* helpers */ } from './{{ComponentKebab}}.utils';   /*** if you have utils ***/
+import type {
+  /*** Replace with the actual types you export from .types.ts ***/
+  Falcon{{ComponentPascal}}Size,
+} from './{{ComponentKebab}}.types';
+
+@Component({
+  tag: '{{ComponentTagFull}}',
+  styleUrl: '{{ComponentTagFull}}.css',
+  shadow: true,
+})
+export class {{ShadowClass}} {
+  @Element() host!: HTMLElement;
+
+  /* === PROPS ============================================================== */
+  {{PropList}}
+  /*** Example shape — delete and replace with real props:
+  @Prop() iconName?: string;
+  @Prop() titleText: string = '';
+  @Prop({ reflect: true }) size: Falcon{{ComponentPascal}}Size = 'md';
+  @Prop({ reflect: true }) disabled = false;
+  @Prop() ariaLabel?: string;
+  ***/
+
+  /* === STATE ============================================================== */
+  {{StateList}}
+  /*** Example — delete block if not needed:
+  @State() resolvedId = '';
+  ***/
+
+  /* === EVENTS ============================================================= */
+  {{EventList}}
+  /*** Example — delete block if no events:
+  @Event({ eventName: 'falcon-change', bubbles: true, composed: true })
+  falconChange!: EventEmitter<{ value: string | number }>;
+  ***/
+
+  /* === LIFECYCLE ========================================================== */
+  componentWillLoad(): void {
+    /*** Delete block if not needed. Common uses: generateId, normalize Props. ***/
+    // this.resolvedId = generateId('{{ComponentTagFull}}');
+  }
+
+  /* === WATCHERS =========================================================== */
+  /*** Add @Watch('propName') methods here when a prop change needs reaction. ***/
+
+  /* === RENDER ============================================================= */
+  render() {
+    return (
+      <Host>
+        {{RenderBody}}
+        {/*** Example body — delete and replace:
+        <div
+          class="falcon-{{ComponentKebab}}-root"
+          part="root"
+          data-size={this.size}
+        >
+          <slot></slot>
+        </div>
+        ***/}
+      </Host>
+    );
+  }
+}
+
+/* Generated from strategy v1.0 — 2026-05-14 */

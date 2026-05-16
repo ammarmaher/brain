@@ -8,6 +8,7 @@ This package keeps the Brain SK v0.1 governance plus the full merged legacy skil
 | Backend | Backend API source of truth, controller scan, DTO dictionary, gateway map | API understanding and validation/error maps |
 | Full Stack | FE/BE contract mapping, validation sync, PES sync, integration testing | Link UI with backend, end-to-end reports |
 | Shared Bootstrap TouchBase | Repo/tool/Obsidian/Git health, root discovery, incremental scan | Notification, reports, Git sync |
+| Shared / Analytics | Chart, scorecard, gap chart, readiness, capability dashboard rendering for every report | data-visualization |
 
 ## Always-on frontend rules
 For every Angular implementation, load: Angular best-practice behavior, Tailwind-only/no CSS/no SCSS rule, Falcon component-first rule, frontend folder structure governance, component registry lookup, and visual parity when a UI source exists.
@@ -74,6 +75,7 @@ For every Angular implementation, load: Angular best-practice behavior, Tailwind
 | `skills/pes-permission-analysis/SKILL.md` | Full Stack / Shared | Active Specialist | pes-permission-analysis |
 | `skills/react-to-angular/SKILL.md` | Frontend | Active Specialist | react-to-angular |
 | `skills/screenshot-to-angular/SKILL.md` | Frontend | Active Specialist | screenshot-to-angular |
+| `shared/analytics/data-visualization/SKILL.md` | Shared / Analytics | Active Specialist | data-visualization (charts, scorecards, progress bars, gap/readiness charts, capability dashboards for every report) |
 | `skills/task-report-generator/SKILL.md` | Shared | Active Specialist | task-report-generator |
 | `skills/testing-qa/SKILL.md` | Full Stack / Shared | Active Specialist | testing-qa |
 | `skills/validation-rules/SKILL.md` | Full Stack / Shared | Active Specialist | validation-rules |

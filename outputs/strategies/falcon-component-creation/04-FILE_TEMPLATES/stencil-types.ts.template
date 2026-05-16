@@ -1,0 +1,69 @@
+/* ============================================================================
+   TEMPLATE: Public types for <{{ComponentTagFull}}>
+   ============================================================================
+   WHAT: Single SSOT for every TypeScript shape this component exposes —
+         string-union variants (size/mode/state), event detail interfaces,
+         item-list contracts (when applicable).
+
+   PLACEHOLDERS TO FILL:
+     {{ComponentTagFull}}  → e.g. falcon-empty-state
+     {{ComponentPascal}}   → e.g. EmptyState
+
+   IMPORTED BY:
+     - {{ComponentTagFull}}.tsx                      (Shadow)
+     - ../{{ComponentTagFull}}-tw/{{ComponentTagFull}}-tw.tsx (Tailwind sibling)
+     - ../../tailwind/{{ComponentKebab}}-tailwind-classes.ts
+     - ../../angular-wrapper/components/{{ComponentTagFull}}/{{ComponentTagFull}}.component.ts
+       (the Angular wrapper RE-EXPORTS via `export type { ... };` so app code
+        never imports across the @falcon/ui-core boundary at a deep path)
+
+   RULES:
+     - ONE file per component for ALL its types. Never split into
+       size.types.ts / mode.types.ts / item.types.ts etc.
+     - String-union types (not enums) — keeps payloads serializable across
+       the Stencil ↔ Angular boundary without runtime overhead.
+     - Event detail interfaces named Falcon{{ComponentPascal}}<Verb>Detail.
+     - Item-list shapes named Falcon{{ComponentPascal}}Item with a
+       `value: string | number` discriminator.
+     - All members readonly where possible — Stencil treats Props as
+       inputs, mutation is not safe.
+   ============================================================================ */
+
+/*** <{{ComponentTagFull}}> — public types ***/
+
+/* === VARIANT UNIONS ======================================================= */
+
+/*** Example — delete and replace. ***/
+export type Falcon{{ComponentPascal}}Size = 'sm' | 'md' | 'lg';
+
+// export type Falcon{{ComponentPascal}}Mode = 'single' | 'multiple';
+// export type Falcon{{ComponentPascal}}Status = 'idle' | 'loading' | 'error';
+
+
+/* === ITEM SHAPES (delete if not collection-based) ========================= */
+
+// export interface Falcon{{ComponentPascal}}Item {
+//   readonly value: string | number;
+//   readonly label: string;
+//   readonly icon?: string;
+//   readonly description?: string;
+//   readonly disabled?: boolean;
+// }
+
+
+/* === EVENT DETAILS (delete if no events) ================================== */
+
+// export interface Falcon{{ComponentPascal}}ChangeDetail {
+//   readonly value: string | number;
+// }
+
+// export interface Falcon{{ComponentPascal}}OpenDetail {
+//   readonly value: string | number;
+// }
+
+// export interface Falcon{{ComponentPascal}}CloseDetail {
+//   readonly value: string | number;
+// }
+
+
+/* Generated from strategy v1.0 — 2026-05-14 */

@@ -88,6 +88,41 @@ The composed `<falcon-table-tw>` has `density: 'compact' | 'comfortable' | 'spac
 - The Angular wrapper template has no `*.component.css` rules (per project standard). All styling rides on the Stencil core + per-column `tdClass` / `widthClass` utilities.
 - `falcon-data-table.component.css` does NOT exist (the wrapper has only `.html` and `.ts` — verified). No SCSS contamination.
 
+## Shadow row tokens (Wave 20, 2026-05-15)
+
+The shadow-row feature owns 9 tokens, all prefixed `--falcon-data-table-shadow-*`. Defaults read from the master theme palette so consumers don't need to override anything for a working baseline.
+
+| Token | Default | Role |
+|---|---|---|
+| `--falcon-data-table-shadow-row-bg` | `var(--color-falcon-success-50, #ecfdf5)` | Background of the full-width shadow `<td>`. Reads as a nested green strip. |
+| `--falcon-data-table-shadow-row-divider` | `var(--falcon-data-table-row-divider)` | Top border between the parent row and the first shadow row (and between consecutive shadow rows). |
+| `--falcon-data-table-shadow-row-padding-y` | `20px` | Vertical padding inside the shadow `<td>`. |
+| `--falcon-data-table-shadow-row-padding-x` | `24px` | Horizontal padding inside the shadow `<td>`. |
+| `--falcon-data-table-shadow-arrow-color` | `var(--falcon-data-table-shadow-row-bg)` | The notch triangle's fill — matches the row bg so the notch reads as a continuation of the strip. |
+| `--falcon-data-table-shadow-arrow-size` | `10px` | Half the triangle base AND the visible triangle height (CSS border-trick). Drives both the visual size AND the `top: calc(-1 * <size>)` lift used to position the notch above the cell. |
+| `--falcon-data-table-shadow-arrow-z` | `2` | Stacking order of the notch inside the shadow `<td>` — above the parent row's bottom border, below popovers/modals. **NEW in Wave 20.** |
+| `--falcon-data-table-shadow-chevron-color` | `var(--color-falcon-primary-700, #0d3f44)` | Colour of the toggle chevron in the parent row's actions cell. |
+| `--falcon-data-table-shadow-transition-duration` | `var(--falcon-data-table-transition-duration)` | Duration for chevron rotation + row reveal. |
+
+### Per-instance override pattern
+
+```css
+.applications-table {
+  /*** Use neutral-50 instead of success-50 — green doesn't fit this page's hue. ***/
+  --falcon-data-table-shadow-row-bg: var(--color-falcon-neutral-50);
+  /*** Bigger notch for the marketing-pricing scheduled-change UI. ***/
+  --falcon-data-table-shadow-arrow-size: 14px;
+}
+```
+
+### Token usage rule for shadow rows
+
+- The notch alignment is computed at runtime from the column header — there is NO token controlling the notch's `left` offset. Consumers MUST use `ShadowRow.targetColumn` instead.
+- Changing `--falcon-data-table-shadow-arrow-size` automatically updates BOTH the visual size AND the `top` offset (because the class uses `top-[calc(-1*var(--falcon-data-table-shadow-arrow-size))]`).
+- Changing `--falcon-data-table-shadow-arrow-color` independently from `--falcon-data-table-shadow-row-bg` lets the notch read as a distinct chip pointing at the column instead of as a flush continuation.
+
+---
+
 ## Token usage for interaction states (legacy data-table token surface)
 
 | Aspect | Token |

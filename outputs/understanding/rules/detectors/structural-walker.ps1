@@ -162,17 +162,43 @@ $StructuralHandlers = @{
     return $hits
   }
 
-  # R-BE-003: Internal services no gateway — HttpClient base URLs should not point at gateway hostnames
+  # R-BE-003: Internal services no gateway — HttpClient base URLs / typed clients must not point at gateway hostnames.
+  # Anchored on URL string literals + typed-client configuration only; bare word "gateway" in prose/comments is ignored.
   'R-BE-003' = {
     param($Repo, $Rule)
     $hits = @()
     Get-ChildItem $Repo -Recurse -File -Include '*.cs','*.json' -ErrorAction SilentlyContinue | ForEach-Object {
-      $rel = (($_.FullName).Substring($Repo.Length).TrimStart('\','/')) -replace '\\','/'
+      $file = $_
+      $rel = (($file.FullName).Substring($Repo.Length).TrimStart('\','/')) -replace '\\','/'
       if (Test-PathMatches -RelPath $rel -Globs $Rule.scopeExemptPaths) { return }
-      $lines = Get-Content $_.FullName -ErrorAction SilentlyContinue
+      $lines = Get-Content $file.FullName -ErrorAction SilentlyContinue
+      $isJson = $file.Extension -eq '.json'
       for ($i = 0; $i -lt $lines.Count; $i++) {
-        if ($lines[$i] -match '(gateway[-.]|/api/.*-gateway|7038|7256|core-gateway|system-gateway)') {
-          $hits += @{ filePath=$rel; lineNumber=$i+1; lineContent=$lines[$i].Trim(); matchedPattern='gateway URL in internal-service code' }
+        $line = $lines[$i]
+        # Skip pure comment / xmldoc lines in .cs
+        if (-not $isJson -and $line -match '^\s*(//|/\*|\*(?!/))') { continue }
+
+        $matched = $null
+        # 1. URL literal pointing at well-known Falcon gateway hostnames
+        if ($line -match '"https?://[^"]*?(system-api|core-api|platform-api|core-gateway|system-gateway)[^"]*"') {
+          $matched = 'gateway hostname URL'
+        }
+        # 2. URL literal pointing at well-known local gateway ports
+        elseif ($line -match '"https?://[^"]*?:(7038|7256)\b[^"]*"') {
+          $matched = 'gateway local port URL'
+        }
+        # 3. Typed-client setup configuring a Gateway base address
+        elseif ($line -match '\.BaseAddress\s*=\s*new\s+Uri\([^)]*?(gateway|core-api|system-api)' -or
+                $line -match 'AddHttpClient<[^>]+>\(\s*"[^"]*?(Gateway|CoreGateway|SystemGateway)') {
+          $matched = 'HttpClient typed-client points at gateway'
+        }
+        # 4. JSON config key/value naming a Gateway URL field with an actual URL value
+        elseif ($isJson -and $line -match '"[^"]*(Gateway|CoreGateway|SystemGateway)[^"]*(Url|BaseUrl|BaseAddress|Endpoint)[^"]*"\s*:\s*"https?://') {
+          $matched = 'appsettings exposes gateway URL'
+        }
+
+        if ($matched) {
+          $hits += @{ filePath=$rel; lineNumber=$i+1; lineContent=$line.Trim(); matchedPattern=$matched }
         }
       }
     }

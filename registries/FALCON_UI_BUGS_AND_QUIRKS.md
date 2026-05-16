@@ -20,6 +20,9 @@
 | BUG-2026-05-14-007 | Falcon `rounded-md` scale | Naming trap | PENDING | 2026-05-14 |
 | BUG-2026-05-14-008 | `--falcon-*` vs `--color-falcon-*` token names | Naming trap | PENDING | 2026-05-13 |
 | BUG-2026-05-14-009 | `TranslateService.translate()` returns key when not loaded | Quirk | PENDING | 2026-05-13 |
+| BUG-2026-05-14-011 | Library layering: shared-ui ↔ ui-core | Naming trap | PENDING | 2026-05-14 |
+| BUG-2026-05-14-012 | Stencil `@Prop()` reserved HTMLElement names | Naming trap | PENDING | 2026-05-14 |
+| BUG-2026-05-14-013 | Loader-entry chicken-and-egg with Stencil dist (first build) | Quirk | PENDING | 2026-05-14 |
 
 ---
 
@@ -312,6 +315,33 @@ Confirmed identical behavior with AND without consumer-side CSS workaround — c
 
 ---
 
+## BUG-2026-05-14-011 — Library layering: `@falcon/shared-ui` cannot be imported FROM `@falcon/ui-core/angular`
+
+**Severity:** Naming trap (architectural)
+**Status:** PENDING
+
+### Previous state
+- New `<falcon-empty-data>` component placed in `libs/falcon/src/shared-ui/lib/components/falcon-empty-data/`.
+- `<falcon-angular-data-table>` (in `libs/falcon-ui-core/src/angular-wrapper/components/falcon-data-table/`) needs to import it for the `[emptyData]` auto-mount feature.
+- Attempted `import { FalconEmptyDataComponent } from '@falcon/shared-ui'` → circular dependency because `@falcon/shared-ui` already re-exports MANY components FROM `@falcon/ui-core/angular` (data-table, input, button, dropdown, etc.).
+
+### Current state
+- Component is colocated INSIDE `libs/falcon-ui-core/src/angular-wrapper/components/falcon-empty-data/`, sibling of `falcon-data-table`.
+- `@falcon/ui-core/angular` barrel exports it directly.
+- `@falcon/shared-ui` barrel re-exports it FROM `@falcon/ui-core/angular` (one-way dependency: shared-ui depends on ui-core, never the reverse).
+- Consumer API surface is unchanged — `import { FalconEmptyDataComponent } from '@falcon'` still works.
+
+### Rule (going forward)
+- **Layering direction:** `@falcon/ui-core/angular` → `@falcon/shared-ui` → consumer apps.
+- A library component USED BY any `@falcon/ui-core/angular` wrapper MUST live in `@falcon/ui-core/angular`, not in `@falcon/shared-ui`.
+- Use `@falcon/shared-ui` only for components that depend on `@falcon/ui-core/angular` but are NOT themselves depended on by it (e.g., `<falcon-tree-panel>`, `<falcon-node-details-section>`, `<falcon-view-toggle>` — all compose data-table or button but no library wrapper imports them).
+
+### Affected components
+- `<falcon-empty-data>` (initial placement was wrong, corrected)
+- Architectural rule applies to ALL future shared components
+
+---
+
 ## Catalog growth rules
 
 1. Every new bug/quirk discovered during a session MUST be appended here BEFORE the session report is finalized.
@@ -322,4 +352,80 @@ Confirmed identical behavior with AND without consumer-side CSS workaround — c
    - **Bug (HIGH)** — library defect that breaks a feature for ≥1 known consumer
    - **Naming trap** — non-obvious naming that easily produces silent failures
 4. Cross-link every entry to the affected component(s) in `FALCON_COMPONENT_REGISTRY.md`.
+
+---
+
+## BUG-2026-05-14-012 — Stencil reserved HTMLElement prop names silently skip dist emission
+
+**Severity:** Naming trap
+**Status:** PENDING
+**Discovered:** 2026-05-14 (Strategy v1.0 run `2026-05-14_falcon-empty-data`, Wave 19 / 16th iter)
+
+### Previous state
+- New Stencil components declared `@Prop()` names that clash with HTMLElement prototype members — common cases: `title`, `scrollHeight`, `scrollTop`, `scrollLeft`, `id`, `lang`, `dir`, `hidden`, `style`, `tabIndex`, `accessKey`, `draggable`, `contentEditable`.
+- Concrete example: initial `<falcon-empty-data>` draft declared `@Prop() title: string;`.
+- Stencil's compiler emits a build-time warning for these names (e.g. `"The component's prop 'title' is a reserved HTMLElement property"`), but the warning is easy to miss in long build logs.
+- **More dangerous:** Stencil then **silently skips dist emission for the affected component**. The build succeeds, the loader-entry exists, but the runtime element does not register — every usage renders an empty inert custom element with no shadow root and no internals.
+
+### Current state
+- Pre-flight grep added to the strategy v1.0 pitfall catalog (`08-COMMON_PITFALLS`):
+  ```bash
+  grep -nE "@Prop\(\)\s+(title|scrollHeight|scrollTop|scrollLeft|id|lang|dir|hidden|style|tabIndex|accessKey|draggable|contentEditable)[?:!]" libs/falcon-ui-core/src/components/**/*.tsx
+  ```
+- **Rename convention:** suffix with `<noun>Text` (e.g. `titleText`, `bodyText`, `descriptionText`) — already in use by `<falcon-empty-state>` and now by `<falcon-empty-data>`.
+- For `<falcon-empty-data>` specifically, `@Prop() titleText: string = 'No data found';` ships in the canonical Wave 19 / 16th-iter contract.
+
+### Recommended next action
+- Add a Stencil custom-rule plugin (or post-build check script) that fails the build on reserved-name `@Prop()` declarations rather than only warning.
+- Document the full reserved-name list in `protocols/STENCIL_NAMING_GUIDE.md`.
+
+### Affected components
+- `<falcon-empty-data>` family — fixed by renaming `title` → `titleText` in the 16th iter
+- Any future Stencil component declaring `@Prop()` with the names above
+
+### Mitigation rule (going forward)
+- **Pre-flight grep before every new Stencil component lands.**
+- When in doubt, suffix with `Text` / `Value` / `Setting` to disambiguate.
+
+---
+
+## BUG-2026-05-14-013 — Loader-entry chicken-and-egg with Stencil dist on first build
+
+**Severity:** Quirk
+**Status:** PENDING
+**Discovered:** 2026-05-14 (Strategy v1.0 run `2026-05-14_falcon-empty-data`, Wave 19 / 16th iter)
+
+### Previous state
+- New entries in `define-falcon-tw-component.ts`'s `twLoaders` map reference paths like `'../dist/components/falcon-X-tw'`.
+- TypeScript validates the import path **before** Stencil emits the dist on the FIRST build for a brand-new component (the dist file doesn't yet exist).
+- Build fails with: `Module not found: Error: Can't resolve '../dist/components/falcon-empty-data-tw'` (or equivalent).
+- Same trap exists for ANY new dual-render `*-tw` component in the loader-map.
+
+### Current state
+- **One-time bootstrap pattern:**
+  1. Comment out the new line in `twLoaders` map.
+  2. Run `nx build falcon-ui-core` once — Stencil emits the dist for the new component.
+  3. Uncomment the line.
+  4. Rebuild — TypeScript now resolves the import successfully.
+- After the first successful build, the dist persists and subsequent rebuilds work normally.
+
+### Why it happens
+- Stencil's build emits `dist/components/<tag>.js` only AFTER the TypeScript compiler validates every `.ts` file in the build graph.
+- The loader map TypeScript-validates the dist path before Stencil emits it. Pure ordering problem on first build only.
+
+### Recommended next action
+- Add a build-time post-Stencil hook that auto-generates the `twLoaders` entry from `dist/components/*.js` matches — eliminates the manual sync and the chicken-and-egg.
+- Alternatively, mark the import as `import(/* webpackIgnore: true */ '...')` dynamic to defer resolution past TS validation.
+
+### Affected components
+- Any new `*-tw` Light-DOM Stencil component added to `twLoaders` for the first time
+- Concrete instance: `<falcon-empty-data-tw>` (Wave 19 / 16th iter)
+
+### Mitigation rule (going forward)
+- **Document this in the strategy v1.0 `09-FIRST_TIME_BUILD_BOOTSTRAP.md` step.**
+- Reviewer checklist: confirm new `*-tw` entries shipped in a build that succeeded — not just a clean tree where the loader-map was added last.
+
+---
+
+_Last updated: 2026-05-14 — Strategy v1.0 — Run: 2026-05-14_falcon-empty-data — Author: Adnan (auto)_
 5. Recommended next action MUST be concrete (code snippet preferred), not vague.

@@ -1,0 +1,5 @@
+react-pdf build complete
+file: C:\Falcon\Brain Outputs\reports\brain-capability-audit\2026-05-14\BRAIN_BOSS_REPORT.pdf
+bytes: 30681
+pages: 6
+builtAt: 2026-05-14T18:36:13.242Z

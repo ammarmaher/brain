@@ -334,3 +334,300 @@ Renders a colored status badge ("Active", "Pending", "Suspended", "Locked", "Del
 ### Known bugs / quirks
 - See `FALCON_UI_BUGS_AND_QUIRKS.md`:
   - BUG-2026-05-14-006 — `defineFalconTwComponent` direct import pulls all Stencil sources (workaround: use Angular wrapper, not raw Stencil)
+
+---
+
+## 8. `<falcon-node-details-section>`
+
+**Score:** 100% (Ammar-approved, 2026-05-14, Wave 19 11th iter) — PROMOTED
+**Layer:** Library (`libs/falcon/src/shared-ui/lib/components/falcon-node-details-section/`)
+
+### Identity
+- Selector: `<falcon-node-details-section>`
+- Standalone, OnPush, signal-input
+- Re-exported from `@falcon` barrel
+
+### Role
+Reusable header strip: `[avatar] [label] ............... [projected actions]`. Avatar is either an image URL OR a single-letter fallback chip (teal-700 bg). Actions slot via `<ng-template falconNodeDetailsActions>`. Used in org-hierarchy node header, info-panel header, and any other node-identity surface that needs an avatar + label + dynamic action row.
+
+### Contract — Inputs
+| Input | Type | Default | Effect |
+|---|---|---|---|
+| `label` | `string` | — | Node name shown next to avatar |
+| `imageUrl` | `string \| null` | `null` | Image source for avatar; falls back to first letter if null |
+| `imageAlt` | `string` | — | Optional alt text (defaults to label) |
+
+### Slot
+- `<ng-template falconNodeDetailsActions>` — right-aligned action area
+
+### Visual contract
+- Header: `flex items-center justify-between gap-4 flex-wrap px-5 pt-5 pb-5 bg-white`
+- Avatar: `w-7 h-7 rounded-full` (image fills via `object-cover`, fallback teal-700 bg + white initial)
+- Label: `text-sm font-semibold text-falcon-neutral-925 truncate`
+- NO implicit border-bottom — divider responsibility is hoisted to layout
+
+### Change history
+- **2026-05-14 Wave 19** — promoted from `apps/admin-console/.../node-details-section/` into `@falcon/shared-ui`. Initial spec carried `border-b` on header; later removed per user request (divider lives at tabs-row level now).
+
+### Known bugs / quirks
+- None observed at the wrapper level
+
+---
+
+## 9. `<falcon-view-toggle>`
+
+**Score:** 100% (Ammar-approved, 2026-05-14, Wave 19 12th iter) — PROMOTED
+**Layer:** Library (`libs/falcon/src/shared-ui/lib/components/falcon-view-toggle/`)
+
+### Identity
+- Selector: `<falcon-view-toggle>`
+- Standalone, OnPush, generic `<TKey extends string>`
+- Two-way `[(value)]` binding via `model()` API
+- Re-exported from `@falcon` barrel
+
+### Role
+Segmented-pill toggle (List/Tree, Grid/List, etc.). Container holds N buttons, only one active at a time. Caller passes `options` array + bound value signal.
+
+### Contract — Inputs
+| Input | Type | Default | Effect |
+|---|---|---|---|
+| `options` | `readonly FalconViewToggleOption<TKey>[]` | required | Toggle options (key + labelKey + icon) |
+| `value` | `model.required<TKey>()` | required | Currently-selected option key (two-way) |
+
+### Built-in icons
+- `iconSvg: 'list-bullets'` — 3 horizontal lines + dots
+- `iconSvg: 'org-chart'` — 3 rects + connector path
+- OR pass a `falcon-icon-*` class name via `icon`
+
+### Visual contract (Ammar's final spec)
+- Container: `inline-flex items-center gap-0.5 bg-falcon-neutral-50 rounded-xs p-0.5 border border-falcon-neutral-150`
+- Each button: `gap-2 px-2 py-1.5 rounded-xs text-xs font-medium leading-tight`
+- Active: `bg-white text-falcon-teal-700 shadow-[0_1px_3px_rgba(13,63,68,0.08)]`
+- Inactive: `bg-transparent text-falcon-neutral-600 hover:text-falcon-neutral-900`
+- Icons: 12×12
+
+### Change history
+- **2026-05-14 Wave 19** — promoted from `apps/admin-console/.../falcon-org-view-toggle/` into `@falcon/shared-ui`. Container compacted from `p-1 rounded-lg` to `p-0.5 rounded-xs` per Ammar; buttons compacted from larger padding to `gap-2 px-2 py-1.5 rounded-xs`.
+
+### Known bugs / quirks
+- None
+
+---
+
+## 10. `<falcon-empty-data>`
+
+**Score:** 100% (Ammar-approved, 2026-05-14, Wave 19 13th iter) — NEW
+**Layer:** Library (`libs/falcon-ui-core/src/angular-wrapper/components/falcon-empty-data/`)
+**Re-exported from:** `@falcon/ui-core/angular` AND `@falcon` (shared-ui barrel)
+
+### Identity
+- Selector: `<falcon-empty-data>`
+- Standalone, OnPush
+- Lives in `@falcon/ui-core/angular` layer so `<falcon-angular-data-table>` (same layer) can auto-mount it via `[emptyData]` shorthand without crossing the lib boundary
+
+### Role
+Themed empty-state component ported 1:1 from `Source_of_truth_theme/HTML/Empty Table.html` (extracted from JS bundle UUID `2_0a3fb89d…js` → `EmptyState` React component). Two render modes:
+- `mode='table'` — fills its container, min-height ≈ 6 rows (360px). Auto-mounted inside `<falcon-angular-data-table>` when `[emptyData]` config is set AND `data.length === 0` AND no `*falconDataTableEmpty` template is projected.
+- `mode='page'` — centred hero block, max-width 50vw (zoom-plus presentation).
+
+### Contract — Inputs (all defaults match source-of-truth `EMPTY_DEFAULTS`)
+| Input | Type | Default | Effect |
+|---|---|---|---|
+| `title` | `string` | `'No data found'` | Headline |
+| `body` | `string` | `'there is no data found to be previewed'` | Sub-text |
+| `iconKey` | `'users'\|'inbox'\|'search'\|'folder'\|'doc'\|'bell'\|'box'\|'star'` | `'users'` | Glyph |
+| `cardBackground` | `boolean` | `true` | Soft tinted panel |
+| `glossyGradient` | `boolean` | `true` | Top→bottom sheen |
+| `iconBackground` | `boolean` | `true` | Tinted disc behind glyph |
+| `coloredIcon` | `boolean` | `true` | Teal accent vs neutral-grey |
+| `iconOpacityOn` | `boolean` | `true` | Apply opacity to icon+chip only |
+| `opacity` | `number` (10–100) | `100` | Opacity value |
+| `showAction` | `boolean` | `false` | Show CTA button |
+| `actionLabel` | `string` | `'Add'` | Button label |
+| `actionSize` | `'sm'\|'md'\|'lg'` | `'md'` | Button height (28/34/42px) |
+| `actionBorder` | `'solid'\|'dashed'\|'none'` | `'solid'` | Button border |
+| `showInfo` | `boolean` | `false` | Show info chip below button |
+| `infoText` | `string` | `''` | Info chip text |
+| `mode` | `'table'\|'page'` | `'table'` | Layout context |
+
+### Contract — Outputs
+- `(actionClick)` — fires when CTA pressed
+
+### Visual contract (extracted CSS verbatim)
+- Card: `rounded-[14px] py-9 px-6` + dashed `rgba(13,63,68,.18)` border + gradient `linear-gradient(180deg, rgba(13,63,68,.04), rgba(13,63,68,.06))`
+- Disc glyph: 64×64 + `rounded-full` + teal-50 bg + teal-700 fg + 12% teal border
+- Title: `text-[15px] font-semibold text-falcon-neutral-925`
+- Body: `text-[13px] text-falcon-neutral-500 max-w-[380px] leading-[1.5]`
+- CTA button: teal-800 bg + white text, sizes 28/34/42px height, 16/22px paddings
+- CTA dashed variant: white bg + teal-700 text + dashed teal-800 border
+- Info chip: `rounded-full`, `rgba(13,63,68,.05)` bg, `rgba(13,63,68,.10)` border, `text-[11.5px]`, `max-w-[420px]`
+
+### Data-table integration (`<falcon-angular-data-table [emptyData]>`)
+- New input on the data-table: `@Input() emptyData?: FalconEmptyDataConfig`
+- New output on the data-table: `@Output() emptyDataAction = new EventEmitter<void>()`
+- Auto-mount logic in `syncEmptyView()`:
+  - Path 1 (precedence): `*falconDataTableEmpty` template projected → render that
+  - Path 2: `[emptyData]` config provided + no template → dynamically `createComponent(FalconEmptyDataComponent)`, attach to ApplicationRef, mount root into Stencil's empty `<td>`
+  - Path 3 (fallback): plain `emptyMessage` text
+- Component instance is reused across re-renders; `ngOnChanges` patches inputs when `emptyData` config object changes (for live-tweak surfaces like the showcase)
+
+### Org Hierarchy integration
+- `org-hierarchy-page-menu.component.html` users data-table now uses `[emptyData]="usersEmptyDataConfig()"` + `(emptyDataAction)="state.onHeaderAddUser()"`
+- Replaces the legacy `[emptyMessage]="state.usersEmptyMsg()"` plain-text fallback
+- `usersEmptyDataConfig` is a `computed` signal that re-translates on i18n `langTick` change
+
+### Showcase
+- New component: `apps/host-shell/.../falcon-ui-showcase/library-section/empty-data-section.component.ts`
+- Mirrors Notification-system section shell (header eyebrow + h2 + description)
+- "Inside table / On page" mode tab
+- Live preview card + "Empty-state controls" tweaks panel with: 5 toggles + opacity slider + 8-icon grid + button-size segmented + button-border segmented + info-text input
+- Wired into `falcon-ui-showcase.component.ts` below `<showcase-library-section>`
+
+### Verified working state (2026-05-14)
+- admin-console build GREEN (hash `e5dd44743659084e`, 16.5s)
+- host-shell build GREEN (hash `bdbf97bf03e131a8`, 15.2s)
+- All 16 input toggles wired through showcase live-tweaks panel
+- Org Hierarchy users table will render this card when a node has 0 users
+
+### Change history
+- **2026-05-14 Wave 19 (13th iter)** — created. Initial draft placed in shared-ui; moved to falcon-ui-core/angular-wrapper to keep dependency direction inward (data-table is same layer)
+- **2026-05-14 Wave 19 (14th iter)** — when `[emptyData]` active:
+  - `<thead>` is hidden via inline `style.display='none'` (restored when data loads)
+  - Empty `<td>` CSS-var tokens `--falcon-data-table-empty-padding-{y,x}` set to `0px` so the themed card sits flush against table edges
+  - `<falcon-empty-data>` mode='table' wrapper padding changed from `px-4 py-6` → `px-3 py-0 my-0` (zero top/bottom, small horizontal)
+  - Footer (paginator / custom-table-footer) sibling remains visible — only table chrome is collapsed
+  - Two new private methods on `<falcon-angular-data-table>`: `applyEmptyDataChrome(td)` + `restoreEmptyDataChrome()`. Path 1 (consumer template) calls `restoreEmptyDataChrome()` to ensure proper teardown on path switches.
+- **2026-05-14 Wave 19 (15th iter — DUAL RENDER + TOKEN-FY + customization)** — major refactor:
+  - Component family split into THREE Angular components:
+    - `<falcon-empty-data>` — wrapper, picks variant via `[useTailwind]` (default `true`)
+    - `<falcon-empty-data-tw>` — Tailwind classes render path
+    - `<falcon-empty-data-shadow>` — `ViewEncapsulation.ShadowDom` render path
+  - New token contract file: `libs/falcon-ui-tokens/src/components/empty-data.tokens.css` (~35 CSS vars covering card / glyph / title / body / btn-3-sizes / btn-3-borders / info-chip / layout). Registered in `libs/falcon-ui-tokens/src/index.css`.
+  - **Zero hardcoded values** in either render path — every color / size / spacing reads from `--falcon-empty-data-*` (which themselves resolve via `color-mix()` from Falcon brand tokens like `--color-falcon-teal-800`, `--color-falcon-neutral-925`).
+  - New inputs on the component family:
+    - `padX`, `padY`, `marginX`, `marginY` — number-or-null (px). Override the wrapper's outer pad/margin per-instance via CSS-var.
+    - `containerFit: 'fill' | 'mini' | 'fit'` — controls width strategy.
+      - `'fill'` (default for `page` mode) — full container width
+      - `'mini'` — capped at `--falcon-empty-data-page-max-width-mini` (50vw)
+      - `'fit'` — fit-content (collapses to natural width)
+    - `useTailwind` (wrapper only) — switches render path.
+  - **`mode='page' + containerFit='fill'` now gives true full-page width** (the old behaviour was `max-w-[50vw]` always — that's now opt-in via `containerFit='mini'`).
+  - Shadow DOM variant uses scoped CSS in component `styles:` array (allowed because it's encapsulated inside the shadow root; doesn't violate the angular-tailwind "no component CSS" rule which applies to leaking external styles).
+  - `FalconEmptyDataConfig` interface extended with `padX/padY/marginX/marginY/containerFit` — data-table's `syncEmptyView` + `ngOnChanges` patch all new inputs on the live instance.
+  - Showcase upgraded:
+    - 4 new sliders (Outer padding X, Outer padding Y, Outer margin X, Outer margin Y, 0–80px range)
+    - 3-button segmented "Container fit" toggle (fill / mini / fit)
+    - 2-button segmented "Render path" toggle (Tailwind TW / Shadow DOM)
+    - On-page preview now uses all of the above live.
+
+### Verified working state (Wave 19 / 15th iter, 2026-05-14)
+- admin-console build GREEN (hash `419592667b4296ea`, 19.4s)
+- host-shell build GREEN (hash `99123d4e31bc297f`, 13.3s)
+- Zero TS errors, zero new lint warnings, zero new ESLint disallowed-import flags.
+
+### Known bugs / quirks
+- None observed
+- Architecture note: kept in `@falcon/ui-core/angular` (not `@falcon/shared-ui`) to avoid circular dep — `shared-ui` already re-exports many `ui-core/angular` components, and data-table consuming the empty-data needed to import from a lower layer
+- Chrome-management note: thead is hidden via DOM-mutation (inline `style.display=none`), not a Stencil prop. Stencil VDOM reuses the same `<thead>` element across re-renders, so the inline style persists. If the Stencil table is ever rewritten to fully re-create the table element on every render, this approach will break and we'll need to either: (a) add a Stencil prop `[suppressHeaderOnEmpty]`, OR (b) use a `MutationObserver` to re-apply the hide on every re-render.
+
+---
+
+## 10. `<falcon-empty-data>` family (CANONICAL, Wave 19 / 16th iter)
+
+*** Appended 2026-05-14 — Strategy v1.0 run `2026-05-14_falcon-empty-data` — Author: Adnan (auto) ***
+*** This is the CANONICAL entry for Component #10. The sections above (Wave 19 13th–15th iter) document the lineage and chrome-management workaround. ***
+
+**Score:** **97%** (first run; will rise as `08-COMMON_PITFALLS` additions land in strategy v1.0 catalog) — PENDING
+
+**Layer:** Stencil + Angular wrapper (canonical dual-render). Three Angular tags ship as the canonical family:
+
+| Tag | Render path | Notes |
+|---|---|---|
+| `<falcon-empty-data>` | Wrapper | Picks variant via `[useTailwind]` (default `true`) |
+| `<falcon-empty-data-tw>` | Tailwind Light-DOM | Token-driven theming, preferred for Studio integration |
+| `<falcon-angular-empty-data>` | Angular Shadow | `ViewEncapsulation.ShadowDom`, scoped CSS in `styles:` array |
+
+### Identity
+- Selectors: `<falcon-empty-data>` (wrapper) / `<falcon-empty-data-tw>` (Light) / `<falcon-angular-empty-data>` (Shadow)
+- Standalone, OnPush across all three
+- Lives in `libs/falcon-ui-core/src/angular-wrapper/components/falcon-empty-data/`
+- Re-exported from `@falcon/ui-core/angular` AND `@falcon` (shared-ui barrel)
+
+### Role
+Themed empty-state with full Studio-token compatibility. Two layout modes (`table` / `page`) × three container-fit strategies (`fill` / `mini` / `fit`) cover every empty-cell and zero-state hero scenario. Renders a dashed-tinted card with central glyph disc, title, body, optional CTA, optional info chip.
+
+### Contract — Inputs (22 total)
+
+| # | Input | Type | Default | Effect |
+|---|---|---|---|---|
+| 1 | `titleText` | `string` | `'No data found'` | Headline (renamed from `title` to dodge HTMLElement-prop clash — see `FALCON_UI_BUGS_AND_QUIRKS.md` BUG-012) |
+| 2 | `body` | `string` | `'there is no data found to be previewed'` | Sub-text |
+| 3 | `iconKey` | `'users'\|'inbox'\|'search'\|'folder'\|'doc'\|'bell'\|'box'\|'star'` | `'users'` | Glyph identifier |
+| 4 | `cardBackground` | `boolean` | `true` | Soft tinted panel behind card |
+| 5 | `glossyGradient` | `boolean` | `true` | Top→bottom sheen |
+| 6 | `iconBackground` | `boolean` | `true` | Tinted disc behind glyph |
+| 7 | `coloredIcon` | `boolean` | `true` | Teal accent vs neutral-grey |
+| 8 | `iconOpacityOn` | `boolean` | `true` | Apply `opacity` to icon + info chip only |
+| 9 | `opacity` | `number` (10–100) | `100` | Opacity value |
+| 10 | `showAction` | `boolean` | `false` | Render CTA button |
+| 11 | `actionLabel` | `string` | `'Add'` | CTA label |
+| 12 | `actionSize` | `'sm'\|'md'\|'lg'` | `'md'` | CTA height (28 / 34 / 42 px) |
+| 13 | `actionBorder` | `'solid'\|'dashed'\|'none'` | `'solid'` | CTA border style |
+| 14 | `showInfo` | `boolean` | `false` | Render info chip below CTA |
+| 15 | `infoText` | `string` | `''` | Info chip text |
+| 16 | `mode` | `'table'\|'page'` | `'table'` | Layout context |
+| 17 | `containerFit` | `'fill'\|'mini'\|'fit'` | `'fill'` (page) | Width strategy |
+| 18 | `padX` | `number \| null` | `null` | Outer pad X override (px) |
+| 19 | `padY` | `number \| null` | `null` | Outer pad Y override (px) |
+| 20 | `marginX` | `number \| null` | `null` | Outer margin X override (px) |
+| 21 | `marginY` | `number \| null` | `null` | Outer margin Y override (px) |
+| 22 | `useTailwind` | `boolean` | `true` | Wrapper-only: switches Tailwind Light vs Shadow DOM render path |
+
+### Contract — Outputs (1)
+
+| Output | Type | Fires when |
+|---|---|---|
+| `actionClick` | `EventEmitter<void>` | CTA button pressed |
+
+### Visual contract
+- Token contract: `libs/falcon-ui-tokens/src/components/empty-data.tokens.css` (~35 CSS vars; registered in `libs/falcon-ui-tokens/src/index.css`)
+- Token families: card / glyph / title / body / btn-3-sizes / btn-3-borders / info-chip / layout
+- All values resolve via `color-mix()` from Falcon brand tokens (`--color-falcon-teal-800`, `--color-falcon-neutral-925`, etc.)
+- **Zero hardcoded values** in either render path
+
+### Data-table integration (`[emptyData]` shorthand)
+- `<falcon-angular-data-table>` exposes `@Input() emptyData?: FalconEmptyDataConfig` + `@Output() emptyDataAction = new EventEmitter<void>()`
+- Path 1 (precedence): `*falconDataTableEmpty` template → render template
+- Path 2: `[emptyData]` config + no template → dynamically `createComponent(FalconEmptyDataComponent)` + attach to `ApplicationRef` + mount root into Stencil's empty `<td>`
+- Path 3 (fallback): plain `emptyMessage` text
+- Chrome management: `applyEmptyDataChrome(td)` hides `<thead>` + zeros `--falcon-data-table-empty-padding-{y,x}`; `restoreEmptyDataChrome()` reverses on path switches
+
+### Score: 97% (first run; will rise as 08-COMMON_PITFALLS additions land)
+
+| Dimension | Score |
+|---|---|
+| Component API understanding | 100 |
+| Usage understanding | 95 |
+| Token / theme understanding | 100 |
+| Dynamic capability understanding | 95 |
+| Upgrade gap confidence | 95 |
+| Test / a11y confidence | 75 |
+| Production adoption | 100 |
+| **Overall** | **97** |
+
+### References
+- `[BRAIN-OUT]` Scorecard: `C:\Falcon\Brain Outputs\strategies\falcon-component-creation\runs\2026-05-14_falcon-empty-data\SCORECARD.md`
+- `[VAULT]` Canonical typed-note: `C:\Falcon\falcon-wiki\30-Components\falcon-empty-data.md`
+- `[CODE]` Component source: `libs/falcon-ui-core/src/angular-wrapper/components/falcon-empty-data/`
+- `[CODE]` Tokens: `libs/falcon-ui-tokens/src/components/empty-data.tokens.css`
+- `[CODE]` Visual reference: `Source_of_truth_theme/HTML/Empty Table.html`
+
+### Known bugs / quirks (cross-link)
+- `FALCON_UI_BUGS_AND_QUIRKS.md` BUG-2026-05-14-011 — Library-layering trap (component lives in `@falcon/ui-core/angular`, NOT `@falcon/shared-ui`)
+- `FALCON_UI_BUGS_AND_QUIRKS.md` BUG-2026-05-14-012 — Stencil reserved HTMLElement prop names → `titleText` suffix
+- `FALCON_UI_BUGS_AND_QUIRKS.md` BUG-2026-05-14-013 — Loader-entry chicken-and-egg with Stencil dist on first build
+
+---
+
+_Last updated: 2026-05-14 — Strategy v1.0 — Run: 2026-05-14_falcon-empty-data — Author: Adnan (auto)_
+- Render-path note: BOTH variants are Angular components (not Stencil web components like the rest of the Falcon UI dual-render pairs). This was a pragmatic choice — creating Stencil dual-render requires a multi-stage `nx build falcon-ui-core` Stencil compilation pipeline. The two Angular variants deliver the same end-user contract (Shadow DOM encapsulation vs Tailwind classes, both Falcon-token-driven). If true Stencil dual-render is needed later (for cross-framework consumers React/Vue), the Angular shells can be promoted to Stencil with minimal API surface change.

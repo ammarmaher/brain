@@ -1,0 +1,22 @@
+{
+  "chart": "readiness",
+  "reportId": "2026-05-14-1730-module-readiness",
+  "chartId": "module-readiness",
+  "title": "Module readiness — May 2026",
+  "subtitle": "Per Falcon module, weighted PRD + backend + frontend + tests",
+  "source": "PRD knowledge + incremental scan metadata + test-case-authoring",
+  "data": [
+    { "label": "Account Management", "value": 92.0 },
+    { "label": "Charging",            "value": 74.5 },
+    { "label": "Provisioning",        "value": 61.0 },
+    { "label": "Auth",                "value": 88.0 },
+    { "label": "Notifications",       "value": 41.0 }
+  ],
+  "options": {
+    "palette": "readiness",
+    "unit": "%",
+    "max": 100,
+    "showValues": true
+  },
+  "outputs": ["markdown", "mermaid", "svg"]
+}

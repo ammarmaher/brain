@@ -186,6 +186,42 @@
     },
     "scanReportFieldsRequired": ["lastEditedBy","lastEditedAt","changedFilesSinceLastScan","status","scanReason","skipReason"]
   },
+  "analytics": {
+    "_comment": "Configuration for shared/analytics/data-visualization/SKILL.md — used by every report writer and the PDF Skills Suite.",
+    "dataVisualization": {
+      "enabled": true,
+      "skillPath": "C:/Falcon/Brain SK/shared/analytics/data-visualization/SKILL.md",
+      "templatesDir": "C:/Falcon/Brain SK/shared/analytics/data-visualization/templates",
+      "renderersDir": "C:/Falcon/Brain SK/shared/analytics/data-visualization/renderers",
+      "schemaDoc": "C:/Falcon/Brain SK/shared/analytics/data-visualization/SCHEMA.md",
+      "palettesDoc": "C:/Falcon/Brain SK/shared/analytics/data-visualization/PALETTES.md",
+      "chartCatalog": "C:/Falcon/Brain SK/shared/analytics/data-visualization/CHART_TYPES.md",
+      "outputRoot": "C:/Falcon/Brain Outputs/reports",
+      "chartsSubdir": "charts",
+      "dashboardsSubdir": "dashboards",
+      "supportedCharts": [
+        "bar",
+        "donut",
+        "pie",
+        "scorecard",
+        "metric-grid",
+        "gap-severity",
+        "readiness",
+        "module-comparison",
+        "confidence-matrix",
+        "progress-bar",
+        "stats-table"
+      ],
+      "defaultPalette": "falcon-default",
+      "allowedOutputs": ["markdown", "mermaid", "svg"],
+      "rules": {
+        "rejectInlineHex": true,
+        "requireSourceCaption": true,
+        "deterministicOutput": true,
+        "neverWriteInsideBrainCore": true
+      }
+    }
+  },
   "gitSync": {
     "enabled": true,
     "brainRepoPath": "C:/Falcon/Brain SK",

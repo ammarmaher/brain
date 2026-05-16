@@ -108,3 +108,32 @@ The 9% gap is dominated by:
 - Live SCSS feature-file migration plan (P0-10 stages gradually).
 
 These are bounded, surfaced gaps — not unknown unknowns.
+
+---
+
+## Per-component first-run scorecards (2026-05-14 onward)
+
+*** Appended 2026-05-14 — Strategy v1.0 ("falcon-component-creation") starts logging per-run scorecards here. Each row references the canonical scorecard file under `Brain Outputs/strategies/falcon-component-creation/runs/<date>_<slug>/SCORECARD.md`. ***
+
+| Component | Run | Score | Strategy | Author | Notes |
+|---|---|---|---|---|---|
+| `<falcon-empty-data>` | `2026-05-14_falcon-empty-data` | **97 / 100** | v1.0 | Adnan (auto) | First-run scorecard. Themed empty-state for data-tables + pages; full Studio-token compatibility; canonical dual-render (3 tags); 22 inputs / 1 output. Will rise as `08-COMMON_PITFALLS` additions land. |
+
+### `<falcon-empty-data>` — rationale (97 / 100)
+
+| Dimension | Score | Rationale |
+|---|---|---|
+| Component API understanding | 100 | All 22 inputs + 1 output documented; defaults match source-of-truth `EMPTY_DEFAULTS`; mode × containerFit matrix enumerated |
+| Usage understanding | 95 | Verified in production (`org-hierarchy-page` users table) + showcase live-tweak panel; 3 worked examples (page hero / data-table auto-mount / Studio custom-control) |
+| Token / theme understanding | 100 | ~35 CSS vars in `empty-data.tokens.css`; zero hardcoded literals; full `color-mix()` resolution from Falcon brand tokens |
+| Dynamic capability understanding | 95 | Render-path toggle via `useTailwind`; `containerFit` strategies; `iconOpacityOn` partial-opacity surfacing; outer-pad/margin per-instance overrides |
+| Upgrade gap confidence | 95 | Three documented pitfalls (BUG-011 / 012 / 013); layering decision recorded; no open gaps blocking adoption |
+| Test / a11y confidence | 75 | No `*.spec.ts` yet (consistent with rest of library); a11y partial (`⚠` — visual-only, no aria-live wiring documented) |
+| Production adoption | 100 | `org-hierarchy-page` users table is live consumer; replaces legacy `[emptyMessage]` text fallback |
+| **Overall** | **97** | Lowest dimension is test/a11y (consistent with library average) |
+
+Reference: `[BRAIN-OUT] C:\Falcon\Brain Outputs\strategies\falcon-component-creation\runs\2026-05-14_falcon-empty-data\SCORECARD.md`
+
+---
+
+_Last updated: 2026-05-14 — Strategy v1.0 — Run: 2026-05-14_falcon-empty-data — Author: Adnan (auto)_

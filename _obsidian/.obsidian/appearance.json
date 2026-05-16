@@ -1,1 +1,8 @@
-{}
+{
+  "enabledCssSnippets": [
+    "falcon-vault"
+  ],
+  "theme": "moonstone",
+  "cssTheme": "Typomagical",
+  "accentColor": ""
+}

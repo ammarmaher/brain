@@ -1,0 +1,14 @@
+{
+  "name": "brain-boss-report-builder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "react-pdf builder for BRAIN_BOSS_REPORT.pdf (Ammar Brain capability audit 2026-05-14)",
+  "scripts": {
+    "build": "node build-pdf.mjs"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^4.0.0",
+    "react": "^18.3.1"
+  }
+}
