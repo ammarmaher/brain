@@ -44,6 +44,7 @@ Every task in Brain SK routes through the Learning-First Task Routing protocol b
 | UI is done, link backend | Full Stack | backend API understanding, FE/BE contract mapping, validation sync, integration tests |
 | Generate report | Shared | task-report-generator, data-visualization (analytics), PDF/report skill |
 | Chart / scorecard / progress bar / gap chart / readiness chart / capability dashboard | Shared / Analytics | data-visualization |
+| `review this PR` · `check this pull request` · `review teammate work` · `inspect branch changes` · `compare branch with main` · `validate PR against PRD/wiki` · `check if this implementation is correct` · `review before merge` | Full Stack | **pr-review-governance** (canonical: `skills/pr-review-governance/SKILL.md`; full-stack entry: `domains/fullstack/pr-review/SKILL.md`). Review-only — never edits code. SoT order: diff → codebase → wiki → PRD → backend/API → page learning → component knowledge → registries → best practice. Produces 6 review docs under `Brain Outputs/reports/pr-reviews/<PR-or-branch>-<YYYY-MM-DD>/`, classifies findings P0–P3, ends in one decision (APPROVE / APPROVE_WITH_MINOR_NOTES / REQUEST_CHANGES / BLOCK_MERGE / NEEDS_MORE_CONTEXT). Obsidian node: `_obsidian/PR_REVIEW_INDEX.md`. |
 
 ## Manual override
 

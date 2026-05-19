@@ -32,3 +32,18 @@ Full-stack tasks load (in order) from the canonical knowledge root [`Brain Outpu
 4. `understanding/pages/<page-name>/` — full Page Learning System set (14+ files)
 
 Skip Light Learning Intake only if the task touches neither a page nor a component. Otherwise mode 1 of the [Learning-First Task Routing protocol](../../protocols/LEARNING_FIRST_TASK_ROUTING.md) runs first.
+
+## PR review
+
+When Ammar asks to review a pull request or branch (`review this PR`, `check this
+pull request`, `review teammate work`, `inspect branch changes`, `compare branch
+with main`, `validate PR against PRD/wiki`, `check if this implementation is
+correct`, `review before merge`), route to the **PR Review Governance Skill**:
+
+- Canonical skill: [`skills/pr-review-governance/SKILL.md`](../../skills/pr-review-governance/SKILL.md)
+- Full-stack domain entry: [`pr-review/SKILL.md`](pr-review/SKILL.md)
+
+The skill is review-only (never edits code), runs the 10-step PR review process,
+classifies findings P0–P3, and produces six review docs under
+`Brain Outputs/reports/pr-reviews/<PR-or-branch>-<YYYY-MM-DD>/` plus a final merge
+decision. Obsidian node: `_obsidian/PR_REVIEW_INDEX.md`.

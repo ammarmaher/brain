@@ -242,6 +242,25 @@ A sister vault exists at `C:\Falcon\falcon-wiki` (Falcon SoT vault). Do not swit
 
 Hard constraints: no edits to `_obsidian/.obsidian/`, Copilot `data.json`, `workspace.json`, plugin config, or any secret file. Obsidian must never become a competing source of truth.
 
+## Permanent Rule: Authorization & Local Auth Knowledge Cluster (Falcon SoT vault)
+
+The authoritative documentation for **how Falcon auth works locally** lives in the sister vault at `C:\Falcon\falcon-wiki\00-MOCs\`. Any session touching Identity, PES, Zitadel, JWT validation, login flows, or test-user provisioning must read the MOC first:
+
+- **`Authorization-Security-MOC.md`** — top-level indexer + the model in one paragraph + standing rules
+- **`Local-Backend-Bring-Up.md`** — single `docker compose up -d` runbook + 2026-05-16 compose patches catalog + recovery
+- **`Local-Test-Users.md`** — the 6 pre-seeded users (3 sys-* + 3 acc-*), all using password `Admin@1234`
+- **`Local-Auth-Recipe.md`** — copy-pasteable login curl (Path A: OTP off, Path B: OTP on) + JWT claim decoder
+- **`PES-Subject-Contract.md`** — non-negotiable rule: PES `g`-rule `obj` MUST be `u:<ZitadelUserId>@<ns>`, never Mongo `_id`. Diagnostic + fix included.
+- Service notes: `50-Services/falcon-core-identity-svc.md` + `50-Services/falcon-core-access-svc.md`
+
+Source-of-truth boundary: those MOCs are the **operational** truth for local auth. The **architectural** truth still lives in `falcon-wiki/Home/Software-Architecture-Design/Security-Architecture.md` + `…/Permissions-&-Authorization-Module-(Policy-Based-Access-Control).md`. The MOCs link out to both; in conflicts the architectural wiki wins per the SoT priority order in `_obsidian/00-Home/AI-Agent-Onboarding.md`.
+
+Trigger phrases that auto-load this cluster:
+- `how do I log in locally?` / `local login` / `local auth`
+- `which test users exist?` / `what's the password?`
+- `PES denies everything` / `silent deny` / `users have no permission`
+- `bring up the backend` / `compose up`
+
 ## Permanent Rule: Learning-First Task Routing
 
 **Brain SK must not jump directly into implementation when the user provides screenshots, source pages, visual bugs, or page instructions. It must first create a Light Learning event and load page/component knowledge before producing any code, plan, or fix.**
@@ -357,3 +376,30 @@ Hard constraints (re-stated for implementation):
 - A session has not loaded enough context until it can answer all 8 verification questions in `IMPLEMENTATION_KNOWLEDGE_MAP.md` ("How to verify a session is correctly grounded").
 - The playbook IS the spec. Drill deeper only when the playbook surfaces a gap or drift.
 - Adding a new flow → add a new file under `understanding/pages/<page>/flows/` + a vault graph node + a row in `IMPLEMENTATION_KNOWLEDGE_MAP.md`.
+
+## Permanent Rule: PR Review Governance
+
+When Ammar asks to review a pull request or branch — `review this PR`, `check this
+pull request`, `review teammate work`, `inspect branch changes`, `compare branch
+with main`, `validate PR against PRD/wiki`, `check if this implementation is
+correct`, `review before merge` — Brain SK MUST route through the **PR Review
+Governance Skill**.
+
+Canonical skill: [`skills/pr-review-governance/SKILL.md`](skills/pr-review-governance/SKILL.md).
+Full-stack domain entry: [`domains/fullstack/pr-review/SKILL.md`](domains/fullstack/pr-review/SKILL.md).
+
+The skill is **review-only** — it never edits implementation code. PR review source
+of truth order: (1) PR diff → (2) project codebase → (3) architecture wiki →
+(4) PRD/business docs → (5) backend/API/DTO understanding → (6) page learning /
+approved patterns → (7) Falcon component knowledge → (8) validation/business/gap
+registries → (9) best practice (only when all above are silent). Conflicts are
+reported as risk/gap, never guessed.
+
+Every review produces six docs (`PR_REVIEW_REPORT.md`, `PR_REVIEW_FINDINGS.md`,
+`PR_REVIEW_CHECKLIST.md`, `PR_REVIEW_RISK_MATRIX.md`, `PR_REVIEW_REQUIRED_FIXES.md`,
+`PR_REVIEW_APPROVAL_DECISION.md`) under
+`Brain Outputs/reports/pr-reviews/<PR-or-branch>-<YYYY-MM-DD>/`, classifies every
+finding P0–P3, and ends in one decision: `APPROVE` / `APPROVE_WITH_MINOR_NOTES` /
+`REQUEST_CHANGES` / `BLOCK_MERGE` / `NEEDS_MORE_CONTEXT` (any P0 → `BLOCK_MERGE`;
+any unresolved P1 → `REQUEST_CHANGES`). The Obsidian graph node is
+`_obsidian/PR_REVIEW_INDEX.md`.

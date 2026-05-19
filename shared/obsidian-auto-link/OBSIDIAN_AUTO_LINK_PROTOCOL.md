@@ -137,6 +137,28 @@ Every time `domains/frontend/page-learning/SKILL.md` runs (Light or Deep), the a
 
 **Hard constraint repeated:** no edits to `_obsidian/.obsidian/`, Copilot `data.json`, plugin workspace files, or any secret file. Page Learning operates on Markdown indexes only.
 
+## PR Review Governance — Obsidian Link Block
+
+Every time the **PR Review Governance Skill** (`skills/pr-review-governance/SKILL.md`)
+produces a review, the auto-link layer must additively refresh:
+
+- `_obsidian/PR_REVIEW_INDEX.md` — the canonical PR-review graph node. Add one row
+  per review (date · PR/branch · target · domains · decision · report folder) and a
+  per-review link block linking the review to:
+  - affected page note(s) — `10-Pages/<Page>.md`
+  - affected component note(s) — `60-Components/<Component>.md`
+  - affected API / DTO — `40-API/` entries / `understanding/backend/<service>/`
+  - related gaps — per-page `GAP_REGISTRY.md` / `70-Gaps/`
+  - related PRD / wiki docs — `15-PRD/` / `35-Architecture/`
+  - the approval decision (`PR_REVIEW_APPROVAL_DECISION.md`)
+- Review report files live at
+  `Brain Outputs/reports/pr-reviews/<PR-or-branch>-<YYYY-MM-DD>/` (mirrored
+  additively into `Brain SK/outputs/reports/pr-reviews/`).
+
+**Hard constraint repeated:** no edits to `_obsidian/.obsidian/`, Copilot
+`data.json`, plugin workspace files, or any secret file. PR-review auto-link
+operates on the Markdown index only and never overwrites prior review rows.
+
 ## Knowledge Graph Vault Structure (2026-05-15)
 
 The Obsidian vault at `C:\Falcon\Brain SK\_obsidian` is organised as the graph/navigation layer over Brain Outputs (the source of truth). Folders:

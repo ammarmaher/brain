@@ -29,6 +29,7 @@ When a task touches Angular/frontend implementation, always apply (in this order
 - `skills/legacy-v7/66-retest-restructure-redraw-enforcement/SKILL.md`
 - `skills/legacy-v7/67-falcon-bundle-performance-architect/SKILL.md`
 - `protocols/legacy-v7/TAILWIND_FIRST_UI_RULES.md`
+- `skills/pr-review-governance/SKILL.md` — **PR Review Governance** (review-only). When a pull request or branch under review contains frontend changes, this skill drives the review and this domain supplies the frontend truth: Falcon component-first rule, dynamic-API usage, Tailwind+tokens-only, folder-structure governance, validation, and visual parity. Trigger phrases: `review this PR`, `check this pull request`, `review teammate work`, `inspect branch changes`, `compare branch with main`, `validate PR against PRD/wiki`, `check if this implementation is correct`, `review before merge`. Produces six review docs under `Brain Outputs/reports/pr-reviews/<PR-or-branch>-<YYYY-MM-DD>/`.
 
 ## Natural commands
 

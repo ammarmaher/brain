@@ -26,3 +26,14 @@ Knowledge root index (read first): [`Brain Outputs/understanding/KNOWLEDGE_ROOT_
 - `C:\Falcon\Brain Outputs\backend-understanding` (pre-canonicalization path; kept for archival provenance only)
 
 Mirror to `C:\Falcon\Brain SK\outputs\understanding\backend\` is additive only (`robocopy /E /XO`; never `/MIR`).
+
+## PR review (backend changes)
+
+When a pull request or branch under review contains backend changes — controllers,
+DTOs, validators, services, gateway routes — the **PR Review Governance Skill**
+(`skills/pr-review-governance/SKILL.md`) drives the review. This domain supplies
+the integration truth: load `understanding/backend/<service>/` so the review can
+check DTO/contract correctness, endpoint/gateway routing, validation authority, and
+error handling. Trigger phrases (`review this PR`, `check this pull request`,
+`review before merge`, …) route through the PR Review Governance Skill; the full
+process lives there.
