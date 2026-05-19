@@ -1,62 +1,49 @@
-# PR Review — Approval Decision — PR #41631
+# PR Review — Approval Decision — PR #41631 (Re-review v2)
 
 ## Decision
 
 | Field | Value |
 |---|---|
-| PR | #41631 |
-| Source branch | `final_template_management_feature` |
-| Target branch | `main` |
-| Repository | `falcon-web-platform-ui` (`C:\Falcon\Falcon\falcon-web-platform-ui`) |
-| PR state | Open (source tip not in `origin/main`) |
+| PR | #41631 — `final_template_management_feature` → `main` |
+| Repository | `C:\Falcon\Falcon\falcon-web-platform-ui` (confirmed canonical) |
+| PR state | Open |
 | **Decision** | **`REQUEST_CHANGES`** |
-| Decided by | Brain SK (pr-review-governance) |
-| Date/time | 2026-05-19T14:35+03:00 |
+| Decided by | Brain SK (pr-review-governance) — re-review v2 |
+| Date/time | 2026-05-19T15:40+03:00 |
+| Review mode | **Silent** — nothing posted to the PR |
 
 ## Decision rationale
 
-Applied decision rules:
-
-- Any P0 → `BLOCK_MERGE` — **no P0 found.**
-- Any unresolved P1 → `REQUEST_CHANGES` — **1 unresolved P1 → decision is `REQUEST_CHANGES`.**
-- Only P2/P3 → `APPROVE_WITH_MINOR_NOTES` / `REQUEST_CHANGES` — not reached.
-- No material issues → `APPROVE` — not reached.
-- Insufficient truth → `NEEDS_MORE_CONTEXT` — not reached (diff fully reviewable; only specific PES/PRD/backend sub-areas are unverified and are tracked as P2, not a global blocker).
-
-| Severity | Count | Effect on decision |
+| Severity | Count | Effect |
 |---|---|---|
-| P0 BLOCKER | 0 | — |
-| P1 MAJOR | 1 | Drives `REQUEST_CHANGES` |
-| P2 MEDIUM | 3 | Recommended fixes / follow-ups |
-| P3 MINOR | 2 | Notes |
+| P0 BLOCKER | 0 | `BLOCK_MERGE` not reached |
+| P1 MAJOR | 1 (F1) | **→ `REQUEST_CHANGES`** |
+| P2 MEDIUM | 5 (F2, F3, F4, B1, B2) | Follow-ups |
+| P3 MINOR | 2 (C1, F5) | Notes |
+| Resolved | 1 (F6) | PrimeNG — canonical repo confirmed |
 
-**Rationale:** The PR delivers a substantial, cleanly-foldered Template Management
-feature with correct Falcon-component usage, no secrets, no SCSS, no hardcoded
-colors, no mock data, and i18n keys added. The single blocking issue is structural:
-the Template Management shared layer (models, mappers, API service, reusable
-sub-components) is duplicated verbatim across `admin-console` and
-`management-console` instead of promoted to `libs/falcon` — `models.ts` is already
-byte-identical between the two copies. Notably the PR *did* correctly place the new
-`falcon-checker-section` component in the library, so the duplication is an
-inconsistency rather than a missing capability and is straightforward to fix. Three
-P2 items (no tests, unverified PES, no PRD) are not individually blocking but should
-be resolved or explicitly accepted as tracked debt.
+Rule applied: *any unresolved P1 → `REQUEST_CHANGES`*. The single P1 is the verbatim
+duplication of the Template Management shared layer across two Nx apps.
 
-## Conditions for approval
+**What changed vs v1:** the decision is the same (`REQUEST_CHANGES`) but better
+grounded. The intelligence engine resolved the v1 repo conflict, retracted a v1
+over-claim (bodyType "bug" → doc conflict), corrected a v1 error (backend
+understanding *does* exist), downgraded the regression risk MED→LOW, and added two
+verified P2 findings (B1 contract conflict, B2 reachability/CORS).
 
-To flip to `APPROVE` / `APPROVE_WITH_MINOR_NOTES`:
+## Conditions to flip to APPROVE
 
-1. **[Required — R1]** De-duplicate the Template Management shared layer into
-   `libs/falcon`; both apps import the single copy.
-2. Confirm `nx build` + `nx lint` green for `admin-console`, `management-console`,
-   `host-shell`, and the `falcon` lib.
-3. P2 items R2–R5 either addressed or explicitly accepted by the team as tracked
-   follow-ups (recommended: at minimum complete R3 — the PES pass — before merge,
-   since checker-level is security-sensitive).
+1. **R1 (required)** — de-duplicate the shared layer into `libs/falcon`.
+2. Confirm `nx build` + `nx lint` green for the 3 apps + `falcon` lib.
+3. Strongly recommended before merge: **R6** (Templates CORS/route — the feature
+   cannot work in the browser without it) and **R3** (PES pass — security-sensitive).
+4. R2, R4, R5, R7 addressed or explicitly accepted as tracked debt.
 
 ## Next action
 
-PR author addresses R1 and confirms build/lint; then re-run the PR Review
-Governance Skill on the updated branch for a follow-up decision. Recommend
-completing the PES pass (R3) before merge given the checker-level / access-registry
-changes.
+Author addresses R1, then re-run the PR Review Governance Skill. B1 should be closed
+by refreshing the backend understanding doc (R5) — that is a Brain knowledge gap,
+not necessarily a PR defect.
+
+> Silent review: this decision is recorded in the report only. Nothing was posted,
+> commented, or attached to PR #41631.

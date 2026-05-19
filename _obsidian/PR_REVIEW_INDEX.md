@@ -15,7 +15,7 @@ decision). Each review is registered here and linked into the knowledge graph.
 
 | Date | PR / branch | Target | Domains | Decision | Report folder |
 |---|---|---|---|---|---|
-| 2026-05-19 | PR #41631 — `final_template_management_feature` | `main` | Frontend (Angular/Nx) | `REQUEST_CHANGES` | `outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/` |
+| 2026-05-19 | PR #41631 — `final_template_management_feature` (re-review v2) | `main` | Frontend (Angular/Nx) | `REQUEST_CHANGES` | `outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/` |
 
 > Add one row per review. After a review, link it below to: affected page ·
 > affected components · affected API/DTO · related gaps · related PRD/wiki docs ·
@@ -23,15 +23,16 @@ decision). Each review is registered here and linked into the knowledge graph.
 
 ## Reviews — link blocks
 
-### PR #41631 `final_template_management_feature` — 2026-05-19
-- Decision: `REQUEST_CHANGES` (0 P0 · 1 P1 · 3 P2 · 2 P3)
-- Repository: `falcon-web-platform-ui` (legacy clone `C:\Falcon\Falcon\falcon-web-platform-ui`)
+### PR #41631 `final_template_management_feature` — 2026-05-19 (re-review v2)
+- Decision: `REQUEST_CHANGES` (0 P0 · 1 P1 · 5 P2 · 2 P3 · 1 resolved) — silent review
+- Repository: `C:\Falcon\Falcon\falcon-web-platform-ui` (**confirmed canonical** 2026-05-19)
 - Scope: 77 files, +5860 / −21 — Template Management feature + checker-level assignment
+- v2 changes: ran intelligence engine (backend cross-check, regression graph, two-pass); resolved repo conflict; F6 (PrimeNG) closed; added B1 (backend doc conflict) + B2 (Templates CORS/reachability); corrected v1 errors
 - Affected page(s): [[Template Management]] (new) · [[User Profile]] / Add User wizard
 - Affected component(s): new `falcon-checker-section` · modified `falcon-multiselect` · feature components `body-type-section`, `body-type-view`, `channel-tabs`, `checker-level-picker`, `unrestricted-banner`, `checker-level-rows`, `template-config-editor`
-- Affected API/DTO: Core Templates gateway (`baseURLCoreTemplatesGateway`) · `template-management-api.service` · `checker-assignment-api.service` · DTOs `checker-assignment.models.ts`, `templates-base.ts`
-- Related gaps: Atlas Wave 4 — "Templates CRUD missing"; new gap candidate — no `understanding/backend/` for Core Templates service
-- Related PRD / wiki: Template Management PRD NOT located (finding F4) · PES Subject Contract (`falcon-wiki/00-MOCs/PES-Subject-Contract.md`) — referenced for F3
+- Affected API/DTO: Core Templates (`baseURLCoreTemplatesGateway`) · `template-management-api.service` · `checker-assignment-api.service` · DTOs `checker-assignment.models.ts`, `templates-base.ts`
+- Related gaps: Atlas Wave 4 — "Templates CRUD missing"; B1 — `understanding/backend/templates/` doc stale vs PR code, needs refresh
+- Related PRD / wiki: Template Management PRD NOT located (F4) · PES Subject Contract (`falcon-wiki/00-MOCs/PES-Subject-Contract.md`) — F3
 - Top blocker: F1/R1 — Template Management shared layer duplicated verbatim across `admin-console` + `management-console`
 - Report: [PR_REVIEW_REPORT.md](../outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/PR_REVIEW_REPORT.md) · [Findings](../outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/PR_REVIEW_FINDINGS.md) · [Checklist](../outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/PR_REVIEW_CHECKLIST.md) · [Risk Matrix](../outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/PR_REVIEW_RISK_MATRIX.md) · [Required Fixes](../outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/PR_REVIEW_REQUIRED_FIXES.md) · [Approval Decision](../outputs/reports/pr-reviews/final_template_management_feature-2026-05-19/PR_REVIEW_APPROVAL_DECISION.md)
 

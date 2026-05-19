@@ -1,31 +1,30 @@
-# PR Review — Required Fixes — PR #41631 (`final_template_management_feature`)
+# PR Review — Required Fixes — PR #41631 (Re-review v2)
 
-> Reviewer: Brain SK · 2026-05-19
-> "Required" = must be resolved before merge. "Recommended" = should be addressed.
+> Reviewer: Brain SK · 2026-05-19 · Silent review.
 
-## Required fixes (block merge until resolved)
+## Required — blocks merge
 
-| # | Severity | File / location | Fix needed | Source rule | Owner | Status |
-|---|---|---|---|---|---|---|
-| R1 | P1 | `apps/admin-console/.../template-management/**` + `apps/management-console/.../template-management/**` | De-duplicate the Template Management shared layer. Move `template-management.models.ts`, `template-management.mappers.ts`, `template-management-api.service.ts`, and the reusable sub-components (`body-type-section`, `body-type-view`, `channel-tabs`, `checker-level-picker`, `unrestricted-banner`) into `libs/falcon` (`shared-data-access` for models/mappers/API, `shared-ui` for components). Each app keeps only its app-specific shell (`template-management.component`, `template-config-editor`, `routes.ts`). | Architecture/structure governance — no duplicated logic; Nx lib boundaries | PR author | open |
+| # | Sev | File / location | Fix | Verify by |
+|---|---|---|---|---|
+| R1 | P1 | `apps/{admin,management}-console/.../template-management/**` | De-duplicate the shared layer — move models, mappers, `template-management-api.service`, and the reusable sub-components into `libs/falcon` (`shared-data-access` + `shared-ui`). Each app keeps only its shell. | One copy in `libs/falcon`; both apps import it; `nx build` green; no duplicate `template-management.models.ts` under `apps/`. **Re-review required.** |
 
-## Recommended fixes (non-blocking)
+## Recommended — non-blocking
 
-| # | Severity | File / location | Fix suggested | Rationale | Status |
-|---|---|---|---|---|---|
-| R2 | P2 | whole PR | Add `*.spec.ts` for `template-form.service`, `template-management.mappers`, `checker-assignment-api.service`, and the permissions/checker step. | 5860 LOC shipped with 0 tests; duplication (R1) raises regression risk. | open |
-| R3 | P2 | `host-shell/.../permissions-privilege-step`, `checker-level-rows`, `checker-assignment-api.service.ts`, `libs/falcon/.../falcon-access.registry.ts` | Run a dedicated PES pass — verify checker-level subject IDs use `u:<ZitadelUserId>@<ns>`, `authorizeResources` keys exist, and the FE-before-BE fallback (per `docs` proposal §1) denies gracefully. | Security/PES correctness not verifiable from diff alone. | open |
-| R4 | P2 | Template Management feature | Locate / link the Template Management PRD so lifecycle, statuses, and maker-checker rules can be confirmed. | Business-rule alignment currently UNVERIFIED; relates to Atlas Wave 4 gap "Templates CRUD missing". | open |
-| R5 | P2 | DTO layer (`checker-assignment.models.ts`, `templates-base.ts`, mappers) | Generate `understanding/backend/` for the Core Templates service and verify FE DTOs match. | No backend contract reference exists for the new gateway. | open |
-| R6 | P3 | `checker-assignment-api.service.ts` | Optionally route `console.error` through a shared logger. | Minor — current logging is acceptable. | open |
-| R7 | P3 | 8 PrimeNG-importing files | Track for PrimeNG removal when this repo adopts the platform-wide migration. | Consistent with this repo today; not blocking. | open |
+| # | Sev | Fix | Notes |
+|---|---|---|---|
+| R2 | P2 | Add specs for `template-form.service`, `template-management.mappers`, `mergeForEdit`/`buildRowsForCreate`, the permissions/checker step. | `mergeForEdit` is even documented "Exported for unit tests" — yet untested. |
+| R3 | P2 | Dedicated PES pass on checker-level + `falcon-access.registry.ts`. | Security-sensitive — advised before merge. |
+| R4 | P2 | Locate / link the Template Management PRD. | Business lifecycle currently unverified. |
+| R5 | P2 | Refresh `Brain Outputs/understanding/backend/templates/` against live `falcon-core-templates-svc` source (`eBodyType.cs` + response DTO files). | Resolves B1. If the doc was stale, no PR change needed. If the PR is wrong, `bodyType === 2` returns zero channels → re-classify to P1. |
+| R6 | P2 | Verify Templates is reachable from the browser — gateway route (`templates-cluster`) or direct host + CORS policy for the web-platform origin. | Resolves B2. The feature cannot work in a deployed browser without this. |
+| R7 | P3 | Make `serializeChannels` order-insensitive (sort `userIds` + channels before `JSON.stringify`). | Resolves C1 — stops spurious unsaved-changes prompts. |
+| R8 | P3 | Optionally route `console.error` through a shared logger. | Minor. |
 
 ## Verification after fixes
 
-| Fix # | How to verify | Re-review needed? |
+| Fix | How to verify | Re-review? |
 |---|---|---|
-| R1 | `libs/falcon` holds one copy of the shared layer; both apps import it; `nx build admin-console management-console` green; no duplicate `template-management.models.ts` under `apps/`. | Yes — re-run PR Review Governance Skill |
-| R2 | `nx test` covers the new services/mappers/step. | Spot-check |
-| R3 | PES pass report confirms subject contract + fallback. | Spot-check |
-| R4 | PRD linked; business rules table in report filled. | Spot-check |
-| R5 | `understanding/backend/<core-templates>/` exists; DTO diff clean. | Spot-check |
+| R1 | Single shared copy in `libs/falcon`; `nx build admin-console management-console` green | Yes — re-run the skill |
+| R5 | `understanding/backend/templates/` refreshed; `bodyType` encoding confirmed | Spot-check |
+| R6 | Browser network tab: Templates call returns 200, no CORS error | Spot-check |
+| R2/R3/R7 | `nx test` green; PES pass report; dirty-tracking no longer order-sensitive | Spot-check |

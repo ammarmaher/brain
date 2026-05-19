@@ -3,67 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PR #41631 Review — final_template_management_feature</title>
+<title>PR #41631 Review v2 — final_template_management_feature</title>
 <style>
-  :root{
-    --bg:#0f1115; --panel:#171a21; --panel2:#1d2129; --line:#2a2f3a;
-    --txt:#e6e8ec; --muted:#9aa3b2; --soft:#c4cad4;
-    --p0:#ef4444; --p1:#f97316; --p2:#f59e0b; --p3:#60a5fa;
-    --pass:#22c55e; --fail:#ef4444; --warn:#f59e0b; --na:#6b7280;
-    --accent:#38bdf8;
-  }
+  :root{--bg:#0f1115;--panel:#171a21;--panel2:#1d2129;--line:#2a2f3a;
+    --txt:#e6e8ec;--muted:#9aa3b2;--soft:#c4cad4;
+    --p0:#ef4444;--p1:#f97316;--p2:#f59e0b;--p3:#60a5fa;
+    --pass:#22c55e;--fail:#ef4444;--warn:#f59e0b;--na:#6b7280;--accent:#38bdf8;}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg);color:var(--txt);line-height:1.55;font-size:15px}
+  body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);
+    color:var(--txt);line-height:1.55;font-size:15px}
   a{color:var(--accent)}
   .wrap{max-width:1180px;margin:0 auto;padding:0 22px 80px}
   header.top{background:linear-gradient(135deg,#1a1f2b,#11141b);border-bottom:1px solid var(--line);
-    padding:30px 0 26px;margin-bottom:6px}
-  .top .wrap{padding-bottom:0}
+    padding:30px 0 26px}
   .eyebrow{color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
-  h1{font-size:26px;margin:6px 0 4px;font-weight:700}
-  .sub{color:var(--soft);font-size:14px}
-  .decision-banner{display:flex;align-items:center;gap:14px;margin-top:18px;
-    background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--p1);
-    border-radius:10px;padding:14px 18px}
-  .decision-banner .big{font-size:20px;font-weight:800;color:var(--p1);letter-spacing:.02em}
+  h1{font-size:25px;margin:6px 0 4px}
+  .sub{color:var(--soft);font-size:13.5px}
+  .silent{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--accent);
+    border:1px solid rgba(56,189,248,.4);background:rgba(56,189,248,.1);border-radius:20px;padding:3px 11px}
+  .decision-banner{display:flex;align-items:center;gap:14px;margin-top:16px;background:var(--panel);
+    border:1px solid var(--line);border-left:5px solid var(--p1);border-radius:10px;padding:14px 18px}
+  .decision-banner .big{font-size:20px;font-weight:800;color:var(--p1)}
   .decision-banner .why{color:var(--muted);font-size:13px}
-  nav.toc{position:sticky;top:0;z-index:5;background:rgba(15,17,21,.93);
-    backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:10px 0}
-  nav.toc .wrap{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:0}
+  nav.toc{position:sticky;top:0;z-index:5;background:rgba(15,17,21,.93);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);padding:10px 0}
+  nav.toc .wrap{display:flex;flex-wrap:wrap;gap:6px}
   nav.toc a{font-size:12.5px;color:var(--soft);text-decoration:none;padding:5px 11px;
     border:1px solid var(--line);border-radius:20px;background:var(--panel)}
   nav.toc a:hover{border-color:var(--accent);color:var(--accent)}
-  section{margin-top:34px}
+  section{margin-top:32px}
   h2{font-size:18px;margin-bottom:4px;padding-bottom:8px;border-bottom:1px solid var(--line);
     display:flex;align-items:center;gap:9px}
-  h2 .n{color:var(--muted);font-size:13px;font-weight:600}
-  h3{font-size:14px;margin:18px 0 8px;color:var(--soft)}
+  h2 .n{color:var(--muted);font-size:13px}
   p.lead{color:var(--muted);font-size:13.5px;margin:8px 0 14px}
-  /* stat cards */
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-  .card .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
-  .card .v{font-size:24px;font-weight:800;margin-top:4px}
-  .card.p0 .v{color:var(--p0)} .card.p1 .v{color:var(--p1)}
-  .card.p2 .v{color:var(--p2)} .card.p3 .v{color:var(--p3)}
-  /* severity pill */
-  .sev{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:5px;
-    letter-spacing:.03em;color:#0b0d11;white-space:nowrap}
-  .sev.P0{background:var(--p0)} .sev.P1{background:var(--p1)}
-  .sev.P2{background:var(--p2)} .sev.P3{background:var(--p3)}
-  /* status pill */
-  .st{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;
-    padding:2px 9px;border-radius:20px;white-space:nowrap}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .card .k{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .card .v{font-size:23px;font-weight:800;margin-top:3px}
+  .card.p0 .v{color:var(--p0)}.card.p1 .v{color:var(--p1)}
+  .card.p2 .v{color:var(--p2)}.card.p3 .v{color:var(--p3)}
+  .sev{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:5px;color:#0b0d11;white-space:nowrap}
+  .sev.P0{background:var(--p0)}.sev.P1{background:var(--p1)}
+  .sev.P2{background:var(--p2)}.sev.P3{background:var(--p3)}.sev.OK{background:var(--pass)}
+  .st{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap}
   .st.pass{background:rgba(34,197,94,.14);color:var(--pass);border:1px solid rgba(34,197,94,.4)}
   .st.fail{background:rgba(239,68,68,.14);color:var(--fail);border:1px solid rgba(239,68,68,.4)}
   .st.warn{background:rgba(245,158,11,.14);color:var(--warn);border:1px solid rgba(245,158,11,.4)}
   .st.na{background:rgba(107,114,128,.16);color:#aab2c0;border:1px solid rgba(107,114,128,.4)}
-  /* finding card */
-  .finding{background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    margin-top:12px;overflow:hidden}
-  .finding>summary{list-style:none;cursor:pointer;padding:13px 16px;display:flex;
-    align-items:center;gap:11px;flex-wrap:wrap}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+  th,td{text-align:left;padding:8px 11px;border:1px solid var(--line);vertical-align:top}
+  th{background:var(--panel2);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft)}
+  code{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;
+    font-size:12.5px;font-family:ui-monospace,Consolas,monospace;color:#d6dbe4}
+  .finding{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:12px;overflow:hidden}
+  .finding>summary{list-style:none;cursor:pointer;padding:13px 16px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
   .finding>summary::-webkit-details-marker{display:none}
   .finding>summary:hover{background:var(--panel2)}
   .finding .fid{font-weight:800;font-size:13px;color:var(--soft)}
@@ -71,550 +64,407 @@
   .finding .chev{color:var(--muted);font-size:12px}
   .finding[open] .chev{transform:rotate(90deg)}
   .fbody{padding:4px 16px 16px;border-top:1px solid var(--line)}
-  .fbody dl{display:grid;grid-template-columns:130px 1fr;gap:6px 14px;margin-top:10px;font-size:13px}
-  .fbody dt{color:var(--muted);font-weight:600}
-  .fbody dd{color:var(--soft)}
-  code{background:var(--panel2);border:1px solid var(--line);border-radius:4px;
-    padding:1px 5px;font-size:12.5px;font-family:ui-monospace,Consolas,monospace;color:#d6dbe4}
-  /* tables */
-  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
-  th,td{text-align:left;padding:8px 11px;border:1px solid var(--line);vertical-align:top}
-  th{background:var(--panel2);color:var(--soft);font-size:12px;text-transform:uppercase;
-    letter-spacing:.05em}
-  tr:nth-child(even) td{background:rgba(255,255,255,.012)}
-  /* checklist groups */
+  .fbody dl{display:grid;grid-template-columns:120px 1fr;gap:6px 14px;margin-top:10px;font-size:13px}
+  .fbody dt{color:var(--muted);font-weight:600}.fbody dd{color:var(--soft)}
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:11px;display:block}
+  .fileref{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--accent)}
+  .codeblock{background:#0b0d11;border:1px solid var(--line);border-left:3px solid var(--p0);border-radius:6px;
+    padding:11px 14px;margin-top:7px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;
+    color:#d6dbe4;overflow-x:auto;white-space:pre}
+  .fix{background:#0b0d11;border:1px solid var(--line);border-left:3px solid var(--pass);border-radius:6px;
+    padding:11px 14px;margin-top:7px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;
+    color:#d6dbe4;overflow-x:auto;white-space:pre}
+  .ev{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:14px}
+  .ev h3{margin:0;color:var(--soft);font-size:14px}
   .grp{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:12px}
-  .grp>.gh{padding:11px 15px;font-weight:700;font-size:13.5px;display:flex;
-    justify-content:space-between;align-items:center;gap:10px}
+  .grp>.gh{padding:11px 15px;font-weight:700;font-size:13.5px;display:flex;justify-content:space-between;gap:10px}
   .grp .gh .mini{font-size:11.5px;color:var(--muted);font-weight:600}
-  .chk{display:flex;gap:10px;padding:8px 15px;border-top:1px solid var(--line);
-    font-size:13px;align-items:flex-start}
+  .chk{display:flex;gap:10px;padding:8px 15px;border-top:1px solid var(--line);font-size:13px;align-items:flex-start}
   .chk .txt{flex:1;color:var(--soft)}
-  /* risk level */
   .risk{font-weight:800;font-size:12px;padding:2px 8px;border-radius:5px;color:#0b0d11}
-  .risk.high{background:var(--p1)} .risk.med{background:var(--p2)}
-  .risk.low{background:var(--pass)}
+  .risk.high{background:var(--p1)}.risk.med{background:var(--p2)}.risk.low{background:var(--pass)}
   .callout{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
     border-radius:8px;padding:13px 16px;margin-top:14px;font-size:13px;color:var(--soft)}
   .callout.warn{border-left-color:var(--warn)}
-  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-  .legend span{font-size:11.5px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
-  footer{margin-top:50px;border-top:1px solid var(--line);padding-top:18px;
-    color:var(--muted);font-size:12px}
-  .filterbar{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-  .filterbar button{background:var(--panel);border:1px solid var(--line);color:var(--soft);
-    font-size:12px;padding:5px 12px;border-radius:20px;cursor:pointer}
-  .filterbar button.active{border-color:var(--accent);color:var(--accent)}
-  .hidden{display:none!important}
+  .callout.good{border-left-color:var(--pass)}
+  footer{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <div class="eyebrow">Brain SK · PR Review Governance Skill</div>
+    <div class="eyebrow">Brain SK · PR Review Governance Skill · Re-review v2</div>
     <h1>PR #41631 — Template Management Feature</h1>
     <div class="sub">
-      <code>final_template_management_feature</code> &rarr; <code>main</code> &nbsp;·&nbsp;
-      Repo <code>falcon-web-platform-ui</code> &nbsp;·&nbsp;
-      77 files, +5860 / &minus;21 &nbsp;·&nbsp;
-      Reviewed 2026-05-19 14:35 +03:00 &nbsp;·&nbsp; PR state: <strong>Open</strong>
+      <code>final_template_management_feature</code> → <code>main</code> ·
+      Repo <code>C:\Falcon\Falcon\falcon-web-platform-ui</code> (canonical, confirmed) ·
+      77 files, +5860 / −21 · Reviewed 2026-05-19 15:40 +03:00 · PR state: <strong>Open</strong>
     </div>
+    <div class="silent">🔒 SILENT REVIEW — nothing posted, commented, or attached to the PR</div>
     <div class="decision-banner">
       <span class="big">REQUEST_CHANGES</span>
-      <span class="why">Mechanical rule: 0 P0, but <strong>1 unresolved P1</strong> &rarr; any unresolved P1 forces REQUEST_CHANGES.</span>
+      <span class="why">0 P0 · <strong>1 unresolved P1</strong> → any unresolved P1 forces REQUEST_CHANGES.</span>
     </div>
   </div>
 </header>
 
-<nav class="toc">
-  <div class="wrap">
-    <a href="#summary">Summary</a>
-    <a href="#scope">Change scope</a>
-    <a href="#findings">Findings (7)</a>
-    <a href="#code">Code evidence</a>
-    <a href="#checklist">Checklist (pass/fail)</a>
-    <a href="#risk">Risk matrix</a>
-    <a href="#fixes">Required fixes</a>
-    <a href="#decision">Decision</a>
-    <a href="#conflict">Conflicts</a>
-  </div>
-</nav>
+<nav class="toc"><div class="wrap">
+  <a href="#summary">Summary</a>
+  <a href="#engine">Intelligence engine</a>
+  <a href="#findings">Findings (9)</a>
+  <a href="#code">Code evidence</a>
+  <a href="#checklist">Checklist</a>
+  <a href="#risk">Risk matrix</a>
+  <a href="#fixes">Fixes</a>
+  <a href="#decision">Decision</a>
+</div></nav>
 
 <div class="wrap">
 
-<!-- ============ SUMMARY ============ -->
 <section id="summary">
   <h2><span class="n">1</span> Summary</h2>
-  <p class="lead">PR #41631 adds a <strong>Template Management</strong> feature to
-  admin-console and management-console, plus a <strong>checker-level assignment</strong>
-  capability in the host-shell Add User wizard, a new <code>falcon-checker-section</code>
-  library component, and an additive extension to <code>falcon-multiselect</code>.</p>
-
+  <p class="lead">Re-review v2 — runs the full intelligence engine and uses the
+  confirmed canonical repo. Template Management feature (admin + management console)
+  + checker-level assignment (host-shell Add User wizard) + new
+  <code>falcon-checker-section</code> library component.</p>
   <div class="cards">
-    <div class="card"><div class="k">Decision</div><div class="v" style="color:var(--p1);font-size:18px">REQUEST_CHANGES</div></div>
-    <div class="card"><div class="k">Files changed</div><div class="v">77</div></div>
-    <div class="card p0"><div class="k">P0 Blocker</div><div class="v">0</div></div>
-    <div class="card p1"><div class="k">P1 Major</div><div class="v">1</div></div>
-    <div class="card p2"><div class="k">P2 Medium</div><div class="v">3</div></div>
-    <div class="card p3"><div class="k">P3 Minor</div><div class="v">3</div></div>
-  </div>
-
-  <div class="legend">
-    <span><span class="sev P0">P0</span> breaks build / security / runtime</span>
-    <span><span class="sev P1">P1</span> major mismatch / wrong structure</span>
-    <span><span class="sev P2">P2</span> maintainability / missing coverage</span>
-    <span><span class="sev P3">P3</span> minor / cleanup</span>
-    <span><span class="st pass">✓ PASS</span></span>
-    <span><span class="st fail">✗ FAIL</span></span>
-    <span><span class="st warn">⚠ PARTIAL / UNVERIFIED</span></span>
-    <span><span class="st na">N/A</span></span>
+    <div class="card"><div class="k">Decision</div><div class="v" style="color:var(--p1);font-size:17px">REQUEST_CHANGES</div></div>
+    <div class="card"><div class="k">Files</div><div class="v">77</div></div>
+    <div class="card p0"><div class="k">P0</div><div class="v">0</div></div>
+    <div class="card p1"><div class="k">P1</div><div class="v">1</div></div>
+    <div class="card p2"><div class="k">P2</div><div class="v">5</div></div>
+    <div class="card p3"><div class="k">P3</div><div class="v">2</div></div>
   </div>
 </section>
 
-<!-- ============ SCOPE ============ -->
-<section id="scope">
-  <h2><span class="n">2</span> Change scope</h2>
+<section id="engine">
+  <h2><span class="n">2</span> Intelligence engine results</h2>
+  <p class="lead">What the four engine capabilities produced this run.</p>
   <table>
-    <thead><tr><th>Area</th><th>Files</th><th>Risk</th><th>Notes</th></tr></thead>
+    <thead><tr><th>Capability</th><th>Result</th></tr></thead>
     <tbody>
-      <tr><td>Template Management — admin-console</td><td>~13</td><td><span class="risk med">MED</span></td><td>New feature — components / models / services / utils</td></tr>
-      <tr><td>Template Management — management-console</td><td>~17</td><td><span class="risk med">MED</span></td><td>New feature + <code>template-config-editor</code> + <code>routes.ts</code></td></tr>
-      <tr><td>Checker assignment — host-shell</td><td>~9</td><td><span class="risk med">MED</span></td><td>PES / checker-level — touches Add User wizard</td></tr>
-      <tr><td><code>libs/falcon</code> shared-ui</td><td>2</td><td><span class="risk med">MED</span></td><td>New <code>falcon-checker-section</code> + modified <code>falcon-multiselect</code></td></tr>
-      <tr><td><code>libs/falcon</code> shared-data-access / shared-types</td><td>several</td><td><span class="risk low">LOW</span></td><td>Constants, models, access registry, enums — additive</td></tr>
-      <tr><td>i18n</td><td>2</td><td><span class="risk low">LOW</span></td><td><code>en.json</code> +71 keys, <code>ar.json</code> — good, no hardcoded strings</td></tr>
-      <tr><td>Environments</td><td>2</td><td><span class="risk low">LOW</span></td><td>Added <code>baseURLCoreTemplatesGateway</code> URL only — no secrets</td></tr>
-      <tr><td>Routing / app.config</td><td>3 apps</td><td><span class="risk low">LOW</span></td><td>Route + HttpClient / provider wiring</td></tr>
-      <tr><td>Docs</td><td>1</td><td><span class="risk low">—</span></td><td><code>docs/checker-assignment-integration-proposal.md</code> — good practice</td></tr>
+      <tr><td><strong>Backend contract cross-check</strong></td>
+        <td>Ran against <code>understanding/backend/templates/</code>. Endpoints match the registry exactly. Surfaced <strong>B1</strong> (backend doc conflicts with PR DTOs) and <strong>B2</strong> (Templates reachability/CORS). Corrected v1's wrong claim that no backend doc existed.</td></tr>
+      <tr><td><strong>Regression-impact graph</strong></td>
+        <td><code>runtime-api-config.ts</code> 40 importers · <code>falcon-multiselect</code> 1 · access-registry 2 — but all three changes are <strong>purely additive</strong> → regression risk <strong>LOW</strong> (v1 guessed MED).</td></tr>
+      <tr><td><strong>Two-pass adversarial review</strong></td>
+        <td>Caught a v1 over-claim: "bodyType numeric is a P1 bug" — <strong>retracted</strong>. PR code cites BE source <code>eBodyType.cs</code>; re-classified as a doc-vs-code conflict (B1, P2).</td></tr>
+      <tr><td><strong>Auto-run quality gates</strong></td>
+        <td>⚠ NOT RUN — would require checking out the PR branch into the working tree (disturbs the user's current <code>polishing-v0.4</code> checkout). Author must run <code>nx affected -t build lint test</code> on the branch.</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- ============ FINDINGS ============ -->
 <section id="findings">
-  <h2><span class="n">3</span> Findings &mdash; 7 comments</h2>
-  <p class="lead">Click any finding to expand. Each is a reviewer comment with severity,
-  the rule it came from, and the fix. <strong>C1</strong> was surfaced by the deeper
-  code-level pass — see &sect;4 Code Evidence.</p>
-  <div class="filterbar" id="fbar">
-    <button class="active" data-f="all">All (7)</button>
-    <button data-f="P1">P1 (1)</button>
-    <button data-f="P2">P2 (3)</button>
-    <button data-f="P3">P3 (3)</button>
-  </div>
+  <h2><span class="n">3</span> Findings — 9 comments</h2>
+  <p class="lead">Click to expand. F6 is resolved (canonical repo confirmed). B1/B2
+  came from the backend cross-check; C1 from the code-level pass.</p>
 
-  <details class="finding" data-sev="P1" open>
-    <summary><span class="chev">▶</span><span class="sev P1">P1</span>
-      <span class="fid">F1</span>
-      <span class="ftitle">Template Management shared layer duplicated verbatim across two apps</span>
-      <span class="st fail">✗ BLOCKING</span></summary>
-    <div class="fbody">
-      <dl>
-        <dt>Where</dt><dd><code>apps/admin-console/.../template-management/**</code> &amp; <code>apps/management-console/.../template-management/**</code></dd>
-        <dt>What</dt><dd>The models, mappers, API service, and 5 sub-components (<code>body-type-section</code>, <code>body-type-view</code>, <code>channel-tabs</code>, <code>checker-level-picker</code>, <code>unrestricted-banner</code>) were copy-pasted into both apps. <code>template-management.models.ts</code> is <strong>byte-identical</strong> between the two copies — verified.</dd>
-        <dt>Why it matters</dt><dd>Every future change must be made twice; the two copies will silently drift apart. Nx libraries exist precisely to avoid this.</dd>
-        <dt>Source rule</dt><dd>Architecture / structure governance — "no duplicated logic", shared-vs-feature-local, Nx lib boundaries</dd>
-        <dt>Fix (R1)</dt><dd>Promote the shared layer into <code>libs/falcon</code> (<code>shared-data-access</code> for models/mappers/API, <code>shared-ui</code> for components). Each app keeps only its app-specific shell.</dd>
-        <dt>Status</dt><dd><span class="st fail">✗ Open — required before merge</span></dd>
-      </dl>
-    </div>
+  <details class="finding" open><summary><span class="chev">▶</span><span class="sev P1">P1</span>
+    <span class="fid">F1</span><span class="ftitle">Template Management shared layer duplicated verbatim across two apps</span>
+    <span class="st fail">✗ BLOCKING</span></summary>
+    <div class="fbody"><dl>
+      <dt>Where</dt><dd><code>apps/{admin,management}-console/.../template-management/**</code></dd>
+      <dt>What</dt><dd>Models, mappers, API service and 5 sub-components are two byte-identical copies. Every future fix must be applied twice; the copies will drift.</dd>
+      <dt>Fix</dt><dd>Promote the shared layer into <code>libs/falcon</code>; each app keeps only its shell. See §4.</dd>
+      <dt>Status</dt><dd><span class="st fail">✗ Open — required before merge</span></dd>
+    </dl></div>
   </details>
 
-  <details class="finding" data-sev="P2">
-    <summary><span class="chev">▶</span><span class="sev P2">P2</span>
-      <span class="fid">F2</span>
-      <span class="ftitle">No automated tests added for a 5860-LOC feature</span>
-      <span class="st warn">⚠ Recommended</span></summary>
-    <div class="fbody">
-      <dl>
-        <dt>Where</dt><dd>Whole PR — 51 added files</dd>
-        <dt>What</dt><dd>Zero <code>*.spec.ts</code> files. A test <em>plan</em> exists in <code>docs/checker-assignment-integration-proposal.md</code>, but no tests were committed.</dd>
-        <dt>Source rule</dt><dd>Quality gates — tests added/updated where needed</dd>
-        <dt>Fix (R2)</dt><dd>Add specs for <code>template-form.service</code>, <code>template-management.mappers</code>, <code>checker-assignment-api.service</code>, and the permissions/checker step.</dd>
-        <dt>Status</dt><dd><span class="st warn">⚠ Open — recommended</span></dd>
-      </dl>
-    </div>
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev P2">P2</span>
+    <span class="fid">F2</span><span class="ftitle">No automated tests for a 5860-LOC feature</span>
+    <span class="st warn">⚠ Recommended</span></summary>
+    <div class="fbody"><dl>
+      <dt>What</dt><dd>0 <code>*.spec.ts</code> files. <code>mergeForEdit</code> is even documented "Exported for unit tests" — yet untested.</dd>
+      <dt>Fix</dt><dd>Specs for <code>template-form.service</code>, mappers, <code>mergeForEdit</code>/<code>buildRowsForCreate</code>, the checker step.</dd>
+    </dl></div>
   </details>
 
-  <details class="finding" data-sev="P2">
-    <summary><span class="chev">▶</span><span class="sev P2">P2</span>
-      <span class="fid">F3</span>
-      <span class="ftitle">Checker-level / PES changes not deep-verified against PES Subject Contract</span>
-      <span class="st warn">⚠ Recommended</span></summary>
-    <div class="fbody">
-      <dl>
-        <dt>Where</dt><dd><code>host-shell/.../permissions-privilege-step</code>, <code>checker-level-rows</code>, <code>checker-assignment-api.service.ts</code>, <code>libs/falcon/.../falcon-access.registry.ts</code></dd>
-        <dt>What</dt><dd>Security-sensitive changes were reviewed at governance level only — not deep-validated against the PES Subject Contract (subject IDs must be <code>u:&lt;ZitadelUserId&gt;@&lt;ns&gt;</code>) or the access-registry semantics.</dd>
-        <dt>Source rule</dt><dd>Security / PES review — maker/checker/PES rules</dd>
-        <dt>Fix (R3)</dt><dd>Dedicated PES pass: verify subject IDs, <code>authorizeResources</code> keys, and the FE-before-BE deny fallback described in the docs proposal §1.</dd>
-        <dt>Status</dt><dd><span class="st warn">⚠ Open — recommended (advised before merge: security-sensitive)</span></dd>
-      </dl>
-    </div>
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev P2">P2</span>
+    <span class="fid">F3</span><span class="ftitle">Checker-level / PES changes not deep-verified</span>
+    <span class="st warn">⚠ Recommended</span></summary>
+    <div class="fbody"><dl>
+      <dt>Where</dt><dd>host-shell checker-level + <code>shared-types/.../falcon-access.registry.ts</code></dd>
+      <dt>What</dt><dd>Security-sensitive; not validated vs the PES Subject Contract (<code>u:&lt;ZitadelUserId&gt;@&lt;ns&gt;</code>).</dd>
+      <dt>Fix</dt><dd>Dedicated PES pass — advised before merge.</dd>
+    </dl></div>
   </details>
 
-  <details class="finding" data-sev="P2">
-    <summary><span class="chev">▶</span><span class="sev P2">P2</span>
-      <span class="fid">F4</span>
-      <span class="ftitle">No Template Management PRD located — business rules unverified</span>
-      <span class="st warn">⚠ Recommended</span></summary>
-    <div class="fbody">
-      <dl>
-        <dt>Where</dt><dd>Template Management feature — business layer</dd>
-        <dt>What</dt><dd>No PRD/business spec found in <code>Brain Outputs/prd</code> or <code>understanding/</code>. Lifecycle, statuses, and maker-checker rules could not be confirmed — they were marked UNVERIFIED rather than assumed correct.</dd>
-        <dt>Source rule</dt><dd>Business logic review — PRD flow followed</dd>
-        <dt>Fix (R4)</dt><dd>Supply / link the Template Management PRD. Relates to known Atlas Wave 4 gap "Templates CRUD missing".</dd>
-        <dt>Status</dt><dd><span class="st warn">⚠ Open — recommended</span></dd>
-      </dl>
-    </div>
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev P2">P2</span>
+    <span class="fid">F4</span><span class="ftitle">No Template Management PRD located — business rules unverified</span>
+    <span class="st warn">⚠ Recommended</span></summary>
+    <div class="fbody"><dl>
+      <dt>What</dt><dd>No PRD in <code>Brain Outputs/prd</code> or <code>understanding/</code>; lifecycle/maker-checker rules unconfirmed.</dd>
+      <dt>Fix</dt><dd>Supply / link the Template Management PRD.</dd>
+    </dl></div>
   </details>
 
-  <details class="finding" data-sev="P3">
-    <summary><span class="chev">▶</span><span class="sev P3">P3</span>
-      <span class="fid">F5</span>
-      <span class="ftitle">console.error left in checker-assignment load catch</span>
-      <span class="st pass">Minor — acceptable</span></summary>
-    <div class="fbody">
-      <dl>
-        <dt>Where</dt><dd><code>apps/host-shell/.../services/checker-assignment-api.service.ts</code></dd>
-        <dt>What</dt><dd><code>console.error('Failed to load checker assignments:', err)</code> in the load catch. Logs an error object, not credentials.</dd>
-        <dt>Source rule</dt><dd>Quality gates — no console noise</dd>
-        <dt>Fix (R6)</dt><dd>Acceptable as error logging; optionally route through a shared logger if one exists.</dd>
-        <dt>Status</dt><dd><span class="st na">Minor — non-blocking</span></dd>
-      </dl>
-    </div>
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev P2">P2</span>
+    <span class="fid">B1</span><span class="ftitle">Backend understanding doc conflicts with the PR's FE↔BE contract</span>
+    <span class="st warn">⚠ Brain knowledge gap</span></summary>
+    <div class="fbody"><dl>
+      <dt>Where</dt><dd><code>understanding/backend/templates/</code> vs PR DTOs</dd>
+      <dt>What</dt><dd>Backend doc (self-flagged "inferred") says <code>bodyType</code> is a string enum and Templates DTOs carry no name fields. PR code cites BE source <code>eBodyType.cs</code> (numeric 1/2) and reads name fields off the response. Per source-of-truth order, code citing BE source outranks an inferred doc → the <strong>backend doc is likely stale</strong>. But the contract is formally UNVERIFIED until reconciled.</dd>
+      <dt>Fix</dt><dd>Refresh <code>understanding/backend/templates/</code> against live <code>falcon-core-templates-svc</code>. See §4.</dd>
+    </dl></div>
   </details>
 
-  <details class="finding" data-sev="P3">
-    <summary><span class="chev">▶</span><span class="sev P3">P3</span>
-      <span class="fid">F6</span>
-      <span class="ftitle">New code adds PrimeNG surface — consistent with this repo, NOT a violation</span>
-      <span class="st pass">Noted — not a violation here</span></summary>
-    <div class="fbody">
-      <dl>
-        <dt>Where</dt><dd>8 files — template-management, <code>checker-level-rows</code>, <code>falcon-checker-section</code> (<code>primeng/radiobutton</code>, <code>primeng/tooltip</code>, <code>primeng/api</code>)</dd>
-        <dt>What</dt><dd>Brain SK's standing rule says "no PrimeNG for new work". <strong>But</strong> verification showed PrimeNG is in this repo's <code>package.json</code> and 70 files on <code>main</code> already use it — so it is consistent with this repo and <strong>not flagged as a violation</strong>. This is the source-of-truth rule working: codebase beats memory.</dd>
-        <dt>Source rule</dt><dd>Standing rule "No PrimeNG for new work" (applies to the v2 workspace, not this repo)</dd>
-        <dt>Fix (R7)</dt><dd>Track for PrimeNG removal when this repo adopts the platform-wide migration.</dd>
-        <dt>Status</dt><dd><span class="st pass">✓ Noted — not blocking</span></dd>
-      </dl>
-    </div>
-  <details class="finding" data-sev="P3">
-    <summary><span class="chev">▶</span><span class="sev P3">P3</span>
-      <span class="fid">C1</span>
-      <span class="ftitle">Order-sensitive dirty-tracking — <code>serializeChannels</code> can raise false "unsaved changes"</span>
-      <span class="st warn">⚠ Code-level — new</span></summary>
-    <div class="fbody">
-      <dl>
-        <dt>Where</dt><dd><code>.../template-management/utils/template-management.mappers.ts:53</code> (used by <code>template-form.service.ts:90</code>)</dd>
-        <dt>What</dt><dd>Surfaced by the deeper code-level pass. <code>serializeChannels</code> uses <code>JSON.stringify</code>, which is order-sensitive. <code>level1UserIds</code>/<code>level2UserIds</code> are <code>string[]</code> — if the checker multiselect returns the same user IDs in a different order than the backend delivered them, the dirty check flips to <em>true</em> with no real change → a spurious unsaved-changes prompt.</dd>
-        <dt>Source rule</dt><dd>Code-level error pass — order-sensitive serialization / comparison</dd>
-        <dt>Fix</dt><dd>Normalise before serialising — sort <code>userIds</code> arrays and channels by id. Full snippet in §4 Code Evidence.</dd>
-        <dt>Status</dt><dd><span class="st warn">⚠ Open — P3; decision unchanged (still driven by F1)</span></dd>
-      </dl>
-    </div>
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev P2">P2</span>
+    <span class="fid">B2</span><span class="ftitle">Templates service browser-reachability / CORS unverified</span>
+    <span class="st warn">⚠ Recommended</span></summary>
+    <div class="fbody"><dl>
+      <dt>Where</dt><dd><code>environment.ts</code> / <code>environment.prod.ts</code> — new <code>baseURLCoreTemplatesGateway</code></dd>
+      <dt>What</dt><dd>Backend scan says Templates is not exposed through Core/System Gateway and its <code>appsettings.json</code> lacks a CORS section. A browser call from <code>localhost:4200</code> to <code>localhost:7264</code> would be CORS-blocked unless CORS was added. Prod host <code>templates-api.falconhub.space</code> implies newer infra the scan didn't see.</dd>
+      <dt>Fix</dt><dd>Verify a gateway route or direct host + CORS for the web origin before relying on the feature. See §4.</dd>
+    </dl></div>
+  </details>
+
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev P3">P3</span>
+    <span class="fid">C1</span><span class="ftitle">Order-sensitive dirty-tracking — spurious "unsaved changes"</span>
+    <span class="st warn">⚠ Code-level</span></summary>
+    <div class="fbody"><dl>
+      <dt>Where</dt><dd><code>template-management.mappers.ts:52</code> → <code>template-form.service.ts:90</code></dd>
+      <dt>What</dt><dd><code>serializeChannels</code> uses order-sensitive <code>JSON.stringify</code>; reordering the same users in a multiselect flips <code>isDirty</code> → false "unsaved changes" prompt.</dd>
+      <dt>Fix</dt><dd>Sort <code>userIds</code> + channels before serialising. See §4.</dd>
+    </dl></div>
+  </details>
+
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev P3">P3</span>
+    <span class="fid">F5</span><span class="ftitle">console.error left in checker-assignment load catch</span>
+    <span class="st pass">Minor — acceptable</span></summary>
+    <div class="fbody"><dl>
+      <dt>What</dt><dd>Error caught, empty list degrades cleanly. Flagged only because raw <code>console.error</code> bypasses central logging.</dd>
+      <dt>Fix</dt><dd>Optional — route through a shared logger.</dd>
+    </dl></div>
+  </details>
+
+  <details class="finding"><summary><span class="chev">▶</span><span class="sev OK">RESOLVED</span>
+    <span class="fid">F6</span><span class="ftitle">PrimeNG in new code — not a violation in this repo</span>
+    <span class="st pass">✓ Closed</span></summary>
+    <div class="fbody"><dl>
+      <dt>What</dt><dd>v1 flagged new PrimeNG imports. Canonical repo now confirmed as <code>C:\Falcon\Falcon\falcon-web-platform-ui</code>, which ships <code>primeng@20.4.0</code> and uses it in 70 files on <code>main</code>. PrimeNG is a sanctioned dependency here — <strong>not a violation</strong>. The "no PrimeNG" rule belongs to a different (v2) workspace.</dd>
+      <dt>Status</dt><dd><span class="st pass">✓ Resolved</span></dd>
+    </dl></div>
   </details>
 </section>
 
-<!-- ============ CODE EVIDENCE ============ -->
 <section id="code">
-  <style>
-    .label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:12px;display:block}
-    .fileref{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--accent)}
-    .codeblock{background:#0b0d11;border:1px solid var(--line);border-left:3px solid var(--p0);
-      border-radius:6px;padding:11px 14px;margin-top:7px;font-family:ui-monospace,Consolas,monospace;
-      font-size:12.5px;color:#d6dbe4;overflow-x:auto;white-space:pre}
-    .fix{background:#0b0d11;border:1px solid var(--line);border-left:3px solid var(--pass);
-      border-radius:6px;padding:11px 14px;margin-top:7px;font-family:ui-monospace,Consolas,monospace;
-      font-size:12.5px;color:#d6dbe4;overflow-x:auto;white-space:pre}
-    .ev{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:14px}
-    .ev h3{margin:0;color:var(--soft)}
-    .wrong{color:#fca5a5}.right{color:#86efac}
-  </style>
-  <h2><span class="n">4</span> Code Evidence &mdash; the actual lines, the defect, the fix</h2>
-  <p class="lead">Per the skill rule "take a shot from the code": each finding below
-  carries the real offending lines (<span class="wrong">red border</span>), what is
-  wrong, and a concrete suggested fix (<span class="right">green border</span>).</p>
+  <h2><span class="n">4</span> Code Evidence — actual lines · defect · fix</h2>
 
   <div class="ev">
-    <h3><span class="sev P1">P1</span> &nbsp; F1 — Template Management shared layer duplicated</h3>
-    <span class="label">Code shot — proof the two copies are identical</span>
-    <div class="codeblock">$ diff \
-   apps/admin-console/src/app/features/template-management/models/template-management.models.ts \
-   apps/management-console/src/app/features/template-management/models/template-management.models.ts
-$            &larr; no output: the files are byte-identical
+    <h3><span class="sev P1">P1</span> &nbsp; F1 — shared layer duplicated</h3>
+    <span class="label">Code shot — proof the copies are identical</span>
+    <div class="codeblock">$ diff apps/admin-console/.../template-management/models/template-management.models.ts \
+       apps/management-console/.../template-management/models/template-management.models.ts
+$        &larr; no output: byte-identical
 
-# git ls confirms the same shared layer exists twice:
-A  apps/admin-console/.../template-management/utils/template-management.mappers.ts
-A  apps/management-console/.../template-management/utils/template-management.mappers.ts
-A  apps/admin-console/.../template-management/services/template-management-api.service.ts
-A  apps/management-console/.../template-management/services/template-management-api.service.ts</div>
+A  apps/admin-console/.../utils/template-management.mappers.ts
+A  apps/management-console/.../utils/template-management.mappers.ts   &larr; same file, twice</div>
     <span class="label">What is wrong</span>
-    <p>The models, mappers, API service and 5 sub-components exist as two identical
-    copies — one per app. Every future fix must be applied twice; the copies will
-    drift. Nx libraries exist to prevent exactly this.</p>
+    <p>Models, mappers, API service and 5 sub-components exist as two identical copies — one per app. Future fixes must be applied twice; the copies will drift.</p>
     <span class="label">Suggested fix</span>
-    <div class="fix">// Move the shared layer into the library, ONE copy:
-libs/falcon/src/shared-data-access/lib/template-management/
-    template-management.models.ts
-    template-management.mappers.ts
-    template-management-api.service.ts
-libs/falcon/src/shared-ui/lib/components/   &larr; body-type-section, body-type-view,
-                                               channel-tabs, checker-level-picker,
-                                               unrestricted-banner
-
-// Both apps then import from the barrel:
-import { toLocalState, toDto, AccountTemplateConfigDto } from '@falcon';
-// Each app keeps ONLY its shell: template-management.component + routes.ts</div>
+    <div class="fix">// ONE copy in the library:
+libs/falcon/src/shared-data-access/lib/template-management/  &larr; models, mappers, api.service
+libs/falcon/src/shared-ui/lib/components/                    &larr; body-type-section, body-type-view,
+                                                                channel-tabs, checker-level-picker,
+                                                                unrestricted-banner
+// Both apps import from the barrel; each keeps only its shell + routes.ts
+import { toLocalState, toDto } from '@falcon';</div>
   </div>
 
   <div class="ev">
-    <h3><span class="sev P3">P3</span> &nbsp; C1 — Order-sensitive dirty-tracking</h3>
+    <h3><span class="sev P2">P2</span> &nbsp; B1 — backend doc vs PR contract (two-pass corrected this from a false "P1 bug")</h3>
+    <span class="label">Code shot — PR code, citing the BE source</span>
+    <div class="codeblock">// apps/.../template-management/models/template-management.models.ts:84
+* Numeric encoding for `bodyType` over the wire. Verified against the BE
+* source (falcon-core-templates-svc/.../Domain/Enums/eBodyType.cs):
+*   1 &rarr; unrestricted, 2 &rarr; restricted.
+export const BE_BODY_RESTRICTED: BeBodyType = 2;</div>
+    <span class="label">Conflicting source — the backend understanding doc</span>
+    <div class="codeblock">// Brain Outputs/understanding/backend/templates/DTO_DICTIONARY.md
+- **BodyType** — likely an enum: `Plain`, `Template`, `Interactive`, ... (verify)
+| CommunicationChannelConfigDto | ... (inferred — verify by reading the DTO file) |
+// FRONTEND_CONTRACT.md example uses string:  bodyType: 'Restricted'
+// FRONTEND_CONTRACT.md: "No multi-language fields on Templates DTOs"</div>
+    <span class="label">What is wrong</span>
+    <p>Two truth sources disagree on <code>bodyType</code> encoding and whether
+    Templates DTOs carry channel-name fields. The backend doc <em>self-flags as
+    inferred</em>; the PR cites the actual BE enum source. <strong>The first pass
+    almost filed this as a P1 bug — the two-pass review retracted that.</strong> Per
+    source-of-truth order, code citing BE source outranks an inferred doc, so the
+    backend doc is the likely-stale party. But the contract stays UNVERIFIED until
+    reconciled.</p>
+    <span class="label">Suggested fix</span>
+    <div class="fix">// Refresh the backend understanding doc against live BE source:
+//   falcon-core-templates-svc/.../Domain/Enums/eBodyType.cs
+//   + the actual response DTO files
+// If doc was stale  &rarr; B1 closes, no PR change.
+// If PR is wrong    &rarr; `bodyType === 2` returns zero channels &rarr; re-classify P1.</div>
+  </div>
+
+  <div class="ev">
+    <h3><span class="sev P2">P2</span> &nbsp; B2 — Templates reachability / CORS</h3>
+    <span class="label">Code shot — <span class="fileref">environment.ts / environment.prod.ts</span></span>
+    <div class="codeblock">+ baseURLCoreTemplatesGateway: 'http://localhost:7264/'                  // dev
++ baseURLCoreTemplatesGateway: 'https://templates-api.falconhub.space/'  // prod</div>
+    <span class="label">What is wrong</span>
+    <p><code>understanding/backend/templates/FRONTEND_CONTRACT.md</code>: Templates is
+    <em>not</em> exposed through Core or System Gateway and its <code>appsettings.json</code>
+    <em>lacks a CORS section</em>. A browser call from <code>localhost:4200</code> to
+    <code>localhost:7264</code> is cross-origin → CORS-blocked unless CORS was added.</p>
+    <span class="label">Suggested fix</span>
+    <div class="fix">// Confirm ONE of:
+//  (a) a gateway route 'templates-cluster' exists in the gateway route map, OR
+//  (b) the Templates service has a CORS policy allowing the web-platform origin.
+// Verify in the browser network tab: Templates call returns 200, no CORS error.</div>
+  </div>
+
+  <div class="ev">
+    <h3><span class="sev P3">P3</span> &nbsp; C1 — order-sensitive dirty-tracking</h3>
     <span class="label">Code shot — <span class="fileref">template-management.mappers.ts:52</span></span>
     <div class="codeblock">/** Stable string snapshot for dirty-tracking. */
 export function serializeChannels(channels: ChannelLocalState[]): string {
   return JSON.stringify(channels);          // &larr; order-sensitive
 }
-
-// consumed by template-form.service.ts:90
-get isDirty(): boolean {
-  return serializeChannels(this.channels) !== this.pristineSnapshot;
-}</div>
+// template-form.service.ts:90
+return serializeChannels(this.channels) !== this.pristineSnapshot;</div>
     <span class="label">What is wrong</span>
-    <p><code>JSON.stringify</code> preserves array order. <code>level1UserIds</code> /
-    <code>level2UserIds</code> are <code>string[]</code> populated from a multiselect.
-    Selecting the <em>same</em> users in a different order changes the string &rarr;
-    <code>isDirty</code> returns <code>true</code> with no real change &rarr; the user
-    is wrongly warned about unsaved changes. (False positives only — never a missed
-    change — but still a real UX defect.)</p>
+    <p><code>JSON.stringify</code> preserves array order; <code>level1UserIds</code>/
+    <code>level2UserIds</code> come from a multiselect. Same users, different order →
+    <code>isDirty</code> true with no real change → spurious unsaved-changes prompt.</p>
     <span class="label">Suggested fix</span>
-    <div class="fix">/** Order-insensitive snapshot for dirty-tracking. */
-export function serializeChannels(channels: ChannelLocalState[]): string {
+    <div class="fix">export function serializeChannels(channels: ChannelLocalState[]): string {
   const norm = channels
-    .map((c) => ({
-      ...c,
+    .map((c) =&gt; ({ ...c,
       level1UserIds: [...c.level1UserIds].sort(),
-      level2UserIds: [...c.level2UserIds].sort(),
-    }))
-    .sort((a, b) => a.channelId.localeCompare(b.channelId));
+      level2UserIds: [...c.level2UserIds].sort() }))
+    .sort((a, b) =&gt; a.channelId.localeCompare(b.channelId));
   return JSON.stringify(norm);
 }</div>
   </div>
 
-  <div class="ev">
-    <h3><span class="sev P3">P3</span> &nbsp; F5 — console.error in load catch</h3>
-    <span class="label">Code shot — <span class="fileref">checker-assignment load catch</span></span>
-    <div class="codeblock">.subscribe({
-  error: (err) =&gt; {
-    console.error('Failed to load checker assignments:', err);
-  },
-});</div>
-    <span class="label">What is wrong</span>
-    <p>Nothing functionally broken — the error is caught and an empty list degrades
-    cleanly. It is flagged only because raw <code>console.error</code> bypasses any
-    central logging/telemetry. Acceptable to ship; listed for completeness.</p>
-    <span class="label">Suggested fix</span>
-    <div class="fix">// Optional — route through a shared logger if one exists:
-error: (err) =&gt; this.logger.error('Failed to load checker assignments', err),
-// or surface a user-visible error/empty state instead of a silent console line.</div>
+  <div class="callout good">
+    <strong>Verified-clean (code-level pass found no defect):</strong> all 18 new
+    <code>.subscribe(...)</code> calls are guarded with
+    <code>takeUntilDestroyed(this.destroyRef)</code> — no leaks · API services
+    defensively coerce a non-array <code>result</code> to <code>[]</code> · no
+    <code>any</code> holes / unsafe casts in the changed services and mappers ·
+    endpoints match the Templates <code>ENDPOINT_REGISTRY.md</code> exactly.
   </div>
-
-  <p class="lead" style="margin-top:16px">Verified-clean (code pass found no defect):
-  all 18 new <code>.subscribe(...)</code> calls are guarded with
-  <code>takeUntilDestroyed(this.destroyRef)</code> — no subscription leaks; API
-  services defensively coerce non-array <code>result</code> to <code>[]</code>;
-  no <code>any</code> holes or unsafe casts in the changed services/mappers.</p>
 </section>
 
-<!-- ============ CHECKLIST ============ -->
 <section id="checklist">
-  <h2><span class="n">4</span> Governance checklist &mdash; what passed, what did not</h2>
-  <p class="lead">Every governance check from the PR Review Governance Skill, with its result.
-  <span class="st pass">✓</span> clean &nbsp; <span class="st fail">✗</span> failed &nbsp;
-  <span class="st warn">⚠</span> partial / could not verify &nbsp; <span class="st na">N/A</span> not applicable.</p>
-
+  <h2><span class="n">5</span> Governance checklist — pass / fail</h2>
   <div class="grp">
-    <div class="gh">Architecture &amp; structure <span class="mini">2 failed · 1 partial · 5 pass</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">Correct feature folder structure (components / models / services / utils)</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">models / services placement correct</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">No random folders · consolidated model files · route conventions</span></div>
-    <div class="chk"><span class="st fail">✗</span><span class="txt">Shared-vs-feature-local — shared layer duplicated across 2 apps <strong>(F1)</strong></span></div>
-    <div class="chk"><span class="st fail">✗</span><span class="txt">No duplicated logic — duplicated <strong>(F1)</strong></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Nx lib boundaries — partial: shared code not promoted to a lib</span></div>
+    <div class="gh">Architecture &amp; structure <span class="mini">2 fail · 1 partial · 4 pass</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">Feature folder structure / placement / route conventions</span></div>
+    <div class="chk"><span class="st fail">✗</span><span class="txt">Shared-vs-feature-local — duplicated across 2 apps (F1)</span></div>
+    <div class="chk"><span class="st fail">✗</span><span class="txt">No duplicated logic — duplicated (F1)</span></div>
+    <div class="chk"><span class="st warn">⚠</span><span class="txt">Nx lib boundaries — shared code not promoted</span></div>
   </div>
-
   <div class="grp">
     <div class="gh">Falcon frontend rules <span class="mini">all pass</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">Falcon components used (<code>falcon-multiselect</code>, <code>-icon</code>, <code>-divider</code>, <code>-organization-hierarchy-tree</code>, <code>-send-credentials-popup</code>, new <code>-checker-section</code>)</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">No raw table/input/select where a Falcon component exists; raw <code>&lt;button&gt;</code> &amp; tab strip acceptable — no <code>falcon-button</code>/<code>falcon-tabs</code> exists in this repo</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">New lib component presentation-only with <code>index.ts</code> barrel</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">Tailwind + tokens only · no new CSS/SCSS (0 files) · 0 hardcoded hex colors · 0 inline <code>style=</code></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">PrimeNG used in new code — consistent with this repo, not a violation <strong>(F6)</strong></span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">Falcon components used; new lib component presentation-only</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">Tailwind + tokens only · 0 CSS/SCSS · 0 hex · 0 inline style</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">PrimeNG — sanctioned in this repo (canonical confirmed); F6 resolved</span></div>
   </div>
-
   <div class="grp">
-    <div class="gh">Validation &amp; API / DTO <span class="mini">3 partial · 4 pass</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">New gateway URL in env config — no secrets</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">API services typed, <code>HttpErrorResponse</code> handled, correct gateway</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">No mock data left in code · i18n messages added</span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">DTO ↔ backend contract — UNVERIFIED: no <code>understanding/backend/</code> for the Core Templates service <strong>(F4/R5)</strong></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">FE validation vs backend rule — not deep-verified</span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Error / loading / empty states — error path present; empty/success render to confirm</span></div>
+    <div class="gh">API / DTO / integration <span class="mini">2 partial · 2 pass</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">API services typed, error-handled; endpoints match registry</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">No mock data · i18n keys added</span></div>
+    <div class="chk"><span class="st warn">⚠</span><span class="txt">FE↔BE DTO contract — conflict with backend doc (B1)</span></div>
+    <div class="chk"><span class="st warn">⚠</span><span class="txt">Templates browser reachability / CORS unverified (B2)</span></div>
   </div>
-
   <div class="grp">
-    <div class="gh">Business logic <span class="mini">4 unverified · 1 pass</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">Design proposal documented (<code>docs/checker-assignment-integration-proposal.md</code>)</span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">PRD flow / statuses / lifecycle — UNVERIFIED, no PRD found <strong>(F4)</strong></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Permissions / PES — UNVERIFIED, needs PES pass <strong>(F3)</strong></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Allowed actions by status/role — UNVERIFIED</span></div>
+    <div class="gh">Security / PES <span class="mini">3 pass · 1 partial</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">No secrets · no sensitive logging · no guard removed</span></div>
+    <div class="chk"><span class="st warn">⚠</span><span class="txt">Permissions / maker-checker — needs PES pass (F3)</span></div>
   </div>
-
   <div class="grp">
-    <div class="gh">Security / PES <span class="mini">3 pass · 2 partial</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">No secrets / credentials committed — env diff is gateway URLs only</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">Sensitive data not logged</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">Route access not weakened — no guard removed in diff</span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Permissions enforced — needs PES pass <strong>(F3)</strong></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Maker / checker rules — needs PES pass <strong>(F3)</strong></span></div>
-  </div>
-
-  <div class="grp">
-    <div class="gh">Quality gates <span class="mini">1 failed · 3 partial · 1 pass · 1 N/A</span></div>
-    <div class="chk"><span class="st fail">✗</span><span class="txt">Tests — 0 spec files added <strong>(F2)</strong></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Build / typecheck — NOT RUN (review-only scope); author must confirm <code>nx build</code></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Lint — NOT RUN; author must confirm <code>nx lint</code></span></div>
-    <div class="chk"><span class="st warn">⚠</span><span class="txt">Regression risk — shared <code>falcon-multiselect</code> modified (additive)</span></div>
-    <div class="chk"><span class="st pass">✓</span><span class="txt">No stray console logs (1 intentional <code>console.error</code>, F5)</span></div>
-    <div class="chk"><span class="st na">N/A</span><span class="txt">Visual parity — no source design supplied for this review</span></div>
+    <div class="gh">Quality gates &amp; code pass <span class="mini">1 fail · 2 partial · 3 pass</span></div>
+    <div class="chk"><span class="st fail">✗</span><span class="txt">Tests — 0 spec files (F2)</span></div>
+    <div class="chk"><span class="st warn">⚠</span><span class="txt">Build / lint — NOT RUN (needs PR-branch checkout); author confirms</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">Subscription safety — 18/18 guarded with takeUntilDestroyed</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">Regression — shared-lib changes additive → LOW</span></div>
+    <div class="chk"><span class="st pass">✓</span><span class="txt">No any holes / unsafe casts in changed code</span></div>
+    <div class="chk"><span class="st warn">⚠</span><span class="txt">C1 — order-sensitive dirty-tracking</span></div>
   </div>
 </section>
 
-<!-- ============ RISK ============ -->
 <section id="risk">
-  <h2><span class="n">5</span> Risk matrix</h2>
+  <h2><span class="n">6</span> Risk matrix</h2>
   <table>
     <thead><tr><th>Area</th><th>Likelihood</th><th>Impact</th><th>Risk</th><th>Mitigation</th></tr></thead>
     <tbody>
-      <tr><td>Architecture / structure</td><td>High</td><td>Medium</td><td><span class="risk high">HIGH</span></td><td>Promote duplicated shared layer to <code>libs/falcon</code> (F1)</td></tr>
-      <tr><td>API / DTO contract</td><td>Medium</td><td>High</td><td><span class="risk high">HIGH</span></td><td>Generate Core Templates backend understanding; verify DTO contract</td></tr>
-      <tr><td>Business logic</td><td>Medium</td><td>High</td><td><span class="risk high">HIGH</span></td><td>Locate Template Management PRD (F4)</td></tr>
-      <tr><td>Security / PES</td><td>Medium</td><td>High</td><td><span class="risk high">HIGH</span></td><td>Dedicated PES pass on checker-level + access registry (F3)</td></tr>
-      <tr><td>Quality gates / regression</td><td>High</td><td>Medium</td><td><span class="risk high">HIGH</span></td><td>Add tests (F2); confirm build/lint; smoke-test multiselect consumers</td></tr>
-      <tr><td>Validation</td><td>Medium</td><td>Medium</td><td><span class="risk med">MED</span></td><td>Deep-verify checker-level picker validation</td></tr>
-      <tr><td>Falcon components</td><td>Low</td><td>Low</td><td><span class="risk low">LOW</span></td><td>Used correctly; new lib component presentation-only</td></tr>
+      <tr><td>Architecture / structure</td><td>High</td><td>Medium</td><td><span class="risk high">HIGH</span></td><td>Promote duplicated layer to libs/falcon (F1)</td></tr>
+      <tr><td>FE↔BE contract</td><td>Medium</td><td>High</td><td><span class="risk high">HIGH</span></td><td>Refresh backend understanding doc (B1)</td></tr>
+      <tr><td>Templates reachability / CORS</td><td>Medium</td><td>High</td><td><span class="risk high">HIGH</span></td><td>Verify gateway route + CORS (B2)</td></tr>
+      <tr><td>Security / PES</td><td>Medium</td><td>High</td><td><span class="risk high">HIGH</span></td><td>PES pass (F3)</td></tr>
+      <tr><td>Quality gates / tests</td><td>High</td><td>Medium</td><td><span class="risk high">HIGH</span></td><td>Add tests (F2)</td></tr>
+      <tr><td>Shared-lib regression</td><td>Low</td><td>Low</td><td><span class="risk low">LOW</span></td><td>Changes additive — regression graph confirmed</td></tr>
     </tbody>
   </table>
-  <h3>Regression surface</h3>
+  <h2 style="font-size:14px;border:0;margin-top:18px">Regression surface (computed)</h2>
   <table>
-    <thead><tr><th>Touched area</th><th>Downstream consumers</th><th>Risk</th><th>Notes</th></tr></thead>
+    <thead><tr><th>Shared file</th><th>Importers</th><th>Change</th><th>Risk</th></tr></thead>
     <tbody>
-      <tr><td><code>falcon-multiselect</code></td><td>All features using it</td><td><span class="risk low">LOW</span></td><td>Additive change (+2 html / +8 model) — smoke-test consumers</td></tr>
-      <tr><td><code>shared-types</code> (access registry, enums)</td><td>All apps consuming the registry</td><td><span class="risk med">MED</span></td><td>Registry/enum changes ripple platform-wide — confirm no key collisions</td></tr>
-      <tr><td><code>runtime-api-config.ts</code></td><td>All gateway consumers</td><td><span class="risk med">MED</span></td><td>New gateway config — verify existing gateways untouched</td></tr>
-      <tr><td>host-shell Add User wizard</td><td>User creation flow</td><td><span class="risk med">MED</span></td><td>Permissions/checker step changed — exercise the full flow</td></tr>
-      <tr><td><code>environment*.ts</code></td><td>All host-shell builds</td><td><span class="risk low">LOW</span></td><td>Additive URL only</td></tr>
+      <tr><td><code>runtime-api-config.ts</code></td><td>40</td><td>Additive — new key + enum entry only</td><td><span class="risk low">LOW</span></td></tr>
+      <tr><td><code>falcon-multiselect</code></td><td>1</td><td>Additive — optional <code>disabled?</code> fields</td><td><span class="risk low">LOW</span></td></tr>
+      <tr><td><code>falcon-access.registry.ts</code></td><td>2</td><td>Registry entry added</td><td><span class="risk med">LOW–MED</span></td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- ============ FIXES ============ -->
 <section id="fixes">
-  <h2><span class="n">6</span> Required &amp; recommended fixes</h2>
-  <h3>Required — blocks merge</h3>
-  <table>
-    <thead><tr><th>#</th><th>Sev</th><th>Fix</th><th>Verify by</th></tr></thead>
-    <tbody>
-      <tr><td><strong>R1</strong></td><td><span class="sev P1">P1</span></td>
-        <td>De-duplicate the Template Management shared layer — move models, mappers, API service, and reusable sub-components into <code>libs/falcon</code>; each app keeps only its app-specific shell.</td>
-        <td>One copy in <code>libs/falcon</code>; both apps import it; <code>nx build</code> green; no duplicate <code>template-management.models.ts</code> under <code>apps/</code>. <strong>Re-review required.</strong></td></tr>
-    </tbody>
-  </table>
-  <h3>Recommended — non-blocking follow-ups</h3>
+  <h2><span class="n">7</span> Required &amp; recommended fixes</h2>
   <table>
     <thead><tr><th>#</th><th>Sev</th><th>Fix</th></tr></thead>
     <tbody>
-      <tr><td>R2</td><td><span class="sev P2">P2</span></td><td>Add specs for services, mappers, and the checker/permissions step.</td></tr>
-      <tr><td>R3</td><td><span class="sev P2">P2</span></td><td>Run a dedicated PES pass on checker-level + access-registry changes. <em>Advised before merge — security-sensitive.</em></td></tr>
-      <tr><td>R4</td><td><span class="sev P2">P2</span></td><td>Locate / link the Template Management PRD so business rules can be confirmed.</td></tr>
-      <tr><td>R5</td><td><span class="sev P2">P2</span></td><td>Generate <code>understanding/backend/</code> for the Core Templates service; verify FE DTOs match.</td></tr>
-      <tr><td>R6</td><td><span class="sev P3">P3</span></td><td>Optionally route <code>console.error</code> through a shared logger.</td></tr>
-      <tr><td>R7</td><td><span class="sev P3">P3</span></td><td>Track PrimeNG removal for when this repo adopts the platform-wide migration.</td></tr>
+      <tr><td><strong>R1</strong></td><td><span class="sev P1">P1</span></td><td><strong>Required</strong> — de-duplicate the shared layer into <code>libs/falcon</code>. Re-review required.</td></tr>
+      <tr><td>R2</td><td><span class="sev P2">P2</span></td><td>Add specs for services, mappers, checker step.</td></tr>
+      <tr><td>R3</td><td><span class="sev P2">P2</span></td><td>PES pass on checker-level + access registry — advised before merge.</td></tr>
+      <tr><td>R4</td><td><span class="sev P2">P2</span></td><td>Locate / link the Template Management PRD.</td></tr>
+      <tr><td>R5</td><td><span class="sev P2">P2</span></td><td>Refresh <code>understanding/backend/templates/</code> vs live BE source (resolves B1).</td></tr>
+      <tr><td>R6</td><td><span class="sev P2">P2</span></td><td>Verify Templates gateway route + CORS (resolves B2) — feature cannot work in the browser without it.</td></tr>
+      <tr><td>R7</td><td><span class="sev P3">P3</span></td><td>Order-insensitive <code>serializeChannels</code> (resolves C1).</td></tr>
+      <tr><td>R8</td><td><span class="sev P3">P3</span></td><td>Optionally route <code>console.error</code> through a shared logger.</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- ============ DECISION ============ -->
 <section id="decision">
-  <h2><span class="n">7</span> Final decision</h2>
+  <h2><span class="n">8</span> Final decision</h2>
   <div class="callout warn">
-    <strong style="color:var(--p1)">REQUEST_CHANGES</strong> &mdash; decided mechanically,
-    not by opinion:
-    <ul style="margin:8px 0 0 18px;color:var(--soft)">
-      <li>Any P0 &rarr; <code>BLOCK_MERGE</code> &mdash; <strong>0 P0s</strong>, so not reached.</li>
-      <li>Any unresolved P1 &rarr; <code>REQUEST_CHANGES</code> &mdash; <strong>1 P1 (F1)</strong> &rarr; this is the decision.</li>
-      <li>P2/P3 do not change the decision — they are follow-ups.</li>
-    </ul>
+    <strong style="color:var(--p1)">REQUEST_CHANGES</strong> — 0 P0, 1 unresolved P1 (F1).
+    Rule: any unresolved P1 → REQUEST_CHANGES. Same verdict as v1, but better grounded —
+    the intelligence engine resolved the repo conflict, retracted a false P1, corrected a
+    v1 error, downgraded regression risk, and added two verified P2 findings.
   </div>
-  <h3>Conditions to flip to APPROVE</h3>
-  <table>
-    <thead><tr><th>#</th><th>Condition</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td><strong>R1</strong> — de-duplicate the shared layer into <code>libs/falcon</code>.</td></tr>
-      <tr><td>2</td><td>Confirm <code>nx build</code> + <code>nx lint</code> green for the 3 apps + <code>falcon</code> lib.</td></tr>
-      <tr><td>3</td><td>P2 items R2–R5 addressed or explicitly accepted as tracked debt — at minimum complete R3 (PES pass) before merge.</td></tr>
-    </tbody>
-  </table>
-  <p class="lead">What is good in this PR: clean feature folders, correct Falcon-component
-  usage, no secrets, no SCSS, no hardcoded colors, no mock data, i18n keys added, API
-  code correctly kept in the host apps (not the library), and the new
-  <code>falcon-checker-section</code> correctly placed in <code>libs/falcon</code>. The
-  duplication (F1) is therefore an <em>inconsistency</em>, not a missing capability —
-  straightforward to fix.</p>
-</section>
-
-<!-- ============ CONFLICT ============ -->
-<section id="conflict">
-  <h2><span class="n">8</span> Source-of-truth conflict (declared, not guessed)</h2>
   <div class="callout">
-    Brain SK memory describes the <strong>v2 workspace</strong>
-    (<code>C:\Falcon\falcon-web-platform-ui</code> — Stencil <code>falcon-ui-core</code>,
-    PrimeNG removed, native UI banned). The repo actually reviewed is the
-    <strong>legacy clone</strong> <code>C:\Falcon\Falcon\falcon-web-platform-ui</code> —
-    it ships <code>primeng@^20.4.0</code>, uses Angular Nx <code>shared-ui</code> libs,
-    and has no <code>falcon-button</code>/<code>falcon-tabs</code> component.
-    <br><br>
-    Per the skill's source-of-truth order, the <strong>codebase (tier 2) wins over
-    memory</strong>. The review was conducted against this repo's own conventions —
-    which is why PrimeNG (F6) and raw <code>&lt;button&gt;</code> were <strong>not</strong>
-    flagged as violations. <strong>Recommended action:</strong> confirm with the
-    architect which repo is canonical.
+    <strong>To flip to APPROVE:</strong> (1) R1 — de-duplicate into <code>libs/falcon</code>;
+    (2) confirm <code>nx build</code>/<code>nx lint</code> green; (3) strongly recommended
+    before merge — R6 (CORS) and R3 (PES pass); (4) R2/R4/R5/R7 done or accepted as tracked debt.
   </div>
+  <p class="lead">Good in this PR: clean feature folders, correct Falcon-component
+  usage, no secrets, no SCSS, no hardcoded colors, no mock data, i18n added, API code
+  kept in host apps, defensive API coercion, all subscriptions guarded, and the new
+  <code>falcon-checker-section</code> correctly placed in the library. F1 is an
+  inconsistency, not a missing capability — straightforward to fix.</p>
 </section>
 
 <footer>
-  Generated by Brain SK · PR Review Governance Skill ·
-  <code>skills/pr-review-governance/SKILL.md</code><br>
-  Companion Markdown: <code>PR_REVIEW_REPORT.md</code> · <code>PR_REVIEW_FINDINGS.md</code> ·
-  <code>PR_REVIEW_CHECKLIST.md</code> · <code>PR_REVIEW_RISK_MATRIX.md</code> ·
-  <code>PR_REVIEW_REQUIRED_FIXES.md</code> · <code>PR_REVIEW_APPROVAL_DECISION.md</code><br>
-  Report folder: <code>Brain Outputs\reports\pr-reviews\final_template_management_feature-2026-05-19\</code>
+  Generated by Brain SK · PR Review Governance Skill · re-review v2 · 2026-05-19 ·
+  <strong>Silent review — nothing posted to PR #41631.</strong><br>
+  Companion Markdown: PR_REVIEW_REPORT.md · PR_REVIEW_FINDINGS.md · PR_REVIEW_CHECKLIST.md ·
+  PR_REVIEW_RISK_MATRIX.md · PR_REVIEW_REQUIRED_FIXES.md · PR_REVIEW_APPROVAL_DECISION.md
 </footer>
 
 </div>
 
 <script>
-  // finding severity filter
-  document.getElementById('fbar').addEventListener('click', function(e){
-    var btn = e.target.closest('button'); if(!btn) return;
-    document.querySelectorAll('#fbar button').forEach(function(b){b.classList.remove('active')});
-    btn.classList.add('active');
-    var f = btn.dataset.f;
-    document.querySelectorAll('.finding').forEach(function(card){
-      var show = (f === 'all') || (card.dataset.sev === f);
-      card.classList.toggle('hidden', !show);
-      if(show && f !== 'all') card.open = true;
-    });
+  document.querySelectorAll('.finding>summary').forEach(function(s){
+    s.addEventListener('click',function(){/* native details toggle */});
   });
 </script>
 </body>

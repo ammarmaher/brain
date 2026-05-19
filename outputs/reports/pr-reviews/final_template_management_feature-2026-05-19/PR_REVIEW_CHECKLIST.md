@@ -1,90 +1,57 @@
-# PR Review Checklist — PR #41631 (`final_template_management_feature`)
+# PR Review Checklist — PR #41631 (Re-review v2)
 
 > Reviewer: Brain SK · 2026-05-19 · ✅ pass · ❌ fail · ⚠️ partial/unverified · N/A.
 
-## 1. Scope identified
-
-- [x] ✅ Source + target branch identified (`final_template_management_feature` → `main`)
-- [x] ✅ Changed files listed (77 files, +5860 / −21)
-- [x] ✅ Affected apps/libs listed (admin-console, management-console, host-shell, `libs/falcon`)
-- [x] ✅ Classified — Frontend (Angular/Nx)
-- [x] ✅ Affected components/APIs/DTOs listed
+## 1. Scope
+- [x] ✅ Source/target branch · 77 files · domains classified
+- [x] ✅ Affected apps/libs/components/APIs listed
 
 ## 2. Knowledge loaded
-
-- [x] ✅ `KNOWLEDGE_ROOT_INDEX.md` reachable
-- [x] ✅ Frontend structure + Falcon component knowledge loaded
-- [x] ⚠️ PRD — Template Management PRD NOT found (F4)
-- [x] ✅ Known gaps checked (Atlas Wave 4 "Templates CRUD missing")
+- [x] ✅ `KNOWLEDGE_ROOT_INDEX.md`, frontend + Falcon component knowledge
+- [x] ✅ Backend understanding `understanding/backend/templates/` (exists — used for cross-check)
+- [x] ⚠️ Template Management PRD NOT found (F4)
 
 ## 3. Architecture & structure
-
-- [x] ✅ Correct feature folder structure (`components`/`models`/`services`/`utils`)
-- [x] ✅ models/services placement correct
-- [x] ✅ No random folders
-- [x] ✅ Consolidated model files
-- [x] ❌ Shared vs feature-local — shared layer duplicated across 2 apps (F1)
-- [x] ⚠️ Nx lib boundaries — partially (F1: shared code not promoted to lib)
-- [x] ✅ Route / menu conventions
+- [x] ✅ Feature folder structure / placement / route conventions
+- [x] ❌ Shared-vs-feature-local — duplicated across 2 apps (F1)
 - [x] ❌ No duplicated logic — duplicated (F1)
+- [x] ⚠️ Nx lib boundaries — shared code not promoted
 
 ## 4. Falcon frontend rules
+- [x] ✅ Falcon components used; new lib component presentation-only
+- [x] ✅ No raw table/input/select where a Falcon component exists
+- [x] ✅ Tailwind + tokens only · 0 CSS/SCSS · 0 hex · 0 inline style
+- [x] ✅ PrimeNG — sanctioned in this repo (canonical confirmed); F6 resolved
 
-- [x] ✅ Falcon custom components used (`falcon-multiselect`, `-icon`, `-divider`, `-organization-hierarchy-tree`, `-send-credentials-popup`, new `-checker-section`)
-- [x] ✅ No raw table/input/select where a Falcon component exists; raw `<button>`/tab strip acceptable (no `falcon-button`/`falcon-tabs` in this repo)
-- [x] ✅ Dynamic APIs — new lib component presentation-only with `index.ts` barrel
-- [x] ✅ Tailwind + Falcon tokens only
-- [x] ✅ No new CSS/SCSS (0 files)
-- [x] ✅ No hardcoded colors/spacing (0 hex; 0 inline `style=`)
-- [x] ⚠️ PrimeNG — used in new code but consistent with this repo (F6); not a violation here
+## 5. Validation & API / DTO
+- [x] ✅ API services typed, error-handled, endpoints match registry
+- [x] ✅ No mock data · i18n keys added
+- [x] ⚠️ FE↔BE DTO contract — conflict with backend doc (B1)
+- [x] ⚠️ Templates browser reachability / CORS unverified (B2)
 
-## 5. Validation
+## 6. Business logic
+- [x] ✅ Design proposal documented
+- [x] ⚠️ PRD flow / lifecycle / permissions — unverified (F4, F3)
 
-- [x] ⚠️ FE validation vs backend rule — not deep-verified (no Core Templates backend doc)
-- [x] ⚠️ required/nullable/disabled — checker-level picker not deep-verified (F3)
-- [x] N/A OTP/IP/email/phone
-- [x] ⚠️ Error states — load failure caught + logged; confirm UI error/empty render
-- [x] ✅ i18n messages added (`en.json` +71, `ar.json`)
-- [x] ⚠️ Backend authoritative — unverified (F3/F4)
+## 7. Security / PES
+- [x] ✅ No secrets · no sensitive logging · no guard removed
+- [x] ⚠️ Permissions / maker-checker — needs PES pass (F3)
 
-## 6. API / DTO integration
+## 8. Quality gates
+- [x] ❌ Tests — 0 spec files (F2)
+- [x] ⚠️ Build / lint — NOT RUN (needs PR-branch checkout); author confirms
+- [x] ✅ Subscription safety — 18/18 guarded with `takeUntilDestroyed`
+- [x] ✅ Regression — shared-lib changes additive → LOW
+- [x] ✅ No `any` holes / unsafe casts in changed services/mappers
+- [x] ⚠️ 1 intentional `console.error` (F5)
 
-- [x] ⚠️ DTOs match backend — UNVERIFIED (no Core Templates backend understanding)
-- [x] ✅ Request/response models present + typed
-- [x] ✅ API services use correct gateway (`baseURLCoreTemplatesGateway`)
-- [x] ⚠️ Error/loading/empty/success — error path present; empty/success confirm pending
-- [x] ✅ No mock data left in code
-- [x] ✅ No breaking API assumptions visible in diff
-
-## 7. Business logic
-
-- [x] ⚠️ PRD flow — UNVERIFIED (F4)
-- [x] ⚠️ Statuses / lifecycle — UNVERIFIED
-- [x] ⚠️ Permissions / PES — UNVERIFIED (F3)
-- [x] ⚠️ Allowed actions by status/role — UNVERIFIED
-- [x] ✅ Design proposal documented (`docs/checker-assignment-integration-proposal.md`)
-
-## 8. Security / PES
-
-- [x] ✅ No secrets committed (env diff = gateway URLs only)
-- [x] ✅ No credentials in code/reports
-- [x] ⚠️ Permissions enforced — needs PES pass (F3)
-- [x] ⚠️ Maker/checker rules — needs PES pass (F3)
-- [x] ✅ Sensitive data not logged
-- [x] ✅ Route access not weakened (no guard removed)
-
-## 9. Quality gates
-
-- [x] ⚠️ Build / typecheck — NOT RUN (review-only); author must confirm
-- [x] ⚠️ Lint — NOT RUN; author must confirm
-- [x] ❌ Tests — 0 spec files added (F2)
-- [x] N/A Visual parity — no source design supplied
-- [x] ✅ No stray console logs (1 intentional `console.error`, F5)
-- [x] ⚠️ Regression risk — `falcon-multiselect` shared component modified (additive)
+## 9. Code-level error pass
+- [x] ⚠️ C1 — order-sensitive dirty-tracking (`serializeChannels`)
+- [x] ✅ No null-deref / unhandled-observable / dead-code defects found
 
 ## 10. Output
-
-- [x] ✅ All 6 review docs produced
-- [x] ✅ Risk matrix filled
+- [x] ✅ 6 MD docs + HTML produced (consistent — 9 findings)
+- [x] ✅ Risk matrix · required fixes filled
 - [x] ✅ Obsidian `PR_REVIEW_INDEX.md` updated
-- [x] ✅ Additive output mirror done
+- [x] ✅ Additive mirror done
+- [x] ✅ Silent review — nothing posted to the PR
