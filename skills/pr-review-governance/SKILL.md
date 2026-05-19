@@ -156,7 +156,7 @@ Create the dated review folder:
 C:\Falcon\Brain Outputs\reports\pr-reviews\<PR-or-branch-name>-<YYYY-MM-DD>\
 ```
 
-Inside it create:
+Inside it create (all are **mandatory** — every review produces the full set):
 
 - `PR_REVIEW_REPORT.md` (main report — format below)
 - `PR_REVIEW_FINDINGS.md`
@@ -164,12 +164,103 @@ Inside it create:
 - `PR_REVIEW_RISK_MATRIX.md`
 - `PR_REVIEW_REQUIRED_FIXES.md`
 - `PR_REVIEW_APPROVAL_DECISION.md`
-- `PR_REVIEW_REPORT.pdf` — **only if** a PDF toolchain is available; otherwise note
-  "PDF skipped — no PDF toolchain" in the report.
+- **`PR_REVIEW_REPORT.html`** — **ALWAYS generated.** A single self-contained HTML
+  file (inline CSS, no external/CDN dependencies, works offline) that consolidates
+  every section above into one readable, navigable page: decision banner, severity
+  stat cards, collapsible findings with code evidence, a pass/fail governance
+  checklist, the risk matrix, required fixes, and the decision rationale. This is
+  not optional and does not depend on any toolchain — it is a plain file write.
+- `PR_REVIEW_REPORT.pdf` — only if a PDF toolchain is available; otherwise note
+  "PDF skipped — no PDF toolchain" in the report. The HTML covers the readable-output
+  need regardless.
 
-Blank templates for all six Markdown files live in
+Blank templates for the Markdown files and the HTML report live in
 [`templates/`](templates/) next to this skill — copy them into the dated folder
 and fill them in.
+
+### Code evidence — mandatory for every finding
+
+A finding is not complete until it carries **code evidence**: the reviewer must
+"take a shot from the code" — quote the actual offending lines from the diff or the
+source file, with a `file:line` reference, and state plainly **what the error is**.
+Every finding then carries a concrete **suggested fix** — a corrected code snippet
+or a precise change instruction, not a vague description. The pattern per finding:
+
+1. **Code shot** — the real lines, fenced, with `file:line`.
+2. **What is wrong** — the specific defect in those lines (bug, contract mismatch,
+   rule violation, leak, dead code, order-sensitivity, etc.).
+3. **Suggested fix** — corrected snippet or exact instruction.
+
+If a finding is structural (e.g. duplication) the "code shot" is the proof — e.g.
+the `git diff`/`diff` output showing the two files are identical. Findings without
+code evidence are downgraded to "observations" and must not drive the decision.
+
+### Code-level error pass (not just governance)
+
+Beyond governance rules, every review runs a **code-level error pass** over the
+changed files looking for real defects: null/undefined dereferences, unhandled
+promise/observable errors, unsubscribed subscriptions (missing
+`takeUntilDestroyed`/`async`), order-sensitive serialization or comparison, dead /
+unreachable code, off-by-one and boolean-logic mistakes, type holes (`any`, unsafe
+casts), missing `await`, race conditions, and DTO/contract mismatches against the
+backend. Each real defect found becomes a finding with code evidence + suggested
+fix, classified P0–P3 like any other.
+
+## Review mode — Silent Review is the default
+
+**Brain SK runs every PR review in SILENT mode by default.** A silent review reads
+the PR, produces the report set locally (Markdown + HTML), and posts **nothing** to
+the pull request itself — no PR thread comments, no inline comments, no file
+attachments, no status updates on the Azure DevOps / GitHub PR.
+
+- The review output lives **only** in
+  `Brain Outputs/reports/pr-reviews/<...>/` and its Brain SK mirror.
+- Brain SK must **never** post to a PR without being explicitly told to in this
+  same request.
+- Before doing anything that writes to the PR, Brain SK **must ask**:
+  *"Do you want to add the findings as comments on the PR, or attach the report to
+  the PR? (default: No — silent review)"* — and proceed only on an explicit "yes".
+- If the user does not answer, or answers anything other than an explicit yes →
+  **silent review** (post nothing).
+
+This keeps PR review a private advisory tool. The decision
+(`APPROVE` / `REQUEST_CHANGES` / …) is recorded in the report, not pushed onto the
+PR, unless the user explicitly opts in.
+
+## Intelligence engine
+
+Every review applies these four capabilities to move findings from "unverified
+opinion" to "verified fact". When a capability genuinely cannot run, the review
+says so and marks the affected items `⚠ UNVERIFIED` rather than guessing.
+
+1. **Backend contract cross-check.** For any changed FE DTO / API model, load the
+   owning service's `DTO_DICTIONARY.md` + `ENDPOINT_REGISTRY.md` from
+   `understanding/backend/<service>/` and diff the FE shape against it. A real
+   mismatch (wrong field name, type, nullability, missing endpoint) is a P0/P1
+   finding with code evidence. If no backend understanding exists for the service,
+   flag a gap and recommend generating it — do not assume the contract is correct.
+
+2. **Auto-run quality gates.** Run the affected build / lint / test for the changed
+   projects (e.g. `nx affected -t build lint test --base=<target> --head=<source>`)
+   and ingest the real results into the Quality Gates section. Only when the
+   commands cannot run in the environment is the gate marked `⚠ NOT RUN` with the
+   reason.
+
+3. **Two-pass adversarial review.** After the first-pass findings are drafted, run
+   a second pass that challenges them: re-check each finding for false positives,
+   re-scan the diff for missed defects, and re-test the severity. The report keeps
+   only findings that survive the second pass; removed/added items are noted in
+   `PR_REVIEW_FINDINGS.md` under a "second-pass adjustments" note. This reduces
+   hallucinated findings and missed bugs.
+
+4. **Regression-impact graph.** Build the dependency graph of the changed files
+   (e.g. `nx graph --file` or import-tracing) to compute the *real* downstream
+   consumers — which apps, libs, pages, and components import what changed. The
+   Risk Matrix "regression surface" is computed from this graph, not guessed.
+
+Each capability that produces a defect feeds the normal findings pipeline (code
+evidence + suggested fix + P0–P3). Each that produces a clean result is recorded as
+a verified-clean line so the reader knows it was actually checked.
 
 ## Review severity
 
@@ -217,6 +308,10 @@ The main report must include these ten sections:
 9. **Quality gates** — `| Gate | Status | Evidence |`
 10. **Final decision** — approve/request changes/block · required fixes ·
     recommended fixes · next action.
+
+The same content is rendered into `PR_REVIEW_REPORT.html` with, additionally, a
+**Code Evidence** section: per-finding code shots (the real offending lines) and
+suggested-fix snippets, plus the code-level error pass results.
 
 ## Obsidian
 

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+  PR REVIEW GOVERNANCE — HTML REPORT TEMPLATE
+  ============================================
+  This is the skeleton for the MANDATORY `PR_REVIEW_REPORT.html` every review
+  produces. Rules:
+   - Self-contained: inline CSS only, NO external/CDN links, works offline.
+   - Replace every {{PLACEHOLDER}}.
+   - Sections (keep all): Summary · Change scope · Findings · Code Evidence ·
+     Checklist (pass/fail) · Risk matrix · Required fixes · Decision · Conflicts.
+   - Every finding card needs a severity pill (P0-P3) and a status pill.
+   - The Code Evidence section is REQUIRED: per finding a "code shot" (real lines)
+     + "what is wrong" + "suggested fix". Use the .codeblock / .fix classes.
+   - A reference fully-rendered example: any existing
+     Brain Outputs/reports/pr-reviews/<...>/PR_REVIEW_REPORT.html
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PR {{PR_ID}} Review — {{SOURCE_BRANCH}}</title>
+<style>
+  :root{
+    --bg:#0f1115;--panel:#171a21;--panel2:#1d2129;--line:#2a2f3a;
+    --txt:#e6e8ec;--muted:#9aa3b2;--soft:#c4cad4;
+    --p0:#ef4444;--p1:#f97316;--p2:#f59e0b;--p3:#60a5fa;
+    --pass:#22c55e;--fail:#ef4444;--warn:#f59e0b;--na:#6b7280;--accent:#38bdf8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);
+    color:var(--txt);line-height:1.55;font-size:15px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px 80px}
+  a{color:var(--accent)}
+  h1{font-size:26px;margin:6px 0}
+  h2{font-size:18px;margin-top:34px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .sev{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:5px;color:#0b0d11}
+  .sev.P0{background:var(--p0)}.sev.P1{background:var(--p1)}
+  .sev.P2{background:var(--p2)}.sev.P3{background:var(--p3)}
+  .st{display:inline-flex;gap:5px;font-size:12px;font-weight:700;padding:2px 9px;border-radius:20px}
+  .st.pass{background:rgba(34,197,94,.14);color:var(--pass);border:1px solid rgba(34,197,94,.4)}
+  .st.fail{background:rgba(239,68,68,.14);color:var(--fail);border:1px solid rgba(239,68,68,.4)}
+  .st.warn{background:rgba(245,158,11,.14);color:var(--warn);border:1px solid rgba(245,158,11,.4)}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+  th,td{text-align:left;padding:8px 11px;border:1px solid var(--line);vertical-align:top}
+  th{background:var(--panel2)}
+  .finding{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:12px;padding:13px 16px}
+  /* CODE EVIDENCE — required styling */
+  .codeblock{background:#0b0d11;border:1px solid var(--line);border-left:3px solid var(--fail);
+    border-radius:6px;padding:10px 13px;margin-top:8px;font-family:ui-monospace,Consolas,monospace;
+    font-size:12.5px;color:#d6dbe4;overflow-x:auto;white-space:pre}
+  .fix{background:#0b0d11;border:1px solid var(--line);border-left:3px solid var(--pass);
+    border-radius:6px;padding:10px 13px;margin-top:8px;font-family:ui-monospace,Consolas,monospace;
+    font-size:12.5px;color:#d6dbe4;overflow-x:auto;white-space:pre}
+  .fileref{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--accent)}
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>PR {{PR_ID}} — {{FEATURE_TITLE}}</h1>
+  <p>{{SOURCE_BRANCH}} → {{TARGET_BRANCH}} · {{FILES_CHANGED}} files · Reviewed {{DATE}}
+     · Decision: <span class="sev {{DECISION_CLASS}}">{{DECISION}}</span></p>
+
+  <h2>1. Summary</h2>
+  <p>{{SUMMARY}}</p>
+  <p>Counts — P0:{{P0}} · P1:{{P1}} · P2:{{P2}} · P3:{{P3}}</p>
+
+  <h2>2. Change scope</h2>
+  <table><thead><tr><th>Area</th><th>Files</th><th>Risk</th><th>Notes</th></tr></thead>
+  <tbody>{{SCOPE_ROWS}}</tbody></table>
+
+  <h2>3. Findings</h2>
+  <!-- one .finding per finding -->
+  <div class="finding">
+    <span class="sev {{SEV}}">{{SEV}}</span> <strong>{{FID}} — {{FINDING_TITLE}}</strong>
+    <span class="st {{STATUS_CLASS}}">{{STATUS}}</span>
+    <p>{{FINDING_BODY}}</p>
+  </div>
+
+  <h2>4. Code Evidence <span style="font-size:12px;color:#9aa3b2">— required: real lines + defect + fix</span></h2>
+  <!-- one block per finding that has code evidence -->
+  <div class="finding">
+    <strong>{{FID}} — {{FINDING_TITLE}}</strong>
+    <div class="label">Code shot — <span class="fileref">{{FILE_PATH}}:{{LINE}}</span></div>
+    <div class="codeblock">{{REAL_OFFENDING_LINES}}</div>
+    <div class="label">What is wrong</div>
+    <p>{{DEFECT_EXPLANATION}}</p>
+    <div class="label">Suggested fix</div>
+    <div class="fix">{{CORRECTED_SNIPPET_OR_INSTRUCTION}}</div>
+  </div>
+
+  <h2>5. Governance checklist — what passed / failed</h2>
+  <table><thead><tr><th>Check</th><th>Status</th><th>Note</th></tr></thead>
+  <tbody>{{CHECKLIST_ROWS}}</tbody></table>
+
+  <h2>6. Risk matrix</h2>
+  <table><thead><tr><th>Area</th><th>Likelihood</th><th>Impact</th><th>Risk</th><th>Mitigation</th></tr></thead>
+  <tbody>{{RISK_ROWS}}</tbody></table>
+
+  <h2>7. Required &amp; recommended fixes</h2>
+  <table><thead><tr><th>#</th><th>Sev</th><th>Fix</th></tr></thead>
+  <tbody>{{FIX_ROWS}}</tbody></table>
+
+  <h2>8. Final decision</h2>
+  <p><strong>{{DECISION}}</strong> — {{DECISION_RATIONALE}}</p>
+
+  <h2>9. Conflicts / source-of-truth notes</h2>
+  <p>{{CONFLICTS}}</p>
+
+  <footer style="margin-top:40px;border-top:1px solid var(--line);padding-top:16px;
+    color:var(--muted);font-size:12px">
+    Generated by Brain SK · PR Review Governance Skill · skills/pr-review-governance/SKILL.md
+  </footer>
+</div>
+</body>
+</html>

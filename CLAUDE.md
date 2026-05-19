@@ -395,8 +395,19 @@ approved patterns → (7) Falcon component knowledge → (8) validation/business
 registries → (9) best practice (only when all above are silent). Conflicts are
 reported as risk/gap, never guessed.
 
-Every review produces six docs (`PR_REVIEW_REPORT.md`, `PR_REVIEW_FINDINGS.md`,
-`PR_REVIEW_CHECKLIST.md`, `PR_REVIEW_RISK_MATRIX.md`, `PR_REVIEW_REQUIRED_FIXES.md`,
+**Silent Review is the default.** A PR review posts NOTHING to the pull request
+itself — no PR comments, no inline comments, no attachments, no status updates.
+Output lives only in `Brain Outputs/reports/pr-reviews/`. Brain SK must explicitly
+ask *"Do you want findings added as PR comments or the report attached to the PR?
+(default: No)"* before any PR write, and proceed only on an explicit yes.
+
+Every review also runs the **intelligence engine** — backend-contract cross-check,
+auto-run quality gates, two-pass adversarial review, regression-impact graph — and
+every finding carries **code evidence** (real lines + defect + suggested fix).
+
+Every review produces seven docs (`PR_REVIEW_REPORT.md`, `PR_REVIEW_REPORT.html`
+(always), `PR_REVIEW_FINDINGS.md`, `PR_REVIEW_CHECKLIST.md`,
+`PR_REVIEW_RISK_MATRIX.md`, `PR_REVIEW_REQUIRED_FIXES.md`,
 `PR_REVIEW_APPROVAL_DECISION.md`) under
 `Brain Outputs/reports/pr-reviews/<PR-or-branch>-<YYYY-MM-DD>/`, classifies every
 finding P0–P3, and ends in one decision: `APPROVE` / `APPROVE_WITH_MINOR_NOTES` /
