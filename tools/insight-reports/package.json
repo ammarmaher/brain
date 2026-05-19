@@ -1,0 +1,24 @@
+{
+  "name": "brain-sk-insight-reports-tool",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Isolated Executive Insight Reports tool for Brain SK — renders chart-heavy, boss-ready Markdown/HTML/PDF reports. Dependencies are PLANNED, not yet installed (setup-only scaffold).",
+  "type": "module",
+  "scripts": {
+    "verify": "echo insight reports tool placeholder"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "_dependencyPlan": {
+    "note": "Run `npm install` of these only when a real executive report is first generated. Keep isolated to this folder — never add to the Falcon Angular workspace.",
+    "preferred": {
+      "echarts": "KPI cards, scorecards, radar/pie/bar/trend charts",
+      "mermaid": "architecture / flow / sequence / dependency diagrams",
+      "puppeteer | playwright": "HTML to PDF export (PDF itself is optional)",
+      "handlebars | mustache": "report HTML templating"
+    },
+    "optional": {
+      "chart.js": "lightweight chart fallback"
+    }
+  }
+}

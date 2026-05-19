@@ -220,3 +220,35 @@ Obsidian must not become a competing source of truth. Notes hold the graph (link
 ### Sister vault (NOT switched)
 
 A second configured Obsidian vault exists at `C:\Falcon\falcon-wiki`. This protocol does NOT switch to it without explicit Ammar approval. Cross-vault graph queries are out of scope until decided.
+
+## Statistics & Executive Reports — Obsidian Link Block
+
+Brain SK has two shared reporting skills with dedicated graph nodes:
+
+- `_obsidian/STATISTICS_INDEX.md` — **Statistical Intelligence** graph node
+- `_obsidian/EXECUTIVE_REPORTS_INDEX.md` — **Executive Insight Reports** graph node
+
+Every time the **Statistical Intelligence** skill (`skills/statistical-intelligence/SKILL.md`)
+produces a statistics run, the auto-link layer must additively refresh
+`_obsidian/STATISTICS_INDEX.md` — add one entry per run linking:
+
+- `[STATISTICS_REPORT.md](../../Brain%20Outputs/reports/statistics/<stats-name>-<YYYY-MM-DD-HHmm>/STATISTICS_REPORT.md)`
+- `STATISTICS_DATA.json`, `KPI_SUMMARY.md`, `FORMULAS_USED.md`, `RISK_SCORECARD.md` in the same run folder
+- related page note(s) (`10-Pages/<Page>.md`), the PR-review node, the Falcon Eyes node when relevant
+
+Every time the **Executive Insight Reports** skill (`skills/executive-insight-reports/SKILL.md`)
+produces a report, the auto-link layer must additively refresh
+`_obsidian/EXECUTIVE_REPORTS_INDEX.md` — add one entry per report linking:
+
+- `[EXECUTIVE_REPORT.md](../../Brain%20Outputs/reports/executive-insights/<report-name>-<YYYY-MM-DD-HHmm>/EXECUTIVE_REPORT.md)`
+- the `EXECUTIVE_REPORT.html` / `.pdf` when present
+- the statistics run it consumed (its `_obsidian/STATISTICS_INDEX.md` entry)
+- related page / PR-review / Falcon Eyes / component nodes
+
+Both skills also keep `_obsidian/AMMAR_BRAIN_HOME.md` linking the two index notes
+under its **Indexes** section.
+
+**Hard constraint repeated:** no edits to `_obsidian/.obsidian/`, Copilot
+`data.json`, plugin workspace files, or any secret file. Statistics / executive
+auto-link operates on the Markdown index notes only and never overwrites prior
+run rows (additive only).

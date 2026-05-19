@@ -414,3 +414,52 @@ finding P0–P3, and ends in one decision: `APPROVE` / `APPROVE_WITH_MINOR_NOTES
 `REQUEST_CHANGES` / `BLOCK_MERGE` / `NEEDS_MORE_CONTEXT` (any P0 → `BLOCK_MERGE`;
 any unresolved P1 → `REQUEST_CHANGES`). The Obsidian graph node is
 `_obsidian/PR_REVIEW_INDEX.md`.
+
+## Permanent Rule: Statistics & Executive Charts
+
+Brain SK has two shared reporting skills. Route to them automatically — Ammar
+does not need to name them.
+
+**Statistical Intelligence** — canonical [`skills/statistical-intelligence/SKILL.md`](skills/statistical-intelligence/SKILL.md),
+shared-domain entry [`domains/shared/statistical-intelligence/SKILL.md`](domains/shared/statistical-intelligence/SKILL.md).
+Calculates KPIs, percentages, scores, risk scores, trends, coverage, and
+data-quality numbers from `Brain Outputs/understanding/` + `reports/`. Trigger
+phrases: `calculate statistics`, `generate KPI stats`, `calculate report
+percentages`, `analyze progress statistically`, `calculate risk score`,
+`calculate page score`, `calculate PR review stats`, `calculate visual parity
+stats`, `make statistics for my boss report`. Slash command:
+`/calculate-statistics`. Output:
+`Brain Outputs/reports/statistics/<stats-name>-<YYYY-MM-DD-HHmm>/`.
+
+**Executive Insight Reports** — canonical [`skills/executive-insight-reports/SKILL.md`](skills/executive-insight-reports/SKILL.md),
+shared-domain entry [`domains/shared/executive-insight-reports/SKILL.md`](domains/shared/executive-insight-reports/SKILL.md).
+Produces professional, chart-heavy, boss-ready reports (Markdown + HTML, PDF when
+available). Trigger phrases: `create boss report`, `create executive report`,
+`create chart report`, `show progress with charts`, `generate status PDF`, `make
+report for my boss`, `summarize with charts`, `create dashboard report`. Slash
+command: `/create-executive-report`. Output:
+`Brain Outputs/reports/executive-insights/<report-name>-<YYYY-MM-DD-HHmm>/`.
+
+**Hard dependency rule:** Executive Insight Reports MUST call Statistical
+Intelligence FIRST whenever a report needs KPIs, percentages, trends, or risk
+scores. Statistical Intelligence owns the numbers, formulas, and chart-ready
+JSON; Executive Insight Reports only renders them. Charts never display invented
+numbers.
+
+Shared domain index: [`domains/shared/SKILL.md`](domains/shared/SKILL.md).
+Isolated tool folders: `tools/statistics/` and `tools/insight-reports/` — their
+dependencies stay isolated and are never added to the Falcon Angular workspace.
+Obsidian graph nodes: [`_obsidian/STATISTICS_INDEX.md`](_obsidian/STATISTICS_INDEX.md)
+and [`_obsidian/EXECUTIVE_REPORTS_INDEX.md`](_obsidian/EXECUTIVE_REPORTS_INDEX.md).
+Both skills follow the standing Brain SK rules: never invent or inflate numbers
+(missing data → `UNKNOWN` / `NEEDS_DATA`), additive output sync only
+(`robocopy /E /XO`, never `/MIR`), no secrets committed.
+
+**Chart Provenance & Generation Trace (MANDATORY).** Both skills must make every
+number and chart traceable. Each statistics run writes `REPORT_GENERATION_TRACE.md`
+(and `CHART_PROVENANCE.md` when it emits charts) and tags every chart-ready
+dataset with provenance metadata; each executive report carries a per-chart Chart
+Provenance block, a Chart Provenance table, plus `CHART_PROVENANCE.md` +
+`REPORT_GENERATION_TRACE.md`. A report or run missing provenance is invalid. See
+the `Chart Provenance & Generation Trace (MANDATORY)` section in each canonical
+skill; report templates live at `skills/executive-insight-reports/templates/`.

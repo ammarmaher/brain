@@ -1,0 +1,53 @@
+{
+  "name": "brain-sk-statistics-charts-skills-only",
+  "version": "0.1",
+  "description": "Only Statistical Intelligence and Executive Insight Reports skills for Brain SK.",
+  "appliedDate": "2026-05-19",
+  "skills": [
+    "skills/statistical-intelligence/SKILL.md",
+    "skills/executive-insight-reports/SKILL.md"
+  ],
+  "domains": [
+    "domains/shared/SKILL.md",
+    "domains/shared/statistical-intelligence/SKILL.md",
+    "domains/shared/executive-insight-reports/SKILL.md"
+  ],
+  "tools": [
+    "tools/statistics/README.md",
+    "tools/statistics/package.json",
+    "tools/statistics/example-run.md",
+    "tools/insight-reports/README.md",
+    "tools/insight-reports/package.json",
+    "tools/insight-reports/example-run.md"
+  ],
+  "routing": [
+    "CLAUDE.md",
+    "shared/SKILL_ROUTING_MANIFEST.md",
+    "domains/README.md",
+    "shared/obsidian-auto-link/OBSIDIAN_AUTO_LINK_PROTOCOL.md",
+    ".claude/commands/calculate-statistics.md",
+    ".claude/commands/create-executive-report.md"
+  ],
+  "obsidian": [
+    "_obsidian/STATISTICS_INDEX.md",
+    "_obsidian/EXECUTIVE_REPORTS_INDEX.md",
+    "_obsidian/AMMAR_BRAIN_HOME.md"
+  ],
+  "templates": [
+    "skills/executive-insight-reports/templates/README.md",
+    "skills/executive-insight-reports/templates/EXECUTIVE_REPORT.template.md",
+    "skills/executive-insight-reports/templates/CHART_PROVENANCE.template.md",
+    "skills/executive-insight-reports/templates/REPORT_GENERATION_TRACE.template.md",
+    "skills/executive-insight-reports/templates/sample-report/EXECUTIVE_REPORT.md",
+    "skills/executive-insight-reports/templates/sample-report/CHART_PROVENANCE.md",
+    "skills/executive-insight-reports/templates/sample-report/REPORT_GENERATION_TRACE.md"
+  ],
+  "dependencyRule": "Executive Insight Reports must call Statistical Intelligence first when it needs KPIs, percentages, trends, or risk scores.",
+  "provenanceRequirement": "Chart Provenance & Generation Trace (mandatory) - every chart/diagram carries a 10-field Chart Provenance block; every report carries the Chart Provenance table; every report folder contains CHART_PROVENANCE.md and REPORT_GENERATION_TRACE.md. Defined in both SKILL.md files under the section 'Chart Provenance & Generation Trace (MANDATORY)'.",
+  "domainConvention": "domains/shared/<skill>/SKILL.md files are short domain-entry pointers to the canonical skills/<skill>/SKILL.md (matches domains/fullstack/pr-review/SKILL.md). domains/shared/SKILL.md is the Shared domain index.",
+  "outputPaths": {
+    "statistics": "C:/Falcon/Brain Outputs/reports/statistics/<stats-name>-<YYYY-MM-DD-HHmm>/",
+    "executiveInsights": "C:/Falcon/Brain Outputs/reports/executive-insights/<report-name>-<YYYY-MM-DD-HHmm>/",
+    "mirror": "C:/Falcon/Brain SK/outputs (additive sync only — robocopy /E /XO, never /MIR)"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "brain-sk-statistics-tool",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Isolated Statistical Intelligence tool for Brain SK — KPI/statistics computation and chart-ready JSON. Dependencies are PLANNED, not yet installed (setup-only scaffold).",
+  "type": "module",
+  "scripts": {
+    "verify": "echo statistics tool placeholder"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "_dependencyPlan": {
+    "note": "Run `npm install` of these only when a real statistics run is first executed. Keep isolated to this folder — never add to the Falcon Angular workspace.",
+    "preferred": {
+      "simple-statistics": "descriptive stats, regression, distributions",
+      "@datashaper/arquero": "clean / group / join / transform tabular data",
+      "duckdb | @duckdb/duckdb-wasm": "SQL queries over JSON/CSV — use the wasm build if native is incompatible"
+    },
+    "optional": {
+      "jstat": "advanced statistical tests (t-test, chi-square, ...) — only if needed"
+    }
+  }
+}
