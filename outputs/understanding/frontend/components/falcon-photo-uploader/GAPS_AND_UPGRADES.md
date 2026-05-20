@@ -1,4 +1,4 @@
-# falcon-photo-uploader (LEGACY) — GAPS & UPGRADES
+﻿# falcon-photo-uploader (LEGACY) — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -9,9 +9,10 @@
 - `falcon-photo-uploader.component.scss` exists. Per Falcon project standard, "Tailwind utilities in templates only — no SCSS".
 - **Recommendation:** as part of migration to Falcon UI core, delete this SCSS file.
 
-### 3. (P0) Silent file-size rejection
-- When `file.size > maxBytes`, the file is silently dropped — no error feedback to the user.
-- **Recommendation:** during migration to `<falcon-angular-single-uploader>`, ensure errors are surfaced via `file.status='error' + errorMessage`.
+### 3. ~~(P0) Silent file-size rejection~~ — **CLOSED 2026-05-20 (Wave 6.2)**
+- ~~When `file.size > maxBytes`, the file is silently dropped — no error feedback to the user.~~
+- **Closed by:** inline red-border error UI in the uploader card itself. `consume()` now branches on size — oversize → `flagOversize()` sets the `oversizeError` signal (red dashed border via `CONTAINER_EDIT_ERROR` class, red warning line replaces the drag-hint in the same flex slot, `aria-live="polite"`). Auto-clears after 6 s or on next valid pick / Upload-Photo click / × clear click. No `fileSelected` / `pictureChange` emitted on rejection — host form-state stays clean. Component default `maxBytes` lowered from 2 MiB → 1 MiB; the 2 explicit overrides in the Add-User wizards were dropped in lockstep. PRD Q-UM-05 / BR-UM-48 closed at 1 MiB.
+- Evidence: `falcon-photo-uploader.component.ts:88` (new default), `:118-128` (signal + timeout), `:140-149` (`containerClasses` branch), `:182-241` (`consume` / `flagOversize` / `clearOversize`).
 
 ### 4. (P1) No remote URL preview
 - `photo` must be a data URL. If the consumer has the user's existing avatar as an http URL (typical for edit flows), they must fetch + base64-encode it client-side first.
@@ -65,3 +66,9 @@
 - Today: works.
 - Tomorrow (interim): use `<falcon-angular-single-uploader>` + `--falcon-single-uploader-tile-radius: 50%`.
 - Future: a dedicated `<falcon-angular-avatar-uploader>` component.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 5** ([CODE] grep `<falcon-photo-uploader>` — pure-Angular tag — across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+**Gap: Pure-Angular component without a Stencil twin** — cross-framework parity NOT achievable until ported to Stencil. Priority: P2 for new tokens-only consumers.

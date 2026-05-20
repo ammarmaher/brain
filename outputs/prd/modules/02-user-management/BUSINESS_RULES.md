@@ -100,6 +100,6 @@
 | BR-UM-45 | "Active -> Locked via manual change" - whether the system notifies the user is silent. | understanding.md:147 | [OPEN] |
 | BR-UM-46 | "Deleted -> Active restore" - whether original password still works, or user is re-sent credentials, is silent. | latest-prd.md:126; understanding.md:148 | [OPEN] |
 | BR-UM-47 | Idle 30-min logout - client-side vs server-side enforcement is silent. | understanding.md:149 | [OPEN] |
-| BR-UM-48 | Profile picture format / size limits are silent. | understanding.md:150 | [OPEN] |
+| BR-UM-48 | Profile picture format: `image/png` + `image/jpeg`. Size: **1 MiB (1,048,576 bytes)** max. Enforced FE-side in `<falcon-photo-uploader>` default `maxBytes` + native `accept`. Oversize files are silently discarded with an inline red-border error shown inside the uploader card (auto-clears after 6 s). | understanding.md:150; `libs/falcon/src/shared-ui/lib/components/falcon-photo-uploader/falcon-photo-uploader.component.ts:88,191` | [CLOSED 2026-05-20] |
 | BR-UM-49 | "Contact administrator" alert - whether it surfaces manager contact info from hierarchy is silent. | understanding.md:151 | [OPEN] |
 | BR-UM-50 | Whether changing password invalidates sessions on other devices is silent in PRD. | understanding.md:127 | [OPEN] |
