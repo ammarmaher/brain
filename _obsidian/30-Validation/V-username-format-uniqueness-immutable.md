@@ -4,11 +4,16 @@ id: V-username-format-uniqueness-immutable
 prd: PRD-02
 service: identity
 severity: medium
-status: triangulated
+status: SUPERSEDED
 drift: false
 created: 2026-05-15
+superseded-by: V-username-format-xlsx-2026-05-24
+superseded-on: 2026-05-24
 ---
-*** Validation V-username-format-uniqueness-immutable — Username starts with letter, ≤30 chars, unique, immutable after create ***
+
+> [!warning] SUPERSEDED 2026-05-24 — Ammar declared `Validations.xlsx` the new SoT. Username **no longer requires starts-with-letter** and now allows specials `_ + @ . -` in the simple branch. See **[[V-username-format-xlsx-2026-05-24]]**. This note is kept for archival provenance only. The async uniqueness check + immutability after create are unchanged in the new V-rule.
+
+*** Validation V-username-format-uniqueness-immutable — Username starts with letter, ≤30 chars, unique, immutable after create (HISTORICAL) ***
 *** Origin: PRD-02 User Management · Backend: Identity · 2026-05-15 ***
 
 # V-username-format-uniqueness-immutable — Username must start with a letter, ≤30 chars, unique system-wide, mandatory, and immutable after create

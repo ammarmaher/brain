@@ -4,14 +4,19 @@ id: V-account-name-format-uniqueness
 prd: PRD-01
 service: commerce
 severity: high
-status: triangulated
+status: SUPERSEDED
 drift: false
 created: 2026-05-15
+superseded-by: V-account-name-format-xlsx-2026-05-24
+superseded-on: 2026-05-24
 ---
-*** Validation V-account-name-format-uniqueness — Account Name format + uniqueness ***
-*** Origin: PRD-01 Account Management · Backend: Commerce · 2026-05-15 ***
 
-# V-account-name-format-uniqueness — Account Name must be unique, ≤30 chars, start with a letter, mandatory
+> [!warning] SUPERSEDED 2026-05-24 — Ammar declared `Validations.xlsx` the new SoT. Account Name **no longer requires** start-with-letter; charset now includes space + & + apostrophe + hyphen. See **[[V-account-name-format-xlsx-2026-05-24]]** for the current rule. This note is kept for archival provenance only.
+
+*** Validation V-account-name-format-uniqueness — Account Name format + uniqueness (HISTORICAL) ***
+*** Origin: PRD-01 Account Management · Backend: Commerce · 2026-05-15 · SUPERSEDED 2026-05-24 ***
+
+# V-account-name-format-uniqueness — Account Name must be unique, ≤30 chars, start with a letter, mandatory (SUPERSEDED)
 
 > Falcon hierarchy uniqueness rule: an Account Name identifies a client across the platform. The PRD locks it to a 30-character cap, letter-prefix, and global uniqueness so admin search and Zitadel tenant provisioning stay deterministic.
 

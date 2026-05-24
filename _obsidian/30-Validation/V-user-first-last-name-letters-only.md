@@ -4,11 +4,16 @@ id: V-user-first-last-name-letters-only
 prd: PRD-02
 service: identity
 severity: medium
-status: triangulated
+status: SUPERSEDED
 drift: false
 created: 2026-05-15
+superseded-by: V-person-name-format-xlsx-2026-05-24
+superseded-on: 2026-05-24
 ---
-*** Validation V-user-first-last-name-letters-only — First/Last Name ≤50 chars, letters only ***
+
+> [!warning] SUPERSEDED 2026-05-24 — Ammar declared `Validations.xlsx` the new SoT. First/Last Name now **allows space + apostrophe + hyphen** in addition to letters/digits. See **[[V-person-name-format-xlsx-2026-05-24]]**. This note is kept for archival provenance only.
+
+*** Validation V-user-first-last-name-letters-only — First/Last Name ≤50 chars, letters only (HISTORICAL) ***
 *** Origin: PRD-02 User Management · Backend: Identity · 2026-05-15 ***
 
 # V-user-first-last-name-letters-only — Add User First/Last Name capped at 50 chars and letters-only
