@@ -62,7 +62,8 @@ created: 2026-05-15
   - Reactive form **conditional validators** wired to the `visibility` control:
     - `visibility.valueChanges.subscribe(v => { if (v === 'Show') { priceType.setValidators([Validators.required]); priceValue.setValidators([Validators.required, Validators.min(0)]); } else { priceType.clearValidators(); priceValue.clearValidators(); } })`
   - Enum-membership validator on `priceType` wired to the shared `ePricingType` TS enum
-  - `Validators.min(0)` on `priceValue` (PRD: ≥ 0 SAR)
+  - `priceValueValidator(required)` from `@falcon` — integer-only, range 0..999_999_999_999_999 (Wave G 2026-05-24 cap bump from 999,999,999 per Ammar). Below `Number.MAX_SAFE_INTEGER` so JS arithmetic stays exact.
+  - **Input layer (Wave G 2026-05-24):** `<falcon-angular-input type="text" inputMode="numeric" [maxlength]="PRICE_VALUE_MAX_DIGITS">` where `PRICE_VALUE_MAX_DIGITS = 15` is exported from `@falcon`. Browser blocks the 16th keystroke at the DOM layer; setter strips non-digits + truncates as paste-defence. `<input type="number">` was REPLACED because it ignores HTML `maxlength`.
   - Reverse rule: when toggling Show → Hide, optionally clear price fields client-side (matches `HiddenProductMustNotHavePricing`)
 - **Page note:** [[Organization Hierarchy]] — both `comm-channels-tab` and `apps-services-tab` sections already listed in the page note
 

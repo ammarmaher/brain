@@ -55,6 +55,7 @@ created: 2026-05-15
   - `Validators.pattern(/^\d+$/)` — integer-only for the three count caps; allow decimal `%` for `BalanceTransferLimit` if PRD/PES allows fractional %
   - Translation rule for display: `if value === 0 → render "No limit" pill / placeholder` — this is a UI-only behavior, server still stores `0`
   - Cross-field: when target limit drops below the current user/node count, surface a confirmation modal (PRD silent — see BR-AM-39)
+  - **Input layer (Wave G 2026-05-24):** Max Normal / Max System / Max Node use `<falcon-angular-input type="text" inputMode="numeric" [maxlength]="USER_LIMIT_MAX_DIGITS">` where `USER_LIMIT_MAX_DIGITS = 3` is exported from `@falcon` (mirrors the 0..999 numeric bound enforced by `userLimitValidator` + `maxNodeLevelsValidator`). Browser blocks the 4th keystroke at the DOM layer. Prior `<falcon-angular-input-number max=999>` silently auto-snapped the value to 999 on overflow, which Ammar flagged as confusing UX. Setter strips non-digits + truncates to 3 chars + clamps to [0, 999] as paste-defence. Applied to Add Client Step 2 + Settings tab in BOTH consoles. `xlsx Validations.xlsx 2026-05-24` confirms "Max 3 digits" for these fields.
 - **Page note:** [[Organization Hierarchy]] — `settings-account-limitation` section already listed
 
 ## Cross-domain links
