@@ -1,4 +1,4 @@
-# falcon-icon — GAPS AND UPGRADES
+﻿# falcon-icon — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -110,3 +110,9 @@ export type FalconIconName =
 
 ## Future-proof recommendation
 The `iconify-icon` fallback is the single most valuable upgrade — it unifies icon usage across the platform. Today the inconsistency between Falcon font (122 icons) and Iconify (millions of icons) leads to teams reaching for whichever is convenient. A single `<falcon-angular-icon>` that handles both would consolidate the pattern.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-icon>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

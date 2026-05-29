@@ -1,4 +1,4 @@
-# falcon-input-number — USAGE
+﻿# falcon-input-number — USAGE
 
 ## Real usage examples
 
@@ -91,3 +91,10 @@ Inherits input + button tokens. Per-instance:
 | Use `mode='currency'` for money. | Use `<falcon-angular-input>` for currency. |
 | Pass `locale` explicitly when relevant. | Rely on browser locale silently. |
 | Use Reactive Forms validators for min/max. | Trust the clamp only — clamp runs on blur. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-input-number>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/settings-tab/settings-tab.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html`

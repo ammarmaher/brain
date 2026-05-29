@@ -24,6 +24,13 @@ created: 2026-05-15
 - [GAPS_AND_UPGRADES](../../outputs/understanding/frontend/components/falcon-angular-data-table/GAPS_AND_UPGRADES.md)
 - [DECISION](../../outputs/understanding/frontend/components/falcon-angular-data-table/DECISION.md)
 
+## Theming & Tailwind
+
+- [[Tailwind CSS]] — library entry.
+- [[Tailwind Custom Styles and Layers]] — data-table cells heavily consume `style="--falcon-table-header-bg: var(--color-falcon-neutral-30, #f7f8fa)"` inline patterns — a candidate for `@utility` consolidation in Wave 2 Phase D.
+- [[Falcon Color Palette Audit]] — data-table shadow rows use `success-10/20/50` and `neutral-30` (off-grid) — both flagged in palette audit.
+- [[Falcon Angular Wrapper Pattern]] — `<falcon-angular-data-table>` exposes `columns` / `data` / `rowMenuItems` props; styling via tokens, not external classes.
+
 ## Pages using this component
 
 - [[Organization Hierarchy]] — multi-section (comm-channels, apps-services, rule-status, permission-privilege, ip-management, account-limitation). PP-001 mandate pending. **Wave 20 shadow-rows feature applied** to `comm-channels-tab` + `apps-services-tab` scheduled-change edit rows.

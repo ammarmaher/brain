@@ -1,4 +1,4 @@
-# falcon-mobile-number (LEGACY FACADE) — GAPS & UPGRADES
+﻿# falcon-mobile-number (LEGACY FACADE) — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -41,3 +41,9 @@
 
 ## Workaround availability
 - For #3: use `<falcon-angular-phone-field>` (complete country list).
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-mobile-number>` — pure-Angular tag — across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+**Gap: Pure-Angular component without a Stencil twin** — cross-framework parity NOT achievable until ported to Stencil. Priority: P2 for new tokens-only consumers.

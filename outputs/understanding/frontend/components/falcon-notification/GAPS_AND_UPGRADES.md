@@ -1,4 +1,4 @@
-# falcon-notification — GAPS AND UPGRADES
+﻿# falcon-notification — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -144,3 +144,9 @@ push(args: FalconNotificationPushArgs & {
 
 ## Future-proof recommendation
 Notification is the preferred passive-message component going forward — invest in the Tier-1 upgrades (hover-pause, body slot, action button) to make it a full replacement for toast in business-status use cases. Once feature parity is reached, the toast component can fade entirely to its PrimeNG-substrate role.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 4** ([CODE] grep `<falcon-angular-notification-stack>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

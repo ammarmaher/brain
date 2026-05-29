@@ -1,4 +1,4 @@
-# falcon-combobox — USAGE
+﻿# falcon-combobox — USAGE
 
 ## Real usage examples
 
@@ -107,3 +107,7 @@ form = new FormGroup({
 | Use when user MAY enter free text. | Use for pure single-select. |
 | Wire `filterChange` to RxJS pipeline for async. | Call API directly inside the handler. |
 | Bind value via CVA. | Bind `[value]` directly. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-combobox>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

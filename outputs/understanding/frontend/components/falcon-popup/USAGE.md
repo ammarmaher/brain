@@ -1,4 +1,4 @@
-# falcon-popup — USAGE
+﻿# falcon-popup — USAGE
 
 ## Real usage examples
 
@@ -137,3 +137,16 @@ The component's `ngOnInit()` calls `defineFalconTwComponent('falcon-button')` to
 | Treat empty-string overrides as "no override" | Pass `''` to render empty (will fall back to variant default) |
 | Handle async work in `(confirm)` and toggle `[open]` after | Toggle `[open]=false` in the confirm handler BEFORE async work completes (user sees the popup vanish then unable to retry on failure) |
 | Use this for any of the 4 canonical decisions | Use this for "show info" or "select option" UX |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-popup>` across `apps/` + `libs/falcon/` returned **8 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/add-client-wizard.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html`
+- `apps/host-shell/src/app/features/falcon-ui-showcase/library-section/library-section.component.ts`
+- `apps/host-shell/src/app/shared-components/otp-dialog/otp-dialog.component.ts`
+- `libs/falcon/src/shared-ui/index.ts`

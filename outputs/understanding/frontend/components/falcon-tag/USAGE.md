@@ -1,4 +1,4 @@
-# falcon-tag — USAGE
+﻿# falcon-tag — USAGE
 
 ## Example 1 — Filter chip with dismiss
 
@@ -95,3 +95,10 @@ import type { FalconTagSeverity, FalconTagSize }
 - DO — choose `severity="secondary"` for neutral non-status chips.
 - DON'T — use for workflow state (`active` / `pending` / `suspended`) — that's `<falcon-status-badge>`.
 - DON'T — pass `'warn'` in new code (legacy alias kept for backwards compat).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-tag>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/settings-tab/settings-tab.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html`

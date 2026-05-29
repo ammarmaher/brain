@@ -1,4 +1,4 @@
-# falcon-menu — USAGE
+﻿# falcon-menu — USAGE
 
 ## Real usage examples
 
@@ -131,3 +131,10 @@ The wrapper auto-registers Stencil tags via `defineFalconTwComponent('falcon-men
 | Use `<slot name="trigger">` for custom triggers | Pass a raw string `triggerLabel` for icon-only kebabs (use slot for SVG / icon) |
 | Pass `data` payload per item for round-trip context | Mutate the items array in-place during render |
 | Use `[popup]="false"` for inline action lists | Use `popup=false` for popups (intent mismatch) |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-menu>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `libs/falcon/src/shared-ui/lib/components/falcon-tree-panel/falcon-tree-panel.component.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-tree-panel/falcon-tree-panel.component.ts`

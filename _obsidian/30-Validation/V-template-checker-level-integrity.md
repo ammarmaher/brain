@@ -7,6 +7,16 @@ severity: medium
 status: triangulated
 drift: false
 created: 2026-05-15
+module: templates
+feature: checker-levels
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/templates", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-template-checker-level-integrity — Checker levels must be sequential, unique, populated, and within bounds ***
 *** Origin: PRD-05 Templates · Backend: templates · 2026-05-15 ***

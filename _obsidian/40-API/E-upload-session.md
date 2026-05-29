@@ -5,6 +5,14 @@ prd: PRD-04
 service: contact-group
 drift-count: 10
 created: 2026-05-15
+module: contact-group
+feature: upload-session
+verification: code-verified
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contact-group", "#verification/code-verified", "#layer/be"]
+up: "[[E-entities-MOC]]"
+parent: "[[E-entities-MOC]]"
+layer: be
 ---
 *** Entity Reconciliation E-upload-session — UploadSession ***
 *** PRD: PRD-04 Contact Group Management · Backend service: contact-group · 2026-05-15 ***

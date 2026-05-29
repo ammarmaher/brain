@@ -49,3 +49,53 @@
 - The PRD uses **Contract Details** for the cost matrix; flag "Tariff Plan" (note: Commerce code uses `ContractTariffPlanResponse` — Q-CC-21).
 - The PRD uses **Addon**; flag "Add-on" with hyphen (PRD style is one word per the doc).
 - The PRD uses **Send Transaction**; this is the unit of work. Flag "Send Message" if more specific term is needed.
+
+---
+
+## Resolutions (Wave 2 — 2026-05-17)
+
+### Q-CC-01 — Packaging + Billing scope contradiction [HALT-AND-FLAG, F-010]
+
+**Not resolved autonomously.** PRD body says Contract + Cost; folder title says four concerns. Two readings contradict — DECISION-PROTOCOL `F-010` requires escalation.
+
+**Pending-question file:** `Brain Outputs/datasets/authority-dataset/_pending-questions/wave-2-03-contract-Q-CC-01.md` (raised 2026-05-17).
+
+**Recommendation:** keep current dossier state (Reading A — Packaging + Billing are Phase 2). Re-evaluate after product team responds.
+
+### Q-CC-09 — Service priority tentative status [PARTIAL RESOLUTION]
+
+**Inferred resolution: keep `Service` in the priority dropdown, label as `(tentative)` until product confirms.**
+
+**Reasoning:**
+- [PRD] `latest-prd.md:34` explicitly tags `Service` as "tentative" — so the PRD itself flagged the uncertainty.
+- [BRAIN-OUT] Commerce DTO `ContractRateRequest.Priority` is a string — accepts any value at the wire level.
+- DECISION-PROTOCOL `F-022` (two valid component choices): pick first option per category + log. Here "first option" is "include all four priorities including `Service`" since the PRD literally lists it.
+- Conservative default (DECISION-PROTOCOL): include `Service` in the UI (so business users can pick it if needed) + tag with `(tentative)` label so they know it might be dropped.
+
+**Action:** Build Contract Details matrix column with priority dropdown `[Authentication, Utility, Advertisement, Service (tentative)]`. Frontend `i18n` key: `contract.priority.whatsapp.service.tentative` → English: "Service (tentative)" · Arabic: "خدمة (مؤقت)".
+
+### Q-CC-16 — PRD "Addons" vs Commerce DTO `Quotas` + `OverageRates` [RESOLVED]
+
+**Concept mapping confirmed via D-CC-3 drift entry.**
+
+**Resolution:**
+- PRD "Addons / Free credit" → DTO `ContractQuotaRequest`
+- PRD "Addons / Rate card" → DTO `ContractOverageRateRequest`
+- PRD "Rate Card" (Step 2 of wizard) → DTO `ContractUnitConversionRequest` (SAR → Points conversion)
+- PRD "Contract Details" (Step 3 of wizard) → DTO `ContractRateRequest` (App × CommChannel × Priority × Destination → Cost)
+
+**Confidence:** High. The four DTOs match the four PRD concepts 1:1 once the mapping is established.
+
+**Action:** Frontend Step 4 ("Addons" tab) is internally split into two sub-tables: "Free Credit Quotas" + "Overage Rates". User-facing label stays "Addons" per PRD glossary discipline.
+
+### Q-CC-21 — `CommittedValue` (DTO) ≡ `ValueSar` (PRD) [RESOLVED]
+
+**Field alias confirmed.** PRD's "Value in SAR" is `CommittedValue` in the Commerce DTO, with currency held in a separate `eCurrency Currency` field. See D-CC-2 in GAPS.md Wave 2 refresh.
+
+**Action:** Frontend input label is "Contract Value (SAR)" (PRD wording); on submit, set `CommittedValue` from the input + `Currency = SAR` (per current product policy of SAR-only).
+
+### Items NOT resolved (pending Drive deep-read or product input)
+
+- Q-CC-02 (nearest-expiring tie-breaker), Q-CC-03 (retroactive expired window), Q-CC-04 (auto-Activate cron/event), Q-CC-05 (concurrent deduction strategy), Q-CC-06 (VAT), Q-CC-07 (audit log), Q-CC-08 (Remaining Value real-time vs eventual), Q-CC-10 (hundreds-of-millions per-contract vs total-active), Q-CC-11 (zero-value addon = free vs no-cost), Q-CC-12 (Price Unit admin UI), Q-CC-13 (Pending cancellation), Q-CC-14 (Refund), Q-CC-15 (Addon fallback contract selection), Q-CC-17 (OCS surface to business user), Q-CC-18 (Destination sheet tabs 2+), Q-CC-19 (Phone Analysis V6 vs Destination Identification), Q-CC-20 (Contracts DELETE endpoint), Q-CC-22 (Remaining Value compute strategy), Q-CC-23 (Destination static vs dynamic), Q-CC-24 (Farabi cadence), Q-CC-25 (Dispatch service ownership).
+
+All require either deep handler code inspection, Drive doc re-read, or product team confirmation.

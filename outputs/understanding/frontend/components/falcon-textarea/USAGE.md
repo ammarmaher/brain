@@ -1,4 +1,4 @@
-# falcon-textarea — USAGE
+﻿# falcon-textarea — USAGE
 
 ## Real usage examples
 
@@ -88,3 +88,9 @@ form = new FormGroup({
 | Use for any multi-line text. | Use for rich-text. |
 | Use `autoResize` for variable-length input. | Hand-roll a resize handler. |
 | Bind via CVA. | Bind `[value]` directly. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-textarea>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

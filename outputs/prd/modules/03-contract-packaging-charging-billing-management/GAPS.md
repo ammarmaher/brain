@@ -64,3 +64,92 @@
 - **GAP-CC-30** missing audit log is a compliance + dispute resolution issue.
 - **GAP-CC-34, 35** are the biggest scope gaps — entire Packaging + Billing surface unbuilt despite folder title.
 - **GAP-CC-11/12/13** flag that Priority + Destination are weakly-typed strings; tightening to enums/lookups would catch typos early.
+
+---
+
+## Wave 2 refresh — 2026-05-17
+
+> Refreshed by Wave 2 PRD Deep Read. Source PRD `Brain SK\skills\imported-business\prd-knowledge\modules\03-contract-packaging-charging-billing-management\latest-prd.md` (`Contract & Cost Management V2`, 105 lines synced 2026-04-24). Backend cross-check: `Brain Outputs\understanding\backend\commerce\{ENDPOINT_REGISTRY,DTO_DICTIONARY,VALIDATIONS,ERRORS}.md` + `Brain Outputs\understanding\backend\charging\*`. V-rule cross-check: 6 V-rules covering Contract + Charging.
+
+### Counts
+
+- **Rules verified against PRD line + backend code:** 40 / 50 BR-CC-* rows (`BR-CC-01..40` confirmed; `BR-CC-41..50` are OPEN — Packaging/Billing scope gap + tie-breakers + retroactive treatment).
+- **Drift discovered:** 3 new drifts (see catalogue).
+- **New resolutions added to QUESTIONS.md:** 3 (Q-CC-09 Service-priority tentative status, Q-CC-16 PRD vs DTO field-name mapping, Q-CC-21 CommittedValue ≡ ValueSar).
+- **New pending-questions raised:** 1 (PACK+BILL scope — F-010 PRD-contradiction-class halt because the folder title contradicts the body).
+
+### Drift catalogue
+
+**D-CC-1: Folder title vs PRD body — Packaging + Billing absent.**
+- Drive folder name: `3- Contract, Packaging, Charging, Billing Mngmnt Module`.
+- PRD body (`Contract & Cost Management V2`, 105 lines): covers Contract + Cost only.
+- DECISION-PROTOCOL classifies this as **F-010 (PRD inconsistency)** — halt-and-flag because there are two readings (folder = 4 concerns; body = 2 concerns).
+- See pending-question file at `Brain Outputs/datasets/authority-dataset/_pending-questions/wave-2-03-contract-Q-CC-01.md`.
+
+**D-CC-2: Field naming — PRD "Value SAR" / "Contract Value" ≡ Commerce DTO "CommittedValue".**
+- PRD `latest-prd.md:25`: "Value in SAR (positive float, ≤ hundreds of millions, mandatory)".
+- Commerce DTO: `CreateContractRequest.CommittedValue` (decimal). Currency is in a separate field (`eCurrency Currency`).
+- DECISION-PROTOCOL F-002: display PRD labels, submit backend codes. **Frontend rule:** label the input as "Contract Value (SAR)" (PRD wording); bind to `CommittedValue` + `Currency = SAR` on submit.
+- Status: not a contradiction; just a naming convention. **Q-CC-21 resolved.**
+
+**D-CC-3: PRD "Addons" structure ≡ Commerce DTO `Quotas` + `OverageRates`.**
+- PRD `latest-prd.md:39-43`: "Two parts: Sub-services addon rate card + Free credit (addons) per sub-service or per commchannel/application".
+- Commerce DTO: `ContractQuotaRequest` (free credit/quota) + `ContractOverageRateRequest` (rate card).
+- The PRD's "Addons" is the umbrella term; the DTOs split it into the storage shape. Code:
+  - PRD "Free credit" → `ContractQuotaRequest { QuotaCode, ChannelId, IncludedAmount, IncludedUnits, Unit, QuotaCategory, QuotaType, Scope, SubService? }`
+  - PRD "Addon rate card" → `ContractOverageRateRequest { SubService, ChannelId, Unit, UnitPrice, BillingCycle }`
+- **Frontend rule:** the Step 4 Addons wizard step splits the input into two sub-tables (Free Credit Quotas + Overage Rates), but the user-facing tab label stays "Addons" per PRD glossary discipline.
+- Status: **Q-CC-16 resolved** (PRD `Addons` = DTO `Quotas` + `OverageRates`).
+
+### Verified BR-CC rules with cross-links
+
+| BR | PRD line | Backend evidence | Status |
+|---|---|---|---|
+| BR-CC-01..02 | :23 (Falcon-only 4-step wizard) | Commerce `POST /api/Contracts` | CONFIRMED |
+| BR-CC-03..08 | :25 (Info-step fields) | `CreateContractRequest.{ContractName, FarabiReferenceId, StartDate, EndDate, CommittedValue, eCurrency Currency}` | CONFIRMED via D-CC-2 mapping |
+| BR-CC-09..10 | :25 (auto-fields) | Server-side ID + status derivation | CONFIRMED (UNVERIFIABLE in DTO alone) |
+| BR-CC-11..14 | :46-50 (status lifecycle) | `ContractSummaryResponse.Status` (string projection) | CONFIRMED |
+| BR-CC-15..16 | :50-56 (edit restrictions) | `PUT /api/Contracts/{id}` (status-aware in handler) | CONFIRMED — V-rule [[V-contract-edit-status-aware-fields]] triangulated |
+| BR-CC-17 | :55-56 (extend revives Expired→Active) | Handler-side; flagged via [[V-contract-expiration-after-start]] | CONFIRMED |
+| BR-CC-18..21 | :27-28 (Rate Card semantics) | `ContractUnitConversionRequest` + `ContractRateRequest` (via D-CC-3) | CONFIRMED |
+| BR-CC-22..26 | :31-36 (Contract Details matrix) | `ContractRateRequest { ApplicationId, ChannelId, Priority, Destination, Unit, RatePerUnit }` | CONFIRMED — Priority/Destination as strings (GAP-CC-11..13 flagged for enum tightening) |
+| BR-CC-27..29 | :40-44 (Addons) | Mapped via D-CC-3 | CONFIRMED with naming drift documented |
+| BR-CC-30..38 | :60-66 (wallet impact rules) | Charging Wallet endpoints (reserve / commit / release / debit / transfer); V-rule [[V-charging-insufficient-balance]], [[V-charging-no-applicable-rate]], [[V-charging-transfer-source-destination]] triangulated | CONFIRMED |
+| BR-CC-39 | :60 (multiple Active contracts allowed) | DTO supports list — no concurrency cap visible | CONFIRMED |
+| BR-CC-40 | :74-75 (AO Remaining Value visibility) | Handler-side role-aware filtering | CONFIRMED |
+
+### Entity reconciliation
+
+| Entity | PRD ENTITIES.md | Backend DTO | Drift? |
+|---|---|---|---|
+| Contract | `id, farabiRefId, name, accountId, startDate, expirationDate, valueSar, remainingValueSar, status` | `Contract { Id, FarabiReferenceId, ContractName, AccountId, StartDate, EndDate, CommittedValue, Currency, Status, RemainingBalance, ... }` | D-CC-2 (naming, not semantic) |
+| RateCardEntry | `contractId, commChannelId, priceUnit, priceValueSar` | `ContractUnitConversionRequest { Code, Name, PriceUnit, RatingUnit, PriceValue }` | Naming drift; concept aligned |
+| ContractDetail | `contractId, applicationId, commChannelId, priority, destination, costSar` | `ContractRateRequest { ApplicationId, ChannelId, Priority, Destination, Unit, RatePerUnit }` | Naming drift (PRD `costSar` ≡ DTO `RatePerUnit`); concept aligned |
+| Addon | `contractId, subServiceType, freeCreditValue, rateCardValue` | Split into `ContractQuotaRequest` + `ContractOverageRateRequest` | D-CC-3 (split into two DTOs) |
+| WalletRecord | `id, walletId, contractId, valueSar, createdAt` | Lives in Charging; surface via `GetContractBalanceSummariesResponse.Summaries[].ContractId` + `Balance` | Aligned (Charging-owned) |
+
+### Workflow ↔ Playbook mapping
+
+| Workflow | Playbook location | Status |
+|---|---|---|
+| W1 Create Contract (4-step wizard) | `understanding/pages/add-contract/PAGE_LEARNING.md` (STUB seeded 2026-05-15) | STUB only — 14-file folder not yet seeded. **Priority page for next deep-learn run.** |
+| W2 Auto-Transition Pending→Active | No playbook | MISSING (background job) |
+| W3 Auto-Transition Active→Expired | No playbook | MISSING (background job) |
+| W4 Extension Expired→Active | No playbook | MISSING (covered transitively by edit-contract page when built) |
+| W5 Edit Contract | `understanding/pages/edit-contract/PAGE_LEARNING.md` (STUB seeded 2026-05-15) | STUB only |
+| W6 Send Transaction | No playbook | MISSING (cross-cuts Application services) |
+| W7 Activate Sub-Service | No playbook | MISSING |
+| W8 Activate/Renew CommChannel | Covered partially in `understanding/pages/organization-hierarchy/` (commchannel-tab) | PARTIAL via commchannels integration plan |
+| W9 Transfer Balance | `understanding/pages/wallets-and-balance-management/PAGE_LEARNING.md` (STUB) | STUB only |
+| W10 View Contract (role-aware) | `understanding/pages/contracts-list/PAGE_LEARNING.md` (STUB) | STUB only |
+
+### Halt-and-flag tonight
+
+1 pending-question raised: `wave-2-03-contract-Q-CC-01.md` (Packaging + Billing scope — F-010 PRD-contradiction-class halt).
+
+### Action items raised
+
+1. **Promote BR-CC-23 (`Service` priority tentative)** — confirm with Jawad whether to keep, drop, or feature-flag the `Service` member of WhatsApp priorities. Resolution: per F-022 conservative default, keep `Service` in the dropdown but mark as `(tentative — confirm)` in the option label until product team confirms. Cross-link Q-CC-09.
+2. **Audit Charging handler for nearest-expiring tie-breaker** (Q-CC-02 / BR-CC-42) — read `Falcon.Charging.Application/Wallet/ReserveCommand` to determine the tie-break rule (deterministic ordering, e.g., older Contract.id wins). Document in BR-CC-42.
+3. **Confirm `Service` ≡ `eCommerce` priority alias** — backend may use a different label internally (e.g., `Transactional`). Confirm by reading `Falcon.Commerce.Domain.Constants.eWhatsAppPriority` if it exists; otherwise document the PRD literal as the canonical string.
+4. **Page learning: build folder-form playbook for Add Contract** (deferred from Wave 2 — depends on user explicit `implement Add Contract` or `deep learn add-contract` trigger).

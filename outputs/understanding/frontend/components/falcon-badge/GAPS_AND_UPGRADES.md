@@ -1,4 +1,4 @@
-# falcon-badge — GAPS & UPGRADES
+﻿# falcon-badge — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -37,3 +37,9 @@
 ## Future-proof recommendation
 
 Promote `<falcon-angular-badge>` as the canonical count / feature-flag indicator across the system via consumer refactor. Add `[ariaLabel]` to the wrapper for parity with the Stencil core.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-badge>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

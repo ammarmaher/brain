@@ -1,4 +1,4 @@
-# falcon-data-table — USAGE
+﻿# falcon-data-table — USAGE
 
 ## Example 1 — Production usage from admin-console org-hierarchy
 
@@ -506,3 +506,18 @@ Pass pre-translated strings for the chevron toggle + default action button aria-
 
 When a per-action aria-label input is `null` (the default), the visible label text is reused as the aria-label — so the simplest consumer can still just translate `shadow{Edit,Delete,Save,Cancel}Label` and get reasonable a11y.
 ```
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-data-table>` across `apps/` + `libs/falcon/` returned **10 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/_shared/models/service.models.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/comm-channels-tab/services/comm-channels.service.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-service-row-table/client-service-row-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-service-row-table/client-service-row-table.component.ts`
+- `apps/host-shell/src/app/features/falcon-ui-showcase/library-section/empty-data-section.component.ts`
+- `apps/management-console/src/app/features/comms-hub/comms-hub.component.html`
+- `libs/falcon/src/shared-ui/index.ts`

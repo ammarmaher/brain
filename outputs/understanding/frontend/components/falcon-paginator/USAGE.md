@@ -1,4 +1,4 @@
-# falcon-paginator — USAGE
+﻿# falcon-paginator — USAGE
 
 ## Example 1 — Standalone Angular wrapper
 
@@ -106,3 +106,9 @@ import { FalconAngularPaginatorComponent }
 - DO — let `<falcon-angular-data-table>` auto-compose the paginator for tables.
 - DON'T — bind `[totalRecords]` / `[rows]` etc on the wrapper today — those props live on the Stencil core only.
 - DON'T — use this for infinite-scroll patterns.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-paginator>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

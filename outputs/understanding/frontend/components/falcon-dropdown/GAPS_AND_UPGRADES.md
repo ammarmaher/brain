@@ -1,4 +1,4 @@
-# falcon-dropdown — GAPS AND UPGRADES
+﻿# falcon-dropdown — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -133,3 +133,9 @@ All gaps belong in the shared component. Per-page workarounds (like the ad-hoc l
 - For G3: use `<falcon-angular-multi-select>` — separate component.
 - For G4: keep dropdowns < 200 items, paginate manually.
 - For G6: reach into `ViewChild.nativeElement.querySelector('falcon-dropdown')` and call methods directly.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 13** ([CODE] grep `<falcon-angular-dropdown>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

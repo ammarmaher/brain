@@ -91,3 +91,31 @@ When any agent (Claude, Ammar, anyone) hits a question of the form "is this perm
 - `Brain Outputs/prd/modules/01-account-management/QUESTIONS.md` — Q-AM-16 origin
 - `01-roles/_INDEX` — what PES says
 - `00-VERIFICATION-GATE.md` — none of the 15 questions currently depend on Tab 2 (intentional — Phase 2 was scoped to avoid the blocked path)
+
+## Wave 6 re-audit (2026-05-17)
+
+> [!info] **PES catalog ↔ FE registry drift status: STABLE — gaps unchanged since 2026-05-16**
+
+Wave 6 forever-wave mining re-verified the PES authority surface at 2026-05-17 23:49 +03:00. Procedure:
+
+1. **PES catalog (`BuiltInRoleCatalog.cs`) verified unchanged.** Hash `DB6616D3A6DAEC85177417A9F28A648E88958B39C985349693809F16CDB9809C` matches the recorded baseline. **6 canonical roles still defined** at lines 79, 113, 135, 171, 211, 249:
+   - System roles (3): `sys-admin` (line 80) · `sys-ops` (line 114) · `sys-products` (line 136)
+   - Account roles (3): `acc-owner` (line 172) · `acc-admin` (line 212) · `acc-user` (line 250)
+   File spans 380 lines total (within the recorded 79-290 doctrine range cited in MEMORY.md).
+2. **FE PES registry (`falcon-access.registry.ts`) verified unchanged.** Hash `200A93807D82E588704FA5DD0637DDE1AAC7E45095DC2CE3950CB8D63DBC9316` matches the recorded baseline. File at 184 lines (1 line under MEMORY.md's `:1-185` doctrine — within rounding tolerance; doctrine wording does not require exact line count). 45 `resource: 'acc.*' | 'sys.*' | 'app.*'` references resolved.
+3. **Tenant p-rule template (`pes-account-role-rules.json`) verified unchanged.** Hash `963D9F0B29F840E5B00F25B6FCA18FF80C80E94E6721737829567ED4FFC94591` matches.
+4. **Seed contract (`seed-test-users.sh`) verified unchanged.** Hash `5BDE5A98676EA01BC826E9A2F16DA2EFB888AE9A49E8148FA91029F1DCA1FC99` matches.
+5. **PRD Permission Sheet Tab 1 prose** — `02-user-management/understanding.md` § Permission rules (lines 52-63) is on disk; **BUSINESS_RULES.md hashes for all 4 modules unchanged**. PES↔Tab1 alignment audited 2026-05-16 ([BRAIN-OUT] `_runtime-verification/pes-gate-results-2026-05-16.json` — 21/21 PES gate runtime tests landed). **No new alignment work this wave.**
+6. **Tab 2 capture status (Q-UM-07): still BLOCKED.** No Drive re-export ran tonight (Wave 1 halted pre-flight — see `_pending-questions/WAVE-1-AND-10-PREREQ-BLOCKERS-2026-05-17.md` for the F-007 + F-021 fork halt; `keys.env` not provisioned). Standing rule from §"Standing rule until both gaps close" remains in force: for ambiguous-Tab-2 cases, halt and ask the user.
+7. **Q-AM-16 (PES↔PRD drift audit): still BLOCKED on Q-UM-07.** No drift audit ran this wave; cannot be unblocked until Tab 2 is captured.
+
+**Drift since 2026-05-16:** ZERO. The 4 watched PES source files all hashed clean, so no new drift cells materialize on a PES↔PRD-Tab-1 audit. The 5 known "conditional on Tab 2" decision items in §"Dependent decisions tagged conditional on Tab 2" still carry the same status.
+
+**Wave-6 PES-relevant cross-cuts** ([BRAIN-OUT] from MEMORY.md 2026-05-17 entries):
+- `project_dark_mode_phase_g_toggle_ui_2026_05_17.md` — theme toggle button in topbar. **No new PES key required** (the toggle is anonymous client-side preference, no role gating).
+- `project_settings_tab_standalone_wave14_2026_05_17.md` — new Settings tab. **PES keys used: `FalconAccess.adminConsole.{rootPasswordSecurityLevel,accountPasswordSecurityLevel,rootAllowedIps,accountAllowedIps,accountQuota}.edit()`** — **all 5 already declared** in the FE registry (verified). Backend gating: `acc.account-settings.{view,edit}` + `sys.{root-password-security-level,account-password-security-level,root-allowed-ips,account-allowed-ips,account-quota}.{view,edit}` — **all already in BuiltInRoleCatalog.cs** (sys-admin lines 91-96 grants the sys.* edits; acc-owner lines 191 grants `acc.account-settings view`). No PES catalog change needed.
+- `project_commchannels_apps_tabs_phase1_2026_05_17.md` — CommChannels/Apps tab phase 1. PES keys: `adminConsole.services.{visibility,editPriceType,editPriceValue,payment}` — **all already in FE registry**. Backend: `sys.services.{view,edit-price-type,edit-price-value,payment}` declared on `sys-admin`+`sys-products` (lines 97-99). `acc.services` keys present on `acc-owner` (lines 188-190). No PES catalog change needed.
+- `project_pr40937_include_deleted_lift_2026_05_17.md` — `IncludeDeleted` soft-delete visibility. **Falcon-session-only query param** — BE enforces regardless of FE flag. **No new PES key required** (it's a query-param toggle, not a role-gated action). MEMORY.md notes "Wave A (FalconAccess.user.* PES namespace)" was deferred — the FE registry has no `user.*` namespace yet. **Still deferred per Wave A scope.**
+
+**Aggregate Wave 6 PES drift count: 0.** The catalog and registry are in lockstep. New 2026-05-17 features all consumed pre-existing PES keys.
+

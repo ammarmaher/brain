@@ -1,4 +1,4 @@
-# falcon-textarea — GAPS AND UPGRADES
+﻿# falcon-textarea — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -82,3 +82,9 @@ All shared.
 
 - For G1: query nativeElement and add a DOM listener.
 - For G3: query nativeElement.querySelector('textarea').
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-textarea>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

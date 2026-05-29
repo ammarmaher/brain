@@ -181,7 +181,7 @@ Implement these at the Angular FormGroup level via custom cross-field validators
 | Field | Type / UI | PRD rule | Backend DTO field | V-rule | Frontend validator (Angular) | Drift |
 |---|---|---|---|---|---|---|
 | CommChannel Name | display ([[Falcon Tag]] or text cell with [[Falcon Icon]]) — MultiLanguage(En, Ar) | Master catalog read | `CommunicationChannelResponse.Name` (MultiLanguage) · `CommunicationChannelResponse.Icon` | — | Read-only. Render using i18n locale switch (PRD-style multi-language). | — |
-| Visibility | [[Falcon Toggle]] — default OFF (= Hide) | BR-AM-14: default Hide | (write) maps to `Service` row inclusion. **Important nuance:** the `CreateAccountRequest.CommChannels.Services` list is sparse — only channels the admin actively configures are sent. Channels NOT in the list inherit `Hide` server-side. | [[V-service-visibility-pricing-required]] | Initial state: OFF (Hide) for every row. Toggling ON enables the Pricing Type + Price Value inputs and makes them required (reactive form: `valueChanges.subscribe` switches validators on/off). | ⚠ enum→bool drift (E-comm-channel-config). |
+| Visibility | [[Falcon Switch]] — default OFF (= Hide) | BR-AM-14: default Hide | (write) maps to `Service` row inclusion. **Important nuance:** the `CreateAccountRequest.CommChannels.Services` list is sparse — only channels the admin actively configures are sent. Channels NOT in the list inherit `Hide` server-side. | [[V-service-visibility-pricing-required]] | Initial state: OFF (Hide) for every row. Toggling ON enables the Pricing Type + Price Value inputs and makes them required (reactive form: `valueChanges.subscribe` switches validators on/off). | ⚠ enum→bool drift (E-comm-channel-config). |
 | Pricing Type | dropdown ([[Falcon Dropdown]]) — Monthly / Yearly / One Time Payment | BR-AM-16: 3-value enum | `Service.PriceType` `[ThrowIfNotEnumValue<ePricingType>]` | [[V-service-visibility-pricing-required]] | **Conditional:** required when Visibility = Show. `Validators.required` + enum-membership validator. Cleared when Visibility flips to Hide (matches `HiddenProductMustNotHavePricing` reverse rule). Backend enum value `One Time Payment` likely encoded as `OneTimePayment` — verify against `ePricingType` enum definition. | — |
 | Price Value | numeric input ([[Falcon Input Number]]) with SAR suffix | BR-AM-17: ≥ 0 SAR | (inferred — part of `Service` nested type beyond the documented `AppId, PriceType` fields; see DTO drill-down for full shape) | [[V-service-visibility-pricing-required]] | **Conditional:** required when Visibility = Show. `Validators.required` + `Validators.min(0)`. Server returns `PriceValueNotConfigured` (422) or `InvalidPriceValue` (400) on failure. Cleared when Visibility flips to Hide. | ⚠ DRIFT — `Service` nested type field list not fully documented in `DTO_DICTIONARY.md` (only `AppId, PriceType` enumerated). Surface as documentation gap. |
 
@@ -240,7 +240,7 @@ Mirror of Step 3, swapping CommChannel for Application:
 | Field | Type / UI | PRD rule | Backend DTO field | V-rule | Frontend validator | Drift |
 |---|---|---|---|---|---|---|
 | Application Name | display ([[Falcon Tag]] or text cell with [[Falcon Icon]]) | Master catalog read | `ApplicationResponse.Name` (MultiLanguage) · `ApplicationResponse.Icon` | — | Read-only | — |
-| Visibility | [[Falcon Toggle]] — default OFF | BR-AM-14 | Sparse list inclusion in `Applications.Services` | [[V-service-visibility-pricing-required]] | Same wiring as Step 3 | ⚠ enum→bool |
+| Visibility | [[Falcon Switch]] — default OFF | BR-AM-14 | Sparse list inclusion in `Applications.Services` | [[V-service-visibility-pricing-required]] | Same wiring as Step 3 | ⚠ enum→bool |
 | Pricing Type | dropdown ([[Falcon Dropdown]]) | BR-AM-16 | `Service.PriceType` `[ThrowIfNotEnumValue<ePricingType>]` | [[V-service-visibility-pricing-required]] | Conditional on Visibility = Show | — |
 | Price Value | numeric input ([[Falcon Input Number]]) SAR | BR-AM-17 | (inferred — `Service` nested type, fields beyond `AppId, PriceType` not documented) | [[V-service-visibility-pricing-required]] | Conditional on Visibility = Show. `Validators.required` + `Validators.min(0)` | ⚠ Documentation gap |
 
@@ -459,7 +459,7 @@ Authoritative dossier path: `C:\Falcon\Brain Outputs\understanding\frontend\comp
 | [[Falcon Input]] | 1, 5 | Text inputs (Account Name, address fields, names) |
 | [[Falcon Input Number]] | 2, 3, 4 | Numeric inputs (limits, price values) |
 | [[Falcon Dropdown]] | 1, 2, 3, 4, 5 | Classification, authority letter, country/city/sector, password level, pricing type, role, delivery method |
-| [[Falcon Toggle]] | 3, 4 | Visibility toggle per row |
+| [[Falcon Switch]] | 3, 4 | Visibility toggle per row |
 | [[Falcon Checkbox]] | (potential) | If used for grouped options |
 | [[Falcon Button]] | shell + 5 | Next / Previous / Submit / Save Draft / Cancel |
 | [[Falcon Data Table]] | 3, 4 | CommChannels + Apps row tables |

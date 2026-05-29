@@ -1,4 +1,4 @@
-# falcon-angular-uploader — USAGE
+﻿# falcon-angular-uploader — USAGE
 
 ## Real usage in active codebase
 - `apps/host-shell/src/app/playground/playground.page.html` — playground showcase (all 3 modes).
@@ -137,3 +137,9 @@ When wizards add attachment support, the call site looks like:
 - DO listen to `valueChange` to start uploads on new queued files.
 - DON'T set `progress` to a value > 100 or < 0 — `clampProgress()` will clip but causes flicker.
 - DON'T use `mode="inline-list"` for new uploads — it shows the list but has no trigger.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-uploader>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

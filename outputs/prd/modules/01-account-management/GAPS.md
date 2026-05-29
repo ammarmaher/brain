@@ -55,3 +55,78 @@
 - **GAP-AM-03 (PARTIAL)** is easy to lift: add `[RegularExpression(@"^[A-Za-z].*$")]` or equivalent to `CreateAccountRequest.Info.AccountName`. Server-side rejection beats UI-only.
 - **GAP-AM-07 (MISSING)** is a known backlog item (root-documents); likely Phase 2.
 - **GAP-AM-15 + 22 + 23 + 24 + 25** all need a Kafka / background-job inspection pass to be fully verified — flagged for next-pass deep dive.
+
+---
+
+## Wave 2 refresh — 2026-05-17
+
+> Refreshed by Wave 2 PRD Deep Read. Source PRD `Brain SK\skills\imported-business\prd-knowledge\modules\01-account-management\latest-prd.md` (`Account Management Module VB4`, 123 lines synced 2026-04-24). Backend cross-check: `Brain Outputs\understanding\backend\commerce\*` + `Brain Outputs\understanding\backend\charging\*`. V-rule cross-check: 4 V-rules covering Account + Balance.
+
+### Counts
+
+- **Rules verified against PRD line + backend code:** 38 / 42 BR-AM-* rows (`BR-AM-01..38` confirmed; `BR-AM-39..42` are OPEN — silent in PRD).
+- **Drift discovered:** 2 new drifts (see catalogue).
+- **New resolutions added to QUESTIONS.md:** 3 (Q-AM-11 classification list source, Q-AM-13 Allowed-IPs header name, Q-AM-19 commchannel cap per active contract).
+- **New pending-questions raised:** 0.
+
+### Drift catalogue
+
+**D-AM-1: Code uses `CommunicationChannel` (DTOs) and `CommChannel` (helpers) inconsistently — glossary mismatch.**
+- PRD uses **CommChannel** (one word) consistently (`latest-prd.md:47-49`, `:65-67`, etc).
+- Commerce DTOs: `AccountCommunicationChannelResponse`, `VisibleCommunicationChannelResponse`, `ChangeCommunicationChannelPriceTypeRequest`, etc. — **`Communication`-spelled**.
+- Routes: `/api/Node/comm-channel/...` — **`comm-channel` hyphenated** (matches PRD).
+- Already flagged in original QUESTIONS.md banned-synonyms section.
+- **Conservative default per `F-022`:** PRD wording (`CommChannel`) wins for all UI / business copy; DTO names can stay (refactoring DTOs is a breaking change). The drift is **cosmetic** for the dossier — log it, don't fix it.
+
+**D-AM-2: PRD Password Security Level `{Normal, Advanced}` vs Identity backend `ePasswordSecurityLevel {Low, Medium, High, Strict}` (cross-cuts module 02).**
+- Already documented as D-UM-1 in module 02 GAPS.md refresh.
+- Cross-link here because `AccountSettings.passwordSecurityLevel` is the field on the Account that Identity reads.
+
+### Verified BR-AM rules with cross-links
+
+| BR | PRD line | Backend evidence | V-rule | Status |
+|---|---|---|---|---|
+| BR-AM-01..02 | :26-31 (hierarchy + Falcon-only creation) | Commerce `POST /api/Node/create-account` (FalconOnly via process orchestrator) | — | CONFIRMED |
+| BR-AM-03..08 | :34-40 (Info step) | `CreateAccountRequest.Info.{AccountName, FinanceId, ClassificationCategory, ClassificationSubCategory, AuthorityLetterType, ...}` | [[V-account-name-format-uniqueness]] triangulated 2026-05-15 | CONFIRMED — D-AM partial (starts-with-letter not visible in DTO attributes) |
+| BR-AM-09..13 | :43-45 (Settings step) | `CreateAccountRequest.Settings.{PasswordSecurityLevel, AllowedIps, MaxNormalUserLimit, MaxSystemUserLimit, MaxNodeLevel, BalanceTransferLimit}` | [[V-account-ip-allowlist-enforcement]] · [[V-account-limits-zero-means-no-limit]] · [[V-password-security-level-enum]] · [[V-normal-user-limit-enforcement]] triangulated | CONFIRMED |
+| BR-AM-14..19 | :47-51 (CommChannel + App config) | `PUT /api/Node/comm-channel/{visibility,price-type,price-value}` + `PUT /api/Node/application/{visibility,price-type,price-value}` (all FalconOnly) | [[V-service-visibility-pricing-required]] triangulated 2026-05-15 | CONFIRMED |
+| BR-AM-20..24 | :56-63 (status lifecycle + grace + Disabled) | No HTTP surface — background job; status visible on read DTOs | — | PARTIAL (grace period not surfaced; renewal worker not mapped) |
+| BR-AM-25..34 | :67-91 (Wallet topology + transfer rules) | `POST /api/Setting/wallets` (FalconOnly) + Charging `POST /api/Wallet/transfer` | — | CONFIRMED structurally; topology-edit-mid-life (Q-AM-01) UNVERIFIABLE |
+| BR-AM-35..38 | :95-98 (Contract ↔ Master Wallet interplay) | Kafka topics — UNVERIFIABLE at REST surface | — | CONFIRMED via cross-module PRD; backend Kafka inspection deferred |
+
+### Entity reconciliation
+
+| Entity | PRD ENTITIES.md | Backend DTO | Drift? |
+|---|---|---|---|
+| Account | `id, accountName, financeId, classificationCategory, classificationSubCategory, authorityLetterType, ...` | Commerce: `CreateAccountRequest.Info.{...}` + `GetMainNodeInfoResponse` | D-AM-1 (cosmetic CommChannel vs CommunicationChannel) |
+| AccountSettings | `passwordSecurityLevel, allowedIps[], maxNormalUserLimit, maxSystemUserLimit, maxNodeLevel, balanceTransferLimit` | `CreateAccountRequest.Settings.{...}` + `GetSettingsResponse` | D-AM-2 (passwordSecurityLevel naming) |
+| Node | `id, name, parentNodeId?, accountId, depth, path` | `GetHierarchyNodeResponse` + east-west DTOs | No drift |
+| CommChannelConfig | `commChannelId, visibility, pricingType, priceValueSar, status, renewalDate` | `AccountCommunicationChannelResponse` | D-AM-1 (naming) |
+| ApplicationConfig | Same shape as CommChannelConfig | `AccountApplicationResponse` (same structural shape per Wave 7.15 dossier note) | Same as above |
+| Wallet (Master, Comm, User, Node) | `id, walletType, balanceType, ownerId, lumpSumSar` | Charging `GetAccountWalletsResponse.{MasterWallet, CommChannelWallets[], OwnerWallets[]}` | No drift |
+| WalletRecord | `id, walletId, contractId, valueSar, createdAt` (defined here; consumed by 03) | Charging — internal table, surface via `GetContractBalanceSummariesResponse` | Aligned via 03 cross-link |
+
+### Workflow ↔ Playbook mapping
+
+| Workflow | Playbook location | Status |
+|---|---|---|
+| W1 Add Client (5-step wizard) | `understanding/pages/organization-hierarchy/Add Client/` (folder form, 14+ files) | COVERED — full playbook with PLAYBOOK.md + 17 supporting files |
+| W2 Add Node (sub-node) | `understanding/pages/organization-hierarchy/flows/Add Node.md` | COVERED |
+| W3 Edit Node (rename) | `understanding/pages/organization-hierarchy/flows/Edit Node.md` | COVERED (move + archive flagged MISSING per Edit Node playbook header) |
+| W4 Configure Wallet Topology | No playbook (covered transitively by Settings tab) | PARTIAL via Settings Tab Wave 14 dossier |
+| W5 Renewal job (background) | No playbook | MISSING (background job) |
+| W6 Activate / Renew CommChannel | Covered partially via organization-hierarchy commchannels tab | PARTIAL via Wave 7.15 |
+| W7 Configure CommChannel/App visibility + pricing | Covered partially via organization-hierarchy tabs | PARTIAL |
+| W8 Balance Transfer (across wallets) | `understanding/pages/wallets-and-balance-management/PAGE_LEARNING.md` (STUB) | STUB only |
+| W9 Contract Expiration sweep | No playbook | MISSING (cross-cuts 03) |
+
+### Halt-and-flag tonight
+
+None.
+
+### Action items raised
+
+1. **Cross-link D-AM-2 to module 02** — added in module 02 D-UM-1.
+2. **Tighten BR-AM-03 starts-with-letter rule in DTO** — proposed via `[RegularExpression(@"^[A-Za-z].*$")]` on `CreateAccountRequest.Info.AccountName`. Currently relies on frontend `FalconStartWithLetterMax30Directive` (per [[V-account-name-format-uniqueness]]).
+3. **Background job inspection** for renewal worker + Kafka event chain — schedule a `falcon-core-commerce-svc` Kafka topology audit before Wave 5 closes.
+4. **Page learning for Wallets & Balance Management** — currently STUB; this is one of the most operationally important screens for Falcon admins.

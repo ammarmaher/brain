@@ -1,4 +1,4 @@
-# falcon-mobile-number (LEGACY FACADE) — USAGE
+﻿# falcon-mobile-number (LEGACY FACADE) — USAGE
 
 ## Real usage in active codebase
 - _Verify with grep._ No active production templates found in this audit. The Wave 2 façade is compile-only compatibility — likely no production consumers remain, but kept as a safety net.
@@ -26,3 +26,10 @@
 - DO let the existing consumers (if any) keep compiling.
 - DON'T extend the façade.
 - DON'T add more country mappings unless absolutely needed.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-mobile-number>` (pure-Angular tag, not a wrapper) across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/features/auth/forgot-password-flow/forgot-password-flow.component.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-mobile-number/falcon-mobile-number.component.html`

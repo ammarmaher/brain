@@ -1,4 +1,4 @@
-# falcon-angular-stepper — USAGE
+﻿# falcon-angular-stepper — USAGE
 
 ## Real usage in active codebase
 - **`apps/host-shell/src/app/playground/playground.page.html`** — playground showcases dual render path + sizes + modes + linear/non-linear.
@@ -140,3 +140,13 @@ Plus the wizard footer (Next/Back/Cancel/Finish) is then provided by `<falcon-an
 - DO use `step.icon` only when `showStepNumbers=false` is intentional, otherwise the icon and number may collide visually.
 - DON'T paint your own custom dot CSS — that violates the token-SSOT rule; override tokens instead.
 - DON'T animate the fill bar with JS — the fill transition is owned by `--falcon-stepper-fill-transition-duration` + easing token.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-stepper>` across `apps/` + `libs/falcon/` returned **5 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/add-client-wizard.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/add-client-wizard.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.ts`
+- `apps/host-shell/src/app/playground/playground.page.html`

@@ -1,0 +1,36 @@
+{
+  "reactProjectDefault": "C:\\Falcon\\Source_of_truth_theme",
+  "outputsRoot": "C:\\Falcon\\Brain Outputs\\reports\\web-scrub",
+  "playwright": {
+    "viewport": { "width": 1440, "height": 900 },
+    "deviceScaleFactor": 1,
+    "userAgent": "Mozilla/5.0 (Falcon Web-Scrub /0.1)",
+    "timeoutMs": 30000,
+    "waitForNetworkIdleMs": 2000,
+    "blockResources": []
+  },
+  "safety": {
+    "respectRobotsTxt": true,
+    "skipLoginWalls": true,
+    "skipCaptcha": true,
+    "skipPaywall": true,
+    "skipAntiBot": true,
+    "allowDomainsOnly": [],
+    "denyDomains": []
+  },
+  "deepDive": {
+    "captureStates": ["default", "hover", "focus", "active", "disabled"],
+    "captureComputedStyleProps": [
+      "display", "position", "width", "height",
+      "padding", "margin", "border", "border-radius",
+      "color", "background-color", "background",
+      "font-family", "font-size", "font-weight", "line-height", "letter-spacing",
+      "box-shadow", "opacity", "transform", "transition"
+    ]
+  },
+  "crawlee": {
+    "enabled": true,
+    "maxRequestsPerCrawl": 50,
+    "maxConcurrency": 2
+  }
+}

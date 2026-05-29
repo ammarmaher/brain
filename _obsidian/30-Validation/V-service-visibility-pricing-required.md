@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: true
 created: 2026-05-15
+module: account-mgmt
+feature: service-pricing
+verification: runtime
+last-verified: 2026-05-21
+tags: ["#status/triangulated", "#module/account-mgmt", "#verification/runtime", "#layer/fe"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: project_service_pricing_per_row_loader_wave_12_2026_05_21.md
 ---
 *** Validation V-service-visibility-pricing-required — Visibility=Show requires Pricing Type + Price Value ***
 *** Origin: PRD-01 Account Management · Backend: Commerce · 2026-05-15 ***

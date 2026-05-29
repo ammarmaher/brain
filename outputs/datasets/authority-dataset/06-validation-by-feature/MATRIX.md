@@ -309,3 +309,23 @@ This contract is repeated in every V-rule's "Frontend implementation hint" secti
 - [BRAIN-OUT] `understanding/backend/<service>/VALIDATIONS.md` (one per service) — per-service validator inventory
 - [BRAIN-OUT] `understanding/backend/<service>/ERRORS.md` (one per service) — per-service error catalog
 - Brain SK `_obsidian/00-Home/VALIDATION_INDEX.md` — the vault graph hub
+
+## 10. Wave 6 re-audit verification (2026-05-17)
+
+> [!success] **Verified clean — no V-rule cells need updating**
+
+Wave 6 of the forever-wave mining run re-audited all 25 V-rule notes against this matrix at 2026-05-17 23:49 +03:00. Procedure:
+
+1. **Drift scanner** — `falcon-wiki/scripts/scan-authority.ps1 -CheckOnly` reported **65/67 clean**. The two changed files (`apps/admin-console/src/app/app.config.ts` + `apps/management-console/src/app/app.config.ts`) carry Wave-8 runtime-config fallback URL hardening — Phase 1 scope only. **No V-rule source file (the 25 `Brain SK/_obsidian/30-Validation/V-*.md` notes) changed**, so every PRD citation, backend validator citation, and FE directive citation in §1 and §3 of this matrix remains valid.
+2. **PRD citation re-check** — Spot-checked V-username-format-uniqueness-immutable (PRD-02 BR-UM-12 + BR-UM-19 + BR-UM-37) and V-service-visibility-pricing-required (PRD-01 BR-AM-14..17) against the live `BUSINESS_RULES.md` files — citations still align. BR-AM totals **42**, BR-UM **50**, BR-CC **50**, BR-CGM **38** (= 180 BR rules total).
+3. **Backend enforcement spot-check** — Identity `CreateUserRequestValidator.MaximumLength(100)` ↔ PRD `<=30` drift (#1 in §4) still applies. Commerce `[ThrowIfNotEnumValue<ePricingType>]` on `Service.PriceType` still the canonical attribute for V-service-visibility-pricing-required. Both validated by the unchanged-file hashes for `BuiltInRoleCatalog.cs` + the Identity/Commerce enum files.
+4. **FE directive existence** — Falcon validations registry now wired in admin-console via `provideFalconValidations()` (added in 2026-05-17 admin-console `app.config.ts` change — Wave-8 fallback hardening + Wave-NEW node-path-tenant-lift). This **CONFIRMS the architecture promise** documented in §5 "3-layer validation architecture" at line 225 of this matrix. The `provideFalconValidations()` call wires Layer 1 directives correctly across the admin-console app.
+
+**New applicability cells:** 0 new V-rule × feature applicability cells discovered. The 25-row × 7-column grid (175 cells) is unchanged.
+
+**Drift items list (#1-16 in §4) status:** all 16 drift items remain in force. None resolved during 2026-05-16 → 2026-05-17 window.
+
+**26th V-rule status** ([INFERRED] in §1 sub-bullet): `V-subnode-name-maxlength-30` still not seeded on disk. Logged in §4 item #16. **NOT raised as a halt** — sister-rule reference is decorative not load-bearing.
+
+*Next audit:* triggered automatically by `scan-authority.ps1` exit-1 on any change to one of the 25 V-rule notes, the PRD-01..05 BUSINESS_RULES files, or the BuiltInRoleCatalog/falcon-access.registry files.
+

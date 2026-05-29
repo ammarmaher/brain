@@ -85,3 +85,20 @@ Email/phone format · password complexity tiers · OTP validity windows · locko
 ## Hubs
 
 - [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[BUSINESS_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[GAPS_INDEX]] · [[COMPONENT_INDEX]]
+
+
+---
+
+## Vol 44 cross-reference (added 2026-05-18)
+
+The [[VOL-44-TRUTH-TAUTOLOGIES]] atomic note carries direct BRD-extracted facts relevant to this module. See [[Vol 44 — Supporting Artifacts Research]] for the long-form treatment.
+
+
+
+## Vol 47 specialist cross-reference (added 2026-05-18)
+
+For user lifecycle / status / OTP / soft-delete deep dive, see:
+- [[USER-LIFECYCLE-SPECIALIST-HUB]] (entry point)
+- [[Vol 47 — User Lifecycle Specialist Guide]] (graph node)
+- Code-verified by Wave 14 mining agent — `UserStatusTransitionPolicy.cs:16-40`, `LoginEligibilityPolicy.cs:14-26`, `ForgotPasswordProcess.cs:35-36`. **3 live code drifts** flagged with task chips.
+

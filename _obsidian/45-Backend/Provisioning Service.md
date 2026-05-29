@@ -24,6 +24,21 @@ created: 2026-05-15
 - [ERRORS](../../../Brain%20Outputs/understanding/backend/provisioning/ERRORS.md)
 - [FRONTEND_CONTRACT](../../../Brain%20Outputs/understanding/backend/provisioning/FRONTEND_CONTRACT.md)
 
+## Controller dossiers (Wave 5d · 2026-05-18)
+
+Per-controller 6-file dossiers live at `understanding/backend/provisioning/controllers/<Name>/`:
+
+| Controller | Endpoints | Primary pages | Findings |
+|---|---|---|---|
+| [ServicesController](../../../Brain%20Outputs/understanding/backend/provisioning/controllers/ServicesController/OVERVIEW.md) | 5 (list · details · visible-details · shadow-rows · available actions) | [[Organization Hierarchy]] CommChannels + Apps tabs | Read-only mirror — FSM owned by Commerce per [[ARCH-FINDING-CommChannel-FSM-ownership]] |
+| [LookupController](../../../Brain%20Outputs/understanding/backend/provisioning/controllers/LookupController/OVERVIEW.md) | 1 (lookup-values catalog) | [[Add Client Flow]] Step 3/4 wizard dropdowns | ⚠️ Empty seed — see pending question `wave-5d-provisioning-lookup-empty-seed.md` |
+
+**Total: 2 controllers** documented during Wave 5d.
+
+## Architectural finding (Wave 5d)
+
+🏛️ See [[ARCH-FINDING-CommChannel-FSM-ownership]] — the `eProductSubscriptionStatus` lifecycle (InActive → Paid → Active → Expired → Disabled) is **owned and driven by [[Commerce Service]]**, not Provisioning. Provisioning reads and mirrors the state via `ServicesController`; it does NOT transition it. The `ServicesActionsPolicy.cs` here only resolves "what actions can this user/role take" — Commerce executes them.
+
 ## PRDs this service implements
 
 - [[01 Account Management]] — CommChannel / App service subscriptions per account (visibility · status · actions)

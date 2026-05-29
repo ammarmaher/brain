@@ -5,6 +5,14 @@ prd: PRD-03
 service: commerce
 drift-count: 19
 created: 2026-05-15
+module: contract
+feature: contract
+verification: code-verified
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contract", "#verification/code-verified", "#layer/be"]
+up: "[[E-entities-MOC]]"
+parent: "[[E-entities-MOC]]"
+layer: be
 ---
 *** Entity Reconciliation E-contract — Contract ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: commerce · 2026-05-15 ***

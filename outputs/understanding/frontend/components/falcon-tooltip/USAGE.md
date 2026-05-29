@@ -1,4 +1,4 @@
-# falcon-tooltip — USAGE
+﻿# falcon-tooltip — USAGE
 
 ## Real usage examples
 Only in `apps/host-shell/src/app/playground/playground.page.html` showcase. No production-feature usage today. Examples below are recommended patterns.
@@ -110,3 +110,9 @@ Not applicable.
 | Set `maxWidth="320px"` for long content | Let the tooltip stretch to viewport width |
 | Use plain `[content]` for short text | Use `<slot name="content">` for short text (overkill) |
 | Project rich content via `slot="content"` for multi-line | Inline `<br>` tags in `[content]` |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-tooltip>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

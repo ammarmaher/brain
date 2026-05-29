@@ -77,3 +77,29 @@ Per-CommChannel field schema · variable-token format · quality-drift detection
 ## Hubs
 
 - [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[BUSINESS_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[GAPS_INDEX]] · [[COMPONENT_INDEX]]
+
+
+---
+
+## Vol 44 cross-reference (added 2026-05-18)
+
+The [[VOL-44-TRUTH-TAUTOLOGIES]] atomic note carries direct BRD-extracted facts relevant to this module. See [[Vol 44 — Supporting Artifacts Research]] for the long-form treatment.
+
+
+
+## Vol 46 specialist cross-reference (added 2026-05-18)
+
+For channels/campaigns/templates deep dive, see:
+- [[CAMPAIGNS-CHANNELS-SPECIALIST-HUB]] (entry point)
+- [[Vol 46 — Campaigns Channels Specialist Guide]] (graph node)
+- 5-word truth: WhatsApp + Voice + SMS implemented; Facebook/Instagram are NOT.
+
+
+
+## Vol 49 specialist cross-reference (added 2026-05-18)
+
+For template lifecycle deep dive, see:
+- [[Vol 49 — Template Lifecycle Specialist Guide]] (graph node)
+- 6-status lifecycle · Free vs Restricted Body · 1L/2L maker-checker · Meta integration boundary · variable interpolation · i18n RTL.
+- Co-canonical with [[Vol 41 — Template Module V4 Deep Refresh]].
+

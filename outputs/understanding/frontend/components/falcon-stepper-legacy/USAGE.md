@@ -1,4 +1,4 @@
-# falcon-stepper (LEGACY) — USAGE
+﻿# falcon-stepper (LEGACY) — USAGE
 
 ## Real usage in active codebase
 
@@ -74,3 +74,11 @@ The `step1Valid()` / `step2Valid()` / `step3Valid()` / `step4Valid()` / `step5Va
 - DO bookmark the Wave 3 PLAN.md (`libs/falcon/src/shared-ui/lib/components/falcon-stepper/PLAN.md`) — it documents the design intent and the rationale for dropping PrimeNG.
 - DON'T add features to this component — invest in `<falcon-angular-stepper>` instead.
 - DON'T mix this legacy stepper with the Stencil-paired one in the same page (the selectors collide; pick one import).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep returned **0 consumers** AND **0 source files** under `libs/falcon-ui-core/` + `libs/falcon/` as of 2026-05-17.
+
+**STATUS: ORPHAN — flagged for deletion review.**
+
+Superseded by: `falcon-stepper` (Stencil + wrapper). The legacy Angular stepper was deleted in Wave 7.13 per MEMORY entry `project_falcon_stepper_legacy_deletion_2026_05_17.md`.

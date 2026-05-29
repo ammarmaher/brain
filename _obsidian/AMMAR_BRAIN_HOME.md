@@ -19,6 +19,15 @@ Welcome to Brain SK knowledge vault.
 - [[PAGE_KNOWLEDGE_INDEX]] — Page-level knowledge folders under `Brain Outputs/understanding/pages/`
 - [[FALCON_EYES_INDEX]] — Falcon Eyes semantic visual difference QA hub
 - [[VISUAL_QA_INDEX]] — Visual QA index (Falcon Eyes + aliases + screenshot-to-angular)
+- [[STATISTICS_INDEX]] — 📊 Statistical Intelligence — KPIs, percentages, scores, risk, trends
+- [[EXECUTIVE_REPORTS_INDEX]] — 📈 Executive Insight Reports — boss-ready chart reports (calls Statistics first)
+
+## 🌟 Specialist Hubs (canonical answer surfaces)
+
+- [[ATLAS_MASTER_INDEX]] — entry point to the 46-volume Business Scenarios Atlas
+- [[WALLET-SPECIALIST-HUB]] — 💰 wallet/balance/multi-contract specialist (Vol 44 §1-§2 + Vol 45 + Wave 11 code mining)
+- [[CAMPAIGNS-CHANNELS-SPECIALIST-HUB]] — 📡 WhatsApp/Voice/SMS/Email + Facebook/Instagram NOT-impl rationale (Vol 46)
+- [[VOL-44-TRUTH-TAUTOLOGIES]] — 35+ BRD-extracted truth tautologies (W-TT, MC-TT, US-TT, TM-TT, CG-TT, CC-TT, MP-TT, DI-TT)
 
 ## Main outputs
 
@@ -102,3 +111,12 @@ Phase 1+2 parallel discovery pipeline · overall readiness **68%** · decision *
 ## Tags
 
 #type/index #status/deprecated #gap #security
+
+- [[USER-LIFECYCLE-SPECIALIST-HUB]] — 👤 user lifecycle / status / OTP / soft-delete specialist (Vol 44 §3 + Vol 47 + Wave 14 code mining) — ⚠️ 3 live code drifts flagged
+
+
+- [[PES-CATALOG-SPECIALIST-HUB]] — 🛡️ permissions / authorization / role-based access (Vol 50 + Wave 17 code mining) — closes Q-AM-16 with 12 drifts (5 HIGH)
+
+
+- [[MARKETPLACE-PRICING-SPECIALIST-HUB]] — 🛒 Marketplace / Visibility / Pricing / Scheduled Change (Vol 55 + Vol 44 §7 + Wave 18b code) — ⚠️ 4 live code drifts flagged
+

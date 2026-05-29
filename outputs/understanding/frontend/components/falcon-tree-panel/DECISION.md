@@ -1,99 +1,54 @@
-# falcon-tree-panel (LEGACY BESPOKE) — DECISION
+# falcon-tree-panel — DECISION
 
-## Brain SK final recommendation
+> Re-swept 2026-05-18 against live source.
 
-### Status
-- **LEGACY-IN-USE / ACTIVE.** Bespoke Angular component, parallel implementation to `<falcon-angular-tree>`.
-- Roadmap: converge with `<falcon-angular-tree>` (extend with row template + action slot) and delete the internal `<falcon-tree-node>`.
+## Status
+- **ACTIVE production component.** Bespoke Angular (standalone, signal inputs, `OnPush`, `ViewEncapsulation.None`). Fully Tailwind — the SCSS→Tailwind conversion is **done** (no `.scss` files remain).
+- It is THE org-hierarchy tree, consumed through the `<app-organization-hierarchy-tree>` host-shell wrapper. Actively enhanced (action-column unification + configuration inputs landed 2026-05-18).
+- A separate `<falcon-angular-tree>` exists as a bare-tree alternative. A convergence of the two was once proposed; it is **not** a verified-active roadmap item — treat the two as independent today.
 
-### Use this component for
-- The standard org-hierarchy left rail (admin-console + management-console).
-- Any tree-with-chrome use case requiring per-row 3-dot menus with declarative action configs.
+## Use this component for
+- The org-hierarchy left rail (admin-console + management-console), via the wrapper.
+- Any tree-with-chrome use case needing per-row 3-dot menus with declarative action configs + a branded/client root row.
 
-### Avoid this component for
-- Generic trees without action menus → use `<falcon-angular-tree>` directly.
-- New tree variants where the chrome would be different.
+## Avoid this component for
+- Generic trees without action menus / chrome.
+- Direct app consumption of the skeleton — always go through the wrapper.
 
-### Preferred variant / render path
-- N/A — pure Angular bespoke.
-
-### Required upgrades before wider use
-1. **Plan + execute convergence** with `<falcon-angular-tree>` (P0).
-2. **Add `disabled(node)` to `FalconTreeAction`** (P1).
-3. **Richer action variants** (`variant: 'default' | 'highlighted' | 'destructive' | 'warning'`) (P1).
-4. **Document chevron-overlap auto-scroll** behavior (P1).
-5. **Multi-selection support** (P2).
-6. **Custom root row template slot** (P2).
-7. **Delete legacy SCSS** during convergence (P0).
-
-### Relationship to other components
-- `<falcon-angular-tree>` — convergence target.
-- `<falcon-angular-menu>` — already composed for the 3-dot popup.
-- `<falcon-organization-hierarchy-tree-tw>` — separate Light-DOM bespoke org-hierarchy tree (Agent 2 territory).
-
-### Exact rule for future implementation tasks
-> "For org-hierarchy-like rails with chrome + per-row 3-dot menus, use `<falcon-tree-panel>` today. The declarative `FalconTreeAction[]` pattern is the canonical API for action menus — preserve it during convergence with `<falcon-angular-tree>`."
-
----
-
-## Dynamic capability assessment
-
-### 1. What is static today?
+## What is static today
 - Chrome shape (aside + root row + section label + tree body) — fixed.
-- Recursive node rendering is its OWN code path (`<falcon-tree-node>`).
-- Root row visual is `mode: 'falcon' | 'client'` — no custom template.
+- Root row visual is `mode: 'falcon' | 'client'` — no custom template slot.
 - Section label position — fixed between root row and tree body.
-- 3-dot trigger keyboard activation — not supported (mouse only).
-- Chevron-overlap auto-scroll — opaque to consumer.
 - Single-selection only.
+- Chevron-overlap auto-scroll — opaque to the consumer.
 
-### 2. What is already dynamic through inputs/outputs?
-- `[root]`, `[expandedIds]`, `[selectedId]`, `[trackBy]`, `[clientId]`, `[clientsLabelKey]`.
-- `[rootActions]`, `[nodeActions]` declarative menu configs.
-- `[mode]` (falcon / client).
-- `[showArrows]`, `[showActions]` toggles.
-- 4 Outputs: `toggle`, `select`, `action`, `hoverPathChange`.
+## What is dynamic through inputs/outputs (current API)
+- Data/state: `[root]`, `[expandedIds]`, `[selectedId]`, `[trackBy]`, `[clientId]`.
+- Visual mode: `[mode]`, `[clientsLabelKey]` (empty hides).
+- Actions: `[rootActions]`, `[nodeActions]` (declarative `FalconTreeAction[]`, per-node `visible` predicate).
+- Visibility toggles: `[showArrows]`, `[showActions]`, `[showRootActions]`, `[showSubNodes]`.
+- Interactivity gates: `[rootSelectable]`, `[nodesSelectable]` — **added 2026-05-18**.
+- Outputs: `(toggle)`, `(select)`, `(action)`, `(hoverPathChange)`.
 
-### 3. What is already dynamic through slots / ng-template?
-- _None._ Fully baked-in chrome.
+## What is still missing (additive upgrade ideas, NOT yet implemented)
+- `FalconTreeAction.disabled?: (node) => boolean` — per-node action disable.
+- `FalconTreeAction.variant?: 'default' | 'highlighted' | 'destructive' | 'warning'` — richer action emphasis (today only `highlighted: boolean`).
+- Multi-selection (`selectionMode`).
+- Custom root-row / section-label template slots (`ng-content`).
+- A `showRoot` input to hide the whole root row (today only its 3-dot is independently hideable via `showRootActions`).
+- Keyboard activation for the 3-dot trigger.
 
-### 4. What is dynamic through token / theme overrides?
-- _Nothing._ Bespoke SCSS.
+## Exact rule for future implementation tasks
+> "For org-hierarchy-like rails, consume `<app-organization-hierarchy-tree>` (the wrapper). The wrapper owns PES + fetch; the skeleton `<falcon-tree-panel>` is presentational. Drive any locked/read-only behaviour by binding the config inputs to a `computed` off the caller's own flags — never fork the component. The declarative `FalconTreeAction[]` API is the canonical action-menu pattern."
 
-### 5. What is dynamic through Tailwind classes?
-- Outer layout context (parent flex / grid / sticky positioning).
+## Risky to change (consumers depend on it)
+- `[root]` shape (`FalconTreeNode<T>`) and the `(toggle)` / `(select)` / `(action)` / `(hoverPathChange)` output types.
+- `mode` semantics — `'falcon'` ignores `root.imageUrl`.
+- `FalconTreeAction.highlighted` semantics — any future `variant` must stay backwards-compatible.
+- Default `true` on all visibility / interactivity inputs — flipping a default would silently change every existing consumer.
+- The `--spacing-row-action-inset` token + `scrollbar-gutter: stable` mirroring — the action-column alignment depends on both the root row and `.falcon-tree` keeping them.
 
-### 6. What is missing to make this component reusable across pages?
-- Multi-selection (P2).
-- Custom root row template (P2).
-- Section label slot (P2).
-- Disabled / richer action variants (P1).
-- Keyboard nav for 3-dot trigger (P1).
-- Convergence with `<falcon-angular-tree>` (P0).
-
-### 7. What capability should be added to the shared component vs a one-off page hack?
-- The declarative `FalconTreeAction[]` API is itself the right abstraction — KEEP IT.
-- Migrate the recursive rendering and the hover-path / focus-mode / locked-spec visuals INTO `<falcon-angular-tree>`; keep the chrome + 3-dot menu dispatch as a thin shell here.
-
-### 8. What flags / options / templates / slots would make it better?
-- `selectionMode?: 'none' | 'single' | 'multi'`.
-- `<ng-content select="[slot=root-row]">`.
-- `<ng-content select="[slot=section-label]">`.
-- `FalconTreeAction.disabled?: (node) => boolean`.
-- `FalconTreeAction.variant?: 'default' | 'highlighted' | 'destructive' | 'warning'`.
-- `(rootMenuOpen)` / `(rootMenuClose)` Outputs for analytics.
-
-### 9. What is the safest upgrade path?
-1. Add `disabled` to `FalconTreeAction` — purely additive.
-2. Add `variant` to `FalconTreeAction` — purely additive.
-3. Add `(autoScrolledIntoView)` Output — purely additive.
-4. Add keyboard nav for 3-dot trigger — purely additive.
-5. Add `<ng-content select="[slot=root-row]">` and `<ng-content select="[slot=section-label]">` — purely additive.
-6. Plan convergence with `<falcon-angular-tree>` — BIG WAVE.
-
-### 10. What would be risky to change because other pages depend on it?
-- `[root]` shape (`FalconTreeNode<T>`).
-- `(toggle)`, `(select)`, `(action)`, `(hoverPathChange)` Output types.
-- Existing `FalconTreeAction.highlighted` semantics — `variant` addition must be backwards-compatible.
-- The chevron-overlap auto-scroll being implicit — consumers may have come to rely on it.
-- `mode` semantics — `'falcon'` ignores `root.imageUrl`; flipping behavior would surprise.
+## Session decisions — 2026-05-18
+- **Action-column unified** via the `--spacing-row-action-inset` token + full-width rows + mirrored `scrollbar-gutter: stable`. Chose a token + structural gutter mirror over a hardcoded magic number.
+- **Config inputs as individual signal `input()`s** (not a config object) — discoverable, independently overridable, OnPush-friendly, consistent with the existing API.
+- **`rootSelectable` / `nodesSelectable`** added to gate clickability without forking the component — enables the caller-driven wizard-lock pattern.

@@ -1,4 +1,4 @@
-# send-credentials-popup (LEGACY) — GAPS & UPGRADES
+﻿# send-credentials-popup (LEGACY) — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -54,3 +54,11 @@
 - For #2: keep using this bespoke component.
 - For #3: pass a translated string via `recipientLabel`.
 - For #4: wrap with a `[class.is-loading]` overlay.
+
+## Wave 7 Findings (2026-05-17)
+
+**STATUS: ORPHAN.** No source files, no consumers, no module-federation references.
+
+**Recommendation: DELETE this dossier** in Wave 8 cleanup. Dossier was retained through Wave 7 as a deletion-review checkpoint.
+
+Successor: `falcon-sending-credentials-dialog` (wrapper-only). NOTE: the successor has NO dossier yet — flagged in the master Wave 7 report as a MISSING component requiring authoring.

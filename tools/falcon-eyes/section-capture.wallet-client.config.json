@@ -1,0 +1,35 @@
+{
+  "$schema": "./section-capture.schema.json",
+  "page": "wallet-balance-management-client",
+  "notes": "Client (management-console) Wallet & Balance .Mng sections. sourceSelector targets the T2 SoT `.wbc-*` classes from wallet-client.jsx; destinationSelector targets the Falcon Angular management-console wallet. The live destination requires client auth + a selected org node to render the table, so destination falls back to full page until an authenticated capture is wired (web-scrub bearer-inject + node-select). The transfer drawer (`.wb-drawer`) only mounts after clicking a per-row `.wbc-xfer-btn`, so it is not auto-captured by a single goto.",
+  "sections": [
+    {
+      "name": "client-wallet-full",
+      "description": "Full client wallet page (header + master wallet + allocation table)",
+      "sourceSelector": ".wbc-content-body",
+      "destinationSelector": "app-wallet-balance-management",
+      "fullPageFallback": true
+    },
+    {
+      "name": "client-header",
+      "description": "Client header row: brand logo + client name + Wallet Type select + Switch view button",
+      "sourceSelector": ".wbc-client-row",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "master-wallet-card",
+      "description": "Master Wallet card: Type (SAR/Points) + Master Wallet label + amount + per-channel totals (multi mode)",
+      "sourceSelector": ".wbc-master",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    },
+    {
+      "name": "allocation-table",
+      "description": "Org/User allocation tree-table: Organizations | Wallet (or per-channel) | Transfer, expandable rows + per-row transfer button",
+      "sourceSelector": ".wbc-table-card",
+      "destinationSelector": "",
+      "fullPageFallback": true
+    }
+  ]
+}

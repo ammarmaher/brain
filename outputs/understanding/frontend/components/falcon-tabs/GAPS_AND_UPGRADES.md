@@ -1,4 +1,4 @@
-# falcon-tabs — GAPS AND UPGRADES
+﻿# falcon-tabs — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -140,3 +140,9 @@ export interface FalconTabOption {
 
 ## Future-proof recommendation
 The `falconTabActions` directive is a clever stop-gap but introduces fragility. Long-term: promote `header-end` into a real Stencil slot and migrate consumers. Keep `falconTabActions` as a deprecation shim that forwards into the new slot during the transition.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 5** ([CODE] grep `<falcon-angular-tabs>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

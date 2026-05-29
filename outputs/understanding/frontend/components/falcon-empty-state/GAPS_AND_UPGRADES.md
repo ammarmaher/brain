@@ -1,4 +1,4 @@
-# falcon-empty-state — GAPS & UPGRADES
+﻿# falcon-empty-state — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -52,3 +52,9 @@
 ## Future-proof recommendation
 
 Add an `[emptyState]` input on `<falcon-angular-data-table>` that auto-composes this primitive without requiring a template projection — most empty states need the same icon + title + description + action shape, so a shorthand reduces boilerplate.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-empty-state>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

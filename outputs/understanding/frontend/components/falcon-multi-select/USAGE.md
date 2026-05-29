@@ -1,4 +1,4 @@
-# falcon-multi-select — USAGE
+﻿# falcon-multi-select — USAGE
 
 ## Real usage examples
 
@@ -104,3 +104,11 @@ form = new FormGroup({
 | Set `maxChipsVisible` to a sensible value. | Let chips overflow vertically. |
 | Use `showSelectAll` for likely-select-all cases. | Build your own "Select all" toggle outside the component. |
 | Use `searchable=true` for long lists. | Filter externally on top of the component. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-multi-select>` across `apps/` + `libs/falcon/` returned **3 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-multiselect/falcon-multiselect.component.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-multiselect/falcon-multiselect.component.ts`

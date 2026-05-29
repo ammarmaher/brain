@@ -1,4 +1,4 @@
-# falcon-email-field — USAGE
+﻿# falcon-email-field — USAGE
 
 ## Real usage examples
 
@@ -86,3 +86,9 @@ form = new FormGroup({
 | Use for emails requiring verify affordance. | Use for plain text. |
 | Validate via Reactive Forms. | Trust component-side validation. |
 | Sync `verifyDisabled` with form validity. | Allow verify on invalid email. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-email-field>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

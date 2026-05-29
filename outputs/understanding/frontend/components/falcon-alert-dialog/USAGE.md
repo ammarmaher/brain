@@ -1,4 +1,4 @@
-*** falcon-alert-dialog — USAGE ***
+﻿*** falcon-alert-dialog — USAGE ***
 
 # Angular import
 
@@ -99,3 +99,10 @@ export class MyPageComponent { /* ... */ }
   footer. Use for simple yes/no prompts without custom body.
 - **`<falcon-angular-dialog>`** — fully custom dialog. Drop down to this when you
   need to override header/footer layout.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-alert-dialog>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/settings-tab/settings-tab.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html`

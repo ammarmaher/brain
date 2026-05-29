@@ -25,6 +25,13 @@ created: 2026-05-15
 
 > **Naming note:** bespoke Angular component (no Stencil core). Coexists in parallel with [[Falcon Tree]] — the two may drift. Per dossier: panel SCSS still present (violates "no per-component SCSS" rule).
 
+## Theming & Tailwind
+
+- [[Tailwind CSS]] — library entry.
+- [[Tailwind Falcon Alignment Scorecard]] — tree-panel template cited as forcing `bg-[var(--falcon-org-hierarchy-panel-bg)]` arbitrary-value syntax (Finding 1). Wave 1 Phase A promotes semantic Tier-2 tokens to `@theme` so templates can use named utilities.
+- [[Tailwind Theme Variables]] — explains the `@theme` vs `:root` discipline that the tree-panel contract currently violates.
+- [[Tailwind States and Variants]] — hover/focus-visible/selected interactive states need standardization across tree rows.
+
 ## Pages using this component
 
 - [[Organization Hierarchy]] — left-rail Hierarchy tab on both admin-console + management-console (current production consumer).

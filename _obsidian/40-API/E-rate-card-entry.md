@@ -5,6 +5,14 @@ prd: PRD-03
 service: commerce
 drift-count: 8
 created: 2026-05-15
+module: contract
+feature: rate-card
+verification: code-verified
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contract", "#verification/code-verified", "#layer/be"]
+up: "[[E-entities-MOC]]"
+parent: "[[E-entities-MOC]]"
+layer: be
 ---
 *** Entity Reconciliation E-rate-card-entry — RateCardEntry ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: commerce · 2026-05-15 ***

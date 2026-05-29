@@ -1,5 +1,8 @@
 # falcon-angular-tree — OVERVIEW
 
+> [!important] Not the production org-hierarchy tree
+> The live Organization Hierarchy left rail is `<falcon-tree-panel>` (via the `<app-organization-hierarchy-tree>` wrapper) — a **parallel** bespoke implementation that does NOT compose `<falcon-angular-tree>`. Use `<falcon-angular-tree>` for a bare generic tree; for org-hierarchy work see `falcon-wiki/00-MOCs/Org-Hierarchy-Tree-Component-Knowledge.md`.
+
 ## Purpose
 Recursive expandable tree component with hover-path highlighting, rail SVG connectors, focus mode, programmatic select+scrollIntoView, exact 18 px indentation rail, and chevron expand/collapse transitions. Mirrors V0.2 React reference `NodeRow + ClientsTree` from `admin/hierarchy.jsx:7-279` + `admin/styles.css:436-628` — the "Tier 7 locked-spec" component.
 

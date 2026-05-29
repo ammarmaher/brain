@@ -1,4 +1,4 @@
-# falcon-badge — USAGE
+﻿# falcon-badge — USAGE
 
 ## Example 1 — Notification count
 
@@ -64,3 +64,7 @@ import type {
 - DO — choose `[dot]` for compact dot-only indicators (pass `ariaLabel` for a11y on Stencil tag).
 - DON'T — confuse this with `<falcon-status-badge>` (workflow state) or `<falcon-tag>` (dismissible chip).
 - DON'T — use this inside a data-table cell for status — use `<falcon-status-badge>`.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-badge>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

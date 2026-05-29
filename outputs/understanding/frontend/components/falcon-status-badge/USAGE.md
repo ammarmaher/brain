@@ -1,4 +1,4 @@
-# falcon-status-badge — USAGE
+﻿# falcon-status-badge — USAGE
 
 ## Example 1 — Inside a data-table cell template (RECOMMENDED)
 
@@ -68,3 +68,14 @@ import type { FalconStatusBadgeSeverity, FalconStatusBadgeSize }
 - DO — choose `dot=false` for dense table cells; `dot=true` for headers / hero status.
 - DON'T — hand-roll status chips with `bg-falcon-{color}-50 text-falcon-{color}-700` Tailwind combinations — those become unmaintainable across pages.
 - DON'T — use this for generic count / notification badges (use `<falcon-badge>`).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-status-badge>` across `apps/` + `libs/falcon/` returned **6 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-service-row-table/client-service-row-table.component.html`
+- `apps/management-console/src/app/features/comms-hub/comms-hub.component.html`

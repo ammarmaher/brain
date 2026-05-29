@@ -1,0 +1,31 @@
+{
+  "name": "web-scrub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Web-Scrub — isolated scraping + UI-extraction + React-source-mapping tool for Brain SK. Powers the `web-scrub` skill (scrape-url, deep-dive-component, react-map). Dependencies are isolated and MUST NOT be added to the Falcon Angular workspace.",
+  "type": "module",
+  "scripts": {
+    "scrape": "tsx src/scrape-url.ts",
+    "deep-dive": "tsx src/deep-dive-component.ts",
+    "react-map": "tsx src/react-map.ts",
+    "smoke:playwright": "tsx src/smoke/playwright-smoke.ts",
+    "smoke:ts-morph": "tsx src/smoke/ts-morph-smoke.ts",
+    "smoke:crawlee": "tsx src/smoke/crawlee-smoke.ts",
+    "smoke:all": "npm run smoke:playwright && npm run smoke:ts-morph && npm run smoke:crawlee",
+    "install-browsers": "playwright install chromium"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.49.0",
+    "playwright": "^1.49.0",
+    "ts-morph": "^24.0.0",
+    "crawlee": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

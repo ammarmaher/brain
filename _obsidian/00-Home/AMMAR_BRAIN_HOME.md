@@ -86,6 +86,74 @@ Organization Hierarchy flow playbooks:
 - [[ERROR_INDEX]] — 233 `FalconKeys.Error.*` codes catalogued · 40 high-frequency individual notes · 24-code cross-service overlap
 - [[35-Architecture/README]] — 13 frontend architecture audits → ~116 extracted rules (no PrimeNG · no `*ngIf` · tokens only · zoneless · etc.)
 
+## Night-Shift 2026-05-17 → 18 — new findings + dossiers
+
+- 🔴 [[SECURITY-FINDINGS-2026-05-18]] — 7 security findings cluster (2 CRITICAL · 2 HIGH · 2 MEDIUM · 1 OPERATIONAL) across Identity · Commerce · Charging
+- 🏛️ [`ARCH-FINDING-CommChannel-FSM-ownership`](../../../Brain%20Outputs/understanding/integration/ARCH-FINDING-CommChannel-FSM-ownership.md) — Provisioning is read-mirror; Commerce owns the FSM
+- **13 new page-flow vault nodes** in [`10-Pages/`](../10-Pages/) — Edit User · Contracts List · Add/Edit Contract · Wallets and Balance Management · Templates List · Create Template WhatsApp · Contact Groups List · Create Contact Group · Login · Forgot Password · Change Password · My Profile
+- **20 new controller dossier folders** across 4 services (Commerce 10 · Identity 4 · Charging 4 · Provisioning 2) at `Brain Outputs/understanding/backend/<svc>/controllers/<Name>/`
+- Reports: `Brain Outputs/reports/night-shift/2026-05-17/`
+
+## 🔥 Business Scenarios Atlas (2026-05-18) — 33 volumes · 177+ entries · ~225,000 words
+
+> **The most important addition to the Brain.** Comprehensive coverage of every business situation Ammar will face when sitting with business teams. Source-prefixed. Truthful. Memorizable.
+
+### Start here
+
+- 📖 [`BUSINESS-SCENARIOS-ATLAS-INDEX.md`](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-INDEX.md) — topic-router for all 33 volumes
+- 🎯 [`BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md`](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md) — **THE master answer key. Read first for any deep question.**
+- 📊 [`BEFORE-AFTER-MINING-REPORT.md`](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BEFORE-AFTER-MINING-REPORT.md) — 22-dimension before/after scoring (16.9% → 91.9%)
+
+### The volumes (grouped)
+
+**Foundation (Vols 1-11):** Cross-module cascades · Pricing+SAMA+multi-contract · Operational failure+multi-tenant · Compliance maps · Edit User · Contract amendments · Off-boarding · Scaling · Runbooks · Bulk ops · Multi-language Templates
+
+**Strategic (Vols 12-19):** CPaaS competitor positioning · Strategic synthesis · Customer Success · Revenue Operations · Vendor Management · Disaster Recovery · Internationalization · Internal Operating Model
+
+**Forward-looking (Vols 20-27):** AI/ML integration · Industry trends 2026-2030 · Pricing psychology · Brand+Marketing · M&A playbook · Talent · Investor Relations · Brain meta-mining
+
+**Systematic Reference (Vols 28-31):** Complete Matrices (every user × status × action) · Memory Card (mnemonic cards) · Cross-Module Cascades · Error Catalog
+
+**Truth Documents (Vols 32-33):** Campaigns+WhatsApp+Facebook honest map · **THE CONCLUSION KNOWLEDGE**
+
+**Per-Module Conclusions (Vols 34-39):** Module 01 Account Mgmt · Module 02 User Mgmt · Module 03 Contract & Cost · Module 04 Contact Group · Module 05 Templates · Cross-Module + Best Practices + Final Run Report
+
+**🔥 BRD Refresh (Vols 40-42, 2026-05-19):**
+- **Vol 40 — Module 06 Basic Send Application (NEW MODULE!)** · Falcon's built-in WhatsApp + Voice IVR sending engine, auto-available per account
+- **Vol 41 — Template Module V4 Deep Refresh** · 14 corrections to Vol 38 + 29 new BR-TM rules + Voice IVR + 6 button types + 5-status FSM
+- **Vol 42 — BRD Refresh Report** · Delta analysis after fresh BRDs at `C:\Falcon\PRD\BRDs\` ingested
+
+**Corrections back-propagated to earlier volumes (per Vol 42 §5):**
+- Vol 32 §5 was wrong — Application IS partially Falcon-built (BSA module)
+- Vol 33 §4 Hard Nots — REVISED: Falcon HAS send scheduling (BSA Scheduled tab) + HAS Campaign-equivalent (BSA Transaction)
+- Vol 38 Templates Conclusion SUPERSEDED by Vol 41 for Module 05
+
+### Quick Q&A
+
+- "Can [role] do [action] when [state]?" → **Vol 28** (matrix lookup)
+- Need to remember rules fast? → **Vol 29** (mnemonic cards)
+- "When X happens, what cascades?" → **Vol 30**
+- Got an error code? → **Vol 31**
+- Anything about Campaigns/WhatsApp/Facebook? → **Vol 32** (truthful)
+- Don't know where to look? → **Vol 33** (the Conclusion — points everywhere)
+
+### The Hard Truths (Vol 33 §4)
+
+❌ Falcon does NOT integrate with Facebook · Instagram · Messenger
+❌ Falcon does NOT have a "Campaign" entity
+❌ Falcon does NOT have Template authoring UI (GAP-T-001)
+❌ Falcon does NOT have Meta webhook for state changes (GAP-TM-14)
+❌ Falcon does NOT have published SLA / public docs / SDK
+❌ Falcon does NOT support send scheduling / A/B test / multi-currency contracts
+
+### The 5 critical security actions (Vol 33 §6)
+
+🔴 S1 set-password Stage check · S2 webhook HMAC constant-time · S3 Commerce [Authorize] gaps · S4 AccountHierarchyController tenant isolation
+
+### The Source-Prefix Discipline (Vol 33 §10)
+
+Every Falcon fact in any output: `[CODE]` / `[PRD]` / `[BRAIN-OUT]` / `[VAULT]` / `[BRAIN-SK]` / `[INFERRED]` / `[REFERENCE-ONLY]`. Unprefixed = convention violation.
+
 ## Top-level indexes
 
 - [[IMPLEMENTATION_KNOWLEDGE_MAP]] — **flow playbooks + load order (Phase 2G)**

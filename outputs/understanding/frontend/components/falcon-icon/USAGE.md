@@ -1,4 +1,4 @@
-# falcon-icon — USAGE
+﻿# falcon-icon — USAGE
 
 ## Real usage examples
 Direct `<falcon-angular-icon>` usage found in `apps/host-shell/src/app/layout/layout.component.html`. Most consumers use the raw `<i class="falcon-icon falcon-icon-X">` pattern (e.g. settings-tab buttons, drawer footers — see earlier USAGE files).
@@ -86,3 +86,7 @@ N/A.
 | Use the `size` prop | Use Tailwind `text-*` classes for sizing |
 | Use `<falcon-angular-icon>` for new code | Continue using `<i class="falcon-icon falcon-icon-X">` in net-new |
 | Provide `label` when `decorative=false` | Forget the label and rely on visual recognition |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-icon>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

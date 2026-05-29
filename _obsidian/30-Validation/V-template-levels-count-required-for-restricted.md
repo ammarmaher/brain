@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: false
 created: 2026-05-15
+module: templates
+feature: restricted-body-type
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/templates", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-template-levels-count-required-for-restricted — BodyType=Restricted requires LevelsCount + matching CheckerLevels ***
 *** Origin: PRD-05 Templates · Backend: templates · 2026-05-15 ***

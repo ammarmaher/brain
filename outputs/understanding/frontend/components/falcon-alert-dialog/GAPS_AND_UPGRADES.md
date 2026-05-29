@@ -1,4 +1,4 @@
-*** falcon-alert-dialog — GAPS + UPGRADE BACKLOG ***
+﻿*** falcon-alert-dialog — GAPS + UPGRADE BACKLOG ***
 
 # Known gaps as of Round 4 (2026-05-15) initial ship
 
@@ -52,3 +52,9 @@
     this SoT centered-icon-title-subtitle-body-2button pattern. Likely candidates:
     delete confirmations, session expiry, unsaved changes, etc. Migrate them in
     a follow-up wave.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-alert-dialog>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

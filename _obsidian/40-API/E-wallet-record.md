@@ -5,6 +5,14 @@ prd: PRD-03
 service: charging
 drift-count: 12
 created: 2026-05-15
+module: contract
+feature: wallet-record
+verification: code-verified
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contract", "#verification/code-verified", "#layer/be"]
+up: "[[E-entities-MOC]]"
+parent: "[[E-entities-MOC]]"
+layer: be
 ---
 *** Entity Reconciliation E-wallet-record — WalletRecord ***
 *** PRD: PRD-03 Contract Packaging Charging Billing · Backend service: charging · 2026-05-15 ***

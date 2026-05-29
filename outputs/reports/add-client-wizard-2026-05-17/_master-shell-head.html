@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Client Wizard — Waves 4 → 7 Full Report (2026-05-17)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────────────────────────────── */
+    /* Master report shell — cover, TOC, navigation, print rules.          */
+    /* Section-scoped styles live INSIDE each section's <style> block.     */
+    /* ─────────────────────────────────────────────────────────────────── */
+
+    :root {
+      --falcon-teal-900: #0a3236;
+      --falcon-teal-700: #0d3f44;
+      --falcon-teal-500: #134e54;
+      --falcon-teal-50:  #e1ecea;
+      --falcon-neutral-900: #111827;
+      --falcon-neutral-700: #374151;
+      --falcon-neutral-500: #6b7280;
+      --falcon-neutral-300: #d1d5db;
+      --falcon-neutral-200: #e5e7eb;
+      --falcon-neutral-100: #f3f4f6;
+      --falcon-neutral-50:  #f9fafb;
+      --falcon-amber-500: #f59e0b;
+      --falcon-amber-100: #fef3c7;
+      --falcon-red-600:   #dc2626;
+      --falcon-red-100:   #fee2e2;
+      --falcon-green-600: #16a34a;
+      --falcon-green-100: #dcfce7;
+      --falcon-blue-600:  #2563eb;
+      --falcon-blue-100:  #dbeafe;
+      --falcon-purple-600: #9333ea;
+      --falcon-purple-100: #f3e8ff;
+      --falcon-orange-600: #ea580c;
+      --falcon-orange-100: #ffedd5;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--falcon-neutral-900);
+      background: #ffffff;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    code, pre, .mono {
+      font-family: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    /* ─── Cover page ──────────────────────────────────────────────────── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      padding: 6vh 8vw;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(13, 63, 68, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, #fafbfc 0%, #ffffff 100%);
+      page-break-after: always;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      width: fit-content;
+      padding: 0.4rem 1rem;
+      background: var(--falcon-teal-700);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      margin-bottom: 2rem;
+    }
+    .cover h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      color: var(--falcon-teal-900);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 1rem 0;
+    }
+    .cover h1 .accent {
+      color: var(--falcon-amber-500);
+    }
+    .cover .subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      color: var(--falcon-neutral-700);
+      font-weight: 500;
+      max-width: 60ch;
+      margin-bottom: 3rem;
+    }
+    .cover .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--falcon-neutral-200);
+    }
+    .cover .meta div {
+      display: flex;
+      flex-direction: column;
+    }
+    .cover .meta .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--falcon-neutral-500);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .cover .meta .value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--falcon-neutral-900);
+    }
+
+    .cover-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    .cover-stats .stat {
+      padding: 1.25rem 1rem;
+      background: white;
+      border: 1px solid var(--falcon-neutral-200);
+      border-radius: 12px;
+      text-align: center;
+    }
+    .cover-stats .num {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--falcon-teal-700);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .cover-stats .lbl {
+      font-size: 0.8rem;
+      color: var(--falcon-neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* ─── Table of Contents ───────────────────────────────────────────── */
+    .toc {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 5rem 1.5rem;
+      page-break-after: always;
+    }
+    .toc h2 {
+      font-size: 2.25rem;
+      color: var(--falcon-teal-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+    }
+    .toc .tagline {
+      color: var(--falcon-neutral-500);
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+    .toc ol {
+      list-style: none;
+      padding: 0;
+      counter-reset: toc-section;
+    }
+    .toc > ol > li {
+      counter-increment: toc-section;
+      margin: 0 0 0.5rem 0;
+    }
+    .toc > ol > li::before {
+      content: counter(toc-section, decimal-leading-zero);
+      color: var(--falcon-amber-500);
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-right: 1rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .toc > ol > li > a {
+      display: inline-block;
+      padding: 0.6rem 0;
+      color: var(--falcon-teal-900);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: color 0.15s;
+    }
+    .toc > ol > li > a:hover {
+      color: var(--falcon-amber-500);
+    }
+    .toc ol ol {
+      margin: 0 0 1rem 2.5rem;
+      padding: 0;
+      list-style: none;
+    }
+    .toc ol ol li {
+      margin: 0.25rem 0;
+    }
+    .toc ol ol li a {
+      color: var(--falcon-neutral-700);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+    .toc ol ol li a:hover {
+      color: var(--falcon-teal-700);
+    }
+    .toc ol ol li::before {
+      content: "›";
+      margin-right: 0.6rem;
+      color: var(--falcon-neutral-300);
+    }
+
+    /* ─── Sticky chapter nav (visible on every section) ────────────────── */
+    .chapter-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--falcon-neutral-200);
+      padding: 0.5rem 1rem;
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .chapter-nav a {
+      padding: 0.35rem 0.7rem;
+      color: var(--falcon-neutral-500);
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .chapter-nav a:hover {
+      background: var(--falcon-teal-50);
+      color: var(--falcon-teal-700);
+    }
+    .chapter-nav .home {
+      color: var(--falcon-teal-700);
+      font-weight: 700;
+    }
+
+    /* ─── Section dividers ─────────────────────────────────────────────── */
+    .section-divider {
+      border: 0;
+      border-top: 2px dashed var(--falcon-neutral-200);
+      margin: 4rem auto;
+      max-width: 200px;
+    }
+
+    /* ─── Footer ───────────────────────────────────────────────────────── */
+    .report-footer {
+      margin-top: 5rem;
+      padding: 3rem 1.5rem;
+      background: var(--falcon-teal-900);
+      color: var(--falcon-neutral-200);
+      text-align: center;
+    }
+    .report-footer p {
+      margin: 0.4rem 0;
+      font-size: 0.95rem;
+    }
+    .report-footer .tagline {
+      color: var(--falcon-neutral-300);
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* ─── Print rules ─────────────────────────────────────────────────── */
+    @media print {
+      .chapter-nav { display: none !important; }
+      .cover, .toc { page-break-after: always; }
+      body { font-size: 12pt; }
+    }
+
+    /* ─── Anchor offset for sticky nav ─────────────────────────────────── */
+    [id] {
+      scroll-margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     COVER PAGE
+     ═══════════════════════════════════════════════════════════════════════ -->
+<header class="cover">
+  <span class="cover-badge">Falcon Platform · Session Knowledge Report</span>
+  <h1>Add Client Wizard<br/><span class="accent">Waves 4 → 7</span> Full Report</h1>
+  <p class="subtitle">
+    A deep-dive on the end-to-end polish of Falcon's 5-step Add Client wizard —
+    from broken backend integration to a production-ready flow with eager API
+    loading, null-init form state, per-component signals architecture, the new
+    Sending Credentials + Completion Success popups, and 12 codified lessons
+    learned the hard way.
+  </p>
+
+  <div class="cover-stats">
+    <div class="stat"><span class="num">4</span><span class="lbl">Wave revisions</span></div>
+    <div class="stat"><span class="num">10+</span><span class="lbl">Parallel agents</span></div>
+    <div class="stat"><span class="num">~3,500</span><span class="lbl">LOC added</span></div>
+    <div class="stat"><span class="num">58</span><span class="lbl">Unit tests</span></div>
+    <div class="stat"><span class="num">12</span><span class="lbl">Lessons codified</span></div>
+    <div class="stat"><span class="num">90%</span><span class="lbl">Reliance score</span></div>
+  </div>
+
+  <div class="meta">
+    <div><span class="label">Owner</span><span class="value">Ammar</span></div>
+    <div><span class="label">Date</span><span class="value">2026-05-17</span></div>
+    <div><span class="label">Final build</span><span class="value mono">f7fb54737d3b9d53</span></div>
+    <div><span class="label">Status</span><span class="value" style="color: var(--falcon-green-600)">🟢 Shipped</span></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     TABLE OF CONTENTS
+     ═══════════════════════════════════════════════════════════════════════ -->
+<nav class="toc" id="toc">
+  <h2>Table of Contents</h2>
+  <p class="tagline">Five chapters · ~50 pages · scroll or jump.</p>
+
+  <ol>
+    <li>
+      <a href="#section-01-executive-summary">Executive Summary &amp; Process Flow</a>
+      <ol>
+        <li><a href="#executive-summary">Executive Summary</a></li>
+        <li><a href="#problem-statement">Original Problem Statement</a></li>
+        <li><a href="#process-flow">End-to-End Process Flow</a></li>
+        <li><a href="#wave-timeline">Wave Timeline</a></li>
+      </ol>
+    </li>
+    <li>
+      <a href="#section-02-architecture">Architecture &amp; Component Inventory</a>
+      <ol>
+        <li><a href="#folder-structure">Final Folder Structure</a></li>
+        <li><a href="#state-architecture">State Architecture &amp; DI Tree</a></li>
+        <li><a href="#new-falcon-components">New Falcon Library Components</a></li>
+        <li><a href="#extended-components">Extended Falcon Components</a></li>
+        <li><a href="#signals-doctrine">Per-Component Signals Doctrine</a></li>
+        <li><a href="#component-anatomy">Anatomy of Each Step</a></li>
+      </ol>
+    </li>
+    <li>
+      <a href="#section-03-wave-deep-dive">Wave-by-Wave Deep Dive</a>
+      <ol>
+        <li><a href="#wave-4-2">Wave 4.2 — Final Polish (4 items)</a></li>
+        <li><a href="#wave-5">Wave 5 — Architecture &amp; New Popups</a></li>
+        <li><a href="#wave-6">Wave 6 — Eager Load, Null Init, Photo Object</a></li>
+        <li><a href="#wave-7">Wave 7 — Bug Fixes &amp; SAR Icon Redesign</a></li>
+      </ol>
+    </li>
+    <li>
+      <a href="#section-04-lessons-learned">Lessons Learned &amp; Anti-Patterns</a>
+      <ol>
+        <li><a href="#lessons-overview">Why this chapter exists</a></li>
+        <li><a href="#mistakes-catalog">The 12 Mistakes Catalog</a></li>
+        <li><a href="#anti-patterns">10 Anti-Patterns to Never Repeat</a></li>
+        <li><a href="#standing-rules">10 Operational Rules + 6 Doctrines</a></li>
+        <li><a href="#prevention-checklist">12-Item Pre-Flight Checklist</a></li>
+      </ol>
+    </li>
+    <li>
+      <a href="#section-05-knowledge-and-reliance">Knowledge Attribution &amp; Reliance Score</a>
+      <ol>
+        <li><a href="#knowledge-attribution">What Powered This Session</a></li>
+        <li><a href="#reliance-matrix">Reliance % Across Domains</a></li>
+        <li><a href="#confidence-by-task-type">Confidence by Task Type</a></li>
+        <li><a href="#time-attribution">Where the Time Went</a></li>
+        <li><a href="#ai-skills-percentage">AI Skills Exercised</a></li>
+        <li><a href="#forward-looking">Forward-Looking Projection</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     STICKY CHAPTER NAVIGATION (visible while scrolling sections)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<nav class="chapter-nav">
+  <a href="#toc" class="home">↑ TOC</a>
+  <a href="#section-01-executive-summary">1 · Summary</a>
+  <a href="#section-02-architecture">2 · Architecture</a>
+  <a href="#section-03-wave-deep-dive">3 · Waves</a>
+  <a href="#section-04-lessons-learned">4 · Lessons</a>
+  <a href="#section-05-knowledge-and-reliance">5 · Knowledge</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     BODY — 5 sections inlined below this marker
+     ═══════════════════════════════════════════════════════════════════════ -->
+<main>
+</content>

@@ -1,4 +1,4 @@
-# falcon-confirm-dialog — USAGE
+﻿# falcon-confirm-dialog — USAGE
 
 ## Real usage examples
 **Zero matches in `apps/`.** Component is exported but unused in production. Examples below are recommended patterns.
@@ -101,3 +101,9 @@ The wrapper internally imports `FalconAngularDialogComponent` — no need to imp
 | Treat `(reject)` as the universal cancel path | Bind `(falconClose)` from the inner dialog separately |
 | Use `severity="danger"` for destructive | Use `severity="info"` + manually swap colors |
 | Project additional body content (date picker, options) | Project replacement footer buttons (won't work) |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-confirm-dialog>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html`

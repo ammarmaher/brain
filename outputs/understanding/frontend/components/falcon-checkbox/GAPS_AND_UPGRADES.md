@@ -1,4 +1,4 @@
-# falcon-checkbox — GAPS AND UPGRADES
+﻿# falcon-checkbox — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -81,3 +81,9 @@ All in shared.
 
 - For G2: wrap label content with custom HTML inside ng-content default slot.
 - For G6: re-set `indeterminate` in `(valueChange)` if needed.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-checkbox>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

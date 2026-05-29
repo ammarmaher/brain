@@ -1,4 +1,4 @@
-# falcon-select — GAPS AND UPGRADES
+﻿# falcon-select — GAPS AND UPGRADES
 
 This component is an **alias** of `<falcon-angular-dropdown>`. All gaps and upgrade ideas live in `../falcon-dropdown/GAPS_AND_UPGRADES.md`.
 
@@ -31,3 +31,9 @@ All shared.
 ## Workarounds today
 
 - Use `<falcon-angular-dropdown>` in HTML regardless. Import the alias if you prefer the "Select" class name.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** for the alias `<falcon-angular-select>` itself; the aliased `<falcon-angular-dropdown>` is used in 13 files.
+
+**Gap: Spec-vs-code naming drift** — Falcon UI Spec §5.12.1 calls this control "Select" but the codebase universally uses "Dropdown". The re-export alias closes the gap for new code; consider deprecating the `<falcon-angular-dropdown>` name in a future major version. Priority: P3.

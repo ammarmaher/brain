@@ -9,6 +9,15 @@ drift: false
 created: 2026-05-24
 xlsx: Source_of_truth_theme/Validations.SOT-2026-05-24.xlsx
 supersedes: [V-username-format-uniqueness-immutable]
+module: user-mgmt
+feature: add-user
+verification: runtime
+last-verified: 2026-05-24
+tags: ["#status/triangulated", "#module/user-mgmt", "#verification/runtime", "#layer/fe"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+superseded-by: []
+evidence-link: project_validation_xlsx_sot_flip_wave_f_2026_05_24.md
 ---
 *** V-username-format-xlsx-2026-05-24 — Username per new xlsx SoT ***
 

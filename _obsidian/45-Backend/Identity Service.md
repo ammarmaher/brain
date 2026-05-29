@@ -25,6 +25,19 @@ created: 2026-05-15
 - [FRONTEND_CONTRACT](../../../Brain%20Outputs/understanding/backend/identity/FRONTEND_CONTRACT.md)
 - Tests: ~340 xUnit tests in `Falcon.Identity.Tests`
 
+## Controller dossiers (Wave 5b · 2026-05-18)
+
+Per-controller 6-file dossiers live at `understanding/backend/identity/controllers/<Name>/`:
+
+| Controller | Endpoints | Primary pages | Findings |
+|---|---|---|---|
+| [AuthController](../../../Brain%20Outputs/understanding/backend/identity/controllers/AuthController/OVERVIEW.md) | 9 (login · verify-otp · set-password · refresh · logout · forgot-password chain) | [[Login Flow]] · [[Forgot Password Flow]] | 🔴 CRITICAL set-password privilege escalation — see [[SECURITY-FINDINGS-2026-05-18]] |
+| [SecurityController](../../../Brain%20Outputs/understanding/backend/identity/controllers/SecurityController/OVERVIEW.md) | IP allowlist + permission-group endpoints | [[Login Flow]] (IP guard) · Org Hierarchy settings | — |
+| [UserController](../../../Brain%20Outputs/understanding/backend/identity/controllers/UserController/OVERVIEW.md) | User CRUD + self-edit · password change · OTP issuance | [[Edit User Flow]] · [[My Profile Flow]] · [[Change Password Flow]] · [[Add Client Flow]] Step 5 | — |
+| [WebhookController](../../../Brain%20Outputs/understanding/backend/identity/controllers/WebhookController/OVERVIEW.md) | Zitadel webhook receiver (HMAC verification) | _(infrastructure)_ | 🔴 CRITICAL HMAC non-constant-time comparison (timing oracle) — see [[SECURITY-FINDINGS-2026-05-18]] |
+
+**Total: 4 controllers** documented during Wave 5b.
+
 ## PRDs this service implements
 
 - [[02 User Management]] — **primary** (User · UserStatusHistory · LoginAttempt · OtpChallenge · Session · PermissionGroup · Permission)

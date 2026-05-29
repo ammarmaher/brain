@@ -1,4 +1,4 @@
-# falcon-toast — GAPS AND UPGRADES
+﻿# falcon-toast — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -111,3 +111,9 @@ export class FalconAngularToastComponent {
 3. Eventually phasing out the toast component in favor of notification + a `FalconNotificationService.fromMessageService(service)` adapter.
 
 The toast remains the PrimeNG substrate — keep it functional but don't grow its API.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-toast>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

@@ -1,4 +1,4 @@
-# falcon-filter-panel — GAPS & UPGRADES
+﻿# falcon-filter-panel — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -70,3 +70,9 @@ All gaps in shared component. The whole point of this panel is consistency above
 ## Future-proof recommendation
 
 This component is the most "behind" of Agent 2's roster — native atoms + no projection + camelCase events all need updating. Recommend a Wave to migrate it to Falcon atoms + Strategy E projection in one pass.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-filter-panel>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

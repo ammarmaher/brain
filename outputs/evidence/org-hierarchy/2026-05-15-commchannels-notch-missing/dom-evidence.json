@@ -1,0 +1,125 @@
+{
+  "captureTime": "2026-05-15T13:29:22.897Z",
+  "url": "http://localhost:4200/#/admin-console/org-hierarchy-page",
+  "consoleUser": "FalconAdmin (Falcon Admin / sys-admin)",
+  "node": "BMW (CommChannels & Services tab)",
+  "viewport": { "innerWidth": 2560, "innerHeight": 1249, "devicePixelRatio": 1.5 },
+  "tableHost": "FALCON-TABLE-TW (light DOM render path)",
+  "columnHeaders": {
+    "Visibility":   { "left": 570.00,  "right": 666.00,   "center": 618.00,    "width": 96.00 },
+    "Name":         { "left": 666.00,  "right": 994.81,   "center": 830.41,    "width": 328.81 },
+    "Price Type":   { "left": 994.81,  "right": 1187.59,  "center": 1091.20,   "width": 192.78 },
+    "Price Value":  { "left": 1187.59, "right": 1393.49,  "center": 1290.54,   "width": 205.90 },
+    "First Activation Date": { "left": 1393.49, "right": 1653.50, "center": 1523.49, "width": 260.01 },
+    "Activation Date": { "left": 1653.50, "right": 1919.93, "center": 1786.71, "width": 266.43 },
+    "Renew Date":   { "left": 1919.93, "right": 2134.14,  "center": 2027.03,   "width": 214.21 },
+    "Status":       { "left": 2134.14, "right": 2324.86,  "center": 2229.50,   "width": 190.73 },
+    "Action":       { "left": 2324.86, "right": 2494.00,  "center": 2409.43,   "width": 169.14 }
+  },
+  "tokens_observed_on_arrow": {
+    "--falcon-data-table-shadow-arrow-size": "10px (deduced from computed border-bottom width)",
+    "--falcon-data-table-shadow-arrow-z": "2 (computed z-index value)",
+    "--falcon-data-table-shadow-arrow-color": "rgb(236, 253, 245) - the green-50 band tint"
+  },
+  "shadows": [
+    {
+      "rowId": "c2",
+      "shadowId": "c2-s1",
+      "parentRowLabel": "WhatsApp Business",
+      "mode": "edit",
+      "targetColumn": "priceValue",
+      "mountAttr": "c2::c2-s1",
+      "arrow": {
+        "exists": true,
+        "ready": true,
+        "visible": true,
+        "rect": { "left": 1281, "right": 1301, "top": 500.375, "bottom": 510.375, "width": 20, "height": 10 },
+        "center": 1291.00,
+        "computed": {
+          "position": "absolute",
+          "top": "-10px",
+          "left": "711px",
+          "width": "20px",
+          "height": "10px",
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "zIndex": "2",
+          "borderTop": "0px solid rgb(0, 0, 0)",
+          "borderRight": "10px solid rgba(0, 0, 0, 0)",
+          "borderBottom": "10px solid rgb(236, 253, 245)",
+          "borderLeft": "10px solid rgba(0, 0, 0, 0)"
+        }
+      },
+      "alignment": {
+        "targetColumnCenter": 1290.54,
+        "arrowCenter": 1291.00,
+        "deltaPx": 0.46,
+        "aligned": true,
+        "verdict": "PIXEL-ALIGNED (sub-pixel delta)"
+      },
+      "form": {
+        "buttons": ["Save", "Cancel"],
+        "falconElements": ["FALCON-ANGULAR-INPUT", "FALCON-INPUT-TW", "FALCON-ANGULAR-DATE-PICKER", "FALCON-DATE-PICKER-TW"],
+        "inputs": [
+          { "label": "New Price Value", "type": "number", "value": "3500" },
+          { "label": "Effective Date", "type": "text", "value": "2026-07-10", "placeholder": "YYYY-MM-DD" }
+        ]
+      }
+    },
+    {
+      "rowId": "c4",
+      "shadowId": "c4-s1",
+      "parentRowLabel": "Voice IVR",
+      "mode": "view",
+      "targetColumn": "priceType",
+      "mountAttr": "c4::c4-s1",
+      "arrow": {
+        "exists": true,
+        "ready": true,
+        "visible": true,
+        "rect": { "left": 1081, "right": 1101, "top": 770.375, "bottom": 780.375, "width": 20, "height": 10 },
+        "center": 1091.00,
+        "computed": {
+          "position": "absolute",
+          "top": "-10px",
+          "width": "20px",
+          "height": "10px",
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "zIndex": "2"
+        }
+      },
+      "alignment": {
+        "targetColumnCenter": 1091.20,
+        "arrowCenter": 1091.00,
+        "deltaPx": -0.20,
+        "aligned": true,
+        "verdict": "PIXEL-ALIGNED (sub-pixel delta)"
+      },
+      "viewModeContent": {
+        "buttons": ["Edit", "Delete"],
+        "labels": ["New Price Type: Yearly", "Effective Date: Aug 1, 2026"]
+      }
+    }
+  ],
+  "events_observed_on_FALCON_TABLE_TW": [
+    "falcon-shadow-action (fired on Save click)",
+    "falcon-shadow-cells-mounted (fired multiple times after Save as table re-mounts shadow cells)"
+  ],
+  "collapse_re_expand_cycle": {
+    "iterations": 4,
+    "result": "Each collapse removes shadow row from DOM; each re-expand recreates with arrow at identical center=1291px and data-shadow-arrow-ready=true"
+  },
+  "console_summary": {
+    "exceptions": 1,
+    "warnings": 52,
+    "shadowRelatedErrors": 0,
+    "preExistingNoise": [
+      "SyntaxError: Cannot use 'import.meta' outside a module (styles.js) — UNRELATED to shadow fix, pre-existing bundler issue",
+      "[Federation Runtime] Version 0.0.1 ... does not satisfy auto — pre-existing @falcon singleton mismatch warnings",
+      "NG8113 unused-import / NG8102 nullish-coalescing — pre-existing lint warnings in admin-console feature components"
+    ]
+  }
+}

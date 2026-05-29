@@ -22,6 +22,25 @@ created: 2026-05-15
 - [ERRORS](../../../Brain%20Outputs/understanding/backend/commerce/ERRORS.md) — `FalconKeys.Error.*` codes
 - [FRONTEND_CONTRACT](../../../Brain%20Outputs/understanding/backend/commerce/FRONTEND_CONTRACT.md) — request/response shape for FE
 
+## Controller dossiers (Wave 5a · 2026-05-18)
+
+Per-controller 6-file dossiers (`OVERVIEW · ENDPOINTS · DTOS · VALIDATIONS · ERRORS · FRONTEND_CONTRACT`) live at `understanding/backend/commerce/controllers/<Name>/`:
+
+| Controller | Endpoints | Primary pages | Findings |
+|---|---|---|---|
+| [AccountHierarchyController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/AccountHierarchyController/OVERVIEW.md) | 1 (GET hierarchy aggregator) | [[Organization Hierarchy]] · [[Wallets and Balance Management Flow]] | 🟡 MEDIUM tenant-isolation gap — see [[SECURITY-FINDINGS-2026-05-18]] |
+| [ApplicationController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/ApplicationController/OVERVIEW.md) | 6 (apps catalog + per-account configuration) | [[Add Client Flow]] Step 4 · Org Hierarchy Apps tab | — |
+| [CommunicationChannelController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/CommunicationChannelController/OVERVIEW.md) | 7 (channels catalog + visibility/pricing/do-payment) | [[Add Client Flow]] Step 3 · Org Hierarchy CommChannels tab | FSM owned here — see [[ARCH-FINDING-CommChannel-FSM-ownership]] |
+| [ContractsController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/ContractsController/OVERVIEW.md) | 4 (CRUD + list) | [[Contracts List Flow]] · [[Add Contract Flow]] · [[Edit Contract Flow]] | — |
+| [InformationController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/InformationController/OVERVIEW.md) | 2 (GET/PUT account info) | Org Hierarchy info tab · [[Edit User Flow]] | 🔴 HIGH missing `[Authorize]` + commented role check — see [[SECURITY-FINDINGS-2026-05-18]] |
+| [LookupController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/LookupController/OVERVIEW.md) | 1 (dropdown values) | All wizards (country/city/sector) | — |
+| [NodeController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/NodeController/OVERVIEW.md) | ~12 (create-account composite + sub-node CRUD + name uniqueness) | [[Add Client Flow]] (composite POST) · [[Add Node Flow]] · [[Edit Node Flow]] | — |
+| [SecurityController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/SecurityController/OVERVIEW.md) | _(security guards exposed)_ | IP allowlist sync · auth | — |
+| [SettingController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/SettingController/OVERVIEW.md) | 4 (settings + wallet strategy GET/PUT) | Org Hierarchy Settings tab · [[Wallets and Balance Management Flow]] | 🔴 HIGH missing `[Authorize]` — see [[SECURITY-FINDINGS-2026-05-18]] |
+| [TestingAccountsController](../../../Brain%20Outputs/understanding/backend/commerce/controllers/TestingAccountsController/OVERVIEW.md) | _(test harness — gated)_ | Local dev only | feature-flag gated |
+
+**Total: 10 controllers** documented during Wave 5a.
+
 ## PRDs this service implements
 
 - [[01 Account Management]] — **primary** (Account, Node, AccountSettings, CommChannelConfig, AppConfig)

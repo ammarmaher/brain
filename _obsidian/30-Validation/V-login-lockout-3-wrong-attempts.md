@@ -7,6 +7,16 @@ severity: medium
 status: triangulated
 drift: false
 created: 2026-05-15
+module: user-mgmt
+feature: login-lockout
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/user-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-login-lockout-3-wrong-attempts — 3 wrong logins or 3 wrong OTPs → Locked ***
 *** Origin: PRD-02 User Management · Backend: Identity (LoginEligibilityPolicy + Zitadel) · 2026-05-15 ***

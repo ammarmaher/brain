@@ -1,4 +1,4 @@
-# falcon-select — USAGE
+﻿# falcon-select — USAGE
 
 ## Real usage examples
 
@@ -50,3 +50,12 @@ Identical to dropdown — see `../falcon-dropdown/USAGE.md`.
 |---|---|
 | Import alias if spec-aligned naming is desired. | Expect a new HTML tag. |
 | Use the HTML tag `<falcon-angular-dropdown>`. | Try `<falcon-angular-select>`. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] `falcon-angular-select` is a re-export ALIAS of `falcon-angular-dropdown` (see `libs/falcon-ui-core/src/angular-wrapper/components/falcon-select/index.ts` — "Wave 5 naming alignment").
+
+Direct `<falcon-angular-select>` consumers: **0 files** as of 2026-05-17.
+Consumers of the aliased `<falcon-angular-dropdown>` (which IS the same component): **13 files**.
+
+Action: keep alias to honour spec §5.12.1 L1 naming; promote dropdown for migration in new code.

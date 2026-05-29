@@ -1,4 +1,4 @@
-# falcon-date-picker — GAPS AND UPGRADES
+﻿# falcon-date-picker — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -98,3 +98,64 @@ All shared.
 - For G2: compose two pickers and validate min/max cross-field.
 - For G3: pair with `<falcon-angular-input type='text'>` for HH:MM.
 - For G4: format manually after `(valueChange)` and display in a sibling element.
+
+## Diagnostics — popover positioning debug flag
+
+When the calendar popover lands in the wrong place (top-left, top-right, bottom-right, far below, or off-screen), enable the runtime debug flag to dump the anchor measurement chain on every popover open:
+
+```javascript
+// In DevTools console, BEFORE clicking the date picker:
+window.__FALCON_DEBUG_POPOVER__ = true;
+
+// Then click the date picker. The console emits one [falcon-popover-portal]
+// log per popover open + per stability re-check. Each log contains:
+//   anchorTag        — the trigger element tag (usually DIV for inputWrapEl)
+//   rect             — { x, y, w, h, l, r, t, b } in viewport coords
+//   anchorPos        — computed `position` on the anchor
+//   anchorDir        — computed `direction` (ltr | rtl) — drives RTL physical-write branch
+//   anchorConnected  — false means the anchor is mid-DOM-detach (replaceChildren race)
+//   chain            — ancestor walk (up to 12 levels) showing pos + transform-presence + left
+
+// Turn off:
+delete window.__FALCON_DEBUG_POPOVER__;
+```
+
+### Reading the chain
+
+A healthy chain (under-anchor placement working) looks like:
+```
+div pos=relative tr=- l=935.0
+div[shadow-col=priceValue] pos=absolute tr=Y l=935.0
+form pos=relative tr=- l=787.0
+div pos=block tr=- l=787.0
+td pos=relative tr=- l=787.0
+tr pos=- tr=- l=787.0
+...
+```
+
+A broken chain (anchor reading zero rect) usually shows:
+```
+div pos=relative tr=- l=0.0       <-- inputWrapEl rect.left = 0
+div[shadow-col=priceValue] pos=absolute tr=Y l=0.0  <-- shadow-col var not yet published
+...
+```
+→ root cause likely RC#3 (replaceChildren detach) or RC#1 (shadow-col var race not yet closed for this consumer).
+
+A broken chain with non-zero rect but popover lands wrong usually shows:
+```
+div pos=relative tr=- l=935.0  rect: { l: 935, t: 263 ... }   <-- anchor measured correctly
+```
+but the popover ends up at `(viewportW - X, viewportH - Y)` → root cause likely RC#2 (ghost utility class cascade — popover's `absolute top-full start-0` leaked through the portal).
+
+### See also
+
+- `libs/falcon-ui-core/src/utils/popover-portal.ts:106-132` — debug-flag implementation
+- `libs/falcon-ui-core/src/utils/popover-portal.ts:81-99` — STABILITY_MAX_RETRIES = 8 (Phase 1, 2026-05-17) + rationale
+- [MEMORY] `project_zindex_calendar_portal_root_cause_fix.md` — three landed passes (pass 1: z-index ladder + zero-rect park; pass 2: RTL physical/logical separation; pass 3: publishShadowColumnVars before emit)
+- [MEMORY] `project_falcon_shadow_row_popover_5_root_causes_2026_05_17.md` — Phase 0/1/2/3/4/5 plan after 5 RCs identified
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 7** ([CODE] grep `<falcon-angular-date-picker>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

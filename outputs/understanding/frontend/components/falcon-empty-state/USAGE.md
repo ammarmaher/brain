@@ -1,4 +1,4 @@
-# falcon-empty-state — USAGE
+﻿# falcon-empty-state — USAGE
 
 ## Example 1 — Empty state inside a data-table
 
@@ -81,3 +81,9 @@ import type { FalconEmptyStateSize }
 - DO — translate `titleText` / `descriptionText` outside the component.
 - DON'T — render this for loading states.
 - DON'T — pass `[iconName]` to a non-existent icon — falls back to empty `<i>`.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-empty-state>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html`

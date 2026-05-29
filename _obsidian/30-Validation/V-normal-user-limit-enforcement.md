@@ -7,6 +7,16 @@ severity: medium
 status: triangulated
 drift: false
 created: 2026-05-15
+module: user-mgmt
+feature: user-quota
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/user-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-normal-user-limit-enforcement — Normal-User account-limit gate ***
 *** Origin: PRD-02 User Management · Backend: Identity (UserQuotaPolicy) reads Commerce limit · 2026-05-15 ***

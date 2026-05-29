@@ -1,4 +1,4 @@
-# falcon-form-field — USAGE
+﻿# falcon-form-field — USAGE
 
 ## Real usage examples
 
@@ -76,3 +76,13 @@ If/when migrated to Tailwind, expose tokens like:
 | Use only for legacy / non-Falcon controls. | Wrap Falcon UI inputs in new code. |
 | Pass translation keys. | Pass translated strings directly. |
 | Migrate to built-in input labels over time. | Add new `<falcon-form-field>` usages. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-form-field>` (pure-Angular tag, not a wrapper) across `apps/` + `libs/falcon/` returned **5 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-account-owner-step/client-account-owner-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-permissions-step/user-permissions-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step/user-personal-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-role-status-step/user-role-status-step.component.html`

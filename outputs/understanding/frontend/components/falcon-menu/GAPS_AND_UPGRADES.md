@@ -1,4 +1,4 @@
-# falcon-menu — GAPS AND UPGRADES
+﻿# falcon-menu — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -116,3 +116,9 @@ export interface FalconMenuItem {
 
 ## Future-proof recommendation
 **`appendTo="body"` is the highest-leverage fix.** Without it, any data-table or tree with `overflow: hidden` clips the menu — a common shipping bug. Land this before broader adoption.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-menu>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

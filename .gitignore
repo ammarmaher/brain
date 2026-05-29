@@ -58,3 +58,41 @@ Obsidian Vault/
 !**/*.example.*
 !**/*.template.*
 !**/*.sample.*
+
+# --- Added 2026-05-29: IDE config + redundant vault zip (machine-specific / duplicate) ---
+# JetBrains IDE project config.
+.idea/
+**/.idea/
+# Redundant 5.2MB zip snapshot of the _obsidian vault — the unzipped vault is already tracked.
+_obsidian.zip
+
+# --- Added 2026-05-29: Python tool venvs + caches (brain-cognee / brain-graphiti, ~32k dep files) ---
+# Python virtual environments and bytecode caches (third-party deps, regenerable from requirements.txt).
+.venv/
+**/.venv/
+venv/
+**/venv/
+**/site-packages/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+# Local tool databases / vector stores / model caches (machine-specific, large, regenerable).
+.kuzu-db
+**/.kuzu-db
+*.sqlite
+*.sqlite3
+*.db
+*.onnx
+*.gguf
+*.safetensors
+*.pt
+*.bin
+**/model-cache/
+# Generated index / build caches (e.g. brain-boost .cache/brain-index.json ~22MB, regenerable).
+.cache/
+**/.cache/
+# Crawlee / Playwright scraper runtime storage.
+**/storage/
+**/.crawlee/

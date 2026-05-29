@@ -1,4 +1,4 @@
-# falcon-confirm-dialog — GAPS AND UPGRADES
+﻿# falcon-confirm-dialog — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -122,3 +122,9 @@ Template would render `<falcon-angular-button>` instances composed in the footer
 
 ## Future-proof recommendation
 This component is currently unused in production. **Now is the time to land the structural fixes** (button composition, icon component, async state) before consumers start adopting it.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-confirm-dialog>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

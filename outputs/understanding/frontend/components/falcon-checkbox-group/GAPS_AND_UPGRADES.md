@@ -1,4 +1,4 @@
-# falcon-checkbox-group — GAPS AND UPGRADES
+﻿# falcon-checkbox-group — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -97,3 +97,9 @@ All in shared.
 - For G1: pre-format `label` with HTML — won't render unless template is overhauled.
 - For G2: manage select-all externally with two-way binding.
 - For G5: enforce via Reactive Forms validators (`minLength(2)`).
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-checkbox-group>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

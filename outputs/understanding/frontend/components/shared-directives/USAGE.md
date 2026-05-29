@@ -1,4 +1,4 @@
-# Shared directives — USAGE
+﻿# Shared directives — USAGE
 
 ## Real usage in active codebase
 
@@ -99,3 +99,9 @@ Or:
 - DO use `FalconCheckExistsDirective` for any async uniqueness check.
 - DON'T re-implement validation in component code if a directive exists.
 - DON'T forget to set the input's `name` attribute — `FalconFormValidateDirective` uses it to map errors back to controls.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+**Meta-dossier.** `shared-directives` is not a single component — it indexes the cross-component directive set under `libs/falcon-ui-core/src/components/shared-directives/` (e.g. `falconDataTableCell`, `falconStepIcon`, `falconTabActions`, focus traps).
+
+These directives are imported across MANY consumers but cannot be grep'd as a single tag. Refresh deferred to Wave 8 (directive-level audit).

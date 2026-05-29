@@ -1,4 +1,4 @@
-# falcon-filter-panel — USAGE
+﻿# falcon-filter-panel — USAGE
 
 ## Example 1 — Admin user-list filter strip
 
@@ -101,3 +101,7 @@ import type {
 - DO — use `(filterApply)` for the "commit filters" UX.
 - DON'T — bind `[(values)]` expecting two-way; the panel is one-way for values, output-only.
 - DON'T — try to project a custom field via `<ng-template>` — not supported (P1 gap).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-filter-panel>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

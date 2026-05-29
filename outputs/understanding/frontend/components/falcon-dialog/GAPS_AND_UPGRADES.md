@@ -1,4 +1,4 @@
-# falcon-dialog — GAPS AND UPGRADES
+﻿# falcon-dialog — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -102,3 +102,9 @@ export class FalconAngularDialogComponent {
 **Reduce surface area.** This component should fade into substrate status: composed by popup + confirm-dialog, never used directly in net-new code. The deprecation message should bake in a 2-release migration window then physically remove the wrapper. Stencil tag can stay (it's still the substrate). 
 
 For the meantime: the component remains FUNCTIONAL — there's no urgent removal need. Just guard rails.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-dialog>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

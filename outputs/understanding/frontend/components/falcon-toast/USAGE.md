@@ -1,4 +1,4 @@
-# falcon-toast — USAGE
+﻿# falcon-toast — USAGE
 
 ## Real usage examples
 - Showcase only (`apps/host-shell/src/app/playground/playground.page.html`).
@@ -91,3 +91,10 @@ For the message service pattern, inject `FalconMessageService` (provided in root
 | Mount `<falcon-angular-message-host>` once at app shell | Mount one per feature module |
 | Set `duration` based on message importance (longer for errors) | Set 0 duration without `dismissible=true` |
 | Use `severity="error"` for failures | Use `severity="info"` for warnings |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-toast>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `libs/falcon/src/shared-ui/index.ts`

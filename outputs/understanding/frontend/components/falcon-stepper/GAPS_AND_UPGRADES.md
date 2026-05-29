@@ -1,4 +1,4 @@
-# falcon-angular-stepper — GAPS & UPGRADES
+﻿# falcon-angular-stepper — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -88,3 +88,9 @@
 
 ## Workaround availability
 - For validation gating today: use `<falcon-angular-wizard>` which wraps this stepper and adds `validateStep` plus `stepControls`. The wizard is the canonical "stepper + nav + validation" composition.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 5** ([CODE] grep `<falcon-angular-stepper>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

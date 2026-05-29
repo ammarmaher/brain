@@ -1,0 +1,720 @@
+<!--
+  Section 2 — Architecture + Component Inventory
+  Add Client Wizard Final Report (2026-05-17)
+  Self-contained HTML fragment. Inherits page-level styles from index.html.
+-->
+<section id="section-02-architecture" class="report-section">
+  <header class="section-header">
+    <p class="eyebrow">Section 2 of 6</p>
+    <h1>Architecture &amp; Component Inventory</h1>
+    <p class="lede">
+      The shape on disk after Waves 5 + 6 + 7. Every file path, every DI scope, every new
+      Falcon library component, and the per-component signals doctrine that now governs
+      every Falcon wizard going forward.
+    </p>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- 2.1 — Final folder structure                                  -->
+  <!-- ============================================================ -->
+  <section id="folder-structure">
+    <h2>2.1 — Final Folder Structure</h2>
+    <p>
+      The Add Client wizard's footprint spans <strong>three</strong> zones: (a) the page
+      route + its surviving state slices under <code>org-hierarchy-page/services/</code>,
+      (b) the wizard itself under <code>components/wizard-components/add-client-wizard/</code>
+      with its 5 step folders, and (c) two new Falcon library dialogs + one extended
+      Falcon input wrapper under <code>libs/falcon-ui-core/</code>. Line counts are
+      annotated; every file is at or below the 400-LOC soft cap.
+    </p>
+
+    <h3>2.1.a — Page + wizard tree (admin-console)</h3>
+<pre class="tree"><code>apps/admin-console/src/app/features/org-hierarchy-page/
+├── services/
+│   ├── hierarchy-page-state.service.ts             # 338 LOC — slim facade re-exporting public API
+│   ├── state/                                      # domain-scoped page-level state slices (5 survivors)
+│   │   ├── tree-state.signals.ts                   # 285 LOC — tree + selection + view toggle
+│   │   ├── users-state.signals.ts                  # 175 LOC — users list + pagination + tabs
+│   │   ├── node-drawer-state.signals.ts            # 196 LOC — add/edit-node drawer state
+│   │   ├── add-user-state.signals.ts               #  84 LOC — Add User open/submit + wizardBackendErrors
+│   │   └── settings-state.signals.ts               #  43 LOC — settings tab state
+│   ├── shared/                                     # pure helpers used across slices (no Angular DI)
+│   │   ├── http-status-inference.ts                #  70 LOC — inferStatus / statusFromHttpError
+│   │   ├── account-settings.helpers.ts             #  32 LOC — to/from AccountSettings DTO
+│   │   └── tree-helpers.ts                         #  79 LOC — toPrimeNode + tree walkers
+│   └── services.ts                                 # existing — HierarchyService etc.
+└── components/
+    └── wizard-components/
+        └── add-client-wizard/
+            ├── add-client-wizard.component.ts      # 398 LOC — shell w/ stepper rail + dialog mounts
+            ├── add-client-wizard.component.html
+            ├── signals/                            # WIZARD-WIDE state (Wave 6.2)
+            │   ├── add-client-wizard.signals.ts    # 353 LOC — open/close + eager data + flow + dialogs
+            │   └── index.ts                        #  53 LOC — barrel + ADD_CLIENT_WIZARD_PROVIDERS
+            ├── models/
+            │   ├── models.ts                       # 392 LOC — form interfaces (all null-init) + validators
+            │   └── wire-builders.ts                # 254 LOC — buildCreateAccountWireRequest + DeliveryMethod map
+            ├── services/
+            │   └── client.service.ts               # 192 LOC — POST create-account + catalogs (channels/apps)
+            │
+            ├── client-information-step/            # STEP 1
+            │   ├── client-information-step.component.{ts,html}
+            │   ├── signals/client-information-step.signals.ts
+            │   └── validations/validations.ts
+            │
+            ├── client-settings-step/               # STEP 2
+            │   ├── client-settings-step.component.{ts,html}
+            │   ├── signals/client-settings-step.signals.ts    # 39 LOC — smallest signal file
+            │   └── validations/validations.ts
+            │
+            ├── client-comm-channels-step/          # STEP 3
+            │   ├── client-comm-channels-step.component.{ts,html}
+            │   ├── signals/client-comm-channels-step.signals.ts
+            │   └── validations/validations.ts
+            │
+            ├── client-applications-step/           # STEP 4
+            │   ├── client-applications-step.component.{ts,html}
+            │   ├── signals/client-applications-step.signals.ts
+            │   └── validations/validations.ts
+            │
+            ├── client-account-owner-step/          # STEP 5
+            │   ├── client-account-owner-step.component.{ts,html}
+            │   ├── signals/client-account-owner-step.signals.ts
+            │   └── validations/validations.ts
+            │
+            └── client-service-row-table/           # shared row editor for Steps 3 + 4
+                └── client-service-row-table.component.{ts,html}</code></pre>
+
+    <h3>2.1.b — Falcon library additions (libs/falcon-ui-core)</h3>
+<pre class="tree"><code>libs/falcon-ui-core/src/angular-wrapper/components/
+├── falcon-sending-credentials-dialog/              # NEW (Wave 5.1, Agent B)
+│   ├── falcon-sending-credentials-dialog.component.ts    # 149 LOC
+│   ├── falcon-sending-credentials-dialog.component.html  # 186 LOC — inline SVG illustrations
+│   └── index.ts
+│
+├── falcon-completion-success-dialog/               # NEW (Wave 5.1, Agent B)
+│   ├── falcon-completion-success-dialog.component.ts     # 112 LOC — OnDestroy + timer
+│   ├── falcon-completion-success-dialog.component.html   #  67 LOC — inline clipboard+check SVG
+│   └── index.ts
+│
+├── falcon-input-number/                            # EXTENDED (Wave 6.1 + 7)
+│   ├── falcon-input-number.component.ts            # +iconLeft (booleanAttribute) + state input
+│   └── falcon-input-number.component.html          # +&lt;ng-content&gt; slot at start edge
+│
+└── falcon-notification/
+    └── falcon-notification-stack.component.ts      # EXTENDED — position input ('top-right' default)
+
+libs/falcon-ui-core/src/components/
+└── falcon-input-number-tw/                         # EXTENDED (Wave 6.1, Stencil)
+    └── falcon-input-number-tw.tsx                  # +state prop + iconLeftSvg prop (raw SVG for non-Angular consumers)
+
+libs/falcon/src/shared-ui/lib/components/
+└── falcon-photo-uploader/                          # EXTENDED (Wave 6.1, Agent F)
+    └── falcon-photo-uploader.component.ts          # +pictureChange output emitting {extension, fileBase64String}
+
+libs/falcon/src/shared-types/lib/enums/
+└── globels.ts                                      # existing — DeliveryMethod (Email=1, Sms=2, Both=3) @ line 97</code></pre>
+
+    <h3>2.1.c — Host-shell additions (HTTP UI routing)</h3>
+<pre class="tree"><code>apps/host-shell/src/app/core/http-ui/
+├── falcon-http-ui-routing.ts                       # NEW — pure helpers extracted from dispatcher
+├── falcon-http-ui-dispatcher.service.ts            # REFACTORED — delegates to pure helpers
+└── falcon-http-ui.config.ts                        # ADDED — 'applicationError' rule (HTTP 200 + isSuccessful:false → top-right toast)
+
+apps/host-shell/src/app/
+└── app.ts                                          # Notification stack mounted with position="top-right"
+
+apps/host-shell/tests/
+├── falcon-http-ui-routing.spec.ts                  # 37 tests — routing + extraction
+└── falcon-notification-stack-position.spec.ts      #  7 tests — position → Tailwind class mapping</code></pre>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 2.2 — State architecture                                      -->
+  <!-- ============================================================ -->
+  <section id="state-architecture">
+    <h2>2.2 — State Architecture</h2>
+    <p>
+      The Add Client wizard runs on a <strong>three-layer DI cake</strong>: page → wizard
+      → step. Each layer owns the state that survives at its own lifecycle. Provider
+      hoisting at the wizard component guarantees that wizard-scoped step services are
+      destroyed on close and recreated on reopen — no manual reset cascade is needed for
+      pristine state.
+    </p>
+
+    <h3>2.2.a — The four-step layered model</h3>
+    <ol>
+      <li>
+        <strong>Page route</strong> (<code>org-hierarchy-page.routes.ts</code>) declares the
+        <code>HIERARCHY_PAGE_STATE_PROVIDERS</code> aggregate. This aggregate registers the
+        5 surviving page-level slices AND the wizard-wide <code>AddClientWizardSignalsService</code>.
+        Lifetime: as long as the page route is active.
+      </li>
+      <li>
+        <strong>Facade</strong> <code>HierarchyPageStateService</code> (slim 338-LOC re-exporter)
+        injects the 5 page slices <em>and</em> the wizard-wide signals service. It re-exports
+        their public surface so existing consumers (page menu, settings tab, user-details
+        page) compile against a single facade rather than 6 separate services.
+      </li>
+      <li>
+        <strong>Wizard component</strong> (<code>add-client-wizard.component.ts</code>)
+        declares <code>providers: [...ADD_CLIENT_WIZARD_PROVIDERS]</code> in its <code>@Component</code>
+        decorator. This <em>hoists</em> the 5 per-step signal services into a
+        wizard-scoped sub-injector. When the parent template's <code>@if state.addClientOpen()</code>
+        falls, Angular destroys this sub-injector → all 5 step services drop with it.
+      </li>
+      <li>
+        <strong>Per-step signal services</strong> live <em>inside</em> their step folders:
+        <code>&lt;step&gt;/signals/&lt;step&gt;.signals.ts</code>. Each is a plain
+        <code>@Injectable()</code> (no <code>providedIn</code>) exposing 4 signals —
+        <code>value</code>, <code>valid</code>, <code>dirty</code>, <code>revealed</code> —
+        plus a <code>reset()</code> method. The wizard binds <code>[(value)]="state1.value"</code>
+        on each step via <code>viewChild()</code> refs.
+      </li>
+    </ol>
+
+    <h3>2.2.b — DI lifecycle diagram</h3>
+<pre class="tree"><code>Page Route ──────────────────────────────────────────── LIFETIME: route active
+│
+└── HIERARCHY_PAGE_STATE_PROVIDERS (page-scoped) ─────── @Injectable({ providedIn: …route… })
+    │
+    ├── TreeStateSlice           (tree + selection + view)
+    ├── UsersStateSlice          (users list + pagination)
+    ├── NodeDrawerStateSlice     (add/edit-node drawer)
+    ├── SettingsStateSlice       (settings tab)
+    ├── AddUserStateSlice        (Add User open/submit + wizardBackendErrors)
+    │
+    ├── HierarchyPageStateService    ← FACADE: re-exports public API of all above + below
+    │
+    └── AddClientWizardSignalsService ─────────────────── LIFETIME: page-active (survives wizard close/open)
+        │ open/close · eager data · password · pending payload · dialogs · pendingTreeSelection
+        │
+        └── @if state.addClientOpen()  →  WIZARD MOUNT  ─ LIFETIME: wizard mounted
+            │
+            └── &lt;add-client-wizard&gt; declares providers: [...ADD_CLIENT_WIZARD_PROVIDERS]
+                │
+                ├── ClientInformationStepSignalsService   ──┐
+                ├── ClientSettingsStepSignalsService        │  WIZARD-SCOPED:
+                ├── ClientCommChannelsStepSignalsService    ├─ destroyed when wizard
+                ├── ClientApplicationsStepSignalsService    │  unmounts; recreated
+                └── ClientAccountOwnerStepSignalsService   ──┘  on each reopen.</code></pre>
+
+    <h3>2.2.c — Why this split?</h3>
+    <table class="responsibility">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Scope</th>
+          <th>Why this level?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Page slices (tree, users, drawer, settings, add-user)</td>
+          <td>Page route</td>
+          <td>
+            Each spans multiple components on the page. No single owner. Lives as long as
+            the operator is on Organization Hierarchy.
+          </td>
+        </tr>
+        <tr>
+          <td><code>AddClientWizardSignalsService</code></td>
+          <td>Page route</td>
+          <td>
+            The page menu sets <code>addClientOpen.set(true)</code> <em>before</em> the
+            wizard component exists. The wizard then injects the SAME instance via DI
+            walk-up. Also keeps the eager-loaded catalogs warm if the wizard closes +
+            reopens within the same page session.
+          </td>
+        </tr>
+        <tr>
+          <td>5 per-step signal services</td>
+          <td>Wizard component (via <code>providers</code>)</td>
+          <td>
+            Wizard mount/unmount drives their lifecycle. Pristine state on every reopen
+            without an explicit reset call — Angular's DI lifecycle does it for free.
+            The optional <code>reset()</code> method exists for a future "Start Over"
+            button mid-wizard.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 2.3 — New Falcon library components                           -->
+  <!-- ============================================================ -->
+  <section id="new-falcon-components">
+    <h2>2.3 — New Falcon Library Components</h2>
+    <p>
+      Two pure-Angular dialogs were added to the Falcon UI Core library during Wave 5.1.
+      Both follow the "standalone Angular component + inlined SVG illustrations + Tailwind
+      utility classes only + composes <code>&lt;falcon-button-tw&gt;</code> for footer
+      actions" pattern. Neither uses a Stencil web component as its outer shell — they
+      are first-class Angular dialogs.
+    </p>
+
+    <!-- — Sending Credentials Dialog spec block — -->
+    <h3 class="component-name"><code>&lt;falcon-angular-sending-credentials-dialog&gt;</code></h3>
+    <table class="component-spec">
+      <tbody>
+        <tr><th>Path</th>
+          <td><code>libs/falcon-ui-core/src/angular-wrapper/components/falcon-sending-credentials-dialog/</code></td></tr>
+        <tr><th>Files</th>
+          <td>
+            <code>*.component.ts</code> — 149 LOC<br>
+            <code>*.component.html</code> — 186 LOC (mostly inline SVG illustrations)<br>
+            <code>index.ts</code> — barrel
+          </td></tr>
+        <tr><th>Selector</th>
+          <td><code>falcon-angular-sending-credentials-dialog</code></td></tr>
+        <tr><th>Change detection</th>
+          <td><code>OnPush</code></td></tr>
+        <tr><th>Inputs</th>
+          <td>
+            <code>open: boolean</code> · <code>ownerName: string</code> ·
+            <code>ownerPhone: string</code> · <code>ownerEmail: string</code> ·
+            <code>defaultDelivery: 'email' | 'sms' | 'both' = 'email'</code> ·
+            <code>disableSend: boolean = false</code> ·
+            <code>title</code> · <code>subtitle</code> · <code>deliveryLabel</code> ·
+            <code>ownerKeyLabel</code> · <code>phoneKeyLabel</code> · <code>emailKeyLabel</code> ·
+            <code>sendLabel = 'Send Credentials'</code> · <code>cancelLabel = 'Cancel'</code> ·
+            <code>closeAriaLabel</code> · <code>emailMethodLabel</code> ·
+            <code>smsMethodLabel</code> · <code>bothMethodLabel</code> ·
+            <code>closeOnBackdrop = true</code> · <code>closeOnEsc = true</code>
+          </td></tr>
+        <tr><th>Outputs</th>
+          <td>
+            <code>cancel: EventEmitter&lt;void&gt;</code> ·
+            <code>send: EventEmitter&lt;FalconCredentialDeliveryMethod&gt;</code> — emits the
+            string union <code>'email' | 'sms' | 'both'</code>. The state service maps this
+            to the backend <code>DeliveryMethod</code> enum integer before the POST.
+          </td></tr>
+        <tr><th>Internal state</th>
+          <td>
+            <code>selected = signal&lt;FalconCredentialDeliveryMethod&gt;('email')</code> —
+            reseeded from <code>defaultDelivery()</code> on every false→true
+            <code>open</code> transition via an <code>effect()</code>.
+          </td></tr>
+        <tr><th>Visual</th>
+          <td>
+            3 method cards in a row (Email · SMS · Both), each card has a radio dot
+            + label + decorative SVG illustration sourced from the React reference
+            (<code>admin/addclient.jsx</code> 680–749). Below the cards: an AO summary
+            mini-card showing Name / Phone / Email. Footer: Cancel + Send Credentials
+            <code>&lt;falcon-button-tw&gt;</code> pair.
+          </td></tr>
+        <tr><th>Accessibility</th>
+          <td>
+            <code>role="dialog"</code> · <code>aria-modal="true"</code> ·
+            <code>aria-labelledby</code> on the title.
+            Method cards: <code>role="radio"</code> + keyboard support (Space / Enter pick).
+            Escape closes (when <code>closeOnEsc</code>).
+            Document-level <code>@HostListener('document:keydown.escape')</code>.
+          </td></tr>
+        <tr><th>Animation</th>
+          <td>
+            <code>fscBackdropIn</code> — 160ms ease-out opacity fade.<br>
+            <code>fscPanelIn</code> — 220ms cubic-bezier(0.2, 0.8, 0.3, 1) translateY + scale.
+          </td></tr>
+        <tr><th>Z-index</th>
+          <td><code>z-[var(--falcon-dialog-z-index)]</code> = <code>1200</code> (above drawer,
+            below toast which sits at <code>1300</code>).</td></tr>
+        <tr><th>Stencil tag registered</th>
+          <td><code>defineFalconTwComponent('falcon-button')</code> in <code>ngOnInit</code> —
+            idempotent, lazy.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- — Completion Success Dialog spec block — -->
+    <h3 class="component-name"><code>&lt;falcon-angular-completion-success-dialog&gt;</code></h3>
+    <table class="component-spec">
+      <tbody>
+        <tr><th>Path</th>
+          <td><code>libs/falcon-ui-core/src/angular-wrapper/components/falcon-completion-success-dialog/</code></td></tr>
+        <tr><th>Files</th>
+          <td>
+            <code>*.component.ts</code> — 112 LOC (<code>OnDestroy</code> + setTimeout
+            cleanup)<br>
+            <code>*.component.html</code> — 67 LOC (inline clipboard-with-check + sparkles
+            SVG)<br>
+            <code>index.ts</code> — barrel
+          </td></tr>
+        <tr><th>Selector</th>
+          <td><code>falcon-angular-completion-success-dialog</code></td></tr>
+        <tr><th>Change detection</th>
+          <td><code>OnPush</code></td></tr>
+        <tr><th>Inputs</th>
+          <td>
+            <code>open: boolean</code> · <code>title = 'Completed successfully'</code> ·
+            <code>subtitle = 'Credentials sent to the user'</code> ·
+            <code>autoDismissMs = 10_000</code> (set to 0 to disable) ·
+            <code>dismissOnOverlayClick = true</code> · <code>closeAriaLabel</code>
+          </td></tr>
+        <tr><th>Outputs</th>
+          <td>
+            <code>closed: EventEmitter&lt;void&gt;</code> — fires on auto-dismiss timer,
+            overlay click, X click, panel click, OR Escape.
+          </td></tr>
+        <tr><th>Internal</th>
+          <td>
+            <code>timerId: ReturnType&lt;typeof setTimeout&gt; | null</code> +
+            <code>effect()</code> that (re-)arms the timer on every false→true
+            <code>open</code> transition and clears it on the reverse. <code>OnDestroy</code>
+            clears the timer to prevent leaks.
+          </td></tr>
+        <tr><th>Visual</th>
+          <td>
+            Centered panel: clipboard-with-checkmark illustration + sparkle accents (inline
+            SVG, copied from the React reference), then Title + Subtitle. Single X button
+            in the top-right corner. No action buttons.
+          </td></tr>
+        <tr><th>Accessibility</th>
+          <td>
+            <code>role="alertdialog"</code> · <code>aria-live="polite"</code> ·
+            <code>aria-labelledby</code>. Escape dismisses.
+            <em>Click-anywhere dismisses</em> — both the backdrop AND the panel call
+            <code>onClose()</code> (per UX spec).
+          </td></tr>
+        <tr><th>Animation</th>
+          <td>
+            <code>fcsBackdropIn</code> — 160ms ease-out opacity fade.<br>
+            <code>fcsPanelIn</code> — 220ms cubic-bezier(0.2, 0.8, 0.3, 1) translateY + scale.
+          </td></tr>
+        <tr><th>Z-index</th>
+          <td>Same <code>z-[var(--falcon-dialog-z-index)]</code> tier as Sending Credentials.
+            Only one is open at a time so they cannot stack.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 2.4 — Extended Falcon components                              -->
+  <!-- ============================================================ -->
+  <section id="extended-components">
+    <h2>2.4 — Extended Falcon Components</h2>
+    <p>
+      The Add Client work also pushed feature requests back into several pre-existing Falcon
+      library components. None of these breaks an existing consumer — every change is
+      additive (new optional inputs or outputs).
+    </p>
+    <table class="extensions">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>What was added</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>FalconAngularInputNumberComponent</code></td>
+          <td>
+            <code>state: 'default' | 'error' | 'success' | 'warning'</code> input
+            (forwarded to inner <code>&lt;falcon-angular-input&gt;</code>).<br>
+            <code>iconLeft: boolean</code> input (<code>{ transform: booleanAttribute }</code>) +
+            <code>&lt;ng-content&gt;</code> slot in the template.<br>
+            <code>computedInputClass</code> getter that force-prepends <code>ps-7</code>
+            when the icon slot is active.
+          </td>
+          <td>
+            Show error state visually on invalid price-value rows in Step 3 + 4. Project
+            the canonical <code>&lt;falcon-angular-saudi-riyal-icon&gt;</code> as a left-edge
+            icon without passing raw SVG strings.
+          </td>
+        </tr>
+        <tr>
+          <td><code>falcon-input-number-tw</code> (Stencil)</td>
+          <td>
+            <code>state</code> prop (mirrors the Angular wrapper).<br>
+            <code>iconLeftSvg</code> prop — raw SVG string slot for non-Angular consumers
+            (React + Vue playgrounds + Studio).
+          </td>
+          <td>
+            Keep dual-render-path parity between the Angular wrapper and the Stencil web
+            component. Non-Angular consumers can't use content projection, so they get the
+            raw-SVG-string escape hatch.
+          </td>
+        </tr>
+        <tr>
+          <td><code>FalconAngularNotificationStackComponent</code></td>
+          <td>
+            <code>position: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'</code>
+            input (default <code>'top-right'</code>).<br>
+            <code>falconNotificationStackContainerClasses</code> helper that maps
+            <code>position</code> → Tailwind anchor classes.
+          </td>
+          <td>
+            Wave 4.2 user requirement: toasts must surface at the top-right corner per the
+            Falcon UX spec. Each host app can override per-mount (admin-console + host-shell
+            +  management-console all use <code>top-right</code> today).
+          </td>
+        </tr>
+        <tr>
+          <td><code>FalconHttpUiErrorBucket</code> type</td>
+          <td>
+            Added <code>'applicationError'</code> to the discriminated union (alongside
+            existing <code>'4xx'</code>, <code>'5xx'</code>, <code>'network'</code>,
+            <code>'default'</code>).
+          </td>
+          <td>
+            HTTP 200 + <code>isSuccessful:false</code> (business-rule violation) must route
+            to its OWN rule path. Previously it fell through to <code>default</code> → popup,
+            which buried the backend message. Now it lands at the top-right toast.
+          </td>
+        </tr>
+        <tr>
+          <td><code>FalconPhotoUploaderComponent</code></td>
+          <td>
+            New <code>pictureChange: EventEmitter&lt;{ extension: string; fileBase64String: string }&gt;</code>
+            output. Existing <code>fileSelected</code> (raw File) + <code>photo</code> model
+            (data URL) outputs preserved for backward compatibility.
+          </td>
+          <td>
+            The wire payload requires <code>profilePictureImageInfo</code> +
+            <code>accountOwnerProfilePictureImageInfo</code> as
+            <code>{ extension, fileBase64String }</code> objects, not data URLs. The uploader
+            now does the mime-type → extension mapping + base64 strip itself, so consumer
+            code is one event listener away from the wire shape.
+          </td>
+        </tr>
+        <tr>
+          <td><code>dispatchApplicationError()</code> in the dispatcher service</td>
+          <td>
+            New method on <code>FalconHttpUiDispatcherService</code> that prefers the
+            <code>applicationError</code> rule when present in <code>FALCON_HTTP_UI_CONFIG</code>;
+            falls back to <code>default</code> otherwise.
+          </td>
+          <td>
+            Wave 4.2 root cause: business-validation errors (HTTP 200 + isSuccessful:false)
+            were being processed by the <code>default</code> rule because the dispatcher had
+            no concept of an "in-body application error" route. Splitting transport vs
+            business errors keeps each rule's title + body coherent.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 2.5 — Per-Component Signals Doctrine                          -->
+  <!-- ============================================================ -->
+  <section id="signals-doctrine">
+    <h2>2.5 — Per-Component Signals Doctrine (forward-applicable)</h2>
+    <p>
+      Wave 6.2 (Agent I) formalized the doctrine that now governs <strong>every Falcon
+      wizard</strong> going forward. Six rules. Each is enforced structurally by the
+      folder layout + DI scope.
+    </p>
+
+    <h3>2.5.a — The Six Rules</h3>
+    <ol class="doctrine">
+      <li>
+        <strong>Rule 1 — State lives inside the component folder that owns it.</strong>
+        No central <code>services/state/</code> directory for state with a single component
+        owner. Per-component signals stay co-located with their consumer.
+      </li>
+      <li>
+        <strong>Rule 2 — Per-step signals folder.</strong> Every step inside a wizard has
+        a <code>&lt;step&gt;/signals/&lt;step&gt;.signals.ts</code> file exporting an
+        <code>@Injectable()</code> class with at least <code>value</code> / <code>valid</code>
+        / <code>dirty</code> / <code>revealed</code> signals and a <code>reset()</code> method.
+      </li>
+      <li>
+        <strong>Rule 3 — Wizard-wide signals.</strong> Cross-step state (open/close, eager
+        catalogs, pending submit payload, generated password, dialog visibility) lives in
+        <code>&lt;wizard&gt;/signals/&lt;wizard&gt;.signals.ts</code>. Same shape:
+        <code>@Injectable()</code> class.
+      </li>
+      <li>
+        <strong>Rule 4 — Provider hoisting at the wizard component.</strong> The wizard
+        component declares <code>providers: [...&lt;WIZARD&gt;_PROVIDERS]</code> for its
+        per-step services. The wizard-wide service is provided at the page level so it
+        can be flipped open BEFORE the wizard mounts. Pristine state on every reopen comes
+        for free from Angular DI lifecycle.
+      </li>
+      <li>
+        <strong>Rule 5 — Reset method on each signal service.</strong> Each
+        <code>@Injectable()</code> exposes a <code>reset()</code> method that re-seeds
+        every signal from <code>empty&lt;FormName&gt;()</code> factories. Required for
+        future "Start Over" buttons; not used by the wizard lifecycle (DI handles that).
+      </li>
+      <li>
+        <strong>Rule 6 — Facade re-exports public surface.</strong> Page-level facade
+        services (<code>HierarchyPageStateService</code>) re-export the public surface so
+        consumers depend on the facade, not the internal split. This decouples future
+        slice splits from consumer source.
+      </li>
+    </ol>
+
+    <h3>2.5.b — Reference: the smallest signals file (Step 2, 39 LOC)</h3>
+    <p>
+      <code>client-settings-step/signals/client-settings-step.signals.ts</code> is the
+      canonical minimal shape. Reproduced inline (header comments trimmed):
+    </p>
+<pre class="code"><code>import { Injectable, signal } from '@angular/core';
+
+import { ClientSettingsFormValue, emptyClientSettings } from '../../models/models';
+
+@Injectable()
+export class ClientSettingsStepSignalsService {
+  readonly value = signal&lt;ClientSettingsFormValue&gt;(emptyClientSettings());
+  readonly valid = signal&lt;boolean&gt;(false);  // Wave 7 — starts invalid (null defaults)
+  readonly dirty = signal&lt;boolean&gt;(false);
+  readonly revealed = signal&lt;boolean&gt;(false);
+
+  reset(): void {
+    this.value.set(emptyClientSettings());
+    this.valid.set(false);
+    this.dirty.set(false);
+    this.revealed.set(false);
+  }
+}</code></pre>
+    <p>
+      Note the absence of <code>providedIn</code> — that is intentional. The wizard
+      component provides this service via <code>ADD_CLIENT_WIZARD_PROVIDERS</code> so its
+      lifecycle tracks the wizard mount, not the application root.
+    </p>
+
+    <h3>2.5.c — How the wizard component wires it up</h3>
+<pre class="code"><code>// add-client-wizard.component.ts
+@Component({
+  selector: 'app-add-client-wizard',
+  // ...
+  providers: [...ADD_CLIENT_WIZARD_PROVIDERS],   // hoists the 5 step services into a wizard-scoped injector
+})
+export class AddClientWizardComponent {
+  protected readonly state    = inject(AddClientWizardSignalsService);     // page-scoped (survives)
+  protected readonly state1   = inject(ClientInformationStepSignalsService); // wizard-scoped (per-mount)
+  protected readonly state2   = inject(ClientSettingsStepSignalsService);
+  protected readonly state3   = inject(ClientCommChannelsStepSignalsService);
+  protected readonly state4   = inject(ClientApplicationsStepSignalsService);
+  protected readonly state5   = inject(ClientAccountOwnerStepSignalsService);
+  // ...
+}</code></pre>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 2.6 — Anatomy of each Add Client step                         -->
+  <!-- ============================================================ -->
+  <section id="component-anatomy">
+    <h2>2.6 — Anatomy of Each Add Client Step</h2>
+    <p>
+      Every step has the same canonical shape: a form-value interface in <code>models/models.ts</code>,
+      an <code>empty&lt;Step&gt;()</code> factory returning null-defaults, a
+      <code>signals/</code> service, a <code>validations/</code> rule bundle (DI token +
+      provider), and a component file that consumes both. The differences across steps
+      are below.
+    </p>
+
+    <table class="anatomy">
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Form Value</th>
+          <th>Validators applied</th>
+          <th>Eager data used</th>
+          <th>Async pipelines</th>
+          <th>Special behaviors</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1 · Client Info</strong></td>
+          <td><code>ClientInfoFormValue</code> — 19 nullable fields (accountName, financeId,
+            classCat, classSub, authority, entityName, sector, budgetNo, country, city,
+            district, street, bldg, postal, addressExtra, anotherId, vat, photoData, …)</td>
+          <td><code>accountNameValidator</code><br><code>anyStringValidator(2, 50, …)</code> per
+            text field<br>Optional fields gated by presence</td>
+          <td><code>eagerCountries</code>, <code>eagerCities</code> (seeded once on wizard mount
+            by the wizard-wide forkJoin; the step <em>reads</em> them via the state facade —
+            it no longer makes its own HTTP calls)</td>
+          <td><code>accountNameTaken</code> — debounced 300ms, fires only on the trimmed
+            value while the field is dirty + non-empty</td>
+          <td>Photo upload via <code>(pictureChange)</code> emits
+            <code>{ extension, fileBase64String }</code> directly into state</td>
+        </tr>
+        <tr>
+          <td><strong>2 · Settings</strong></td>
+          <td><code>ClientSettingsFormValue</code> — 5 fields: security (null), allowedIps[],
+            maxNormal (null), maxSystem (null), maxNode (null)</td>
+          <td><code>allowedIpListValidator</code><br><code>userLimitValidator</code> on the 3
+            user-limit fields<br><code>maxNodeLevelsValidator(999)</code></td>
+          <td>—</td>
+          <td>—</td>
+          <td>Starts <em>invalid</em> because <code>security: null</code> (no preselected
+            radio). Next stays blocked until operator picks a security level AND types
+            positive integer user-limits.</td>
+        </tr>
+        <tr>
+          <td><strong>3 · Communication Channels</strong></td>
+          <td><code>ClientCommChannelsFormValue</code> = <code>{ rows: ClientServiceRow[] }</code></td>
+          <td>Row-level: <code>priceType</code> + <code>priceValue</code> both required when
+            <code>visible === true</code>. Validators applied inside the
+            <code>&lt;client-service-row-table&gt;</code> per row, surfaced as red
+            <code>state="error"</code> on dropdown + input-number when <code>revealed === true</code>.</td>
+          <td><code>eagerCommChannels</code> — seeded once by the wizard's forkJoin from
+            <code>commerce/CommunicationChannel</code></td>
+          <td>—</td>
+          <td>Row-table reveal cascade: <code>revealAllRowsErrors()</code> on Next click sets
+            <code>touched</code> per row AND forces a new <code>rows.update((rs) =&gt; [...rs])</code>
+            reference to defeat the OnPush + signal-array trap (Wave 7 fix).</td>
+        </tr>
+        <tr>
+          <td><strong>4 · Applications</strong></td>
+          <td><code>ClientApplicationsFormValue</code> = <code>{ rows: ClientServiceRow[] }</code></td>
+          <td>Same row-level <code>priceType</code> + <code>priceValue</code> required-when-visible
+            rules. Row-table shared with Step 3.</td>
+          <td><code>eagerApps</code> — seeded once by the wizard's forkJoin from
+            <code>commerce/Application</code></td>
+          <td>—</td>
+          <td>Identical to Step 3 (uses the same <code>client-service-row-table</code> component
+            with different data; <code>revealed</code> + <code>touched</code> cascade the same way).</td>
+        </tr>
+        <tr>
+          <td><strong>5 · Account Owner</strong></td>
+          <td><code>ClientAccountOwnerFormValue</code> — 10 nullable fields (ownerFirst,
+            ownerLast, ownerUser, ownerNid, ownerPhone, ownerEmail, ownerPwd, ownerRole,
+            ownerPhotoData, …)</td>
+          <td><code>personNameValidator</code> on first/last<br><code>userNameValidator</code><br>
+            <code>nationalIdValidator</code><br><code>phoneNumberValidator</code><br>
+            <code>emailValidator</code></td>
+          <td><code>lastGeneratedPassword</code> — auto-fills <code>ownerPwd</code> via an
+            internal effect on the false→true mount transition (Wave 6.1 eager fetch).</td>
+          <td><code>usernameAsyncError</code> — debounced 300ms; checks uniqueness against
+            the Identity Gateway. Dirty + non-empty + non-trivial gates the call.</td>
+          <td>Photo upload (same <code>(pictureChange)</code> shape as Step 1).
+            Password field is <code>readonly</code> with an eye-toggle (Wave 4.2 library
+            fix). Form starts invalid until all required scalars are non-null and
+            validator-clean.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>2.6.a — Cross-step invariants</h3>
+    <ul>
+      <li>
+        <strong>All form values use <code>T | null</code> scalar slots.</strong> The
+        <code>empty&lt;Step&gt;()</code> factories return null for every scalar. Required-field
+        validators treat null as <code>{ required: true }</code>. The wire builder
+        defensively coalesces <code>null → '' | 0 | DefaultEnum</code> for the few required
+        wire slots so a slip-through still POSTs (but normal flow blocks Next before that
+        path fires).
+      </li>
+      <li>
+        <strong><code>revealed</code> propagates one direction only.</strong> Steps flip
+        their own <code>revealed</code> signal on Next click via <code>revealErrors()</code>.
+        The signal is read by the step template to switch invalid fields into
+        <code>state="error"</code> visual mode. Validators don't change behavior — only the
+        rendering does.
+      </li>
+      <li>
+        <strong>Eager data is only read, never refetched per step.</strong> The wizard's
+        <code>forkJoin</code> on mount fires the 5 catalog calls (password, countries, cities,
+        commchannels, apps) once. Per-step navigation reads from cached signals.
+        DevTools Network confirms: open wizard → 5 calls at t=0 → Step 1 → 5 navigation
+        cycles produce zero new XHR.
+      </li>
+    </ul>
+  </section>
+</section>

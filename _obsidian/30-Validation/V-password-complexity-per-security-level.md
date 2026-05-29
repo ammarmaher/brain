@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: false
 created: 2026-05-15
+module: user-mgmt
+feature: password-policy
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/user-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-password-complexity-per-security-level — Password complexity tier resolved per account security level ***
 *** Origin: PRD-02 User Management · Backend: Identity (PasswordPolicy) · 2026-05-15 ***

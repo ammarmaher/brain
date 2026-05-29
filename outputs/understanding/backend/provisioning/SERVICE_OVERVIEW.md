@@ -47,7 +47,7 @@ tests/Falcon.Provisioning.Tests/       <- xUnit
 | Controller | Endpoints | Drilled? |
 |---|---:|:---:|
 | `ServicesController` | 5 | **yes — see `controllers/ServicesController/`** |
-| `LookupController` | 1 | no |
+| `LookupController` | 1 | **yes — see `controllers/LookupController/`** |
 
 See [`ENDPOINT_REGISTRY.md`](ENDPOINT_REGISTRY.md) for the full table.
 

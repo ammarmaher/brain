@@ -1,0 +1,380 @@
+---
+url: https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/
+title: Graph API Reference v25.0: Whats App Business Account Subscribed Apps
+status: 200
+---
+
+![](https://googleads.g.doubleclick.net/pagead/viewthroughconversion/963623955/?guid=ON&script=0)
+
+![](https://dc.ads.linkedin.com/collect/?pid=276116&fmt=gif)
+
+![](https://analytics.twitter.com/i/adsct?txn_id=nz7m3&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0)
+
+![](https://t.co/i/adsct?txn_id=nz7m3&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0)
+
+![](https://facebook.com/security/hsts-pixel.gif)
+
+[Meta logo](https://developers.facebook.com/?no_redirect=true)
+
+MoreMoreMore
+
+DocsDocsDocs
+
+ToolsToolsTools
+
+SupportSupportSupport
+
+Search input
+
+​
+
+[LoginLoginLogin](https://business.facebook.com/business/loginpage/?is_work_accounts=true&login_options[0]=FB&login_options[1]=SSO&config_ref=biz_login_tool_flavor_dfc&app=436761779744620&next=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fgraph-api%2Freference%2Fwhats-app-business-account%2Fsubscribed_apps%2F%3Fnav_ref%3Dbiz_unified_f3_login_page_to_dfc)
+
+[Graph API](https://developers.facebook.com/docs/graph-api)
+
+- [Overview](https://developers.facebook.com/docs/graph-api/overview)
+- [Get Started](https://developers.facebook.com/docs/graph-api/get-started)
+- [Batch Requests](https://developers.facebook.com/docs/graph-api/batch-requests)
+- [Debug Requests](https://developers.facebook.com/docs/graph-api/guides/debugging)
+- [Handle Errors](https://developers.facebook.com/docs/graph-api/guides/error-handling)
+- [Field Expansion](https://developers.facebook.com/docs/graph-api/guides/field-expansion)
+- [Secure Requests](https://developers.facebook.com/docs/graph-api/guides/secure-requests)
+- [Changelog](https://developers.facebook.com/docs/graph-api/changelog)
+- [Reference](https://developers.facebook.com/docs/graph-api/reference)
+
+
+  - [/video](https://developers.facebook.com/docs/graph-api/reference/video/)
+  - [Ad](https://developers.facebook.com/docs/graph-api/reference/adgroup/)
+  - [Ads Archive](https://developers.facebook.com/docs/graph-api/reference/ads_archive/)
+  - [Album](https://developers.facebook.com/docs/graph-api/reference/album/)
+  - [App Link Host](https://developers.facebook.com/docs/graph-api/reference/app-link-host/)
+  - [Application](https://developers.facebook.com/docs/graph-api/reference/application/)
+  - [Binary Transparency Artifacts](https://developers.facebook.com/docs/graph-api/reference/binary_transparency_artifacts/)
+  - [Binary Transparency Proofs](https://developers.facebook.com/docs/graph-api/reference/binary_transparency_proofs/)
+  - [Branded Content Search](https://developers.facebook.com/docs/graph-api/reference/branded_content_search/)
+  - [CPASAdvertiser Partnership Recommendation](https://developers.facebook.com/docs/graph-api/reference/cpas-advertiser-partnership-recommendation/)
+  - [Canvas](https://developers.facebook.com/docs/graph-api/reference/canvas/)
+  - [Canvas Button](https://developers.facebook.com/docs/graph-api/reference/canvas-button/)
+  - [Canvas Carousel](https://developers.facebook.com/docs/graph-api/reference/canvas-carousel/)
+  - [Canvas Footer](https://developers.facebook.com/docs/graph-api/reference/canvas-footer/)
+  - [Canvas Header](https://developers.facebook.com/docs/graph-api/reference/canvas-header/)
+  - [Canvas Photo](https://developers.facebook.com/docs/graph-api/reference/canvas-photo/)
+  - [Canvas Product List](https://developers.facebook.com/docs/graph-api/reference/canvas-product-list/)
+  - [Canvas Product Set](https://developers.facebook.com/docs/graph-api/reference/canvas-product-set/)
+  - [Canvas Text](https://developers.facebook.com/docs/graph-api/reference/canvas-text/)
+  - [Canvas Video](https://developers.facebook.com/docs/graph-api/reference/canvas-video/)
+  - [Collaborative Ads Directory](https://developers.facebook.com/docs/graph-api/reference/collaborative-ads-directory/)
+  - [Comment](https://developers.facebook.com/docs/graph-api/reference/comment/)
+  - [Conversation](https://developers.facebook.com/docs/graph-api/reference/conversation/)
+  - [Debug Token](https://developers.facebook.com/docs/graph-api/reference/debug_token/)
+  - [Event](https://developers.facebook.com/docs/graph-api/reference/event/)
+  - [Extended Credit Allocation Config](https://developers.facebook.com/docs/graph-api/reference/extended-credit-allocation-config/)
+  - [Games IAPProduct](https://developers.facebook.com/docs/graph-api/reference/games-iap-product/)
+  - [Group Doc](https://developers.facebook.com/docs/graph-api/reference/groupdoc/)
+  - [Group Message](https://developers.facebook.com/docs/graph-api/reference/group-message/)
+  - [Image Copyright](https://developers.facebook.com/docs/graph-api/reference/image-copyright/)
+  - [Instagram Business Asset](https://developers.facebook.com/docs/graph-api/reference/instagram-business-asset/)
+  - [Instagram Oembed](https://developers.facebook.com/docs/graph-api/reference/instagram-oembed/)
+  - [Link](https://developers.facebook.com/docs/graph-api/reference/link/)
+  - [Live Video Input Stream](https://developers.facebook.com/docs/graph-api/reference/live-video-input-stream/)
+  - [Mailing Address](https://developers.facebook.com/docs/graph-api/reference/mailing-address/)
+  - [Media Fingerprint](https://developers.facebook.com/docs/graph-api/reference/media-fingerprint/)
+  - [Message](https://developers.facebook.com/docs/graph-api/reference/message/)
+  - [Message Template Library](https://developers.facebook.com/docs/graph-api/reference/message_template_library/)
+  - [Messenger Business Template](https://developers.facebook.com/docs/graph-api/reference/messenger-business-template/)
+  - [Milestone](https://developers.facebook.com/docs/graph-api/reference/milestone/)
+  - [Object Comments](https://developers.facebook.com/docs/graph-api/reference/object/comments/)
+  - [Object Likes](https://developers.facebook.com/docs/graph-api/reference/object/likes/)
+  - [Object Private Replies](https://developers.facebook.com/docs/graph-api/reference/object/private_replies/)
+  - [Object Reactions](https://developers.facebook.com/docs/graph-api/reference/object/reactions/)
+  - [Object Sharedposts](https://developers.facebook.com/docs/graph-api/reference/object/sharedposts/)
+  - [Oembed Page](https://developers.facebook.com/docs/graph-api/reference/oembed-page/)
+  - [Oembed Post](https://developers.facebook.com/docs/graph-api/reference/oembed-post/)
+  - [Oembed Video](https://developers.facebook.com/docs/graph-api/reference/oembed-video/)
+  - [Offline Conversion Data Set Upload](https://developers.facebook.com/docs/graph-api/reference/offline-conversion-data-set-upload/)
+  - [Page](https://developers.facebook.com/docs/graph-api/reference/page/)
+  - [Page Call To Action](https://developers.facebook.com/docs/graph-api/reference/page-call-to-action/)
+  - [Page Post](https://developers.facebook.com/docs/graph-api/reference/page-post/)
+  - [Page Upcoming Change](https://developers.facebook.com/docs/graph-api/reference/page-upcoming-change/)
+  - [Page/insights](https://developers.facebook.com/docs/graph-api/reference/insights/)
+  - [Payment](https://developers.facebook.com/docs/graph-api/reference/payment/)
+  - [Photo](https://developers.facebook.com/docs/graph-api/reference/photo/)
+  - [Place](https://developers.facebook.com/docs/graph-api/reference/place/)
+  - [Place Tag](https://developers.facebook.com/docs/graph-api/reference/place-tag/)
+  - [Place Topic](https://developers.facebook.com/docs/graph-api/reference/place-topic/)
+  - [Post](https://developers.facebook.com/docs/graph-api/reference/post/)
+  - [Profile](https://developers.facebook.com/docs/graph-api/reference/profile/)
+  - [Request](https://developers.facebook.com/docs/graph-api/reference/request/)
+  - [IGUser](https://developers.facebook.com/docs/graph-api/reference/shadow-ig-user/)
+  - [Test User](https://developers.facebook.com/docs/graph-api/reference/test-user/)
+  - [Thread](https://developers.facebook.com/docs/graph-api/reference/thread/)
+  - [Threat Exchange Impact Report](https://developers.facebook.com/docs/graph-api/reference/threat-exchange-impact-report/)
+  - [URL](https://developers.facebook.com/docs/graph-api/reference/url/)
+  - [User](https://developers.facebook.com/docs/graph-api/reference/user/)
+  - [Video Copyright](https://developers.facebook.com/docs/graph-api/reference/video-copyright/)
+  - [Video List](https://developers.facebook.com/docs/graph-api/reference/video-list/)
+  - [Video Poll](https://developers.facebook.com/docs/graph-api/reference/video-poll/)
+  - [Video Poll Option](https://developers.facebook.com/docs/graph-api/reference/video-poll-option/)
+  - [Whats App Business Account](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/)
+
+
+    - [Activities](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/activities/)
+    - [Assigned Users](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/assigned_users/)
+    - [Call Analytics](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/call_analytics/)
+    - [Conversation Analytics](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/conversation_analytics/)
+    - [Dataset](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/dataset/)
+    - [Message Template Previews](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_template_previews/)
+    - [Message Templates](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_templates/)
+    - [Payment Configuration](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/payment_configuration/)
+    - [Payment Configurations](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/payment_configurations/)
+    - [Phone Numbers](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/phone_numbers/)
+    - [Pricing Analytics](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/pricing_analytics/)
+    - [Product Catalogs](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/product_catalogs/)
+    - [Solutions](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/solutions/)
+    - [Subscribed Apps](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/)
+    - [Template Groups](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/template_groups/)
+    - [Upsert Message Templates](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/upsert_message_templates/)
+    - [Welcome Message Sequences](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/welcome_message_sequences/)
+
+  - [Whats App Message Template](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-hsm/)
+
+On This Page
+
+[Whats App Business Account Subscribed Apps](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#overview)
+
+[Reading](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Reading)
+
+[Example](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#example)
+
+[Parameters](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#parameters)
+
+[Fields](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#fields)
+
+[Error Codes](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#error-codes)
+
+[Creating](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Creating)
+
+[Parameters](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#parameters-2)
+
+[Return Type](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#return-type)
+
+[Error Codes](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#error-codes-2)
+
+[Updating](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Updating)
+
+[Deleting](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Deleting)
+
+[Parameters](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#parameters-3)
+
+[Return Type](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#return-type-2)
+
+[Error Codes](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#error-codes-3)
+
+Graph API Version
+
+[v25.0](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#)
+
+# Whats App Business Account Subscribed Apps
+
+## Reading
+
+Get a list of apps subscribed to webhooks for the WABA.
+
+### Example
+
+HTTPPHP SDKJavaScript SDKAndroid SDKiOS SDK [Graph API Explorer](https://developers.facebook.com/tools/explorer/?method=GET&path=%7Bwhats-app-business-account-id%7D%2Fsubscribed_apps&version=v25.0)
+
+```
+GET /v25.0/{whats-app-business-account-id}/subscribed_apps HTTP/1.1
+Host: graph.facebook.com
+```
+
+```
+/* PHP SDK v5.0.0 */
+/* make the API call */
+try {
+  // Returns a `Facebook\FacebookResponse` object
+  $response = $fb->get(
+    '/{whats-app-business-account-id}/subscribed_apps',
+    '{access-token}'
+  );
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+$graphNode = $response->getGraphNode();
+/* handle the result */
+```
+
+```
+/* make the API call */
+FB.api(
+    "/{whats-app-business-account-id}/subscribed_apps",
+    function (response) {
+      if (response && !response.error) {
+        /* handle the result */
+      }
+    }
+);
+```
+
+```
+/* make the API call */
+new GraphRequest(
+    AccessToken.getCurrentAccessToken(),
+    "/{whats-app-business-account-id}/subscribed_apps",
+    null,
+    HttpMethod.GET,
+    new GraphRequest.Callback() {
+        public void onCompleted(GraphResponse response) {
+            /* handle the result */
+        }
+    }
+).executeAsync();
+```
+
+```
+/* make the API call */
+FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]\
+                               initWithGraphPath:@"/{whats-app-business-account-id}/subscribed_apps"\
+                                      parameters:params\
+                                      HTTPMethod:@"GET"];
+[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,\
+                                      id result,\
+                                      NSError *error) {\
+    // Handle the result\
+}];
+```
+
+If you want to learn how to use the Graph API, read our [Using Graph API guide](https://developers.facebook.com/docs/graph-api/using-graph-api/).
+
+### Parameters
+
+This endpoint doesn't have any parameters.
+
+### Fields
+
+Reading from this edge will return a JSON formatted result:
+
+```
+{
+    "data": [],
+    "paging": {}
+}
+```
+
+#### `data`
+
+A list of WhatsAppApplication nodes.
+
+#### `paging`
+
+For more details about pagination, see the [Graph API guide](https://developers.facebook.com/docs/graph-api/using-graph-api/#paging).
+
+### Error Codes
+
+| Error | Description |
+| --- | --- |
+| 100 | Invalid parameter |
+| 200 | Permissions error |
+| 80008 | There have been too many calls to this WhatsApp Business account. Wait a bit and try again. For more info, please refer to https://developers.facebook.com/docs/graph-api/overview/rate-limiting. |
+
+## Creating
+
+You can make a POST request to `subscribed_apps` edge from the following paths:
+
+- [`/{whats_app_business_account_id}/subscribed_apps`](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/)
+
+When posting to this edge, a [WhatsAppApplication](https://developers.facebook.com/docs/graph-api/reference/whats-app-application/) will be created.
+
+### Parameters
+
+| Parameter | Description |
+| --- | --- |
+| `override_callback_uri`<br>URI | **Required if overriding the callback URL.**<br>New callback URL. See [Overriding the Callback URL](https://developers.facebook.com/docs/whatsapp/embedded-signup/webhooks#overriding-the-callback-url). |
+| `verify_token`<br>string | **Required if overriding the callback URL.**<br>Callback verification token. See [Overriding the Callback URL](https://developers.facebook.com/docs/whatsapp/embedded-signup/webhooks#overriding-the-callback-url). |
+
+### Return Type
+
+This endpoint supports [read-after-write](https://developers.facebook.com/docs/graph-api/overview/#read-after-write) and will read the node to which you POSTed.
+
+Struct {
+
+`success`: bool,
+
+}
+
+### Error Codes
+
+| Error | Description |
+| --- | --- |
+| 100 | Invalid parameter |
+| 2200 | subscription validation failed |
+| 200 | Permissions error |
+| 2201 | received an invalid hub.challenge while validating endpoint |
+| 190 | Invalid OAuth 2.0 Access Token |
+| 80008 | There have been too many calls to this WhatsApp Business account. Wait a bit and try again. For more info, please refer to https://developers.facebook.com/docs/graph-api/overview/rate-limiting. |
+
+## Updating
+
+You can't perform this operation on this endpoint.
+
+## Deleting
+
+You can dissociate a [WhatsAppApplication](https://developers.facebook.com/docs/graph-api/reference/whats-app-application/) from a [WhatsAppBusinessAccount](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/) by making a DELETE request to [`/{whats_app_business_account_id}/subscribed_apps`](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/).
+
+### Parameters
+
+This endpoint doesn't have any parameters.
+
+### Return Type
+
+Struct {
+
+`success`: bool,
+
+}
+
+### Error Codes
+
+| Error | Description |
+| --- | --- |
+| 100 | Invalid parameter |
+| 200 | Permissions error |
+| 80008 | There have been too many calls to this WhatsApp Business account. Wait a bit and try again. For more info, please refer to https://developers.facebook.com/docs/graph-api/overview/rate-limiting. |
+| 190 | Invalid OAuth 2.0 Access Token |
+
+On This Page
+
+[Whats App Business Account Subscribed Apps](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#overview)
+
+[Reading](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Reading)
+
+[Example](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#example)
+
+[Parameters](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#parameters)
+
+[Fields](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#fields)
+
+[Error Codes](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#error-codes)
+
+[Creating](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Creating)
+
+[Parameters](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#parameters-2)
+
+[Return Type](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#return-type)
+
+[Error Codes](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#error-codes-2)
+
+[Updating](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Updating)
+
+[Deleting](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#Deleting)
+
+[Parameters](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#parameters-3)
+
+[Return Type](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#return-type-2)
+
+[Error Codes](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/#error-codes-3)

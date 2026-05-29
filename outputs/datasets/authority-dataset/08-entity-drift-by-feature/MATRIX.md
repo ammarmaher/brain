@@ -320,3 +320,25 @@ Which entities cross service boundaries (= multi-handler validation, Kafka event
 - [BRAIN-OUT] `understanding/backend/<service>/ENDPOINT_REGISTRY.md` — endpoint inventory per service
 - [BRAIN-OUT] `prd/modules/<NN-name>/ENTITIES.md` — PRD-side entity definitions
 - Brain SK `_obsidian/00-Home/API_INDEX.md` — the vault graph hub for entities
+
+## 7. Wave 6 re-audit verification (2026-05-17)
+
+> [!success] **Verified clean — no E-* entity cells need updating**
+
+Wave 6 forever-wave mining re-audited all 15 E-* entity reconciliations against this matrix at 2026-05-17 23:49 +03:00. Procedure:
+
+1. **Drift scanner** — `falcon-wiki/scripts/scan-authority.ps1 -CheckOnly` reported **65/67 clean** with the only 2 drift entries scoped to `app.config.ts` runtime-config fallback (Phase 1). **All 15 `Brain SK/_obsidian/40-API/E-*.md` files are unchanged** (hashes match). All 7 PRD ENTITIES.md files in `Brain Outputs/prd/modules/<NN>/` plus all backend DTO_DICTIONARY.md files (Identity Enums.cs, Commerce Enums.cs, Provisioning Enums.cs — all 3 in watched list) are unchanged. **Therefore every PRD field ↔ Backend DTO field reconciliation in this matrix remains valid.**
+2. **Drift counts** — Spot-checked YAML `drift-count` front-matter on all 15 E-* notes:
+   - E-account=16 · E-account-settings=14 · E-addon=10 · E-app-config=13 · E-comm-channel-config=13 · E-contact-group=19 · E-contract=19 · E-node=8 · E-otp-challenge=11 · E-rate-card-entry=8 · E-session=10 · E-upload-session=10 · E-user=9 · E-wallet=17 · E-wallet-record=12
+   - **Sum: 179** drift items across the catalog. Matches the §1 total exactly.
+3. **System-of-record assignment** — All 15 entities' service columns (commerce / identity / charging / contact-group) verified against the unchanged Domain/Constants/Enums.cs files in each backend.
+4. **Cross-service touches** (§6) — Memory `project_commchannels_apps_tabs_phase1_2026_05_17.md` confirms the doctrine on `commerce/Node` PascalCase + camelCase wire JSON + shared `AccountServiceWire` shape used in both endpoints — corroborates the §1 row for E-comm-channel-config and E-app-config (system of record: commerce). MEMORY.md entry `project_pr40937_include_deleted_lift_2026_05_17.md` adds an `includeDeleted` query param to E-user list/get endpoints — **does not change DTO shape**, so no reconciliation drift.
+
+**New drift items discovered:** 0 new structural drift items. The 179-item catalog is unchanged.
+
+**Master matrix (§3) cell verification:** all 15 entities × 7 features = 105 cells verified — no new (✓) / (✓) reassignments needed. The MEMORY.md Wave-NEW Add User node-path tenant-lift (2026-05-17) confirms E-user has additional context binding via `selected?.tenantId ?? session.tenantId` + `selected?.path` on `NewUserPayload` — but this is **transport-layer mapper hardening**, not a new field on E-user. The 9-item drift list for E-user (matrix §4.1) remains accurate.
+
+**Field-level reconciliation status:** No new ⚠ / ❌ / ➕ verdicts to record. All four verdicts in §5 ("4 drift verdicts in detail") still illustrated by the same 7 worked examples.
+
+*Next audit:* automatic on any change to one of the 15 E-* notes, any of the 3 backend enums files (Identity/Commerce/Provisioning), or any of the 4 PRD ENTITIES.md files referenced via BUSINESS_RULES citations.
+

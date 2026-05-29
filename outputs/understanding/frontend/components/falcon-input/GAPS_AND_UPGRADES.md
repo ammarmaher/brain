@@ -1,4 +1,4 @@
-# falcon-input — GAPS AND UPGRADES
+﻿# falcon-input — GAPS AND UPGRADES
 
 ## Missing capabilities (active source verified)
 
@@ -127,3 +127,9 @@ All gaps above belong in the **shared Falcon component**, not per-page. The wrap
 - For G2 today: `(blur)`-trigger refocus via native `(focus)` listener and `event.currentTarget.querySelector('input')?.focus()`.
 - For G3 today: drop down to raw `<falcon-input>` + CVA via `formControlName` is harder; use a thin local wrapper.
 - For G5 today: Shadow path only.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 14** ([CODE] grep `<falcon-angular-input>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

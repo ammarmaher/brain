@@ -1,126 +1,83 @@
-# falcon-tree-panel (LEGACY BESPOKE) — USAGE
+# falcon-tree-panel — USAGE
 
-## Real usage in active codebase
+> Re-swept 2026-05-18 against live source. The skeleton is consumed only through the `<app-organization-hierarchy-tree>` wrapper.
 
-### admin-console organization-hierarchy-page menu
-`apps/admin-console/src/app/features/organization-hierarchy-page/components/organization-hierarchy-page-menu.component.html:19-29`:
-```html
-<!-- LEFT — Tree panel via @falcon shared component. -->
-<falcon-tree-panel
-  mode="falcon"
-  [root]="state.treeRoot()"
-  [expandedIds]="state.expandedNodeIds()"
-  [selectedId]="state.selectedNodeId()"
-  clientsLabelKey="hierarchyTab.tree.clientsLabel"
-  [rootActions]="rootActions"
-  [nodeActions]="nodeActions"
-  (toggle)="state.onTreeToggle($event)"
-  (select)="state.onTreeSelect($event)"
-  (action)="onTreeAction($event)" />
-```
-With these action configs in the component class (`organization-hierarchy-page-menu.component.ts:32-41`):
-```ts
-const ROOT_ACTIONS: FalconTreeAction[] = [
-  { id: 'addClient', labelKey: 'hierarchyTab.tree.actions.addClient', icon: 'falcon-icon falcon-icon-building' },
-  { id: 'addUser',   labelKey: 'hierarchyTab.tree.actions.addUser',   icon: 'falcon-icon falcon-icon-user-plus' },
-];
+## Real usage in the active codebase
 
-const NODE_ACTIONS: FalconTreeAction[] = [
-  { id: 'addNode',  labelKey: 'hierarchyTab.tree.actions.addNode',  icon: 'falcon-icon falcon-icon-plus' },
-  { id: 'editNode', labelKey: 'hierarchyTab.tree.actions.editNode', icon: 'falcon-icon falcon-icon-pencil' },
-  { id: 'addUser',  labelKey: 'hierarchyTab.tree.actions.addUser',  icon: 'falcon-icon falcon-icon-user-plus' },
-];
-```
-And the `(action)` dispatcher (single stream for both menus):
-```ts
-protected onTreeAction(event: FalconTreePanelActionEvent): void {
-  const id = event.nodeId ?? '';
-  switch (event.id) {
-    case 'addClient': this.state.onHeaderAddClient(); break;
-    case 'addUser':
-      if (id) this.state.onTreeContextAction({ nodeId: id, action: 'open' });
-      this.state.onHeaderAddUser();
-      break;
-    case 'addNode':
-      this.state.onTreeContextAction({ nodeId: id, action: 'open' });
-      this.state.onHeaderAddNode();
-      break;
-    case 'editNode':
-      this.state.onTreeContextAction({ nodeId: id, action: 'open' });
-      this.state.onHeaderEditNode();
-      break;
-  }
-}
-```
+`<falcon-tree-panel>` has exactly ONE direct consumer: the host-shell wrapper
+`apps/host-shell/src/app/shared-components/organization-hierarchy-tree/organization-hierarchy-tree.component.{ts,html}`.
 
-### admin-console organization-hierarchy (old folder)
-`apps/admin-console/src/app/features/organization-hierarchy/components/organization-hierarchy-menu.component.html` — same pattern.
-
-### management-console mirror
-`apps/management-console/src/app/features/organization-hierarchy-page/components/organization-hierarchy-page-menu.component.html` — same pattern.
-
-### Playground
-`apps/host-shell/src/app/playground/playground.page.html`.
-
-## Recommended NEW usage (this is the canonical pattern for tree-with-actions today)
-- USE this component when you need the standard org-hierarchy left rail with chrome + per-row 3-dot menus + hover-path.
-- If you don't need per-row 3-dot menus, use `<falcon-angular-tree>` directly.
-
-### Hide actions on a specific consumer
+The wrapper composes the skeleton and binds:
 ```html
 <falcon-tree-panel
-  mode="falcon"
-  [root]="treeRoot()"
+  [mode]="skeletonMode()"
+  [root]="tree()"
   [expandedIds]="expandedIds()"
-  [selectedId]="selectedId()"
-  [rootActions]="rootActions"
-  [nodeActions]="[]"
-  [showActions]="false"
-  (toggle)="onToggle($event)"
-  (select)="onSelect($event)" />
+  [selectedId]="effectiveSelectedId()"
+  [clientsLabelKey]="effectiveClientsLabelKey()"
+  [rootActions]="rootActions()"
+  [nodeActions]="nodeActions()"
+  [showActions]="showActions()"
+  [showRootActions]="showRootActions()"
+  [showSubNodes]="skeletonShowSubNodes()"
+  [rootSelectable]="rootSelectable()"
+  [nodesSelectable]="nodesSelectable()"
+  [showArrows]="showArrows()"
+  (toggle)="onSkeletonToggle($event)"
+  (select)="onSkeletonSelect($any($event))"
+  (action)="onSkeletonAction($event)" />
 ```
+
+Admin-console + management-console then consume the **wrapper** `<app-organization-hierarchy-tree>` from their `org-hierarchy-page-menu` components — they never touch the skeleton.
+
+## Canonical pattern — caller-driven configuration
+The tree is dumb; the caller drives every behaviour through inputs. Defaults are all "on", so a plain `<app-organization-hierarchy-tree>` is a fully-interactive tree.
+
+### Lock the tree for a wizard flow (the wizard-lock pattern)
+In `admin-console/org-hierarchy-page-menu`:
+```ts
+treeNavigable      = computed(() => !this.state.addClientOpen());
+treeActionsVisible = computed(() => !this.state.addClientOpen() && !this.state.addUserOpen());
+```
+```html
+<app-organization-hierarchy-tree
+  [nodesSelectable]="treeNavigable()"
+  [showArrows]="treeNavigable()"
+  [showActions]="treeActionsVisible()"
+  [showRootActions]="treeActionsVisible()" ... />
+```
+- **Add Client open** → full lock: nodes non-clickable, chevrons hidden, all 3-dot menus hidden.
+- **Add User open** → actions-only lock: 3-dot menus hidden; nodes clickable + expandable.
+- The root row stays clickable in both (`rootSelectable` left at default `true`).
+
+### Hide all actions
+`[showActions]="false"` hides every per-row 3-dot; `[showRootActions]="false"` hides only the root one.
 
 ### Filter actions per node
 ```ts
 readonly nodeActions: FalconTreeAction[] = [
-  { id: 'addNode',  labelKey: 'tree.actions.addNode',  icon: 'falcon-icon falcon-icon-plus' },
   { id: 'editNode', labelKey: 'tree.actions.editNode', icon: 'falcon-icon falcon-icon-pencil' },
-  {
-    id: 'delete',
-    labelKey: 'tree.actions.delete',
-    icon: 'falcon-icon falcon-icon-trash',
-    highlighted: true,
-    visible: (node) => node.type !== 'root',  // hide on root
-  },
+  { id: 'delete', labelKey: 'tree.actions.delete', icon: 'falcon-icon falcon-icon-trash',
+    highlighted: true, visible: (node) => node.type !== 'root' },
 ];
 ```
 
-### Client mode (root row shows the customer's brand image + name)
-```html
-<falcon-tree-panel
-  mode="client"
-  [root]="aramcoTreeRoot()"
-  [expandedIds]="expandedIds()"
-  [selectedId]="selectedId()" />
-```
+### Client-mode root
+`mode='client'` renders the root as a client (`root.imageUrl` + `root.name`). The wrapper then auto-hides the "Falcon Clients" label.
 
 ## Reactive Forms / ngModel
-- **None.** The panel is not a form control.
+- **None.** The panel is not a form control. Wire selection via `[selectedId]` + `(select)`.
 
 ## Tailwind / token usage
-- The panel uses bespoke SCSS classes — token override is limited.
-- For new code wanting more control, consider migrating to `<falcon-angular-tree>` + custom chrome.
-
-## Admin-console / management-console example (already shown above)
-The org-hierarchy page is THE canonical consumer.
+- The component is fully Tailwind utilities + Falcon theme tokens (no SCSS).
+- The action-column inset is the `--spacing-row-action-inset` token — bind any new action-bearing row to `pe-row-action-inset` to stay in the shared column.
 
 ## Bad usage to avoid
-- DO NOT consume `<falcon-tree-node>` directly — it's a private internal component.
-- DO NOT mutate `[root].children` in place — pass a fresh tree.
-- DO NOT set both `[rootActions]` and `[showActions]=false` and expect actions — `showActions` overrides.
+- DO NOT consume `<falcon-tree-node>` or `<falcon-tree-panel>` directly from an app — use the `<app-organization-hierarchy-tree>` wrapper.
+- DO NOT mutate `[root].children` in place — pass a fresh tree object (signal identity).
+- DO NOT expect actions when `[showActions]="false"` — it overrides `nodeActions`.
 
 ## Do / Don't
-- DO declare `ROOT_ACTIONS` and `NODE_ACTIONS` at the top of the consumer file as `const` so they're stable references.
-- DO use the `visible(node)` predicate to filter per-node actions instead of switching in `(action)` handler.
-- DON'T add new visual rules in the panel's SCSS without consideration of the migration target (`<falcon-angular-tree>` + slot).
-- DON'T rely on global CSS leakage — the panel uses `ViewEncapsulation.None`, so any rule must be prefixed with `.falcon-tree-panel` or `.falcon-tree-panel-menu`.
+- DO declare action arrays as stable references (or `computed`) so change detection is cheap.
+- DO use `visible(node)` to filter per-node actions instead of branching in the `(action)` handler.
+- DO drive locked/read-only states by binding the config inputs to a `computed` off the caller's own flags.

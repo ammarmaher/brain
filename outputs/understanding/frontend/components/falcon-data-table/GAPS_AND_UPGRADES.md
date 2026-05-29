@@ -1,4 +1,4 @@
-# falcon-data-table — GAPS & UPGRADES
+﻿# falcon-data-table — GAPS & UPGRADES
 
 ## Closed in Wave 20 (2026-05-15) — Shadow row notch alignment
 
@@ -145,3 +145,9 @@
 - **Deprecate `rowMenuItems` and `boundMenuItems`** once consumers fully migrate to typed `rowActions`. Add an ESLint rule disallowing the legacy inputs in `apps/`.
 - **Document Strategy E publicly.** It's a unique pattern (Stencil emits projection mount-points; Angular wraps with `EmbeddedViewRef`) that other Falcon wrappers could adopt (`<falcon-angular-tree-table>` could project per-row templates the same way).
 - **Add a typed cell template helper** — a tiny utility type to give cell templates better TS inference for `let-value="value" let-row="row"` context typing.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 10** ([CODE] grep `<falcon-angular-data-table>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

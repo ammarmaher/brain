@@ -1,4 +1,4 @@
-# falcon-button — GAPS AND UPGRADES
+﻿# falcon-button — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -118,3 +118,9 @@ Everything else listed here is **shared-fix only** — no page should monkey-pat
 
 ## Future-proof recommendation
 Move `buildRootClasses` (Stencil-internal) + `falconButtonRootClasses` (Tailwind helper) to a single shared module that produces both the `Record<string, boolean>` for class-object syntax AND the joined string. That removes the drift risk and lets future flags propagate to both render paths automatically.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 15** ([CODE] grep `<falcon-angular-button>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

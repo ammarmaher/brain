@@ -1,4 +1,4 @@
-# falcon-organization-hierarchy-tree-tw — USAGE
+﻿# falcon-organization-hierarchy-tree-tw — USAGE
 
 ## Example 1 — Playground demo (Angular template)
 
@@ -109,3 +109,10 @@ await defineFalconTwComponent('falcon-organization-hierarchy-tree-tw');
 - DON'T — bind object props as `[attr.x]` — they'll stringify.
 - DON'T — assume Shadow DOM style isolation — there isn't one.
 - DON'T — use this for non-org-hierarchy trees. The chrome is opinionated.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-organization-hierarchy-tree-tw>` (pure-Angular tag, not a wrapper) across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `apps/host-shell/src/app/playground/playground.page.ts`

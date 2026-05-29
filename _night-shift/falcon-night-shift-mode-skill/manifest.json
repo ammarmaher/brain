@@ -1,0 +1,15 @@
+{
+  "name": "falcon-night-shift-report-checkpoints-addon",
+  "version": "1.0.0",
+  "target_folder": "C:\\Falcon\\Brain SK\\_night-shift\\falcon-night-shift-mode-skill",
+  "adds": [
+    "10_REPORT_CHECKPOINT_RULE.md",
+    "00_LOAD_SEQUENTIALLY_PROMPT_PATCH.md",
+    "PROMPT_TO_LOAD_ADDON.md"
+  ],
+  "mandatory_reports": [
+    "C:\\Falcon\\architecture-reports\\night-shift\\00_BEFORE_HEALTH_CHECK.md",
+    "C:\\Falcon\\architecture-reports\\night-shift\\08_AFTER_HEALTH_CHECK.md",
+    "C:\\Falcon\\architecture-reports\\night-shift\\09_NIGHT_SHIFT_REPORT.md"
+  ]
+}

@@ -10,6 +10,110 @@ created: 2026-05-15
 
 > **The Brain SK knowledge IS the implementation spec.** When you start a new session to implement (or validate) any frontend or backend work on Falcon, this note tells you exactly which files to load — in order — so the work is grounded in the canonical source of truth.
 
+## 🔥 NEW (2026-05-18) — Business Scenarios Atlas + CONCLUSION KNOWLEDGE
+
+> **The Atlas is now the master reference.** 33 volumes · 177+ entries · ~225,000 words. Source-prefixed. Truthful. Covers every user × every status × every action.
+
+**Read order for ANY question:**
+
+1. [`BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md`](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md) — **THE master answer key** (12 sections including 20 canonical facts + diffuse implementations + hard nots + new instructions)
+2. [`BUSINESS-SCENARIOS-ATLAS-INDEX.md`](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-INDEX.md) — topic router to all 33 volumes
+3. The specific volume matching your question
+
+**Key volumes by use case:**
+
+| Use case | Volume |
+|---|---|
+| "Can [role] do [action] when [state]?" | Vol 28 — Complete Matrices |
+| Need mnemonic recall fast | Vol 29 — Memory Card |
+| "What cascades when X happens?" | Vol 30 — Cross-Module Cascades |
+| Error code lookup | Vol 31 — Error Catalog |
+| Campaigns / WhatsApp / Facebook (truthful) | Vol 32 — Honest Implementation Map |
+| Business meeting deep prep | Vols 1-19 (scenarios + ops + strategy) |
+| Forward-looking strategic planning | Vols 20-27 (AI · industry · pricing · M&A · talent · IR · brain meta) |
+
+**Read THIS before any implementation work:**
+
+- 🔥 [Vol 33 §2 — The 20 Canonical Facts](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md#2--the-20-canonical-facts) — covers ~80% of questions
+- 🔴 [Vol 33 §4 — The Hard Nots](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md#4--the-hard-nots-never-claim-these-as-falcon-features) — what Falcon does NOT do (NEVER claim otherwise)
+- 🔴 [Vol 33 §6 — Critical Security Actions](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md#6--the-4-critical-security-actions-fix-this-sprint) — must-fix vulnerabilities
+- 📋 [Vol 33 §8 — New Instructions](../../../Brain%20Outputs/reports/night-shift/2026-05-17/BUSINESS-SCENARIOS-ATLAS-VOL-33-CONCLUSION-KNOWLEDGE.md#8--new-instructions-for-future-sessions) — 10 standing rules for future sessions
+
+---
+
+## Theming & Tailwind knowledge — Angular-first (updated 2026-05-20)
+
+For any task that touches styling, theming, or component visual contracts, load the Theming cluster:
+
+- [[36-Theming/README|36-Theming Index]] — top-level cluster index (Angular-first)
+- [[Tailwind CSS]] — library entry
+
+**Theme governance (read first):**
+- [[Falcon Tailwind Theme]] ★ — THE styling source of truth + 5 governance rules
+- [[Falcon Component Theme Contract]] ★ — 9-section contract every component must satisfy
+- [[Tailwind Falcon Alignment Scorecard]] — Angular-first delivery 95%; codebase 71% → 93% via 2-wave fix
+
+**🟢 CURRENT delivery scope (Angular only):**
+- [[Falcon Angular Wrapper Pattern]] · [[Falcon Stencil-to-Angular Bridge]] · [[Tailwind Multi-Framework Strategy]] (framework-neutral architecture overview)
+
+**🟡 FUTURE EXTENSION (NOT current scope — placeholders only):**
+- [[Falcon React Wrapper Future Pattern]] · [[Falcon Vue Wrapper Future Pattern]]
+
+**Tokens + mental model:**
+- [[Tailwind Mental Model]] (3-layer doctrine) · [[Falcon Design Tokens]] · [[Falcon Color Palette Audit]]
+
+**Layout + sizing reference (new 2026-05-20):**
+- [[Tailwind Sizing and Responsive]] · [[Tailwind Layout Flex Grid]] · [[Tailwind Spacing Radius Shadow Borders]] · [[Tailwind Utility Cheatsheet]] · [[Tailwind Official Docs Map]]
+
+**Audit + governance tooling (new 2026-05-20):**
+- [[Falcon Component Audit Scorecard]] ★ — per-component 6-dimension audit
+- [[Component Theme Contract Template]] — markdown stub for new components
+- [[Tailwind Implementation Review Checklist]] — pre-merge PR review
+
+**Light Mode Visual Baseline (new 2026-05-20):**
+
+Read these BEFORE any styling/page-building task touches code:
+
+- [[Falcon Light Mode Visual Baseline]] ★ — overall visual identity (surfaces, colors, borders, shadows, radius, spacing)
+- [[Falcon Current Color Usage Map]] — every color token with hex + where used
+- [[Falcon Current Spacing Radius Shadow Map]] — dimensional vocabulary
+- [[Falcon Current Hover Focus State Map]] — per-component interactive-state behavior
+- [[Falcon Organization Hierarchy Visual Standard]] ★ — canonical reference page
+- [[Falcon Page Visual Consistency Rules]] — 12 rules for new pages
+- [[Falcon Do Not Change Visual Rules]] — 20 strict guardrails (refusal list)
+
+**Component Recognition & Page Assembly (new 2026-05-20):**
+
+Read these BEFORE any new page, HTML, Angular template, or component is written. The Brain must recognize each visible UI pattern and map it to an existing Falcon component first — bespoke work is last resort:
+
+- [[Falcon Component Recognition Playbook]] ★ — UI pattern → Falcon component lookup
+- [[Falcon Page Assembly Playbook]] ★ — compose components into a full page
+- [[Falcon Component Selection Decision Tree]] — reuse → extend → create
+- [[Falcon Component Capability Matrix]] — 9-column quick-pick reference
+- [[Falcon Screenshot To Component Mapping Guide]] — 6-step process for designs / screenshots / HTML / React handoffs
+- [[Falcon Component Gap Registry]] — P0/P1/P2/P3 capability gaps
+- [[Falcon New Page Implementation Checklist]] — pre-merge 8-section gate
+
+**Trigger phrases (component recognition):** `new page`, `build a page`, `convert this HTML`, `take this React design`, `screenshot to Angular`, `which Falcon component for...`, `is there a Falcon component for...`, `assemble this layout`, `Falcon-ify this`.
+
+**Component Combination Intelligence (new 2026-05-20):**
+
+Read these BEFORE wiring two or more Falcon components together. Answers "how do components compose?" — not just which single component to use:
+
+- [[Falcon Component Composition Playbook]] ★ — 9 composition families (Table+Actions, Tree+Details, Form+Validation, Popup+Confirm, Stepper+Forms, Filter+Search, CardGrid, Loading/Empty/Error, Tabs+CTAs) + anti-patterns
+- [[Falcon Page Region Patterns]] — 12 named page regions (R01 shell → R12 toast) with canonical layout strings, allowed components, and wrong-pattern table
+- [[Falcon Component Combination Matrix]] — 7 canonical UI compositions with wiring templates, required states, known gaps, and example pages
+- [[Falcon Data Table Composition Rules]] — cell templates, row actions, selection, expansion, inline-row loading, empty state, pagination, sorting, filter integration
+- [[Falcon Form Composition Rules]] — control-to-wrapper mapping, CVA rules (4 known gaps), label+error pattern, grid layout, async validators, footer contract, unsaved changes guard
+- [[Falcon Popup and Drawer Composition Rules]] — popup vs drawer decision table, portal contract (`[appendTo]="'body'"` mandatory), z-index ladder, focus trap, loading states, a11y
+- [[Falcon Tree and Details Composition Rules]] — split layout (320 px tree), node selection signal, PathPrefix subtree fetch, tabs + CTAs, info-form edit mode, PES role-change gate, visual consistency
+
+**Trigger phrases (composition):** `wire components`, `how do I combine`, `compose a page`, `table with actions`, `tree with details`, `form inside drawer`, `popup with form`, `wizard step form`, `how do I build a [composition name]`.
+
+Brain Outputs SoT: [theme/](../../Brain%20Outputs/understanding/frontend/theme/) — 11 existing audits + 11 new Falcon-specific files. Component capability + gap SoT: [FALCON_COMPONENT_CAPABILITY_MATRIX](../../Brain%20Outputs/understanding/frontend/FALCON_COMPONENT_CAPABILITY_MATRIX.md) + [COMPONENT_UPGRADE_BACKLOG](../../Brain%20Outputs/understanding/frontend/COMPONENT_UPGRADE_BACKLOG.md).
+
+**Trigger phrases (Angular-first):** `tailwind`, `theme`, `falcon tailwind theme`, `component theme contract`, `component audit`, `audit scorecard`, `review checklist`, `mental model`, `tokens`, `sizing`, `resize`, `responsive`, `flex`, `grid`, `container query`, `spacing`, `radius`, `shadow`, `borders`, `dark mode`, `colors`, `angular wrapper`, `angular forms`, `palette`, `hover`, `focus`, `states`, `variants`. React/Vue triggers route to future-placeholder notes only.
+
 ## Permanent rule
 
 When a session begins implementation work on a Falcon page, **load these artifacts before writing a single line of code or markup**:
@@ -33,6 +137,20 @@ When a session begins implementation work on a Falcon page, **load these artifac
 | Add User (3-tab wizard) | [[Add User Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/flows/Add User.md`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Add%20User.md) | [[Organization Hierarchy]] | [[02 User Management]] |
 | Add Node (sub-node) | [[Add Node Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/flows/Add Node.md`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Add%20Node.md) | [[Organization Hierarchy]] | [[01 Account Management]] |
 | Edit Node (rename · scheduled rename · move ❌ · archive ❌) | [[Edit Node Flow]] | [`Brain Outputs/understanding/pages/organization-hierarchy/flows/Edit Node.md`](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/flows/Edit%20Node.md) | [[Organization Hierarchy]] | [[01 Account Management]] |
+| **--- Wave 4 — Page mining catch-up · 2026-05-18 ---** | | | | |
+| Edit User (3 tabs · 3-endpoint save chain · OTP) | [[Edit User Flow]] | [`pages/edit-user/`](../../../Brain%20Outputs/understanding/pages/edit-user/) folder — 16 files. **HALT Q-UM-13** (admin OTP path) | [[Organization Hierarchy]] · User Details | [[02 User Management]] |
+| Contracts List (mode FSM · list+add+view+edit) | [[Contracts List Flow]] | [`pages/contracts-list/`](../../../Brain%20Outputs/understanding/pages/contracts-list/) folder — 16 files | Admin Console > Contracts | [[03 Contract Packaging Charging Billing Management]] |
+| Add Contract (4-step wizard) | [[Add Contract Flow]] | [`pages/add-contract/`](../../../Brain%20Outputs/understanding/pages/add-contract/) folder — 16 files | Admin Console > Contracts | [[03 Contract Packaging Charging Billing Management]] |
+| Edit Contract (4 tabs · status-aware freeze · extension) | [[Edit Contract Flow]] | [`pages/edit-contract/`](../../../Brain%20Outputs/understanding/pages/edit-contract/) folder — 16 files | Admin Console > Contracts | [[03 Contract Packaging Charging Billing Management]] |
+| Wallets and Balance Management (strategy + transfer drawer) | [[Wallets and Balance Management Flow]] | [`pages/wallets-and-balance-management/`](../../../Brain%20Outputs/understanding/pages/wallets-and-balance-management/) folder — 16 files | Admin Console > Wallets | [[01 Account Management]] |
+| Templates List (**BLOCKED** GAP-T-001) | [[Templates List Flow]] | [`pages/templates-list/`](../../../Brain%20Outputs/understanding/pages/templates-list/) folder — 16 files. Backend CRUD MISSING. | Templates | [[05 Templates]] |
+| Create Template (WhatsApp) (2-step · **BLOCKED**) | [[Create Template WhatsApp Flow]] | [`pages/create-template-whatsapp/`](../../../Brain%20Outputs/understanding/pages/create-template-whatsapp/) folder — 16 files | Templates > New | [[05 Templates]] |
+| Contact Groups List (2-tab · detail · download) | [[Contact Groups List Flow]] | [`pages/contact-groups-list/`](../../../Brain%20Outputs/understanding/pages/contact-groups-list/) folder — 16 files | Admin Console > Contact Groups | [[04 Contact Group Management]] |
+| Create Contact Group (4-stage · S3 upload session FSM) | [[Create Contact Group Flow]] | [`pages/create-contact-group/`](../../../Brain%20Outputs/understanding/pages/create-contact-group/) folder — 16 files | Management Console > Contact Groups | [[04 Contact Group Management]] |
+| Login (3-stage · IP allowlist · OTP · first-login) | [[Login Flow]] | [`pages/login/`](../../../Brain%20Outputs/understanding/pages/login/) folder — 16 files | /login | [[02 User Management]] |
+| Forgot Password (3-step · Active-only · silent OTP) | [[Forgot Password Flow]] | [`pages/forgot-password/`](../../../Brain%20Outputs/understanding/pages/forgot-password/) folder — 16 files | /login/forgot-password | [[02 User Management]] |
+| Change Password (self-service · revoke all sessions) | [[Change Password Flow]] | [`pages/change-password/`](../../../Brain%20Outputs/understanding/pages/change-password/) folder — 16 files | /profile/change-password | [[02 User Management]] |
+| My Profile (self-edit · Role/Status/PG hidden per BR-UM-41) | [[My Profile Flow]] | [`pages/my-profile/`](../../../Brain%20Outputs/understanding/pages/my-profile/) folder — 16 files | /profile | [[02 User Management]] |
 
 Each playbook contains:
 - Trigger / entry point

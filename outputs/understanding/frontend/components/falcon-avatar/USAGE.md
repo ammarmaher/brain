@@ -1,4 +1,4 @@
-# falcon-avatar — USAGE
+﻿# falcon-avatar — USAGE
 
 ## Real usage examples
 **Zero matches in `apps/`.** Examples below are recommended patterns.
@@ -96,3 +96,7 @@ N/A.
 | Use `shape="square"` for org / account avatars | Use `shape="circle"` for company logos |
 | Use `altText` for screen-reader name | Skip altText for user avatars |
 | Compute initials from `firstName.charAt(0) + lastName.charAt(0)` | Use raw email or full name as `initials` |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-avatar>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

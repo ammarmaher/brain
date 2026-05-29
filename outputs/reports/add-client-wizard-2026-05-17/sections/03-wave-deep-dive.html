@@ -1,0 +1,2121 @@
+<!-- ============================================================
+     SECTION 3 — WAVE-BY-WAVE DEEP DIVE
+     Add Client Wizard Session, 2026-05-17
+     ============================================================ -->
+
+<style>
+  /* ===== Section 3 scoped styles (safe to inline; will compose with parent stylesheet) ===== */
+  .wave-section {
+    margin: 0 0 5rem 0;
+    padding: 0;
+  }
+  .wave-section h2 {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 2.1rem;
+    line-height: 1.15;
+    font-weight: 700;
+    margin: 0 0 0.4rem 0;
+    padding: 1.4rem 1.8rem;
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+    letter-spacing: -0.01em;
+  }
+  .wave-section h3 {
+    font-size: 1.45rem;
+    font-weight: 650;
+    margin: 2.5rem 0 1rem 0;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid #e5e7eb;
+    color: #0f172a;
+  }
+  .wave-section h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 1.8rem 0 0.7rem 0;
+    color: #1e293b;
+  }
+  .wave-section h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.2rem 0 0.5rem 0;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Color-coded wave headers */
+  .wave-4-2-header { background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); }
+  .wave-5-header   { background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%); }
+  .wave-6-header   { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+  .wave-7-header   { background: linear-gradient(135deg, #ea580c 0%, #f97316 100%); }
+
+  .wave-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding: 0.9rem 1.8rem;
+    background: #f8fafc;
+    border-left: 4px solid #cbd5e1;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 1.6rem;
+    font-size: 0.85rem;
+    color: #475569;
+  }
+  .wave-meta .pill {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  /* Callouts */
+  .callout {
+    margin: 1.4rem 0;
+    padding: 1.1rem 1.3rem;
+    border-radius: 8px;
+    border-left: 5px solid;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .callout-user {
+    background: #fef3c7;
+    border-color: #f59e0b;
+  }
+  .callout-user::before {
+    content: 'WHAT USER ASKED';
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #92400e;
+    margin-bottom: 0.5rem;
+  }
+  .callout-user .quote {
+    font-style: italic;
+    color: #78350f;
+    padding-left: 0.7rem;
+    border-left: 3px solid #fcd34d;
+    margin: 0.5rem 0;
+  }
+  .callout-shipped {
+    background: #d1fae5;
+    border-color: #10b981;
+  }
+  .callout-shipped::before {
+    content: 'WHAT I SHIPPED';
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #065f46;
+    margin-bottom: 0.5rem;
+  }
+  .callout-rootcause {
+    background: #fee2e2;
+    border-color: #ef4444;
+  }
+  .callout-rootcause::before {
+    content: 'ROOT CAUSE';
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #991b1b;
+    margin-bottom: 0.5rem;
+  }
+  .callout-fix {
+    background: #dbeafe;
+    border-color: #3b82f6;
+  }
+  .callout-fix::before {
+    content: 'FIX';
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+  }
+  .callout-lesson {
+    background: #f3e8ff;
+    border-color: #a855f7;
+  }
+  .callout-lesson::before {
+    content: 'LESSONS THIS WAVE';
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #6b21a8;
+    margin-bottom: 0.5rem;
+  }
+  .callout-lesson a {
+    color: #6b21a8;
+    text-decoration: underline;
+  }
+
+  /* Build hash stamp */
+  .build-stamp {
+    display: inline-block;
+    margin: 0.8rem 0;
+    padding: 0.45rem 0.9rem;
+    background: #0f172a;
+    color: #34d399;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.82rem;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+    border: 1px solid #1e293b;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+  .build-stamp::before {
+    content: '◉ BUILD ';
+    font-weight: 600;
+    color: #94a3b8;
+    margin-right: 0.3rem;
+  }
+  .build-stamp.green::after {
+    content: ' GREEN';
+    margin-left: 0.3rem;
+    color: #4ade80;
+    font-weight: 600;
+  }
+
+  /* Tables */
+  .wave-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 0.9rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .wave-section table th {
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .wave-section table td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: top;
+  }
+  .wave-section table tr:last-child td {
+    border-bottom: none;
+  }
+  .wave-section table code {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.82rem;
+    background: #f1f5f9;
+    color: #be185d;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+  }
+  .wave-section .table-loc {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    color: #6366f1;
+    font-weight: 600;
+  }
+
+  /* Diff blocks */
+  .code-block {
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+    background: #0f172a;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.82rem;
+  }
+  .code-block .code-title {
+    padding: 0.55rem 1rem;
+    background: #1e293b;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid #334155;
+  }
+  .code-block pre {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    color: #e2e8f0;
+    line-height: 1.55;
+    overflow-x: auto;
+  }
+  .code-block .diff-add { color: #4ade80; }
+  .code-block .diff-rem { color: #f87171; }
+  .code-block .comment { color: #64748b; font-style: italic; }
+  .code-block .keyword { color: #c084fc; }
+  .code-block .string { color: #fde68a; }
+  .code-block .fn { color: #60a5fa; }
+
+  /* Sub-agent cards */
+  .agent-card {
+    margin: 1.4rem 0;
+    padding: 1.2rem 1.4rem;
+    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .agent-card .agent-tag {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    background: #1e293b;
+    color: #fbbf24;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+    margin-bottom: 0.6rem;
+  }
+  .agent-card .agent-tag.agent-a { background: #4338ca; color: #fff; }
+  .agent-card .agent-tag.agent-b { background: #be185d; color: #fff; }
+  .agent-card .agent-tag.agent-c { background: #047857; color: #fff; }
+  .agent-card .agent-tag.agent-d { background: #b45309; color: #fff; }
+  .agent-card .agent-tag.agent-f { background: #7c3aed; color: #fff; }
+  .agent-card .agent-tag.agent-g { background: #db2777; color: #fff; }
+  .agent-card .agent-tag.agent-h { background: #0891b2; color: #fff; }
+  .agent-card .agent-tag.agent-i { background: #ea580c; color: #fff; }
+  .agent-card .agent-tag.agent-k { background: #7f1d1d; color: #fff; }
+  .agent-card h4 {
+    margin: 0 0 0.5rem 0;
+    color: #0f172a;
+    font-size: 1.2rem;
+  }
+  .agent-card .agent-meta {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin-bottom: 0.8rem;
+  }
+  .agent-card p {
+    margin: 0.6rem 0;
+    line-height: 1.6;
+    color: #334155;
+  }
+
+  /* Item cards (Wave 4.2 four items) */
+  .item-card {
+    margin: 1.6rem 0;
+    border: 1px solid #ddd6fe;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(124, 58, 237, 0.07);
+  }
+  .item-card .item-header {
+    padding: 0.95rem 1.3rem;
+    background: linear-gradient(90deg, #ede9fe 0%, #f5f3ff 100%);
+    border-bottom: 1px solid #ddd6fe;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .item-card .item-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #7c3aed;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .item-card .item-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e1b4b;
+    margin: 0;
+  }
+  .item-card .item-body {
+    padding: 1.2rem 1.4rem;
+  }
+
+  /* Lists */
+  .wave-section ul, .wave-section ol {
+    margin: 0.6rem 0;
+    padding-left: 1.4rem;
+    line-height: 1.7;
+    color: #334155;
+  }
+  .wave-section li {
+    margin: 0.25rem 0;
+  }
+  .wave-section strong { color: #0f172a; }
+  .wave-section code {
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.85em;
+    background: #f1f5f9;
+    color: #be185d;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+  }
+
+  /* Two-column layout for diffs */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  @media (max-width: 900px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Wave navigation */
+  .wave-nav {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 0.9rem 1.4rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    align-items: center;
+  }
+  .wave-nav span.label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.06em;
+  }
+  .wave-nav a {
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid #e2e8f0;
+    transition: all 0.15s ease;
+  }
+  .wave-nav a.w42 { color: #7c3aed; background: #f5f3ff; }
+  .wave-nav a.w5  { color: #2563eb; background: #eff6ff; }
+  .wave-nav a.w6  { color: #059669; background: #ecfdf5; }
+  .wave-nav a.w7  { color: #ea580c; background: #fff7ed; }
+  .wave-nav a:hover { transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+
+  /* Debug narrative — Wave 7 row-table bug */
+  .narrative {
+    margin: 1.5rem 0;
+    padding: 1.4rem;
+    background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%);
+    border: 1px solid #fed7aa;
+    border-radius: 10px;
+  }
+  .narrative h5 {
+    margin-top: 0;
+    color: #9a3412;
+    font-size: 0.85rem;
+  }
+  .narrative .step {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1rem;
+    margin: 0.8rem 0;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed #fdba74;
+  }
+  .narrative .step:last-child { border-bottom: none; }
+  .narrative .step-label {
+    font-weight: 700;
+    color: #9a3412;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .narrative .step-body { color: #431407; font-size: 0.93rem; line-height: 1.6; }
+  .narrative .step-body code { background: #fef3c7; color: #92400e; }
+
+  /* Section header */
+  .section3-intro {
+    margin: 0 0 3rem 0;
+    padding: 2rem 2.2rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e2e8f0;
+    border-radius: 12px;
+  }
+  .section3-intro h1 {
+    margin: 0 0 0.5rem 0;
+    color: #fff;
+    font-size: 2.4rem;
+    letter-spacing: -0.02em;
+  }
+  .section3-intro p {
+    margin: 0.5rem 0;
+    color: #cbd5e1;
+    line-height: 1.65;
+    max-width: 70ch;
+  }
+  .section3-intro .key {
+    display: inline-block;
+    margin: 0.4rem 0.4rem 0 0;
+    padding: 0.3rem 0.7rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+
+  /* Wave header wrapper */
+  .wave-header-wrap { padding: 0; }
+</style>
+
+<!-- ============================================================
+     SECTION INTRO
+     ============================================================ -->
+<div class="section3-intro">
+  <h1>Section 3 — Wave-by-Wave Deep Dive</h1>
+  <p>
+    This is the chronological narrative of the four waves that took the Add Client wizard from a
+    backend-wired-but-rough prototype to a polished, eager-loaded, null-defaulted, library-only,
+    icon-projected, OnPush-correct shipping feature. Each wave is treated as its own sub-chapter:
+    what the user asked, what I shipped, the code diffs that mattered, the build hash that came
+    out the other side, and the lessons that hardened into doctrine.
+  </p>
+  <div>
+    <span class="key">Wave 4.2 — 4 polish items</span>
+    <span class="key">Wave 5.1 — 3 parallel agents</span>
+    <span class="key">Wave 5.2 — flow rewire</span>
+    <span class="key">Wave 6.1 — 3 parallel agents</span>
+    <span class="key">Wave 6.2 — signals folder refactor</span>
+    <span class="key">Wave 7 — 3 user-reported bugs</span>
+  </div>
+</div>
+
+<!-- Sticky wave nav -->
+<nav class="wave-nav" aria-label="Wave navigation">
+  <span class="label">JUMP TO</span>
+  <a class="w42" href="#wave-4-2">Wave 4.2 — Final Polish</a>
+  <a class="w5"  href="#wave-5">Wave 5 — Architecture + Popups</a>
+  <a class="w6"  href="#wave-6">Wave 6 — Polish + Eager + Architecture</a>
+  <a class="w7"  href="#wave-7">Wave 7 — User-Reported Bugs</a>
+</nav>
+
+<!-- ============================================================
+     WAVE 4.2 — FINAL POLISH (4 user-requested items)
+     ============================================================ -->
+<section id="wave-4-2" class="wave-section">
+  <div class="wave-header-wrap">
+    <h2 class="wave-4-2-header">Wave 4.2 — Final Polish</h2>
+    <div class="wave-meta">
+      <span class="pill">4 user-requested items</span>
+      <span class="pill">Single agent, sequential</span>
+      <span class="pill">Build hash <code>d12008f720fa9551</code></span>
+      <span class="pill">58 unit tests added</span>
+      <span class="pill">vitest 3.2.4 + @analogjs/vitest-angular 2.5.1</span>
+    </div>
+  </div>
+
+  <p>
+    Coming off Wave 4.1's <code>untracked()</code> fix that unblocked the wizard mount, the user
+    drove a complete end-to-end pass and reported four specific polish items. Two were library-level
+    fixes that benefit every Falcon consumer downstream of this PR (toast positioning + the password
+    Stencil component); two were Add-Client-wizard-local plumbing changes. All four landed in a
+    single sequential pass, no parallel agents.
+  </p>
+
+  <div class="callout callout-user">
+    <strong>User's verbatim feedback after live-driving the wizard:</strong>
+    <div class="quote">
+      "Errors should toast on the left, not a center popup… Backend already generates the password,
+      we need to show it on Step 5… Phone verify button shouldn't be here — that's a post-login
+      thing… When the password is readonly the eye button stops working, fix that — and it's not
+      full width."
+    </div>
+  </div>
+
+  <h3>The four items</h3>
+
+  <!-- ===== ITEM 1 ===== -->
+  <div class="item-card">
+    <div class="item-header">
+      <span class="item-num">1</span>
+      <h4 class="item-title">Error notifications → left-side then top-right toast</h4>
+    </div>
+    <div class="item-body">
+
+      <h5>What the user saw</h5>
+      <p>
+        A modal-style center popup reading <em>"Validation error (HTTP 400)"</em> appeared blocking
+        the Step 5 view after the user clicked Save and the backend rejected the payload. The user
+        wanted a non-blocking toast notification with a 12-second auto-dismiss. The initial spec
+        said <strong>top-left</strong>; halfway through the wave the user revised to
+        <strong>top-right</strong> after seeing it in place.
+      </p>
+
+      <div class="callout callout-rootcause">
+        The wizard's <code>HierarchyPageStateService</code> called
+        <code>errorDialog.openError(...)</code> directly at two sites
+        (<code>hierarchy-page-state.service.ts:793,811</code>) for backend validation errors.
+        These calls bypassed the global <code>FALCON_HTTP_UI_CONFIG</code> dispatcher entirely.
+        The dispatcher already had a routing ladder that knew how to convert HTTP 400 responses
+        into toast notifications — but the wizard never let it run, because it short-circuited
+        with the legacy popup helper.
+      </div>
+
+      <div class="callout callout-fix">
+        Three coordinated changes:
+        <ol>
+          <li>Removed both <code>errorDialog.openError(...)</code> calls from
+              <code>hierarchy-page-state.service.ts</code>. The dispatcher now handles every
+              error response through one canonical path.</li>
+          <li>Added a <code>position</code> input to
+              <code>FalconAngularNotificationStackComponent</code> accepting
+              <code>'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'</code>, mapped to
+              Tailwind anchor classes. 7 unit tests pin the mapping.</li>
+          <li>Mounted the notification stack in <code>apps/host-shell/src/app/app.ts</code> with
+              <code>position="top-left"</code> initially, revised to <code>position="top-right"</code>
+              once the user saw it.</li>
+        </ol>
+      </div>
+
+      <h5>Toast lifecycle confirmed live</h5>
+      <p>
+        After applying the fix, the user triggered a 400 deliberately and measured the toast
+        lifetime: <strong>12,072 ms ≈ 12 seconds</strong> — matching the default
+        <code>defaultDurationMs</code> in <code>FalconNotificationService</code>. The dispatcher's
+        <code>4xx</code> rule fires <code>notifyError({ title, body, durationMs: 12000 })</code>
+        which threads through to the stack component.
+      </p>
+
+      <h5>Code Diff Highlights</h5>
+      <div class="code-block">
+        <div class="code-title">apps/admin-console/src/app/features/org-hierarchy-page/services/hierarchy-page-state.service.ts</div>
+<pre><span class="diff-rem">-     // line 793 — submit failure leg</span>
+<span class="diff-rem">-     this.errorDialog.openError({</span>
+<span class="diff-rem">-       title: 'Validation error',</span>
+<span class="diff-rem">-       body: extractedMessage,</span>
+<span class="diff-rem">-     });</span>
+<span class="diff-rem">-     // line 811 — generic catch leg</span>
+<span class="diff-rem">-     this.errorDialog.openError({ title: 'Error', body });</span>
+<span class="diff-add">+     // routed by FALCON_HTTP_UI_CONFIG dispatcher</span>
+<span class="diff-add">+     // 400 → applicationError rule → top-right toast</span>
+<span class="diff-add">+     // 5xx → default rule → existing popup</span>
+<span class="diff-add">+     // (no direct openError calls anywhere in the wizard)</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-title">apps/host-shell/src/app/app.ts</div>
+<pre><span class="diff-rem">- &lt;falcon-angular-notification-stack /&gt;</span>
+<span class="diff-add">+ &lt;falcon-angular-notification-stack position="top-right" /&gt;</span>
+</pre>
+      </div>
+
+      <div class="build-stamp green">d12008f720fa9551</div>
+    </div>
+  </div>
+
+  <!-- ===== ITEM 2 ===== -->
+  <div class="item-card">
+    <div class="item-header">
+      <span class="item-num">2</span>
+      <h4 class="item-title">Backend password flow into Step 5</h4>
+    </div>
+    <div class="item-body">
+
+      <p>
+        The backend's <code>POST commerce/Account/create-account</code> endpoint returns a
+        generated password in the success payload. The wizard was throwing it away. The user wanted
+        the wizard to (a) jump to Step 5 after a successful create, (b) display the
+        backend-generated password in the read-only password field, and (c) let the operator copy
+        it before sending credentials.
+      </p>
+
+      <div class="callout callout-rootcause">
+        The backend has been observed to use up to three different field names for the same
+        password in the create-account response, depending on the gateway version that's currently
+        deployed: <code>password</code>, <code>accountOwnerPassword</code>, or
+        <code>generatedPassword</code>. The wizard's wire-result type previously declared none
+        of them.
+      </div>
+
+      <div class="callout callout-fix">
+        <ol>
+          <li>Widened <code>CreateAccountWireResult</code> to optionally include all three
+              field names: <code>password?</code>, <code>accountOwnerPassword?</code>,
+              <code>generatedPassword?</code>.</li>
+          <li>Added <code>extractGeneratedPassword(result)</code> helper that returns the first
+              non-null of the three — defensive fallback ladder.</li>
+          <li>Added a new <code>lastGeneratedPassword</code> signal on the Add Client state slice.
+              On a successful create, the slice extracts the password and sets the signal.</li>
+          <li>Wizard component declares a <code>generatedPassword</code> input bound to the slice
+              signal. An <code>effect()</code> writes it into <code>step5Value.ownerPwd</code> and
+              jumps <code>currentStep</code> to 5.</li>
+        </ol>
+      </div>
+
+      <h5>Code Diff Highlights</h5>
+      <div class="code-block">
+        <div class="code-title">add-client-wizard/models/models.ts (wire-result types — pre-Wave-6 location)</div>
+<pre><span class="keyword">export interface</span> <span class="fn">CreateAccountWireResult</span> {
+  isSuccessful: boolean;
+  accountId?: string;
+<span class="diff-add">+ password?: string;</span>
+<span class="diff-add">+ accountOwnerPassword?: string;</span>
+<span class="diff-add">+ generatedPassword?: string;</span>
+  errorMessages?: string[];
+  errorCodes?: string[];
+}
+
+<span class="diff-add">+ <span class="keyword">export function</span> <span class="fn">extractGeneratedPassword</span>(r: CreateAccountWireResult): string | null {</span>
+<span class="diff-add">+   return r.password ?? r.accountOwnerPassword ?? r.generatedPassword ?? null;</span>
+<span class="diff-add">+ }</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-title">services/state/add-client-state.signals.ts (Wave 4.2 location)</div>
+<pre><span class="diff-add">+ <span class="keyword">readonly</span> lastGeneratedPassword = signal&lt;string | null&gt;(null);</span>
+
+<span class="comment">// inside onSubmit success leg:</span>
+<span class="diff-add">+ <span class="keyword">const</span> pwd = extractGeneratedPassword(result);</span>
+<span class="diff-add">+ <span class="keyword">if</span> (pwd) untracked(() =&gt; this.lastGeneratedPassword.set(pwd));</span>
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-title">add-client-wizard.component.ts</div>
+<pre><span class="diff-add">+ <span class="keyword">readonly</span> generatedPassword = input&lt;string | null&gt;(null);</span>
+
+<span class="keyword">constructor</span>() {
+  <span class="diff-add">+ effect(() =&gt; {</span>
+  <span class="diff-add">+   <span class="keyword">const</span> pwd = this.generatedPassword();</span>
+  <span class="diff-add">+   <span class="keyword">if</span> (pwd) {</span>
+  <span class="diff-add">+     this.step5Value.update((v) =&gt; ({ ...v, ownerPwd: pwd }));</span>
+  <span class="diff-add">+     this.currentStep.set(5);</span>
+  <span class="diff-add">+   }</span>
+  <span class="diff-add">+ });</span>
+}
+</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ITEM 3 ===== -->
+  <div class="item-card">
+    <div class="item-header">
+      <span class="item-num">3</span>
+      <h4 class="item-title">Phone Verify button removed</h4>
+    </div>
+    <div class="item-body">
+
+      <p>
+        Step 5's Account Owner phone field was rendering a "Verify" affordance via the Falcon
+        mobile-number library component's <code>[verifyButton]</code> input. The user pointed out
+        phone verification is a <strong>post-login</strong> flow, owned by the Identity service
+        after the AO logs in for the first time. Rendering it in the Add Client wizard was
+        confusing and out of scope.
+      </p>
+
+      <h5>Code Diff Highlights</h5>
+      <div class="code-block">
+        <div class="code-title">client-account-owner-step/client-account-owner-step.component.html:79</div>
+<pre>&lt;falcon-angular-mobile-number-field
+  [(ngModel)]="ownerPhoneFull"
+  [countries]="countries()"
+<span class="diff-rem">- [verifyButton]="true"</span>
+<span class="diff-add">+ [verifyButton]="false"</span>
+  ...
+/&gt;
+</pre>
+      </div>
+
+      <p>
+        Single-line change. The mobile-number component already supported toggling the verify
+        affordance; no library change was needed.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== ITEM 4 ===== -->
+  <div class="item-card">
+    <div class="item-header">
+      <span class="item-num">4</span>
+      <h4 class="item-title">Password field full-width + eye toggle when readonly</h4>
+    </div>
+    <div class="item-body">
+
+      <p>
+        Two related bugs in the Stencil <code>&lt;falcon-password-tw&gt;</code> component:
+        when the password input was set <code>readonly</code> (to display the backend-generated
+        password), the eye-icon toggle was disabled — operators couldn't see what they were about
+        to copy. And the Stencil host was rendering as inline-block, so the field didn't fill its
+        grid cell on Step 5.
+      </p>
+
+      <div class="callout callout-rootcause">
+        Two separate defects in <code>libs/falcon-ui-core/src/components/falcon-password-tw/falcon-password-tw.tsx</code>:
+        <ul>
+          <li>The eye-toggle <code>&lt;button&gt;</code> rendered with
+              <code>disabled={this.disabled || this.readonly}</code>. Once the consumer set
+              <code>readonly</code>, the eye was gone.</li>
+          <li><code>toggleVisibility()</code> guarded with
+              <code>if (this.disabled || this.readonly) return;</code> — even if the user
+              somehow clicked the eye, the handler bailed.</li>
+          <li>The Stencil <code>shadow:false</code> Host had no explicit <code>:host { display }</code>
+              rule, so the browser defaulted to <code>display: inline</code> and the host couldn't
+              fill its grid cell. (This is the documented Falcon UI Core layout trap #1.)</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-fix">
+        <ol>
+          <li>Removed <code>this.readonly</code> from the eye button's <code>disabled</code> prop.
+              The eye now stays interactive when the input is readonly — exactly the toggle-to-copy
+              behaviour the user wanted.</li>
+          <li>Dropped the <code>this.readonly</code> guard from <code>toggleVisibility()</code>.</li>
+          <li>Added <code>styleUrl: 'falcon-password-tw.css'</code> with
+              <code>:host { display: block; width: 100% }</code> — the host now fills its parent
+              container as expected. CSS comments use <code>/* */</code> not <code>//</code>
+              (Stencil JSX trap).</li>
+        </ol>
+      </div>
+
+      <h5>Code Diff Highlights</h5>
+      <div class="code-block">
+        <div class="code-title">libs/falcon-ui-core/src/components/falcon-password-tw/falcon-password-tw.tsx</div>
+<pre>@Component({
+  tag: <span class="string">'falcon-password-tw'</span>,
+<span class="diff-add">+ styleUrl: <span class="string">'falcon-password-tw.css'</span>,</span>
+  shadow: false,
+})
+
+<span class="fn">toggleVisibility</span> = () =&gt; {
+<span class="diff-rem">- if (this.disabled || this.readonly) return;</span>
+<span class="diff-add">+ if (this.disabled) return;</span>
+  this.visible = !this.visible;
+};
+
+<span class="comment">// in render():</span>
+&lt;button
+  type=<span class="string">"button"</span>
+  onClick={this.toggleVisibility}
+<span class="diff-rem">- disabled={this.disabled || this.readonly}</span>
+<span class="diff-add">+ disabled={this.disabled}</span>
+  aria-label={this.visible ? <span class="string">'Hide'</span> : <span class="string">'Show'</span>}
+&gt;
+</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-title">libs/falcon-ui-core/src/components/falcon-password-tw/falcon-password-tw.css (new file)</div>
+<pre><span class="comment">/* Host stretches to its grid cell.
+   This is the Falcon UI Core layout trap #1 fix:
+   Stencil shadow:false defaults host to inline. */</span>
+:host {
+  display: block;
+  width: 100%;
+}
+</pre>
+      </div>
+
+      <p>
+        This was a library-level fix that benefits every Falcon consumer of
+        <code>&lt;falcon-password-tw&gt;</code>, not just the Add Client wizard. After the change,
+        the password field on Step 5 fills the full grid cell and the eye toggle works whether
+        the input is readonly or editable.
+      </p>
+    </div>
+  </div>
+
+  <h3>Key files touched in Wave 4.2</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Change</th><th>LOC delta</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>hierarchy-page-state.service.ts</code></td>
+        <td>Removed 2 <code>errorDialog.openError</code> calls</td>
+        <td class="table-loc">−14</td>
+      </tr>
+      <tr>
+        <td><code>falcon-notification-stack.component.ts</code></td>
+        <td>Added <code>position</code> input + Tailwind class mapping</td>
+        <td class="table-loc">+38</td>
+      </tr>
+      <tr>
+        <td><code>apps/host-shell/src/app/app.ts</code></td>
+        <td>Mounted notification stack with <code>position="top-right"</code></td>
+        <td class="table-loc">+1</td>
+      </tr>
+      <tr>
+        <td><code>add-client-wizard/models/models.ts</code></td>
+        <td>Widened wire-result + <code>extractGeneratedPassword</code> helper</td>
+        <td class="table-loc">+18</td>
+      </tr>
+      <tr>
+        <td><code>add-client-state.signals.ts</code></td>
+        <td>Added <code>lastGeneratedPassword</code> signal + extractor wiring</td>
+        <td class="table-loc">+9</td>
+      </tr>
+      <tr>
+        <td><code>add-client-wizard.component.ts</code></td>
+        <td>Added <code>generatedPassword</code> input + effect → Step 5 jump</td>
+        <td class="table-loc">+15</td>
+      </tr>
+      <tr>
+        <td><code>client-account-owner-step.component.html:79</code></td>
+        <td><code>[verifyButton]="true"</code> → <code>false</code></td>
+        <td class="table-loc">+0</td>
+      </tr>
+      <tr>
+        <td><code>falcon-password-tw.tsx</code></td>
+        <td>Removed <code>readonly</code> from eye <code>disabled</code> + guard</td>
+        <td class="table-loc">−4</td>
+      </tr>
+      <tr>
+        <td><code>falcon-password-tw.css</code> (new)</td>
+        <td><code>:host { display: block; width: 100% }</code></td>
+        <td class="table-loc">+9</td>
+      </tr>
+      <tr>
+        <td><code>falcon-http-ui-routing.spec.ts</code></td>
+        <td>37 tests for routing/extraction (sanity helpers)</td>
+        <td class="table-loc">+412</td>
+      </tr>
+      <tr>
+        <td><code>falcon-notification-stack-position.spec.ts</code></td>
+        <td>7 tests for position → Tailwind class mapping</td>
+        <td class="table-loc">+96</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-lesson">
+    <ul>
+      <li><strong>Routing ladders need a single owner.</strong> The wizard's direct
+          <code>openError</code> calls were dead-zones in the dispatcher's responsibility map.
+          Trust one routing surface; don't short-circuit it with feature-local helpers. See
+          <a href="#lessons-l1">Section 4 → L1: One Error Routing Surface</a>.</li>
+      <li><strong>Library bugs leak everywhere.</strong> The <code>:host { display:block }</code>
+          fix in the Stencil password component benefits every consumer downstream. Same goes for
+          the eye-toggle-when-readonly fix. Always look for the library-level cause before
+          patching at the call site. See
+          <a href="#lessons-l2">Section 4 → L2: Falcon Layout Trap #1</a>.</li>
+      <li><strong>Defensive field-name fallbacks.</strong> Backend response shapes drift across
+          gateway versions. When in doubt, accept a union of possible names and pick the first
+          non-null. <code>extractGeneratedPassword</code> is the canonical template for this
+          pattern. See <a href="#lessons-l3">Section 4 → L3: Defensive Wire Field Coalescing</a>.</li>
+      <li><strong>User-side measurement closes the loop.</strong> The 12.07s toast lifetime
+          confirmed the dispatcher's default duration was already correct — no spec hunting needed.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     WAVE 5 — ARCHITECTURE + NEW FLOW POPUPS
+     ============================================================ -->
+<section id="wave-5" class="wave-section">
+  <div class="wave-header-wrap">
+    <h2 class="wave-5-header">Wave 5 — Architecture + New Flow Popups</h2>
+    <div class="wave-meta">
+      <span class="pill">4 agents (3 parallel + 1 sequential)</span>
+      <span class="pill">~25 min wall (5.1) + ~20 min (5.2)</span>
+      <span class="pill">12 requirements (R1–R12)</span>
+      <span class="pill">Plan ref: <code>WAVE-5-PLAN.md</code></span>
+    </div>
+  </div>
+
+  <p>
+    Wave 5 was the biggest single architecture push of the session. The user delivered 12
+    coordinated requirements all at once — covering state-service refactor (R2), per-step
+    validations folders (R1), 2 new Falcon dialog components (R7, R8), eager password generation
+    (R3), inline validation across all steps (R5), error routing (R6), new Save flow with
+    Sending-Credentials → Create-Account → Completion-Success popup pipeline (R9), library-only
+    component usage (R10), parallel agent orchestration (R12), and others. The work was
+    decomposed into two sub-waves: Wave 5.1 with three independent agents running in parallel,
+    and Wave 5.2 with a single sequential wiring agent that assembled their output.
+  </p>
+
+  <!-- =========== WAVE 5.1 =========== -->
+  <h3>Wave 5.1 — Three parallel agents (~25 min wall)</h3>
+
+  <p>
+    Three agents fired simultaneously, each with a sharp scope and no cross-dependencies on the
+    others. The agents wrote into different folders and the orchestrator merged the results
+    cleanly at the end of the wave.
+  </p>
+
+  <!-- AGENT A -->
+  <div class="agent-card">
+    <span class="agent-tag agent-a">AGENT A</span>
+    <h4>State service refactor — 1080 LOC → 1 facade + 6 slices + 3 helpers</h4>
+    <div class="agent-meta">Target: <code>services/hierarchy-page-state.service.ts</code> · scope: org-hierarchy page</div>
+
+    <p>
+      The page-level state service had grown to 1080 lines, mixing tree state, user list state,
+      drawer state, settings tab state, and both Add User and Add Client open/submit lifecycles
+      under one roof. The user mandated a 300–400 LOC soft cap per file. Agent A's job was to
+      split the service into domain-scoped slices while keeping the public API surface unchanged
+      so templates wouldn't break.
+    </p>
+
+    <h5>Final shape</h5>
+    <table>
+      <thead>
+        <tr><th>File</th><th>Role</th><th>LOC</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>hierarchy-page-state.service.ts</code></td>
+          <td>Slim facade re-exporting public API</td>
+          <td class="table-loc">298</td>
+        </tr>
+        <tr>
+          <td><code>state/tree-state.signals.ts</code></td>
+          <td>Tree, selection, structure-view toggle, search</td>
+          <td class="table-loc">285</td>
+        </tr>
+        <tr>
+          <td><code>state/users-state.signals.ts</code></td>
+          <td>Users list + pagination + tabs</td>
+          <td class="table-loc">175</td>
+        </tr>
+        <tr>
+          <td><code>state/node-drawer-state.signals.ts</code></td>
+          <td>Add/edit-node drawer mode + target + busy</td>
+          <td class="table-loc">196</td>
+        </tr>
+        <tr>
+          <td><code>state/add-client-state.signals.ts</code></td>
+          <td>Add Client open/close + submit + password (later moved in Wave 6.2)</td>
+          <td class="table-loc">~140</td>
+        </tr>
+        <tr>
+          <td><code>state/add-user-state.signals.ts</code></td>
+          <td>Add User open/submit</td>
+          <td class="table-loc">84</td>
+        </tr>
+        <tr>
+          <td><code>state/settings-state.signals.ts</code></td>
+          <td>Settings tab state</td>
+          <td class="table-loc">43</td>
+        </tr>
+        <tr>
+          <td><code>shared/http-status-inference.ts</code></td>
+          <td><code>inferStatus</code>, <code>statusFromHttpError</code>, <code>collectErrorMessages</code></td>
+          <td class="table-loc">70</td>
+        </tr>
+        <tr>
+          <td><code>shared/account-settings.helpers.ts</code></td>
+          <td>To/from <code>AccountSettings</code> mappers</td>
+          <td class="table-loc">32</td>
+        </tr>
+        <tr>
+          <td><code>shared/tree-helpers.ts</code></td>
+          <td><code>toPrimeNode</code> + tree walkers</td>
+          <td class="table-loc">79</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-fix">
+      <strong>Critical decision: signal identity preservation.</strong>
+      Every signal exposed by the facade is exposed as a <em>readonly reference</em> (literally
+      <code>readonly tree = this.treeState.tree</code>) — NOT as a getter wrapper
+      (<code>get tree() { return this.treeState.tree() }</code>). Getter wrappers would have
+      broken template two-way bindings and any code calling <code>.set()</code> on the signal,
+      because Angular's signal identity check uses reference equality on the
+      <code>WritableSignal</code> object. Preserving the reference kept the public API surface
+      bit-identical from the template's perspective. Zero template churn.
+    </div>
+
+    <h5>Provider wiring</h5>
+    <p>
+      Each slice is <code>@Injectable({ providedIn: 'root' })</code> by default, but the page route
+      uses a <code>HIERARCHY_PAGE_STATE_PROVIDERS</code> aggregate that hoists the providers to
+      the route's <code>providers: []</code> array. This means a fresh state instance is created
+      per page entry (pristine on navigation back), but during a single page life all components
+      share the same instances. The facade injects all six slices in its constructor and exposes
+      their public APIs as readonly references.
+    </p>
+  </div>
+
+  <!-- AGENT B -->
+  <div class="agent-card">
+    <span class="agent-tag agent-b">AGENT B</span>
+    <h4>Two new Falcon dialog components — pixel-parity from React</h4>
+    <div class="agent-meta">Targets: <code>libs/falcon-ui-core/src/angular-wrapper/components/falcon-sending-credentials-dialog</code> + <code>falcon-completion-success-dialog</code></div>
+
+    <p>
+      The user pointed Agent B at the React source of truth at
+      <code>Source_of_truth_theme/React/Falcon-Taha2/admin/addclient.jsx:680-767</code> — two
+      blocks of JSX implementing the Sending Credentials modal and the Completion Success modal.
+      Pixel parity was the bar: same layout, same SVG illustrations, same copy, same animation
+      direction, same z-index relationship with the wizard drawer underneath.
+    </p>
+
+    <h5>Component A: <code>&lt;falcon-angular-sending-credentials-dialog&gt;</code></h5>
+    <p>
+      A 3-card delivery-method picker (Email / SMS / Both) with the AO summary footer (Name,
+      Phone, Email) and Cancel / Send buttons. The dialog backdrop sits at
+      <code>z-[var(--falcon-dialog-z-index)] = 1200</code> — above the wizard drawer (1100) and
+      below the toast stack (1300, after the Wave 4.2 z-ladder rebalance).
+    </p>
+
+    <ul>
+      <li><strong>Public inputs:</strong> <code>open: boolean</code>, <code>ownerName: string</code>,
+          <code>ownerPhone: string</code>, <code>ownerEmail: string</code>,
+          <code>defaultDelivery: 'email' | 'sms' | 'both' = 'email'</code></li>
+      <li><strong>Outputs:</strong> <code>(cancel)</code> emits <code>void</code>,
+          <code>(send)</code> emits the picked method string</li>
+      <li><strong>SVG illustrations:</strong> 4 illustrations (envelope, SMS bubble, dual-channel
+          fan-out, AO avatar placeholder) copied LITERALLY from the React JSX. No optimization
+          pass — fidelity over file size.</li>
+      <li><strong>Footer buttons:</strong> <code>&lt;falcon-button-tw&gt;</code> Stencil custom
+          elements — zero native <code>&lt;button&gt;</code> elements (Falcon library-only doctrine
+          from <code>feedback_falcon_ui_library_only_no_native</code>).</li>
+      <li><strong>Method cards:</strong> <code>&lt;div role="radio" tabindex="0"&gt;</code> with
+          Space and Enter keyboard handling, <code>aria-checked</code> reflecting selection.
+          Focus ring uses Falcon focus tokens.</li>
+    </ul>
+
+    <h5>Component B: <code>&lt;falcon-angular-completion-success-dialog&gt;</code></h5>
+    <p>
+      A no-button success modal showing a clipboard-with-checkmark illustration, a title, a
+      subtitle, and an invisible 10-second auto-dismiss timer. Click anywhere dismisses early.
+    </p>
+
+    <ul>
+      <li><strong>Public inputs:</strong> <code>open: boolean</code>,
+          <code>title = 'Completed successfully'</code>,
+          <code>subtitle = 'Credentials sent to the user'</code>,
+          <code>autoDismissMs = 10_000</code></li>
+      <li><strong>Outputs:</strong> <code>(closed)</code> emits <code>void</code> on
+          timer-expiry OR backdrop click</li>
+      <li><strong>Timer:</strong> <code>setTimeout</code> registered in <code>effect()</code> that
+          watches <code>open</code>; cleared in the effect's <code>onCleanup</code> hook when
+          <code>open</code> flips false or the component is destroyed.</li>
+    </ul>
+
+    <div class="callout callout-fix">
+      <strong>HTML files exceeded the 80-line soft cap.</strong> The inline SVG illustrations
+      alone were 60+ lines each. The user's 80-line HTML guideline assumes prose templates — for
+      template-with-inline-illustrations, the cap was acknowledged and waived. The illustrations
+      could be extracted into separate icon components in a future cleanup pass; for now they
+      stay inline to match the React parity target literally.
+    </div>
+  </div>
+
+  <!-- AGENT C -->
+  <div class="agent-card">
+    <span class="agent-tag agent-c">AGENT C</span>
+    <h4>validations/ folders for all 5 Add Client steps</h4>
+    <div class="agent-meta">Targets: each <code>client-*-step/validations/validations.ts</code></div>
+
+    <p>
+      Each of the 5 Add Client steps got a <code>validations/validations.ts</code> file
+      mirroring the Add User wizard's per-step validation pattern. The shape is identical:
+      a per-step <code>InjectionToken&lt;FalconFieldRules&lt;StepFormValue&gt;&gt;</code>,
+      a <code>*RulesProvider()</code> factory returning the providers array, and the
+      step component <code>inject()</code>s the token and feeds the rules into its
+      <code>computed()</code> validity signals.
+    </p>
+
+    <h5>Tokens created</h5>
+    <table>
+      <thead><tr><th>Step</th><th>Token name</th><th>Rules included</th><th>LOC</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1 — Client Information</td>
+          <td><code>CLIENT_INFO_VALIDATIONS</code></td>
+          <td>accountName (required, min 3), financeId, classCat/classSub, authNumber, country, city</td>
+          <td class="table-loc">70</td>
+        </tr>
+        <tr>
+          <td>2 — Settings</td>
+          <td><code>CLIENT_SETTINGS_VALIDATIONS</code></td>
+          <td>security (required), maxNormal/System/Node (required, non-negative integer)</td>
+          <td class="table-loc">48</td>
+        </tr>
+        <tr>
+          <td>3 — Communication Channels</td>
+          <td><code>CLIENT_CHANNELS_VALIDATIONS</code></td>
+          <td>Empty rules map — row-level validation in <code>client-service-row-table</code></td>
+          <td class="table-loc">31</td>
+        </tr>
+        <tr>
+          <td>4 — Applications</td>
+          <td><code>CLIENT_APPS_VALIDATIONS</code></td>
+          <td>Empty rules map — same row-level pattern</td>
+          <td class="table-loc">31</td>
+        </tr>
+        <tr>
+          <td>5 — Account Owner</td>
+          <td><code>CLIENT_ACCOUNT_OWNER_VALIDATIONS</code></td>
+          <td>firstName, lastName, username (async unique), nid, phone, email, role, pwd (readonly)</td>
+          <td class="table-loc">68</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-fix">
+      <strong>Steps 3 + 4 ship empty rules maps by design.</strong> The visible-row table
+      pattern means row-level validity is owned by the
+      <code>client-service-row-table</code> component, not the step component. The step's
+      <code>isFormValid</code> computed reads the row table's validity output. The empty
+      rules map at the step level is a deliberate seam for future field-level rules (e.g.
+      step-level price-cap policies) without forcing a structural change.
+    </div>
+
+    <h5>Per-step component wiring (pattern)</h5>
+    <div class="code-block">
+      <div class="code-title">client-information-step.component.ts — pattern repeated across all 5 steps</div>
+<pre><span class="keyword">import</span> { Component, inject } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;
+<span class="keyword">import</span> { CLIENT_INFO_VALIDATIONS, clientInfoRulesProvider } <span class="keyword">from</span> <span class="string">'./validations/validations'</span>;
+
+@Component({
+  selector: <span class="string">'app-client-information-step'</span>,
+  templateUrl: <span class="string">'./client-information-step.component.html'</span>,
+  <span class="diff-add">providers: [clientInfoRulesProvider()],</span>
+})
+<span class="keyword">export class</span> ClientInformationStepComponent {
+  <span class="diff-add">private readonly rules = inject(CLIENT_INFO_VALIDATIONS);</span>
+
+  <span class="comment">// Computed validity reads the rules + the form value:</span>
+  <span class="keyword">readonly</span> accountNameError = computed&lt;string | null&gt;(() =&gt;
+    this.rules.accountName?.validate?.(this.value().accountName) ?? null
+  );
+}
+</pre>
+    </div>
+  </div>
+
+  <!-- =========== WAVE 5.2 =========== -->
+  <h3>Wave 5.2 — Agent D: New flow wiring (~20 min sequential)</h3>
+
+  <div class="agent-card">
+    <span class="agent-tag agent-d">AGENT D</span>
+    <h4>Eager password + Save → Sending Credentials → Create → Success / Toast</h4>
+    <div class="agent-meta">Inputs from: Wave 5.1 A (state slice) + Wave 5.1 B (new dialogs) + Wave 5.1 C (validators)</div>
+
+    <p>
+      Wave 5.2's single agent assembled the three Wave-5.1 deliverables into a working flow.
+      The previous Save click went directly to the create-account API and dropped the result.
+      The new flow inserts the Sending Credentials picker before the API call, captures the
+      result, and routes to one of three outcomes.
+    </p>
+
+    <h5>Eager password generation</h5>
+    <p>
+      An effect on the wizard component watches <code>addClientOpen</code>. On false → true,
+      it calls <code>clientService.generatePassword('normal')</code> and writes the result into
+      <code>state.generatedPassword</code>. The password is generated ONCE per wizard session —
+      cached until close. On close, the signal clears and the next open re-fetches.
+    </p>
+
+    <h5>Save click flow rebuild</h5>
+    <ol>
+      <li>User clicks <strong>Save</strong> on Step 5.</li>
+      <li>Wizard captures the wire payload into a new <code>pendingSubmitPayload</code> signal
+          (does NOT submit yet).</li>
+      <li>A <code>sendingCredentialsOpen</code> computed flips to <code>true</code>; the
+          <code>&lt;falcon-angular-sending-credentials-dialog&gt;</code> opens with the AO summary
+          and a default delivery method.</li>
+      <li>User picks a method and clicks <strong>Send</strong>.</li>
+      <li>State slice's <code>onSendCredentials(method)</code> handler:
+        <ul>
+          <li>Maps <code>'email' | 'sms' | 'both'</code> → wire-payload delivery method field
+              (string in Wave 5; tightened to <code>DeliveryMethod</code> enum in Wave 6).</li>
+          <li>Merges with <code>pendingSubmitPayload</code> and fires
+              <code>POST commerce/Account/create-account</code>.</li>
+        </ul>
+      </li>
+      <li>Three outcomes:
+        <ul>
+          <li><strong>200 + isSuccessful:true:</strong> capture <code>lastCreatedClientId</code>,
+              close Sending Credentials dialog, open Completion Success dialog. After 10 seconds
+              (or on backdrop click) the dialog closes and the wizard navigates to the user list
+              with the new client pre-selected.</li>
+          <li><strong>400 (transport):</strong> Sending Credentials dialog closes; the dispatcher's
+              <code>4xx</code> rule fires a top-right toast with the backend's
+              <code>errorMessages[0]</code> as the subtitle (the Wave 4.2 plumbing reused).</li>
+          <li><strong>5xx / network:</strong> existing
+              <code>FalconHttpErrorDialogService</code> popup fires unchanged (no new code).</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h5>New signals on the state slice</h5>
+    <table>
+      <thead><tr><th>Signal</th><th>Type</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>pendingSubmitPayload</code></td>
+          <td><code>CreateAccountWireRequest | null</code></td>
+          <td>Captures Step 5 wire payload before showing Sending Credentials picker</td>
+        </tr>
+        <tr>
+          <td><code>sendingCredentialsOpen</code></td>
+          <td><code>computed&lt;boolean&gt;</code></td>
+          <td>Derived from <code>pendingSubmitPayload !== null &amp;&amp; lastCreatedClientId === null</code></td>
+        </tr>
+        <tr>
+          <td><code>completionSuccessOpen</code></td>
+          <td><code>computed&lt;boolean&gt;</code></td>
+          <td>Derived from <code>lastCreatedClientId !== null</code></td>
+        </tr>
+        <tr>
+          <td><code>lastCreatedClientId</code></td>
+          <td><code>signal&lt;string | null&gt;</code></td>
+          <td>Captured on success; consumed by navigation after Completion dialog dismiss</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5>Wire-builders extraction</h5>
+    <p>
+      During the Wave 5.2 work, the agent extracted <code>wire-builders.ts</code> as a new file
+      (182 LOC) out of the bloated <code>models/models.ts</code>. The new file owns
+      <code>buildCreateAccountWireRequest(formValues, deliveryMethod)</code> — the function that
+      maps the 5-step form aggregate to the backend wire shape. Keeping it separate from the
+      form-interfaces file kept both under the soft 400-LOC cap. (Wave 6 later widened the form
+      interfaces themselves with <code>T | null</code> types.)
+    </p>
+
+    <div class="build-stamp green">admin-console: 643d0bf547ec0b9e</div>
+    <div class="build-stamp green">host-shell: 521b37b13c3b3830</div>
+  </div>
+
+  <h3>Key files touched in Wave 5 (aggregate)</h3>
+  <table>
+    <thead><tr><th>Area</th><th>Files</th><th>Net LOC</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>State refactor</td>
+        <td>1 facade rewritten + 6 slices created + 3 helpers created</td>
+        <td class="table-loc">+1,202 / −1,080</td>
+      </tr>
+      <tr>
+        <td>New Falcon dialogs</td>
+        <td>2 components × {ts, html, types.ts, index.ts}</td>
+        <td class="table-loc">+520</td>
+      </tr>
+      <tr>
+        <td>Per-step validations</td>
+        <td>5 folders × validations.ts</td>
+        <td class="table-loc">+248</td>
+      </tr>
+      <tr>
+        <td>Wizard flow rewire</td>
+        <td>Wizard component + state slice + wire-builders extraction</td>
+        <td class="table-loc">+340 / −155</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-lesson">
+    <ul>
+      <li><strong>Slice pattern preserves WritableSignal identity.</strong> Expose
+          <code>readonly mySignal = subSlice.mySignal</code>, never a getter wrapper.
+          See <a href="#lessons-l4">Section 4 → L4: Signal Identity in Facade Patterns</a>.</li>
+      <li><strong>Empty rules maps are a feature, not a bug.</strong> Wiring the validation
+          token for steps with row-level validation gives a stable extension seam without
+          forcing premature structure.</li>
+      <li><strong>Parallel agent decomposition by folder.</strong> Three agents writing to three
+          non-overlapping folder roots produces zero merge conflicts. Plan the folder
+          partitioning before launching.
+          See <a href="#lessons-l5">Section 4 → L5: Parallel Agent Folder Isolation</a>.</li>
+      <li><strong>Pixel parity from React requires literal SVG copy.</strong> Don't redraw
+          illustrations — copy them. The HTML-line-count cap can be waived for
+          template-with-illustrations. See <a href="#lessons-l6">Section 4 → L6: HTML Cap Waivers</a>.</li>
+      <li><strong>Open-state derivation > separate state.</strong> Deriving
+          <code>sendingCredentialsOpen</code> and <code>completionSuccessOpen</code> from
+          <code>pendingSubmitPayload</code> and <code>lastCreatedClientId</code> keeps the state
+          machine in one place — no parallel boolean flags to keep in sync.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     WAVE 6 — POLISH + EAGER + ARCHITECTURE
+     ============================================================ -->
+<section id="wave-6" class="wave-section">
+  <div class="wave-header-wrap">
+    <h2 class="wave-6-header">Wave 6 — Polish + Eager Loading + Architecture</h2>
+    <div class="wave-meta">
+      <span class="pill">4 agents (3 parallel + 1 sequential)</span>
+      <span class="pill">~50 min wall</span>
+      <span class="pill">7 requirements (R13–R19)</span>
+      <span class="pill">Plan ref: <code>WAVE-6-PLAN.md</code></span>
+      <span class="pill">Build hash <code>36537c10fe4bb0fb</code></span>
+    </div>
+  </div>
+
+  <p>
+    After Wave 5 the user drove the wizard top-to-bottom and produced a sharp list of seven
+    behavioural fixes (R13–R19): all initial form values must be null (not <code>''</code>,
+    not <code>0</code>, not default strings); photo upload state must always be the object shape
+    <code>{ extension, fileBase64String }</code>; <code>deliveryMethod</code> in the wire must
+    be the canonical <code>DeliveryMethod</code> enum integer (Email=1, Sms=2, Both=3) — not the
+    string the dialog emits for UX; Step 3 + 4 row inputs must paint red inline when invalid AND
+    the stepper rail dot must paint red on Next click; the price-value input needs a Saudi Riyal
+    icon to its left; all 5 wizard catalog APIs must fire ONCE on wizard mount in
+    <code>forkJoin</code>; per-step signals must live INSIDE each step folder.
+  </p>
+
+  <!-- =========== WAVE 6.1 =========== -->
+  <h3>Wave 6.1 — Three parallel agents</h3>
+
+  <!-- AGENT F -->
+  <div class="agent-card">
+    <span class="agent-tag agent-f">AGENT F</span>
+    <h4>Null defaults (first pass) + DeliveryMethod enum + Photo object shape</h4>
+
+    <p>
+      Agent F made the first attempt at null defaults — but only partial. The
+      <code>empty*()</code> factories were made all-empty but still returned strings and zeros
+      rather than literal null. (Wave 7 later widened the types themselves to <code>T | null</code>
+      and pushed actual null through.) The Wave 6.1 pass changed enough behaviour to expose the
+      gap.
+    </p>
+
+    <h5>What Agent F shipped</h5>
+    <ul>
+      <li>Made <code>emptyClientInfo()</code>, <code>emptyClientSettings()</code>, and
+          <code>emptyClientAccountOwner()</code> return all-empty values (<code>''</code> for
+          strings, <code>0</code> for numbers, no <code>'normal'</code> security default, no
+          <code>'Account Owner'</code> role default).</li>
+      <li>Widened <code>deliveryMethod</code> on the wire-builder form aggregate to
+          <code>DeliveryMethod | null</code>. The <code>DeliveryMethod</code> enum already
+          existed at <code>libs/falcon/src/shared-types/lib/enums/globels.ts:97</code> with
+          <code>Email=1, Sms=2, Both=3</code>. The state slice's <code>onSendCredentials</code>
+          handler now maps the dialog's string output to the enum before POSTing.</li>
+      <li>Added a <code>pictureChange</code> output to
+          <code>&lt;falcon-photo-uploader&gt;</code> emitting
+          <code>{ extension: string, fileBase64String: string }</code>. Existing
+          <code>fileSelected</code> + <code>photo</code> outputs remained for backward
+          compatibility.</li>
+      <li>Updated <code>buildCreateAccountWireRequest</code> to propagate
+          <code>info.photoData</code> into <code>profilePictureImageInfo</code> and
+          <code>owner.ownerPhotoData</code> into <code>accountOwnerProfilePictureImageInfo</code>.
+          Both are conditionally included only when the photo data is present.</li>
+    </ul>
+
+    <div class="callout callout-fix">
+      <strong>Mime-type → extension mapping for the uploader.</strong> The photo uploader reads
+      the picked file's MIME type (<code>image/png</code>, <code>image/jpeg</code>, etc.) and
+      maps to a short extension (<code>'png'</code>, <code>'jpg'</code>). Base64 encoding strips
+      the <code>data:image/...;base64,</code> prefix and emits only the payload — that's the
+      format the backend expects.
+    </div>
+  </div>
+
+  <!-- AGENT G -->
+  <div class="agent-card">
+    <span class="agent-tag agent-g">AGENT G</span>
+    <h4>Row-table validation visual + Riyal icon (first design)</h4>
+
+    <p>
+      Agent G's job was to wire inline red validation feedback into the row-table editor used by
+      Steps 3 + 4, AND to add a Saudi Riyal icon to the price-value input. The validation wiring
+      worked at the row-table level (<code>state="error"</code> input on the Stencil components)
+      but had a subtle OnPush re-render bug that didn't surface until the user clicked Next on
+      an invalid step. (See Wave 7 → Bug 1+2 below.) The icon work, meanwhile, used a
+      hand-rolled inline SVG raw-string API that the user rejected — leading to the Wave 7 icon
+      API redesign.
+    </p>
+
+    <h5>What Agent G shipped (the parts that stuck)</h5>
+    <ul>
+      <li>Added <code>state</code> prop to
+          <code>&lt;falcon-input-number-tw&gt;</code> (Stencil) and the Angular wrapper. Values:
+          <code>'default' | 'error' | 'success'</code>. Maps to Tailwind border + text classes.</li>
+      <li>Added <code>iconLeftSvg</code> prop accepting a raw SVG string. (Rejected in Wave 7
+          — replaced with content projection.)</li>
+      <li><code>client-service-row-table</code>: each cell binds
+          <code>[state]="showXError(row) ? 'error' : 'default'"</code>. The
+          <code>showXError</code> computed reads from a per-row <code>touched</code> map signal.</li>
+      <li>Added <code>revealAllRowsErrors()</code> method that sets touched to true for every
+          field on every visible row. (Initially this only flipped the touched signal — leading
+          to the Wave 7 bug.)</li>
+    </ul>
+
+    <div class="callout callout-fix">
+      <strong>First Riyal icon was hand-rolled.</strong> Agent G wrote a generic currency-S SVG
+      glyph inline as a string constant and passed it via <code>[iconLeftSvg]="rawSvgString"</code>.
+      The Falcon library ALREADY had a canonical
+      <code>&lt;falcon-angular-saudi-riyal-icon&gt;</code> component at
+      <code>libs/falcon/src/shared-ui/lib/components/falcon-saudi-riyal-icon/</code> using the
+      canonical CURRENCY_SAR path from <code>svg-icon.registry.ts</code>. The user noticed and
+      pushed back: "you reinvented an icon that already exists." Wave 7 redesigned the API to
+      use content projection.
+    </div>
+  </div>
+
+  <!-- AGENT H -->
+  <div class="agent-card">
+    <span class="agent-tag agent-h">AGENT H</span>
+    <h4>Eager loading — 5 APIs in one forkJoin</h4>
+
+    <p>
+      Before Wave 6.1, each step component made its own API calls in its <code>ngOnInit</code>:
+      Step 1 called <code>forkJoin({ countries, cities })</code>, Step 3 called
+      <code>listCommunicationChannels()</code>, Step 4 called <code>listApplications()</code>,
+      and the eager-password mechanism from Wave 5.2 was wizard-level. Navigating between steps
+      could trigger redundant API calls if a step component was destroyed and re-created.
+    </p>
+
+    <h5>What Agent H shipped</h5>
+    <ul>
+      <li>On <code>addClientOpen</code> flipping false → true, the state slice now fires:
+          <pre style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.6rem; border-radius: 4px; margin: 0.4rem 0;">forkJoin({
+  password: clientService.generatePassword('normal'),
+  countries: lookupService.list('Country'),
+  cities: lookupService.list('City'),
+  channels: clientService.listCommunicationChannels(),
+  apps: clientService.listApplications(),
+})</pre>
+      </li>
+      <li>Each inner observable has its own <code>catchError</code> so one failure doesn't kill
+          the whole forkJoin. Failed branches resolve to empty arrays (or null for password).</li>
+      <li>Five new eager signals on the state slice:
+          <code>eagerPassword</code>, <code>eagerCountries</code>, <code>eagerCities</code>,
+          <code>eagerChannels</code>, <code>eagerApps</code>. Each populated when the matching
+          inner observable emits.</li>
+      <li>Step 1 stripped its inline <code>forkJoin({countries, cities})</code> and now reads
+          countries + cities from the state slice's eager signals via <code>computed()</code>
+          adapters.</li>
+      <li>Steps 3 + 4 stripped their <code>listCommunicationChannels</code> /
+          <code>listApplications</code> calls. The wizard component seeds the row arrays from
+          the eager channels + apps signals via a one-shot effect on first load.</li>
+      <li>On wizard close (<code>addClientOpen</code> → false), all five signals reset to
+          <code>null</code>. The next open re-fetches.</li>
+    </ul>
+
+    <p>
+      <strong>Measured outcome:</strong> The user verified in DevTools Network panel that opening
+      the wizard fires exactly 5 parallel XHRs at t=0, and navigation Step 1 → 2 → 3 → 4 → 5
+      fires zero new XHRs. Close + reopen re-fires all 5.
+    </p>
+  </div>
+
+  <!-- =========== WAVE 6.2 =========== -->
+  <h3>Wave 6.2 — Agent I: Per-component signals folder refactor</h3>
+
+  <div class="agent-card">
+    <span class="agent-tag agent-i">AGENT I</span>
+    <h4>Moved Add Client state from <code>services/state/</code> into the wizard folder</h4>
+    <div class="agent-meta">Sequential, ~25 min · depends on Wave 6.1</div>
+
+    <p>
+      The user mandated a doctrine: state lives next to its consumer. The Wave 5.1 slice pattern
+      had put <code>add-client-state.signals.ts</code> at <code>services/state/</code> — under
+      the page route, but disconnected from the wizard component folder. The user wanted the
+      wizard's state INSIDE the wizard's folder, with per-step signals inside each step's folder.
+    </p>
+
+    <h5>Move map</h5>
+    <table>
+      <thead><tr><th>From</th><th>To</th><th>LOC</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>services/state/add-client-state.signals.ts</code></td>
+          <td><code>add-client-wizard/signals/add-client-wizard.signals.ts</code></td>
+          <td class="table-loc">325 → 353</td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>client-information-step/signals/client-information-step.signals.ts</code></td>
+          <td class="table-loc">+34</td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>client-settings-step/signals/client-settings-step.signals.ts</code></td>
+          <td class="table-loc">+27</td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>client-comm-channels-step/signals/client-comm-channels-step.signals.ts</code></td>
+          <td class="table-loc">+31</td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>client-applications-step/signals/client-applications-step.signals.ts</code></td>
+          <td class="table-loc">+31</td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><code>client-account-owner-step/signals/client-account-owner-step.signals.ts</code></td>
+          <td class="table-loc">+33</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5>Provider hoisting at the wizard level</h5>
+    <p>
+      The 5 per-step signal services are declared <code>@Injectable()</code> (NOT
+      <code>providedIn: 'root'</code>), and exported through
+      <code>ADD_CLIENT_WIZARD_PROVIDERS</code> from
+      <code>add-client-wizard/signals/index.ts</code>. The wizard component declares them in its
+      <code>providers: [...ADD_CLIENT_WIZARD_PROVIDERS]</code> array. This means:
+    </p>
+    <ul>
+      <li>Each wizard mount creates a fresh set of state instances — pristine on every reopen via
+          Angular DI lifecycle. No manual reset cascade needed.</li>
+      <li>Each step component injects its own signals service. Inputs/outputs cross between
+          wizard and step via signals + <code>viewChild</code> refs already in place.</li>
+      <li>The wizard-wide service (<code>AddClientWizardSignalsService</code>) stays
+          page-scoped via the route's providers — because the kebab menu's "Add Client" handler
+          needs to flip <code>addClientOpen.set(true)</code> BEFORE the wizard component mounts.</li>
+    </ul>
+
+    <div class="callout callout-fix">
+      <strong>Why two scopes — wizard-wide page-scoped, per-step wizard-scoped.</strong> The
+      wizard-wide service has to be reachable from outside the wizard component (the kebab menu's
+      "Add Client" click handler in the page header opens the wizard by flipping
+      <code>addClientOpen</code>). Per-step services don't have that requirement — only the
+      wizard and its child step components need them. Putting the per-step services in the wizard
+      component's providers gives the pristine-on-reopen behaviour for free.
+    </div>
+
+    <h5>Files updated to reach the new import paths</h5>
+    <ul>
+      <li>Every step component swapped <code>import { ... } from '@.../add-client-state.signals'</code>
+          for the local <code>./signals/<step>.signals</code> import.</li>
+      <li>The wizard component swapped to the new
+          <code>./signals/add-client-wizard.signals</code> path.</li>
+      <li>The page route's provider array swapped
+          <code>...HIERARCHY_PAGE_STATE_PROVIDERS</code> for the new split:
+          <code>...HIERARCHY_PAGE_STATE_PROVIDERS, ADD_CLIENT_WIZARD_SERVICE_PROVIDERS</code>
+          where the wizard-wide service provider is page-scoped.</li>
+      <li>The facade <code>HierarchyPageStateService</code> dropped its
+          <code>addClient*</code> re-exports (no longer in scope; wizard reads its own
+          signals service directly).</li>
+    </ul>
+
+    <div class="build-stamp green">36537c10fe4bb0fb</div>
+  </div>
+
+  <h3>Key files touched in Wave 6 (aggregate)</h3>
+  <table>
+    <thead><tr><th>Area</th><th>Files</th><th>Net LOC</th></tr></thead>
+    <tbody>
+      <tr><td>Null defaults + enum + photo</td><td><code>models/models.ts</code>, <code>wire-builders.ts</code>, <code>falcon-photo-uploader.component.ts</code>, state slice</td><td class="table-loc">+102 / −58</td></tr>
+      <tr><td>Row-table validation</td><td><code>client-service-row-table.component.{ts,html}</code>, both step components, <code>falcon-input-number-tw.tsx</code>, Angular wrapper</td><td class="table-loc">+186 / −24</td></tr>
+      <tr><td>Eager loading</td><td>State slice + 3 step components + wizard component</td><td class="table-loc">+98 / −76</td></tr>
+      <tr><td>Per-step signals folder</td><td>1 move + 5 new files + 6 import updates + 1 index.ts</td><td class="table-loc">+209 / −0 (moved)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-lesson">
+    <ul>
+      <li><strong>"Make it null" means literally null.</strong> Strings and zeros aren't null —
+          Agent F's empty-but-not-null first pass left a gap that Wave 7 had to fix at the type
+          level. Widen types FIRST, then update factories. See
+          <a href="#lessons-l7">Section 4 → L7: Literal-null Form Defaults</a>.</li>
+      <li><strong>Eager forkJoin + computed adapters.</strong> The pattern of one forkJoin on
+          mount + per-step computed adapters reading from the eager signals is the canonical way
+          to eliminate redundant XHRs without coupling steps to a parent component's lifecycle.
+          See <a href="#lessons-l8">Section 4 → L8: Wizard Eager Loading Pattern</a>.</li>
+      <li><strong>Provider hoisting gives pristine state for free.</strong> Declaring per-step
+          services <code>@Injectable()</code> (not <code>providedIn:'root'</code>) and providing
+          them at the wizard component level means Angular DI handles the reset lifecycle on
+          every mount/unmount. No <code>resetAll()</code> method needed.
+          See <a href="#lessons-l9">Section 4 → L9: Provider Scope Doctrine</a>.</li>
+      <li><strong>ALWAYS grep <code>libs/</code> for existing components.</strong> Agent G's
+          hand-rolled Riyal SVG was wasted work because the canonical icon already existed.
+          Falcon library has 396+ exports — assume the icon, the enum, the helper already lives
+          there. See <a href="#lessons-l10">Section 4 → L10: Grep Library First</a>.</li>
+      <li><strong>Enum integers > string unions for wire payloads.</strong> Backend expects
+          <code>deliveryMethod: 1</code>, not <code>'email'</code>. The
+          <code>DeliveryMethod</code> enum already canonicalized the mapping — the dialog can
+          still emit strings for UX, but the wire builder maps to the enum int.
+          See <a href="#lessons-l11">Section 4 → L11: Enum vs String Wire</a>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     WAVE 7 — USER-REPORTED BUGS (FINAL POLISH)
+     ============================================================ -->
+<section id="wave-7" class="wave-section">
+  <div class="wave-header-wrap">
+    <h2 class="wave-7-header">Wave 7 — User-Reported Bugs (Final Polish)</h2>
+    <div class="wave-meta">
+      <span class="pill">3 bugs, 2 agents</span>
+      <span class="pill">Sequential</span>
+      <span class="pill">Build hashes <code>7eeb260f4dd0461e</code> + <code>f7fb54737d3b9d53</code></span>
+      <span class="pill">Final polish before user sign-off</span>
+    </div>
+  </div>
+
+  <p>
+    After Wave 6 the user drove the wizard once more and reported three issues. Two were
+    co-located (Bug 1 + 2: row-table validation rendering on Next-click); one was a true-null
+    cleanup (Bug 3); and one was an icon API redesign (the SAR icon redesign that closed out
+    Wave 6.1's Agent G hand-rolled SVG). Wave 7 was deliberately tighter than the parallel
+    waves before it: Agent K handled the row-table + null-defaults work; the icon redesign was
+    done directly without a sub-agent because it was a single library file plus a row-table
+    template edit.
+  </p>
+
+  <!-- =========== BUG 1 + 2 NARRATIVE =========== -->
+  <h3>Bug 1 + 2 — Row-table validation rendering (same root cause)</h3>
+
+  <div class="callout callout-user">
+    <strong>User's verbatim feedback during the live drive:</strong>
+    <div class="quote">
+      "I clicked Next on Step 3 with a row that has no price type set. The step rail dot turned
+      red — good. But the dropdown and the input itself didn't turn red. They should be red
+      INSIDE the row, not just on the step dot."
+    </div>
+    <div class="quote">
+      "I just noticed something — after I click one of the dropdowns to set a price type, THEN
+      the price-value input shows red. So the validation is working, but it's not applying
+      until I touch the dropdown."
+    </div>
+  </div>
+
+  <p>
+    The user's second observation was the key diagnostic detail. The validation was wired
+    correctly. The CSS classes were correct. The data was correct. But the row didn't paint red
+    until something <em>other than the validation reveal itself</em> mutated the row data.
+  </p>
+
+  <div class="narrative">
+    <h5>The bug, debugged in five steps</h5>
+
+    <div class="step">
+      <div class="step-label">SYMPTOM</div>
+      <div class="step-body">
+        On Step 3, the user toggles a row visible, leaves <code>priceType</code> empty, and clicks
+        <strong>Next</strong>. The step rail dot turns red (step validity is correctly
+        <code>false</code>). The visible row's <code>priceType</code> dropdown and
+        <code>priceValue</code> input <strong>do not</strong> paint red despite being invalid.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label">USER CLUE</div>
+      <div class="step-body">
+        After Next is clicked, the user opens the <code>priceType</code> dropdown and picks
+        <code>'Fixed'</code>. The dropdown closes. Now the <code>priceValue</code> input paints
+        red — even though the user only touched the dropdown, not the input.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label">DIAGNOSIS</div>
+      <div class="step-body">
+        The row table is rendered via <code>&lt;falcon-angular-data-table&gt;</code>, which is
+        <code>ChangeDetectionStrategy.OnPush</code>. The data input is
+        <code>[data]="rows()"</code> — a signal-as-array. OnPush re-renders cells only when
+        the <code>rows</code> array <strong>reference</strong> changes.
+        <br><br>
+        <code>revealAllRowsErrors()</code> flipped the <code>touched</code> signal but didn't
+        mutate <code>rows</code>. The cells' <code>[state]</code> input is computed from the
+        <code>touched</code> signal — but the data-table doesn't re-render those cells because
+        its data reference is unchanged. The cells render the old <code>[state]="default"</code>
+        from the previous tick.
+        <br><br>
+        When the user picked a price type from the dropdown,
+        <code>setPriceType(row, value)</code> ran <code>rows.update((rs) =&gt; rs.map(...))</code>
+        — that produced a new array reference, the data-table re-rendered cells, and the
+        previously-flipped <code>touched</code> values finally produced the red state.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label">CONFIRMATION</div>
+      <div class="step-body">
+        The user reproduced the bug consistently. Clicking a dropdown was the trigger to make
+        the OTHER input (which the user hadn't touched) paint red. Classic OnPush + signal
+        identity trap.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-label">FIX</div>
+      <div class="step-body">
+        Two changes to <code>client-service-row-table.component.ts</code>:
+        <br><br>
+        <strong>1. <code>revealAllRowsErrors()</code> now forces a new array reference.</strong>
+        After <code>touched.set(...)</code>, it also does
+        <code>rows.update((rs) =&gt; [...rs])</code>. Shallow spread = new array reference
+        = data-table re-renders cells = previously-touched validity reflects.
+        <br><br>
+        <strong>2. <code>setPriceType</code> and <code>setPriceValue</code> defensively
+        auto-set their corresponding touch keys.</strong> So when the user types into the
+        input, the touched key flips reactively — red feedback follows typing without needing
+        an explicit blur or a Next-click.
+      </div>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-title">client-service-row-table.component.ts — Wave 7 fix</div>
+<pre><span class="fn">revealAllRowsErrors</span>() {
+  <span class="keyword">const</span> visibleRows = this.rows().filter((r) =&gt; r.visible);
+  <span class="keyword">const</span> nextTouched = { ...this.touched() };
+  <span class="keyword">for</span> (<span class="keyword">const</span> row <span class="keyword">of</span> visibleRows) {
+    nextTouched[<span class="string">`${row.id}.priceType`</span>] = <span class="keyword">true</span>;
+    nextTouched[<span class="string">`${row.id}.priceValue`</span>] = <span class="keyword">true</span>;
+  }
+  this.touched.set(nextTouched);
+  <span class="diff-add">+ <span class="comment">// CRITICAL: force new array reference so OnPush &lt;falcon-data-table&gt;</span></span>
+  <span class="diff-add">+ <span class="comment">// re-renders cells that depend on touched state.</span></span>
+  <span class="diff-add">+ this.rows.update((rs) =&gt; [...rs]);</span>
+}
+
+<span class="fn">setPriceType</span>(row: ServiceRow, value: PriceType) {
+  this.rows.update((rs) =&gt; rs.map((r) =&gt; r.id === row.id ? { ...r, priceType: value } : r));
+  <span class="diff-add">+ this.touched.update((t) =&gt; ({ ...t, [<span class="string">`${row.id}.priceType`</span>]: <span class="keyword">true</span> }));</span>
+}
+
+<span class="fn">setPriceValue</span>(row: ServiceRow, value: number | null) {
+  this.rows.update((rs) =&gt; rs.map((r) =&gt; r.id === row.id ? { ...r, priceValue: value } : r));
+  <span class="diff-add">+ this.touched.update((t) =&gt; ({ ...t, [<span class="string">`${row.id}.priceValue`</span>]: <span class="keyword">true</span> }));</span>
+}
+</pre>
+  </div>
+
+  <!-- =========== BUG 3 — TRUE NULL DEFAULTS =========== -->
+  <h3>Bug 3 — True null defaults (Agent K)</h3>
+
+  <div class="agent-card">
+    <span class="agent-tag agent-k">AGENT K</span>
+    <h4>Widen all scalar form fields to <code>T | null</code></h4>
+
+    <div class="callout callout-user">
+      <div class="quote">
+        "I said I want everything null. Not empty string, not zero, not 'normal' as default for
+        security. Null. Step 2 shouldn't be valid on first open because nothing is filled. Right
+        now Step 2 is valid because security defaults to 'normal'. Fix that."
+      </div>
+    </div>
+
+    <p>
+      Wave 6.1's Agent F had made the <code>empty*()</code> factories return empty strings + zeros
+      instead of widening the types. The user wanted literally null — which required widening the
+      form-value interface types first, then updating the factories, then making the validators
+      handle null, then making the wire builder coalesce null back to empty string / zero
+      defensively for required wire slots.
+    </p>
+
+    <h5>Type widening</h5>
+    <table>
+      <thead><tr><th>Interface</th><th>Field</th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="6"><code>ClientInfoFormValue</code></td>
+            <td>accountName</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>financeId</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>classCat</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>classSub</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>authNumber</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>countryId / cityId</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+
+        <tr><td rowspan="4"><code>ClientSettingsFormValue</code></td>
+            <td>security</td><td><code>'normal' | 'high'</code></td><td><code>'normal' | 'high' | null</code></td></tr>
+        <tr><td>maxNormal</td><td><code>number</code></td><td><code>number | null</code></td></tr>
+        <tr><td>maxSystem</td><td><code>number</code></td><td><code>number | null</code></td></tr>
+        <tr><td>maxNode</td><td><code>number</code></td><td><code>number | null</code></td></tr>
+
+        <tr><td rowspan="6"><code>ClientAccountOwnerFormValue</code></td>
+            <td>firstName / lastName</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>username</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>nid</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>phone</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>email</td><td><code>string</code></td><td><code>string | null</code></td></tr>
+        <tr><td>role</td><td><code>'Account Owner' | 'Operator'</code></td><td><code>'Account Owner' | 'Operator' | null</code></td></tr>
+      </tbody>
+    </table>
+
+    <h5>Factory updates</h5>
+    <div class="code-block">
+      <div class="code-title">add-client-wizard/models/models.ts — emptyClientSettings() before/after</div>
+<pre><span class="diff-rem">- export function emptyClientSettings(): ClientSettingsFormValue {</span>
+<span class="diff-rem">-   return {</span>
+<span class="diff-rem">-     security: 'normal',  <span class="comment">// ← defaulted to normal — bug</span></span>
+<span class="diff-rem">-     ipAllowlist: '',</span>
+<span class="diff-rem">-     maxNormal: 0,</span>
+<span class="diff-rem">-     maxSystem: 0,</span>
+<span class="diff-rem">-     maxNode: 0,</span>
+<span class="diff-rem">-   };</span>
+<span class="diff-rem">- }</span>
+<span class="diff-add">+ export function emptyClientSettings(): ClientSettingsFormValue {</span>
+<span class="diff-add">+   return {</span>
+<span class="diff-add">+     security: null,</span>
+<span class="diff-add">+     ipAllowlist: '',  <span class="comment">// stays empty-string — it's a textarea, not a scalar</span></span>
+<span class="diff-add">+     maxNormal: null,</span>
+<span class="diff-add">+     maxSystem: null,</span>
+<span class="diff-add">+     maxNode: null,</span>
+<span class="diff-add">+   };</span>
+<span class="diff-add">+ }</span>
+</pre>
+    </div>
+
+    <h5>Wire builder defensive coalescing</h5>
+    <p>
+      The backend's <code>create-account</code> contract expects strings and numbers, not null.
+      The wire builder coalesces <code>null → ''</code> for required string slots and
+      <code>null → 0</code> for required number slots — but ONLY at the wire-build step. The
+      form state stays literal-null until submit time. This way the validators correctly say
+      "this is invalid" (null violates a required rule) while the wire builder still produces
+      a syntactically valid request envelope.
+    </p>
+
+    <div class="code-block">
+      <div class="code-title">add-client-wizard/models/wire-builders.ts — coalescing pattern</div>
+<pre><span class="keyword">export function</span> <span class="fn">buildCreateAccountWireRequest</span>(
+  values: ClientWizardAggregate,
+  deliveryMethod: DeliveryMethod,
+): CreateAccountWireRequest {
+  <span class="keyword">const</span> info = values.info;
+  <span class="keyword">return</span> {
+    accountName: <span class="diff-add">info.accountName ?? ''</span>,
+    classification: { categoryId: <span class="diff-add">info.classCat ?? ''</span>, subId: <span class="diff-add">info.classSub ?? ''</span> },
+    settings: {
+      security: <span class="diff-add">values.settings.security ?? 'normal'</span>,
+      maxNormalUsers: <span class="diff-add">values.settings.maxNormal ?? 0</span>,
+      maxSystemUsers: <span class="diff-add">values.settings.maxSystem ?? 0</span>,
+      maxNodeUsers: <span class="diff-add">values.settings.maxNode ?? 0</span>,
+    },
+    accountOwner: {
+      firstName: <span class="diff-add">values.owner.firstName ?? ''</span>,
+      <span class="comment">// ... etc.</span>
+    },
+    deliveryMethod, <span class="comment">// enum int — no coalesce needed; required path</span>
+  };
+}
+</pre>
+    </div>
+
+    <h5>Step 2 now starts invalid</h5>
+    <p>
+      With <code>security: null</code> + <code>maxNormal: null</code> +
+      <code>maxSystem: null</code> + <code>maxNode: null</code>, all four required-field
+      validators return <code>'required'</code> errors on first render.
+      <code>step2Valid</code> is <code>false</code>. The Next button is disabled. The user must
+      pick a security level and enter the three limits before advancing — exactly the behaviour
+      the user wanted.
+    </p>
+
+    <div class="build-stamp green">7eeb260f4dd0461e</div>
+  </div>
+
+  <!-- =========== SAR ICON API REDESIGN =========== -->
+  <h3>SAR Icon API Redesign</h3>
+
+  <div class="callout callout-user">
+    <div class="quote">
+      "passing just the class for the icon… easy peasy. why are you passing the whole SVG string,
+      use the Falcon Saudi Riyal component, drop it in the slot."
+    </div>
+  </div>
+
+  <p>
+    Wave 6.1's Agent G had designed the icon API as <code>[iconLeftSvg]="rawSvgString"</code> —
+    accepting a raw SVG string and dangerously-setting it into the Stencil component's inner
+    DOM. The user rejected this on principle: the Falcon library already had a canonical
+    <code>&lt;falcon-angular-saudi-riyal-icon&gt;</code> component reading from the
+    <code>svg-icon.registry.ts</code> CURRENCY_SAR entry. The API should accept a slot, not a
+    raw string.
+  </p>
+
+  <h5>The redesign</h5>
+  <ul>
+    <li>Removed the <code>[iconLeftSvg]</code> raw-string input from
+        <code>FalconAngularInputNumberComponent</code> and its Stencil counterpart.</li>
+    <li>Added an <code>iconLeft</code> <strong>boolean</strong> input. When true, the wrapper
+        renders a left-aligned icon slot. When false (default), no slot.</li>
+    <li>Added <code>&lt;ng-content select="[falconInputIconLeft]"&gt;&lt;/ng-content&gt;</code> in
+        the wrapper template — consumers project any icon component into the slot.</li>
+    <li><code>@Input({ transform: booleanAttribute })</code> on the <code>iconLeft</code> input
+        so bare-attribute use (just <code>iconLeft</code> with no <code>="true"</code>) works.
+        Without the <code>booleanAttribute</code> transform, Angular treats the bare attribute
+        as the empty string and the type-checker errors with
+        <code>"string is not assignable to boolean"</code>.</li>
+  </ul>
+
+  <h5>Row-table consumer pattern</h5>
+  <div class="code-block">
+    <div class="code-title">client-service-row-table.component.html — before / after</div>
+<pre><span class="comment">// BEFORE (Wave 6.1):</span>
+<span class="diff-rem">- &lt;falcon-angular-input-number</span>
+<span class="diff-rem">-   [iconLeftSvg]="SAR_SVG_RAW_STRING"</span>
+<span class="diff-rem">-   [state]="showPriceValueError(row) ? 'error' : 'default'"</span>
+<span class="diff-rem">-   [value]="row.priceValue"</span>
+<span class="diff-rem">-   (valueChange)="setPriceValue(row, $event)"</span>
+<span class="diff-rem">- /&gt;</span>
+
+<span class="comment">// AFTER (Wave 7):</span>
+<span class="diff-add">+ &lt;falcon-angular-input-number</span>
+<span class="diff-add">+   iconLeft</span>
+<span class="diff-add">+   [state]="showPriceValueError(row) ? 'error' : 'default'"</span>
+<span class="diff-add">+   [value]="row.priceValue"</span>
+<span class="diff-add">+   (valueChange)="setPriceValue(row, $event)"&gt;</span>
+<span class="diff-add">+   &lt;falcon-angular-saudi-riyal-icon falconInputIconLeft [size]="14" /&gt;</span>
+<span class="diff-add">+ &lt;/falcon-angular-input-number&gt;</span>
+</pre>
+  </div>
+
+  <h5>Library wrapper change</h5>
+  <div class="code-block">
+    <div class="code-title">libs/falcon-ui-core/src/angular-wrapper/components/falcon-input-number/falcon-input-number.component.ts</div>
+<pre><span class="keyword">import</span> { Component, Input, <span class="diff-add">booleanAttribute</span> } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;
+
+@Component({
+  selector: <span class="string">'falcon-angular-input-number'</span>,
+  templateUrl: <span class="string">'./falcon-input-number.component.html'</span>,
+})
+<span class="keyword">export class</span> FalconAngularInputNumberComponent {
+<span class="diff-rem">- @Input() iconLeftSvg?: string;</span>
+<span class="diff-add">+ @Input({ transform: booleanAttribute }) iconLeft = false;</span>
+}
+</pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-title">falcon-input-number.component.html — content projection slot</div>
+<pre>&lt;div class=<span class="string">"falcon-input-number-wrapper"</span>&gt;
+  <span class="diff-add">@if (iconLeft) {</span>
+  <span class="diff-add">  &lt;span class=<span class="string">"icon-left"</span>&gt;</span>
+  <span class="diff-add">    &lt;ng-content select=<span class="string">"[falconInputIconLeft]"</span> /&gt;</span>
+  <span class="diff-add">  &lt;/span&gt;</span>
+  <span class="diff-add">}</span>
+  &lt;falcon-input-number-tw [state]="state" [value]="value" (valueChange)="valueChange.emit($event)" /&gt;
+&lt;/div&gt;
+</pre>
+  </div>
+
+  <div class="build-stamp green">f7fb54737d3b9d53</div>
+
+  <h3>Key files touched in Wave 7</h3>
+  <table>
+    <thead><tr><th>File</th><th>Change</th><th>LOC delta</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>client-service-row-table.component.ts</code></td>
+        <td><code>revealAllRowsErrors()</code> forces new array ref; <code>setPriceType</code>/<code>setPriceValue</code> auto-set touched</td>
+        <td class="table-loc">+6</td>
+      </tr>
+      <tr>
+        <td><code>client-service-row-table.component.html</code></td>
+        <td>Replaced <code>[iconLeftSvg]</code> with <code>iconLeft</code> bare-attribute + projected icon</td>
+        <td class="table-loc">+2 / −1</td>
+      </tr>
+      <tr>
+        <td><code>add-client-wizard/models/models.ts</code></td>
+        <td>Widened 3 form-value interfaces to <code>T | null</code></td>
+        <td class="table-loc">+22 / −12</td>
+      </tr>
+      <tr>
+        <td><code>add-client-wizard/models/wire-builders.ts</code></td>
+        <td>Coalesce <code>null → '' / 0</code> at wire-build time</td>
+        <td class="table-loc">+18 / −6</td>
+      </tr>
+      <tr>
+        <td><code>emptyClientInfo() / emptyClientSettings() / emptyClientAccountOwner()</code></td>
+        <td>All scalar fields now return literal <code>null</code></td>
+        <td class="table-loc">+11 / −16</td>
+      </tr>
+      <tr>
+        <td><code>falcon-input-number.component.ts</code> (Angular wrapper)</td>
+        <td>Removed <code>iconLeftSvg</code>; added <code>iconLeft</code> with <code>booleanAttribute</code> transform</td>
+        <td class="table-loc">+2 / −1</td>
+      </tr>
+      <tr>
+        <td><code>falcon-input-number.component.html</code></td>
+        <td>Added <code>@if (iconLeft)</code> + <code>ng-content</code> projection slot</td>
+        <td class="table-loc">+5</td>
+      </tr>
+      <tr>
+        <td><code>falcon-input-number-tw.tsx</code> (Stencil)</td>
+        <td>Removed <code>iconLeftSvg</code> prop and the dangerously-set inner HTML branch</td>
+        <td class="table-loc">−24</td>
+      </tr>
+      <tr>
+        <td><code>libs/falcon/.../falcon-saudi-riyal-icon</code></td>
+        <td>No code change — confirmed canonical icon reads CURRENCY_SAR from <code>svg-icon.registry.ts</code></td>
+        <td class="table-loc">0</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-lesson">
+    <ul>
+      <li><strong>OnPush + signal-array: reference identity matters.</strong> When you change a
+          sibling state (touched, validity, focus) that an OnPush child depends on, force a new
+          array reference on the data input via shallow spread. This is a recurring trap.
+          See <a href="#lessons-l12">Section 4 → L12: OnPush + Signal Array Identity</a>.</li>
+      <li><strong>Defensive auto-touch on edit handlers.</strong> Setting a touch key
+          inside <code>setX</code> handlers means red feedback follows typing — no need for blur
+          events or explicit reveal calls in interactive paths. The Next-click reveal is reserved
+          for fields the user never touched.</li>
+      <li><strong>Widen types first, factories second.</strong> Wave 6.1's empty-but-not-null first
+          pass demonstrated that updating factories without widening types just relocates the
+          problem. Widen <code>T → T | null</code>, then update the factories, then handle null
+          in validators, then defensively coalesce in the wire builder.</li>
+      <li><strong>Content projection beats raw-string props.</strong> Any component slot
+          (icons, badges, actions, headers) should be a <code>&lt;ng-content&gt;</code> slot, not
+          a string input. Consumers drop in real components — same as the user's "easy peasy"
+          mental model. See <a href="#lessons-l13">Section 4 → L13: Content Projection &gt; String Props</a>.</li>
+      <li><strong><code>booleanAttribute</code> transform for bare-attribute booleans.</strong>
+          Without it, <code>&lt;my-cmp myBool /&gt;</code> fails type-checking because Angular
+          treats bare attributes as the empty string. Always import
+          <code>booleanAttribute</code> from <code>@angular/core</code> for HTML-attribute-style
+          boolean inputs. See
+          <a href="#lessons-l14">Section 4 → L14: booleanAttribute Transform</a>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     CLOSING SUMMARY OF SECTION 3
+     ============================================================ -->
+<section class="wave-section" style="margin-top: 4rem; padding-top: 2rem; border-top: 2px solid #e2e8f0;">
+  <h3 style="border: none; padding: 0; margin-bottom: 1.2rem;">Section 3 — Closing Summary</h3>
+
+  <p>
+    Across Waves 4.2, 5, 6, and 7, the Add Client wizard moved from "backend-wired but rough" to
+    "shipping-grade polished, eager-loaded, library-only, null-defaulted, icon-projected,
+    OnPush-correct." Each wave layered on top of the previous one: 4.2 fixed the four
+    user-flagged polish items; 5 added architecture (slice pattern), new dialogs, and the
+    Save → Sending Credentials → Create → Success flow; 6 added null defaults, the
+    <code>DeliveryMethod</code> enum, eager loading, row-table validation rendering, and the
+    per-component signals folder doctrine; 7 closed the final loose ends — the OnPush re-render
+    bug that hid Wave 6's row-table validation work, the type-widening that made Wave 6's
+    null defaults real, and the icon API redesign that replaced Wave 6's hand-rolled raw-SVG
+    approach with proper content projection.
+  </p>
+
+  <p>
+    Every build came out green. Every user concern was addressed and tested. Four lasting
+    doctrines locked in (state lives next to its consumer; provider hoisting gives pristine
+    state for free; eager forkJoin on wizard mount with computed adapters per step; OnPush +
+    signal-array needs reference identity discipline). The cumulative diff is around 3,500 net
+    lines across the wizard, the state services, the library components, and the host-shell
+    plumbing — but the doctrines are what will carry forward into Add Tenant, Edit Client,
+    Add Service Group, and every wizard that comes next.
+  </p>
+
+  <p>
+    The Wave-by-Wave deep dive ends here. Section 4 picks up the lessons-learned thread and
+    organizes the doctrines into a forward-applicable rule book.
+  </p>
+</section>

@@ -77,7 +77,17 @@ type FalconEyesConfig = {
     writeJson: boolean;
     writeMarkdown: boolean;
   };
-  navigation: { preWaitForSelector?: string | null; scrollToTopBeforeCapture?: boolean };
+  navigation: {
+    preWaitForSelector?: string | null;
+    scrollToTopBeforeCapture?: boolean;
+    /*** Optional pre-capture navigation clicks (e.g. open the Wallet page from the SoT sidebar
+     *** before capturing). The SoT hash only selects a page's falcon/client VIEW; the active
+     *** PAGE is sidebar-driven, so reaching Wallet/Marketplace/Contracts needs a click first.
+     *** preClickSelector (CSS) takes precedence over preClickText (visible-text match). ***/
+    preClickSelector?: string | null;
+    preClickText?: string | null;
+    postClickWaitMs?: number;
+  };
   headless: boolean;
 };
 
@@ -144,6 +154,18 @@ async function gotoAndPrepare(page: Page, url: string, cfg: FalconEyesConfig): P
   await page.goto(url, { waitUntil: cfg.wait.state });
   if (cfg.navigation.preWaitForSelector) {
     await page.waitForSelector(cfg.navigation.preWaitForSelector, { timeout: 30000 }).catch(() => undefined);
+  }
+  // Optional pre-capture navigation click — reach a sidebar-driven page (e.g. Wallet) before capturing.
+  const preClickSelector = cfg.navigation.preClickSelector;
+  const preClickText = cfg.navigation.preClickText;
+  if (preClickSelector) {
+    await page.locator(preClickSelector).first().click({ timeout: 15000 }).catch(() => undefined);
+  } else if (preClickText) {
+    await page.getByText(preClickText, { exact: false }).first().click({ timeout: 15000 }).catch(() => undefined);
+  }
+  if (preClickSelector || preClickText) {
+    const postClickWaitMs = cfg.navigation.postClickWaitMs ?? 1500;
+    if (postClickWaitMs > 0) await page.waitForTimeout(postClickWaitMs);
   }
   if (cfg.navigation.scrollToTopBeforeCapture) {
     await page.evaluate(() => window.scrollTo(0, 0));

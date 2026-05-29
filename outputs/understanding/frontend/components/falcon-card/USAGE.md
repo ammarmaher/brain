@@ -1,4 +1,4 @@
-# falcon-card — USAGE
+﻿# falcon-card — USAGE
 
 ## Real usage examples
 The component is exported and registered but has zero `<falcon-angular-card>` usage matches in `apps/`. This is an under-leveraged primitive. Examples below are recommended patterns.
@@ -91,3 +91,9 @@ The wrapper exposes `computed()` helpers (`classes`, `bodyClasses`, `headerClass
 | Use tokens for per-instance overrides | Inline Tailwind utilities on the host |
 | Stack flat cards inside default cards for hierarchy | Stack default cards in default cards (too many shadows) |
 | Wrap data tables in a card for consistent framing | Wrap dialogs in a card (use dialog's own surface) |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-card>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/management-console/src/app/features/comms-hub/comms-hub.component.html`

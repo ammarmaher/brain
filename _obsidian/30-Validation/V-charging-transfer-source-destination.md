@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: false
 created: 2026-05-15
+module: contract
+feature: charging-transfer
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contract", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-charging-transfer-source-destination — transfer source ≠ destination + currency match ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: charging · 2026-05-15 ***

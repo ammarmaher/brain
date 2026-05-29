@@ -63,3 +63,13 @@ The Drive folder is the authority. To refresh: run `take latest from PRD` agains
 ## Tags
 
 #type/index #gap #security
+
+
+---
+
+## Vol 44 — Truth Tautologies (Added 2026-05-18)
+
+- [[VOL-44-TRUTH-TAUTOLOGIES]] — 35+ BRD-extracted `*-TT-*` tautologies covering wallet, multi-contract, user status, template tab matrix, CG permissions, marketplace, destination identification
+- [[Vol 44 — Supporting Artifacts Research]] — Atlas volume graph node
+- Refines: Vol 28 Matrix 5 (wallet), Vol 31 (destinations), Vol 38 (templates), BR-CC-31 (multi-contract pricing)
+

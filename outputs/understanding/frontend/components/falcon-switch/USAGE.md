@@ -1,4 +1,4 @@
-# falcon-switch — USAGE
+﻿# falcon-switch — USAGE
 
 ## Real usage examples
 
@@ -85,3 +85,15 @@ form = new FormGroup({
 | Use for feature toggles / preferences. | Use for required form acceptance (use checkbox). |
 | Use `channel-pill` when ON/OFF labels add clarity. | Apply `textOn` to other variants. |
 | Bind via CVA. | Use `[value]` directly. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-switch>` across `apps/` + `libs/falcon/` returned **7 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-service-row-table/client-service-row-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-service-row-table/client-service-row-table.component.ts`
+- `apps/host-shell/src/app/features/falcon-ui-showcase/library-section/empty-data-section.component.ts`
+- `apps/host-shell/src/app/features/falcon-ui-showcase/library-section/library-section.component.ts`
+- `apps/host-shell/src/app/playground/playground.page.html`

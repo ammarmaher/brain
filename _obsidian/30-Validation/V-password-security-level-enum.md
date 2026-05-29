@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: false
 created: 2026-05-15
+module: account-mgmt
+feature: password-policy
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/account-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-password-security-level-enum — Password Security Level enum membership ***
 *** Origin: PRD-01 Account Management · Backend: Commerce + Identity · 2026-05-15 ***

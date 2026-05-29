@@ -1,4 +1,4 @@
-# falcon-switch — GAPS AND UPGRADES
+﻿# falcon-switch — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -78,3 +78,9 @@ All shared.
 
 - For G3: gate `[disabled]` while async pending, show a sibling spinner externally.
 - For G2: extend label with HTML in default slot.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 7** ([CODE] grep `<falcon-angular-switch>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

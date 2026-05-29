@@ -1,0 +1,32 @@
+{
+  "name": "brain-boost",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Isolated Falcon brain enhancement tool: semantic search (Orama + transformers.js), graph health (graphology), and dossier/skill linting (gray-matter + remark + zod). Tier 1+2. MUST NOT add deps to the Angular workspace.",
+  "scripts": {
+    "index": "node --dns-result-order=ipv4first src/index-semantic.mjs",
+    "query": "node --dns-result-order=ipv4first src/query-semantic.mjs",
+    "health": "node src/graph-health.mjs",
+    "lint": "node src/lint-brain.mjs",
+    "warm": "node --dns-result-order=ipv4first src/warm-model.mjs",
+    "build-sqlite": "node src/build-sqlite.mjs",
+    "query-sqlite": "node --dns-result-order=ipv4first src/query-sqlite.mjs",
+    "measure": "node --dns-result-order=ipv4first src/measure.mjs",
+    "repair-edges": "node src/repair-edges.mjs"
+  },
+  "dependencies": {
+    "@orama/orama": "^3.1.0",
+    "@xenova/transformers": "^2.17.2",
+    "better-sqlite3": "^11.8.1",
+    "graphology": "^0.26.0",
+    "graphology-communities-louvain": "^2.0.1",
+    "graphology-metrics": "^2.4.0",
+    "gray-matter": "^4.0.3",
+    "remark-frontmatter": "^5.0.0",
+    "remark-parse": "^11.0.0",
+    "sqlite-vec": "^0.1.7-alpha.2",
+    "unified": "^11.0.5",
+    "zod": "^3.24.1"
+  }
+}

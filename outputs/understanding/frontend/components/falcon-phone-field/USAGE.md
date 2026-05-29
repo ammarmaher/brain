@@ -1,4 +1,4 @@
-# falcon-phone-field — USAGE
+﻿# falcon-phone-field — USAGE
 
 ## Real usage examples
 
@@ -94,3 +94,13 @@ See Example 3.
 | Use for ALL phone fields. | Use generic input for phones. |
 | Validate via Reactive Forms + libphonenumber. | Trust component-side. |
 | Pass filtered `countries` when applicable. | Always render full list. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-phone-field>` across `apps/` + `libs/falcon/` returned **5 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-account-owner-step/client-account-owner-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step/user-personal-step.component.html`
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-mobile-number/falcon-mobile-number.component.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-mobile-number/falcon-mobile-number.component.ts`

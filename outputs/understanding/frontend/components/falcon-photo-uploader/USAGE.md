@@ -1,4 +1,4 @@
-# falcon-photo-uploader (LEGACY) — USAGE
+﻿# falcon-photo-uploader (LEGACY) — USAGE
 
 ## Real usage in active codebase
 
@@ -67,3 +67,13 @@ Each admin-console consumer has a mirror in `apps/management-console/src/app/fea
 - DO read the data URL from `(photoChange)` and pipe to the consumer's state service.
 - DON'T add new features to this component.
 - DON'T re-export or alias it elsewhere — the legacy footprint should not grow.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-photo-uploader>` (pure-Angular tag, not a wrapper) across `apps/` + `libs/falcon/` returned **5 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-info-panel/falcon-org-info-panel.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-account-owner-step/client-account-owner-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/models/models.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step/user-personal-step.component.html`

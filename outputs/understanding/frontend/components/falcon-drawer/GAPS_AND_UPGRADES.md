@@ -1,4 +1,4 @@
-# falcon-drawer — GAPS AND UPGRADES
+﻿# falcon-drawer — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -107,3 +107,9 @@ All belong in the shared component.
 
 ## Future-proof recommendation
 Consolidate the dialog + drawer focus-trap code into a shared `useFocusTrap()` Stencil mixin. Both components today duplicate ~30 lines of focus-trap logic — a single source would prevent future drift.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-drawer>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

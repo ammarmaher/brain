@@ -1,4 +1,4 @@
-# falcon-angular-wizard — USAGE
+﻿# falcon-angular-wizard — USAGE
 
 ## Real usage in active codebase
 - `apps/host-shell/src/app/playground/playground.page.html` — playground showcase (5-step demo of the dual render path).
@@ -129,3 +129,7 @@ async forceNext(): Promise<void> {
 - DO use `slot="footer-extra"` for tertiary actions (Cancel, Skip This Step) that don't fit Next/Back/Finish/Draft.
 - DON'T add custom CSS to override the footer layout — propose new tokens instead.
 - DON'T set `[stepControls]` to a non-array; the wrapper's `resolvedValidateStep` guards with `if (!this.stepControls?.length) return undefined;`.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-wizard>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

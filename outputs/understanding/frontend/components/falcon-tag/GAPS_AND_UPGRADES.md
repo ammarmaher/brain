@@ -1,4 +1,4 @@
-# falcon-tag — GAPS & UPGRADES
+﻿# falcon-tag — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -53,3 +53,9 @@
 ## Future-proof recommendation
 
 Clean up the dead `classes` computed. Add i18n affordances. Then promote `<falcon-angular-tag>` as the canonical chip primitive across multi-select and filter UIs.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-tag>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

@@ -1,4 +1,4 @@
-# falcon-insufficient-balance-dialog — USAGE
+﻿# falcon-insufficient-balance-dialog — USAGE
 
 ## Real usage in the workspace
 
@@ -128,3 +128,11 @@ The underlying `-tw` Stencil tag registers automatically via `defineFalconTwComp
 - **Don't try to read the dialog's working state externally** — it's encapsulated; subscribe to `(falconProceed)`.
 - **Don't pass raw `null` to `errorMessage`** — use `undefined` (Angular wrapper input is `string | undefined`).
 - **Don't use this for binary yes/no decisions** — use `<falcon-angular-popup>`.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-insufficient-balance-dialog>` across `apps/` + `libs/falcon/` returned **3 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/features/falcon-ui-showcase/library-section/library-section.component.ts`
+- `apps/host-shell/src/app/shared-components/do-payment-priority-popup/do-payment-priority-popup.component.html`
+- `apps/host-shell/src/app/shared-components/do-payment-priority-popup/do-payment-priority-popup.component.ts`

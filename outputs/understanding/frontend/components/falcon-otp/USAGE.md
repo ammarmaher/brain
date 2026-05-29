@@ -1,4 +1,4 @@
-# falcon-otp — USAGE
+﻿# falcon-otp — USAGE
 
 ## Real usage examples
 
@@ -88,3 +88,12 @@ submitOnComplete = effect(() => {
 | Use for 4-8 char codes. | Use for free-text. |
 | Set `mask=true` for PINs. | Display PIN unmasked. |
 | Detect completion in `(ngModelChange)`. | Wait for blur. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-otp>` across `apps/` + `libs/falcon/` returned **4 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/features/auth/enter-otp/enter-otp.component.html`
+- `apps/host-shell/src/app/features/auth/forgot-password-flow/forgot-password-flow.component.html`
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `apps/host-shell/src/app/shared-components/otp-dialog/otp-dialog.component.html`

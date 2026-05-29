@@ -9,6 +9,15 @@ drift: false
 created: 2026-05-24
 xlsx: Source_of_truth_theme/Validations.SOT-2026-05-24.xlsx
 supersedes: [V-user-first-last-name-letters-only]
+module: user-mgmt
+feature: add-user
+verification: runtime
+last-verified: 2026-05-24
+tags: ["#status/triangulated", "#module/user-mgmt", "#verification/runtime", "#layer/fe"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+superseded-by: []
+evidence-link: project_validation_xlsx_sot_flip_wave_f_2026_05_24.md
 ---
 *** V-person-name-format-xlsx-2026-05-24 — First/Last Name per new xlsx SoT ***
 *** Origin: Validations.xlsx 2026-05-24 · Identity · 2026-05-24 ***

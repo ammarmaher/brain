@@ -5,5 +5,5 @@
                      "silent",
                      "mute"
                  ],
-    "mode":  "mute"
+    "mode":  "silent"
 }

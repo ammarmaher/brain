@@ -45,3 +45,59 @@
 - The PRD uses **Master Wallet** consistently; do NOT alias as "main wallet" or "primary wallet".
 - The PRD uses **Falcon usertype** to mean the admin-side user (vs Client usertype = client-side). Both are precise; avoid "internal user" / "external user" aliases.
 - The PRD uses **CommChannel** (one word). Code mixes `CommunicationChannel` (DTOs) and `CommChannel` (some helpers); the glossary should pick one. Flagged.
+
+---
+
+## Resolutions (Wave 2 — 2026-05-17)
+
+### Q-AM-11 — Classification Category + Sub-category source [PARTIAL RESOLUTION]
+
+**Resolution: hardcoded enums in `Falcon.Commerce.Domain.Constants`.**
+
+- [BRAIN-OUT] `backend/commerce/DTO_DICTIONARY.md` references `eClassificationCategory` (VIP / Critical / Normal) and `eClassificationSubCategory` (Bank / Gov / SemiGov / Large / Medium / SME) — both as **enum types**, not DB-backed lookups.
+- **Implication:** adding a new classification requires a service redeploy.
+- The PRD `latest-prd.md:37-38` doesn't mandate DB-editable behavior — it lists the values inline.
+- DECISION-PROTOCOL `F-022` (conservative default): keep hardcoded enum as current state; if Operations wants DB-editable, that's a Phase 2 feature.
+- **Action:** track as PRD enhancement candidate; not urgent.
+- **Confidence:** High.
+
+### Q-AM-13 — Allowed-IPs HTTP header name + scope [PARTIAL RESOLUTION]
+
+**Inferred: header is system-config (single name across all accounts), not per-account.**
+
+**Reasoning:**
+- [PRD] `latest-prd.md:44` says: "Network Access uses an Allowed-IPs list, enforced via an agreed HTTP header parameter."
+- "An agreed HTTP header" implies **a single agreed name** shared platform-wide, not "each account picks its own".
+- [BRAIN-OUT] [[V-account-ip-allowlist-enforcement]] is triangulated and references gateway-level enforcement via the `Allowed-IPs` list (per-account values).
+- [BRAIN-OUT] `Brain Outputs\understanding\backend\core-gateway\*` and `system-gateway\*` should contain the actual header name + middleware code.
+- **Action:** read Core Gateway `Program.cs` to find the actual header name. Likely candidates: `X-Real-IP` (proxy-standard), `X-Forwarded-For` (proxy-standard), or a Falcon-custom name like `X-Falcon-Client-IP`.
+- **Confidence:** Medium-low — requires gateway code read.
+
+### Q-AM-19 — CommChannel count cap per active contract [INFERRED RESOLUTION]
+
+**Inferred: no cap. The "Active contract + 3 visible commchannels + 4th" scenario implies no hard limit at the contract level.**
+
+**Reasoning:**
+- [PRD] `root-documents/latest-prd.md:24`: "Active contract + 3 visible commchannels; client wants to activate the 4th." — this is the entire backlog item; no further specification.
+- [PRD] `latest-prd.md:91` (Step 2 Rate Card): "Rate Card Price Value applies to: Multiple-wallet accounts, OR Single-wallet accounts with EXACTLY ONE active commchannel" — this is about Rate Card applicability, not commchannel count cap.
+- [BRAIN-OUT] Commerce DTOs have no `MaxCommChannelsPerContract` field anywhere.
+- **Inferred:** The "Active contract + 4th commchannel" backlog item is asking what happens when a client wants to enable a fourth commchannel under an existing active contract. **The answer is: nothing special** — the contract's `RateCardEntry[]` and `ContractDetail[]` matrix just expand to cover the new commchannel. No re-activation needed.
+- DECISION-PROTOCOL `F-022` conservative default: don't introduce a cap that isn't in the PRD.
+- **Confidence:** Medium-high.
+- **Action:** confirm with Jawad that no cap exists. If a cap is needed, treat it as a Phase 2 new business rule.
+
+### Q-AM-20 — Single-wallet-multi-commchannel rate card selection [DEFERRED]
+
+**Resolution: defer to PRD revision; not a runtime ambiguity tonight.**
+
+**Reasoning:**
+- The PRD `latest-prd.md:28` (BR-CC-20 via cross-link) explicitly says: "Rate Card Price Value applies to: Multiple-wallet accounts, OR Single-wallet accounts with **EXACTLY ONE active commchannel**."
+- For Single-wallet-with-multiple-commchannels, the PRD itself says "applies to" excludes this case.
+- This means: in Single-wallet-multi-commchannel, the SAR-to-Points conversion is undefined per current PRD.
+- The backlog item Q-AM-20 says the answer requires "Changes in Doc + Screens" — i.e., **product team owns this scope decision**.
+- **Action:** treat as PRD-extension request; surface to product team. Do not attempt to invent a fallback in code.
+- **Confidence:** N/A — this is a deliberate product-scope question.
+
+### Items NOT resolved (pending Drive deep-read or product input)
+
+- Q-AM-01 (wallet topology change after balance), Q-AM-02 (deleted Normal User funds), Q-AM-03 (Account Limits edit enforcement), Q-AM-04 (Show→Hide while Active), Q-AM-05 (IP edit terminates sessions?), Q-AM-06 (Finance ID source), Q-AM-07 (transfer-limit baseline), Q-AM-08 (Account archive state), Q-AM-09 (Renewal job trigger), Q-AM-10 (full wallet UI per scenario — Drive Drawings deep-read), Q-AM-12 (System User definition), Q-AM-14 (umbrella PUT vs granular PATCH), Q-AM-15 (wallet topology edit endpoint), Q-AM-16 (PES sheet sync).

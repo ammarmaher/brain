@@ -1,0 +1,52 @@
+filters:
+  and:
+    - '"type" == "entity-reconciliation"'
+
+properties:
+  file.name:
+    displayName: Entity
+  module:
+    displayName: Module
+  service:
+    displayName: Service
+  prd:
+    displayName: PRD
+  drift-count:
+    displayName: Drift Count
+  verification:
+    displayName: Verification
+  last-verified:
+    displayName: Last Verified
+
+views:
+  - type: table
+    name: All entities
+    order:
+      - file.name
+      - module
+      - service
+      - prd
+      - drift-count
+      - verification
+      - last-verified
+    sort:
+      - column: drift-count
+        direction: DESC
+
+  - type: table
+    name: High-drift
+    filters:
+      and:
+        - '"type" == "entity-reconciliation"'
+        - 'drift-count > 5'
+    order:
+      - file.name
+      - module
+      - service
+      - prd
+      - drift-count
+      - verification
+      - last-verified
+    sort:
+      - column: drift-count
+        direction: DESC

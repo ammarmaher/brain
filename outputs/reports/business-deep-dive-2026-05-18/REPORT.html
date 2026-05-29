@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Falcon Business Knowledge Mining — 2026-05-18</title>
+<style>
+  :root {
+    --bg:#0e1117; --panel:#161b22; --panel2:#1c2129; --border:#30363d;
+    --text:#e6edf3; --muted:#7d8590; --accent:#58a6ff; --accent2:#bc8cff;
+    --good:#3fb950; --warn:#d29922; --bad:#f85149; --info:#388bfd;
+    --code:#161b22;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:15px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:var(--code);padding:1px 6px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;color:#ffa657}
+  header.hero{background:linear-gradient(135deg,#161b22 0%,#1c2129 100%);padding:32px 40px;border-bottom:1px solid var(--border)}
+  header h1{font-size:28px;margin-bottom:6px;color:var(--text)}
+  header .subtitle{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+  .stat-card{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+  .stat-num{display:block;font-size:24px;font-weight:600;color:var(--accent)}
+  .stat-label{display:block;font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:12px;border-top:1px solid var(--border)}
+  .controls button{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:.15s}
+  .controls button:hover{background:var(--accent);border-color:var(--accent)}
+  .controls button.danger:hover{background:var(--bad);border-color:var(--bad)}
+  #autosave-status{margin-left:auto;font-size:12px;color:var(--good)}
+  #filter-bar{display:flex;gap:8px;align-items:center;margin-left:8px}
+  #filter-bar input{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;width:200px;font-size:13px}
+  main{max-width:1200px;margin:0 auto;padding:24px 40px 64px}
+  nav.toc{position:sticky;top:0;background:var(--bg);padding:16px 40px;border-bottom:1px solid var(--border);z-index:50}
+  nav.toc h2{font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;letter-spacing:.5px}
+  nav.toc ol{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+  nav.toc li a{font-size:13px;padding:4px 10px;background:var(--panel2);border-radius:14px;border:1px solid var(--border)}
+  nav.toc li a:hover{background:var(--accent);color:#fff;text-decoration:none}
+  section.module{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:24px;scroll-margin-top:90px}
+  section.module h2{font-size:22px;margin-bottom:6px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+  section.module h2 .badge{font-size:12px;background:var(--accent);color:#fff;padding:3px 9px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  section.module h2 .scope-badge{background:var(--accent2)}
+  section.module .module-meta{color:var(--muted);font-size:13px;margin-bottom:16px}
+  details{background:var(--panel2);border:1px solid var(--border);border-radius:8px;margin-bottom:14px;padding:0}
+  details>summary{padding:12px 16px;cursor:pointer;font-weight:600;list-style:none;display:flex;align-items:center;justify-content:space-between}
+  details>summary::-webkit-details-marker{display:none}
+  details>summary::after{content:'▾';transition:transform .2s;color:var(--muted)}
+  details:not([open])>summary::after{transform:rotate(-90deg)}
+  details>summary:hover{background:#202732}
+  details>summary .count{background:var(--bg);font-size:12px;color:var(--muted);padding:2px 8px;border-radius:10px;margin-left:auto;margin-right:14px}
+  details .content{padding:16px;border-top:1px solid var(--border)}
+  .gap{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;border-left:3px solid var(--info)}
+  .gap[data-severity="high"]{border-left-color:var(--bad)}
+  .gap[data-severity="medium"]{border-left-color:var(--warn)}
+  .gap[data-severity="low"]{border-left-color:var(--good)}
+  .gap h4{font-size:14px;margin-bottom:4px;color:var(--text)}
+  .gap .sev{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-right:8px;text-transform:uppercase;vertical-align:middle}
+  .gap .sev.high{background:rgba(248,81,73,.15);color:var(--bad)}
+  .gap .sev.medium{background:rgba(210,153,34,.15);color:var(--warn)}
+  .gap .sev.low{background:rgba(63,185,80,.15);color:var(--good)}
+  .gap .desc{font-size:13px;color:var(--text);margin:4px 0}
+  .gap .binding{font-size:12px;color:var(--muted);font-family:ui-monospace,monospace}
+  .question{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;transition:.15s}
+  .question:hover{border-color:var(--accent)}
+  .question.answered{border-left:3px solid var(--good)}
+  .question.answered-no{border-left:3px solid var(--bad)}
+  .question.answered-defer{border-left:3px solid var(--warn)}
+  .question .qid{color:var(--accent);font-family:ui-monospace,monospace;font-weight:600;font-size:13px}
+  .question .qtext{margin:6px 0 10px;font-size:14px}
+  .question .answers{display:flex;gap:14px;flex-wrap:wrap}
+  .question .answers label{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;padding:4px 10px;border-radius:6px;background:var(--panel2);border:1px solid var(--border);transition:.1s}
+  .question .answers label:hover{background:var(--panel)}
+  .question .answers input[type=radio]{accent-color:var(--accent)}
+  .question .answers label.yes-label:has(input:checked){background:rgba(63,185,80,.18);border-color:var(--good)}
+  .question .answers label.no-label:has(input:checked){background:rgba(248,81,73,.18);border-color:var(--bad)}
+  .question .answers label.defer-label:has(input:checked){background:rgba(210,153,34,.18);border-color:var(--warn)}
+  .question .qnote{margin-top:8px;width:100%;padding:6px 10px;background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:13px;font-family:inherit}
+  .question .qnote:focus{outline:none;border-color:var(--accent)}
+  .proposal{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:13px;border-left:3px solid var(--accent2)}
+  .proposal .ptype{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(188,140,255,.15);color:var(--accent2);margin-right:8px}
+  .proposal .pid{font-family:ui-monospace,monospace;color:var(--accent2);font-weight:600}
+  .proposal .pdesc{color:var(--muted);font-size:12px;margin-top:2px}
+  table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:13px}
+  table th,table td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table th{background:var(--panel2);font-weight:600;color:var(--text);font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+  table tr:nth-child(even){background:rgba(255,255,255,.015)}
+  .source-prefix{font-family:ui-monospace,monospace;font-size:11px;padding:1px 5px;border-radius:3px;background:var(--panel2);color:var(--accent2);margin-right:4px}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
+  .progress-bar{height:6px;background:var(--panel2);border-radius:3px;overflow:hidden;margin-top:8px}
+  .progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--good),var(--accent));width:0%;transition:width .3s}
+  .module-progress{font-size:12px;color:var(--muted);margin-top:4px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;font-size:12px}
+  .legend span{padding:3px 8px;border-radius:4px;background:var(--panel2);border:1px solid var(--border)}
+  .legend .high{border-left:3px solid var(--bad)}
+  .legend .medium{border-left:3px solid var(--warn)}
+  .legend .low{border-left:3px solid var(--good)}
+  .findings-summary{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:18px}
+  .findings-summary h3{font-size:16px;margin-bottom:10px}
+  .findings-summary ul{padding-left:24px}
+  .findings-summary li{margin-bottom:4px;font-size:14px}
+  .hidden{display:none!important}
+  .top-priority{background:linear-gradient(135deg,rgba(248,81,73,.06),rgba(210,153,34,.04));border:1px solid var(--bad);border-radius:8px;padding:14px;margin-bottom:18px}
+  .top-priority h3{color:var(--bad);font-size:14px;margin-bottom:8px}
+  .top-priority ol{padding-left:22px}
+  .top-priority li{font-size:13px;margin-bottom:3px}
+  @media print{nav.toc{position:static}.controls{display:none}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>🧠 Falcon Business Knowledge Mining Report</h1>
+  <p class="subtitle">Cross-module deep-dive · 5 PRD modules + cross-cutting integration · 2026-05-18</p>
+  <div class="stats">
+    <div class="stat-card"><span class="stat-num">5</span><span class="stat-label">Modules mined</span></div>
+    <div class="stat-card"><span class="stat-num">221</span><span class="stat-label">BR rules audited</span></div>
+    <div class="stat-card"><span class="stat-num">41</span><span class="stat-label">OPEN BR rules</span></div>
+    <div class="stat-card"><span class="stat-num">26</span><span class="stat-label">V-rules in vault</span></div>
+    <div class="stat-card"><span class="stat-num">62</span><span class="stat-label">V-rules proposed</span></div>
+    <div class="stat-card"><span class="stat-num">16</span><span class="stat-label">E-* entities in vault</span></div>
+    <div class="stat-card"><span class="stat-num">34</span><span class="stat-label">E-* entities proposed</span></div>
+    <div class="stat-card"><span class="stat-num">98</span><span class="stat-label">New business gaps</span></div>
+    <div class="stat-card"><span class="stat-num" id="qtotal">105</span><span class="stat-label">Yes/No questions</span></div>
+    <div class="stat-card"><span class="stat-num" id="qanswered">0</span><span class="stat-label">Answered</span></div>
+  </div>
+  <div class="controls">
+    <button id="export-btn" title="Download all answers as JSON">⬇ Export answers (JSON)</button>
+    <button id="import-btn" title="Restore previously exported answers">⬆ Import answers</button>
+    <button id="clear-btn" class="danger" title="Clear all answers from this browser">✕ Clear all</button>
+    <button id="expand-all">Expand all</button>
+    <button id="collapse-all">Collapse all</button>
+    <div id="filter-bar">
+      <input type="text" id="filter-input" placeholder="🔍 Filter questions/gaps…">
+      <select id="filter-status" style="background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:6px;border-radius:6px;font-size:13px">
+        <option value="all">All questions</option>
+        <option value="unanswered">Unanswered only</option>
+        <option value="answered">Answered only</option>
+      </select>
+    </div>
+    <span id="autosave-status">Auto-save enabled</span>
+    <input type="file" id="import-file" accept="application/json" style="display:none">
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>Quick Jump</h2>
+  <ol>
+    <li><a href="#summary">📊 Summary</a></li>
+    <li><a href="#top-priority">🔥 Top priorities</a></li>
+    <li><a href="#module-01">M01 Account</a></li>
+    <li><a href="#module-02">M02 User</a></li>
+    <li><a href="#module-03">M03 Contract/Cost</a></li>
+    <li><a href="#module-04">M04 Contact Group</a></li>
+    <li><a href="#module-05">M05 Templates</a></li>
+    <li><a href="#cross-cutting">M-X Cross-cutting</a></li>
+    <li><a href="#methodology">🔬 Methodology</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="summary" class="module">
+  <h2>📊 Executive Summary</h2>
+  <p class="module-meta">What this report covers and the most important shifts revealed by the mining pass.</p>
+
+  <div class="findings-summary">
+    <h3>The headlines</h3>
+    <ul>
+      <li><strong>221 business rules</strong> exist across 5 modules. <strong>41 are OPEN</strong> (PRD-silent or contradictory). Until they close, the platform behavior on those topics depends on whoever ships the code first.</li>
+      <li><strong>Module 05 Templates is the largest knowledge hole.</strong> Only ~12% of the 982-line source PRD made it into the vault. Voice + AI template flows are entirely missing. The Template entity has <em>zero backend DTOs and no <code>E-template.md</code> vault note</em>.</li>
+      <li><strong>26 V-rules cover only ~25% of the 221 BR rules.</strong> Wallet topology (BR-AM-20..38), contract lifecycle (BR-CC-10..14), template wizard (BR-TM-02..16) are essentially unvalidated.</li>
+      <li><strong>16 E-* entities</strong> in vault; <strong>34 more</strong> are referenced by BR rules but undefined. The single biggest missing entity is <code>E-permission-group</code> — cited everywhere, modeled nowhere.</li>
+      <li><strong>Cross-module workflows are documented only for Add Client.</strong> Send Transaction (the most important platform flow), Add Contract, Transfer Balance, Do Payment, First Login — none have an A→Z trace.</li>
+      <li><strong>105 yes/no questions</strong> need product-team answers. Tick the answers below; the report auto-saves and you can export the full set as JSON to share back.</li>
+    </ul>
+  </div>
+
+  <div class="top-priority" id="top-priority">
+    <h3>🔥 Top 10 highest-priority decisions (HIGH severity, blocking implementation today)</h3>
+    <ol>
+      <li><strong>Q-UM-07</strong> — Permission Sheet Tab 2 re-export from Drive (blocks BR-UM-43/44 + 4 downstream Q-UM questions)</li>
+      <li><strong>Q-UM-13 / GAP-BIZ-UM-02</strong> — Admin OTP path for editing another user's email/phone (blocks entire Edit User epic)</li>
+      <li><strong>GAP-BIZ-CG-03 / BR-CGM-34</strong> — `Failed` status missing from contact-group enum (parse errors silently invisible)</li>
+      <li><strong>GAP-BIZ-CC-02 / BR-CC-49</strong> — Refund flow entirely absent in PRD (no entity, no rule, no endpoint)</li>
+      <li><strong>GAP-BIZ-CC-03 / BR-CC-44</strong> — KSA VAT + ZATCA e-invoicing entirely missing (compliance risk)</li>
+      <li><strong>GAP-BIZ-TM-01 / GAP-TM-01</strong> — Template entity has no backend DTOs and no <code>E-template.md</code></li>
+      <li><strong>GAP-BIZ-X-02</strong> — Account soft-delete / termination has no documented story (cross-cuts all 5 modules)</li>
+      <li><strong>GAP-BIZ-X-08</strong> — `E-permission-group` missing despite being cited by every module</li>
+      <li><strong>GAP-BIZ-AM-01</strong> — 6-state CommChannel/App status FSM has no transition table or V-rule</li>
+      <li><strong>GAP-BIZ-X-15 / Send-Transaction.trace.md</strong> — End-to-end Send Transaction has no single document tracing Contract → Template → Contact Group → CommChannel → wallet deduction</li>
+    </ol>
+  </div>
+
+  <div class="legend">
+    <span class="high">HIGH = blocks implementation OR creates security/compliance risk</span>
+    <span class="medium">MEDIUM = blocks completeness OR creates technical debt</span>
+    <span class="low">LOW = cosmetic / nice-to-have</span>
+  </div>
+
+  <h3 style="margin-top:18px;margin-bottom:8px">How to use this report</h3>
+  <ol style="padding-left:22px;font-size:14px">
+    <li>Scroll through each module section. Each has 3 collapsible blocks: <em>Gaps Discovered</em>, <em>Yes/No Questions</em>, <em>Proposed New Vault Notes</em>.</li>
+    <li>For each yes/no question, click <strong>Yes</strong>, <strong>No</strong>, or <strong>Defer</strong>. Answers auto-save to your browser (localStorage).</li>
+    <li>Add optional notes per question (free-text) — they save too.</li>
+    <li>When done (or in batches), click <strong>⬇ Export answers (JSON)</strong> to download all your answers as a JSON file. Share that back and the gaps can close.</li>
+    <li>Use 🔍 filter to find specific questions/gaps. Use the status dropdown to focus on unanswered only.</li>
+  </ol>
+</section>
+
+<!-- ============ MODULE 01 — ACCOUNT MANAGEMENT ============ -->
+<section id="module-01" class="module" data-module="AM">
+  <h2>Module 01 — Account Management <span class="badge">BR-AM-*</span></h2>
+  <p class="module-meta">42 BR rules · 4 OPEN · 2 INFERRED · 7 V-rules in vault (cover 12 BR rules — <strong>30 of 42 rules unvalidated</strong>) · 3 entities missing from vault</p>
+  <div class="module-progress">Questions answered: <span class="qa-AM">0</span> / 20 <div class="progress-bar"><div class="fill" id="prog-AM"></div></div></div>
+
+  <details open>
+    <summary>🟠 Business Gaps Discovered <span class="count">29</span></summary>
+    <div class="content">
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-01 — Status FSM missing</h4><p class="desc">6-state CommChannel/App lifecycle has no transition table or V-rule.</p><p class="binding">Binds: BR-AM-20, BR-AM-21, BR-AM-23, BR-AM-24</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-02 — Grace-period semantics unsurfaced</h4><p class="desc">7d Monthly / 30d Yearly+OneTime grace durations not exposed via DTOs or V-rule (presumably hardcoded in renewal job).</p><p class="binding">Binds: BR-AM-21</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-03 — Renewal worker unmapped</h4><p class="desc">Background renewal job not in code-map; Kafka event chain unverified.</p><p class="binding">Binds: BR-AM-23</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-04 — Master Wallet formula uncontracted</h4><p class="desc">Master Wallet = SUM(Active contract records) has no V-rule invariant or test.</p><p class="binding">Binds: BR-AM-28, BR-AM-38</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-05 — Transfer-limit % baseline undefined</h4><p class="desc">Per-transfer vs per-day vs per-action baseline unresolved.</p><p class="binding">Binds: BR-AM-34</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-06 — Wallet role-x-topology matrix unenforced</h4><p class="desc">4-cell (BalanceType × WalletType) × (Falcon/AO/NA) authorization matrix has no V-rule.</p><p class="binding">Binds: BR-AM-25, BR-AM-26, BR-AM-30..33</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-07 — Node-balance Normal-User-only unenforced</h4><p class="desc">BR-AM-27 enforcement gap: Node Admin must not consume in Node-based config — no V-rule.</p><p class="binding">Binds: BR-AM-27</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-AM-27 — passwordSecurityLevel vocabulary drift</h4><p class="desc">PRD/Commerce use Normal/Advanced; Identity uses Low/Medium/High/Strict. D-AM-2 confirmed.</p><p class="binding">Binds: BR-AM-09 + cross to BR-UM-15/22/34</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-08 — AccountOfficialData not modeled</h4><p class="desc">12-field embedded entity referenced by BR-AM-08 + Step 1 but no E-* vault note.</p><p class="binding">Binds: BR-AM-08</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-09 — AuthorityLetter triple no cross-field rule</h4><p class="desc">AuthorityLetterType + Sector + ID required-as-triple rule absent.</p><p class="binding">Binds: BR-AM-08</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-10 — TransferTx entity missing</h4><p class="desc">PRD defines TransferTx (audit row) but no E-* vault note.</p><p class="binding">Binds: BR-AM-30..34, BR-AM-36</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-11 — WalletTypeConfig orphaned</h4><p class="desc">PRD lists balanceType + walletType as distinct entity; E-account-settings doesn't list those fields.</p><p class="binding">Binds: BR-AM-25, BR-AM-26</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-12 — Contract-id tag invariant untested</h4><p class="desc">BR-AM-36 "every balance op carries contractId" has no V-rule.</p><p class="binding">Binds: BR-AM-36</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-13 — Account archive state missing</h4><p class="desc">No Account archive/soft-delete state (extends Q-AM-08).</p><p class="binding">Binds: BR-AM-42 area</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-14 — System User undefined</h4><p class="desc">Term referenced in BR-AM-12 (counting rule) but never defined.</p><p class="binding">Binds: BR-AM-12</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-15 — Move-Node operation missing</h4><p class="desc">Re-parent sub-node operation absent; extends Q-AM-18 + GAP-RD-03.</p><p class="binding">Binds: BR-AM-01</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-16 — VAT on Price Value unspecified</h4><p class="desc">PRD silent on KSA 15% VAT inclusive vs additive.</p><p class="binding">Binds: BR-AM-15..17</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-17 — Node.path undocumented</h4><p class="desc">Field absent from E-node but used by Add User wizard (Wave 5 memory entry).</p><p class="binding">Binds: BR-AM-01</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-18 — PES sheet vs policy drift</h4><p class="desc">Permission sheet vs PES policy-rule consistency unverified (Q-AM-16).</p><p class="binding">Binds: BR-AM-02 + all Falcon-only actions</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-22 — Scheduled price change untracked</h4><p class="desc">Backend effectiveDate field has no PRD coverage or V-rule.</p><p class="binding">Binds: BR-AM-15..17</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-24 — Single-wallet multi-CC rate undefined</h4><p class="desc">Q-AM-20 explicitly deferred; runtime ambiguity exists.</p><p class="binding">Binds: BR-AM-26 + BR-CC cross</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-25 — AccountName letter-prefix FE-only</h4><p class="desc">BR-AM-03 letter-prefix rule unenforced server-side (FE directive only).</p><p class="binding">Binds: BR-AM-03</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-26 — W4 insufficient-Master branch unmapped</h4><p class="desc">Workflow failure branch PRD-silent (Paid? InActive?).</p><p class="binding">Binds: BR-AM-22</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-28 — Address-hierarchy rule code-only</h4><p class="desc">City⇒Country, District⇒City, Street⇒City cross-field rules exist in Wave 15 code but not PRD or V-rule.</p><p class="binding">Binds: BR-AM-08 (extension)</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-AM-29 — Falcon-only edit gate on AccountName+FinanceId</h4><p class="desc">Wave 15 edit gate enforces Falcon-only edit; not documented in BR-AM-03/05.</p><p class="binding">Binds: BR-AM-03, BR-AM-05</p></article>
+      <article class="gap" data-severity="low"><h4><span class="sev low">LOW</span>GAP-BIZ-AM-19 — IP-allowlist Enabled toggle undocumented</h4><p class="desc">Backend Enabled boolean has no PRD counterpart.</p><p class="binding">Binds: BR-AM-10</p></article>
+      <article class="gap" data-severity="low"><h4><span class="sev low">LOW</span>GAP-BIZ-AM-20 — Profile picture write-path missing</h4><p class="desc">Account-level profile picture has no documented write path.</p><p class="binding">Binds: BR-AM-03 area</p></article>
+      <article class="gap" data-severity="low"><h4><span class="sev low">LOW</span>GAP-BIZ-AM-21 — accountId vs Id semantic drift</h4><p class="desc">PRD distinguishes id vs accountId; backend collapses both into Id.</p><p class="binding">Binds: BR-AM-04</p></article>
+      <article class="gap" data-severity="low"><h4><span class="sev low">LOW</span>GAP-BIZ-AM-23 — 4th-commchannel cap unconfirmed</h4><p class="desc">Q-AM-19 INFERRED resolution awaiting product confirmation.</p><p class="binding">Binds: BR-AM-14..22</p></article>
+    </div>
+  </details>
+
+  <details open>
+    <summary>❓ Yes/No Questions for Product Team <span class="count">20</span></summary>
+    <div class="content" data-questions="AM"></div>
+  </details>
+
+  <details>
+    <summary>🆕 Proposed New Vault Notes (V-rules + Entities) <span class="count">23</span></summary>
+    <div class="content">
+      <h4 style="margin-bottom:8px">New V-rules</h4>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-account-name-starts-with-letter</span> → BR-AM-03<p class="pdesc">Backend regex <code>^[A-Za-z]</code> on AccountName — currently FE-only.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-authority-letter-triple-required</span> → BR-AM-08<p class="pdesc">Cross-field: AuthorityLetterType set ⇒ Sector + AuthorityLetterId both required.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-finance-id-required</span> → BR-AM-05<p class="pdesc">FinanceId mandatory at create + immutable post-create unless Falcon usertype.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-classification-category-enum</span> → BR-AM-06, BR-AM-07<p class="pdesc">Closed enums eClassificationCategory + eClassificationSubCategory.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-comm-channel-status-transitions</span> → BR-AM-20<p class="pdesc">Allowed-transition table for 6-state FSM.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-grace-period-duration</span> → BR-AM-21<p class="pdesc">7d Monthly / 30d Yearly|OneTime hardcoded validation.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-wallet-topology-balance-only-normal-user</span> → BR-AM-27<p class="pdesc">In Node-based config, only Normal Users can consume.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-wallet-transfer-role-topology-matrix</span> → BR-AM-30..33<p class="pdesc">4-cell × 3-role authorization matrix.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-balance-transfer-limit-percentage</span> → BR-AM-34<p class="pdesc">Source cap with Master-source exemption.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-contract-id-tag-required</span> → BR-AM-36<p class="pdesc">Every Debit/Reserve/Transfer must carry non-null contractId.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-master-wallet-funding-on-activation</span> → BR-AM-22, BR-AM-35<p class="pdesc">Kafka ContractActivated ⇒ Master Wallet record created.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-address-hierarchy-required</span> → NEW<p class="pdesc">City⇒Country, District⇒City, Street⇒City cross-field invariants.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-account-edit-falcon-only-fields</span> → BR-AM-03, BR-AM-05<p class="pdesc">AccountName + FinanceId edit-after-create requires Falcon usertype.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-visibility-to-hide-with-active-status</span> → BR-AM-40<p class="pdesc">Show→Hide while Active behavior (pending resolution).</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-wallet-topology-change-mid-life</span> → BR-AM-41<p class="pdesc">Migration semantics for BalanceType/WalletType change with non-zero balances.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-normal-user-delete-balance-handling</span> → BR-AM-42<p class="pdesc">Stranded-balance disposition for deleted Normal User.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-system-user-definition</span> → BR-AM-12 / Q-AM-12<p class="pdesc">Defines System User scope + counting rule.</p></div>
+      <h4 style="margin:14px 0 8px">New E-* entities</h4>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-account-official-data</span> → BR-AM-08<p class="pdesc">12-field embedded entity (address+legal+VAT+AuthorityLetter triplet).</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-wallet-type-config</span> → BR-AM-25, BR-AM-26<p class="pdesc">Falcon-only 1:1 Account row resolving the 2×2 matrix.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-transfer-tx</span> → BR-AM-30..34, BR-AM-36<p class="pdesc">Audit row for every balance transfer.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-comm-channel-status-fsm</span> → BR-AM-20..24<p class="pdesc">FSM definition for the 6-state lifecycle + grace-period timer rules.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-pending-price-change</span> → BR-AM-15..17 ext<p class="pdesc">Backend-discovered pending-change record with effectiveDate.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-master-wallet-aggregate</span> → BR-AM-28, BR-AM-38<p class="pdesc">Formal contract for Master Wallet = SUM(records where contract.status=Active).</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ MODULE 02 — USER MANAGEMENT ============ -->
+<section id="module-02" class="module" data-module="UM">
+  <h2>Module 02 — User Management <span class="badge">BR-UM-*</span></h2>
+  <p class="module-meta">50 BR rules · 6 OPEN · 4 V-rules in vault (cover 11 BR rules) · 6 entities missing from vault (incl. <strong>E-permission-group</strong>)</p>
+  <div class="module-progress">Questions answered: <span class="qa-UM">0</span> / 15 <div class="progress-bar"><div class="fill" id="prog-UM"></div></div></div>
+
+  <details open>
+    <summary>🟠 Business Gaps Discovered <span class="count">12</span></summary>
+    <div class="content">
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-UM-01 — Permission Sheet Tab 2 missing</h4><p class="desc">Tab 2 uncaptured; blocks BR-UM-43/44 + Q-UM-08/15/16 (HALT-AND-FLAG per F-009).</p><p class="binding">Binds: BR-UM-43, BR-UM-44</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-UM-02 — Admin OTP path undefined</h4><p class="desc">BR-UM-36 admin email/phone OTP path silent; 3 candidate paths; halts Edit User per Q-UM-13.</p><p class="binding">Binds: BR-UM-36</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-UM-03 — Email+phone together permissive</h4><p class="desc">BR-UM-21 says strict-reject; handler accepts both fields and returns double-flag. FE+BE both lack enforcement.</p><p class="binding">Binds: BR-UM-21</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-UM-05 — Status transition matrix incomplete</h4><p class="desc">BR-UM-08 only documents 8 of 25 transition cells; missing Pending→{Suspended,Locked,Deleted}, Suspended→{Locked,Pending,Deleted}, Locked→{Active direct,Suspended,Deleted}, Deleted→Pending.</p><p class="binding">Binds: BR-UM-08, BR-UM-39, BR-UM-46</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-UM-07 — OTP failure path fragmented</h4><p class="desc">BR-UM-26/27/28/32 fragment the OTP model; no single rule encodes resend-cooldown vs limit, counter-reset, channel-fallback.</p><p class="binding">Binds: BR-UM-26..32</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-UM-04 — Idle timeout semantics</h4><p class="desc">BR-UM-29 "idle" undefined; code uses token-TTL (1800s), not activity-driven; no TenantSettings.IdleTimeoutSeconds field exists.</p><p class="binding">Binds: BR-UM-29, BR-UM-47</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-UM-06 — Force-change-password rule implicit</h4><p class="desc">First-login force-change is buried in BR-UM-22 step list; no standalone rule binding force-change to Pending status.</p><p class="binding">Binds: BR-UM-10, BR-UM-22</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-UM-08 — Permission group on node move</h4><p class="desc">Q-UM-10 user-move + BR-UM-40/42 PG-singleton don't reconcile; PG-follow vs PG-null undefined.</p><p class="binding">Binds: BR-UM-40, BR-UM-42</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-UM-09 — Account Owner demotion undefined</h4><p class="desc">BR-UM-03 AO singleton; no rule covers admin attempting AO demotion (GAP-UM-30).</p><p class="binding">Binds: BR-UM-03</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-UM-10 — OTP expiry PRD vs code drift</h4><p class="desc">BR-UM-26 says 60s; code constant OTP_DEFAULTS.EXPIRY_SECONDS = 120 (2× drift, GAP-UM-25).</p><p class="binding">Binds: BR-UM-26</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-UM-11 — Cross-module BRs missing for Templates</h4><p class="desc">BR-UM has 0 explicit references to Module 05 despite OVERVIEW listing transitive dependency (Checker user contract).</p><p class="binding">Binds: cross to BR-TM-22</p></article>
+      <article class="gap" data-severity="low"><h4><span class="sev low">LOW</span>GAP-BIZ-UM-12 — Zitadel/Identity boundary no BR</h4><p class="desc">"Identity owns user lifecycle" lives in CLAUDE.md prose only; no BR rule encodes it.</p><p class="binding">Binds: BR-UM-15/22/25 chain</p></article>
+    </div>
+  </details>
+
+  <details open>
+    <summary>❓ Yes/No Questions for Product Team <span class="count">15</span></summary>
+    <div class="content" data-questions="UM"></div>
+  </details>
+
+  <details>
+    <summary>🆕 Proposed New Vault Notes (V-rules + Entities) <span class="count">25</span></summary>
+    <div class="content">
+      <h4 style="margin-bottom:8px">New V-rules</h4>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-otp-resend-limit</span> → BR-UM-27, BR-UM-31<p class="pdesc">OTP resend triggers OtpStillValid (429) within 60s + OtpResendLimitExceeded (422) after N resends.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-status-transition-allowed</span> → BR-UM-08, BR-UM-39, BR-UM-46<p class="pdesc">Status flip allowed iff (from,to) in UserStatusTransitionPolicy allow-list.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-email-phone-cannot-both-change</span> → BR-UM-21<p class="pdesc">Reject when both email and phoneNumber diff from stored.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-otp-validity-60s</span> → BR-UM-26<p class="pdesc">PRD says 60s; code uses 120 (drift fix needed).</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-otp-length-4-or-6</span> → BR-UM-28<p class="pdesc">OtpAppSetting.otpLength ∈ {4, 6}; editable by Operation only.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-force-change-password-on-pending</span> → BR-UM-10, BR-UM-22<p class="pdesc">First login from Pending MUST gate force-change before status→Active.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-email-valid-format</span> → BR-UM-13, BR-UM-36<p class="pdesc">RFC 5322 pattern.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-phone-valid-format</span> → BR-UM-14, BR-UM-36<p class="pdesc">E.164 international.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-profile-picture-mime-size</span> → BR-UM-16, BR-UM-48<p class="pdesc">image/* + size ≤ 4MB.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-account-owner-singleton</span> → BR-UM-03<p class="pdesc">AO exists at Main-node only; one per account.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-permission-group-assignment-scope</span> → BR-UM-40, BR-UM-42<p class="pdesc">One PG per user; tenant-scoped or system-wide.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-username-immutable-runtime-check</span> → BR-UM-19, BR-UM-37<p class="pdesc">Explicit handler reject on username rename attempt.</p></div>
+      <h4 style="margin:14px 0 8px">New E-* entities</h4>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-password-policy</span> → BR-UM-15/22/34 ← BR-AM-09<p class="pdesc">Cross-module bridge entity: tier + complexity rules.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-permission-group</span> → BR-UM-40, BR-UM-42<p class="pdesc"><strong>HIGHEST PRIORITY missing entity.</strong> Cited everywhere, modeled nowhere.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-permission</span> → BR-UM-43, BR-UM-44<p class="pdesc">Tuple {menuItem, pageTab, functionAction, role, value ∈ {Allow,NotAllow,Deny,CanBeOverriddenByDeny}}.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-user-status-history</span> → BR-UM-08 audit<p class="pdesc">Append-only audit row {userId, fromStatus, toStatus, actor, at, reason}.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-login-attempt</span> → BR-UM-25<p class="pdesc">Append-only for lockout-counter math.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-app-setting + E-otp-app-setting</span> → BR-UM-28<p class="pdesc">Singleton-ish key/value; OtpAppSetting carries otpLength.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ MODULE 03 — CONTRACT / COST / CHARGING ============ -->
+<section id="module-03" class="module" data-module="CC">
+  <h2>Module 03 — Contract &amp; Cost Management <span class="badge">BR-CC-*</span> <span class="badge scope-badge">Scope fork: Packaging+Billing</span></h2>
+  <p class="module-meta">50 BR rules · 10 OPEN (highest of all clusters) · 1 INFERRED · 9 V-rules in vault (cover 8 BR rules) · 4 entities missing from vault · folder vs body scope contradiction (Q-CC-01)</p>
+  <div class="module-progress">Questions answered: <span class="qa-CC">0</span> / 20 <div class="progress-bar"><div class="fill" id="prog-CC"></div></div></div>
+
+  <details open>
+    <summary>🟠 Business Gaps Discovered <span class="count">17</span></summary>
+    <div class="content">
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CC-01 — Packaging+Billing scope fork</h4><p class="desc">Folder title says four concerns; PRD body covers two. F-010 halt-and-flag.</p><p class="binding">Binds: BR-CC-41 (OPEN) + meta</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CC-02 — Refund cluster missing</h4><p class="desc">No BR rule for refund anywhere. Failed-campaign refund "covered later" but no authority anywhere.</p><p class="binding">Binds: BR-CC-49 (OPEN)</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CC-03 — Tax/VAT/ZATCA missing</h4><p class="desc">KSA 15% VAT + ZATCA e-invoicing entirely missing — no tax fields on contract or transaction DTOs.</p><p class="binding">Binds: BR-CC-44 (OPEN)</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CC-09 — Audit log missing</h4><p class="desc">BR-CC-46 open — no audit-log endpoint, no entity, no granularity decision (compliance gap).</p><p class="binding">Binds: BR-CC-46 (OPEN)</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CC-13 — Reservation lifecycle not modeled</h4><p class="desc">Backend has 4-state OCS reservation (Active/Committed/Released/Expired); PRD says "Live" only.</p><p class="binding">Binds: BR-CC-32 (implicit)</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-04 — Contract status FSM incomplete</h4><p class="desc">Missing Cancelled/Suspended/Deleted transitions + Falcon manual overrides.</p><p class="binding">Binds: BR-CC-10/11/17/48</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-05 — Tie-breaker nearest-expiring</h4><p class="desc">Tie-breaker undocumented when multiple Active contracts share ExpirationDate.</p><p class="binding">Binds: BR-CC-42 (OPEN)</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-06 — Rate-card mid-contract edit</h4><p class="desc">Active-contract rate-card edits lack effective-date semantics; in-flight reservation pricing silent.</p><p class="binding">Binds: BR-CC-16</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-07 — Retroactive Expired→Active window</h4><p class="desc">No rule for what charges are reapplied when extension covers an Expired window.</p><p class="binding">Binds: BR-CC-47 (OPEN)</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-08 — Addon cross-contract fallback</h4><p class="desc">Addon cascade silent on whether free-credit/rate-card crosses contract boundaries.</p><p class="binding">Binds: BR-CC-50 (OPEN)</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-10 — Currency strategy unwritten</h4><p class="desc">Single-currency policy is tribal knowledge; Charging cross-service has no enum attribute (drift).</p><p class="binding">Binds: BR-CC-08, BR-CC-19</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-11 — Length cap drift on Name/Farabi</h4><p class="desc">Backend DTO lacks [MaxLength(50)] on ContractName and FarabiReferenceId.</p><p class="binding">Binds: BR-CC-04, BR-CC-05</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-12 — CommittedValue upper bound drift</h4><p class="desc">Backend [Range] uses decimal.MaxValue rather than PRD's "hundreds of millions" cap.</p><p class="binding">Binds: BR-CC-08</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-14 — E-contract-detail missing</h4><p class="desc">No vault entity for the cost matrix cell.</p><p class="binding">Binds: BR-CC-22</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-15 — Packaging bundle entity placeholder</h4><p class="desc">If Reading A wins, E-packaging-bundle + E-billing-period need Phase 2 placeholders.</p><p class="binding">Binds: NEW BR-PKG-*</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CC-16 — Cross-module citations thin</h4><p class="desc">BR-CC lacks explicit citations to BR-AM-22/29/34 and BR-UM-01/02.</p><p class="binding">Binds: cross-cluster</p></article>
+      <article class="gap" data-severity="low"><h4><span class="sev low">LOW</span>GAP-BIZ-CC-17 — Wallet cell-edit no authority</h4><p class="desc">OLD-UI per-cell wallet balance edit has no governing BR rule.</p><p class="binding">Binds: cross to GAP-OLDUI-04</p></article>
+    </div>
+  </details>
+
+  <details open>
+    <summary>❓ Yes/No Questions for Product Team <span class="count">20</span></summary>
+    <div class="content" data-questions="CC"></div>
+  </details>
+
+  <details>
+    <summary>🆕 Proposed New Vault Notes (V-rules + Entities) <span class="count">18</span></summary>
+    <div class="content">
+      <h4 style="margin-bottom:8px">New V-rules</h4>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-contract-status-transition-allowed</span> → BR-CC-10/11/17/48<p class="pdesc">Reject any FSM transition not in allow-list.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-tie-breaker-expiration</span> → BR-CC-42<p class="pdesc">Deterministic order (ExpirationDate, CreatedAt, Id) ASC.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-refund-target-contract</span> → BR-CC-49<p class="pdesc">Refund routing rules with Master holding bucket fallback.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-tax-rate-applicable</span> → BR-CC-44<p class="pdesc">KSA 15% VAT with exempt-flag carve-outs.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-rate-card-effective-date</span> → BR-CC-16<p class="pdesc">effectiveDate semantics for in-flight reservations.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-pending-contract-cancellable</span> → BR-CC-48<p class="pdesc">Only Pending contracts may be cancelled; Falcon-only.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-contract-name-max-length</span> → BR-CC-05<p class="pdesc">Contract.Name ≤ 50 (currently drift).</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-farabi-ref-id-max-length</span> → BR-CC-04<p class="pdesc">FarabiReferenceId ≤ 50 (currently drift).</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-contract-value-upper-bound</span> → BR-CC-08<p class="pdesc">CommittedValue ≤ 999,999,999.99 (currently drift).</p></div>
+      <h4 style="margin:14px 0 8px">New E-* entities</h4>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-refund-record</span> → BR-CC-49<p class="pdesc">Per-refund ledger row.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-tax-record</span> → BR-CC-44<p class="pdesc">Per-transaction tax breakdown + ZATCA invoice ref.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-packaging-bundle</span> → NEW BR-PKG-01<p class="pdesc">Reusable contract template (Phase 2 placeholder).</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-billing-period</span> → NEW BR-BILL-01<p class="pdesc">Periodic invoice window (Phase 2 placeholder).</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-contract-detail</span> → BR-CC-22<p class="pdesc">Cost matrix cell entity.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-price-unit</span> → BR-CC-21<p class="pdesc">DB-editable lookup.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-destination</span> → BR-CC-26<p class="pdesc">Destination axis sourced from International Phone Destination List sheet.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-priority</span> → BR-CC-23/24/25<p class="pdesc">Per-CommChannel priority taxonomy.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-reservation</span> → BR-CC-32 (implicit)<p class="pdesc">4-state OCS reservation lifecycle (Active/Committed/Released/Expired).</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ MODULE 04 — CONTACT GROUP ============ -->
+<section id="module-04" class="module" data-module="CG">
+  <h2>Module 04 — Contact Group Management <span class="badge">BR-CGM-*</span></h2>
+  <p class="module-meta">38 BR rules · 9 OPEN · 5 V-rules in vault (high coverage) · 2 entities partially complete · primary gaps in user/account deletion cascades + missing Failed status</p>
+  <div class="module-progress">Questions answered: <span class="qa-CG">0</span> / 15 <div class="progress-bar"><div class="fill" id="prog-CG"></div></div></div>
+
+  <details open>
+    <summary>🟠 Business Gaps Discovered <span class="count">12</span></summary>
+    <div class="content">
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CG-03 — Failed status + reason missing</h4><p class="desc">Status enum {InProgress, Completed} cannot model parse errors; promote Q-CGM-04 to formal BR-CGM-34 reframe.</p><p class="binding">Binds: BR-CGM-34 (OPEN)</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CG-01 — Creator account-deletion cascade</h4><p class="desc">BR-CGM-36 OPEN — cross-cuts BR-AM account lifecycle.</p><p class="binding">Binds: BR-CGM-36, cross to BR-AM</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-CG-02 — Shared-with-user deletion cascade</h4><p class="desc">BR-CGM-32 OPEN — cross-cuts BR-UM lifecycle. 3 candidate options (silent/placeholder/auto-promote).</p><p class="binding">Binds: BR-CGM-32, cross to BR-UM-08</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-04 — Hierarchy depth visibility</h4><p class="desc">BR-CGM-35 silent; recursion almost-certainly intended but never stated.</p><p class="binding">Binds: BR-CGM-35 (OPEN)</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-05 — Group-name uniqueness scope</h4><p class="desc">Per creator / per node / per account — undocumented.</p><p class="binding">Binds: NEW</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-06 — Column-name case sensitivity</h4><p class="desc">Allowed to have "name" + "Name" as two columns? Silent.</p><p class="binding">Binds: BR-CGM-06</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-07 — Max contacts + columns</h4><p class="desc">Backend has ImportTooLarge error; number undocumented. Column cap implied (≤ template variable cap 30) but never enforced.</p><p class="binding">Binds: NEW BR-CGM-39/40</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-08 — Falcon download audit trail</h4><p class="desc">Compliance gap; Q-CGM-16 / GAP-CGM-29.</p><p class="binding">Binds: BR-CGM-23</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-09 — Soft-delete retention policy</h4><p class="desc">Q-CGM-12 / GAP-CGM-30 — soft-deleted groups have no retention policy.</p><p class="binding">Binds: BR-CGM-28</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-10 — Edit propagation timing</h4><p class="desc">BR-CGM-27 says SSoT propagation; timing (immediate vs eventual) undocumented.</p><p class="binding">Binds: BR-CGM-27</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-CG-11 — Share-with-self UI block</h4><p class="desc">BR-CGM-38 OPEN; backend silent (no SelfShareNotAllowed code).</p><p class="binding">Binds: BR-CGM-38</p></article>
+      <article class="gap" data-severity="low"><h4><span class="sev low">LOW</span>GAP-BIZ-CG-12 — Header toggle reset behavior</h4><p class="desc">BR-CGM-37 silent on toggling Off after editing column names.</p><p class="binding">Binds: BR-CGM-37</p></article>
+    </div>
+  </details>
+
+  <details open>
+    <summary>❓ Yes/No Questions for Product Team <span class="count">15</span></summary>
+    <div class="content" data-questions="CG"></div>
+  </details>
+
+  <details>
+    <summary>🆕 Proposed New Vault Notes (V-rules + Entities) <span class="count">7</span></summary>
+    <div class="content">
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-contact-group-max-contacts</span> → NEW BR-CGM-39<p class="pdesc">Surface FileImport:MaxRowsPerImport as a documented limit.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-contact-group-max-columns</span> → NEW BR-CGM-40<p class="pdesc">Implied cap (≤ template variable cap 30) — enforce server-side.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-contact-group-shared-with-self</span> → BR-CGM-38<p class="pdesc">UI-side guard.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-share-audit-entry</span> → BR-CGM-23 + GAP-CGM-29<p class="pdesc">Falcon download audit trail.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-contact-group-link</span> → cross with BR-TM-12<p class="pdesc">Formalizing Template ← ContactGroup column binding.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-soft-delete-retention-policy</span> → Q-CGM-12<p class="pdesc">Retention policy entity.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ MODULE 05 — TEMPLATES ============ -->
+<section id="module-05" class="module" data-module="TM">
+  <h2>Module 05 — Templates <span class="badge">BR-TM-*</span> <span class="badge scope-badge">~12% PRD captured</span></h2>
+  <p class="module-meta">41 BR rules · 12 OPEN (largest OPEN/total ratio) · 2 V-rules in vault · Template entity has <strong>ZERO backend DTOs</strong> + no E-template vault note · Voice + AI flows entirely missing</p>
+  <div class="module-progress">Questions answered: <span class="qa-TM">0</span> / 15 <div class="progress-bar"><div class="fill" id="prog-TM"></div></div></div>
+
+  <details open>
+    <summary>🟠 Business Gaps Discovered <span class="count">16</span></summary>
+    <div class="content">
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-TM-01 — Template entity has no backend</h4><p class="desc">Single biggest gap in PRD-05; flag GAP-TM-01 at vault level so future sessions see it instantly.</p><p class="binding">Binds: BR-TM-01..29 (entire entity surface)</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-TM-04 — Voice template flow missing</h4><p class="desc">W9 never captured (BR-TM-30 OPEN, Q-TM-01).</p><p class="binding">Binds: BR-TM-30</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-TM-05 — AI template flow missing</h4><p class="desc">W10 never captured; only high-level "AI has no priority, destination=Global" mentioned.</p><p class="binding">Binds: Q-TM-08</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-TM-11 — Template ↔ ContactGroup binding lifecycle</h4><p class="desc">Cross-cut Q-TM-19 + Q-CG-NEW-10..12; when group deleted/renamed, bound templates' fate undefined.</p><p class="binding">Binds: BR-TM-12, BR-CGM-27</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-TM-15 — Send Transaction triangle missing</h4><p class="desc">No single document traces Contract → Template → ContactGroup → CommChannel end-to-end.</p><p class="binding">Cross-module — also flagged as GAP-BIZ-X-15</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-TM-16 — Template PRD Drive re-sync</h4><p class="desc">D-TM-1 drift; only ~12% of 982-line source captured.</p><p class="binding">Binds: meta</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-02 — Template edit versioning semantics</h4><p class="desc">BR-TM-33 OPEN — re-Pending vs new version unresolved.</p><p class="binding">Binds: BR-TM-33</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-03 — Maker/Checker self-approval</h4><p class="desc">SOX-grade decision; Q-TM-12 inferred but not confirmed.</p><p class="binding">Binds: BR-TM-22</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-06 — Meta Paused runtime block</h4><p class="desc">BR-TM-27 says runtime sender must block; doesn't cite which BR-CC rule owns the block.</p><p class="binding">Binds: BR-TM-27 cross BR-CC-32</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-07 — Template deletion governance</h4><p class="desc">BR-TM-38 OPEN.</p><p class="binding">Binds: BR-TM-38</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-08 — Falcon view scope for templates</h4><p class="desc">BR-TM-39 OPEN.</p><p class="binding">Binds: BR-TM-39</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-09 — Language addition flow</h4><p class="desc">BR-TM-34 OPEN.</p><p class="binding">Binds: BR-TM-34</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-10 — Preview server-side vs client-side</h4><p class="desc">BR-TM-35 OPEN.</p><p class="binding">Binds: BR-TM-35</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-12 — Checker-level routing semantics</h4><p class="desc">First-claim-wins vs all-must-approve (Q-TM-13 inferred).</p><p class="binding">Binds: BR-TM-22</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-13 — Quick Reply label cap</h4><p class="desc">Q-TM-17 OPEN (Meta's documented limit is 25 chars).</p><p class="binding">Binds: BR-TM-16</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-TM-14 — Variable count cap precision</h4><p class="desc">Q-TM-16: PRD says "20-30" — pick one.</p><p class="binding">Binds: BR-TM-10</p></article>
+    </div>
+  </details>
+
+  <details open>
+    <summary>❓ Yes/No Questions for Product Team <span class="count">15</span></summary>
+    <div class="content" data-questions="TM"></div>
+  </details>
+
+  <details>
+    <summary>🆕 Proposed New Vault Notes (V-rules + Entities) <span class="count">15</span></summary>
+    <div class="content">
+      <h4 style="margin-bottom:8px">New E-* entities (entire entity surface missing)</h4>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-template</span> → BR-TM-01..29<p class="pdesc"><strong>HIGHEST PRIORITY.</strong> Template entity (body/header/footer/buttons/variables/status/metaState) — PRD-defined, zero backend.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-template-version</span> → BR-TM-33<p class="pdesc">Immutable revision tied to submit/approval cycle.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-meta-approval-state</span> → BR-TM-26..29<p class="pdesc">Meta-side state record with qualityTier + webhook timestamps.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-template-variable-binding</span> → BR-TM-12, BR-CGM-06, BR-CGM-27<p class="pdesc">Bind row (templateId, variable, contactGroupId, columnName, bindingMode).</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-template-approval-trail</span> → BR-TM-21..23<p class="pdesc">Audit row per approval step (PRD-listed; no vault note).</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-checker-assignment</span> → BR-TM-22, BR-TM-31<p class="pdesc">Runtime "who got asked / who claimed" record per level.</p></div>
+      <h4 style="margin:14px 0 8px">New V-rules</h4>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-name-unique-per-account</span> → BR-TM-04<p class="pdesc">Unique within WhatsApp Business Account per language.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-variable-resolves-to-column</span> → BR-TM-12 + BR-CGM-06<p class="pdesc">Cross-module: variable must resolve to existing ContactGroup column at send-time.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-maker-checker-distinct</span> → NEW BR-TM-42<p class="pdesc">SOX-grade: same user cannot be Maker AND Checker on the same template.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-body-required</span> → BR-TM-13<p class="pdesc">Body non-empty; variables match shape.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-variable-position</span> → BR-TM-07<p class="pdesc">Variables cannot be at start/end of body.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-header-mutex</span> → BR-TM-11<p class="pdesc">Media disables Text in header.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-buttons-max-10</span> → BR-TM-16<p class="pdesc">Up to 10 buttons total.</p></div>
+      <div class="proposal"><span class="ptype">V-rule</span><span class="pid">V-template-footer-no-variables</span> → BR-TM-15<p class="pdesc">Footer ≤ 60 chars + no {{…}}.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ CROSS-CUTTING ============ -->
+<section id="cross-cutting" class="module" data-module="X">
+  <h2>Cross-Cutting Integration <span class="badge">BR-X-*</span></h2>
+  <p class="module-meta">9 end-to-end workflows · 6 declared-but-unencoded module dependencies · 8 cross-cutting entities missing · 12 unowned cross-module rules · 9 drift items</p>
+  <div class="module-progress">Questions answered: <span class="qa-X">0</span> / 20 <div class="progress-bar"><div class="fill" id="prog-X"></div></div></div>
+
+  <details open>
+    <summary>🟠 Cross-Module Workflows Without a Single Owner <span class="count">9</span></summary>
+    <div class="content">
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>X-WF-01 — Send Transaction (E2E)</h4><p class="desc">02 (NU trigger) → 04 (contact group) → 05 (template) → 03 (charging) → 01 (wallets). No single document. <strong>Highest priority for new trace.</strong></p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>X-WF-05 — Account Soft-Delete</h4><p class="desc">Does it exist at all? No PRD discusses account-termination. Cross-cuts all 5 modules.</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>X-WF-04 — User Lifecycle Affects Owned Resources</h4><p class="desc">User Deleted → Contact Groups? Templates? Wallets? 4 OPEN rules in 3 modules asking same systemic question.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>X-WF-02 — Add Client wizard post-creation lifecycle</h4><p class="desc">Wizard creates Account but Master Wallet = 0 until 1st contract. Transition undocumented.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>X-WF-03 — Contract Activation → Wallet Funding</h4><p class="desc">No event-flow doc; trigger (timer? Kafka? cron?) not in source.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>X-WF-06 — Hierarchy Move (re-parent)</h4><p class="desc">Marked MISSING in root-documents/GAPS.md. Cross-cuts users + groups + permissions.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>X-WF-07 — First-Login → OTP → Force-Change-Password → Active</h4><p class="desc">Spans Identity + Account Settings + IP allowlist + notification. No binding trace.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>X-WF-08 — Template Approval Chain</h4><p class="desc">Maker/Checker spans 02 + 05 + 04 + 03. Checker is invented by 05 but mapped to no role in 02.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>X-WF-09 — Falcon-Only Visibility/Pricing Edit</h4><p class="desc">Mid-life CommChannel visibility/pricing changes touch contract validity. Coupling undocumented.</p></article>
+    </div>
+  </details>
+
+  <details open>
+    <summary>🟠 Cross-Cutting Gap Files (GAP-BIZ-X-*) <span class="count">12</span></summary>
+    <div class="content">
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-X-01 — User Cascade on Delete</h4><p class="desc">Wraps BR-UM-08 + BR-CGM-32 + BR-CGM-36 + BR-AM-42 (4 OPEN rules → 1 systemic gap).</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-X-02 — Account Lifecycle Missing</h4><p class="desc">No account-termination story anywhere.</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-X-03 — Contract Activation Event Flow</h4><p class="desc">Missing Kafka topic registry for BR-CC-37 / BR-AM-35.</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-X-08 — E-permission-group missing</h4><p class="desc">Highest-priority entity gap. Cited everywhere, modeled nowhere.</p></article>
+      <article class="gap" data-severity="high"><h4><span class="sev high">HIGH</span>GAP-BIZ-X-15 — Send Transaction trace missing</h4><p class="desc">No E2E document for the most important flow.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-X-04 — Hierarchy Move Cascade</h4><p class="desc">Wraps GAP-RD-03 with full cross-module impact.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-X-05 — Notification module unmodeled</h4><p class="desc">Multi-module dependency with no entity / no spec.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-X-06 — i18n DB-editable messages</h4><p class="desc">GAP-RD-06 with cross-module impact + fallback rule proposal.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-X-07 — Audit event standardization</h4><p class="desc">BR-AM-36 + BR-CC-30 + BR-CGM-28 in one entity.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-X-09 — Checker role not in PES</h4><p class="desc">BR-TM-22 + BR-TM-31 + cross to BR-UM-43.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-X-10 — Template variable contract</h4><p class="desc">BR-TM-12 + BR-CGM-04..08 binding gap.</p></article>
+      <article class="gap" data-severity="medium"><h4><span class="sev medium">MED</span>GAP-BIZ-X-11 — Send Transaction OTP confirmation</h4><p class="desc">Re-use E-otp-challenge for high-value sends.</p></article>
+    </div>
+  </details>
+
+  <details open>
+    <summary>❓ Yes/No Questions for Product Team <span class="count">20</span></summary>
+    <div class="content" data-questions="X"></div>
+  </details>
+
+  <details>
+    <summary>🆕 Proposed Cross-Cutting BR-X Rules + Entities + Trace Stubs <span class="count">21</span></summary>
+    <div class="content">
+      <h4 style="margin-bottom:8px">New BR-X-* rules (no module owner today)</h4>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-USER-CASCADE-01</span><p class="pdesc">User Deleted ⇒ ContactGroups they created surface with creator-deleted status; Edit locked.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-USER-CASCADE-02</span><p class="pdesc">User Deleted ⇒ Pending Templates auto-Reject (reason creator-deleted).</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-USER-CASCADE-03</span><p class="pdesc">Normal User Deleted ⇒ wallet balance returns to parent node's wallet (tagged with deleted-user id).</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-ACCOUNT-LIFECYCLE-01</span><p class="pdesc">Define Active → Suspended → Deleted. Suspended: AO can log in but writes 403; contracts continue; templates inactive.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-CONTRACT-EXTENSION-01</span><p class="pdesc">Extension Expired→Active ⇒ wallet records previously excluded from lump-sum re-added.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-HIERARCHY-MOVE-01</span><p class="pdesc">Node moved ⇒ child users' permission paths re-resolve; contact groups follow; PES rules recompute.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-VISIBILITY-DOWNGRADE-01</span><p class="pdesc">Hiding only-active CommChannel of a Single-wallet account with active Rate Card-priced contract is FORBIDDEN.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-AUDIT-EVENT-01</span><p class="pdesc">Every cross-module state-changing event MUST emit audit record with shared correlationId.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-I18N-FALLBACK-01</span><p class="pdesc">MultiLanguageName missing locale ⇒ fall back to other locale (not empty string). DB-stored ⇒ fall back to .resx.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-OTP-PURPOSE-COVERAGE</span><p class="pdesc">Any new user-confirmation flow MUST reuse E-otp-challenge purpose-enum rather than invent new entity.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-PERMISSION-GROUP-01</span><p class="pdesc">Permission Groups account-scoped; cross-account sharing FORBIDDEN; Falcon uses separate PGs.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-CHECKER-ROLE-01</span><p class="pdesc">Template Checker is a PES key (acc.template/approve), not a user-level flag.</p></div>
+      <div class="proposal"><span class="ptype">BR-X</span><span class="pid">BR-X-DELIVERY-FAILURE-01</span><p class="pdesc">Credential delivery failure ⇒ user stays Pending; wizard surfaces retry.</p></div>
+      <h4 style="margin:14px 0 8px">New cross-cutting E-* entities</h4>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-permission-group</span><p class="pdesc">HIGHEST PRIORITY shared entity.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-audit-event</span><p class="pdesc">Cross-module event spine.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-notification</span><p class="pdesc">Email/SMS delivery surface.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-translation / E-localized-string</span><p class="pdesc">i18n + DB-editable messages.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-finance-record</span><p class="pdesc">Finance integration shim.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-farabi-reference</span><p class="pdesc">Farabi integration shim.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-destination</span><p class="pdesc">Phone destination + per-country pricing.</p></div>
+      <div class="proposal"><span class="ptype">E-*</span><span class="pid">E-ip-allowlist</span><p class="pdesc">Cross-platform-enforced; no entity today.</p></div>
+      <h4 style="margin:14px 0 8px">New cross-module trace files (18-a-to-z-traces/)</h4>
+      <div class="proposal"><span class="ptype">trace</span><span class="pid">Send-Transaction.trace.md</span><p class="pdesc">HIGHEST priority — closes X-WF-01.</p></div>
+      <div class="proposal"><span class="ptype">trace</span><span class="pid">Add-Contract.trace.md</span><p class="pdesc">Closes X-WF-02 + X-WF-03.</p></div>
+      <div class="proposal"><span class="ptype">trace</span><span class="pid">Transfer-Balance.trace.md</span></div>
+      <div class="proposal"><span class="ptype">trace</span><span class="pid">Do-Payment-CommChannel.trace.md</span></div>
+      <div class="proposal"><span class="ptype">trace</span><span class="pid">First-Login.trace.md</span><p class="pdesc">Closes X-WF-07.</p></div>
+      <div class="proposal"><span class="ptype">trace</span><span class="pid">Template-Approval-Chain.trace.md</span><p class="pdesc">Closes X-WF-08.</p></div>
+    </div>
+  </details>
+</section>
+
+<!-- ============ METHODOLOGY ============ -->
+<section id="methodology" class="module">
+  <h2>🔬 Methodology &amp; Sources</h2>
+  <h3 style="margin-bottom:8px">Mining process</h3>
+  <p style="font-size:14px;margin-bottom:14px">Five parallel research agents — one per PRD module plus one cross-cutting integration agent — were spawned simultaneously. Each agent read its module's PRD files (OVERVIEW, BUSINESS_RULES, ENTITIES, WORKFLOWS, GAPS, QUESTIONS), the relevant V-rules and E-* entities in the Brain SK vault, and cross-cuts in the authority dataset. Each agent returned structured findings under fixed headings: inventory · gaps · cross-links · proposed new vault notes · yes/no questions for product team.</p>
+  <h3 style="margin-bottom:8px">Stores mined</h3>
+  <table>
+    <tr><th>Store</th><th>Path</th><th>Touched</th></tr>
+    <tr><td>PRD Modules</td><td><code>Brain Outputs/prd/modules/</code></td><td>5 modules + root-documents (35 files)</td></tr>
+    <tr><td>Brain SK Vault</td><td><code>Brain SK/_obsidian/</code></td><td>26 V-rules + 16 E-* entities</td></tr>
+    <tr><td>Brain Outputs Understanding</td><td><code>Brain Outputs/understanding/</code></td><td>Per-page dossiers + backend service dossiers</td></tr>
+    <tr><td>Authority Dataset</td><td><code>Brain Outputs/datasets/authority-dataset/</code></td><td>Master index + 9-by-feature matrix + 4-feature-parity matrix + 18-traces + pending questions</td></tr>
+    <tr><td>Pending Questions</td><td><code>authority-dataset/_pending-questions/</code></td><td>14 open F-* halt-and-flag files</td></tr>
+    <tr><td>falcon-wiki Gaps</td><td><code>falcon-wiki/70-Gaps/</code></td><td>10 existing gap notes (NS + OLDUI)</td></tr>
+  </table>
+  <h3 style="margin:14px 0 8px">What was NOT touched</h3>
+  <ul style="font-size:14px;padding-left:22px">
+    <li>Backend source code (no <code>.cs</code> files edited; only read for citation)</li>
+    <li>Frontend source code (no Angular files edited)</li>
+    <li>Build / test pipeline</li>
+    <li>Test data or runtime systems</li>
+  </ul>
+  <h3 style="margin:14px 0 8px">Artifacts generated by this run</h3>
+  <ol style="font-size:14px;padding-left:22px">
+    <li>This HTML report (the headline deliverable)</li>
+    <li>Consolidated MD registry: <code>Brain Outputs/reports/business-deep-dive-2026-05-18/CONSOLIDATED-REGISTRY.md</code></li>
+    <li>Raw agent findings (5 MD files): <code>Brain Outputs/reports/business-deep-dive-2026-05-18/agent-findings/</code></li>
+    <li>5 priority new <code>E-*</code> entity stubs in <code>Brain SK/_obsidian/40-API/</code></li>
+    <li>Cross-module BR-X-* registry index in <code>Brain Outputs/datasets/cross-module-business-rules/</code></li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <p>Generated 2026-05-18 by Falcon Brain — Adnan/Ammar mining pipeline · Self-contained HTML · localStorage-persisted answers</p>
+  <p style="margin-top:6px"><small>To clear all answers, click <strong>✕ Clear all</strong>. To share answers, click <strong>⬇ Export answers</strong> and send the resulting JSON file.</small></p>
+</footer>
+
+<script>
+/* ========== QUESTIONS DATA ========== */
+const QUESTIONS = {
+  AM: [
+    ["Q-AM-NEW-01","When an account is over its Normal-User limit (admin shrunk the limit), should the next \"Add Normal User\" call return 422 NormalUserLimitReached?"],
+    ["Q-AM-NEW-02","When an account is over its Normal-User limit, should existing Active Normal Users be auto-suspended down to the new limit?"],
+    ["Q-AM-NEW-03","When Falcon flips a CommChannel Visibility Show→Hide while Status=Active, should existing client users lose ability to consume immediately?"],
+    ["Q-AM-NEW-04","When CommChannel Visibility flips Show→Hide while Active, should the periodic renewal job still attempt Renew Date deduction?"],
+    ["Q-AM-NEW-05","Can Balance Type (User/Node) be changed after the account has non-zero wallet records?"],
+    ["Q-AM-NEW-06","Can Wallet Type (Single/Multiple) be changed after the account has non-zero wallet records?"],
+    ["Q-AM-NEW-07","When a Normal User is deleted with non-zero User wallet balance, should the balance auto-transfer to the parent Node wallet?"],
+    ["Q-AM-NEW-08","Is the Balance Transfer Limit % computed against source wallet's balance at transfer time (vs per-day or per-action accumulator)?"],
+    ["Q-AM-NEW-09","Does Master Wallet as source exempt the entire transfer from Balance Transfer Limit % (vs just first hop)?"],
+    ["Q-AM-NEW-10","When CommChannel Master Wallet debit fails on Renew Date, does channel go directly to Expired (skipping Paid-but-not-Active)?"],
+    ["Q-AM-NEW-11","Is there an Account-level archive/soft-delete state distinct from hard delete?"],
+    ["Q-AM-NEW-12","Should Falcon usertype be able to re-parent a sub-node (Move Node operation)?"],
+    ["Q-AM-NEW-13","Are address fields hierarchical such that City requires Country, District requires City, Street requires City? (confirms Wave 15 cross-field validators)"],
+    ["Q-AM-NEW-14","Is the AccountName editable after account creation by Falcon usertype only?"],
+    ["Q-AM-NEW-15","Is the FinanceId editable after account creation by Falcon usertype only?"],
+    ["Q-AM-NEW-16","When admin edits Allowed-IPs and change excludes an active user's current IP, should active sessions be terminated immediately?"],
+    ["Q-AM-NEW-17","Is AuthorityLetterType + Sector + ID always a required triple (if Type set, Sector AND ID become mandatory)?"],
+    ["Q-AM-NEW-18","Does an Account have a maximum count of visible CommChannels per active contract? (Q-AM-19 confirmation)"],
+    ["Q-AM-NEW-19","Is the IP-allowlist Enabled boolean (backend) intended to be exposed to Falcon admins as an on/off toggle separate from list contents?"],
+    ["Q-AM-NEW-20","Should VAT (15% KSA) be added on top of Price Value at activation, or is Price Value already VAT-inclusive? (yes = additive)"]
+  ],
+  UM: [
+    ["Q-UM-NEW-01","When a user is force-logged-out by idle timeout (BR-UM-29), should other active sessions for the same user remain alive?"],
+    ["Q-UM-NEW-02","When a user is restored from Deleted to Active (BR-UM-08/46), must the password be reset (forcing first-login again)?"],
+    ["Q-UM-NEW-03","When system flips a user to Locked via manual admin action (BR-UM-45), should a notification be sent to user via last-verified channel?"],
+    ["Q-UM-NEW-04","Should \"idle\" in BR-UM-29 be defined as \"30 min since last authenticated API call\" (activity-driven) rather than \"30 min since token issued\"?"],
+    ["Q-UM-NEW-05","When admin attempts to demote singleton Account Owner (BR-UM-03), should system reject with MustHaveAccountOwner unless replacement provided atomically?"],
+    ["Q-UM-NEW-06","Should Falcon admins (SysAdmin/Operation/Product) bypass OTP entirely when editing another user's email/phone (Q-UM-13 path 3)?"],
+    ["Q-UM-NEW-07","Should Pending→Active transition be allowed without first-login force-change-password if admin manually flips status?"],
+    ["Q-UM-NEW-08","Should a Pending user (never logged in) be eligible for Suspension before they ever log in?"],
+    ["Q-UM-NEW-09","Should Locked→Active direct transition (skipping Pending per BR-UM-08) be allowed to spare unlocked users from re-doing first-login?"],
+    ["Q-UM-NEW-10","Should strict reject for BR-UM-21 (email+phone same request) be enforced at backend handler (yes) or remain FE-only convention (no)?"],
+    ["Q-UM-NEW-11","When OTP delivery fails on Email (bounce/timeout), should system automatically fall back to SMS using verified phone?"],
+    ["Q-UM-NEW-12","Should the Permission Group follow a user automatically when admin re-assigns user to a different node (Q-UM-10 follow-on)?"],
+    ["Q-UM-NEW-13","Should \"Contact administrator\" message (BR-UM-49) pull user's direct manager name/contact from hierarchy and render inline?"],
+    ["Q-UM-NEW-14","Should the OTP attempts counter (BR-UM-27) reset to 0 after a successful verify (yes), OR persist for session lifetime (no)?"],
+    ["Q-UM-NEW-15","Should \"Forgot Password\" wrong-OTP silence rule (BR-UM-32) be aligned with login (3-strike lock) to fix BR-UM-27 inconsistency?"]
+  ],
+  CC: [
+    ["Q-CC-NEW-01","When two Active contracts have identical ExpirationDate, should we charge the one with lower Remaining Value first (drain-near-empty)?"],
+    ["Q-CC-NEW-02","Should rate-card edits on an Active contract apply only to transactions AFTER edit timestamp (vs immediately to in-flight reservations)?"],
+    ["Q-CC-NEW-03","Does Falcon need to support multi-currency contracts within one account? (if no, lock to SAR)"],
+    ["Q-CC-NEW-04","Is the contract-value upper bound 999,999,999.99 SAR (one billion minus one cent) the correct interpretation of \"hundreds of millions\"?"],
+    ["Q-CC-NEW-05","Should Pending contracts support a Cancel operation that bypasses the auto Pending→Active transition?"],
+    ["Q-CC-NEW-06","Should we apply 15% KSA VAT on top of CommittedValue (system adds VAT)? (yes = net+VAT, no = already gross)"],
+    ["Q-CC-NEW-07","When an Expired contract is extended back to Active, should Send Transactions that failed for insufficient balance during Expired window be retried automatically?"],
+    ["Q-CC-NEW-08","When Expired contract is extended, should already-charged transactions that consumed a different Active contract during the gap be unwound and re-billed to revived contract?"],
+    ["Q-CC-NEW-09","Should refunds (failed campaign) route back to the original debited contract by default? (vs nearest-expiring Active)"],
+    ["Q-CC-NEW-10","Should addon free-credit cascade cross contracts (drain ALL free credits before any rate-card fires)? (vs stay within nearest-expiring contract)"],
+    ["Q-CC-NEW-11","Should Falcon expose a \"force-activate before StartDate\" admin override for an emergency client go-live?"],
+    ["Q-CC-NEW-12","Should the contract audit log capture per-field old/new values? (yes = per-field / no = just event)"],
+    ["Q-CC-NEW-13","Does the system need a Suspended status (e.g. sanctions / payment holds) distinct from Expired?"],
+    ["Q-CC-NEW-14","Is Packaging (Reading A) a Phase 2 deliverable that should be tracked as a separate module today (with placeholder BR-PKG-* rules)?"],
+    ["Q-CC-NEW-15","Is Billing (Reading A) a Phase 2 deliverable that should be tracked as a separate module today?"],
+    ["Q-CC-NEW-16","Should Remaining Value displayed to AO be eventually-consistent (cheaper, sub-second lag) vs real-time per Send Transaction?"],
+    ["Q-CC-NEW-17","Should every contract carry a TaxRegime field even before VAT is implemented, so data model can grow?"],
+    ["Q-CC-NEW-18","When ExpirationDate is being edited to value beyond a year out, should there be a confirmation prompt (high-blast-radius guard)?"],
+    ["Q-CC-NEW-19","Should Send Transaction support a per-attempt \"preferred contract id\" override (so Normal Users on a campaign can pin to a contract)?"],
+    ["Q-CC-NEW-20","Should rate-card price-value changes trigger an automatic notification to the AO (email/in-app)?"]
+  ],
+  CG: [
+    ["Q-CG-NEW-01","When a contact group's creator user is deleted, should the group be soft-deleted too?"],
+    ["Q-CG-NEW-02","When the creator's account is Deleted, should the group be hard-deleted, soft-deleted, or reassigned to the AO? (yes = soft-delete)"],
+    ["Q-CG-NEW-03","When a shared-with Normal User is deleted, should the share entry be removed silently (yes) or kept as \"(deleted user)\" placeholder (no)?"],
+    ["Q-CG-NEW-04","Is column-name uniqueness scoped case-sensitively (i.e. \"name\" and \"Name\" allowed as two columns)?"],
+    ["Q-CG-NEW-05","Is group-name uniqueness required per creator (vs per node or per account)? (yes = per creator)"],
+    ["Q-CG-NEW-06","Is there a hard maximum contacts per group beyond ImportTooLarge? (yes = define hard cap)"],
+    ["Q-CG-NEW-07","Is there a hard maximum columns per group equal to template variable cap (20-30 per BR-TM-10)?"],
+    ["Q-CG-NEW-08","Should the Failed status be added to contact-group status enum (with failureReason: string)?"],
+    ["Q-CG-NEW-09","Does the AO see contact groups created on all sub-nodes recursively (vs only direct children)?"],
+    ["Q-CG-NEW-10","When a creator edits a shared group, do shared-with users see the change immediately on next refresh (vs retain original snapshot)?"],
+    ["Q-CG-NEW-11","Should there be a +N collapsing threshold of 3 explicit names on the Shared-With column?"],
+    ["Q-CG-NEW-12","Should UI block share-with-self at validation time (vs silently drop creator's own ID from picker)?"],
+    ["Q-CG-NEW-13","After editing column names in Step 2 then toggling \"First row is header\" off, should custom names be reset to column_1, column_2?"],
+    ["Q-CG-NEW-14","Should Falcon admin downloads be audit-logged (PII/compliance)?"],
+    ["Q-CG-NEW-15","Should soft-deleted groups have a hard-delete retention policy (e.g. 30 days)?"]
+  ],
+  TM: [
+    ["Q-TM-NEW-01","Should the same user be allowed to be Maker AND Checker on the same template?"],
+    ["Q-TM-NEW-02","When a template is edited post-approval, should approval be re-requested on the same record (yes), or should a new version be created with the old running until new is approved (no)?"],
+    ["Q-TM-NEW-03","Should the variable count cap be exactly 30 (upper end of BR-TM-10 \"20-30\" range)?"],
+    ["Q-TM-NEW-04","Should Quick Reply button labels be capped at 25 characters (Meta's documented limit)?"],
+    ["Q-TM-NEW-05","Should template deletion require Checker approval (yes), or be a Maker-side immediate action (no)?"],
+    ["Q-TM-NEW-06","Can Falcon usertypes view all-clients templates (read-only, like contact groups)?"],
+    ["Q-TM-NEW-07","When Meta sends Paused/Disabled webhook, should the template's general status transition to a distinct Blocked-by-Meta state?"],
+    ["Q-TM-NEW-08","When Meta rejects a previously-approved template (post-quality-feedback), should system auto-re-submit, or notify Maker for manual action? (yes = manual)"],
+    ["Q-TM-NEW-09","Should Checker level resolution be first-claim-wins (yes), or require all users at the level to approve (no)?"],
+    ["Q-TM-NEW-10","When a Contact Group is deleted, should bound Templates also be soft-deleted (yes), or remain with broken-binding warning (no)?"],
+    ["Q-TM-NEW-11","When a Contact Group column is renamed, should bound Template variables auto-update (yes), or stay broken until Maker re-binds (no)?"],
+    ["Q-TM-NEW-12","Should approving a template lock the bound Contact Group's columns from being renamed?"],
+    ["Q-TM-NEW-13","When a template is Paused by Meta, should queued Send Transactions fall back to another template (yes) or fail (no)?"],
+    ["Q-TM-NEW-14","Should the system support multi-language template groups (one logical template with EN+AR variants editable in one screen)?"],
+    ["Q-TM-NEW-15","Should the Maker be allowed to edit a Pending template before Checker review (yes), or must they Reject + re-create (no)?"]
+  ],
+  X: [
+    ["Q-X-NEW-01","When an Account Owner user is Deleted (BR-UM-08), should the Main-node account be auto-Suspended?"],
+    ["Q-X-NEW-02","When a Contract is Extended (BR-CC-17 Expired→Active), should wallet records previously excluded from lump-sum (BR-CC-38) be automatically re-included?"],
+    ["Q-X-NEW-03","Should we centralise all cross-module workflow traces in 18-a-to-z-traces/ (vs scattered across per-page folders)?"],
+    ["Q-X-NEW-04","When a User is Deleted, should their Contact Groups (BR-CGM-32/36) become read-only for shared-with users?"],
+    ["Q-X-NEW-05","When a User is Deleted, should pending Templates they authored (BR-TM-17 Pending) auto-Reject?"],
+    ["Q-X-NEW-06","Does the Account entity support a Soft-Delete state? (if yes, define cascade per BR-X-ACCOUNT-LIFECYCLE-01)"],
+    ["Q-X-NEW-07","When a Node is Moved (GAP-RD-03), should child users' permissions re-resolve automatically?"],
+    ["Q-X-NEW-08","Is the Checker (BR-TM-22) a PES permission (acc.template/approve) rather than a per-user role flag?"],
+    ["Q-X-NEW-09","Is Permission Group sharing across accounts FORBIDDEN?"],
+    ["Q-X-NEW-10","When a Send Transaction (BR-CC-32) fails partway (dispatch hop), should deducted balance be auto-refunded to originating contract?"],
+    ["Q-X-NEW-11","Does Send Transaction require OTP confirmation for Normal Users above a configurable SAR threshold?"],
+    ["Q-X-NEW-12","Does Balance Transfer (BR-AM-30..33) require OTP confirmation?"],
+    ["Q-X-NEW-13","Should all cross-module state-change events emit an audit record with a shared correlationId (BR-X-AUDIT-EVENT-01)?"],
+    ["Q-X-NEW-14","Is i18n fallback EN↔AR symmetric (when AR missing, fall back to EN — and vice versa)?"],
+    ["Q-X-NEW-15","Are confirmation/warning messages DB-stored editable-without-release (Q-RD-06)?"],
+    ["Q-X-NEW-16","When a CommChannel visibility flips Show→Hide while an Active contract references its Rate Card, is the flip ALLOWED?"],
+    ["Q-X-NEW-17","When Account Limits change (BR-AM-39 OPEN) and current state exceeds new limit, do existing rows stay and new ones are blocked?"],
+    ["Q-X-NEW-18","Is there a single Kafka topic registry (proposed datasets/kafka-topics/_INDEX.md)?"],
+    ["Q-X-NEW-19","Is the Notification module a 1st-class PRD module? (currently referenced by 4 modules but never authored)"],
+    ["Q-X-NEW-20","Should the canonical PRD-vs-deployed-behavior verification surface be authored before next milestone?"]
+  ]
+};
+
+/* ========== RENDER QUESTIONS ========== */
+function renderQuestions() {
+  Object.entries(QUESTIONS).forEach(([mod, qs]) => {
+    const container = document.querySelector(`[data-questions="${mod}"]`);
+    if (!container) return;
+    container.innerHTML = qs.map(([qid, text]) => `
+      <div class="question" data-qid="${qid}" data-module="${mod}">
+        <div><span class="qid">${qid}:</span> <span class="qtext">${text.replace(/</g,'&lt;')}</span></div>
+        <div class="answers">
+          <label class="yes-label"><input type="radio" name="${qid}" value="yes"> ✅ Yes</label>
+          <label class="no-label"><input type="radio" name="${qid}" value="no"> ❌ No</label>
+          <label class="defer-label"><input type="radio" name="${qid}" value="defer"> ⏸ Defer</label>
+        </div>
+        <input type="text" class="qnote" placeholder="Optional note / rationale…" data-qid="${qid}">
+      </div>
+    `).join('');
+  });
+}
+
+/* ========== PERSISTENCE ========== */
+const STORE_KEY = 'falcon-biz-answers-v1';
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  const t = new Date().toLocaleTimeString();
+  document.getElementById('autosave-status').textContent = `✓ Saved ${t}`;
+  updateProgress();
+}
+function applyState(state) {
+  Object.entries(state).forEach(([qid, val]) => {
+    if (val.answer) {
+      const radio = document.querySelector(`input[name="${qid}"][value="${val.answer}"]`);
+      if (radio) {
+        radio.checked = true;
+        markAnswered(qid, val.answer);
+      }
+    }
+    if (val.note) {
+      const noteInput = document.querySelector(`.qnote[data-qid="${qid}"]`);
+      if (noteInput) noteInput.value = val.note;
+    }
+  });
+  updateProgress();
+}
+function markAnswered(qid, answer) {
+  const q = document.querySelector(`.question[data-qid="${qid}"]`);
+  if (!q) return;
+  q.classList.remove('answered','answered-no','answered-defer');
+  if (answer === 'yes') q.classList.add('answered');
+  else if (answer === 'no') q.classList.add('answered-no');
+  else if (answer === 'defer') q.classList.add('answered-defer');
+}
+function captureCurrentState() {
+  const state = {};
+  document.querySelectorAll('.question').forEach(q => {
+    const qid = q.dataset.qid;
+    const checked = q.querySelector('input[type=radio]:checked');
+    const note = q.querySelector('.qnote').value;
+    if (checked || note) {
+      state[qid] = { answer: checked ? checked.value : null, note: note || null };
+    }
+  });
+  return state;
+}
+function updateProgress() {
+  const state = captureCurrentState();
+  const answered = Object.values(state).filter(v => v.answer).length;
+  document.getElementById('qanswered').textContent = answered;
+  Object.keys(QUESTIONS).forEach(mod => {
+    const total = QUESTIONS[mod].length;
+    const a = Object.entries(state).filter(([qid, v]) => qid.includes(`-${mod}-`) && v.answer).length;
+    const el = document.querySelector(`.qa-${mod}`);
+    if (el) el.textContent = a;
+    const prog = document.getElementById(`prog-${mod}`);
+    if (prog) prog.style.width = (a / total * 100) + '%';
+  });
+}
+
+/* ========== EVENT HANDLERS ========== */
+function attachHandlers() {
+  document.addEventListener('change', e => {
+    if (e.target.matches('input[type=radio]') && e.target.closest('.question')) {
+      const qid = e.target.name;
+      const state = loadState();
+      state[qid] = state[qid] || {};
+      state[qid].answer = e.target.value;
+      markAnswered(qid, e.target.value);
+      saveState(state);
+    }
+  });
+  document.addEventListener('input', e => {
+    if (e.target.matches('.qnote')) {
+      const qid = e.target.dataset.qid;
+      const state = loadState();
+      state[qid] = state[qid] || {};
+      state[qid].note = e.target.value;
+      saveState(state);
+    }
+    if (e.target.id === 'filter-input' || e.target.id === 'filter-status') {
+      applyFilter();
+    }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.id === 'filter-status') applyFilter();
+  });
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const state = captureCurrentState();
+    const data = {
+      generated: new Date().toISOString(),
+      reportVersion: '2026-05-18',
+      totalQuestions: Object.values(QUESTIONS).flat().length,
+      answeredCount: Object.values(state).filter(v => v.answer).length,
+      answers: state
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `falcon-business-answers-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById('import-btn').addEventListener('click', () => {
+    document.getElementById('import-file').click();
+  });
+  document.getElementById('import-file').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        const answers = data.answers || data;
+        localStorage.setItem(STORE_KEY, JSON.stringify(answers));
+        applyState(answers);
+        alert(`Imported ${Object.keys(answers).length} answers.`);
+      } catch (err) { alert('Failed to parse JSON: ' + err.message); }
+    };
+    r.readAsText(file);
+  });
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    if (!confirm('Clear ALL answers? This cannot be undone (unless you exported first).')) return;
+    localStorage.removeItem(STORE_KEY);
+    document.querySelectorAll('input[type=radio]:checked').forEach(r => r.checked = false);
+    document.querySelectorAll('.qnote').forEach(n => n.value = '');
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('answered','answered-no','answered-defer'));
+    updateProgress();
+    document.getElementById('autosave-status').textContent = '✓ Cleared';
+  });
+  document.getElementById('expand-all').addEventListener('click', () => {
+    document.querySelectorAll('details').forEach(d => d.open = true);
+  });
+  document.getElementById('collapse-all').addEventListener('click', () => {
+    document.querySelectorAll('details').forEach(d => d.open = false);
+  });
+}
+function applyFilter() {
+  const q = document.getElementById('filter-input').value.toLowerCase();
+  const status = document.getElementById('filter-status').value;
+  document.querySelectorAll('.question, .gap, .proposal').forEach(el => {
+    const text = el.textContent.toLowerCase();
+    const matchesText = !q || text.includes(q);
+    let matchesStatus = true;
+    if (el.classList.contains('question')) {
+      const answered = el.querySelector('input[type=radio]:checked');
+      if (status === 'unanswered') matchesStatus = !answered;
+      if (status === 'answered') matchesStatus = !!answered;
+    }
+    el.classList.toggle('hidden', !(matchesText && matchesStatus));
+  });
+}
+
+/* ========== INIT ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  renderQuestions();
+  attachHandlers();
+  const saved = loadState();
+  applyState(saved);
+});
+</script>
+</body>
+</html>

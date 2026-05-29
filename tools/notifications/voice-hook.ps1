@@ -56,9 +56,9 @@ if ($mode -eq 'silent') {
     # *** finished = 3 beeps; waitingForInput / blocked = 1 beep (different pitches); other categories silent. ***
     $beepCmd = $null
     switch ($Category) {
-        'finished'        { $beepCmd = "[console]::beep(660,180); Start-Sleep -Milliseconds 80; [console]::beep(660,180); Start-Sleep -Milliseconds 80; [console]::beep(880,220)" }
-        'waitingForInput' { $beepCmd = "[console]::beep(880,250)" }
-        'blocked'         { $beepCmd = "[console]::beep(440,350)" }
+        'finished'        { $beepCmd = "[console]::beep(784,200); [console]::beep(988,200); [console]::beep(1319,420)" }
+        'waitingForInput' { $beepCmd = "1..3 | ForEach-Object { [console]::beep(1175,350); [console]::beep(1397,350); Start-Sleep -Milliseconds 180 }" }
+        'blocked'         { $beepCmd = "1..2 | ForEach-Object { [console]::beep(440,260); [console]::beep(880,260); Start-Sleep -Milliseconds 120 }" }
     }
     if ($beepCmd) {
         try {

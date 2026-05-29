@@ -1,4 +1,4 @@
-# falcon-otp-send-dialog — USAGE
+﻿# falcon-otp-send-dialog — USAGE
 
 ## Real usage examples
 
@@ -79,3 +79,11 @@ Inherits dialog + radio + otp tokens.
 | Use for OTP-send-verify flows. | Use for arbitrary modals. |
 | Two-way bind `open` and `step`. | One-way only. |
 | Handle send/verify/resend in parent. | Try to validate inside dialog. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-otp-send-dialog>` across `apps/` + `libs/falcon/` returned **3 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.ts`
+- `apps/host-shell/src/app/playground/playground.page.html`

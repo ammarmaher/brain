@@ -52,3 +52,86 @@
 - The PRD uses **Variable**; do NOT alias as "placeholder" / "merge field" / "token" in user-facing copy.
 - The PRD uses **Quick Reply** for the button kind; flag "Quick Action".
 - The PRD uses **Paused** and **Disabled** for Meta states; do NOT alias.
+
+---
+
+## Resolutions (Wave 2 — 2026-05-17)
+
+> Resolutions from cross-reading the PRD + backend dossiers + V-rules. Each resolution cites sources. Resolved questions remain in the table above with `[RESOLVED]` tag.
+
+### Q-TM-11 — `CommChannelConfig.bodyType` valid values [PARTIAL RESOLUTION]
+
+**Inferred enum set (NOT confirmed; requires Domain code read):** `Plain | Template | Interactive | Restricted`.
+
+**Reasoning:**
+- [BRAIN-OUT] `backend/templates/DTO_DICTIONARY.md:42` records "BodyType — likely an enum: `Plain`, `Template`, `Interactive`, … (verify)".
+- [VAULT] `_obsidian/30-Validation/V-template-levels-count-required-for-restricted.md:33` documents error code `LevelsCountRequiredForRestricted` (HTTP 400) — proves `Restricted` is a member name.
+- [BRAIN-OUT] `backend/templates/ERRORS.md:23` confirms the error code in the FalconKeys catalog.
+- [BRAIN-OUT] `backend/templates/VALIDATIONS.md:23` calls out "conditional rules on `BodyType` driving `LevelsCount` and `CheckerLevels`" — the conditional gate exists.
+
+**Confidence:** Medium. The four names are inferred from text references, not from reading the enum source. **Action:** read `Falcon.Templates.Domain/Constants/{eBodyType.cs OR BodyType.cs}` to confirm exact spelling + ordinals. Until done, treat `Restricted` as confirmed and the other three as candidates.
+
+**Cross-reference:** V-rule [[V-template-levels-count-required-for-restricted]] uses `BodyType === 'Restricted'` as the trigger for `LevelsCount` requirement + `CheckerLevels` enablement. Frontend implementation can scaffold against `Restricted` literal without confirming the rest of the enum.
+
+### Q-TM-13 — Checker auto-routing semantics [DESIGN-LEVEL RESOLUTION]
+
+**Resolved by data shape inference, not PRD prose.**
+
+**Resolution:**
+- [BRAIN-OUT] `backend/templates/DTO_DICTIONARY.md:18` shows `CheckerLevel { int LevelNumber, List<CheckerUser> Users }` — a level is a **pool of eligible users**, not a single named approver.
+- [VAULT] `_obsidian/30-Validation/V-template-checker-level-integrity.md:40-44` enumerates the structural rules: levels are sequential (`CheckerLevel1RequiredBeforeLevel2`), no duplicates, no user across multiple levels, each level has ≥1 user.
+- **Inferred routing semantics:** Submit dispatches to Level 1 → any Level-1 user can approve → on approval, dispatches to Level 2 (if `LevelsCount ≥ 2`) → any Level-2 user can approve → ... → on the last level's approval, transitions to Meta (if WhatsApp) or final Approved.
+- The PRD does not explicitly state "round-robin" vs "first-claim-wins" vs "all-must-approve" at a level. **Treating it as first-claim-wins is the conservative default** per DECISION-PROTOCOL F-022 (cosmetic-tier fork → conservative default).
+
+**Confidence:** Medium-low — this is a data-shape inference, not a confirmed product spec. Schedule a follow-up with Jawad to confirm before building the Checker UI.
+
+### Q-TM-09 — Where do template-entity CRUD endpoints live? [ARCHITECTURE FINDING]
+
+**Resolved: they don't exist yet anywhere.**
+
+**Resolution:**
+- [BRAIN-OUT] `backend/templates/ENDPOINT_REGISTRY.md:20` confirms "3 (+ 1 health) — the smallest service in the platform". The Templates service ONLY exposes `CommunicationChannelConfigEndpointGroup`.
+- [BRAIN-OUT] `backend/templates/SERVICE_OVERVIEW.md:11` describes the service as "**consumer-heavy**: it materializes state from Commerce + Identity events and exposes a small read+update surface to the frontend". Specifically: "Track per-tenant communication channel configurations" — NOT "Manage templates".
+- [BRAIN-OUT] `backend/templates/SERVICE_OVERVIEW.md:70` states: "The service is fundamentally a **read-model / projection** of Commerce + Identity state — adding an update endpoint only for the rare case where the tenant configures checker levels independently of upstream events."
+
+**Conclusion:** The "Templates Service" is misnamed for the current scope — it is a **CommChannelConfig service**. The Template entity (body / header / footer / variables / buttons / status / Meta state) has **no production code anywhere in the platform today**. Phase 2 needs an architectural decision: extend `falcon-core-templates-svc` to own the Template entity, OR build a new `falcon-core-template-content-svc` adjacent to it.
+
+**Action for Phase 2 plan:** add an explicit "Architecture decision: where does the Template entity live?" item to the Phase 2 roadmap before any template-creation UI work begins.
+
+### Q-TM-10 — Gateway routing for Templates service [CONFIRMED MISSING]
+
+**Resolved (no surprise).**
+
+**Resolution:**
+- [BRAIN-OUT] `backend/templates/FRONTEND_CONTRACT.md:9` confirms: "**Not currently exposed through either gateway** ... The `Falcon.Core.Gateway` and `Falcon.System.Gateway` route maps in `appsettings.json` do not list a `templates-cluster`. Templates is reachable only directly at `localhost:7264`."
+- [BRAIN-OUT] `integration/GAP_LIST.md` (per original GAP-TM-02) corroborates GAP-008.
+- **This is the prerequisite blocker for any Templates frontend work.** Even the 3 existing endpoints cannot be called from `admin-console` or `host-shell` today.
+
+**Action:** Add `templates-cluster` to `Falcon.System.Gateway/appsettings.json` route map first; only Falcon admin needs CommChannelConfig editor today (Q-TM-02 — Checker assignment per the Maker/Checker governance). Client portal CommChannelConfig view-only can wait. (This is a `Phase 2.0` quick-win — 1 file edit + redeploy.)
+
+### Q-TM-12 — Maker / Checker self-approval prevention [DESIGN-LEVEL RESOLUTION]
+
+**Resolved (by exclusion).**
+
+**Resolution:**
+- [VAULT] `_obsidian/30-Validation/V-template-checker-level-integrity.md:42` enforces `UserAssignedToMultipleCheckerLevels` (400) — one user cannot appear at more than one level.
+- The PRD never explicitly says "Maker cannot also be Checker for their own template". But the data shape allows it: a Maker user might be assigned to Level 1 (or 2, or N) as a Checker.
+- **Conservative default per F-022:** UI should hide the "Approve" action when `viewerUserId === templateCreatorUserId`. PES policy gate should add a deny: `templates.approve.deny when subject == template.creator`.
+
+**Confidence:** Low — this is an inferred standard, not a documented Falcon rule. Should be confirmed with the compliance owner before production deployment.
+
+**Action:** Add Q-TM-12 to the human-asks queue for next product review. Cross-reference SOX / dual-control requirements if applicable.
+
+### Q-TM-22 — DB-editable warning messages [SCOPE DEFERRED]
+
+**Resolved: out of scope for the Templates module.**
+
+**Resolution:**
+- This is a cross-platform i18n concern (Q-RD-06). Today every service uses `.resx`-bound resource files (`ErrorMessages.{en,ar}.resx`); DB-editable system messages would require a brand-new infrastructure component (admin UI + lookup table + cache invalidation across all services).
+- The Templates module is not the right owner. Tagged to platform-architecture for prioritization.
+
+**Action:** Track in root-documents/QUESTIONS.md only. Don't carry as a Templates-specific item.
+
+### Items NOT resolved (still pending Drive re-sync or product input)
+
+- Q-TM-01 (Voice flow), Q-TM-02 (default Checker role), Q-TM-03 (versioning semantics), Q-TM-04 (Meta pause/disable surfacing), Q-TM-05 (Drive doc disambiguation), Q-TM-06 (deletion governance), Q-TM-07 (Falcon read scope), Q-TM-08 (AI template flow), Q-TM-14 (Marketing-hours policy), Q-TM-15 (bulk operations), Q-TM-16 (variable cap 20 OR 30), Q-TM-17 (Quick Reply label limit), Q-TM-18..21 (cross-cuts), Q-TM-19 (Contact Group deletion propagation), Q-TM-20 (Paused template runtime fallback) — all require product team confirmation or a Drive re-sync.

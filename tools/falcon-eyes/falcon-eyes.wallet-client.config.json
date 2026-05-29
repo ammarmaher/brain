@@ -1,0 +1,41 @@
+{
+  "$schema": "./falcon-eyes.schema.json",
+  "source": {
+    "url": "http://127.0.0.1:5173/T2%20Falcon%20Admin.html#contactGroups=client%2Fcreate&wallet=client",
+    "label": "T2 Falcon SoT — Wallet & Balance .Mng (Show as Client / management-console reference)"
+  },
+  "destination": {
+    "url": "http://localhost:4200/management-console/wallet-balance-management",
+    "label": "Falcon management-console wallet (live; client auth + selected node required to render)"
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "deviceScaleFactor": 1
+  },
+  "wait": {
+    "state": "networkidle",
+    "extraDelayMs": 3500
+  },
+  "pixelmatch": {
+    "threshold": 0.1,
+    "includeAA": false,
+    "diffColor": [255, 0, 255]
+  },
+  "output": {
+    "rootDir": "C:\\Falcon\\Brain Outputs\\reports\\falcon-eyes",
+    "mirrorTo": "C:\\Falcon\\Brain SK\\outputs\\reports\\falcon-eyes",
+    "writeFullPage": true,
+    "writeSectionScreenshots": true,
+    "writeDiffImages": true,
+    "writeJson": true,
+    "writeMarkdown": true
+  },
+  "navigation": {
+    "preWaitForSelector": null,
+    "scrollToTopBeforeCapture": true,
+    "preClickText": "Wallet & Balance",
+    "postClickWaitMs": 2500
+  },
+  "headless": true
+}

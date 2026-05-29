@@ -1,4 +1,4 @@
-# falcon-email-field — GAPS AND UPGRADES
+﻿# falcon-email-field — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -91,3 +91,9 @@ All shared.
 
 - For G2: drive `state` to a custom token-overridden 'success' state on the host.
 - For G4: render a sibling spinner externally.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-email-field>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

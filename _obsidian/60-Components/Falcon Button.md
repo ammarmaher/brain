@@ -34,6 +34,12 @@ Navigation note. Brain Outputs holds the dossier.
 
 - See [GAP_REGISTRY.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/GAP_REGISTRY.md) — filter by component `falcon-button`.
 
+## Theming & Tailwind
+
+- [[Tailwind CSS]] — library entry. Button is a canonical consumer of `--color-falcon-teal-700` and the focus-ring shadow token.
+- [[Tailwind Falcon Alignment Scorecard]] — button-level interactive states (hover / focus-visible / active / disabled) flagged for standardization in Wave 1.
+- [[Falcon Angular Wrapper Pattern]] — `<falcon-angular-button>` wraps `<falcon-button-tw>`; consumers should use `variant` / `size` props, not external classes.
+
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-button`.

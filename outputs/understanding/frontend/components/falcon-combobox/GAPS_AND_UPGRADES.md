@@ -1,4 +1,4 @@
-# falcon-combobox — GAPS AND UPGRADES
+﻿# falcon-combobox — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -109,3 +109,9 @@ All gaps belong in the shared component.
 - For G1/G2: wrap in `<falcon-form-field>` for label + error markup.
 - For G3: use Reactive Forms `disable()` on the control.
 - For G7: pipe `filterChange` through `Subject + debounceTime`.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-combobox>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

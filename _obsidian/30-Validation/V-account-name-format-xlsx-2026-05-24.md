@@ -9,6 +9,15 @@ drift: false
 created: 2026-05-24
 xlsx: Source_of_truth_theme/Validations.SOT-2026-05-24.xlsx (snapshot of Downloads/Validations.xlsx)
 supersedes: [V-account-name-format-uniqueness]
+module: account-mgmt
+feature: add-client
+verification: runtime
+last-verified: 2026-05-24
+tags: ["#status/triangulated", "#module/account-mgmt", "#verification/runtime", "#layer/fe"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+superseded-by: []
+evidence-link: project_validation_xlsx_sot_flip_wave_f_2026_05_24.md
 ---
 *** Validation V-account-name-format-xlsx-2026-05-24 — Account Name per new xlsx SoT ***
 *** Origin: Validations.xlsx 2026-05-24 (declared SoT by Ammar) · Commerce · 2026-05-24 ***

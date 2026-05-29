@@ -1,4 +1,4 @@
-# falcon-angular-single-uploader — USAGE
+﻿# falcon-angular-single-uploader — USAGE
 
 ## Real usage in active codebase
 - `apps/host-shell/src/app/playground/playground.page.html` — playground showcase (all 3 preview modes + sizes).
@@ -104,3 +104,9 @@ export class CompanyLogoStepComponent {
 - DO leverage Reactive Forms via `formControlName`.
 - DO listen to `fileEdit` to track "user wants to replace" analytics — the picker reopens automatically afterwards.
 - DON'T paint your own delete button — there's a built-in one with the right tokens.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-single-uploader>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

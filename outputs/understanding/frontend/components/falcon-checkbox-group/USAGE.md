@@ -1,4 +1,4 @@
-# falcon-checkbox-group — USAGE
+﻿# falcon-checkbox-group — USAGE
 
 ## Real usage examples
 
@@ -92,3 +92,9 @@ The wrapper passes `useTailwind=true` (default) to each child. Per-row layout is
 | Use this wrapper for grouped checkboxes. | Hand-roll your own loop. |
 | Bind via CVA. | Mutate selection imperatively from outside. |
 | Use `orientation` for layout. | Set inline `style="display: flex"`. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-checkbox-group>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

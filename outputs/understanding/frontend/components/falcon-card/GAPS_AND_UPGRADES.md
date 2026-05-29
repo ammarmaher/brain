@@ -1,4 +1,4 @@
-# falcon-card — GAPS AND UPGRADES
+﻿# falcon-card — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -107,3 +107,9 @@ All upgrades belong in the shared component. Per-page hand-rolling defeats the p
 
 ## Future-proof recommendation
 Pre-adoption: ship `interactive` + `selected` + the slot/prop fix. Without them the card can't compete with hand-rolled selectable tiles in coming dashboard / billing pages.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-card>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

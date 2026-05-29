@@ -182,5 +182,256 @@ export class FalconAngularXComponent implements OnInit {
 | `[prop]` Angular property binding on Stencil tag for primitive props | [CODE] Wrapper template uses `[attr.icon-name]` not `[iconName]` — see Contract C8 |
 | Eager `defineCustomElements()` of Light variants | [CODE] `define-falcon-tw-component.ts` is on-demand — see Contract C6 |
 | Re-emitting Stencil event without `bubbles: true, composed: true` | Composed events traverse Shadow boundary; without them Angular wrapper `(falcon-change)` listener never fires |
+| **Library component injecting an HTTP service** | [MEMORY] `feedback_library_skeleton_app_api.md` 2026-05-15 (Wave 16). Library components are SKELETONS — they take inputs, emit outputs, never inject anything that calls a backend. The API talk lives in an app-level **wrapper** component (see §6). |
 
-_Last updated: 2026-05-14 — Strategy v1.0 — Author: Adnan (auto)_
+## 6. Library = Skeleton, App = API — Architectural rule (2026-05-15)
+
+> **Doctrine.** Every Falcon component lives in one of TWO layers:
+>
+> 1. **Library skeleton** (`libs/falcon-ui-core/...`) — pure presentational. Accepts data via `@Prop`/`@Input`, emits events. Knows NOTHING about backends, HTTP, or domain APIs. Works with default/passed-in data.
+> 2. **App-level wrapper** (`apps/host-shell/src/app/shared-components/<name>/`) — uses the library skeleton **as a tag** in its template, injects backend services, owns the API orchestration. This is the layer where data goes live.
+
+### 6.1 When to author a wrapper
+
+You need a wrapper whenever the feature touches the backend:
+- HTTP fetch / submit
+- Polling
+- Event-stream subscription
+- Cross-app state coordination
+
+If the feature is purely presentational (button, badge, accordion, calendar, dialog chrome) — you DON'T need a wrapper. The library skeleton is the end product.
+
+### 6.2 Wrapper anatomy
+
+Path: `apps/host-shell/src/app/shared-components/<verb-noun>-popup/` (or `-modal`, `-panel`, `-flow` — name the verb the user performs).
+
+Files:
+- `<name>.component.ts` — standalone, OnPush; injects services; orchestrates flow
+- `<name>.component.html` — composes the library skeleton tag + binds inputs/outputs
+- `index.ts` — public surface (component + types only; services are private)
+
+Consumer surface (rule of thumb):
+- ONE `@Input() trigger: SomeTriggerShape | null` — caller sets to fire the flow
+- TWO `@Output()`s: `succeeded` + `failed` — caller reacts to terminal state
+- Visual config (e.g. `showGlossy`, `showIconColor`) optional — forwarded to skeleton
+
+### 6.3 Cross-app consumption
+
+TypeScript path alias in `tsconfig.base.json`:
+```json
+"@host-shell/shared/*": ["./apps/host-shell/src/app/shared-components/*/index.ts"]
+```
+
+Consumer apps import:
+```ts
+import { MyPopupComponent } from '@host-shell/shared/my-popup';
+```
+
+This is build-time bundling — each MF app gets its own copy of the wrapper code. Stateless HTTP services duplicate fine. For shared state (auth, theme, language), the existing `falcon-facades/` + DI-token pattern remains the right answer.
+
+### 6.4 What stays in libs
+
+- ✅ Library skeleton components (Shadow + Light/TW + Angular wrapper) — no service injection
+- ✅ Pure utility services (no HTTP) — e.g. `SimplePollService`, `HttpService` (low-level wrapper), formatters, validators
+- ✅ Type definitions (request/response DTOs, enums) — `DoPaymentCommunicationChannelRequest`, `OrderFailureReason`, etc.
+- ✅ Tokens, theme, i18n keys
+
+What MAY stay in libs (grandfathered, but new code goes app-level):
+- ⚠️ Domain HTTP services authored before Wave 16 (e.g. `CommChannelPaymentService`, `OrderStatusService`). These work, but new domain-API services should be authored at the app level per §6.1.
+
+### 6.5 Example — `<app-do-payment-priority-popup>` (Wave 16 reference)
+
+The library skeleton:
+```html
+<!-- libs/falcon-ui-core/.../falcon-insufficient-balance-dialog.component.html -->
+<falcon-insufficient-balance-dialog-tw
+  [items]="items"
+  [open]="open"
+  ... />
+```
+
+The app-level wrapper:
+```ts
+// apps/host-shell/src/app/shared-components/do-payment-priority-popup/do-payment-priority-popup.component.ts
+@Component({
+  selector: 'app-do-payment-priority-popup',
+  imports: [FalconAngularInsufficientBalanceDialogComponent],
+  templateUrl: './do-payment-priority-popup.component.html',
+})
+export class DoPaymentPriorityPopupComponent {
+  @Input() set trigger(t: DoPaymentPriorityTrigger | null) { ... }
+  @Output() succeeded = new EventEmitter<DoPaymentPrioritySuccess>();
+  @Output() failed = new EventEmitter<DoPaymentPriorityFailure>();
+
+  private payment = inject(CommChannelPaymentService);
+  private orderStatus = inject(OrderStatusService);
+  private poll = inject(SimplePollService);
+
+  // doPayment → poll → getVisibleCommChannels → dialog → resubmit → terminal
+}
+```
+
+The consumer (admin-console):
+```html
+<!-- apps/admin-console/.../applications-table.component.html -->
+<app-do-payment-priority-popup
+  [trigger]="ibTrigger()"
+  (succeeded)="onIbSucceeded($event)"
+  (failed)="onIbFailed($event)" />
+```
+
+```ts
+import { DoPaymentPriorityPopupComponent } from '@host-shell/shared/do-payment-priority-popup';
+
+// Just set the trigger — popup owns the rest.
+protected ibTrigger = signal<DoPaymentPriorityTrigger | null>(null);
+
+case 'doPayment':
+  this.ibTrigger.set({ commChannelId: row.id, accountId, nodeId });
+  return;
+```
+
+Library skeleton sees `items` + emits `orderedIds`. Wrapper sees `trigger` + emits `succeeded`/`failed`. Caller sees a 3-line interaction. Three layers, three concerns, zero leakage.
+
+## 7. Feature components + validation contract
+
+> **Doctrine.** A *feature component* is anything app-level that isn't a Falcon library primitive — wizard step, drawer panel, page-pool form, host-shell shared-component. Every feature component follows the same folder shape and consumes validations from the shared `FALCON_VALIDATIONS` registry. Locked 2026-05-16 (Strategy v1.2.0).
+
+### 7.1 — Folder pattern
+
+```
+<feature-component-name>/
+  <feature-component-name>.component.ts
+  <feature-component-name>.component.html
+  index.ts                              # public barrel
+  models/
+    models.ts                           # ONE file holding the component's interfaces / form values / helpers
+  services/
+    <domain>.service.ts                 # ONE file per primary service class — name reflects the domain
+  validations/
+    validations.ts                      # field-rule map + InjectionToken + <name>RulesProvider() factory
+```
+
+`<domain>` is the entity the component owns (`user.service.ts` for an Add User wizard, `client.service.ts` for an Add Client wizard, `wallet.service.ts` for a wallet panel). Inside the file: one class named after the domain (`UserService`, `ClientService`, `WalletService`) — NOT after the wizard chrome.
+
+This clarifies the prior rule "ONE file per type-folder" — the type folder remains (`services/`), but when only one service class lives there, the file name and class name reflect the domain, not the type. Multiple services collapse into the same file's exports if their concerns are tightly coupled, or split into `services/<domain-a>.service.ts` + `services/<domain-b>.service.ts`.
+
+### 7.2 — Wizards: each step is a self-contained feature component
+
+A wizard chrome (`add-user-wizard.component.ts`) imports each step component as a child. Every step folder is itself a feature component with the exact same shape:
+
+```
+add-user-wizard/
+  add-user-wizard.component.{ts,html}
+  index.ts
+  models/models.ts
+  services/user.service.ts             # owns Identity user lifecycle calls
+  user-personal-step/                  # step is a feature component
+    user-personal-step.component.{ts,html}
+    index.ts
+    validations/validations.ts         # step-local rules
+  user-role-status-step/               # ...same shape
+  user-permissions-step/
+```
+
+The wizard chrome only knows about step VALUE + step VALID + step DIRTY signals. Per-field rules live with each step. The chrome never reaches into a step's validation map.
+
+### 7.3 — `validations/validations.ts` shape
+
+Every feature component declares its rules in `validations/validations.ts` as a `FalconFieldRules<TFormValue>` map exposed via a per-component `InjectionToken` plus a `*RulesProvider()` factory:
+
+```typescript
+import { InjectionToken, Provider, inject } from '@angular/core';
+import { FALCON_VALIDATIONS, FalconFieldRules } from '@falcon';
+import { MyFormValue } from '../../models/models';
+
+export const MY_FORM_VALIDATIONS = new InjectionToken<FalconFieldRules<MyFormValue>>(
+  'MY_FORM_VALIDATIONS',
+);
+
+export const myFormRulesProvider = (): Provider => ({
+  provide: MY_FORM_VALIDATIONS,
+  useFactory: (): FalconFieldRules<MyFormValue> => {
+    const v = inject(FALCON_VALIDATIONS);
+    return {
+      firstName: [v.personName()],
+      email: [v.email()],
+      /* ... */
+    };
+  },
+});
+```
+
+The component declares `providers: [myFormRulesProvider()]` and reads the rules via `inject(MY_FORM_VALIDATIONS)`. Two helper functions in `@falcon` make consumption a one-liner:
+
+- `allFieldsValid(value, rules)` — runs every sync rule against current values. Returns true iff none fail.
+- `fieldErrorMessage(value, field, rules, touched)` — runs the rule array for a single field. Returns a `ValidationMessage` (i18n key + params) or null if no error is visible (per `LIVE_ERROR_KEYS` + touched-set semantics).
+
+### 7.4 — Cross-reference to §6 — host-shell shared components
+
+Library-side skeletons in `libs/falcon-ui-core/` are pure (no DI). App-level wrappers in `apps/host-shell/src/app/shared-components/` follow §7 EXACTLY — they have `<name>/models/`, `<name>/services/`, and `<name>/validations/` whenever they own form input. The validation contract is the same as for page-pool wizards.
+
+### 7.5 — Anti-patterns
+
+| Anti-pattern | Why it's wrong | Fix |
+|---|---|---|
+| `services/services.ts` exporting `AddUserApiService` | The file name and class name are dialectally circular ("services/services" exporting a service named after the chrome) | `services/user.service.ts` exporting `UserService` |
+| Direct `ValidatorFn` imports across feature folders | Cross-feature coupling; hard to swap rules per route; impossible to override in tests | Inject `FALCON_VALIDATIONS` from `@falcon` and compose per component |
+| Per-field hand-rolled `computed()` block per error | Boilerplate that re-implements the touched-set + LIVE_ERROR_KEYS gate every step | `fieldErrorMessage(value(), 'field', this.rules, this.touched())` |
+| Stuffing every validator factory into `services/validators.ts` next to HTTP services | Two unrelated concerns in one folder; validators end up coupled to that feature's mock-tree | Page-pool feature has NO `services/validators.ts`; rules live in each component's `validations/validations.ts` |
+| App-level wrapper injecting a service inside the LIBRARY skeleton | §6 violation — library stays pure | Service injection happens in the wrapper only |
+
+See `10-VALIDATION_CONVENTION.md` for the full contract, override semantics, and the migration cookbook.
+
+### 7.6 — Backend errors, success toasts, and PES gating (v1.3.0)
+
+Added 2026-05-16 (Strategy v1.3.0) when the Add User wizard became the first reference flow with full backend + PES integration. Three rules every feature component owning a submit-flow must follow:
+
+**Rule A — Backend errors land in the popup, not the global toaster.** When a feature submits to the backend and gets a non-success envelope (`isSuccessful: false`) or throws an `HttpErrorResponse`:
+
+1. Set the `notShowToaster: 'true'` header on the request so the global response-interceptor's toast stays silent.
+2. Inject `ErrorDialogService` from `@falcon` and call `errorDialog.openError({ httpStatus, errorMessages })`. The host (`<falcon-angular-error-dialog-host>`, mounted ONCE in `apps/host-shell/src/app/app.ts`) renders the dialog automatically.
+3. Map backend codes to HTTP status via a feature-local helper (`inferStatus(errs)`). Map known business-rule codes (`NormalUserLimitReached → 422`, `DuplicateUsername → 409`, etc.) to their HTTP semantics; default to `400` for validation. HTTP `401` is suppressed by the service — the global interceptor owns re-auth.
+4. For multi-step wizards: ALSO store the error envelopes in a `wizardBackendErrors` signal on the page-state service. The wizard reads it via `[backendErrors]` input + an `effect()` that jumps to the offending step via `FIELD_LEVEL_ERROR_MAP` and calls `revealErrors()`. The popup runs in parallel; the in-wizard jump is for field-level guidance.
+
+**Rule B — Success toasts use `FalconMessageService`, not `FalconNotifierFacade`.** The toast host (`<falcon-angular-message-host>`) lives in the app shell so toasts survive wizard-close + navigation. After a successful submit:
+
+```typescript
+this.messageService.add({
+  severity: 'success',
+  summary: this.i18n.translate('hierarchy.addUser.success.title'),
+  detail: this.i18n.translate('hierarchy.addUser.success.detail').replace('{userName}', payload.username),
+  life: 10000,
+});
+```
+
+i18n keys for success messages use `<feature>.success.{title,detail}` shape; `{paramName}` literal tokens are interpolated by the caller via `.replace()`.
+
+**Rule C — PES gating uses `AccessControlFacade.resolveFlags()` batched at mount time.** Feature components that need PES gating do NOT call `AccessControlFacade.check()` per field. Instead, in `ngOnInit`:
+
+```typescript
+forkJoin({
+  flags: from(this.accessControl.resolveFlags({
+    addUser:         FalconAccess.adminConsole.user.add(),
+    assignPermGroup: FalconAccess.adminConsole.userPermissionGroup.assign(),
+    uploadPhoto:     FalconAccess.adminConsole.userProfilePicture.upload(),
+    /* ... per-role grant flags via FalconAccess.userRole.other(currentRole, target) */
+  })),
+  settings: this.commerceSettingsApi.getSettings(),
+}).subscribe(({ flags, settings }) => { /* ... */ });
+```
+
+Component renders a token-styled skeleton while `loading()` is true. PES-denied flags drive a DISABLED state on the gated control + an `[attr.title]` tooltip explaining the denial (per D2). Hard denials (e.g. `canAddUser=false`) render an empty-state instead of the form body.
+
+**Cross-reference table — Wave-3 work landed by feature:**
+
+| Component / Service | File | Role |
+|---|---|---|
+| `ErrorDialogService` | `libs/falcon/src/shared-data-access/lib/services/error-dialog.service.ts` | Backend error popup state |
+| `FalconAngularErrorDialogHostComponent` | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-error-dialog-host/` | Renders the popup |
+| `CommerceSettingsService` | `libs/falcon/src/shared-data-access/lib/services/commerce-settings.service.ts` | Settings hydrate |
+| `FalconAccess.adminConsole.{user,userPermissionGroup,userProfilePicture}` | `libs/falcon/src/shared-types/lib/constants/falcon-access.registry.ts` | PES query factories |
+| `FIELD_LEVEL_ERROR_MAP` | `apps/admin-console/.../add-user-wizard/models/models.ts` | Code → step+field map |
+| `userNameUnique(... pendingSignal)` | `libs/falcon/src/shared-utils/lib/validations/falcon-validations.ts` | Wave 6 async-pending gate |
+
+_Last updated: 2026-05-16 — Strategy v1.3.0 — Author: Ammar (auto). v1.3.0 added §7.6 (backend errors / success toasts / PES gating)._

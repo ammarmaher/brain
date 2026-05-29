@@ -1,4 +1,4 @@
-# falcon-date-picker — USAGE
+﻿# falcon-date-picker — USAGE
 
 ## Real usage examples
 
@@ -91,3 +91,15 @@ Inherits calendar tokens; per-instance override:
 | Use for input + popover. | Use for inline. |
 | Bind via `[value]` + `(valueChange)`. | Use `ngModel`. |
 | Pass `firstDayOfWeek` per locale. | Trust browser default. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-date-picker>` across `apps/` + `libs/falcon/` returned **7 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/falcon-table-edit-row/falcon-table-edit-row.component.html`
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-calendar/falcon-calendar.component.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-calendar/falcon-calendar.component.ts`
+- `libs/falcon/src/shared-ui/lib/directives/falcon-effective-date.directive.ts`

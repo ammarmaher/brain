@@ -91,6 +91,42 @@ Seven-agent parallel investigation. **60 component folders x 6 files = 360 compo
 
 Full enumeration in [[Frontend Understanding]].
 
+## Theming Cluster — Angular-first (updated 2026-05-20)
+
+- [[36-Theming/README|36-Theming]] — Tailwind v4 + Falcon theme governance — **Angular-first**
+- [[Tailwind CSS]] — library entry
+
+**Theme governance (read first):**
+- [[Falcon Tailwind Theme]] ★ — THE styling source of truth + 5 governance rules
+- [[Falcon Component Theme Contract]] ★ — 9-section contract every component must satisfy
+- [[Tailwind Falcon Alignment Scorecard]] — Angular-first delivery 95%; codebase 71% → 93% via 2-wave fix
+
+**Tokens + mental model:**
+- [[Tailwind Mental Model]] (3-layer token doctrine) · [[Falcon Design Tokens]] · [[Falcon Color Palette Audit]]
+
+**🟢 CURRENT delivery scope (Angular):**
+- [[Falcon Angular Wrapper Pattern]] · [[Falcon Stencil-to-Angular Bridge]] · [[Tailwind Multi-Framework Strategy]] (framework-neutral architecture)
+
+**🟡 FUTURE EXTENSION (NOT current scope):**
+- [[Falcon React Wrapper Future Pattern]] · [[Falcon Vue Wrapper Future Pattern]] — placeholders only
+
+**Audit + governance tooling (new 2026-05-20):**
+- [[Falcon Component Audit Scorecard]] ★ · [[Component Theme Contract Template]] · [[Tailwind Implementation Review Checklist]]
+
+**Tailwind layout / sizing reference (new 2026-05-20):**
+- [[Tailwind Sizing and Responsive]] · [[Tailwind Layout Flex Grid]] · [[Tailwind Spacing Radius Shadow Borders]] · [[Tailwind Utility Cheatsheet]] · [[Tailwind Official Docs Map]]
+
+**Light Mode Visual Baseline (new 2026-05-20):**
+- [[Falcon Light Mode Visual Baseline]] ★ — overall visual identity (surfaces, colors, borders, shadows, radius, spacing)
+- [[Falcon Current Color Usage Map]] — every color token with hex + where used
+- [[Falcon Current Spacing Radius Shadow Map]] — dimensional vocabulary
+- [[Falcon Current Hover Focus State Map]] — per-component interactive-state behavior
+- [[Falcon Organization Hierarchy Visual Standard]] ★ — canonical reference page
+- [[Falcon Page Visual Consistency Rules]] — 12 rules for new pages
+- [[Falcon Do Not Change Visual Rules]] — 20 strict guardrails
+
+**Brain Outputs SoT:** `understanding/frontend/theme/` — see 36-Theming README for full list
+
 ## Snapshot
 
 - 3 apps: `host-shell` (4200, host) · `admin-console` (4204, remote) · `management-console` (4301, remote)

@@ -1,4 +1,4 @@
-# falcon-dialog — USAGE
+﻿# falcon-dialog — USAGE
 
 ## Real usage examples
 Direct usage of `<falcon-angular-dialog>` in `apps/` is limited to the playground showcase. Production usage is via composition:
@@ -72,3 +72,10 @@ Apply layout utilities INSIDE the body slot. Don't override panel geometry via h
 | Compose this via `<falcon-angular-confirm-dialog>` for accept/reject | Wire `falconConfirm`/`falconCancel` without explicit emit |
 | Use this only for custom-shape modals popup doesn't cover | Stack multiple dialogs at once |
 | Use tokens for visual overrides | Inline Tailwind on panel host |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-dialog>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `apps/host-shell/src/app/shared-components/otp-dialog/otp-dialog.component.ts`

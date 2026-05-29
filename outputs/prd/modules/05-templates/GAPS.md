@@ -1,4 +1,4 @@
-*** PRD Understanding - Templates - GAPS ***
+*** PRD Understanding - Templates - PRD vs Code Gaps ***
 
 # 05-templates - PRD vs Code Gaps
 
@@ -57,3 +57,90 @@
 - **GAP-TM-01 and the cascade** depend on whether the Template entity is built inside this service or a separate one. Architecture decision needed before building UI.
 - **GAP-TM-11, 14** Meta integration is significant work — likely 3-4 weeks for webhook + state machine.
 - **GAP-TM-26** is officially Phase 2 (per root-documents backlog).
+
+---
+
+## Wave 2 refresh — 2026-05-17
+
+> Refreshed by Wave 2 PRD Deep Read. Source PRD `Brain SK\skills\imported-business\prd-knowledge\modules\05-templates\latest-prd.md` (`Copy of Template Module`, 115 lines synced 2026-04-24). Backend cross-check: `Brain Outputs\understanding\backend\templates\{ENDPOINT_REGISTRY,DTO_DICTIONARY,VALIDATIONS,ERRORS,SERVICE_OVERVIEW,FRONTEND_CONTRACT}.md`. V-rule cross-check: `Brain SK\_obsidian\30-Validation\V-template-{checker-level-integrity,levels-count-required-for-restricted}.md`.
+
+### Counts
+
+- **Rules verified against PRD line + backend code:** 29 / 41 BR-TM-* rows (`BR-TM-01..29` confirmed; `BR-TM-30..41` are OPEN — not verifiable today).
+- **Drift discovered:** 1 new drift (see below).
+- **New resolutions added to QUESTIONS.md:** 1 (Q-TM-11 BodyType enum — now triangulated via V-rule + DTO dict honest-call note).
+- **New pending-questions raised:** 0 (all OPEN items are PRD-level gaps, not autonomous-build forks; nothing to halt-flag tonight).
+
+### Drift catalogue
+
+**D-TM-1: Source PRD line count mismatch — "982 lines" claim vs 115 lines captured.**
+- The OVERVIEW.md preamble + GAPS.md "Critical findings" call out that "Only the head ~250 lines of the 982-line PRD were captured in the sync." Wave 2 re-read the actual file: it is **115 lines total**, not 982. The 982 number refers to the **original Google Doc text-export length** (per the latest-prd.md header: `448 KB (982 lines text export) | Sync date 2026-04-24`).
+- Implication: the 115 lines captured are not "head 250 of 982" — they are the **complete current sync** of a heavily-summarized Drive sync run. The 982-line Google Doc was condensed during sync (likely because the sync skill produced summary-style output rather than verbatim).
+- Action item: the next Drive sync should be configured for verbatim extraction (not summary) so Voice template flow + AI template flow + advanced approval semantics enter the local copy. Until then, BR-TM-30..41 remain OPEN.
+- Tag: provenance-discipline (this isn't a runtime drift — it's a knowledge-base accuracy fix).
+
+### Verified BR-TM rules with cross-links
+
+| BR | PRD line (latest-prd.md) | Backend evidence | V-rule | Status |
+|---|---|---|---|---|
+| BR-TM-01 | (per understanding.md:11 — original capture) | n/a (UI-only role gate) | — | CONFIRMED (no public API; Falcon gate is UI-side per PRD prose) |
+| BR-TM-02..16 | :65-86 (wizard) | None yet (template entity surface MISSING — see GAP-TM-01) | — | PRD-confirmed; backend deferred |
+| BR-TM-17..20 | :39-43 (statuses) | n/a | — | PRD-confirmed; runtime status field would live on a Template entity |
+| BR-TM-21..23 | :35-36 (Maker/Checker) | Templates `GET /api/communication-channel-configs/user-checker-levels` exists (`UserCheckerLevelDto[]`) — **Checker assignment metadata is wired**; submit/approve flow is NOT. | [[V-template-checker-level-integrity]] triangulated 2026-05-15 | PARTIAL (config layer present; flow absent) |
+| BR-TM-24..29 | :44-63 (WhatsApp categories + Meta states) | No Meta webhook endpoint; no template entity. | — | PRD-confirmed; backend Meta integration deferred |
+
+### Backend-side rules NOT in PRD prose (handler-level validators)
+
+These are server-enforced and surfaced by the V-rule + VALIDATIONS.md cross-check but never appeared in the PRD because the PRD never described CommChannelConfig validation:
+
+- `CheckerLevelMustHaveAtLeastOneUser` (BR-TM-21..22 implied)
+- `CheckerLevel1RequiredBeforeLevel2` (sequential level requirement — not in PRD)
+- `CheckerLevelLimitExceeded` (bounded `LevelsCount` — bound value not in Brain Outputs; needs validator source read)
+- `DuplicateCheckerLevelNumber`
+- `UserAssignedToMultipleCheckerLevels`
+- `InvalidCheckerLevelNumber`
+- `LevelsCountMismatch` (declared count vs actual)
+- `LevelsCountRequiredForRestricted` (BodyType=Restricted → LevelsCount mandatory — gate for V-template-levels-count-required-for-restricted)
+
+These are **backend-only invariants** for the CommChannelConfig editor. They should be folded into a BR-TM-42..49 "Approval Configuration Integrity" cluster once the PRD body covers the editor UX (today the PRD only describes the template wizard, not the per-channel configuration that sets up which approval levels exist).
+
+### Workflow ↔ Playbook mapping (re-verified)
+
+| Workflow | Playbook location | Status |
+|---|---|---|
+| W1 Create WhatsApp Template (Maker) | `understanding/pages/create-template-whatsapp/PAGE_LEARNING.md` (STUB seeded 2026-05-15) | Stub only — full 14-file folder not yet created |
+| W2 Internal Approval (Checker) | No playbook | MISSING (deferred; depends on Checker UI surface) |
+| W3 Meta External Approval | No playbook | MISSING (deferred; depends on backend Meta integration) |
+| W4 Auto-Approval | No playbook | MISSING |
+| W5 Edit Template | No playbook | MISSING (depends on Q-TM-03 versioning semantics) |
+| W6 Quality Drift | No playbook | MISSING |
+| W7 Link Contact Group | No playbook (covered transitively by create-template-whatsapp page) | PARTIAL |
+| W8 Preview / Sample | No playbook | MISSING (depends on Q-TM-07 client-vs-server-side) |
+| W9 Voice Template | No PRD body, no playbook | MISSING |
+| W10 AI Template | No PRD body, no playbook | MISSING |
+
+**New gap surfaced:** All 10 workflows lack folder-form playbooks; the Templates module has the lowest playbook coverage of any module (0 / 10 vs Organization Hierarchy's 4 / 4).
+
+### Resolutions added to QUESTIONS.md
+
+- **Q-TM-11 (CommChannelConfig.bodyType enum values) — partial resolution from V-rule + DTO honest-call note.** The DTO dictionary records "likely an enum: Plain, Template, Interactive, … (verify)". The error code `LevelsCountRequiredForRestricted` strongly implies a `Restricted` member. Inferred candidate set: `Plain | Template | Interactive | Restricted`. CONFIRM by reading `Falcon.Templates.Domain/Constants` (`BodyType` enum source). See QUESTIONS.md Resolutions.
+
+### Halt-and-flag tonight
+
+None. All open items are PRD-content gaps (need product team to extend the PRD body); they are not autonomous-build forks. The DECISION-PROTOCOL `F-009` rule applies: proceed against captured content + mark conditional on later PRD revisions.
+
+### Entity reconciliation
+
+| Entity | PRD ENTITIES.md | Backend DTO | Drift? |
+|---|---|---|---|
+| Template | Defined in ENTITIES.md (with header/body/footer/buttons/variables) | **No Template DTO in templates service** — entity surface is not yet built. | Drift = GAP, not contradiction. Aligned for Phase 2. |
+| CommChannelConfig | Inferred in ENTITIES.md (id, tenantId, commChannelId, bodyType, levelsCount, checkerLevels[]) | `CommunicationChannelConfigDto` (DTO_DICTIONARY:26) — shape matches exactly | No drift |
+| CheckerLevel | `levelNumber, users[]` | `CheckerLevel { int LevelNumber, List<CheckerUser> Users }` — shape matches | No drift |
+| CheckerUser | `userId, ...` | `CheckerUser { string UserId, ... }` — shape matches | No drift |
+
+### Action items raised
+
+1. **Re-sync Drive PRD verbatim** to capture lines 250..982 (Voice flow + advanced approval). Tag: `dependency-on-Wave-1-PRD-sync`.
+2. **Promote handler-level CommChannelConfig validators** to BR-TM-42..49 in BUSINESS_RULES.md once PRD body covers the editor (or document them as "backend-only invariants" if they remain UX-only).
+3. **Build folder-form playbook for W1 Create WhatsApp Template** when the gateway route lands (GAP-TM-02 is the prerequisite). Today's stub at `understanding/pages/create-template-whatsapp/` is the kickoff.
+4. **Confirm BodyType enum literal values** (Q-TM-11) by reading `Falcon.Templates.Domain/Constants`. One small step but high-value: unblocks future BodyType dropdown UX.

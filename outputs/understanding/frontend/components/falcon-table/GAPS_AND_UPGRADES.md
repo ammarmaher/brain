@@ -1,4 +1,4 @@
-# falcon-table — GAPS & UPGRADES
+﻿# falcon-table — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -105,3 +105,9 @@ All gaps above are **shared component fixes** — none should be patched per-pag
 ## Future-proof recommendation
 
 The basic Angular wrapper `<falcon-angular-table>` should be **fully deleted** once the project ships a stricter ESLint flat-block rule disallowing its selector. Today the JSDoc deprecation is silent. Adding a `@deprecated` ESLint rule + a migration codemod to `<falcon-angular-data-table>` is the cleanest path. **P2**.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-table>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

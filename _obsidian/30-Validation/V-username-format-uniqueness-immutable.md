@@ -9,6 +9,15 @@ drift: false
 created: 2026-05-15
 superseded-by: V-username-format-xlsx-2026-05-24
 superseded-on: 2026-05-24
+module: user-mgmt
+feature: add-user
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/superseded", "#module/user-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+evidence-link: 
 ---
 
 > [!warning] SUPERSEDED 2026-05-24 — Ammar declared `Validations.xlsx` the new SoT. Username **no longer requires starts-with-letter** and now allows specials `_ + @ . -` in the simple branch. See **[[V-username-format-xlsx-2026-05-24]]**. This note is kept for archival provenance only. The async uniqueness check + immutability after create are unchanged in the new V-rule.

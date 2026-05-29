@@ -1,4 +1,4 @@
-# falcon-organization-hierarchy-tree-tw — GAPS & UPGRADES
+﻿# falcon-organization-hierarchy-tree-tw — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -80,3 +80,9 @@
 ## Future-proof recommendation
 
 This component needs the most work of any in Agent 2's roster. Recommended Wave to (a) ship the Shadow companion, (b) ship the Angular wrapper, (c) audit production org-hierarchy consumers to plan a migration, (d) move brand styling into tokens.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-organization-hierarchy-tree-tw>` — pure-Angular tag — across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+**Gap: Pure-Angular component without a Stencil twin** — cross-framework parity NOT achievable until ported to Stencil. Priority: P2 for new tokens-only consumers.

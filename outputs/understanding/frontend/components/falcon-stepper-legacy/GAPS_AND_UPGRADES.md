@@ -1,4 +1,4 @@
-# falcon-stepper (LEGACY) — GAPS & UPGRADES
+﻿# falcon-stepper (LEGACY) — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -63,3 +63,11 @@
 
 ## Workaround availability
 - Today: the wizards work. The migration is the only outstanding task — it is large (each step body wraps a complex form component).
+
+## Wave 7 Findings (2026-05-17)
+
+**STATUS: ORPHAN.** No source files, no consumers, no module-federation references.
+
+**Recommendation: DELETE this dossier** in Wave 8 cleanup. Dossier was retained through Wave 7 as a deletion-review checkpoint.
+
+Successor: `falcon-stepper`. Source code deletion already completed in Wave 7.13 (MEMORY `project_falcon_stepper_legacy_deletion_2026_05_17.md`).

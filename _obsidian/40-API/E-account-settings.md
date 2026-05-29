@@ -5,6 +5,14 @@ prd: PRD-01
 service: commerce
 drift-count: 14
 created: 2026-05-15
+module: account-mgmt
+feature: account-settings
+verification: code-verified
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/account-mgmt", "#verification/code-verified", "#layer/be"]
+up: "[[E-entities-MOC]]"
+parent: "[[E-entities-MOC]]"
+layer: be
 ---
 *** Entity Reconciliation E-account-settings — AccountSettings ***
 *** PRD: PRD-01 Account Management · Backend service: Commerce · 2026-05-15 ***

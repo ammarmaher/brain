@@ -1,4 +1,4 @@
-# falcon-multiselect (LEGACY STUB) — GAPS & UPGRADES
+﻿# falcon-multiselect (LEGACY STUB) — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -40,3 +40,11 @@
 
 ## Workaround availability
 - For new code: use `<falcon-angular-multi-select>`.
+
+## Wave 7 Findings (2026-05-17)
+
+**STATUS: ORPHAN.** No source files, no consumers, no module-federation references.
+
+**Recommendation: DELETE this dossier** in Wave 8 cleanup. Dossier was retained through Wave 7 as a deletion-review checkpoint.
+
+Successor: `falcon-multi-select`.

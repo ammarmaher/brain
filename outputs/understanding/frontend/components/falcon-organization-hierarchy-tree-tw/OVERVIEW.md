@@ -1,5 +1,8 @@
 # falcon-organization-hierarchy-tree-tw — OVERVIEW
 
+> [!warning] Name trap — this is NOT the production org-hierarchy tree
+> Despite the name, this component has **no production org-hierarchy consumers** (playground / showcase only — see Consumers below). The live Organization Hierarchy left rail is `<falcon-tree-panel>` consumed via the `<app-organization-hierarchy-tree>` wrapper. For org-hierarchy work see `falcon-wiki/00-MOCs/Org-Hierarchy-Tree-Component-Knowledge.md`.
+
 ## Purpose
 
 Bespoke organization-hierarchy panel. Pinned root header (icon + name + ⋮ menu button) plus recursive list of expandable child nodes. Single floating context menu opens under whichever ⋮ button was clicked. Mirrors the React reference `admin/hierarchy.jsx` `NodeRow + ClientsTree` and `admin/styles.css §"CLIENTS TREE PANEL"`.

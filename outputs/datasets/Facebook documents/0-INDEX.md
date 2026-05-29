@@ -1,0 +1,1069 @@
+# Facebook / Meta Developer Documentation -- Master Index
+
+[BRAIN-OUT] Dataset: Brain Outputs/datasets/Facebook documents
+Source: https://developers.facebook.com/docs/  |  Crawled via Firecrawl  |  2026-05-18
+Pages: 1000  |  Raw markdown: raw/  |  Machine manifest: manifest.json
+
+## Product Groups
+
+| # | Group | Pages |
+|---|-------|-------|
+| 01 | [Meta App Development](summaries/01-app-development/README.md) | 79 |
+| 02 | [Graph API](summaries/02-graph-api/README.md) | 358 |
+| 03 | [Authentication & Login](summaries/03-authentication/README.md) | 12 |
+| 04 | [Business Messaging (WhatsApp / Messenger / IG)](summaries/04-business-messaging/README.md) | 72 |
+| 05 | [Instagram & Threads](summaries/05-instagram-threads/README.md) | 130 |
+| 06 | [Social Integrations (Pages, Sharing, Plugins)](summaries/06-social-integrations/README.md) | 49 |
+| 07 | [Video & Live](summaries/07-video/README.md) | 31 |
+| 08 | [Marketing, Ads & Commerce](summaries/08-marketing-commerce/README.md) | 145 |
+| 09 | [Research & Data APIs](summaries/09-research-apis/README.md) | 93 |
+| 10 | [SDKs (JS / Android / iOS / Unity / Business)](summaries/10-sdks/README.md) | 22 |
+| 11 | [Gaming](summaries/11-gaming/README.md) | 5 |
+| 12 | [Work & Education](summaries/12-work-education/README.md) | 1 |
+| 13 | [Data Portability & Privacy](summaries/13-data-privacy/README.md) | 2 |
+| 99 | [Other / Uncategorized](summaries/99-misc/README.md) | 1 |
+
+## All Documents by Group
+
+### 01-app-development -- Meta App Development (79)
+
+- [Meta App Events](raw/app-events.md) -- https://developers.facebook.com/docs/app-events/
+- [Screen Recordings](raw/app-review/submission-guide/screen-recordings.md) -- https://developers.facebook.com/docs/app-review/submission-guide/screen-recordings/
+- [Migrations](raw/apps/migrations.md) -- https://developers.facebook.com/docs/apps/migrations
+- [App Development with Meta](raw/development.md) -- https://developers.facebook.com/docs/development
+- [Use Case Customization - App Development with Meta](raw/development/app-customization.md) -- https://developers.facebook.com/docs/development/app-customization
+- [Build and Test - App Development with Meta](raw/development/build-and-test.md) -- https://developers.facebook.com/docs/development/build-and-test
+- [App Modes - App Development with Meta](raw/development/build-and-test/app-modes.md) -- https://developers.facebook.com/docs/development/build-and-test/app-modes/
+- [App Roles - App Development with Meta](raw/development/build-and-test/app-roles.md) -- https://developers.facebook.com/docs/development/build-and-test/app-roles/
+- [Test Apps - App Development with Meta](raw/development/build-and-test/test-apps.md) -- https://developers.facebook.com/docs/development/build-and-test/test-apps
+- [Test Pages - App Development with Meta](raw/development/build-and-test/test-pages.md) -- https://developers.facebook.com/docs/development/build-and-test/test-pages
+- [Test Users - App Development with Meta](raw/development/build-and-test/test-users.md) -- https://developers.facebook.com/docs/development/build-and-test/test-users
+- [Create an App - App Development with Meta](raw/development/create-an-app.md) -- https://developers.facebook.com/docs/development/create-an-app/
+- [App Dashboard - App Development with Meta](raw/development/create-an-app/app-dashboard.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/
+- [Advanced Settings - App Development with Meta](raw/development/create-an-app/app-dashboard/advanced-settings.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/advanced-settings
+- [Development — App Audience - App Development with Meta](raw/development/create-an-app/app-dashboard/app-audience.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-audience
+- [App Categories - App Development with Meta](raw/development/create-an-app/app-dashboard/app-categories.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-categories
+- [App States - App Development with Meta](raw/development/create-an-app/app-dashboard/app-states.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-states
+- [App Types - App Development with Meta](raw/development/create-an-app/app-dashboard/app-types.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-types
+- [Basic Settings - App Development with Meta](raw/development/create-an-app/app-dashboard/basic-settings.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/basic-settings
+- [Data Deletion Callback - App Development with Meta](raw/development/create-an-app/app-dashboard/data-deletion-callback.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/data-deletion-callback
+- [Page Not Found - Meta for Developers](raw/development/create-an-app/app-dashboard/developers.facebook.com/apps.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/developers.facebook.com/apps
+- [Platform Settings - App Development with Meta](raw/development/create-an-app/app-dashboard/platform-settings.md) -- https://developers.facebook.com/docs/development/create-an-app/app-dashboard/platform-settings
+- [App Ads Use Case - App Development with Meta](raw/development/create-an-app/app-install-ads-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/app-install-ads-use-case
+- [Developer Settings - App Development with Meta](raw/development/create-an-app/developer-settings.md) -- https://developers.facebook.com/docs/development/create-an-app/developer-settings
+- [Facebook Login Use Case - App Development with Meta](raw/development/create-an-app/facebook-login-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/facebook-login-use-case
+- [Fundraiser API Use Case - App Development with Meta](raw/development/create-an-app/fundraiser-api-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/fundraiser-api-use-case
+- [Instagram Use Case - App Development with Meta](raw/development/create-an-app/instagram-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/instagram-use-case
+- [Launch a game on Facebook Use Case - App Development with Meta](raw/development/create-an-app/launch-a-game-on-facebook-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/launch-a-game-on-facebook-use-case
+- [Marketing API Use Cases - App Development with Meta](raw/development/create-an-app/marketing-api-use-cases.md) -- https://developers.facebook.com/docs/development/create-an-app/marketing-api-use-cases
+- [Messenger Use Case - App Development with Meta](raw/development/create-an-app/messenger-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/messenger-use-case
+- [No Use Case - App Development with Meta](raw/development/create-an-app/no-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/no-use-case
+- [oEmbed Use Case - App Development with Meta](raw/development/create-an-app/oembed-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/oembed-use-case
+- [Other App Types - App Development with Meta](raw/development/create-an-app/other-app-types.md) -- https://developers.facebook.com/docs/development/create-an-app/other-app-types
+- [Instagram Platform  - App Development with Meta](raw/development/create-an-app/other-app-types/instagram-apis.md) -- https://developers.facebook.com/docs/development/create-an-app/other-app-types/instagram-apis
+- [Pages API Use Case - App Development with Meta](raw/development/create-an-app/pages-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/pages-use-case/
+- [Server-to-Server Apps - App Development with Meta](raw/development/create-an-app/server-to-server-apps.md) -- https://developers.facebook.com/docs/development/create-an-app/server-to-server-apps
+- [Threads Use Case - App Development with Meta](raw/development/create-an-app/threads-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/threads-use-case/
+- [Transfer Ownership - App Development with Meta](raw/development/create-an-app/transfer-an-app.md) -- https://developers.facebook.com/docs/development/create-an-app/transfer-an-app
+- [Permission Mapping - App Development with Meta](raw/development/create-an-app/use-cases-permission-mapping.md) -- https://developers.facebook.com/docs/development/create-an-app/use-cases-permission-mapping
+- [WhatsApp Use Case - App Development with Meta](raw/development/create-an-app/whatsapp-use-case.md) -- https://developers.facebook.com/docs/development/create-an-app/whatsapp-use-case
+- [Developer Data Security Best Practices - App Development with Meta](raw/development/data-security.md) -- https://developers.facebook.com/docs/development/data-security
+- [Maintaining Data Access - App Development with Meta](raw/development/maintaining-data-access.md) -- https://developers.facebook.com/docs/development/maintaining-data-access
+- [Data Protection Assessment - Responsible Platform Initiatives](raw/development/maintaining-data-access/data-protection-assessment.md) -- https://developers.facebook.com/docs/development/maintaining-data-access/data-protection-assessment/
+- [Data Use Checkup - Responsible Platform Initiatives](raw/development/maintaining-data-access/data-use-checkup.md) -- https://developers.facebook.com/docs/development/maintaining-data-access/data-use-checkup
+- [Register - App Development with Meta](raw/development/register.md) -- https://developers.facebook.com/docs/development/register
+- [Release - App Development with Meta](raw/development/release.md) -- https://developers.facebook.com/docs/development/release
+- [Access Verification - App Development with Meta](raw/development/release/access-verification.md) -- https://developers.facebook.com/docs/development/release/access-verification
+- [Business Verification - App Development with Meta](raw/development/release/business-verification.md) -- https://developers.facebook.com/docs/development/release/business-verification
+- [Support - App Development with Meta](raw/development/support.md) -- https://developers.facebook.com/docs/development/support
+- [Terms and Policies - App Development with Meta](raw/development/terms-and-policies.md) -- https://developers.facebook.com/docs/development/terms-and-policies/
+- [Automated Data Collection - App Development with Meta](raw/development/terms-and-policies/automated-data-collection.md) -- https://developers.facebook.com/docs/development/terms-and-policies/automated-data-collection
+- [Enforcement - App Development with Meta](raw/development/terms-and-policies/enforcement.md) -- https://developers.facebook.com/docs/development/terms-and-policies/enforcement
+- [Terms and Policies FAQs - App Development with Meta](raw/development/terms-and-policies/faqs.md) -- https://developers.facebook.com/docs/development/terms-and-policies/faqs
+- [Privacy Policy Expectations - App Development with Meta](raw/development/terms-and-policies/privacy-policy.md) -- https://developers.facebook.com/docs/development/terms-and-policies/privacy-policy
+- [Separate Ad Accounts Policy - App Development with Meta](raw/development/terms-and-policies/separate-ad-accounts.md) -- https://developers.facebook.com/docs/development/terms-and-policies/separate-ad-accounts
+- [Trust Center - App Development with Meta](raw/development/trust-center.md) -- https://developers.facebook.com/docs/development/trust-center/
+- [Page Not Found - Meta for Developers](raw/feature-reference.md) -- https://developers.facebook.com/docs/feature-reference
+- [Features Reference - App Development with Meta](raw/features-reference.md) -- https://developers.facebook.com/docs/features-reference
+- [Ad Targeting Data Access - App Development with Meta](raw/features-reference/ad-targeting-data-access.md) -- https://developers.facebook.com/docs/features-reference/ad-targeting-data-access
+- [Ads Management Standard Access Feature - App Development with Meta](raw/features-reference/ads-management-standard-access.md) -- https://developers.facebook.com/docs/features-reference/ads-management-standard-access
+- [Business Asset User Profile Access - App Development with Meta](raw/features-reference/business-asset-user-profile-access.md) -- https://developers.facebook.com/docs/features-reference/business-asset-user-profile-access
+- [Human Agent - App Development with Meta](raw/features-reference/human-agent.md) -- https://developers.facebook.com/docs/features-reference/human-agent/
+- [Instagram Public Content Access - App Development with Meta](raw/features-reference/instagram-public-content-access.md) -- https://developers.facebook.com/docs/features-reference/instagram-public-content-access
+- [Instant Games Zero Permission Access - App Development with Meta](raw/features-reference/instant-games-zero-permission-access.md) -- https://developers.facebook.com/docs/features-reference/instant-games-zero-permission-access
+- [Live Video API - App Development with Meta](raw/features-reference/live-video-api.md) -- https://developers.facebook.com/docs/features-reference/live-video-api
+- [Meta oEmbed Read - App Development with Meta](raw/features-reference/meta-oembed-read.md) -- https://developers.facebook.com/docs/features-reference/meta-oembed-read
+- [oEmbed Read - App Development with Meta](raw/features-reference/oembed-read.md) -- https://developers.facebook.com/docs/features-reference/oembed-read
+- [Page Mentioning - App Development with Meta](raw/features-reference/page-mentioning.md) -- https://developers.facebook.com/docs/features-reference/page-mentioning
+- [Page Public Content Access - 通过 Meta 开发应用](raw/features-reference/page-public-content-access.md) -- https://developers.facebook.com/docs/features-reference/page-public-content-access?locale=zh_CN
+- [Page Public Content Access - App Development with Meta](raw/features-reference/page-public-content-access.md) -- https://developers.facebook.com/docs/features-reference/page-public-content-access/
+- [Page Public Metadata Access - App Development with Meta](raw/features-reference/page-public-metadata-access.md) -- https://developers.facebook.com/docs/features-reference/page-public-metadata-access
+- [Threads oEmbed Read - App Development with Meta](raw/features-reference/threads-oembed-read.md) -- https://developers.facebook.com/docs/features-reference/threads-oembed-read
+- [Threat Exchange - App Development with Meta](raw/features-reference/threat-exchange.md) -- https://developers.facebook.com/docs/features-reference/threat-exchange
+- [Permissions Reference - App Development with Meta](raw/permissions.md) -- https://developers.facebook.com/docs/permissions/
+- [Responsible Platform Initiatives](raw/resp-plat-initiatives.md) -- https://developers.facebook.com/docs/resp-plat-initiatives
+- [App Review - Responsible Platform Initiatives](raw/resp-plat-initiatives/individual-processes/app-review.md) -- https://developers.facebook.com/docs/resp-plat-initiatives/individual-processes/app-review
+- [App Review FAQs - Responsible Platform Initiatives - Documentation - Meta for Developers](raw/resp-plat-initiatives/individual-processes/app-review/AR-FAQs.md) -- https://developers.facebook.com/docs/resp-plat-initiatives/individual-processes/app-review/AR-FAQs
+- [Content - Responsible Platform Initiatives](raw/resp-plat-initiatives/individual-processes/app-review/content.md) -- https://developers.facebook.com/docs/resp-plat-initiatives/individual-processes/app-review/content
+- [Tutorial - Responsible Platform Initiatives](raw/resp-plat-initiatives/individual-processes/app-review/submission-guide.md) -- https://developers.facebook.com/docs/resp-plat-initiatives/individual-processes/app-review/submission-guide
+
+### 02-graph-api -- Graph API (358)
+
+- [Graph API](raw/graph-api.md) -- https://developers.facebook.com/docs/graph-api/
+- [Upgrade  - Graph API](raw/graph-api/advanced/api-upgrade.md) -- https://developers.facebook.com/docs/graph-api/advanced/api-upgrade
+- [Batch Requests - Graph API](raw/graph-api/batch-requests.md) -- https://developers.facebook.com/docs/graph-api/batch-requests
+- [Changelog - Graph API](raw/graph-api/changelog.md) -- https://developers.facebook.com/docs/graph-api/changelog/
+- [Feb 3, 2020 - Graph API](raw/graph-api/changelog/2020-02-03-endpoint-deprecations.md) -- https://developers.facebook.com/docs/graph-api/changelog/2020-02-03-endpoint-deprecations
+- [Apr 30, 2019 - Graph API](raw/graph-api/changelog/4-30-2019-endpoint-deprecations.md) -- https://developers.facebook.com/docs/graph-api/changelog/4-30-2019-endpoint-deprecations
+- [Page Not Found - Meta for Developers](raw/graph-api/changelog/archive/gray-accounts.md) -- https://developers.facebook.com/docs/graph-api/changelog/archive/gray-accounts/
+- [v2.6 - Graph API](raw/graph-api/changelog/archive/version2.6.md) -- https://developers.facebook.com/docs/graph-api/changelog/archive/version2.6
+- [Page Not Found - Meta for Developers](raw/graph-api/changelog/non-versioned-changes/(/docs/marketing-api/reference/reach-frequency-prediction).md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/(/docs/marketing-api/reference/reach-frequency-prediction)
+- [Apr 12, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-12-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-12-2021
+- [Apr 14, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-14-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-14-2021
+- [Apr 18, 2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-18-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-18-2011
+- [Apr 23, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-23-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-23-2018
+- [Apr 24, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-24-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-24-2018
+- [April 27, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-27-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-27-2021
+- [Apr 3, 2013 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-3-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-3-2013
+- [Apr 4, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-4-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-4-2012
+- [Apr 4, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-4-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-4-2018
+- [Apr 9, 2014 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-9-2014.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-9-2014
+- [Apr 9, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/apr-9-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/apr-9-2021
+- [Aug 1, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/aug-1-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/aug-1-2012
+- [Aug 14, 2019 - Graph API](raw/graph-api/changelog/non-versioned-changes/aug-14-2019.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/aug-14-2019
+- [Aug 17, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/aug-17-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/aug-17-2018
+- [Dec 1, 2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/dec-1-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/dec-1-2011
+- [Dec 1, 2017 - Graph API](raw/graph-api/changelog/non-versioned-changes/dec-1-2017.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/dec-1-2017
+- [Dec 16, 2020 - Graph API](raw/graph-api/changelog/non-versioned-changes/dec-16-2020.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/dec-16-2020/
+- [Dec 2, 2020 - Graph API](raw/graph-api/changelog/non-versioned-changes/dec-2-2020.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/dec-2-2020
+- [Dec 5, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/dec-5-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/dec-5-2012
+- [Feb 1, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/feb-1-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/feb-1-2012
+- [Feb 15, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/feb-15-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/feb-15-2012
+- [Feb 22, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/feb-22-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/feb-22-2018
+- [Feb 3, 2022 - Graph API](raw/graph-api/changelog/non-versioned-changes/feb-3-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/feb-3-2022
+- [Feb 6, 2013: - Graph API](raw/graph-api/changelog/non-versioned-changes/feb-6-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/feb-6-2013
+- [Feb 7, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/feb-7-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/feb-7-2018
+- [Jan 1, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/jan-1-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jan-1-2012
+- [Jan 19, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/jan-19-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jan-19-2021/
+- [Jan 30, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/jan-30-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jan-30-2018
+- [Jan 31, 2022 - Graph API](raw/graph-api/changelog/non-versioned-changes/jan-31-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jan-31-2022
+- [Jan 8, 2014 - Graph API](raw/graph-api/changelog/non-versioned-changes/jan-8-2014.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jan-8-2014
+- [Jan 9, 2013 - Graph API](raw/graph-api/changelog/non-versioned-changes/jan-9-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jan-9-2013
+- [Jul 10, 2013 - Graph API](raw/graph-api/changelog/non-versioned-changes/jul-10-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jul-10-2013
+- [Jul 2, 2014 - Graph API](raw/graph-api/changelog/non-versioned-changes/jul-2-2014.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jul-2-2014
+- [Jul 2, 2020 - Graph API](raw/graph-api/changelog/non-versioned-changes/jul-2-2020.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jul-2-2020
+- [Jul 29, 2019 - Graph API](raw/graph-api/changelog/non-versioned-changes/jul-29-2019.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jul-29-2019
+- [Jul 5, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/jul-5-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jul-5-2012
+- [Jun 11, 2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/jun-11-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jun-11-2011
+- [Jun 18, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/jun-18-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jun-18-2018
+- [Jun 27, 2017 - Graph API](raw/graph-api/changelog/non-versioned-changes/jun-27-2017.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jun-27-2017
+- [Jun 3, 2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/jun-3-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jun-3-2011
+- [Jun 6, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/jun-6-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/jun-6-2012
+- [Mar 11, 2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-11-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-11-2011
+- [Mar 15, 2022 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-15-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-15-2022
+- [Mar 16, 2020 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-16-2020.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-16-2020
+- [Mar 16, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-16-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-16-2021
+- [Mar 26, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-26-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-26-2018
+- [Mar 3, 2022 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-3-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-3-2022
+- [March 4, 2022 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-4-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-4-2022
+- [Mar 6, 2013 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-6-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-6-2013
+- [Mar 8, 2017 - Graph API](raw/graph-api/changelog/non-versioned-changes/mar-8-2017.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/mar-8-2017
+- [May 13, 2014 - Graph API](raw/graph-api/changelog/non-versioned-changes/may-13-2014.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/may-13-2014
+- [May 2, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/may-2-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/may-2-2012
+- [May 26, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/may-26-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/may-26-2021
+- [May 30, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/may-30-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/may-30-2018
+- [May 31, 2022 - Graph API - Documentation - Meta for Developers](raw/graph-api/changelog/non-versioned-changes/may-31-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/may-31-2022
+- [May 4, 2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/may-4-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/may-4-2021
+- [Nov 1, 2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/nov-1-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nov-1-2011
+- [Nov 7, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/nov-7-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nov-7-2012
+- [2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2011
+- [2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2012
+- [2013 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2013
+- [2014 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2014.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2014
+- [2015 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2015.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2015
+- [2017 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2017.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2017
+- [2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2018
+- [2019 - Graph API - Documentation - Meta for Developers](raw/graph-api/changelog/non-versioned-changes/nvc-2019.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2019
+- [2020 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2020.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2020
+- [2021 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2021
+- [2022 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2022
+- [2023 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2023.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2023
+- [2024 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2024.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2024
+- [2025 - Graph API](raw/graph-api/changelog/non-versioned-changes/nvc-2025.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/nvc-2025
+- [Oct 1, 2011 - Graph API](raw/graph-api/changelog/non-versioned-changes/oct-1-2011.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/oct-1-2011
+- [Oct 1, 2014 - Graph API](raw/graph-api/changelog/non-versioned-changes/oct-1-2014.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/oct-1-2014
+- [Oct 2, 2013 - Graph API](raw/graph-api/changelog/non-versioned-changes/oct-2-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/oct-2-2013
+- [Oct 24, 2020 - Graph API](raw/graph-api/changelog/non-versioned-changes/oct-24-2020.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/oct-24-2020
+- [Oct 3, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/oct-3-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/oct-3-2012
+- [Oct 9, 2019 - Graph API](raw/graph-api/changelog/non-versioned-changes/oct-9-2019.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/oct-9-2019
+- [Sep 10, 2017 - Graph API](raw/graph-api/changelog/non-versioned-changes/sep-10-2017.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-10-2017
+- [Sep 12, 2013 - Graph API](raw/graph-api/changelog/non-versioned-changes/sep-12-2013.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-12-2013
+- [Sep 12, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/sep-12-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-12-2018
+- [Sep 16, 2019 - Graph API](raw/graph-api/changelog/non-versioned-changes/sep-16-2019.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-16-2019
+- [Sep 16, 2020 - Graph API](raw/graph-api/changelog/non-versioned-changes/sep-16-2020.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-16-2020
+- [Sep 30, 2018 - Graph API](raw/graph-api/changelog/non-versioned-changes/sep-30-2018.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-30-2018
+- [Sep 5, 2012 - Graph API](raw/graph-api/changelog/non-versioned-changes/sep-5-2012.md) -- https://developers.facebook.com/docs/graph-api/changelog/non-versioned-changes/sep-5-2012
+- [August 30, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/aug-30-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/aug-30-2021
+- [June 15, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/jun-15-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/jun-15-2021
+- [June 30, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/jun-30-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/jun-30-2021
+- [November 9, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/nov-9-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/nov-9-2021
+- [October 13, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/oct-13-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/oct-13-2021
+- [October 20, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/oct-20-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/oct-20-2021
+- [October 26, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/oct-26-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/oct-26-2021
+- [October 5, 2021 - Graph API](raw/graph-api/changelog/ooc-changes/oct-5-2021.md) -- https://developers.facebook.com/docs/graph-api/changelog/ooc-changes/oct-5-2021
+- [Out-Of-Cycle Changes - Graph API](raw/graph-api/changelog/out-of-cycle-changes.md) -- https://developers.facebook.com/docs/graph-api/changelog/out-of-cycle-changes
+- [Jun 20, 2022 - Graph API](raw/graph-api/changelog/out-of-cycle-changes/june-20-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/out-of-cycle-changes/june-20-2022
+- [Jun 28, 2022 - Graph API](raw/graph-api/changelog/out-of-cycle-changes/june-28-2022.md) -- https://developers.facebook.com/docs/graph-api/changelog/out-of-cycle-changes/june-28-2022
+- [v10.0 - Graph API](raw/graph-api/changelog/version10.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version10.0
+- [v11.0 - Graph API](raw/graph-api/changelog/version11.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version11.0
+- [v12.0 - Graph API](raw/graph-api/changelog/version12.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version12.0
+- [v13.0 - Graph API](raw/graph-api/changelog/version13.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version13.0
+- [v14.0 - Graph API](raw/graph-api/changelog/version14.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version14.0
+- [v15.0 - Graph API](raw/graph-api/changelog/version15.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version15.0
+- [v16.0 - Graph API](raw/graph-api/changelog/version16.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version16.0
+- [v17.0 - Graph API](raw/graph-api/changelog/version17.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version17.0
+- [v18.0 - Graph API](raw/graph-api/changelog/version18.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version18.0
+- [v19.0 - Graph API](raw/graph-api/changelog/version19.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version19.0
+- [v2.1 - Graph API](raw/graph-api/changelog/version2.1.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.1
+- [v2.10 - Graph API](raw/graph-api/changelog/version2.10.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.10
+- [v2.11 - Graph API](raw/graph-api/changelog/version2.11.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.11
+- [v2.12 - Graph API](raw/graph-api/changelog/version2.12.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.12
+- [v2.2 - Graph API](raw/graph-api/changelog/version2.2.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.2
+- [v2.3 - Graph API](raw/graph-api/changelog/version2.3.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.3
+- [v.2.4 - Graph API](raw/graph-api/changelog/version2.4.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.4
+- [v2.5 - Graph API](raw/graph-api/changelog/version2.5.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.5
+- [v2.7 - Graph API](raw/graph-api/changelog/version2.7.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.7
+- [v2.8 - Graph API](raw/graph-api/changelog/version2.8.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.8
+- [v2.9 - Graph API](raw/graph-api/changelog/version2.9.md) -- https://developers.facebook.com/docs/graph-api/changelog/version2.9
+- [v20.0 - Graph API](raw/graph-api/changelog/version20.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version20.0
+- [v21.0 - Graph API](raw/graph-api/changelog/version21.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version21.0/
+- [v22.0 - Graph API](raw/graph-api/changelog/version22.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version22.0
+- [v23.0 - Graph API](raw/graph-api/changelog/version23.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version23.0
+- [v24.0 - Graph API](raw/graph-api/changelog/version24.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version24.0
+- [v25.0 - Graph API](raw/graph-api/changelog/version25.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version25.0
+- [v3.0 - Graph API](raw/graph-api/changelog/version3.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version3.0
+- [v3.1 - Graph API](raw/graph-api/changelog/version3.1.md) -- https://developers.facebook.com/docs/graph-api/changelog/version3.1
+- [v3.2 - Graph API](raw/graph-api/changelog/version3.2.md) -- https://developers.facebook.com/docs/graph-api/changelog/version3.2
+- [v3.3 - Graph API](raw/graph-api/changelog/version3.3.md) -- https://developers.facebook.com/docs/graph-api/changelog/version3.3
+- [v4.0 - Graph API](raw/graph-api/changelog/version4.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version4.0
+- [v5.0 - Graph API](raw/graph-api/changelog/version5.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version5.0
+- [v6.0 - Graph API](raw/graph-api/changelog/version6.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version6.0
+- [v7.0 - Graph API](raw/graph-api/changelog/version7.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version7.0
+- [v8.0 - Graph API](raw/graph-api/changelog/version8.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version8.0
+- [v9.0 - Graph API](raw/graph-api/changelog/version9.0.md) -- https://developers.facebook.com/docs/graph-api/changelog/version9.0
+- [Versions - Graph API](raw/graph-api/changelog/versions.md) -- https://developers.facebook.com/docs/graph-api/changelog/versions/
+- [Get Started - Graph API](raw/graph-api/get-started.md) -- https://developers.facebook.com/docs/graph-api/get-started/
+- [Debug Requests - Graph API](raw/graph-api/guides/debugging.md) -- https://developers.facebook.com/docs/graph-api/guides/debugging
+- [Handle Errors - Graph API](raw/graph-api/guides/error-handling.md) -- https://developers.facebook.com/docs/graph-api/guides/error-handling
+- [Graph Explorer Guide - Graph API](raw/graph-api/guides/explorer.md) -- https://developers.facebook.com/docs/graph-api/guides/explorer
+- [Field Expansion - Graph API](raw/graph-api/guides/field-expansion.md) -- https://developers.facebook.com/docs/graph-api/guides/field-expansion
+- [Facebook SDKs - Graph API](raw/graph-api/guides/our-sdks.md) -- https://developers.facebook.com/docs/graph-api/guides/our-sdks
+- [Secure Requests - Graph API](raw/graph-api/guides/secure-requests.md) -- https://developers.facebook.com/docs/graph-api/guides/secure-requests
+- [Upload a File or Video - Video API](raw/graph-api/guides/upload.md) -- https://developers.facebook.com/docs/graph-api/guides/upload
+- [Versioning - Graph API](raw/graph-api/guides/versioning.md) -- https://developers.facebook.com/docs/graph-api/guides/versioning
+- [Overview - Graph API](raw/graph-api/overview.md) -- https://developers.facebook.com/docs/graph-api/overview/
+- [Access Levels - App Development with Meta](raw/graph-api/overview/access-levels.md) -- https://developers.facebook.com/docs/graph-api/overview/access-levels/
+- [Rate Limits - Graph API](raw/graph-api/overview/rate-limiting.md) -- https://developers.facebook.com/docs/graph-api/overview/rate-limiting/
+- [Graph API Reference](raw/graph-api/reference.md) -- https://developers.facebook.com/docs/graph-api/reference/
+- [Graph API Reference v25.0: Ad](raw/graph-api/reference/adgroup.md) -- https://developers.facebook.com/docs/graph-api/reference/adgroup/
+- [Ad Creative - Developer Documentation](raw/graph-api/reference/adgroup/adcreatives.md) -- https://developers.facebook.com/docs/graph-api/reference/adgroup/adcreatives/
+- [Graph API Reference v25.0: Ads Archive](raw/graph-api/reference/ads_archive.md) -- https://developers.facebook.com/docs/graph-api/reference/ads_archive/
+- [Graph API Reference v25.0: Age Country Gender Reach Breakdown](raw/graph-api/reference/age-country-gender-reach-breakdown.md) -- https://developers.facebook.com/docs/graph-api/reference/age-country-gender-reach-breakdown/
+- [Album - Graph API](raw/graph-api/reference/album.md) -- https://developers.facebook.com/docs/graph-api/reference/album/
+- [Graph API Reference v25.0: Album Photos](raw/graph-api/reference/album/photos.md) -- https://developers.facebook.com/docs/graph-api/reference/album/photos/
+- [App Link Host - Graph API](raw/graph-api/reference/app-link-host.md) -- https://developers.facebook.com/docs/graph-api/reference/app-link-host/
+- [Application Achievements](raw/graph-api/reference/app/achievements.md) -- https://developers.facebook.com/docs/graph-api/reference/app/achievements
+- [Graph API App](raw/graph-api/reference/application.md) -- https://developers.facebook.com/docs/graph-api/reference/application/
+- [Graph API Reference v25.0: Application Accounts](raw/graph-api/reference/application/accounts.md) -- https://developers.facebook.com/docs/graph-api/reference/application/accounts/
+- [Graph API Reference v25.0: Application Activities](raw/graph-api/reference/application/activities.md) -- https://developers.facebook.com/docs/graph-api/reference/application/activities/
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/application/analytics_app_events_exports.md) -- https://developers.facebook.com/docs/graph-api/reference/application/analytics_app_events_exports/
+- [Subscriptions - Graph API](raw/graph-api/reference/application/subscriptions.md) -- https://developers.facebook.com/docs/graph-api/reference/application/subscriptions
+- [Graph API Reference v25.0: Audience Distribution](raw/graph-api/reference/audience-distribution.md) -- https://developers.facebook.com/docs/graph-api/reference/audience-distribution/
+- [Graph API Reference v25.0: Beneficiary Payer](raw/graph-api/reference/beneficiary-payer.md) -- https://developers.facebook.com/docs/graph-api/reference/beneficiary-payer/
+- [Graph API Reference v25.0: Binary Transparency Artifacts](raw/graph-api/reference/binary_transparency_artifacts.md) -- https://developers.facebook.com/docs/graph-api/reference/binary_transparency_artifacts/
+- [Graph API Reference v25.0: Binary Transparency Proofs](raw/graph-api/reference/binary_transparency_proofs.md) -- https://developers.facebook.com/docs/graph-api/reference/binary_transparency_proofs/
+- [Graph API Reference v25.0: Branded Content Search](raw/graph-api/reference/branded_content_search.md) -- https://developers.facebook.com/docs/graph-api/reference/branded_content_search/
+- [Graph API Reference v25.0: Canvas Button](raw/graph-api/reference/canvas-button.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-button/
+- [Graph API Reference v25.0: Canvas Carousel](raw/graph-api/reference/canvas-carousel.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-carousel/
+- [Graph API Reference v25.0: Canvas Footer](raw/graph-api/reference/canvas-footer.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-footer/
+- [Graph API Reference v25.0: Canvas Header](raw/graph-api/reference/canvas-header.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-header/
+- [Graph API Reference v25.0: Canvas Photo](raw/graph-api/reference/canvas-photo.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-photo/
+- [Graph API Reference v25.0: Canvas Product List](raw/graph-api/reference/canvas-product-list.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-product-list/
+- [Graph API Reference v25.0: Canvas Product Set](raw/graph-api/reference/canvas-product-set.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-product-set/
+- [Graph API Reference v25.0: Canvas Text](raw/graph-api/reference/canvas-text.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-text/
+- [Graph API Reference v25.0: Canvas Video](raw/graph-api/reference/canvas-video.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas-video/
+- [Graph API Reference v25.0: Canvas](raw/graph-api/reference/canvas.md) -- https://developers.facebook.com/docs/graph-api/reference/canvas/
+- [Graph API Reference v25.0: Collaborative Ads Directory](raw/graph-api/reference/collaborative-ads-directory.md) -- https://developers.facebook.com/docs/graph-api/reference/collaborative-ads-directory/
+- [Graph API Reference v25.0: Comment](raw/graph-api/reference/comment.md) -- https://developers.facebook.com/docs/graph-api/reference/comment/
+- [Conversation - Graph API](raw/graph-api/reference/conversation.md) -- https://developers.facebook.com/docs/graph-api/reference/conversation/
+- [Graph API Cover Photo](raw/graph-api/reference/cover-photo.md) -- https://developers.facebook.com/docs/graph-api/reference/cover-photo/
+- [Graph API Reference v25.0: CPASAdvertiser Partnership Recommendation](raw/graph-api/reference/cpas-advertiser-partnership-recommendation.md) -- https://developers.facebook.com/docs/graph-api/reference/cpas-advertiser-partnership-recommendation/
+- [Debug Token - Graph API](raw/graph-api/reference/debug_token.md) -- https://developers.facebook.com/docs/graph-api/reference/debug_token/
+- [Graph API Reference v25.0: Entity At Text Range](raw/graph-api/reference/entity-at-text-range.md) -- https://developers.facebook.com/docs/graph-api/reference/entity-at-text-range/
+- [Event - Graph API Reference](raw/graph-api/reference/event.md) -- https://developers.facebook.com/docs/graph-api/reference/event
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/event/feed.md) -- https://developers.facebook.com/docs/graph-api/reference/event/feed
+- [Graph API Reference v25.0: Event Live Videos](raw/graph-api/reference/event/live_videos.md) -- https://developers.facebook.com/docs/graph-api/reference/event/live_videos/
+- [/event/photos](raw/graph-api/reference/event/photos.md) -- https://developers.facebook.com/docs/graph-api/reference/event/photos/
+- [/event/picture](raw/graph-api/reference/event/picture.md) -- https://developers.facebook.com/docs/graph-api/reference/event/picture/
+- [Graph API Reference v25.0: Event Roles](raw/graph-api/reference/event/roles.md) -- https://developers.facebook.com/docs/graph-api/reference/event/roles/
+- [Graph API Reference v25.0: Event Ticket Tiers](raw/graph-api/reference/event/ticket_tiers.md) -- https://developers.facebook.com/docs/graph-api/reference/event/ticket_tiers/
+- [Graph API Reference /event/videos](raw/graph-api/reference/event/videos.md) -- https://developers.facebook.com/docs/graph-api/reference/event/videos/
+- [Graph API Reference v25.0: Extended Credit Allocation Config](raw/graph-api/reference/extended-credit-allocation-config.md) -- https://developers.facebook.com/docs/graph-api/reference/extended-credit-allocation-config/
+- [Graph API Reference v25.0: Games IAPProduct](raw/graph-api/reference/games-iap-product.md) -- https://developers.facebook.com/docs/graph-api/reference/games-iap-product/
+- [Graph API Reference v25.0: Group Message](raw/graph-api/reference/group-message.md) -- https://developers.facebook.com/docs/graph-api/reference/group-message/
+- [Group Doc - Graph API](raw/graph-api/reference/groupdoc.md) -- https://developers.facebook.com/docs/graph-api/reference/groupdoc/
+- [Graph API Reference v25.0: Image Copyright](raw/graph-api/reference/image-copyright.md) -- https://developers.facebook.com/docs/graph-api/reference/image-copyright/
+- [Graph API Reference v25.0: Insights Range Value](raw/graph-api/reference/insights-range-value.md) -- https://developers.facebook.com/docs/graph-api/reference/insights-range-value/
+- [Graph API Reference v25.0: Insights Result](raw/graph-api/reference/insights-result.md) -- https://developers.facebook.com/docs/graph-api/reference/insights-result/
+- [Page/insights - Graph API](raw/graph-api/reference/insights.md) -- https://developers.facebook.com/docs/graph-api/reference/insights/
+- [Graph API Reference v25.0: Instagram Business Asset](raw/graph-api/reference/instagram-business-asset.md) -- https://developers.facebook.com/docs/graph-api/reference/instagram-business-asset/
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/instagram-comment.md) -- https://developers.facebook.com/docs/graph-api/reference/instagram-comment/
+- [Graph API Reference v25.0: Instagram Oembed](raw/graph-api/reference/instagram-oembed.md) -- https://developers.facebook.com/docs/graph-api/reference/instagram-oembed/
+- [Link - Graph API](raw/graph-api/reference/link.md) -- https://developers.facebook.com/docs/graph-api/reference/link/
+- [Graph API Reference v25.0: Live Video Input Stream](raw/graph-api/reference/live-video-input-stream.md) -- https://developers.facebook.com/docs/graph-api/reference/live-video-input-stream/
+- [Graph API Reference v25.0: Mailing Address](raw/graph-api/reference/mailing-address.md) -- https://developers.facebook.com/docs/graph-api/reference/mailing-address/
+- [Graph API Reference v25.0: Media Fingerprint](raw/graph-api/reference/media-fingerprint.md) -- https://developers.facebook.com/docs/graph-api/reference/media-fingerprint/
+- [Graph API Reference v25.0: Message Template Library](raw/graph-api/reference/message_template_library.md) -- https://developers.facebook.com/docs/graph-api/reference/message_template_library/
+- [Message - Graph API](raw/graph-api/reference/message.md) -- https://developers.facebook.com/docs/graph-api/reference/message/
+- [Graph API Reference v25.0: Messenger Business Template](raw/graph-api/reference/messenger-business-template.md) -- https://developers.facebook.com/docs/graph-api/reference/messenger-business-template/
+- [Milestone - Graph API](raw/graph-api/reference/milestone.md) -- https://developers.facebook.com/docs/graph-api/reference/milestone/
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/object/captions.md) -- https://developers.facebook.com/docs/graph-api/reference/object/captions
+- [Object Comments - Graph API](raw/graph-api/reference/object/comments.md) -- https://developers.facebook.com/docs/graph-api/reference/object/comments/
+- [Object Likes - Graph API](raw/graph-api/reference/object/likes.md) -- https://developers.facebook.com/docs/graph-api/reference/object/likes/
+- [Graph API Reference /object/private_replies](raw/graph-api/reference/object/private_replies.md) -- https://developers.facebook.com/docs/graph-api/reference/object/private_replies/
+- [Object Reactions - Graph API](raw/graph-api/reference/object/reactions.md) -- https://developers.facebook.com/docs/graph-api/reference/object/reactions/
+- [Object Sharedposts - Graph API](raw/graph-api/reference/object/sharedposts.md) -- https://developers.facebook.com/docs/graph-api/reference/object/sharedposts/
+- [Graph API Reference v25.0: Oembed Page](raw/graph-api/reference/oembed-page.md) -- https://developers.facebook.com/docs/graph-api/reference/oembed-page/
+- [Graph API Reference v25.0: Oembed Post](raw/graph-api/reference/oembed-post.md) -- https://developers.facebook.com/docs/graph-api/reference/oembed-post/
+- [Graph API Reference v25.0: Oembed Video](raw/graph-api/reference/oembed-video.md) -- https://developers.facebook.com/docs/graph-api/reference/oembed-video/
+- [Graph API Reference v25.0: Offline Conversion Data Set Upload](raw/graph-api/reference/offline-conversion-data-set-upload.md) -- https://developers.facebook.com/docs/graph-api/reference/offline-conversion-data-set-upload/
+- [Graph API Reference v25.0: Page Call To Action](raw/graph-api/reference/page-call-to-action.md) -- https://developers.facebook.com/docs/graph-api/reference/page-call-to-action/
+- [Graph API Reference v25.0: Page Change Proposal](raw/graph-api/reference/page-change-proposal.md) -- https://developers.facebook.com/docs/graph-api/reference/page-change-proposal/
+- [Post](raw/graph-api/reference/page-post.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/
+- [Graph API Reference v25.0: Page Post Attachments](raw/graph-api/reference/page-post/attachments.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/attachments/
+- [Graph API Reference v25.0: Page Post Comments](raw/graph-api/reference/page-post/comments.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/comments/
+- [Graph API Reference v25.0: Page Post Dynamic Posts](raw/graph-api/reference/page-post/dynamic_posts.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/dynamic_posts/
+- [Graph API Reference v25.0: Page Post Insights](raw/graph-api/reference/page-post/insights.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/insights/
+- [Graph API Reference v25.0: Page Post Likes](raw/graph-api/reference/page-post/likes.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/likes/
+- [Graph API Reference v25.0: Page Post Reactions](raw/graph-api/reference/page-post/reactions.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/reactions/
+- [Graph API Reference v25.0: Page Post Sharedposts](raw/graph-api/reference/page-post/sharedposts.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/sharedposts/
+- [Post Sponsor Tags](raw/graph-api/reference/page-post/sponsor_tags.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/sponsor_tags/
+- [Post To](raw/graph-api/reference/page-post/to.md) -- https://developers.facebook.com/docs/graph-api/reference/page-post/to/
+- [Graph API Reference v25.0: Page Upcoming Change](raw/graph-api/reference/page-upcoming-change.md) -- https://developers.facebook.com/docs/graph-api/reference/page-upcoming-change/
+- [Page - Graph API Reference](raw/graph-api/reference/page.md) -- https://developers.facebook.com/docs/graph-api/reference/page/
+- [Graph API Reference v25.0: Page Ab Tests](raw/graph-api/reference/page/ab_tests.md) -- https://developers.facebook.com/docs/graph-api/reference/page/ab_tests/
+- [Graph API Reference v25.0: Page Ads Posts](raw/graph-api/reference/page/ads_posts.md) -- https://developers.facebook.com/docs/graph-api/reference/page/ads_posts/
+- [Graph API Reference v25.0: Page Agencies](raw/graph-api/reference/page/agencies.md) -- https://developers.facebook.com/docs/graph-api/reference/page/agencies/
+- [Graph API Reference v25.0: Page Albums](raw/graph-api/reference/page/albums.md) -- https://developers.facebook.com/docs/graph-api/reference/page/albums/
+- [Graph API Reference v25.0: Page Ar Experience](raw/graph-api/reference/page/ar_experience.md) -- https://developers.facebook.com/docs/graph-api/reference/page/ar_experience/
+- [Graph API Reference v25.0: Page Assigned Users](raw/graph-api/reference/page/assigned_users.md) -- https://developers.facebook.com/docs/graph-api/reference/page/assigned_users/
+- [Graph API Page Blocked](raw/graph-api/reference/page/blocked.md) -- https://developers.facebook.com/docs/graph-api/reference/page/blocked
+- [Lead Gen Forms](raw/graph-api/reference/page/leadgen_forms.md) -- https://developers.facebook.com/docs/graph-api/reference/page/leadgen_forms?locale=en_US
+- [Lead Gen Forms](raw/graph-api/reference/page/leadgen_forms.md) -- https://developers.facebook.com/docs/graph-api/reference/page/leadgen_forms/
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/page/photo_stories.md) -- https://developers.facebook.com/docs/graph-api/reference/page/photo_stories
+- [Graph API Reference v25.0: Page Photos](raw/graph-api/reference/page/photos.md) -- https://developers.facebook.com/docs/graph-api/reference/page/photos/
+- [Open Graph Page Settings](raw/graph-api/reference/page/settings.md) -- https://developers.facebook.com/docs/graph-api/reference/page/settings
+- [Open Graph Page Subscribed Apps](raw/graph-api/reference/page/subscribed_apps.md) -- https://developers.facebook.com/docs/graph-api/reference/page/subscribed_apps
+- [Tagged](raw/graph-api/reference/page/tagged.md) -- https://developers.facebook.com/docs/graph-api/reference/page/tagged
+- [Graph API Reference v25.0: Page Video Reels](raw/graph-api/reference/page/video_reels.md) -- https://developers.facebook.com/docs/graph-api/reference/page/video_reels
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/page/video_stories.md) -- https://developers.facebook.com/docs/graph-api/reference/page/video_stories
+- [Graph API Reference v25.0: Page Videos](raw/graph-api/reference/page/videos.md) -- https://developers.facebook.com/docs/graph-api/reference/page/videos/
+- [Post](raw/graph-api/reference/pagepost.md) -- https://developers.facebook.com/docs/graph-api/reference/pagepost
+- [Payment - Graph API](raw/graph-api/reference/payment.md) -- https://developers.facebook.com/docs/graph-api/reference/payment/
+- [Graph API Photo Node](raw/graph-api/reference/photo.md) -- https://developers.facebook.com/docs/graph-api/reference/photo/
+- [Graph API Reference v25.0: Photo Insights](raw/graph-api/reference/photo/insights.md) -- https://developers.facebook.com/docs/graph-api/reference/photo/insights/
+- [/photo/likes](raw/graph-api/reference/photo/likes.md) -- https://developers.facebook.com/docs/graph-api/reference/photo/likes/
+- [Graph API Reference v25.0: Photo Picture](raw/graph-api/reference/photo/picture.md) -- https://developers.facebook.com/docs/graph-api/reference/photo/picture/
+- [Graph API Reference v25.0: Photo Sponsor Tags](raw/graph-api/reference/photo/sponsor_tags.md) -- https://developers.facebook.com/docs/graph-api/reference/photo/sponsor_tags/
+- [Place Tag - Graph API](raw/graph-api/reference/place-tag.md) -- https://developers.facebook.com/docs/graph-api/reference/place-tag/
+- [Graph API Reference v25.0: Place Topic](raw/graph-api/reference/place-topic.md) -- https://developers.facebook.com/docs/graph-api/reference/place-topic/
+- [Graph API Reference v25.0: Place](raw/graph-api/reference/place.md) -- https://developers.facebook.com/docs/graph-api/reference/place/
+- [Graph API Reference v25.0: Platform Image Source](raw/graph-api/reference/platform-image-source.md) -- https://developers.facebook.com/docs/graph-api/reference/platform-image-source/
+- [Graph API Reference v25.0: Post](raw/graph-api/reference/post.md) -- https://developers.facebook.com/docs/graph-api/reference/post
+- [Graph API Reference v25.0: Post Attachments](raw/graph-api/reference/post/attachments.md) -- https://developers.facebook.com/docs/graph-api/reference/post/attachments/
+- [Graph API Reference v25.0: Post Comments](raw/graph-api/reference/post/comments.md) -- https://developers.facebook.com/docs/graph-api/reference/post/comments/
+- [Post Dynamic Posts](raw/graph-api/reference/post/dynamic_posts.md) -- https://developers.facebook.com/docs/graph-api/reference/post/dynamic_posts/
+- [Graph API Reference v25.0: Post Insights](raw/graph-api/reference/post/insights.md) -- https://developers.facebook.com/docs/graph-api/reference/post/insights/
+- [Graph API Reference v25.0: Post Reactions](raw/graph-api/reference/post/reactions.md) -- https://developers.facebook.com/docs/graph-api/reference/post/reactions/
+- [Graph API Reference v25.0: Post Sharedposts](raw/graph-api/reference/post/sharedposts.md) -- https://developers.facebook.com/docs/graph-api/reference/post/sharedposts/
+- [Graph API Reference v25.0: Post Sponsor Tags](raw/graph-api/reference/post/sponsor_tags.md) -- https://developers.facebook.com/docs/graph-api/reference/post/sponsor_tags/
+- [Graph API Reference v25.0: Post To](raw/graph-api/reference/post/to.md) -- https://developers.facebook.com/docs/graph-api/reference/post/to/
+- [Graph API Privacy Node](raw/graph-api/reference/privacy.md) -- https://developers.facebook.com/docs/graph-api/reference/privacy/
+- [Profile - Graph API](raw/graph-api/reference/profile.md) -- https://developers.facebook.com/docs/graph-api/reference/profile/
+- [Request - Graph API](raw/graph-api/reference/request.md) -- https://developers.facebook.com/docs/graph-api/reference/request/
+- [Graph API Reference v25.0: IGUser](raw/graph-api/reference/shadow-ig-user.md) -- https://developers.facebook.com/docs/graph-api/reference/shadow-ig-user/
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/stories/insights.md) -- https://developers.facebook.com/docs/graph-api/reference/stories/insights/
+- [Graph API Reference v25.0: Story Attachment Media - Documentation - Meta for Developers](raw/graph-api/reference/story-attachment-media.md) -- https://developers.facebook.com/docs/graph-api/reference/story-attachment-media/
+- [Graph API Reference v25.0: Story Attachment](raw/graph-api/reference/story-attachment.md) -- https://developers.facebook.com/docs/graph-api/reference/story-attachment/
+- [Graph API Reference v25.0: Target Location](raw/graph-api/reference/target-location.md) -- https://developers.facebook.com/docs/graph-api/reference/target-location/
+- [Graph API Reference v25.0: Targeting](raw/graph-api/reference/targeting.md) -- https://developers.facebook.com/docs/graph-api/reference/targeting/
+- [Test User - Graph API](raw/graph-api/reference/test-user.md) -- https://developers.facebook.com/docs/graph-api/reference/test-user/
+- [Thread - Graph API](raw/graph-api/reference/thread.md) -- https://developers.facebook.com/docs/graph-api/reference/thread/
+- [Graph API Reference v25.0: Threat Exchange Impact Report](raw/graph-api/reference/threat-exchange-impact-report.md) -- https://developers.facebook.com/docs/graph-api/reference/threat-exchange-impact-report/
+- [URL - Graph API](raw/graph-api/reference/url.md) -- https://developers.facebook.com/docs/graph-api/reference/url/
+- [Graph API User](raw/graph-api/reference/user.md) -- https://developers.facebook.com/docs/graph-api/reference/user/
+- [Graph API User Accounts](raw/graph-api/reference/user/accounts.md) -- https://developers.facebook.com/docs/graph-api/reference/user/accounts
+- [Graph API Reference v25.0: User Ad Studies](raw/graph-api/reference/user/ad_studies.md) -- https://developers.facebook.com/docs/graph-api/reference/user/ad_studies/
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/user/adaccounts.md) -- https://developers.facebook.com/docs/graph-api/reference/user/adaccounts
+- [Graph API Reference v25.0: User Feed](raw/graph-api/reference/user/feed.md) -- https://developers.facebook.com/docs/graph-api/reference/user/feed/
+- [Page Not Found - Meta for Developers](raw/graph-api/reference/user/promotable_events.md) -- https://developers.facebook.com/docs/graph-api/reference/user/promotable_events
+- [Graph API Reference: User Videos](raw/graph-api/reference/user/videos.md) -- https://developers.facebook.com/docs/graph-api/reference/user/videos/
+- [Graph API Reference v24.0: Post](raw/graph-api/reference/v24.0/post.md) -- https://developers.facebook.com/docs/graph-api/reference/v24.0/post
+- [Feed](raw/graph-api/reference/v25.0/page/feed.md) -- https://developers.facebook.com/docs/graph-api/reference/v25.0/page/feed
+- [Graph API Reference v25.0: Post](raw/graph-api/reference/v25.0/post.md) -- https://developers.facebook.com/docs/graph-api/reference/v25.0/post
+- [Graph API Reference v25.0: Video Copyright](raw/graph-api/reference/video-copyright.md) -- https://developers.facebook.com/docs/graph-api/reference/video-copyright/
+- [Graph API Reference v25.0: Video List](raw/graph-api/reference/video-list.md) -- https://developers.facebook.com/docs/graph-api/reference/video-list/
+- [Graph API Reference v25.0: Video Poll Option](raw/graph-api/reference/video-poll-option.md) -- https://developers.facebook.com/docs/graph-api/reference/video-poll-option/
+- [Graph API Reference v25.0: Video Poll](raw/graph-api/reference/video-poll.md) -- https://developers.facebook.com/docs/graph-api/reference/video-poll/
+- [Graph API Reference Video /video](raw/graph-api/reference/video.md) -- https://developers.facebook.com/docs/graph-api/reference/video/
+- [Graph API Reference v25.0: Video Polls](raw/graph-api/reference/video/polls.md) -- https://developers.facebook.com/docs/graph-api/reference/video/polls
+- [Graph API Reference v25.0: Whats App Business Account](raw/graph-api/reference/whats-app-business-account.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/
+- [Graph API Reference v25.0: Whats App Business Account Activities](raw/graph-api/reference/whats-app-business-account/activities.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/activities/
+- [Graph API Reference v25.0: Whats App Business Account Assigned Users](raw/graph-api/reference/whats-app-business-account/assigned_users.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/assigned_users/
+- [Graph API Reference v25.0: Whats App Business Account Call Analytics](raw/graph-api/reference/whats-app-business-account/call_analytics.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/call_analytics/
+- [Graph API Reference v25.0: Whats App Business Account Conversation Analytics](raw/graph-api/reference/whats-app-business-account/conversation_analytics.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/conversation_analytics/
+- [Graph API Reference v25.0: Whats App Business Account Dataset](raw/graph-api/reference/whats-app-business-account/dataset.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/dataset/
+- [Graph API Reference v25.0: Whats App Business Account Message Template Previews](raw/graph-api/reference/whats-app-business-account/message_template_previews.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_template_previews/
+- [Graph API Reference v25.0: Whats App Business Account Message Templates](raw/graph-api/reference/whats-app-business-account/message_templates.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/message_templates/
+- [Graph API Reference v25.0: Whats App Business Account Payment Configuration](raw/graph-api/reference/whats-app-business-account/payment_configuration.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/payment_configuration/
+- [Graph API Reference v25.0: Whats App Business Account Payment Configurations](raw/graph-api/reference/whats-app-business-account/payment_configurations.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/payment_configurations/
+- [Graph API Reference v25.0: Whats App Business Account Phone Numbers](raw/graph-api/reference/whats-app-business-account/phone_numbers.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/phone_numbers/
+- [Graph API Reference v25.0: Whats App Business Account Pricing Analytics](raw/graph-api/reference/whats-app-business-account/pricing_analytics.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/pricing_analytics/
+- [Graph API Reference v25.0: Whats App Business Account Product Catalogs](raw/graph-api/reference/whats-app-business-account/product_catalogs.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/product_catalogs/
+- [Graph API Reference v25.0: Whats App Business Account Solutions](raw/graph-api/reference/whats-app-business-account/solutions.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/solutions/
+- [Graph API Reference v25.0: Whats App Business Account Subscribed Apps](raw/graph-api/reference/whats-app-business-account/subscribed_apps.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/subscribed_apps/
+- [Graph API Reference v25.0: Whats App Business Account Template Groups](raw/graph-api/reference/whats-app-business-account/template_groups.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/template_groups/
+- [Graph API Reference v25.0: Whats App Business Account Upsert Message Templates](raw/graph-api/reference/whats-app-business-account/upsert_message_templates.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/upsert_message_templates/
+- [Graph API Reference v25.0: Whats App Business Account Welcome Message Sequences](raw/graph-api/reference/whats-app-business-account/welcome_message_sequences.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/welcome_message_sequences/
+- [Graph API Reference v25.0: Whats App Message Template](raw/graph-api/reference/whats-app-business-hsm.md) -- https://developers.facebook.com/docs/graph-api/reference/whats-app-business-hsm/
+- [Paginated Results - Graph API](raw/graph-api/results.md) -- https://developers.facebook.com/docs/graph-api/results
+- [Rights Manager API - Video API](raw/graph-api/rights-manager-api.md) -- https://developers.facebook.com/docs/graph-api/rights-manager-api
+- [Status, Support, and Tools - App Development with Meta](raw/graph-api/support-and-tools.md) -- https://developers.facebook.com/docs/graph-api/support-and-tools
+- [Page Not Found - Meta for Developers](raw/graph-api/video.md) -- https://developers.facebook.com/docs/graph-api/video
+- [Webhooks from Meta](raw/graph-api/webhooks.md) -- https://developers.facebook.com/docs/graph-api/webhooks/
+- [Getting Started - Webhooks from Meta](raw/graph-api/webhooks/getting-started.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started
+- [Ad Accounts - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-ad-accounts.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-ad-accounts
+- [Catalogs - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-catalogs.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-catalogs
+- [Instagram - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-instagram.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-instagram/
+- [Leads - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-leadgen.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-leadgen
+- [Messenger - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-messenger.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-messenger
+- [Pages - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-pages.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-pages/
+- [Payments - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-payments.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-payments
+- [Webhooks for WhatsApp Business Accounts - Webhooks from Meta](raw/graph-api/webhooks/getting-started/webhooks-for-whatsapp.md) -- https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp
+- [Webhooks Reference](raw/graph-api/webhooks/reference.md) -- https://developers.facebook.com/docs/graph-api/webhooks/reference/
+- [Webhooks Reference: Ad Account](raw/graph-api/webhooks/reference/ad-account.md) -- https://developers.facebook.com/docs/graph-api/webhooks/reference/ad-account/
+- [Webhooks Reference: Application](raw/graph-api/webhooks/reference/application.md) -- https://developers.facebook.com/docs/graph-api/webhooks/reference/application/
+- [Webhooks Reference: Catalog](raw/graph-api/webhooks/reference/catalog.md) -- https://developers.facebook.com/docs/graph-api/webhooks/reference/catalog/
+- [Webhooks Reference: Instagram](raw/graph-api/webhooks/reference/instagram.md) -- https://developers.facebook.com/docs/graph-api/webhooks/reference/instagram/
+- [Webhooks Reference: Managed Meta Account](raw/graph-api/webhooks/reference/managed-meta-account.md) -- https://developers.facebook.com/docs/graph-api/webhooks/reference/managed-meta-account/
+- [Webhooks Reference: Page](raw/graph-api/webhooks/reference/page.md) -- https://developers.facebook.com/docs/graph-api/webhooks/reference/page/
+- [Sample Apps - Webhooks from Meta](raw/graph-api/webhooks/sample-apps.md) -- https://developers.facebook.com/docs/graph-api/webhooks/sample-apps
+- [Subscriptions Edge - Webhooks from Meta](raw/graph-api/webhooks/subscriptions-edge.md) -- https://developers.facebook.com/docs/graph-api/webhooks/subscriptions-edge
+- [Ad, Image - Developer Documentation](raw/reference/ads-api/adimage.md) -- https://developers.facebook.com/docs/reference/ads-api/adimage
+- [Facebook SDK for Android Reference - Documentation - Meta for Developers](raw/reference/android/current.md) -- https://developers.facebook.com/docs/reference/android/current
+- [AbstractAdListener - Documentation - Meta for Developers](raw/reference/android/current/class/AbstractAdListener.md) -- https://developers.facebook.com/docs/reference/android/current/class/AbstractAdListener/
+- [AccessToken - Documentation - Meta for Developers](raw/reference/android/current/class/AccessToken.md) -- https://developers.facebook.com/docs/reference/android/current/class/AccessToken
+- [AccessTokenSource - Documentation - Meta for Developers](raw/reference/android/current/class/AccessTokenSource.md) -- https://developers.facebook.com/docs/reference/android/current/class/AccessTokenSource/
+- [AccessToken.AccessTokenCreationCallback - Documentation - Meta for Developers](raw/reference/android/current/interface/AccessToken.AccessTokenCreationCallback.md) -- https://developers.facebook.com/docs/reference/android/current/interface/AccessToken.AccessTokenCreationCallback/
+- [AccessToken.AccessTokenRefreshCallback - Documentation - Meta for Developers](raw/reference/android/current/interface/AccessToken.AccessTokenRefreshCallback.md) -- https://developers.facebook.com/docs/reference/android/current/interface/AccessToken.AccessTokenRefreshCallback/
+- [developers.facebook.com](raw/reference/ios/current.md) -- https://developers.facebook.com/docs/reference/ios/current
+
+### 03-authentication -- Authentication & Login (12)
+
+- [Page Not Found - Meta for Developers](raw/facebook-login-for-business.md) -- https://developers.facebook.com/docs/facebook-login-for-business
+- [Facebook Login - Developer Documentation](raw/facebook-login.md) -- https://developers.facebook.com/docs/facebook-login
+- [Access Tokens for Meta Technologies - Developer Documentation](raw/facebook-login/access-tokens.md) -- https://developers.facebook.com/docs/facebook-login/access-tokens
+- [Facebook Login for Business - Developer Documentation](raw/facebook-login/facebook-login-for-business.md) -- https://developers.facebook.com/docs/facebook-login/facebook-login-for-business/
+- [Long-Lived Access Tokens - Developer Documentation](raw/facebook-login/guides/access-tokens/get-long-lived.md) -- https://developers.facebook.com/docs/facebook-login/guides/access-tokens/get-long-lived
+- [Manually Build a Login Flow - Developer Documentation](raw/facebook-login/guides/advanced/manual-flow.md) -- https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow
+- [Handling Declined Permissions - Developer Documentation](raw/facebook-login/handling-declined-permissions.md) -- https://developers.facebook.com/docs/facebook-login/handling-declined-permissions
+- [Permissions with Facebook Login - Developer Documentation](raw/facebook-login/permissions/overview.md) -- https://developers.facebook.com/docs/facebook-login/permissions/overview
+- [Requesting & Revoking Permissions - Developer Documentation](raw/facebook-login/permissions/requesting-and-revoking.md) -- https://developers.facebook.com/docs/facebook-login/permissions/requesting-and-revoking
+- [Permissions / Login Review - Developer Documentation](raw/facebook-login/permissions/review.md) -- https://developers.facebook.com/docs/facebook-login/permissions/review
+- [Login Security - Developer Documentation](raw/facebook-login/security.md) -- https://developers.facebook.com/docs/facebook-login/security/
+- [User Experience Design - Developer Documentation](raw/facebook-login/userexperience.md) -- https://developers.facebook.com/docs/facebook-login/userexperience
+
+### 04-business-messaging -- Business Messaging (WhatsApp / Messenger / IG) (72)
+
+- [Instagram Messaging](raw/instagram-messaging.md) -- https://developers.facebook.com/docs/instagram-messaging/
+- [Button Template - Instagram Messaging](raw/instagram-messaging/button-template.md) -- https://developers.facebook.com/docs/instagram-messaging/button-template
+- [Generic Template - Instagram Messaging](raw/instagram-messaging/generic-template.md) -- https://developers.facebook.com/docs/instagram-messaging/generic-template
+- [Get Started - Instagram Messaging](raw/instagram-messaging/get-started.md) -- https://developers.facebook.com/docs/instagram-messaging/get-started
+- [Page Not Found - Meta for Developers](raw/instagram-messaging/overivew.md) -- https://developers.facebook.com/docs/instagram-messaging/overivew
+- [Overview - Instagram Messaging](raw/instagram-messaging/overview.md) -- https://developers.facebook.com/docs/instagram-messaging/overview
+- [Instagram Messaging Webhooks](raw/instagram-messaging/webhooks.md) -- https://developers.facebook.com/docs/instagram-messaging/webhooks
+- [Webhook debugger - Instagram Messaging](raw/instagram-messaging/webhooks/debugging.md) -- https://developers.facebook.com/docs/instagram-messaging/webhooks/debugging
+- [Messenger Platform - Developer Documentation](raw/messenger-platform.md) -- https://developers.facebook.com/docs/messenger-platform/
+- [Developer Platform](raw/messenger-platform/changelog.md) -- https://developers.facebook.com/docs/messenger-platform/changelog/
+- [Discovery & Engagement - Developer Documentation](raw/messenger-platform/discovery.md) -- https://developers.facebook.com/docs/messenger-platform/discovery/
+- [Private Replies - Developer Documentation](raw/messenger-platform/discovery/private-replies.md) -- https://developers.facebook.com/docs/messenger-platform/discovery/private-replies
+- [Page Not Found - Meta for Developers](raw/messenger-platform/handover-protocol.md) -- https://developers.facebook.com/docs/messenger-platform/handover-protocol/
+- [App Review - Instagram Messaging](raw/messenger-platform/instagram/app-review.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/app-review
+- [Apps For Your Own Business - Instagram Messaging](raw/messenger-platform/instagram/app-review/apps-for-your-own-business.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/app-review/apps-for-your-own-business/
+- [Attachment Upload API - Instagram Messaging](raw/messenger-platform/instagram/features/attachment-upload.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/attachment-upload
+- [Conversation Routing - Instagram Messaging](raw/messenger-platform/instagram/features/conversation-routing.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/conversation-routing
+- [Human Agent Escalation - Instagram Messaging](raw/messenger-platform/instagram/features/human-agent-escalation.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/human-agent-escalation
+- [Ice Breakers - Instagram Messaging](raw/messenger-platform/instagram/features/ice-breakers.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/ice-breakers
+- [ig.me links - Instagram Messaging](raw/messenger-platform/instagram/features/ig-me-links.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/ig-me-links
+- [Moderate Conversations API - Instagram Messaging](raw/messenger-platform/instagram/features/moderate-conversations.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/moderate-conversations
+- [Persistent Menu - Instagram Messaging](raw/messenger-platform/instagram/features/persistent-menu.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/persistent-menu
+- [Private Replies - Instagram Messaging](raw/messenger-platform/instagram/features/private-replies.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/private-replies
+- [Product Template - Instagram Messaging](raw/messenger-platform/instagram/features/product-template.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/product-template
+- [Quick Replies - Instagram Messaging](raw/messenger-platform/instagram/features/quick-replies.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/quick-replies
+- [Send a Message - Instagram Messaging](raw/messenger-platform/instagram/features/send-message.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/send-message
+- [Sender Actions - Instagram Messaging](raw/messenger-platform/instagram/features/sender-actions.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/sender-actions
+- [Story Mention - Instagram Messaging](raw/messenger-platform/instagram/features/story-mention.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/story-mention
+- [User Profile API - Instagram Messaging](raw/messenger-platform/instagram/features/user-profile.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/features/user-profile
+- [Page Not Found - Meta for Developers](raw/messenger-platform/instagram/overview.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/overview
+- [Sample Experience - Instagram Messaging](raw/messenger-platform/instagram/sample-experience.md) -- https://developers.facebook.com/docs/messenger-platform/instagram/sample-experience
+- [Overview for the Messenger Platform - Developer Documentation](raw/messenger-platform/overview.md) -- https://developers.facebook.com/docs/messenger-platform/overview
+- [Developer Platform](raw/messenger-platform/reference/buttons.md) -- https://developers.facebook.com/docs/messenger-platform/reference/buttons
+- [Page Not Found - Meta for Developers](raw/messenger-platform/reference/webhook-events/message-edit.md) -- https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/message-edit
+- [Buttons - Developer Documentation](raw/messenger-platform/send-api-reference/url-button.md) -- https://developers.facebook.com/docs/messenger-platform/send-api-reference/url-button
+- [Page Not Found - Meta for Developers](raw/messenger-platform/send-messages/rate-limiting.md) -- https://developers.facebook.com/docs/messenger-platform/send-messages/rate-limiting
+- [Page Not Found - Meta for Developers](raw/messenger-platform/send-messages/template/utility-messaging.md) -- https://developers.facebook.com/docs/messenger-platform/send-messages/template/utility-messaging
+- [Meta Webhooks for Messenger Platform - Developer Documentation](raw/messenger-platform/webhooks.md) -- https://developers.facebook.com/docs/messenger-platform/webhooks
+- [WhatsApp Business Platform - Developer Documentation](raw/whatsapp.md) -- https://developers.facebook.com/docs/whatsapp
+- [Interactive Message Templates](raw/whatsapp/api/messages/message-templates/interactive-message-templates.md) -- https://developers.facebook.com/docs/whatsapp/api/messages/message-templates/interactive-message-templates/
+- [Identity Change - Developer Documentation](raw/whatsapp/best-practices/identity-change.md) -- https://developers.facebook.com/docs/whatsapp/best-practices/identity-change
+- [Developer Platform](raw/whatsapp/business-management-api/authentication-templates.md) -- https://developers.facebook.com/docs/whatsapp/business-management-api/authentication-templates
+- [On-Premises API Archive - WhatsApp Business Platform](raw/whatsapp/changelog/archive.md) -- https://developers.facebook.com/docs/whatsapp/changelog/archive/
+- [Page Not Found - Meta for Developers](raw/whatsapp/changelog/archive/developers.facebook.com/docs/whatsapp/flows.md) -- https://developers.facebook.com/docs/whatsapp/changelog/archive/developers.facebook.com/docs/whatsapp/flows
+- [Developer Platform](raw/whatsapp/changelog/cloud-api-archive.md) -- https://developers.facebook.com/docs/whatsapp/changelog/cloud-api-archive
+- [Developer Platform](raw/whatsapp/cloud-api/messages/interactive-flow-messages.md) -- https://developers.facebook.com/docs/whatsapp/cloud-api/messages/interactive-flow-messages
+- [Local storage - Developer Documentation](raw/whatsapp/cloud-api/overview/local-storage.md) -- https://developers.facebook.com/docs/whatsapp/cloud-api/overview/local-storage/
+- [Cloud vs On-Prem - WhatsApp Business Platform](raw/whatsapp/cloud-vs-onprem.md) -- https://developers.facebook.com/docs/whatsapp/cloud-vs-onprem
+- [Service messages - Developer Documentation](raw/whatsapp/conversation-types.md) -- https://developers.facebook.com/docs/whatsapp/conversation-types
+- [Embedded Signup - Developer Documentation](raw/whatsapp/embedded-signup.md) -- https://developers.facebook.com/docs/whatsapp/embedded-signup
+- [WhatsApp Flows - Developer Documentation](raw/whatsapp/flows.md) -- https://developers.facebook.com/docs/whatsapp/flows
+- [Sending a Flow - Developer Documentation](raw/whatsapp/flows/gettingstarted/sendingaflow.md) -- https://developers.facebook.com/docs/whatsapp/flows/gettingstarted/sendingaflow
+- [Share Products With Customers](raw/whatsapp/guides/commerce-guides/share-products-with-customers.md) -- https://developers.facebook.com/docs/whatsapp/guides/commerce-guides/share-products-with-customers
+- [Interactive Messages](raw/whatsapp/guides/interactive-messages.md) -- https://developers.facebook.com/docs/whatsapp/guides/interactive-messages
+- [Link Previews - Developer Documentation](raw/whatsapp/link-previews.md) -- https://developers.facebook.com/docs/whatsapp/link-previews
+- [Marketing Messages API for WhatsApp - Developer Documentation](raw/whatsapp/marketing-messages-lite-api.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api
+- [Changelog - Developer Documentation](raw/whatsapp/marketing-messages-lite-api/changelog.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api/changelog
+- [Features - Developer Documentation](raw/whatsapp/marketing-messages-lite-api/features.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api/features
+- [Deep links - Developer Documentation](raw/whatsapp/marketing-messages-lite-api/guides/deep-links.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api/guides/deep-links
+- [Tracking click events - Developer Documentation](raw/whatsapp/marketing-messages-lite-api/guides/tracking-click-events.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api/guides/tracking-click-events
+- [Setting up conversion measurement - Developer Documentation](raw/whatsapp/marketing-messages-lite-api/measuring-conversion.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api/measuring-conversion
+- [Send Marketing Messages - Developer Documentation](raw/whatsapp/marketing-messages-lite-api/sending-messages.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api/sending-messages
+- [Viewing metrics - Developer Documentation](raw/whatsapp/marketing-messages-lite-api/viewing-metrics.md) -- https://developers.facebook.com/docs/whatsapp/marketing-messages-lite-api/viewing-metrics
+- [Messaging Limits - Developer Documentation](raw/whatsapp/messaging-limits.md) -- https://developers.facebook.com/docs/whatsapp/messaging-limits
+- [Page Not Found - Meta for Developers](raw/whatsapp/on-premises/payments-api/p2m-lite.md) -- https://developers.facebook.com/docs/whatsapp/on-premises/payments-api/p2m-lite
+- [On-Premises API Sunset](raw/whatsapp/on-premises/sunset.md) -- https://developers.facebook.com/docs/whatsapp/on-premises/sunset
+- [About the WhatsApp Business Platform - Developer Documentation](raw/whatsapp/overview.md) -- https://developers.facebook.com/docs/whatsapp/overview
+- [WhatsApp Business Platform policy and spam enforcement - Developer Documentation](raw/whatsapp/overview/policy-enforcement.md) -- https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement
+- [Pricing on the WhatsApp Business Platform - Developer Documentation](raw/whatsapp/pricing.md) -- https://developers.facebook.com/docs/whatsapp/pricing
+- [Partners - Developer Documentation](raw/whatsapp/solution-providers.md) -- https://developers.facebook.com/docs/whatsapp/solution-providers
+- [Support - Developer Documentation](raw/whatsapp/support.md) -- https://developers.facebook.com/docs/whatsapp/support
+- [Developer Platform](raw/whatsapp/webhooks.md) -- https://developers.facebook.com/docs/whatsapp/webhooks
+
+### 05-instagram-threads -- Instagram & Threads (130)
+
+- [Page Not Found - Meta for Developers](raw/instagram-api/reference/ig-user/agencies.md) -- https://developers.facebook.com/docs/instagram-api/reference/ig-user/agencies
+- [Page not found - Meta for Developers](raw/instagram-api/reference/ig-user/authorized-adaccounts.md) -- https://developers.facebook.com/docs/instagram-api/reference/ig-user/authorized-adaccounts
+- [Page Not Found - Meta for Developers](raw/instagram-api/reference/ig-user/collaboration_invites.md) -- https://developers.facebook.com/docs/instagram-api/reference/ig-user/collaboration_invites
+- [Page Not Found - Meta for Developers](raw/instagram-api/reference/ig-user/collaborative_media.md) -- https://developers.facebook.com/docs/instagram-api/reference/ig-user/collaborative_media
+- [Page Not Found - Meta for Developers](raw/instagram-api/reference/ig-user/upcoming-events.md) -- https://developers.facebook.com/docs/instagram-api/reference/ig-user/upcoming-events
+- [Instagram Platform](raw/instagram-platform.md) -- https://developers.facebook.com/docs/instagram-platform/
+- [Insights - Instagram Platform](raw/instagram-platform/api-reference/instagram-user/insights.md) -- https://developers.facebook.com/docs/instagram-platform/api-reference/instagram-user/insights/
+- [App Review - Instagram Platform](raw/instagram-platform/app-review.md) -- https://developers.facebook.com/docs/instagram-platform/app-review/
+- [Changelog - Instagram Platform](raw/instagram-platform/changelog.md) -- https://developers.facebook.com/docs/instagram-platform/changelog/
+- [Comment Moderation  - Instagram Platform](raw/instagram-platform/comment-moderation.md) -- https://developers.facebook.com/docs/instagram-platform/comment-moderation
+- [Publish Content - Instagram Platform](raw/instagram-platform/content-publishing.md) -- https://developers.facebook.com/docs/instagram-platform/content-publishing
+- [Audio API - Instagram Platform](raw/instagram-platform/content-publishing/audio-api.md) -- https://developers.facebook.com/docs/instagram-platform/content-publishing/audio-api
+- [Resumable Uploads - Instagram Platform](raw/instagram-platform/content-publishing/resumable-uploads.md) -- https://developers.facebook.com/docs/instagram-platform/content-publishing/resumable-uploads/
+- [Create an App - Instagram Platform](raw/instagram-platform/create-an-instagram-app.md) -- https://developers.facebook.com/docs/instagram-platform/create-an-instagram-app/
+- [Embed Button - Instagram Platform](raw/instagram-platform/embed-button.md) -- https://developers.facebook.com/docs/instagram-platform/embed-button
+- [Insights - Instagram Platform](raw/instagram-platform/insights.md) -- https://developers.facebook.com/docs/instagram-platform/insights
+- [Instagram API with Facebook Login - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login
+- [Business Discovery - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/business-discovery.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/business-discovery
+- [Facebook Login for Business   - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/business-login-for-instagram.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/business-login-for-instagram/
+- [Collaboration - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/collaboration.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/collaboration
+- [Copyright Detection - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/copyright-detection.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/copyright-detection
+- [Creator Marketplace API - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/creator-marketplace.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/creator-marketplace
+- [Get Started - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/get-started.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/get-started/
+- [Hashtag Search - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/hashtag-search.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/hashtag-search
+- [Mentions - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/mentions.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/mentions
+- [Product Tagging - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/product-tagging.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/product-tagging
+- [Upcoming Events - Instagram Platform](raw/instagram-platform/instagram-api-with-facebook-login/upcoming-events.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/upcoming-events
+- [Instagram API with Instagram Login - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/
+- [Business Login for Instagram - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/business-login.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/business-login/
+- [Conversations API - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/conversations-api.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/conversations-api
+- [Get started - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/get-started.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/get-started/
+- [Mentions - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/mentions.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/mentions
+- [Messaging - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/messaging-api.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/messaging-api/
+- [User Profile API - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/messaging-api/user-profile.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/messaging-api/user-profile
+- [Migration Guide - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/migration-guide.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/migration-guide/
+- [Welcome message ads - Instagram Platform](raw/instagram-platform/instagram-api-with-instagram-login/welcome-message-ads.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/welcome-message-ads
+- [Error Codes - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/error-codes.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/error-codes/
+- [IG Comment - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-comment.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-comment
+- [Replies - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-comment/replies.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-comment/replies
+- [IG Container - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-container.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-container/
+- [IG Hashtag Search - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-hashtag-search.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-hashtag-search
+- [IG Hashtag - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-hashtag.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-hashtag
+- [Recent Media - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-hashtag/recent-media.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-hashtag/recent-media
+- [Children - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-media/children.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-media/children
+- [Collaborators - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-media/collaborators.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-media/collaborators/
+- [Comments - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-media/comments.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-media/comments
+- [Product Tags - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-media/product_tags.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-media/product_tags
+- [IG User - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user
+- [Available Catalogs - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/available_catalogs.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/available_catalogs
+- [Business Discovery - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/business_discovery.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/business_discovery
+- [Catalog Product Search - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/catalog_product_search.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/catalog_product_search
+- [Connected Threads User - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/connected_threads_user.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/connected_threads_user
+- [Content Publishing Limit - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/content_publishing_limit.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/content_publishing_limit
+- [Instagram-Backed Threads User - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/instagram_backed_threads_user.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/instagram_backed_threads_user
+- [Live Media - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/live_media.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/live_media
+- [Media Publish - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/media_publish.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media_publish
+- [Media - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/media.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media/
+- [Mentioned Comment - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/mentioned_comment.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/mentioned_comment
+- [Mentioned Media - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/mentioned_media.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/mentioned_media
+- [Mentions - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/mentions.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/mentions
+- [Product Appeal - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/product_appeal.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/product_appeal
+- [Recently Searched Hashtags - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/recently_searched_hashtags.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/recently_searched_hashtags
+- [Stories - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/stories.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/stories
+- [Tags - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/tags.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/tags
+- [User Likes - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/ig-user/user-likes.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/user-likes
+- [Page - Instagram Platform](raw/instagram-platform/instagram-graph-api/reference/page.md) -- https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/page/
+- [oEmbed - Instagram Platform](raw/instagram-platform/oembed.md) -- https://developers.facebook.com/docs/instagram-platform/oembed
+- [Overview - Instagram Platform](raw/instagram-platform/overview.md) -- https://developers.facebook.com/docs/instagram-platform/overview/
+- [Private Replies - Instagram Platform](raw/instagram-platform/private-replies.md) -- https://developers.facebook.com/docs/instagram-platform/private-replies
+- [API Reference - Instagram Platform](raw/instagram-platform/reference.md) -- https://developers.facebook.com/docs/instagram-platform/reference
+- [Access Token - Instagram Platform](raw/instagram-platform/reference/access_token.md) -- https://developers.facebook.com/docs/instagram-platform/reference/access_token
+- [IG Media - Instagram Platform](raw/instagram-platform/reference/instagram-media.md) -- https://developers.facebook.com/docs/instagram-platform/reference/instagram-media/
+- [Insights - Instagram Platform](raw/instagram-platform/reference/instagram-media/insights.md) -- https://developers.facebook.com/docs/instagram-platform/reference/instagram-media/insights
+- [Page not found - Meta for Developers](raw/instagram-platform/reference/instagram-media/insights/docs/graph-api/results.md) -- https://developers.facebook.com/docs/instagram-platform/reference/instagram-media/insights/docs/graph-api/results
+- [/me - Instagram Platform](raw/instagram-platform/reference/me.md) -- https://developers.facebook.com/docs/instagram-platform/reference/me
+- [Oauth Authorize - Instagram Platform](raw/instagram-platform/reference/oauth-authorize.md) -- https://developers.facebook.com/docs/instagram-platform/reference/oauth-authorize/
+- [Refresh Access Token - Instagram Platform](raw/instagram-platform/reference/refresh_access_token.md) -- https://developers.facebook.com/docs/instagram-platform/reference/refresh_access_token
+- [Self Messaging - Instagram Platform](raw/instagram-platform/self-messaging.md) -- https://developers.facebook.com/docs/instagram-platform/self-messaging
+- [Sharing to Feed - Instagram Platform](raw/instagram-platform/sharing-to-feed.md) -- https://developers.facebook.com/docs/instagram-platform/sharing-to-feed
+- [Sharing to Stories - Instagram Platform](raw/instagram-platform/sharing-to-stories.md) -- https://developers.facebook.com/docs/instagram-platform/sharing-to-stories
+- [Support - Instagram Platform](raw/instagram-platform/support.md) -- https://developers.facebook.com/docs/instagram-platform/support
+- [Webhooks - Instagram Platform](raw/instagram-platform/webhooks.md) -- https://developers.facebook.com/docs/instagram-platform/webhooks/
+- [Threads API](raw/threads.md) -- https://developers.facebook.com/docs/threads/
+- [Changelog - Threads API](raw/threads/changelog.md) -- https://developers.facebook.com/docs/threads/changelog/
+- [Create Posts - Threads API](raw/threads/create-posts.md) -- https://developers.facebook.com/docs/threads/create-posts
+- [Ghost Posts - Threads API](raw/threads/create-posts/ghost-posts.md) -- https://developers.facebook.com/docs/threads/create-posts/ghost-posts
+- [Location Tagging - Threads API](raw/threads/create-posts/location-tagging.md) -- https://developers.facebook.com/docs/threads/create-posts/location-tagging
+- [Polls - Threads API](raw/threads/create-posts/polls.md) -- https://developers.facebook.com/docs/threads/create-posts/polls
+- [Share to Instagram Stories - Threads API](raw/threads/create-posts/share-to-ig-stories.md) -- https://developers.facebook.com/docs/threads/create-posts/share-to-ig-stories
+- [Spoilers - Threads API](raw/threads/create-posts/spoilers.md) -- https://developers.facebook.com/docs/threads/create-posts/spoilers
+- [Text Attachments - Threads API](raw/threads/create-posts/text-attachments.md) -- https://developers.facebook.com/docs/threads/create-posts/text-attachments
+- [スタートガイド - Threads API](raw/threads/get-started.md) -- https://developers.facebook.com/docs/threads/get-started?locale=ja_JP
+- [Get Started - Threads API](raw/threads/get-started.md) -- https://developers.facebook.com/docs/threads/get-started/
+- [App Access Tokens - Threads API](raw/threads/get-started/app-access-tokens.md) -- https://developers.facebook.com/docs/threads/get-started/app-access-tokens
+- [Create an app - Threads API](raw/threads/get-started/create-an-app.md) -- https://developers.facebook.com/docs/threads/get-started/create-an-app
+- [Get Access Tokens - Threads API](raw/threads/get-started/get-access-tokens-and-permissions.md) -- https://developers.facebook.com/docs/threads/get-started/get-access-tokens-and-permissions/
+- [Long-Lived Access Tokens - Threads API](raw/threads/get-started/long-lived-tokens.md) -- https://developers.facebook.com/docs/threads/get-started/long-lived-tokens
+- [Insights - Threads API](raw/threads/insights.md) -- https://developers.facebook.com/docs/threads/insights/
+- [Keyword Search - Threads API](raw/threads/keyword-search.md) -- https://developers.facebook.com/docs/threads/keyword-search/
+- [Overview - Threads API](raw/threads/overview.md) -- https://developers.facebook.com/docs/threads/overview/
+- [Posts - Threads API](raw/threads/posts.md) -- https://developers.facebook.com/docs/threads/posts/
+- [Accessibility - Threads API](raw/threads/posts/accessibility.md) -- https://developers.facebook.com/docs/threads/posts/accessibility
+- [Delete Posts - Threads API](raw/threads/posts/delete-posts.md) -- https://developers.facebook.com/docs/threads/posts/delete-posts
+- [Geo-Gated Content - Threads API](raw/threads/posts/geo-gating.md) -- https://developers.facebook.com/docs/threads/posts/geo-gating
+- [Quote Posts - Threads API](raw/threads/posts/quote-posts.md) -- https://developers.facebook.com/docs/threads/posts/quote-posts
+- [Reposts - Threads API](raw/threads/posts/reposts.md) -- https://developers.facebook.com/docs/threads/posts/reposts
+- [Reference - Threads API](raw/threads/reference.md) -- https://developers.facebook.com/docs/threads/reference
+- [Debug - Threads API](raw/threads/reference/debug.md) -- https://developers.facebook.com/docs/threads/reference/debug
+- [Insights - Threads API](raw/threads/reference/insights.md) -- https://developers.facebook.com/docs/threads/reference/insights/
+- [Location Search - Threads API](raw/threads/reference/location-search.md) -- https://developers.facebook.com/docs/threads/reference/location-search
+- [Locations - Threads API](raw/threads/reference/locations.md) -- https://developers.facebook.com/docs/threads/reference/locations
+- [Media Retrieval - Threads API](raw/threads/reference/media-retrieval.md) -- https://developers.facebook.com/docs/threads/reference/media-retrieval
+- [oEmbed  - Threads API](raw/threads/reference/oembed.md) -- https://developers.facebook.com/docs/threads/reference/oembed
+- [Publishing - Threads API](raw/threads/reference/publishing.md) -- https://developers.facebook.com/docs/threads/reference/publishing/
+- [Reply Management - Threads API](raw/threads/reference/reply-management.md) -- https://developers.facebook.com/docs/threads/reference/reply-management
+- [User - Threads API](raw/threads/reference/user.md) -- https://developers.facebook.com/docs/threads/reference/user
+- [Reply Management - Threads API](raw/threads/reply-management.md) -- https://developers.facebook.com/docs/threads/reply-management
+- [Retrieve and Discover Posts - Threads API](raw/threads/retrieve-and-discover-posts.md) -- https://developers.facebook.com/docs/threads/retrieve-and-discover-posts
+- [Retrieve User Posts - Threads API](raw/threads/retrieve-and-discover-posts/retrieve-posts.md) -- https://developers.facebook.com/docs/threads/retrieve-and-discover-posts/retrieve-posts/
+- [Retrieve and Manage Replies - Threads API](raw/threads/retrieve-and-manage-replies.md) -- https://developers.facebook.com/docs/threads/retrieve-and-manage-replies
+- [Create Replies - Threads API](raw/threads/retrieve-and-manage-replies/create-replies.md) -- https://developers.facebook.com/docs/threads/retrieve-and-manage-replies/create-replies
+- [Retrieve User Replies - Threads API](raw/threads/retrieve-and-manage-replies/retrieve-replies.md) -- https://developers.facebook.com/docs/threads/retrieve-and-manage-replies/retrieve-replies
+- [Mentions - Threads API](raw/threads/threads-mentions.md) -- https://developers.facebook.com/docs/threads/threads-mentions
+- [Profiles - Threads API](raw/threads/threads-profiles.md) -- https://developers.facebook.com/docs/threads/threads-profiles/
+- [Web Intents - Threads API](raw/threads/threads-web-intents.md) -- https://developers.facebook.com/docs/threads/threads-web-intents
+- [Tools and Resources - Threads API](raw/threads/tools-and-resources.md) -- https://developers.facebook.com/docs/threads/tools-and-resources
+- [oEmbed - Threads API](raw/threads/tools-and-resources/embed-a-threads-post.md) -- https://developers.facebook.com/docs/threads/tools-and-resources/embed-a-threads-post
+- [Postman Collection - Threads API](raw/threads/tools-and-resources/postman-collection.md) -- https://developers.facebook.com/docs/threads/tools-and-resources/postman-collection
+- [Troubleshooting - Threads API](raw/threads/troubleshooting.md) -- https://developers.facebook.com/docs/threads/troubleshooting
+- [Webhooks - Threads API](raw/threads/webhooks.md) -- https://developers.facebook.com/docs/threads/webhooks
+
+### 06-social-integrations -- Social Integrations (Pages, Sharing, Plugins) (49)
+
+- [App Links](raw/applinks.md) -- https://developers.facebook.com/docs/applinks/
+- [Fundraiser API](raw/fundraiser-api.md) -- https://developers.facebook.com/docs/fundraiser-api
+- [Create an app - Fundraiser API](raw/fundraiser-api/create-an-app.md) -- https://developers.facebook.com/docs/fundraiser-api/create-an-app
+- [Integrate - Fundraiser API](raw/fundraiser-api/integrate.md) -- https://developers.facebook.com/docs/fundraiser-api/integrate
+- [Learn - Fundraiser API](raw/fundraiser-api/learn.md) -- https://developers.facebook.com/docs/fundraiser-api/learn
+- [Plan - Fundraiser API](raw/fundraiser-api/plan.md) -- https://developers.facebook.com/docs/fundraiser-api/plan
+- [Reporting - Fundraiser API](raw/fundraiser-api/reporting.md) -- https://developers.facebook.com/docs/fundraiser-api/reporting
+- [Marketplace Platform](raw/marketplace.md) -- https://developers.facebook.com/docs/marketplace
+- [Marketplace Partnerships - Marketplace Platform](raw/marketplace/partnerships.md) -- https://developers.facebook.com/docs/marketplace/partnerships
+- [Item API - Marketplace Platform](raw/marketplace/partnerships/itemAPI.md) -- https://developers.facebook.com/docs/marketplace/partnerships/itemAPI/
+- [Seller API - Marketplace Platform](raw/marketplace/partnerships/sellerAPI.md) -- https://developers.facebook.com/docs/marketplace/partnerships/sellerAPI
+- [Facebook Pages API](raw/pages-api.md) -- https://developers.facebook.com/docs/pages-api/
+- [Changelog - Facebook Pages API](raw/pages-api/changelog.md) -- https://developers.facebook.com/docs/pages-api/changelog
+- [Comments and @Mentions - Facebook Pages API](raw/pages-api/comments-mentions.md) -- https://developers.facebook.com/docs/pages-api/comments-mentions/
+- [Create an app - Facebook Pages API](raw/pages-api/create-an-app.md) -- https://developers.facebook.com/docs/pages-api/create-an-app/
+- [Error Codes - Facebook Pages API](raw/pages-api/error-codes.md) -- https://developers.facebook.com/docs/pages-api/error-codes
+- [Get Started - Facebook Pages API](raw/pages-api/getting-started.md) -- https://developers.facebook.com/docs/pages-api/getting-started/
+- [Page Integrity API & Webhook - Facebook Pages API](raw/pages-api/integrity-webhook.md) -- https://developers.facebook.com/docs/pages-api/integrity-webhook
+- [Manage a Page - Facebook Pages API](raw/pages-api/manage-pages.md) -- https://developers.facebook.com/docs/pages-api/manage-pages/
+- [管理公共主页 - Facebook 公共主页 API - 文档 - Meta 开发者](raw/pages-api/manage-pages.md) -- https://developers.facebook.com/docs/pages-api/manage-pages?locale=zh_CN
+- [Overview - Facebook Pages API](raw/pages-api/overview.md) -- https://developers.facebook.com/docs/pages-api/overview/
+- [Posts - Facebook Pages API](raw/pages-api/posts.md) -- https://developers.facebook.com/docs/pages-api/posts
+- [Search Pages - Facebook Pages API](raw/pages-api/search-pages.md) -- https://developers.facebook.com/docs/pages-api/search-pages/
+- [Webhooks - Facebook Pages API](raw/pages-api/webhooks-for-pages.md) -- https://developers.facebook.com/docs/pages-api/webhooks-for-pages/
+- [Page Not Found - Meta for Developers](raw/pages/comments.md) -- https://developers.facebook.com/docs/pages/comments
+- [Jobs XML](raw/pages/jobs-xml.md) -- https://developers.facebook.com/docs/pages/jobs-xml
+- [Upcoming Changes - Facebook Pages API](raw/pages/upcoming-changes.md) -- https://developers.facebook.com/docs/pages/upcoming-changes
+- [Social Plugins](raw/plugins.md) -- https://developers.facebook.com/docs/plugins/
+- [Best Practices - Social Plugins](raw/plugins/best-practices.md) -- https://developers.facebook.com/docs/plugins/best-practices
+- [Embedded Posts - Social Plugins](raw/plugins/embedded-posts.md) -- https://developers.facebook.com/docs/plugins/embedded-posts
+- [Embedded Videos](raw/plugins/embedded-video-player.md) -- https://developers.facebook.com/docs/plugins/embedded-video-player/
+- [API - Embedded Videos](raw/plugins/embedded-video-player/api.md) -- https://developers.facebook.com/docs/plugins/embedded-video-player/api
+- [Page Not Found - Meta for Developers](raw/plugins/faqs.md) -- https://developers.facebook.com/docs/plugins/faqs
+- [Page Plugin - Social Plugins](raw/plugins/page-plugin.md) -- https://developers.facebook.com/docs/plugins/page-plugin/
+- [Child-Directed Sites - Social Plugins](raw/plugins/restrictions.md) -- https://developers.facebook.com/docs/plugins/restrictions
+- [Share Button - Social Plugins](raw/plugins/share-button.md) -- https://developers.facebook.com/docs/plugins/share-button
+- [Sharing](raw/sharing.md) -- https://developers.facebook.com/docs/sharing/
+- [Android - Sharing](raw/sharing/android.md) -- https://developers.facebook.com/docs/sharing/android
+- [Best Practices - Sharing](raw/sharing/best-practices.md) -- https://developers.facebook.com/docs/sharing/best-practices/
+- [Domain Verification - Sharing](raw/sharing/domain-verification.md) -- https://developers.facebook.com/docs/sharing/domain-verification
+- [iOS - Sharing](raw/sharing/ios.md) -- https://developers.facebook.com/docs/sharing/ios
+- [Messenger - Sharing](raw/sharing/messenger.md) -- https://developers.facebook.com/docs/sharing/messenger
+- [Overview - Sharing](raw/sharing/overview.md) -- https://developers.facebook.com/docs/sharing/overview
+- [Share Dialog - Sharing](raw/sharing/reference/share-dialog.md) -- https://developers.facebook.com/docs/sharing/reference/share-dialog/
+- [Sharing to Stories](raw/sharing/sharing-to-stories.md) -- https://developers.facebook.com/docs/sharing/sharing-to-stories
+- [Web - Sharing](raw/sharing/web.md) -- https://developers.facebook.com/docs/sharing/web
+- [Webmasters - Sharing](raw/sharing/webmasters.md) -- https://developers.facebook.com/docs/sharing/webmasters
+- [Images in Link Shares - Sharing](raw/sharing/webmasters/images.md) -- https://developers.facebook.com/docs/sharing/webmasters/images/
+- [Meta Web Crawlers - Sharing](raw/sharing/webmasters/web-crawlers.md) -- https://developers.facebook.com/docs/sharing/webmasters/web-crawlers
+
+### 07-video -- Video & Live (31)
+
+- [Live Video API](raw/live-video-api.md) -- https://developers.facebook.com/docs/live-video-api/
+- [Target an Audience - Live Video API](raw/live-video-api/audience-targeting.md) -- https://developers.facebook.com/docs/live-video-api/audience-targeting
+- [Create a Backup Stream - Live Video API](raw/live-video-api/backup_stream.md) -- https://developers.facebook.com/docs/live-video-api/backup_stream
+- [Best Practices - Live Video API](raw/live-video-api/best-practices.md) -- https://developers.facebook.com/docs/live-video-api/best-practices
+- [Changelog - Live Video API](raw/live-video-api/changelog.md) -- https://developers.facebook.com/docs/live-video-api/changelog
+- [Get Started - Live Video API](raw/live-video-api/getting-started.md) -- https://developers.facebook.com/docs/live-video-api/getting-started
+- [Automatic Encoder Configuration API - Live Video API](raw/live-video-api/guides/automatic-encoder-configuration-api.md) -- https://developers.facebook.com/docs/live-video-api/guides/automatic-encoder-configuration-api
+- [Copyrighted Content - Live Video API](raw/live-video-api/guides/copyrighted-content.md) -- https://developers.facebook.com/docs/live-video-api/guides/copyrighted-content
+- [Crosspost a video - Live Video API](raw/live-video-api/guides/crossposting.md) -- https://developers.facebook.com/docs/live-video-api/guides/crossposting
+- [Schedule a video - Live Video API](raw/live-video-api/guides/scheduling.md) -- https://developers.facebook.com/docs/live-video-api/guides/scheduling
+- [Speed Test - Live Video API](raw/live-video-api/guides/speed-test.md) -- https://developers.facebook.com/docs/live-video-api/guides/speed-test
+- [Broadcast a video - Live Video API](raw/live-video-api/guides/streaming.md) -- https://developers.facebook.com/docs/live-video-api/guides/streaming
+- [Interact with viewers - Live Video API](raw/live-video-api/interact-with-viewers.md) -- https://developers.facebook.com/docs/live-video-api/interact-with-viewers
+- [Overview - Live Video API](raw/live-video-api/overview.md) -- https://developers.facebook.com/docs/live-video-api/overview
+- [Poll viewers - Live Video API](raw/live-video-api/polls.md) -- https://developers.facebook.com/docs/live-video-api/polls
+- [Reference - Live Video API](raw/live-video-api/reference.md) -- https://developers.facebook.com/docs/live-video-api/reference
+- [Support - Live Video API](raw/live-video-api/support.md) -- https://developers.facebook.com/docs/live-video-api/support
+- [Stories - Video API](raw/page-stories-api.md) -- https://developers.facebook.com/docs/page-stories-api/
+- [Video API](raw/video-api.md) -- https://developers.facebook.com/docs/video-api
+- [A/B Testing - Video API](raw/video-api/ab-testing.md) -- https://developers.facebook.com/docs/video-api/ab-testing
+- [Get Started - Video API](raw/video-api/getting-started.md) -- https://developers.facebook.com/docs/video-api/getting-started
+- [Crossposting - Video API](raw/video-api/guides/crossposting.md) -- https://developers.facebook.com/docs/video-api/guides/crossposting
+- [Get Videos - Video API](raw/video-api/guides/get-videos.md) -- https://developers.facebook.com/docs/video-api/guides/get-videos
+- [Get Insights - Video API](raw/video-api/guides/insights.md) -- https://developers.facebook.com/docs/video-api/guides/insights
+- [Music Recommendations - Video API](raw/video-api/guides/music-recommendations.md) -- https://developers.facebook.com/docs/video-api/guides/music-recommendations
+- [Publish a Video - Video API](raw/video-api/guides/publishing.md) -- https://developers.facebook.com/docs/video-api/guides/publishing
+- [Publish a Reel - Video API](raw/video-api/guides/reels-publishing.md) -- https://developers.facebook.com/docs/video-api/guides/reels-publishing/
+- [Slideshows - Video API](raw/video-api/guides/slideshows.md) -- https://developers.facebook.com/docs/video-api/guides/slideshows
+- [Video API — Splitting](raw/video-api/guides/splitting.md) -- https://developers.facebook.com/docs/video-api/guides/splitting
+- [Overview - Video API](raw/video-api/overview.md) -- https://developers.facebook.com/docs/video-api/overview
+- [Reference - Video API](raw/video-api/reference.md) -- https://developers.facebook.com/docs/video-api/reference
+
+### 08-marketing-commerce -- Marketing, Ads & Commerce (145)
+
+- [Facebook App Ads](raw/app-ads.md) -- https://developers.facebook.com/docs/app-ads/
+- [Overview - Facebook App Ads](raw/app-ads/overview.md) -- https://developers.facebook.com/docs/app-ads/overview
+- [Target Your App Ad - Facebook App Ads](raw/app-ads/targeting.md) -- https://developers.facebook.com/docs/app-ads/targeting
+- [Meta Audience Network](raw/audience-network.md) -- https://developers.facebook.com/docs/audience-network/
+- [Ad Formats  - Meta Audience Network](raw/audience-network/ad-formats.md) -- https://developers.facebook.com/docs/audience-network/ad-formats
+- [Native Banner Ads - Meta Audience Network](raw/audience-network/android-native-banner.md) -- https://developers.facebook.com/docs/audience-network/android-native-banner
+- [Native Ads - Meta Audience Network](raw/audience-network/android-native.md) -- https://developers.facebook.com/docs/audience-network/android-native
+- [Get Started with Android - Meta Audience Network](raw/audience-network/android.md) -- https://developers.facebook.com/docs/audience-network/android
+- [Rewarded Video Ads - Meta Audience Network](raw/audience-network/android/rewarded-video.md) -- https://developers.facebook.com/docs/audience-network/android/rewarded-video
+- [Bidding Integration - Meta Audience Network](raw/audience-network/bidding-integration.md) -- https://developers.facebook.com/docs/audience-network/bidding-integration
+- [Bidding Overview - Meta Audience Network](raw/audience-network/bidding/overview.md) -- https://developers.facebook.com/docs/audience-network/bidding/overview
+- [Bidding with Partner Mediation - Meta Audience Network](raw/audience-network/bidding/partner-mediation.md) -- https://developers.facebook.com/docs/audience-network/bidding/partner-mediation
+- [Google Ad Manager - Meta Audience Network](raw/audience-network/bidding/partner-mediation/ad-manager.md) -- https://developers.facebook.com/docs/audience-network/bidding/partner-mediation/ad-manager
+- [AdMob - Meta Audience Network](raw/audience-network/bidding/partner-mediation/admob.md) -- https://developers.facebook.com/docs/audience-network/bidding/partner-mediation/admob
+- [Admost - Meta Audience Network](raw/audience-network/bidding/partner-mediation/admost.md) -- https://developers.facebook.com/docs/audience-network/bidding/partner-mediation/admost
+- [Appodeal - Meta Audience Network](raw/audience-network/bidding/partner-mediation/appodeal.md) -- https://developers.facebook.com/docs/audience-network/bidding/partner-mediation/appodeal
+- [Audience Network Setup - Meta Audience Network](raw/audience-network/bidding/partner-mediation/audience-network-setup.md) -- https://developers.facebook.com/docs/audience-network/bidding/partner-mediation/audience-network-setup/
+- [Get Started  - Meta Audience Network](raw/audience-network/get-started.md) -- https://developers.facebook.com/docs/audience-network/get-started
+- [How To Use This Site - Meta Audience Network](raw/audience-network/how-to-use-this-site.md) -- https://developers.facebook.com/docs/audience-network/how-to-use-this-site
+- [Instant Games - Meta Audience Network](raw/audience-network/instant-games.md) -- https://developers.facebook.com/docs/audience-network/instant-games
+- [Native Banner Ads - Meta Audience Network](raw/audience-network/ios-native-banner.md) -- https://developers.facebook.com/docs/audience-network/ios-native-banner
+- [Native Ads - Meta Audience Network](raw/audience-network/ios-native.md) -- https://developers.facebook.com/docs/audience-network/ios-native
+- [Rewarded Video Ads - Meta Audience Network](raw/audience-network/ios/rewarded-video.md) -- https://developers.facebook.com/docs/audience-network/ios/rewarded-video
+- [APIs - Meta Audience Network](raw/audience-network/optimization/apis.md) -- https://developers.facebook.com/docs/audience-network/optimization/apis
+- [Audio Guidelines - Meta Audience Network](raw/audience-network/optimization/audio-best-practices.md) -- https://developers.facebook.com/docs/audience-network/optimization/audio-best-practices
+- [Android - Meta Audience Network](raw/audience-network/optimization/audio-best-practices/android.md) -- https://developers.facebook.com/docs/audience-network/optimization/audio-best-practices/android
+- [iOS - Meta Audience Network](raw/audience-network/optimization/audio-best-practices/ios.md) -- https://developers.facebook.com/docs/audience-network/optimization/audio-best-practices/ios
+- [Best Practices - Meta Audience Network](raw/audience-network/optimization/best-practices.md) -- https://developers.facebook.com/docs/audience-network/optimization/best-practices
+- [Policy - Meta Audience Network](raw/audience-network/optimization/best-practices/an-policy.md) -- https://developers.facebook.com/docs/audience-network/optimization/best-practices/an-policy
+- [Do's and Don'ts - Meta Audience Network](raw/audience-network/optimization/best-practices/an-policy/dos-and-donts.md) -- https://developers.facebook.com/docs/audience-network/optimization/best-practices/an-policy/dos-and-donts
+- [App-ads.txt - Meta Audience Network](raw/audience-network/optimization/best-practices/authorized-sellers-app-ads.md) -- https://developers.facebook.com/docs/audience-network/optimization/best-practices/authorized-sellers-app-ads
+- [Ads.txt - Meta Audience Network](raw/audience-network/optimization/best-practices/authorized-sellers.md) -- https://developers.facebook.com/docs/audience-network/optimization/best-practices/authorized-sellers
+- [COPPA - Meta Audience Network](raw/audience-network/optimization/best-practices/coppa.md) -- https://developers.facebook.com/docs/audience-network/optimization/best-practices/coppa
+- [Data Processing Options for US Users - Meta Audience Network](raw/audience-network/optimization/best-practices/data-processing-options.md) -- https://developers.facebook.com/docs/audience-network/optimization/best-practices/data-processing-options
+- [Layout Guidelines - Meta Audience Network](raw/audience-network/optimization/layout-best-practices.md) -- https://developers.facebook.com/docs/audience-network/optimization/layout-best-practices
+- [Android Guide - Meta Audience Network](raw/audience-network/optimization/layout-best-practices/android.md) -- https://developers.facebook.com/docs/audience-network/optimization/layout-best-practices/android
+- [iOS Guide - Meta Audience Network](raw/audience-network/optimization/layout-best-practices/ios.md) -- https://developers.facebook.com/docs/audience-network/optimization/layout-best-practices/ios
+- [Reporting API v2 - Meta Audience Network](raw/audience-network/optimization/report-api/guide-v2.md) -- https://developers.facebook.com/docs/audience-network/optimization/report-api/guide-v2
+- [Ad Setup - Meta Audience Network](raw/audience-network/setting-up/ad-setup.md) -- https://developers.facebook.com/docs/audience-network/setting-up/ad-setup
+- [Android - Meta Audience Network](raw/audience-network/setting-up/ad-setup/android.md) -- https://developers.facebook.com/docs/audience-network/setting-up/ad-setup/android
+- [Banner Ads - Meta Audience Network](raw/audience-network/setting-up/ad-setup/android/banner.md) -- https://developers.facebook.com/docs/audience-network/setting-up/ad-setup/android/banner
+- [iOS - Meta Audience Network](raw/audience-network/setting-up/ad-setup/ios.md) -- https://developers.facebook.com/docs/audience-network/setting-up/ad-setup/ios
+- [Banner Ads - Meta Audience Network](raw/audience-network/setting-up/ad-setup/ios/banner.md) -- https://developers.facebook.com/docs/audience-network/setting-up/ad-setup/ios/banner
+- [Interstitial Ads - Meta Audience Network](raw/audience-network/setting-up/ad-setup/ios/interstitial.md) -- https://developers.facebook.com/docs/audience-network/setting-up/ad-setup/ios/interstitial
+- [iOS Template - Meta Audience Network](raw/audience-network/setting-up/ad-setup/ios/native/template.md) -- https://developers.facebook.com/docs/audience-network/setting-up/ad-setup/ios/native/template
+- [Platform Setup - Meta Audience Network](raw/audience-network/setting-up/platform-setup.md) -- https://developers.facebook.com/docs/audience-network/setting-up/platform-setup
+- [Android - Meta Audience Network](raw/audience-network/setting-up/platform-setup/android.md) -- https://developers.facebook.com/docs/audience-network/setting-up/platform-setup/android
+- [Onboarding Debugger - Meta Audience Network](raw/audience-network/setting-up/test/onboarding-debugger.md) -- https://developers.facebook.com/docs/audience-network/setting-up/test/onboarding-debugger
+- [On a Test Device - Meta Audience Network](raw/audience-network/setting-up/test/test-device.md) -- https://developers.facebook.com/docs/audience-network/setting-up/test/test-device
+- [Testing Your Setup - Meta Audience Network](raw/audience-network/setting-up/testing.md) -- https://developers.facebook.com/docs/audience-network/setting-up/testing
+- [Help - Meta Audience Network](raw/audience-network/support.md) -- https://developers.facebook.com/docs/audience-network/support
+- [On the Platform - Meta Audience Network](raw/audience-network/testing.md) -- https://developers.facebook.com/docs/audience-network/testing
+- [Business Management APIs](raw/business-management-apis.md) -- https://developers.facebook.com/docs/business-management-apis/
+- [2-Tier Business Manager Solution - Business Management APIs](raw/business-management-apis/2tier-bm-solution.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/
+- [Get Started - Business Management APIs](raw/business-management-apis/2tier-bm-solution/get-started.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/get-started
+- [Guides - Business Management APIs](raw/business-management-apis/2tier-bm-solution/guides.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/guides
+- [Overview - Business Management APIs](raw/business-management-apis/2tier-bm-solution/overview.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/overview
+- [Pre-app Review Development - Business Management APIs](raw/business-management-apis/2tier-bm-solution/pre-app-review-development.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/pre-app-review-development
+- [Prerequisites - Business Management APIs](raw/business-management-apis/2tier-bm-solution/prerequisites.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/prerequisites
+- [Support - Business Management APIs](raw/business-management-apis/2tier-bm-solution/support.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/support
+- [Supported Operations - Business Management APIs](raw/business-management-apis/2tier-bm-solution/supported-operations.md) -- https://developers.facebook.com/docs/business-management-apis/2tier-bm-solution/supported-operations
+- [Business Asset Management - Business Management APIs](raw/business-management-apis/business-asset-management.md) -- https://developers.facebook.com/docs/business-management-apis/business-asset-management
+- [Guides - Business Management APIs](raw/business-management-apis/business-asset-management/guides.md) -- https://developers.facebook.com/docs/business-management-apis/business-asset-management/guides
+- [Ad Accounts - Business Management APIs](raw/business-management-apis/business-asset-management/guides/ad-accounts.md) -- https://developers.facebook.com/docs/business-management-apis/business-asset-management/guides/ad-accounts
+- [Asset Groups And Users - Business Management APIs](raw/business-management-apis/business-asset-management/guides/asset-groups.md) -- https://developers.facebook.com/docs/business-management-apis/business-asset-management/guides/asset-groups
+- [Overview - Business Management APIs](raw/business-management-apis/business-asset-management/overview.md) -- https://developers.facebook.com/docs/business-management-apis/business-asset-management/overview
+- [Business Creative Asset Management - Business Management APIs](raw/business-management-apis/business-creative-asset-management.md) -- https://developers.facebook.com/docs/business-management-apis/business-creative-asset-management
+- [Business Manager - Business Management APIs](raw/business-management-apis/business-manager-api.md) -- https://developers.facebook.com/docs/business-management-apis/business-manager-api
+- [Best Practices - Business Management APIs](raw/business-management-apis/business-manager/best-practices.md) -- https://developers.facebook.com/docs/business-management-apis/business-manager/best-practices/
+- [Get Started - Business Management APIs](raw/business-management-apis/business-manager/get-started.md) -- https://developers.facebook.com/docs/business-management-apis/business-manager/get-started
+- [Guides - Business Management APIs](raw/business-management-apis/business-manager/guides.md) -- https://developers.facebook.com/docs/business-management-apis/business-manager/guides
+- [Support - Business Management APIs](raw/business-management-apis/businessmanager/support.md) -- https://developers.facebook.com/docs/business-management-apis/businessmanager/support
+- [System Users - Business Management APIs](raw/business-management-apis/system-users.md) -- https://developers.facebook.com/docs/business-management-apis/system-users/
+- [Create, Retrieve and Update - Business Management APIs](raw/business-management-apis/system-users/create-retrieve-update.md) -- https://developers.facebook.com/docs/business-management-apis/system-users/create-retrieve-update
+- [Guides - Business Management APIs](raw/business-management-apis/system-users/guides.md) -- https://developers.facebook.com/docs/business-management-apis/system-users/guides
+- [Permissions - Business Management APIs](raw/business-management-apis/system-users/guides/permissions.md) -- https://developers.facebook.com/docs/business-management-apis/system-users/guides/permissions
+- [Business Login - Meta Business Extension](raw/facebook-business-extension/fbe/get-started/business-login.md) -- https://developers.facebook.com/docs/facebook-business-extension/fbe/get-started/business-login
+- [Facebook Creator Discovery API](raw/fb-creator-discovery.md) -- https://developers.facebook.com/docs/fb-creator-discovery/
+- [Ad Rules Engine - Developer Documentation](raw/marketing-api/ad-rules.md) -- https://developers.facebook.com/docs/marketing-api/ad-rules
+- [Page Not Found - Meta for Developers](raw/marketing-api/adcreative.md) -- https://developers.facebook.com/docs/marketing-api/adcreative
+- [Audiences - Developer Documentation](raw/marketing-api/audiences.md) -- https://developers.facebook.com/docs/marketing-api/audiences
+- [Best Practices - Developer Documentation](raw/marketing-api/best-practices.md) -- https://developers.facebook.com/docs/marketing-api/best-practices
+- [Advantage Campaign Budget - Developer Documentation](raw/marketing-api/bidding-and-optimization/campaign-budget-optimization.md) -- https://developers.facebook.com/docs/marketing-api/bidding-and-optimization/campaign-budget-optimization
+- [Bidding - Developer Documentation](raw/marketing-api/bidding.md) -- https://developers.facebook.com/docs/marketing-api/bidding
+- [Brand Safety and Suitability - Developer Documentation](raw/marketing-api/brand-safety-and-suitability.md) -- https://developers.facebook.com/docs/marketing-api/brand-safety-and-suitability
+- [Manage Assets - Business Management APIs](raw/marketing-api/business-asset-management/guides/assets.md) -- https://developers.facebook.com/docs/marketing-api/business-asset-management/guides/assets
+- [Business-to-Business Functions - Business Management APIs](raw/marketing-api/business-asset-management/guides/business-to-business.md) -- https://developers.facebook.com/docs/marketing-api/business-asset-management/guides/business-to-business/
+- [On Behalf Of - Business Management APIs](raw/marketing-api/business-manager-api/business-onboarding/obo.md) -- https://developers.facebook.com/docs/marketing-api/business-manager-api/business-onboarding/obo
+- [API Calls - Business Management APIs](raw/marketing-api/businessmanager/systemuser/api-calls.md) -- https://developers.facebook.com/docs/marketing-api/businessmanager/systemuser/api-calls
+- [Install Apps, Generate, Refresh, and Revoke Tokens - Business Management APIs](raw/marketing-api/businessmanager/systemuser/install-apps-and-generate-tokens.md) -- https://developers.facebook.com/docs/marketing-api/businessmanager/systemuser/install-apps-and-generate-tokens
+- [Overview - Business Management APIs](raw/marketing-api/businessmanager/systemuser/types.md) -- https://developers.facebook.com/docs/marketing-api/businessmanager/systemuser/types
+- [Catalog Integration Using Meta Business SDK - Developer Documentation](raw/marketing-api/catalog/get-started/integrate-via-meta-sdk.md) -- https://developers.facebook.com/docs/marketing-api/catalog/get-started/integrate-via-meta-sdk
+- [Ad Creative - Developer Documentation](raw/marketing-api/creative.md) -- https://developers.facebook.com/docs/marketing-api/creative
+- [Placement Asset Customization - Developer Documentation](raw/marketing-api/dynamic-creative/placement-asset-customization.md) -- https://developers.facebook.com/docs/marketing-api/dynamic-creative/placement-asset-customization
+- [Get Started with the Marketing API - Developer Documentation](raw/marketing-api/get-started.md) -- https://developers.facebook.com/docs/marketing-api/get-started
+- [Lead Ads - Developer Documentation](raw/marketing-api/guides/lead-ads.md) -- https://developers.facebook.com/docs/marketing-api/guides/lead-ads
+- [Event and Local Ads - Developer Documentation](raw/marketing-api/guides/local-awareness.md) -- https://developers.facebook.com/docs/marketing-api/guides/local-awareness
+- [System User Access Token Handling - System User Tokens](raw/marketing-api/guides/smb/system-user-access-token-handling/v25.0.md) -- https://developers.facebook.com/docs/marketing-api/guides/smb/system-user-access-token-handling/v25.0
+- [Video and Carousel Ads - Developer Documentation](raw/marketing-api/guides/videoads.md) -- https://developers.facebook.com/docs/marketing-api/guides/videoads/
+- [Ads Insights API - Developer Documentation](raw/marketing-api/insights.md) -- https://developers.facebook.com/docs/marketing-api/insights
+- [Changelog - Developer Documentation](raw/marketing-api/marketing-api-changelog.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog
+- [Version 18.0 - Developer Documentation](raw/marketing-api/marketing-api-changelog/version18.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version18.0
+- [Version 19.0 - Developer Documentation](raw/marketing-api/marketing-api-changelog/version19.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version19.0
+- [Developer Platform](raw/marketing-api/marketing-api-changelog/version20.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version20.0
+- [Version 21.0 - Developer Documentation](raw/marketing-api/marketing-api-changelog/version21.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version21.0
+- [Version 22.0 - Developer Documentation](raw/marketing-api/marketing-api-changelog/version22.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version22.0
+- [Version 23.0 - Developer Documentation](raw/marketing-api/marketing-api-changelog/version23.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version23.0
+- [Version 24.0 - Developer Documentation](raw/marketing-api/marketing-api-changelog/version24.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version24.0
+- [Version 25.0 - Developer Documentation](raw/marketing-api/marketing-api-changelog/version25.0.md) -- https://developers.facebook.com/docs/marketing-api/marketing-api-changelog/version25.0
+- [App Ads - Developer Documentation](raw/marketing-api/mobile-app-ads.md) -- https://developers.facebook.com/docs/marketing-api/mobile-app-ads
+- [Overview - Developer Documentation](raw/marketing-api/overview.md) -- https://developers.facebook.com/docs/marketing-api/overview
+- [Marketing API Reference - Developer Documentation](raw/marketing-api/reference.md) -- https://developers.facebook.com/docs/marketing-api/reference/
+- [Ad Account - Developer Documentation](raw/marketing-api/reference/ad-account.md) -- https://developers.facebook.com/docs/marketing-api/reference/ad-account
+- [Ad Account, Ad Campaigns - Developer Documentation](raw/marketing-api/reference/ad-account/campaigns.md) -- https://developers.facebook.com/docs/marketing-api/reference/ad-account/campaigns
+- [Graph API Reference v25.0: Ad Asset Feed Spec](raw/marketing-api/reference/ad-asset-feed-spec.md) -- https://developers.facebook.com/docs/marketing-api/reference/ad-asset-feed-spec/
+- [Ad Campaign Group - Developer Documentation](raw/marketing-api/reference/ad-campaign-group.md) -- https://developers.facebook.com/docs/marketing-api/reference/ad-campaign-group
+- [Graph API Reference v25.0: Ad Creative Ad Disclaimer](raw/marketing-api/reference/ad-creative-ad-disclaimer.md) -- https://developers.facebook.com/docs/marketing-api/reference/ad-creative-ad-disclaimer
+- [Ad Creative - Developer Documentation](raw/marketing-api/reference/ad-creative.md) -- https://developers.facebook.com/docs/marketing-api/reference/ad-creative/
+- [Page Not Found - Meta for Developers](raw/marketing-api/reference/ad-report-run.md) -- https://developers.facebook.com/docs/marketing-api/reference/ad-report-run
+- [Graph API Reference v25.0: Ad Creative](raw/marketing-api/reference/adcreative.md) -- https://developers.facebook.com/docs/marketing-api/reference/adcreative
+- [Graph API Reference v25.0: Archived Ad](raw/marketing-api/reference/archived-ad.md) -- https://developers.facebook.com/docs/marketing-api/reference/archived-ad/
+- [Business - Developer Documentation](raw/marketing-api/reference/business.md) -- https://developers.facebook.com/docs/marketing-api/reference/business/
+- [Product Catalog - Developer Documentation](raw/marketing-api/reference/product-catalog.md) -- https://developers.facebook.com/docs/marketing-api/reference/product-catalog/
+- [Graph API Reference v25.0: Product Item](raw/marketing-api/reference/product-item.md) -- https://developers.facebook.com/docs/marketing-api/reference/product-item/
+- [Page Not Found - Meta for Developers](raw/marketing-api/reference/reach-frequency-prediction.md) -- https://developers.facebook.com/docs/marketing-api/reference/reach-frequency-prediction
+- [Targeting Search - Developer Documentation](raw/marketing-api/targeting-search.md) -- https://developers.facebook.com/docs/marketing-api/targeting-search
+- [Troubleshooting - Developer Documentation](raw/marketing-api/troubleshooting.md) -- https://developers.facebook.com/docs/marketing-api/troubleshooting
+- [Versioning - Developer Documentation](raw/marketing-api/versions.md) -- https://developers.facebook.com/docs/marketing-api/versions
+- [Marketing API - Meta - Developer Documentation](raw/marketing-apis.md) -- https://developers.facebook.com/docs/marketing-apis
+- [Meta Business Extension](raw/meta-business-extension.md) -- https://developers.facebook.com/docs/meta-business-extension
+- [Meta Pixel](raw/meta-pixel.md) -- https://developers.facebook.com/docs/meta-pixel/
+- [Advanced - Meta Pixel](raw/meta-pixel/advanced.md) -- https://developers.facebook.com/docs/meta-pixel/advanced
+- [Advanced Matching - Meta Pixel](raw/meta-pixel/advanced/advanced-matching.md) -- https://developers.facebook.com/docs/meta-pixel/advanced/advanced-matching
+- [Get Started - Meta Pixel](raw/meta-pixel/get-started.md) -- https://developers.facebook.com/docs/meta-pixel/get-started
+- [Pixel for Advantage+ Catalog Ads - Meta Pixel](raw/meta-pixel/get-started/advantage-catalog-ads.md) -- https://developers.facebook.com/docs/meta-pixel/get-started/advantage-catalog-ads
+- [Guides - Meta Pixel](raw/meta-pixel/guides.md) -- https://developers.facebook.com/docs/meta-pixel/guides
+- [Terms and Policies - Meta Pixel](raw/meta-pixel/guides/terms-and-policies.md) -- https://developers.facebook.com/docs/meta-pixel/guides/terms-and-policies
+- [Track Multiple Events - Meta Pixel](raw/meta-pixel/guides/track-multiple-events.md) -- https://developers.facebook.com/docs/meta-pixel/guides/track-multiple-events
+- [Conversion Tracking - Meta Pixel](raw/meta-pixel/implementation/conversion-tracking.md) -- https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking
+- [Custom Audiences - Meta Pixel](raw/meta-pixel/implementation/custom-audiences.md) -- https://developers.facebook.com/docs/meta-pixel/implementation/custom-audiences
+- [General Data Protection Regulation - Meta Pixel](raw/meta-pixel/implementation/gdpr.md) -- https://developers.facebook.com/docs/meta-pixel/implementation/gdpr/
+- [Tagging SPAs - Meta Pixel](raw/meta-pixel/implementation/tag_spa.md) -- https://developers.facebook.com/docs/meta-pixel/implementation/tag_spa
+- [Reference - Meta Pixel](raw/meta-pixel/reference.md) -- https://developers.facebook.com/docs/meta-pixel/reference
+- [Support - Meta Pixel](raw/meta-pixel/support.md) -- https://developers.facebook.com/docs/meta-pixel/support
+- [Pixel Helper - Meta Pixel](raw/meta-pixel/support/pixel-helper.md) -- https://developers.facebook.com/docs/meta-pixel/support/pixel-helper
+
+### 09-research-apis -- Research & Data APIs (93)
+
+- [Meta Content Library and API](raw/content-library-and-api.md) -- https://developers.facebook.com/docs/content-library-and-api/
+- [Appendix - Meta Content Library and API](raw/content-library-and-api/appendix.md) -- https://developers.facebook.com/docs/content-library-and-api/appendix
+- [Data dictionary - Meta Content Library and API](raw/content-library-and-api/appendix/data-dictionary.md) -- https://developers.facebook.com/docs/content-library-and-api/appendix/data-dictionary
+- [Field expansion - Meta Content Library and API](raw/content-library-and-api/appendix/field-expansion.md) -- https://developers.facebook.com/docs/content-library-and-api/appendix/field-expansion
+- [Get API Code - Meta Content Library and API](raw/content-library-and-api/appendix/get-api-code.md) -- https://developers.facebook.com/docs/content-library-and-api/appendix/get-api-code
+- [Share producer list - Meta Content Library and API](raw/content-library-and-api/appendix/share-producer-list.md) -- https://developers.facebook.com/docs/content-library-and-api/appendix/share-producer-list
+- [Changelog - Meta Content Library and API](raw/content-library-and-api/changelog.md) -- https://developers.facebook.com/docs/content-library-and-api/changelog
+- [Citations - Meta Content Library and API](raw/content-library-and-api/citations.md) -- https://developers.facebook.com/docs/content-library-and-api/citations
+- [Content Library API - Meta Content Library and API](raw/content-library-and-api/content-library-api.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api
+- [Getting started - Meta Content Library and API](raw/content-library-and-api/content-library-api/getting-started.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/getting-started
+- [Guides - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides
+- [Advanced search - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/advanced-search.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/advanced-search
+- [Bulk comments - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/bulk-comments.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/bulk-comments
+- [Collections and async queries - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/collections-and-async.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/collections-and-async
+- [Data deletion - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/data-deletion.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/data-deletion
+- [Facebook channel messages - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-channel-msg.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-channel-msg
+- [Facebook channels - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-channel.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-channel
+- [Facebook comments - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-comments.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-comments
+- [Facebook donations - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-donations.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-donations
+- [Facebook events - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-events.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-events
+- [Facebook Fundraisers - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-fundraisers.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-fundraisers
+- [Facebook groups - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-groups.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-groups
+- [Facebook Marketplace - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-marketplace.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-marketplace/
+- [Facebook Pages - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-pages.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-pages
+- [Facebook posts - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-posts.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-posts
+- [Facebook profiles - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/fb-profiles.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-profiles
+- [ID-based retrieval - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/id-based-retrieval.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/id-based-retrieval
+- [Instagram accounts - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/ig-accounts.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts
+- [Instagram channel messages - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/ig-channel-msg.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-channel-msg
+- [Instagram channels - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/ig-channel.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-channel
+- [Instagram comments - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/ig-comments.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-comments
+- [Instagram Fundraisers - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/ig-fundraisers.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-fundraisers
+- [Instagram posts - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/ig-posts.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-posts
+- [MCL 6.0 URL changes - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/mcl-endpoints.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/mcl-endpoints
+- [Rate limiting - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/rate-limiting.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/rate-limiting
+- [Search guide - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/search-guide.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/search-guide/
+- [WhatsApp channel updates - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/wa-channel-update.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/wa-channel-update
+- [WhatsApp channels - Meta Content Library and API](raw/content-library-and-api/content-library-api/guides/wa-channel.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/wa-channel
+- [Overview - Meta Content Library and API](raw/content-library-and-api/content-library-api/overview.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library-api/overview
+- [Content Library - Meta Content Library and API](raw/content-library-and-api/content-library.md) -- https://developers.facebook.com/docs/content-library-and-api/content-library
+- [Disclosures and disclaimers - Meta Content Library and API](raw/content-library-and-api/disclosures-disclaimers.md) -- https://developers.facebook.com/docs/content-library-and-api/disclosures-disclaimers
+- [Get access - Meta Content Library and API](raw/content-library-and-api/get-access.md) -- https://developers.facebook.com/docs/content-library-and-api/get-access
+- [Secure computing platforms - Meta Content Library and API](raw/content-library-and-api/get-access/computing-platform-comparison.md) -- https://developers.facebook.com/docs/content-library-and-api/get-access/computing-platform-comparison
+- [MCL application guide - Meta Content Library and API](raw/content-library-and-api/get-access/mcl-application-guide.md) -- https://developers.facebook.com/docs/content-library-and-api/get-access/mcl-application-guide
+- [Quick links - Meta Content Library and API](raw/content-library-and-api/quick-links.md) -- https://developers.facebook.com/docs/content-library-and-api/quick-links
+- [Support - Meta Content Library and API](raw/content-library-and-api/support.md) -- https://developers.facebook.com/docs/content-library-and-api/support
+- [FAQ - Meta Content Library and API](raw/content-library-api/disclosures.md) -- https://developers.facebook.com/docs/content-library-api/disclosures
+- [Search quality  - Meta Content Library and API](raw/content-library-api/search-quality.md) -- https://developers.facebook.com/docs/content-library-api/search-quality
+- [Insights - Facebook Pages API](raw/platforminsights/page.md) -- https://developers.facebook.com/docs/platforminsights/page
+- [ThreatExchange](raw/threat-exchange.md) -- https://developers.facebook.com/docs/threat-exchange
+- [API Structure - ThreatExchange](raw/threat-exchange/api-structure.md) -- https://developers.facebook.com/docs/threat-exchange/api-structure
+- [API Overview - ThreatExchange](raw/threat-exchange/api.md) -- https://developers.facebook.com/docs/threat-exchange/api
+- [Best Practices - ThreatExchange](raw/threat-exchange/best-practices.md) -- https://developers.facebook.com/docs/threat-exchange/best-practices
+- [FAQ - ThreatExchange](raw/threat-exchange/FAQ.md) -- https://developers.facebook.com/docs/threat-exchange/FAQ
+- [Get Access - ThreatExchange](raw/threat-exchange/getting-access.md) -- https://developers.facebook.com/docs/threat-exchange/getting-access
+- [Get Started - ThreatExchange](raw/threat-exchange/getting-started.md) -- https://developers.facebook.com/docs/threat-exchange/getting-started
+- [API Reference - ThreatExchange](raw/threat-exchange/reference/apis.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis
+- [/<app-id>/threat_privacy_groups_member - ThreatExchange](raw/threat-exchange/reference/apis/app-id-threat-privacy-groups-member.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/app-id-threat-privacy-groups-member
+- [/<app-id>/threat_privacy_groups_owner - ThreatExchange](raw/threat-exchange/reference/apis/app-id-threat-privacy-groups-owner.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/app-id-threat-privacy-groups-owner
+- [CaseTag Object - ThreatExchange](raw/threat-exchange/reference/apis/case-tag.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/case-tag
+- [ConfidenceType - ThreatExchange](raw/threat-exchange/reference/apis/confidence-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/confidence-type
+- [IndicatorType - ThreatExchange](raw/threat-exchange/reference/apis/indicator-type/v25.0.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/indicator-type/v25.0
+- [PrecisionType - ThreatExchange](raw/threat-exchange/reference/apis/precision-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/precision-type
+- [PrivacyType - ThreatExchange](raw/threat-exchange/reference/apis/privacy-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/privacy-type
+- [ReactionType - ThreatExchange](raw/threat-exchange/reference/apis/reaction-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/reaction-type
+- [ReviewStatusType - ThreatExchange](raw/threat-exchange/reference/apis/review-status-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/review-status-type
+- [SeverityType - ThreatExchange](raw/threat-exchange/reference/apis/severity-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/severity-type
+- [ShareLevelType - ThreatExchange](raw/threat-exchange/reference/apis/share-level-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/share-level-type
+- [SignatureType - ThreatExchange](raw/threat-exchange/reference/apis/signature-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/signature-type
+- [StatusType - ThreatExchange](raw/threat-exchange/reference/apis/status-type.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/status-type
+- [ThreatDescriptor Object - ThreatExchange](raw/threat-exchange/reference/apis/threat-descriptor.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-descriptor
+- [/threat_descriptors - ThreatExchange](raw/threat-exchange/reference/apis/threat-descriptors.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-descriptors
+- [ImpactReport Object - ThreatExchange](raw/threat-exchange/reference/apis/threat-exchange-impact-report.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-exchange-impact-report
+- [ThreatExchangeMember Object](raw/threat-exchange/reference/apis/threat-exchange-member.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-exchange-member
+- [/threat_exchange_members - ThreatExchange](raw/threat-exchange/reference/apis/threat-exchange-members.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-exchange-members
+- [ThreatIndicator Object - ThreatExchange](raw/threat-exchange/reference/apis/threat-indicator.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-indicator
+- [/threat_indicators - ThreatExchange](raw/threat-exchange/reference/apis/threat-indicators.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-indicators
+- [ThreatPrivacyGroup Object - ThreatExchange](raw/threat-exchange/reference/apis/threat-privacy-group.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-privacy-group
+- [/threat_privacy_groups - ThreatExchange](raw/threat-exchange/reference/apis/threat-privacy-groups.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-privacy-groups
+- [/threat_tags - ThreatExchange](raw/threat-exchange/reference/apis/threat-tags.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-tags
+- [/threat_updates - ThreatExchange](raw/threat-exchange/reference/apis/threat-updates.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threat-updates
+- [ThreatTag Object - ThreatExchange](raw/threat-exchange/reference/apis/threattags.md) -- https://developers.facebook.com/docs/threat-exchange/reference/apis/threattags
+- [Changelog - ThreatExchange](raw/threat-exchange/reference/changelog.md) -- https://developers.facebook.com/docs/threat-exchange/reference/changelog
+- [Delete Data - ThreatExchange](raw/threat-exchange/reference/deleting.md) -- https://developers.facebook.com/docs/threat-exchange/reference/deleting
+- [Editing Existing Data - ThreatExchange](raw/threat-exchange/reference/editing.md) -- https://developers.facebook.com/docs/threat-exchange/reference/editing
+- [Privacy Controls - ThreatExchange](raw/threat-exchange/reference/privacy.md) -- https://developers.facebook.com/docs/threat-exchange/reference/privacy
+- [React to Data - ThreatExchange](raw/threat-exchange/reference/reacting.md) -- https://developers.facebook.com/docs/threat-exchange/reference/reacting
+- [Reshare Controls - ThreatExchange](raw/threat-exchange/reference/resharing.md) -- https://developers.facebook.com/docs/threat-exchange/reference/resharing
+- [Submit Connections - ThreatExchange](raw/threat-exchange/reference/submitting-connections.md) -- https://developers.facebook.com/docs/threat-exchange/reference/submitting-connections
+- [Submit Data - ThreatExchange](raw/threat-exchange/reference/submitting.md) -- https://developers.facebook.com/docs/threat-exchange/reference/submitting
+- [UI Reference - ThreatExchange](raw/threat-exchange/reference/ui.md) -- https://developers.facebook.com/docs/threat-exchange/reference/ui
+- [Vendors - ThreatExchange](raw/threat-exchange/reference/vendors.md) -- https://developers.facebook.com/docs/threat-exchange/reference/vendors
+- [UI Overview - ThreatExchange](raw/threat-exchange/ui.md) -- https://developers.facebook.com/docs/threat-exchange/ui
+
+### 10-sdks -- SDKs (JS / Android / iOS / Unity / Business) (22)
+
+- [Facebook SDK for Android](raw/android.md) -- https://developers.facebook.com/docs/android/
+- [Getting Started - Facebook SDK for Android](raw/android/getting-started.md) -- https://developers.facebook.com/docs/android/getting-started
+- [Meta Business SDK](raw/business-sdk.md) -- https://developers.facebook.com/docs/business-sdk/
+- [Guides](raw/business-sdk/common-scenarios.md) -- https://developers.facebook.com/docs/business-sdk/common-scenarios
+- [Using Other APIs - Meta Business SDK](raw/business-sdk/common-scenarios/add-apis.md) -- https://developers.facebook.com/docs/business-sdk/common-scenarios/add-apis
+- [Ads Buying - Meta Business SDK](raw/business-sdk/common-scenarios/ads-buying.md) -- https://developers.facebook.com/docs/business-sdk/common-scenarios/ads-buying
+- [Instagram Management](raw/business-sdk/common-scenarios/instagram-management.md) -- https://developers.facebook.com/docs/business-sdk/common-scenarios/instagram-management
+- [Onboard Clients at Scale - Meta Business SDK](raw/business-sdk/common-scenarios/onboard-at-scale.md) -- https://developers.facebook.com/docs/business-sdk/common-scenarios/onboard-at-scale
+- [Page Management](raw/business-sdk/common-scenarios/page-management.md) -- https://developers.facebook.com/docs/business-sdk/common-scenarios/page-management
+- [Switching Access Tokens - Meta Business SDK](raw/business-sdk/common-scenarios/token-switch.md) -- https://developers.facebook.com/docs/business-sdk/common-scenarios/token-switch
+- [Support - Meta Business SDK](raw/business-sdk/faq.md) -- https://developers.facebook.com/docs/business-sdk/faq
+- [Get Started - Meta Business SDK](raw/business-sdk/getting-started.md) -- https://developers.facebook.com/docs/business-sdk/getting-started
+- [Disable Crash Reports - Meta Business SDK](raw/business-sdk/guides/crash-reports.md) -- https://developers.facebook.com/docs/business-sdk/guides/crash-reports
+- [Overview - Meta Business SDK](raw/business-sdk/overview.md) -- https://developers.facebook.com/docs/business-sdk/overview
+- [Reference - Meta Business SDK](raw/business-sdk/reference.md) -- https://developers.facebook.com/docs/business-sdk/reference
+- [Facebook SDK for iOS](raw/ios.md) -- https://developers.facebook.com/docs/ios/
+- [Get Started - Facebook SDK for iOS](raw/ios/getting-started.md) -- https://developers.facebook.com/docs/ios/getting-started
+- [Facebook SDK for JavaScript](raw/javascript.md) -- https://developers.facebook.com/docs/javascript/
+- [Quickstart - Facebook SDK for JavaScript](raw/javascript/quickstart.md) -- https://developers.facebook.com/docs/javascript/quickstart/
+- [Graph API - Facebook SDK for JavaScript](raw/javascript/reference/FB.api.md) -- https://developers.facebook.com/docs/javascript/reference/FB.api
+- [Unity SDK](raw/unity.md) -- https://developers.facebook.com/docs/unity/
+- [Getting Started - Unity SDK](raw/unity/gettingstarted.md) -- https://developers.facebook.com/docs/unity/gettingstarted
+
+### 11-gaming -- Gaming (5)
+
+- [Game Payments](raw/games_payments.md) -- https://developers.facebook.com/docs/games_payments
+- [Webhooks - Game Payments](raw/games_payments/webhooks.md) -- https://developers.facebook.com/docs/games_payments/webhooks
+- [Build - Facebook Games](raw/games/build.md) -- https://developers.facebook.com/docs/games/build
+- [Login for Games on Facebook - Facebook Games](raw/games/gamesonfacebook/login.md) -- https://developers.facebook.com/docs/games/gamesonfacebook/login/
+- [App-to-User Notifications - Facebook Games](raw/games/services/appnotifications.md) -- https://developers.facebook.com/docs/games/services/appnotifications/
+
+### 12-work-education -- Work & Education (1)
+
+- [Meta Admin Center](raw/admin-center.md) -- https://developers.facebook.com/docs/admin-center/
+
+### 13-data-privacy -- Data Portability & Privacy (2)
+
+- [Data Portability](raw/data-portability.md) -- https://developers.facebook.com/docs/data-portability/
+- [Cookie Consent Resource - Meta App Events](raw/privacy.md) -- https://developers.facebook.com/docs/privacy
+
+### 99-misc -- Other / Uncategorized (1)
+
+- [Meta Developer Documentation - Meta APIs, SDKs & Guides](raw/index.md) -- https://developers.facebook.com/docs/
+

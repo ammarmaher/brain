@@ -80,3 +80,28 @@ File type · file size · column shape · share-target hierarchy bounds · soft-
 ## Hubs
 
 - [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[BUSINESS_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[GAPS_INDEX]] · [[COMPONENT_INDEX]]
+
+
+---
+
+## Vol 44 cross-reference (added 2026-05-18)
+
+The [[VOL-44-TRUTH-TAUTOLOGIES]] atomic note carries direct BRD-extracted facts relevant to this module. See [[Vol 44 — Supporting Artifacts Research]] for the long-form treatment.
+
+
+
+## Vol 46 specialist cross-reference (added 2026-05-18)
+
+For channels/campaigns/templates deep dive, see:
+- [[CAMPAIGNS-CHANNELS-SPECIALIST-HUB]] (entry point)
+- [[Vol 46 — Campaigns Channels Specialist Guide]] (graph node)
+- 5-word truth: WhatsApp + Voice + SMS implemented; Facebook/Instagram are NOT.
+
+
+
+## Vol 48 specialist cross-reference (added 2026-05-18)
+
+For Contact Group operating model deep dive, see:
+- [[Vol 48 — Contact Group Specialist Guide]] (graph node)
+- 7-action permission matrix · Falcon-staff non-mutation invariant · creator-only Edit/Delete · per-channel opt-in (CITC) · upload pipeline.
+

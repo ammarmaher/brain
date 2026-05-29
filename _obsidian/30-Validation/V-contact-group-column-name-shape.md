@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: false
 created: 2026-05-15
+module: contact-group
+feature: column-name
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contact-group", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-contact-group-column-name-shape — Column names: EN letters, no special chars, no duplicates, ≤20, spaces → _ ***
 *** Origin: PRD-04 Contact Group Management · Backend: contact-group · 2026-05-15 ***

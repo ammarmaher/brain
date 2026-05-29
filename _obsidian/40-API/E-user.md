@@ -5,6 +5,14 @@ prd: PRD-02
 service: identity
 drift-count: 9
 created: 2026-05-15
+module: user-mgmt
+feature: user
+verification: code-verified
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/user-mgmt", "#verification/code-verified", "#layer/be"]
+up: "[[E-entities-MOC]]"
+parent: "[[E-entities-MOC]]"
+layer: be
 ---
 *** Entity Reconciliation E-user — User ***
 *** PRD: PRD-02 User Management · Backend service: Identity · 2026-05-15 ***

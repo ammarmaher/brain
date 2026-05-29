@@ -15,7 +15,7 @@
 | [[Falcon Input]] | 1, 5 | Text inputs (Account Name, address fields, names) |
 | [[Falcon Input Number]] | 2, 3, 4 | Numeric inputs (limits, price values) |
 | [[Falcon Dropdown]] | 1, 2, 3, 4, 5 | Classification, authority letter, country/city/sector, password level, pricing type, role, delivery method |
-| [[Falcon Toggle]] | 3, 4 | Visibility toggle per row |
+| [[Falcon Switch]] | 3, 4 | Visibility toggle per row |
 | [[Falcon Checkbox]] | (potential) | If used for grouped options |
 | [[Falcon Button]] | shell + 5 | Next / Previous / Submit / Save Draft / Cancel |
 | [[Falcon Data Table]] | 3, 4 | CommChannels + Apps row tables |
@@ -77,4 +77,4 @@ The Add Client wizard must be implemented as an **app-level wrapper** under `app
 
 ## Hubs
 
-- [[Falcon Stepper]] · [[Falcon Wizard]] · [[Falcon Dialog]] · [[Falcon Input]] · [[Falcon Input Number]] · [[Falcon Dropdown]] · [[Falcon Toggle]] · [[Falcon Checkbox]] · [[Falcon Button]] · [[Falcon Data Table]] · [[Falcon Email Field]] · [[Falcon Phone Field]] · [[Falcon Mobile Number]] · [[Falcon Password]] · [[Falcon Single Uploader]] · [[Falcon Uploader (generic)]] · [[Falcon Tag]] · [[Falcon Icon]] · [[Falcon Status Badge]] · [[Falcon Notification]] · [[Falcon Toast]] · [[Falcon Form Field]] · [[Falcon Textarea]] · [[Falcon Radio Group]] · [[COMPONENT_INDEX]] · [[AMMAR_BRAIN_HOME]]
+- [[Falcon Stepper]] · [[Falcon Wizard]] · [[Falcon Dialog]] · [[Falcon Input]] · [[Falcon Input Number]] · [[Falcon Dropdown]] · [[Falcon Switch]] · [[Falcon Checkbox]] · [[Falcon Button]] · [[Falcon Data Table]] · [[Falcon Email Field]] · [[Falcon Phone Field]] · [[Falcon Mobile Number]] · [[Falcon Password]] · [[Falcon Single Uploader]] · [[Falcon Uploader (generic)]] · [[Falcon Tag]] · [[Falcon Icon]] · [[Falcon Status Badge]] · [[Falcon Notification]] · [[Falcon Toast]] · [[Falcon Form Field]] · [[Falcon Textarea]] · [[Falcon Radio Group]] · [[COMPONENT_INDEX]] · [[AMMAR_BRAIN_HOME]]

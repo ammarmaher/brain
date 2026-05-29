@@ -1,4 +1,4 @@
-# falcon-calendar (LEGACY FACADE) — GAPS & UPGRADES
+﻿# falcon-calendar (LEGACY FACADE) — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -40,3 +40,11 @@
 
 ## Workaround availability
 - For new date fields: use `<falcon-angular-date-picker>`.
+
+## Wave 7 Findings (2026-05-17)
+
+**STATUS: ORPHAN.** No source files, no consumers, no module-federation references.
+
+**Recommendation: DELETE this dossier** in Wave 8 cleanup. Dossier was retained through Wave 7 as a deletion-review checkpoint.
+
+Successor: `falcon-calendar`.

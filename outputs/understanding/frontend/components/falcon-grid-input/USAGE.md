@@ -1,4 +1,4 @@
-# falcon-grid-input — USAGE
+﻿# falcon-grid-input — USAGE
 
 ## Real usage examples
 
@@ -83,3 +83,7 @@ Not supported.
 | Use inside grid/table cells. | Use as form field. |
 | Pass `originalValue` for revert. | Skip it. |
 | Handle navigate event for focus. | Hand-roll Tab handling. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-grid-input>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

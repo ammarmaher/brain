@@ -1,4 +1,4 @@
-# falcon-search-input — GAPS AND UPGRADES
+﻿# falcon-search-input — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -81,3 +81,9 @@ All shared.
 - For G1: subscribe to `(falconSearch)` and `setValue` on the form control.
 - For G3: query nativeElement.
 - For G7: add global keydown listener externally.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-search-input>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

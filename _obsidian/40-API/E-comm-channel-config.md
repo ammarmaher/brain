@@ -5,6 +5,14 @@ prd: PRD-01
 service: commerce
 drift-count: 13
 created: 2026-05-15
+module: account-mgmt
+feature: comm-channel-config
+verification: code-verified
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/account-mgmt", "#verification/code-verified", "#layer/be"]
+up: "[[E-entities-MOC]]"
+parent: "[[E-entities-MOC]]"
+layer: be
 ---
 *** Entity Reconciliation E-comm-channel-config — CommChannelConfig ***
 *** PRD: PRD-01 Account Management · Backend service: Commerce · 2026-05-15 ***

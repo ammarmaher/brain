@@ -1,4 +1,4 @@
-# falcon-angular-wizard — GAPS & UPGRADES
+﻿# falcon-angular-wizard — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -76,3 +76,9 @@
 - For #1 (`step.status` not visualized): consumer can drive `[steps]` with a derived array that uses `currentStep` to compute the displayed state via the embedded stepper's `completedValues` — but this is awkward and should be eliminated by fixing the wizard.
 - For #4 (Skip button): consumer can place a Skip button in `slot="footer-extra"` and call `wizardRef.next()` imperatively.
 - For #7 (Reset): consumer can `currentStep.set(0)` directly (2-way binding works).
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-wizard>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

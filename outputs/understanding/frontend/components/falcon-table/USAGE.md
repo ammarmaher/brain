@@ -1,4 +1,4 @@
-# falcon-table — USAGE
+﻿# falcon-table — USAGE
 
 ## Direct use is rare
 
@@ -154,3 +154,9 @@ import { FalconAngularDataTableComponent } from '@falcon-ui-core/angular-wrapper
 - Don't hand-roll a `<table>` for any Falcon list view.
 - Don't put Falcon Angular components inside `col.render()` — `render()` returns a static HTML string. Use a template directive.
 - Don't expect Arrow-key navigation between rows — the table is `tabIndex={0}` but does NOT implement Arrow / Home / End key handling on rows (see GAPS_AND_UPGRADES.md).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-table>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

@@ -1,4 +1,4 @@
-# falcon-tree-panel (LEGACY BESPOKE) — GAPS & UPGRADES
+﻿# falcon-tree-panel (LEGACY BESPOKE) — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -85,3 +85,9 @@
 - For #2 (SCSS): tolerate until convergence.
 - For #5 (disabled action): filter via `visible(node)` to hide instead of greying.
 - For #10 (custom root row): use `mode="client"` and pre-process the root data to fit.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-tree-panel>` — pure-Angular tag — across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+**Gap: Pure-Angular component without a Stencil twin** — cross-framework parity NOT achievable until ported to Stencil. Priority: P2 for new tokens-only consumers.

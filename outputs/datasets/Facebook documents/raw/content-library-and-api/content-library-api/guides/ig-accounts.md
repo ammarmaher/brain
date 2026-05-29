@@ -1,0 +1,258 @@
+---
+url: https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts
+title: Instagram accounts - Meta Content Library and API
+status: 200
+---
+
+![](https://googleads.g.doubleclick.net/pagead/viewthroughconversion/963623955/?guid=ON&script=0)
+
+![](https://dc.ads.linkedin.com/collect/?pid=276116&fmt=gif)
+
+![](https://analytics.twitter.com/i/adsct?txn_id=nz7m3&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0)
+
+![](https://t.co/i/adsct?txn_id=nz7m3&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0)
+
+![](https://facebook.com/security/hsts-pixel.gif)
+
+[Meta logo](https://developers.facebook.com/?no_redirect=true)
+
+MoreMoreMore
+
+DocsDocsDocs
+
+ToolsToolsTools
+
+SupportSupportSupport
+
+Search input
+
+​
+
+[LoginLoginLogin](https://business.facebook.com/business/loginpage/?is_work_accounts=true&login_options[0]=FB&login_options[1]=SSO&config_ref=biz_login_tool_flavor_dfc&app=436761779744620&next=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fcontent-library-and-api%2Fcontent-library-api%2Fguides%2Fig-accounts%3Fnav_ref%3Dbiz_unified_f3_login_page_to_dfc)
+
+[Meta Content Library and API](https://developers.facebook.com/docs/content-library-and-api)
+
+- [Get access](https://developers.facebook.com/docs/content-library-and-api/get-access)
+- [Quick links](https://developers.facebook.com/docs/content-library-and-api/quick-links)
+- [Content Library](https://developers.facebook.com/docs/content-library-and-api/content-library)
+- [Content Library API](https://developers.facebook.com/docs/content-library-and-api/content-library-api)
+
+
+  - [Overview](https://developers.facebook.com/docs/content-library-and-api/content-library-api/overview)
+  - [Getting started](https://developers.facebook.com/docs/content-library-and-api/content-library-api/getting-started)
+  - [Guides](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides)
+
+
+    - [Facebook Pages](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-pages)
+    - [Facebook groups](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-groups)
+    - [Facebook events](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-events)
+    - [Facebook profiles](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-profiles)
+    - [Facebook posts](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-posts)
+    - [Facebook Marketplace](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-marketplace)
+    - [Facebook Fundraisers](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-fundraisers)
+    - [Facebook donations](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-donations)
+    - [Facebook comments](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-comments)
+    - [Facebook channels](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-channel)
+    - [Facebook channel messages](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/fb-channel-msg)
+    - [Instagram accounts](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts)
+    - [Instagram posts](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-posts)
+    - [Instagram Fundraisers](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-fundraisers)
+    - [Instagram channels](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-channel)
+    - [Instagram channel messages](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-channel-msg)
+    - [Instagram comments](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-comments)
+    - [WhatsApp channels](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/wa-channel)
+    - [WhatsApp channel updates](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/wa-channel-update)
+    - [Bulk comments](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/bulk-comments)
+    - [ID-based retrieval](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/id-based-retrieval)
+    - [Search guide](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/search-guide)
+    - [Advanced search](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/advanced-search)
+    - [Rate limiting](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/rate-limiting)
+    - [Data deletion](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/data-deletion)
+    - [Collections and async queries](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/collections-and-async)
+    - [MCL 6.0 URL changes](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/mcl-endpoints)
+
+- [Appendix](https://developers.facebook.com/docs/content-library-and-api/appendix)
+- [Support](https://developers.facebook.com/docs/content-library-and-api/support)
+- [Disclosures and disclaimers](https://developers.facebook.com/docs/content-library-and-api/disclosures-disclaimers)
+- [Citations](https://developers.facebook.com/docs/content-library-and-api/citations)
+- [Changelog](https://developers.facebook.com/docs/content-library-and-api/changelog)
+
+On This Page
+
+[Guide to Instagram accounts data](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#guide-to-instagram-accounts-data)
+
+[Parameters](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#parameters)
+
+[Sample queries](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#sample-queries)
+
+[Search for Instagram accounts by keyword](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#search-for-instagram-accounts-by-keyword)
+
+[Request specific fields](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#request-specific-fields)
+
+[Search for Instagram accounts by account ID](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#search-for-instagram-accounts-by-account-id)
+
+[Learn more](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#learn-more)
+
+# Guide to Instagram accounts data
+
+You can perform searches for Instagram creator, business and certain personal accounts by calling the Meta Content Library API client `get()` method, with the `/instagram/accounts/preview` path.
+
+For personal accounts, only those that have account privacy [set to public](https://l.facebook.com/l.php?u=https%3A%2F%2Fhelp.instagram.com%2F517073653436611&h=AUCtggqNXB82aqLAVTOVB4tYe1TXbSBvpaMtIEaphLQXfp733NMRVXOCtD8VJu6t3j6gsxuan9gVg-t7B2T_ZiyhRCAhvHfYbfa45jAV2ODbIv4f1k1jNsQjnT08LFySLLeC964a-m9KhQ), and are either [verified](https://l.facebook.com/l.php?u=https%3A%2F%2Fhelp.instagram.com%2F733907830039577%3Fhelpref%3Dfaq_content&h=AUAHkrpoX1CaIzwDaPY6tB4AZbjiHVhmt2kjRIDDMZNsTedyj1mZ1mXewLhARQ_CFaTwkCtFyqaxgQlLAIJVRBn4s8JJuSlAZcrj5-RtmPPJQbTEja177vgxYf1SggWwLXJWPoMeSIpBSw) or have a threshold number of followers are included. The threshold number of followers depends on the version of the API:
+
+- Version 6.0 requires 100 or more followers
+- Version 5.0 requires 1,000 or more followers
+
+This document describes the parameters and shows how to perform basic queries by using this method.
+
+All of the examples in this document are taken from a Secure Research Environment use case and assume you have already created a Python or R Jupyter notebook and have created a client object. See [Getting started](https://developers.facebook.com/docs/content-library-api/quick-start) to learn more.
+
+See [Data dictionary](https://developers.facebook.com/docs/content-library-api/data#dd-ig-account) for detailed information about the fields that are available on an Instagram account node.
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `Q`<br>_Optional_ | String | Keyword(s) to search Instagram accounts for. Searches account `name` and `biography` fields. See [Advanced search guidelines](https://developers.facebook.com/docs/content-library-api/adv-search) for information about how multiple keyword searches with Boolean operators are handled. |
+| `FIELDS`<br>_Optional_ | List | A comma-separated list of Instagram account fields you want included in search results. See [Data dictionary](https://developers.facebook.com/docs/content-library-api/data#dd-ig-account) for descriptions of all available fields. |
+| `ACCOUNT_IDS`<br>_Optional_ | List | Comma-separated list of Meta Content Library Instagram account IDs to include in the search results. Maximum of 250 IDs. |
+| `ACCOUNT_TYPES`<br>_Optional_ | List | Comma-separated list of account types of the Instagram accounts to be included in the search results. Possible values are `creator`, `business` and `personal`.<br>Public Instagram accounts include professional accounts for businesses and creators. They also include a subset of personal accounts that have privacy [set to public](https://l.facebook.com/l.php?u=https%3A%2F%2Fhelp.instagram.com%2F517073653436611&h=AUAZl0_tA1LJPZDifGNMMgpDAfVFRdby1WdZnJMa7B59vEVkD_bIyn6sHGmxrMK6_D6ksGFv9cLOAY_WvkAHEdvdrsjHq1Sm7jzb5QfxzfJtNI10yFGBaEAoJKCAaMnS_qxQ1tD4D4qIuQ) and are either [verified](https://l.facebook.com/l.php?u=https%3A%2F%2Fhelp.instagram.com%2F733907830039577%3Fhelpref%3Dfaq_content&h=AUDwtL1mOz-J0ZKLGOzkK9YeTeDXk-9jHuSXckdD8vk1Rwqx_DhjVDen_dV6NQ4U61xNadSsubgoY6PqR5ZBhpE5Qdoa4cO9EGHMx3CnoOuJZj-1Sbgjzy0FVqUivxbMCDnNBGY7O-Cimg) or have 100 or more followers. |
+| `SORT`<br>_Optional_ | Enum | Sort mode specifying the order in which the accounts are returned (only available for synchronous searches). Available options:<br>- `newest_to_oldest`: Accounts are returned in reverse chronological order (newest first).<br>  <br>- `most_to_least_follower_count`: Accounts are returned based on the number of followers (most followers first).<br>  <br>Default: `most_to_least_followers_count`<br>**Note**: Searches conducted in versions earlier than 5.0 had responses sorted in newest-to-oldest order by default. To achieve that same order, you must now specify `newest_to_oldest` with the `sort` parameter in your query. |
+| `IS_VERIFIED`<br>_Optional_ | Boolean | Whether the Instagram account is [verified](https://l.facebook.com/l.php?u=https%3A%2F%2Fhelp.instagram.com%2F854227311295302&h=AUDlBkKW6dNvpycgoHpVQyDRXpFtiLcPiby1s4GNANe0u6EvJESpVSaZn0gklTSmUYyK5ALAkgcHog_mGiPcLNkF0D4wWNop_csNHNFlaozGrsze3vnp1da38dDt6-vSlT9y7so8sX8U3Q). |
+| `SINCE`<br>_Optional_ | String or Integer | Date in YYYY-MM-DD (date only) or UNIX timestamp (translates to a date and time to the second) format. Instagram accounts created on or after this date or timestamp are returned (used with `UNTIL` to define a time range). `SINCE` and `UNTIL` are based on UTC time zone, regardless of the local time zone of the user who created the account.<br>- If both `SINCE` and `UNTIL` are included, the search includes the time range defined by those values.<br>- If `SINCE` is included and `UNTIL` is omitted, the search includes the `SINCE` time through the present time. <br>- If `SINCE` is omitted and `UNTIL` is included, the search goes from the beginning of Instagram time through the `UNTIL` time. <br>- If `SINCE` and `UNTIL` are both omitted, the search goes from the beginning of Instagram time to the present time.<br>- If `SINCE` and `UNTIL` are the same UNIX timestamp, the search includes the `SINCE` time through the `SINCE` time plus one hour.<br>- If `SINCE` and `UNTIL` are the same date (YYYY-MM-DD), the search includes the `SINCE` date through the `SINCE` date plus one day. |
+| `UNTIL`<br>_Optional_ | String or Integer | Date in YYYY-MM-DD (date only) or UNIX timestamp (translates to a date and time to the second) format. Instagram accounts created on or before this date or timestamp are returned (used with `SINCE` to define a time range). `SINCE` and `UNTIL` are based on UTC time zone, regardless of the local time zone of the user who created the account.<br>- If both `SINCE` and `UNTIL` are included, the search includes the time range defined by those values.<br>- If `SINCE` is included and `UNTIL` is omitted, the search includes the `SINCE` time through the present time.<br>- If `SINCE` is omitted and `UNTIL` is included, the search goes from the beginning of Instagram time through the `UNTIL` time.<br>- If `SINCE` and `UNTIL` are both omitted, the search goes from the beginning of Instagram time to the present time.<br>- If `SINCE` and `UNTIL` are the same UNIX timestamp, the search includes the `SINCE` time through the `SINCE` time plus one hour.<br>- If `SINCE` and `UNTIL` are the same date (YYYY-MM-DD), the search includes the `SINCE` date through the `SINCE` date plus one day. |
+
+## Sample queries
+
+### Search for Instagram accounts by keyword
+
+To search for Instagram accounts that contain a specific keyword use the `get()` method with the `q` parameter. See [Advanced search guidelines](https://developers.facebook.com/docs/content-library-api/adv-search) for information about how multiple keyword searches are handled.
+
+RPython
+
+```r
+library(reticulate)
+client <- import("metacontentlibraryapi")$MetaContentLibraryAPIClient
+
+client$set_default_version(client$LATEST_VERSION)
+
+response <-client$get(
+                      path = "/instagram/accounts/preview",
+                      params = list('q' = "cybercrime")
+)
+jsonlite::fromJSON(response$text, flatten=TRUE) # Display first page
+
+# Fetch next page
+if (client$has_next_page(response)) {
+    response <- client$query_next_page(response)
+    jsonlite::fromJSON(response$text, flatten=TRUE) # Display second page
+}
+```
+
+```py
+from metacontentlibraryapi import MetaContentLibraryAPIClient as client
+
+client.set_default_version(client.LATEST_VERSION)
+
+response = client.get(
+       path="/instagram/accounts/preview",
+       params={"q":"cybercrime"}
+)
+display(response.json()) # Display first page
+
+# Fetch next page
+if client.has_next_page(response):
+    response = client.query_next_page(response)
+    display(response.json()) # Display second page
+```
+
+This example would return only 10 results per page. You can use the `query_next_page()` and `has_next_page()` to get the next page of 10 results until all the results have been returned. See [Search guide](https://developers.facebook.com/docs/content-library-api/guide-search-object) for other display and storage options.
+
+### Request specific fields
+
+To have the API return only specific fields on any Instagram accounts in the response, use the `get()` method with the `fields` parameter and a comma-separated list of fields you want included. If omitted, default fields will be returned. To more easily see columns of data, this example specifies a DataFrame response format (the default response format is JSON).
+
+RPython
+
+```r
+library(reticulate)
+client <- import("metacontentlibraryapi")$MetaContentLibraryAPIClient
+
+client$set_default_version(client$LATEST_VERSION)
+
+response <- client$get(
+	path = "/instagram/accounts/preview",
+	params = list('q'="cybercrime", 'fields'='id,name,biography')
+)
+jsonlite::fromJSON(response$text, flatten=TRUE) # Display first page
+```
+
+```py
+from metacontentlibraryapi import MetaContentLibraryAPIClient as client
+
+client.set_default_version(client.LATEST_VERSION)
+
+response = client.get(
+        path="/instagram/accounts/preview",
+        params={"q":"cybercrime", "fields":"id,name,biography"}
+)
+display(response.json()) # Display first page
+```
+
+### Search for Instagram accounts by account ID
+
+You can search for Instagram accounts using specific account IDs obtained from previous account searches.
+
+To get data on specific Instagram accounts that contain specific keywords or phrases, use the `get()` method with the `account_ids` parameter (specifying the list of account IDs you want included). If you omit the `q` argument, all accounts in the list of IDs are included, not just those with a specific keyword or phrase.
+
+RPython
+
+```r
+library(reticulate)
+client <- import("metacontentlibraryapi")$MetaContentLibraryAPIClient
+
+client$set_default_version(client$LATEST_VERSION)
+
+response <- client$get(
+       path = "/instagram/accounts/preview",
+       params = list("account_ids"=list("315242517956050"))
+)
+jsonlite::fromJSON(response$text, flatten=TRUE) # Display first page
+```
+
+```py
+from metacontentlibraryapi import MetaContentLibraryAPIClient as client
+
+client.set_default_version(client.LATEST_VERSION)
+
+response = client.get(
+            path="/instagram/accounts/preview",
+            params={"account_ids": ["315242517956050"]}
+)
+display(response.json()) # Display first page
+```
+
+For using Instagram account IDs to search for posts from specific Instagram accounts, see [Guide to Instagram posts data](https://developers.facebook.com/docs/content-library-api/guide-ig-posts).
+
+## Learn more
+
+- [Getting started](https://developers.facebook.com/docs/content-library-api/quick-start)
+- [Search guide](https://developers.facebook.com/docs/content-library-api/guide-search-object)
+- [Data dictionary](https://developers.facebook.com/docs/content-library-api/data)
+- [Advanced search guidelines](https://developers.facebook.com/docs/content-library-api/adv-search)
+- [Guide to Instagram posts data](https://developers.facebook.com/docs/content-library-api/guide-ig-posts)
+
+On This Page
+
+[Guide to Instagram accounts data](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#guide-to-instagram-accounts-data)
+
+[Parameters](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#parameters)
+
+[Sample queries](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#sample-queries)
+
+[Search for Instagram accounts by keyword](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#search-for-instagram-accounts-by-keyword)
+
+[Request specific fields](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#request-specific-fields)
+
+[Search for Instagram accounts by account ID](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#search-for-instagram-accounts-by-account-id)
+
+[Learn more](https://developers.facebook.com/docs/content-library-and-api/content-library-api/guides/ig-accounts#learn-more)

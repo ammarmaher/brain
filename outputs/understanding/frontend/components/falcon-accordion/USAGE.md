@@ -1,4 +1,4 @@
-# falcon-accordion — USAGE
+﻿# falcon-accordion — USAGE
 
 ## Real usage examples
 **Zero matches in `apps/`.** Component is unused in production templates. Examples below are recommended patterns.
@@ -109,3 +109,9 @@ The `[(expandedValues)]` is the two-way binding for the accordion's expansion st
 | Use `[(expandedValues)]` for two-way binding | Subscribe to `expand` / `collapse` separately to track state |
 | Allow per-item `disabled: true` to gray out sections | Use accordion-wide `disabled` for granular gating |
 | Project rich content via `slot="content-<value>"` | Try to slot into the header (not supported) |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-accordion>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

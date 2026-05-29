@@ -1,4 +1,4 @@
-# falcon-message-host — GAPS AND UPGRADES
+﻿# falcon-message-host — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -144,3 +144,9 @@ export class FalconMessageService {
 ```
 
 This would let the toast component fully retire while preserving the consumer API.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 3** ([CODE] grep `<falcon-angular-message-host>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

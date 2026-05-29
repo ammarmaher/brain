@@ -1,4 +1,4 @@
-# falcon-checkbox — USAGE
+﻿# falcon-checkbox — USAGE
 
 ## Real usage examples
 
@@ -78,3 +78,9 @@ form = new FormGroup({
 | Use CVA for forms. | Use `checkedInput` outside checkbox-group. |
 | Use `indeterminate` for tri-state headers. | Try to preserve indeterminate across toggles. |
 | Override visuals via tokens. | Hardcode hex / px in consumer CSS. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-checkbox>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

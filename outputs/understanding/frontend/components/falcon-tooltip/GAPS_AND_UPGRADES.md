@@ -1,4 +1,4 @@
-# falcon-tooltip — GAPS AND UPGRADES
+﻿# falcon-tooltip — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -119,3 +119,9 @@ Stencil source:
 
 ## Future-proof recommendation
 Collision-aware flip is the most-asked tooltip feature in modern UI libraries (Radix UI, Floating UI). The current `computeOffset()` already returns x/y — extending it to try alternative placements is a moderate refactor with high payoff.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-tooltip>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

@@ -1,4 +1,4 @@
-# falcon-radio — USAGE
+﻿# falcon-radio — USAGE
 
 ## Real usage examples
 
@@ -81,3 +81,13 @@ form = new FormGroup({
 | Use radio-group for typical multi-option. | Hand-roll the loop. |
 | Set `name` consistent across siblings. | Use radio for boolean. |
 | Bind via CVA for forms. | Use raw `[checkedInput]` outside group. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-radio>` across `apps/` + `libs/falcon/` returned **5 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/settings-tab/settings-tab.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-permissions-step/user-permissions-step.component.html`
+- `apps/host-shell/src/app/features/user-details/user-details-page.component.html`
+- `apps/host-shell/src/app/playground/playground.page.html`

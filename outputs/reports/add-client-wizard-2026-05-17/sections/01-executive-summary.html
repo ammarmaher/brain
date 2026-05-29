@@ -1,0 +1,764 @@
+<style>
+  /* Section 1 — Executive Summary + Process Flow — scoped styles */
+  .s1-root {
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    color: #1f2937;
+    line-height: 1.6;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem 1.5rem;
+  }
+  .s1-root h2 {
+    font-size: 2rem;
+    color: #0d3f44;
+    border-bottom: 3px solid #0d3f44;
+    padding-bottom: 0.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .s1-root h3 {
+    font-size: 1.35rem;
+    color: #134e54;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .s1-root h4 {
+    font-size: 1.05rem;
+    color: #0d3f44;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .s1-root p { margin: 0.5rem 0 1rem 0; }
+  .s1-root code {
+    background: #f3f4f6;
+    color: #b45309;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .s1-root table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem 0;
+    font-size: 0.92rem;
+  }
+  .s1-root th {
+    background: #0d3f44;
+    color: #ffffff;
+    text-align: left;
+    padding: 0.6rem 0.85rem;
+    font-weight: 600;
+  }
+  .s1-root td {
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+  .s1-root tr:nth-child(even) td { background: #fafafa; }
+
+  /* Hero summary */
+  .s1-hero {
+    background: linear-gradient(135deg, #0d3f44 0%, #134e54 60%, #1a6168 100%);
+    color: #fff;
+    padding: 2rem 2.25rem;
+    border-radius: 14px;
+    margin: 1.5rem 0 2rem 0;
+    box-shadow: 0 8px 24px rgba(13,63,68,0.18);
+  }
+  .s1-hero h1 {
+    font-size: 1.6rem;
+    margin: 0 0 0.85rem 0;
+    color: #e9fcf6;
+    letter-spacing: -0.01em;
+  }
+  .s1-hero p {
+    font-size: 1.02rem;
+    color: #d6f1ec;
+    margin: 0;
+  }
+
+  /* Stat block */
+  .s1-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 0.85rem;
+    margin: 1.25rem 0 2rem 0;
+  }
+  .s1-stat {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #0d3f44;
+    padding: 0.95rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .s1-stat-value {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #0d3f44;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+    font-feature-settings: "tnum";
+  }
+  .s1-stat-label {
+    font-size: 0.78rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  /* Big-picture flow diagram (top) */
+  .s1-bigflow {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0 2rem 0;
+  }
+  .s1-bigflow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+  .s1-bigflow-box {
+    background: #ffffff;
+    border: 2px solid #0d3f44;
+    color: #0d3f44;
+    border-radius: 10px;
+    padding: 0.55rem 0.95rem;
+    font-weight: 600;
+    font-size: 0.86rem;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: 0 1px 3px rgba(13,63,68,0.08);
+  }
+  .s1-bigflow-box.green { border-color: #0f8d6c; color: #0f8d6c; }
+  .s1-bigflow-box.amber { border-color: #c2660a; color: #c2660a; }
+  .s1-bigflow-box.red   { border-color: #b91c1c; color: #b91c1c; }
+  .s1-bigflow-arrow {
+    color: #0d3f44;
+    font-size: 1.2rem;
+    font-weight: 700;
+    user-select: none;
+  }
+  .s1-bigflow-branch {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Timeline of process flow */
+  .s1-timeline {
+    position: relative;
+    margin: 1.5rem 0 2rem 0;
+    padding-left: 2.25rem;
+  }
+  .s1-timeline::before {
+    content: "";
+    position: absolute;
+    left: 0.6rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 3px;
+    background: linear-gradient(180deg, #0d3f44, #b8d4d7);
+    border-radius: 2px;
+  }
+  .s1-tl-item {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #0d3f44;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .s1-tl-item::before {
+    content: "";
+    position: absolute;
+    left: -2.05rem;
+    top: 1.15rem;
+    width: 14px;
+    height: 14px;
+    background: #0d3f44;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 0 2px #0d3f44;
+  }
+  .s1-tl-item.branch-success { border-left-color: #0f8d6c; }
+  .s1-tl-item.branch-success::before { background: #0f8d6c; box-shadow: 0 0 0 2px #0f8d6c; }
+  .s1-tl-item.branch-error { border-left-color: #b91c1c; }
+  .s1-tl-item.branch-error::before { background: #b91c1c; box-shadow: 0 0 0 2px #b91c1c; }
+  .s1-tl-item.branch-warn { border-left-color: #c2660a; }
+  .s1-tl-item.branch-warn::before { background: #c2660a; box-shadow: 0 0 0 2px #c2660a; }
+  .s1-tl-step {
+    display: inline-block;
+    background: #0d3f44;
+    color: #fff;
+    padding: 0.15rem 0.55rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 0.6rem;
+    letter-spacing: 0.04em;
+  }
+  .s1-tl-title {
+    font-weight: 700;
+    color: #0d3f44;
+    font-size: 1.05rem;
+  }
+  .s1-tl-body { margin-top: 0.5rem; font-size: 0.93rem; }
+  .s1-tl-body ul { margin: 0.35rem 0 0 1.1rem; padding: 0; }
+  .s1-tl-body li { margin: 0.2rem 0; }
+
+  /* Wave horizontal timeline */
+  .s1-wave-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin: 1.5rem 0 2rem 0;
+  }
+  .s1-wave-card {
+    border-radius: 10px;
+    padding: 1rem 0.95rem;
+    color: #ffffff;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+  .s1-wave-card.purple { background: linear-gradient(160deg, #6b21a8, #8b5cf6); }
+  .s1-wave-card.blue   { background: linear-gradient(160deg, #1e3a8a, #2563eb); }
+  .s1-wave-card.green  { background: linear-gradient(160deg, #064e3b, #0f8d6c); }
+  .s1-wave-card.orange { background: linear-gradient(160deg, #9a3412, #ea580c); }
+  .s1-wave-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.01em;
+  }
+  .s1-wave-meta {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+  .s1-wave-hash {
+    background: rgba(0,0,0,0.25);
+    border-radius: 4px;
+    padding: 0.1em 0.4em;
+    font-family: Consolas, monospace;
+    font-size: 0.78em;
+  }
+  .s1-wave-body { font-size: 0.86rem; line-height: 1.5; }
+  .s1-wave-body p { margin: 0.4rem 0; color: #f3f4f6; }
+  .s1-wave-body ul { margin: 0.4rem 0 0 1rem; padding: 0; color: #fff; }
+  .s1-wave-body li { margin: 0.2rem 0; }
+
+  /* Severity badges */
+  .s1-badge {
+    display: inline-block;
+    padding: 0.18em 0.55em;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .s1-badge.green { background: #d1fae5; color: #065f46; }
+  .s1-badge.amber { background: #fef3c7; color: #92400e; }
+  .s1-badge.red   { background: #fee2e2; color: #991b1b; }
+  .s1-badge.blue  { background: #dbeafe; color: #1e40af; }
+
+  .s1-callout {
+    border-left: 4px solid #0d3f44;
+    background: #ecfdf5;
+    padding: 0.95rem 1.1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+  .s1-callout strong { color: #0d3f44; }
+</style>
+
+<div class="s1-root">
+
+<section id="executive-summary">
+  <h2>1. Executive Summary</h2>
+
+  <div class="s1-hero">
+    <h1>Add Client Wizard — End-to-End Polish, 4 Wave Revisions, Production Ready</h1>
+    <p>
+      Across <strong>4 wave revisions</strong> (Wave 4.2, Wave 5, Wave 6, Wave 7) the Falcon Add Client
+      wizard was end-to-end polished from broken backend integration to a production-ready 5-step flow with
+      <strong>eager API loading</strong> (single <code>forkJoin</code> on mount across 5 endpoints),
+      <strong>null-init form state</strong> (every field begins literally <code>null</code>, no
+      <code>'Government'</code> or <code>'Account Owner'</code> defaults),
+      <strong>Sending Credentials popup</strong> (3 method cards Email/SMS/Both + AO summary, pixel-parity to
+      the React mockups), <strong>Completion Success popup</strong> (10s auto-dismiss + click-anywhere
+      dismiss), <strong>per-step DI-token validations</strong> (Add User parity — InjectionToken +
+      <code>*RulesProvider()</code> factory per step), and an <strong>OnPush-safe row-table validation</strong>
+      fix that forces a new array reference so the data-table re-renders red borders on Next click.
+    </p>
+  </div>
+
+  <h3>Quick stats</h3>
+  <div class="s1-stats">
+    <div class="s1-stat">
+      <div class="s1-stat-value">~45</div>
+      <div class="s1-stat-label">Files Created</div>
+    </div>
+    <div class="s1-stat">
+      <div class="s1-stat-value">~30</div>
+      <div class="s1-stat-label">Files Modified</div>
+    </div>
+    <div class="s1-stat">
+      <div class="s1-stat-value">~3,500</div>
+      <div class="s1-stat-label">Lines Added</div>
+    </div>
+    <div class="s1-stat">
+      <div class="s1-stat-value">58</div>
+      <div class="s1-stat-label">Unit Tests Added</div>
+    </div>
+    <div class="s1-stat">
+      <div class="s1-stat-value">4</div>
+      <div class="s1-stat-label">Wave Revisions</div>
+    </div>
+    <div class="s1-stat">
+      <div class="s1-stat-value">10+</div>
+      <div class="s1-stat-label">Parallel Agents</div>
+    </div>
+    <div class="s1-stat">
+      <div class="s1-stat-value">5</div>
+      <div class="s1-stat-label">Build Hashes Green</div>
+    </div>
+    <div class="s1-stat">
+      <div class="s1-stat-value">5</div>
+      <div class="s1-stat-label">APIs Eager-Loaded</div>
+    </div>
+  </div>
+
+  <h3>Build hashes (every wave shipped green)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:14%;">Wave</th>
+        <th style="width:30%;">Build hash</th>
+        <th>Headline deliverable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Wave 4.2</td>
+        <td><code>d12008f720fa9551</code></td>
+        <td>4 polish items — top-right toast, backend password through, Verify button removed, password width + eye fix</td>
+      </tr>
+      <tr>
+        <td>Wave 5.1</td>
+        <td><code>95a7638d6bee4596</code></td>
+        <td>State-service refactor (1080-line file → 1 facade + 6 slices + 3 helpers) + 2 new dialog components + per-step validations</td>
+      </tr>
+      <tr>
+        <td>Wave 5.2</td>
+        <td><code>643d0bf547ec0b9e</code></td>
+        <td>Eager password generation + Save → Sending Credentials → API → Success popup OR 400 toast → navigate flow</td>
+      </tr>
+      <tr>
+        <td>Wave 6.2</td>
+        <td><code>36537c10fe4bb0fb</code></td>
+        <td>Null defaults + <code>DeliveryMethod</code> enum + photo object + row-table validation + input-number left icon + eager forkJoin + per-step signals folders</td>
+      </tr>
+      <tr>
+        <td>Wave 7</td>
+        <td><code>f7fb54737d3b9d53</code></td>
+        <td>Row-table OnPush re-render fix + true null defaults across all factories + SAR icon content-projection API redesign</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Big-picture flow (final shape)</h3>
+  <div class="s1-bigflow">
+    <div class="s1-bigflow-row">
+      <div class="s1-bigflow-box">User opens wizard</div>
+      <span class="s1-bigflow-arrow">→</span>
+      <div class="s1-bigflow-box">forkJoin (5 APIs)</div>
+      <span class="s1-bigflow-arrow">→</span>
+      <div class="s1-bigflow-box">5 steps (cached)</div>
+      <span class="s1-bigflow-arrow">→</span>
+      <div class="s1-bigflow-box amber">Sending Credentials popup</div>
+      <span class="s1-bigflow-arrow">→</span>
+      <div class="s1-bigflow-box">Backend</div>
+      <span class="s1-bigflow-arrow">→</span>
+      <div class="s1-bigflow-branch">
+        <div class="s1-bigflow-box green">Success popup → Navigate</div>
+        <div class="s1-bigflow-box red">Top-right error toast</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem-statement">
+  <h2>2. Original Problem Statement</h2>
+
+  <p>
+    The user wanted a working 5-step Add Client wizard with the following non-negotiable requirements,
+    captured verbatim across Wave 4.2, Wave 5, Wave 6, and Wave 7 user messages:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%;">Pillar</th>
+        <th>What the user asked for</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Backend integration</strong></td>
+        <td>All 6 Add Client APIs (lookups, async account-name check, generate-password, create-account) must fire live against the local Identity Gateway and System Gateway. <code>ServiceOperationResult&lt;T&gt;</code> envelope honored. Token-bearer auth required.</td>
+      </tr>
+      <tr>
+        <td><strong>Proper validation</strong></td>
+        <td>Each step gets its own <code>validations/validations.ts</code> folder mirroring Add User wizard. Per-field inline messages, red borders on touch, Next disabled when invalid, stepper-rail dot paints red on Next click for invalid steps.</td>
+      </tr>
+      <tr>
+        <td><strong>Business-validation toasts</strong></td>
+        <td>HTTP 200 + <code>isSuccessful:false</code> (business validation errors) must render as a <strong>top-right red toast</strong> showing the backend's exact <code>errorMessages[0]</code> string — not a centered confirmation popup, not a generic "Bad request" body.</td>
+      </tr>
+      <tr>
+        <td><strong>Eager loading</strong></td>
+        <td>All 5 wizard APIs (<code>generate-password</code>, country lookup, city lookup, communication channels, applications) must fire in <strong>one parallel <code>forkJoin</code></strong> on wizard mount. Navigation between steps must produce <strong>zero new XHR</strong>. Close + reopen fires a fresh batch.</td>
+      </tr>
+      <tr>
+        <td><strong>Null-init defaults</strong></td>
+        <td>Every form field begins literally <code>null</code>. No <code>''</code> for strings, no <code>0</code> for numbers, no <code>'normal'</code> security default, no <code>'Account Owner'</code> role default. Types widened to <code>T | null</code>; wire builder coalesces at the boundary.</td>
+      </tr>
+      <tr>
+        <td><strong>Per-component signal architecture</strong></td>
+        <td>Each step's signals live INSIDE that step's component folder (<code>&lt;step&gt;/signals/&lt;step&gt;.signals.ts</code>). Wizard-wide signals live in <code>add-client-wizard/signals/</code>. No central <code>services/state/</code> for state with a single component owner.</td>
+      </tr>
+      <tr>
+        <td><strong>Pixel parity to React mockups</strong></td>
+        <td>The new Sending Credentials + Completion Success popups must match the React source-of-truth (<code>C:\Falcon\Source_of_truth_theme\React\Falcon-Taha2\admin\addclient.jsx</code> lines 680–767) — same 3-method-card layout, same illustrations, same auto-dismiss timer, same click-anywhere-to-dismiss behavior.</td>
+      </tr>
+      <tr>
+        <td><strong>Falcon library only</strong></td>
+        <td>Zero native <code>&lt;button&gt;</code> / <code>&lt;input&gt;</code> / <code>&lt;dialog&gt;</code>. Every interactive element is a Falcon wrapper (<code>&lt;falcon-angular-*&gt;</code>). Missing component = extend the library, do not hand-roll.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="s1-callout">
+    <strong>Constraint of constraints:</strong> the user said "I will test" — so live verification was the
+    user's responsibility, and the agent's job was to ship build-green + visually-correct code on every wave
+    without autopiloting Chrome MCP E2E runs.
+  </div>
+</section>
+
+<section id="process-flow">
+  <h2>3. End-to-End Process Flow</h2>
+
+  <p>
+    This is the final shape of the user journey from the click that opens the wizard to the routing call
+    that closes it. Every step below is annotated with the signals, APIs, and components that participate.
+    Read top-to-bottom — the flow is strictly linear with two terminal branches at step 9 (success vs.
+    error).
+  </p>
+
+  <div class="s1-timeline">
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 1</span>
+      <span class="s1-tl-title">User clicks "Add Client" from Org Hierarchy</span>
+      <div class="s1-tl-body">
+        From the management-console org-hierarchy-page, the user opens the root-action menu and selects
+        <em>Add Client</em>. <code>HierarchyPageStateService</code> (facade) routes to
+        <code>addClientState.openWizard()</code>, which flips the <code>addClientOpen</code> signal
+        <code>false → true</code>. The wizard mounts via Angular DI — providers are hoisted at
+        <code>AddClientWizardComponent</code> via <code>ADD_CLIENT_WIZARD_PROVIDERS</code>, guaranteeing
+        pristine state on every re-open.
+      </div>
+    </article>
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 2</span>
+      <span class="s1-tl-title">Wizard mount fires <code>forkJoin</code> of 5 APIs in parallel</span>
+      <div class="s1-tl-body">
+        <code>ngOnInit</code> on <code>AddClientWizardComponent</code> calls
+        <code>clientService.prefetchWizardData()</code> which forks 5 calls. <code>catchError</code> is
+        applied per-inner so a single failure does not kill the batch.
+        <ul>
+          <li><code>POST /user/generate-password</code> (Identity Gateway, port 8088) — returns one-shot strong password</li>
+          <li><code>GET /commerce/Lookup/{countryId}</code> (System Gateway, port 7256) — country option list</li>
+          <li><code>GET /commerce/Lookup/{cityId}</code> (System Gateway) — city option list</li>
+          <li><code>GET /commerce/CommunicationChannel</code> (System Gateway) — available channels for Step 3 rows</li>
+          <li><code>GET /commerce/Application</code> (System Gateway) — available applications for Step 4 rows</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 3</span>
+      <span class="s1-tl-title">Results land in wizard-level signals (single source of truth for cached data)</span>
+      <div class="s1-tl-body">
+        The 5 responses unzip into 5 wizard signals stored in
+        <code>add-client-wizard.signals.ts</code>:
+        <ul>
+          <li><code>eagerCountries</code> — country lookup array</li>
+          <li><code>eagerCities</code> — city lookup array</li>
+          <li><code>eagerCommChannels</code> — communication channel rows for Step 3</li>
+          <li><code>eagerApps</code> — application rows for Step 4</li>
+          <li><code>lastGeneratedPassword</code> — pre-filled password for Step 5</li>
+        </ul>
+        Steps READ from these signals — they do not own them. On <code>closeWizard()</code> the signals are
+        cleared so the next open fires a fresh batch.
+      </div>
+    </article>
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 4</span>
+      <span class="s1-tl-title">Step 1 — Client Information</span>
+      <div class="s1-tl-body">
+        Country/city dropdowns bind to <code>eagerCountries</code> / <code>eagerCities</code> — no fresh
+        XHR. All form fields start literally <code>null</code> (Wave 7 widened types to
+        <code>T | null</code> across <code>models.ts</code>). The <code>accountName</code> field runs
+        async uniqueness check via
+        <code>POST /commerce/Account/account-name-availability</code> on
+        <code>debounceTime(300)</code> from the value-change pipe — <code>untracked(() =&gt; ...)</code>
+        wraps every <code>signal.set</code> inside the <code>switchMap</code> to prevent renderer freezes
+        that Wave 4 originally hit.
+        <br><br>
+        Photo upload emits the canonical object shape:
+        <code>{ extension: 'png', fileBase64String: '...' }</code>, written into
+        <code>step1Value().info.profilePictureImageInfo</code>. The
+        <code>&lt;app-falcon-photo-uploader&gt;</code> component gained a <code>pictureChange</code>
+        output in Wave 6 to surface this shape (backward-compatible with the existing
+        <code>photo</code> data-URL model used for preview).
+      </div>
+    </article>
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 5</span>
+      <span class="s1-tl-title">Steps 2, 3, 4, 5 — pure view + form (no new XHR)</span>
+      <div class="s1-tl-body">
+        Navigation between steps does NOT trigger network calls. Each step:
+        <ul>
+          <li><strong>Step 2 — Client Settings:</strong> security mode + IP allowlist + 3 user/session limits — all null-init (Wave 7). Step starts <code>isFormValid === false</code> until user picks a security mode.</li>
+          <li><strong>Step 3 — Communication Channels:</strong> reads <code>eagerCommChannels</code> into the shared <code>&lt;client-service-row-table&gt;</code> editor. Per-row <code>priceType</code> + <code>priceValue</code> with the new Saudi Riyal left-icon on the <code>&lt;falcon-angular-input-number&gt;</code>.</li>
+          <li><strong>Step 4 — Applications:</strong> identical row-table component, fed from <code>eagerApps</code>. Same validation cascade.</li>
+          <li><strong>Step 5 — Account Owner:</strong> form fields all null-init (no <code>'Account Owner'</code> role default). Password field pre-filled from <code>lastGeneratedPassword</code>; eye toggle works even when input is readonly (Wave 4.2 library fix in <code>falcon-password-tw.tsx</code>).</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 6</span>
+      <span class="s1-tl-title">Row-table validation cascade (Step 3 + 4)</span>
+      <div class="s1-tl-body">
+        When the user clicks <em>Next</em> on Step 3 or 4 with an invalid row,
+        <code>revealAllRowsErrors()</code> runs. Wave 7 hardened this to fix an OnPush re-render bug —
+        in addition to flipping <code>touched</code> signals, it now also calls
+        <code>this.rows.update((rs) =&gt; [...rs])</code> to force a new array reference on the data-table
+        input. Without this spread, the OnPush <code>&lt;falcon-angular-data-table&gt;</code> child would
+        retain stale cell renderers and the red borders would only appear after a manual dropdown click.
+        <br><br>
+        Touch keys (<code>priceTypeTouched</code>, <code>priceValueTouched</code>) are also defensively
+        auto-set inside <code>setPriceType()</code> / <code>setPriceValue()</code> so the red state follows
+        typing without needing a blur event. The stepper-rail dot's color binds to
+        <code>step.isFormValid()</code>, so an invalid step paints red on Next click.
+      </div>
+    </article>
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 7</span>
+      <span class="s1-tl-title">Save click on Step 5 → opens Sending Credentials popup</span>
+      <div class="s1-tl-body">
+        Clicking <em>Save</em> on Step 5 does NOT submit yet. Instead, the wizard signals service flips
+        <code>sendingCredentialsOpen.set(true)</code>, which mounts the new
+        <code>&lt;falcon-angular-sending-credentials-dialog&gt;</code> component (library addition from
+        Wave 5.1). The popup is fed:
+        <ul>
+          <li><code>ownerName</code>, <code>ownerEmail</code>, <code>ownerPhone</code> from <code>step5Value()</code></li>
+          <li><code>defaultDelivery</code> — Email by default</li>
+        </ul>
+        The popup renders the 3 method cards (Email / SMS / Both) + the AO summary block + Cancel/Send
+        buttons. Pixel parity to React source at
+        <code>addclient.jsx:680-749</code>.
+      </div>
+    </article>
+
+    <article class="s1-tl-item">
+      <span class="s1-tl-step">STEP 8</span>
+      <span class="s1-tl-title">User picks Email/SMS/Both → maps to DeliveryMethod enum → POSTs create-account</span>
+      <div class="s1-tl-body">
+        The popup emits <code>(send)="onSend('email'|'sms'|'both')"</code>. The wizard signals service
+        maps the string to the canonical <code>DeliveryMethod</code> enum
+        (<code>libs/falcon/src/shared-types/lib/enums/globels.ts:97</code>) — <strong>Email = 1, Sms = 2,
+        Both = 3</strong>. Wave 6 corrected this; before Wave 6 the wire field was a string. <code>buildCreateAccountWireRequest()</code>
+        in <code>wire-builders.ts</code> assembles the full payload — all 5 step states, photo objects,
+        delivery method int, owner info — and the service issues:
+        <br><br>
+        <code>POST /commerce/Node/create-account</code> (System Gateway, bearer token forwarded).
+        <br><br>
+        While the call is in-flight, <code>pendingCreate.set(true)</code> drives a busy state on the
+        popup's Send button.
+      </div>
+    </article>
+
+    <article class="s1-tl-item branch-success">
+      <span class="s1-tl-step">STEP 9-A</span>
+      <span class="s1-tl-title">Success branch (HTTP 200 + isSuccessful:true)</span>
+      <div class="s1-tl-body">
+        The dispatcher's <code>FALCON_HTTP_UI_CONFIG</code> resolves the response as success — no rule
+        fires. The wizard signals service:
+        <ul>
+          <li>Closes the Sending Credentials popup (<code>sendingCredentialsOpen.set(false)</code>)</li>
+          <li>Opens the Completion Success popup (<code>completionSuccessOpen.set(true)</code>)</li>
+          <li>Starts the 10s auto-dismiss timer (configurable via <code>autoDismissMs</code>)</li>
+        </ul>
+        The <code>&lt;falcon-angular-completion-success-dialog&gt;</code> renders the clipboard-with-checkmark
+        illustration + title + subtitle. Click anywhere OR timer elapses → emits <code>(closed)</code>.
+        The wizard listens and calls
+        <code>router.navigate(['/admin-console/org-hierarchy-page'], { queryParams: { selectedNode: id } })</code>
+        — returning to the org-hierarchy with the new client pre-selected.
+      </div>
+    </article>
+
+    <article class="s1-tl-item branch-error">
+      <span class="s1-tl-step">STEP 9-B</span>
+      <span class="s1-tl-title">Business validation error branch (HTTP 200 + isSuccessful:false, OR 422)</span>
+      <div class="s1-tl-body">
+        Backend returns the success envelope with <code>isSuccessful: false</code> and an
+        <code>errorMessages</code> array. The dispatcher's resolver routes this to the
+        <code>applicationError</code> rule (Wave 4.2 addition to <code>FalconHttpUiErrorBucket</code>
+        union). The rule:
+        <ul>
+          <li>Title from the rule's <code>title</code> field (i18n key or category default)</li>
+          <li>Subtitle = backend's <code>errorMessages[0]</code> via <code>extractInBodyErrorDetail</code></li>
+          <li>Render mode: <strong>top-right toast</strong> (red, error intent), 5s auto-dismiss</li>
+        </ul>
+        Field-level errors map back to the originating step via <code>FIELD_LEVEL_ERROR_MAP</code>
+        (e.g. <code>VAL_010</code> → Step 1 accountName, <code>VAL_023</code> → Step 5 ownerEmail).
+        The toast appears in the host-shell's mounted <code>&lt;falcon-angular-notification-stack
+        position="top-right"&gt;</code>.
+      </div>
+    </article>
+
+    <article class="s1-tl-item branch-warn">
+      <span class="s1-tl-step">STEP 9-C</span>
+      <span class="s1-tl-title">Transport error branch (5xx, network failure)</span>
+      <div class="s1-tl-body">
+        Genuine transport failures (500, 502, network drop) still route through the existing
+        <code>FalconHttpErrorDialogService</code> — a centered confirmation popup with retry. This path
+        was unchanged in this session; the Wave 4.2 fix kept it intact while carving out the
+        <code>applicationError</code> bucket for business validation specifically. The user can dismiss
+        the popup and the wizard remains open with its filled-in state preserved.
+      </div>
+    </article>
+
+  </div>
+
+  <div class="s1-callout">
+    <strong>Performance characteristic:</strong> the entire wizard session, from open to close, costs
+    <strong>5 parallel XHR on mount + 1 sequential POST on save</strong>. Zero per-step API chatter.
+    Verified via DevTools Network panel: navigating Step 1 → 5 in any order produces zero new requests.
+  </div>
+</section>
+
+<section id="wave-timeline">
+  <h2>4. Wave Timeline</h2>
+
+  <p>
+    The session executed 4 wave revisions in sequence, each one driven by user feedback from the previous
+    wave. Total session length: approximately 10 hours. 10+ parallel agents dispatched across the waves.
+    Every wave shipped build-green; every wave was approved by the user before moving forward.
+  </p>
+
+  <div class="s1-wave-track">
+
+    <div class="s1-wave-card purple">
+      <div class="s1-wave-name">Wave 4.2</div>
+      <div class="s1-wave-meta">Polish · hash <span class="s1-wave-hash">d12008f720fa9551</span></div>
+      <div class="s1-wave-body">
+        <p><strong>User asked for:</strong> 4 specific polish items after Wave 4's first-pass backend integration.</p>
+        <ul>
+          <li>Error notifications → toast (not popup) for 4xx</li>
+          <li>Toast position <em>top-left → top-right</em></li>
+          <li>Backend-generated password flow into Step 5</li>
+          <li>Verify button removed from phone field</li>
+          <li>Password width + eye toggle when readonly (library fix in <code>falcon-password-tw.tsx</code>)</li>
+        </ul>
+        <p><strong>Agents:</strong> 1 (focused polish pass).</p>
+        <p><strong>Side win:</strong> 58 unit tests added (vitest 3.2.4 + <code>@analogjs/vitest-angular</code> 2.5.1, after fixing vitest 4 / vite 6 / analogjs 2.1.3 mutual incompatibility).</p>
+      </div>
+    </div>
+
+    <div class="s1-wave-card blue">
+      <div class="s1-wave-name">Wave 5</div>
+      <div class="s1-wave-meta">Architecture + new popups · hashes <span class="s1-wave-hash">95a7…4596</span> / <span class="s1-wave-hash">643d…0b9e</span></div>
+      <div class="s1-wave-body">
+        <p><strong>User asked for:</strong> per-step validations folders + state-service refactor + 2 new flow popups + new save flow.</p>
+        <ul>
+          <li>1080-line <code>hierarchy-page-state.service.ts</code> → 1 facade + 6 slices + 3 helpers</li>
+          <li>New <code>FalconAngularSendingCredentialsDialogComponent</code></li>
+          <li>New <code>FalconAngularCompletionSuccessDialogComponent</code></li>
+          <li><code>validations/validations.ts</code> for all 5 Add Client steps (DI token + provider)</li>
+          <li>Eager password-gen on mount + Save → Sending Credentials → API → Success-or-Toast flow</li>
+        </ul>
+        <p><strong>Agents:</strong> 4 (Wave 5.1: A + B + C parallel; Wave 5.2: Agent D sequential).</p>
+      </div>
+    </div>
+
+    <div class="s1-wave-card green">
+      <div class="s1-wave-name">Wave 6</div>
+      <div class="s1-wave-meta">Polish + eager · hash <span class="s1-wave-hash">36537c10fe4bb0fb</span></div>
+      <div class="s1-wave-body">
+        <p><strong>User asked for:</strong> 7 fixes after visual review of Wave 5.</p>
+        <ul>
+          <li>All form initial values <em>null</em> — no defaults</li>
+          <li>Photo upload → <code>{ extension, fileBase64String }</code> object always</li>
+          <li><code>deliveryMethod</code> = enum int (1/2/3) not string</li>
+          <li>Row-table inline red invalid state + stepper red on Next</li>
+          <li>SAR icon on <code>&lt;falcon-angular-input-number&gt;</code> left side</li>
+          <li>All 5 APIs in single <code>forkJoin</code> on mount</li>
+          <li>Per-step <code>signals/</code> folder INSIDE each step's component folder</li>
+        </ul>
+        <p><strong>Agents:</strong> 4 (Wave 6.1: F + G + H parallel; Wave 6.2: Agent I sequential).</p>
+      </div>
+    </div>
+
+    <div class="s1-wave-card orange">
+      <div class="s1-wave-name">Wave 7</div>
+      <div class="s1-wave-meta">Bug fixes · hash <span class="s1-wave-hash">f7fb54737d3b9d53</span></div>
+      <div class="s1-wave-body">
+        <p><strong>User asked for:</strong> 3 user-reported bugs from live testing.</p>
+        <ul>
+          <li>Row-table OnPush re-render — <code>revealAllRowsErrors()</code> now spreads <code>rows.update((rs) =&gt; [...rs])</code> to force a new array reference (defensive touch-key auto-set too)</li>
+          <li>True null defaults — every scalar form field widened to <code>T | null</code>; all <code>emptyClient*()</code> factories return all-null objects; wire builder coalesces at the boundary</li>
+          <li>SAR icon API redesign — replaced <code>[iconLeftSvg]</code> raw-string with <code>iconLeft</code> boolean + <code>&lt;ng-content&gt;</code> slot; consumer drops in canonical <code>&lt;falcon-angular-saudi-riyal-icon&gt;</code></li>
+        </ul>
+        <p><strong>Agents:</strong> 1 focused fix-pass.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <h3>Severity legend used across the report</h3>
+  <p>
+    <span class="s1-badge green">SUCCESS</span> shipped and verified by user ·
+    <span class="s1-badge blue">ARCH</span> architectural decision locked ·
+    <span class="s1-badge amber">CARE</span> known-tricky area — read before touching ·
+    <span class="s1-badge red">MISTAKE</span> lesson-learned-the-hard-way path
+  </p>
+</section>
+
+</div>

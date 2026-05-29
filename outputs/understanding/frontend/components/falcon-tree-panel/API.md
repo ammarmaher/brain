@@ -65,8 +65,15 @@ export interface FalconTreePanelActionEvent {
 | `rootActions` | `input<readonly FalconTreeAction[]>` | — | `[]` | Items in the root 3-dot menu. Empty → no root 3-dot button. |
 | `nodeActions` | `input<readonly FalconTreeAction[]>` | — | `[]` | Items in the per-row 3-dot menu. Empty → no per-row 3-dot. `visible(node)` filters per node. |
 | `mode` | `input<'falcon' \| 'client'>` | — | `'falcon'` | `falcon` mode renders Falcon SVG + "Falcon" label (ignores root's name/image). `client` mode renders `root.imageUrl` (with initials fallback) + `root.name`. |
-| `showArrows` | `input<boolean>` | — | `true` | When false, all chevrons are hidden. |
-| `showActions` | `input<boolean>` | — | `true` | When false, both root + per-row 3-dot triggers are hidden (overrides `*Actions` arrays). |
+| `showArrows` | `input<boolean>` | — | `true` | When false, all chevrons are hidden (tree otherwise unchanged). |
+| `showActions` | `input<boolean>` | — | `true` | When false, every per-row 3-dot trigger is hidden. |
+| `showRootActions` | `input<boolean>` | — | `true` | When false, ONLY the root row 3-dot is hidden — independent of `showActions`. |
+| `showSubNodes` | `input<boolean>` | — | `true` | When false, only depth-0 rows render — chevrons hidden, expansion forced empty ("clients-only" view). |
+| `rootSelectable` | `input<boolean>` | — | `true` | **(2026-05-18)** When false, the root row emits no `select` on click and drops its pointer cursor + hover surface. Expansion + root 3-dot unaffected. |
+| `nodesSelectable` | `input<boolean>` | — | `true` | **(2026-05-18)** When false, client rows emit no `select` on click and drop their pointer + hover. Chevron expand/collapse + per-row 3-dot still work. |
+
+> [!note] App wrapper
+> Admin-console + management-console do NOT consume `<falcon-tree-panel>` directly — they consume the host-shell wrapper `<app-organization-hierarchy-tree>`, which owns PES + tree fetch and **passes through** `mode`, `showActions`, `showRootActions`, `showArrows`, `rootSelectable`, `nodesSelectable`, `clientsLabelKey`. The wrapper also auto-hides the clients label in `mode='client'`. See [[Org-Hierarchy-Tree-Component-Knowledge]].
 
 ## @Outputs
 

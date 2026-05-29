@@ -59,3 +59,70 @@
 - **GAP-CGM-26** introduce a `Failed` status before users report "stuck In Progress" rows.
 - **GAP-CGM-29** add a download audit trail for Falcon admin actions (compliance / PII).
 - **GAP-CGM-30** retention policy on soft-deleted groups is a known unknown.
+
+---
+
+## Wave 2 refresh — 2026-05-17
+
+> Refreshed by Wave 2 PRD Deep Read. Source PRD `Brain SK\skills\imported-business\prd-knowledge\modules\04-contact-group-management\latest-prd.md` (`Contact Group Management Module_V2`, 73 lines synced 2026-04-24). Backend cross-check: `Brain Outputs\understanding\backend\contact-group\*`. V-rule cross-check: 5 V-rules covering Contact Group.
+
+### Counts
+
+- **Rules verified against PRD line + backend code:** 29 / 38 BR-CGM-* rows (`BR-CGM-01..29` confirmed; `BR-CGM-30..38` are OPEN — silent in PRD).
+- **Drift discovered:** 1 new drift (see catalogue).
+- **New resolutions added to QUESTIONS.md:** 2 (Q-CGM-04 Failed status semantics, Q-CGM-13 validated file scope).
+- **New pending-questions raised:** 0.
+
+### Drift catalogue
+
+**D-CGM-1: Frontend integration MISSING (GAP-CGM-34) — backend ready, no consumer.**
+- All 14 Contact Group endpoints are **unbound** in the current frontend tree (per API_TO_COMPONENT_TRACE.md).
+- `active-story-115329-handover.md` indicates frontend work is in flight.
+- Wave 2 doesn't introduce new drift here — just re-affirms the existing GAP-CGM-34 status.
+- **Action:** monitor active-story-115329 for landing; update API_TO_COMPONENT_TRACE.md once frontend lands.
+
+### Verified BR-CGM rules with cross-links
+
+| BR | PRD line | Backend evidence | V-rule | Status |
+|---|---|---|---|---|
+| BR-CGM-01..03 | :29-34 (Identity + Naming) | `CreateContactGroupRequest.{Name, ReferenceId}` | [[V-contact-group-name-required-format]] triangulated | CONFIRMED |
+| BR-CGM-04..08 | :30-31, :54 (Upload + File Validation) | `UploadConfigResponse.{AllowedExtensions[], MaxFileSizeMB, PreviewRowCount}` + `CreateContactGroupRequest.{HasHeader, ColumnConfig}` | [[V-contact-group-file-size-cap]] · [[V-contact-group-file-type-allowlist]] · [[V-contact-group-column-name-shape]] triangulated | CONFIRMED |
+| BR-CGM-09..12 | :32 (Sharing) | `CreateContactGroupRequest.SharePolicy` + `PATCH /api/contact-groups/{id}/share` | [[V-contact-group-share-policy-mode-mutex]] triangulated | CONFIRMED |
+| BR-CGM-13..19 | attachments.md:9-19 (Permission Matrix) | PES policy rules (server-side) | — | CONFIRMED structurally; alignment with sheet open (Q-CGM-15) |
+| BR-CGM-20..23 | :36-40 (View Tabs) | `GET /api/contact-groups` + `GET /api/contact-groups/shared` (two endpoints; tab logic frontend) | — | CONFIRMED |
+| BR-CGM-24..25 | :41 (List Columns) | `ContactGroupListItemDto.{GroupId, Name, ReferenceId, CreatedAt, RowCount, Status, IsShared}` | — | CONFIRMED |
+| BR-CGM-26..28 | :48, :45, :56 (Edit & Delete) | `PATCH /api/contact-groups/{id}` + `DELETE /api/contact-groups/{id}` (soft) | — | CONFIRMED |
+| BR-CGM-29 | :41 (Status) | `ContactGroupListItemDto.Status` (string) | — | CONFIRMED (`In Progress`, `Completed`); `Failed` is BR-CGM-34 OPEN |
+
+### Entity reconciliation
+
+| Entity | PRD ENTITIES.md | Backend DTO | Drift? |
+|---|---|---|---|
+| ContactGroup | `id (Contact ID), name, referenceId?, createdBy, createdAt, rowCount, status, sharedWith[]` | `ContactGroupListItemDto` + `GetContactGroupDetailsResponse` | No drift on shape; `createdBy` empty-when-viewer-is-creator is frontend display (GAP-CGM-15) |
+| UploadSession | `uploadId, preSignedUrl, expiresInSeconds, maxFileSizeMB, allowedExtensions[]` | `InitUploadResponse` + `UploadConfigResponse` | No drift |
+| Contact | `dynamic key-value` per row | `BrowseContactGroupContactsEndpoint -> PagedResult<Dictionary<string, object>>` | No drift; dynamic schema is intentional per BR-CGM-08 |
+| SharePolicy | `sharedWithAllUsers, sharedUsers[]` | `ShareContactGroupRequest` | No drift |
+| ColumnConfig | `name, type?, alias?` | `CreateContactGroupRequest.ColumnConfig` | No drift |
+
+### Workflow ↔ Playbook mapping
+
+| Workflow | Playbook location | Status |
+|---|---|---|
+| W1 Create Contact Group (4-step wizard) | `understanding/pages/create-contact-group/PAGE_LEARNING.md` (STUB) | STUB only — full playbook MISSING |
+| W2 View Contact Group (role-aware tabs) | `understanding/pages/contact-groups-list/PAGE_LEARNING.md` (STUB) | STUB only |
+| W3 Share (during creation or via action menu) | Covered transitively by W1 + W2 | PARTIAL |
+| W4 Edit (creator only) | Covered transitively by W2 | PARTIAL |
+| W5 Soft Delete (creator only) | Covered transitively by W2 | PARTIAL |
+| W6 Download (all roles per matrix) | Covered transitively by W2 | PARTIAL |
+
+### Halt-and-flag tonight
+
+None.
+
+### Action items raised
+
+1. **Add `Failed` status to ContactGroup status enum** (GAP-CGM-26 / Q-CGM-04) — current PRD only mentions `In Progress` and `Completed`; production reality needs a third terminal state.
+2. **Add Falcon admin download audit log** (GAP-CGM-29 / Q-CGM-16) — PII / compliance requirement.
+3. **Document hard-delete retention policy** (GAP-CGM-30 / Q-CGM-12) — current PRD silent; storage cost concern.
+4. **Watch active-story-115329** — frontend integration is the biggest live blocker. Once landed, update API_TO_COMPONENT_TRACE.md and lift GAP-CGM-34 to COVERED.
+5. **Page learning** for `create-contact-group` and `contact-groups-list` — currently STUB; full 14-file folder would unblock implementation work.

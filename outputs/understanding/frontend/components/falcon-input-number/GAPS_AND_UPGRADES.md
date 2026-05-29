@@ -1,4 +1,4 @@
-# falcon-input-number — GAPS AND UPGRADES
+﻿# falcon-input-number — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -95,3 +95,9 @@ All shared.
 - For G2: pass `mode='currency'` if needing a symbol; otherwise render prefix/suffix externally outside the component.
 - For G6: use `showButtons=true`.
 - For G1: trigger `blur()` programmatically on form submit.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-input-number>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

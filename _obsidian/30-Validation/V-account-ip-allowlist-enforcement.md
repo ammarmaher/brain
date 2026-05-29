@@ -7,6 +7,16 @@ severity: medium
 status: triangulated
 drift: false
 created: 2026-05-15
+module: account-mgmt
+feature: ip-allowlist
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/account-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-account-ip-allowlist-enforcement — IP allowlist gate at gateway ***
 *** Origin: PRD-01 Account Management · Backend: Commerce (source) + Identity (enforcer) · 2026-05-15 ***

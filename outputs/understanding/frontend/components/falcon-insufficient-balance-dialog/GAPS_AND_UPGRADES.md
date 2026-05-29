@@ -1,4 +1,4 @@
-# falcon-insufficient-balance-dialog — GAPS & UPGRADES
+﻿# falcon-insufficient-balance-dialog — GAPS & UPGRADES
 
 ## Known gaps (open for future polish)
 
@@ -56,3 +56,9 @@
 3. **Animated reorder** — spring tween or `view-transition`.
 4. **Glyph font integration** — once `grip-vertical` / `chevrons-*` ship in the icon font.
 5. **Demo app coverage** — register the new component in `apps/demo/{angular,react,vue}/` showcase routes (deferred per "skip demos" rule).
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 3** ([CODE] grep `<falcon-angular-insufficient-balance-dialog>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

@@ -9,6 +9,15 @@ drift: false
 created: 2026-05-15
 superseded-by: V-account-name-format-xlsx-2026-05-24
 superseded-on: 2026-05-24
+module: account-mgmt
+feature: add-client
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/superseded", "#module/account-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+evidence-link: 
 ---
 
 > [!warning] SUPERSEDED 2026-05-24 — Ammar declared `Validations.xlsx` the new SoT. Account Name **no longer requires** start-with-letter; charset now includes space + & + apostrophe + hyphen. See **[[V-account-name-format-xlsx-2026-05-24]]** for the current rule. This note is kept for archival provenance only.

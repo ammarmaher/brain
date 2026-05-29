@@ -1,4 +1,4 @@
-# falcon-search-input — USAGE
+﻿# falcon-search-input — USAGE
 
 ## Real usage examples
 
@@ -90,3 +90,7 @@ NOT supported.
 | Use for search bars. | Use for any free-text. |
 | Trust the built-in debounce. | Add external debounce. |
 | Set `loading` while searching. | Show spinner externally. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-search-input>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

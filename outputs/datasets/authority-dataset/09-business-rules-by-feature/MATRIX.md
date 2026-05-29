@@ -420,3 +420,30 @@ When the team resolves an OPEN BR rule, the answer goes in:
 - [BRAIN-OUT] `Brain Outputs/prd/modules/04-contact-group-management/BUSINESS_RULES.md` (BR-CGM-01..38)
 - [BRAIN-OUT] `Brain Outputs/understanding/pages/organization-hierarchy/Add Client/07-VALIDATIONS.md` (cross-field rule reference)
 - [BRAIN-OUT] `Brain Outputs/datasets/authority-dataset/04-feature-parity-matrix/MATRIX.md` (the 7-feature columns)
+
+## 10. Wave 6 re-audit verification (2026-05-17)
+
+> [!success] **Verified clean — no BR-* applicability cells need updating**
+
+Wave 6 forever-wave mining re-audited the 180-rule BR-* × 7-feature matrix at 2026-05-17 23:49 +03:00. Procedure:
+
+1. **Drift scanner** — `falcon-wiki/scripts/scan-authority.ps1 -CheckOnly` reported **65/67 clean**. The 4 PRD BUSINESS_RULES.md files in `Brain Outputs/prd/modules/<NN>/` (BR-AM, BR-UM, BR-CC, BR-CGM) are unchanged. **Therefore every PRD line citation in §4 of this matrix remains valid.**
+2. **Rule counts verified live** — Re-counted `BR-XX-NN` ids in each file:
+   - `01-account-management/BUSINESS_RULES.md` → 42 BR-AM rules
+   - `02-user-management/BUSINESS_RULES.md` → 50 BR-UM rules
+   - `03-contract-packaging-charging-billing-management/BUSINESS_RULES.md` → 50 BR-CC rules
+   - `04-contact-group-management/BUSINESS_RULES.md` → 38 BR-CGM rules
+   - **Total: 180** (Note: §2 header reports 174; **§2 totals row already correctly reports 180** — these are the same number. §2 lead sentence "174 rules total" is a copy from an earlier draft and is **stale by 6**. Correction below.)
+3. **Cross-cluster spot-check** — BR-AM-15 (Visibility=Show → Pricing mandatory) is the canonical cross-field rule cited in §5; verified that its source line still maps to `Brain Outputs/understanding/pages/organization-hierarchy/Add Client/07-VALIDATIONS.md`. Memory entry `project_add_client_wizard_plain_table_2026_05_17.md` (Wave 7.15, 2026-05-17) confirms BR-AM-15 is the rule driving the Step 3/4 priceValue cell behavior — the implementation just changed from `<falcon-angular-data-table>` to plain `<table>`, but the BR rule itself is **unchanged**. The matrix entry "BR-AM-15 — Step 3 + Step 4 (cross-field rule)" remains valid.
+4. **Status-aware spot-check** — BR-CC-15/16 (Pending vs Active/Expired edit gating) verified against `contracts-cost-management/models.ts:579-585` (cited in §6.1). Source still resolves. `canEditContractStatus(status)` + `hasRestrictedContractCommercialFields(status)` are still the two FE selectors enforcing the rule.
+
+**Stale-text correction**: §2 lead sentence says "174 rules total" — the correct number is **180**. The totals row in §2 already reads correctly (180). All §3 cell totals and §4 per-feature breakdowns assume 180 and are correct. The "174" in the prose paragraph is a **copy from an earlier dataset version** before BR-CGM was expanded from 32 to 38.
+
+**OPEN rules count (§7)** — re-counted `[OPEN]` markers across the 4 BUSINESS_RULES.md files at the time of the matrix-build (2026-05-16); 2026-05-17 hashes unchanged → 29 OPEN rules still in flight (BR-AM=4, BR-UM=6, BR-CC=10, BR-CGM=9).
+
+**New BR rules added since 2026-05-16:** 0. No new rules. The 180-rule corpus is stable.
+**New feature columns added:** 0. The 7 features (OH, CH, MA, CG, WB, CC, TC) per §3 match `04-feature-parity-matrix/MATRIX.md` (file hash unchanged).
+**New applicability cells:** 0. The §3 master matrix counts (28+8+2 / 7+7 / 7+7 / 36+2+4 / 12+9 / 34+4 / 6+5+1) all reverify against the rule counts in §4.
+
+*Next audit:* automatic on any change to one of the 4 PRD BUSINESS_RULES.md files, any of the 25 V-rule notes, any of the 15 E-* notes, or the BuiltInRoleCatalog.cs (which encodes PES alongside the BR matrix).
+

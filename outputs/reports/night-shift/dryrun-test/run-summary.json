@@ -1,0 +1,13 @@
+﻿{
+    "runId":  "dryrun-test",
+    "startedAt":  "2026-05-16T00:06:42.4284305Z",
+    "finishedAt":  "2026-05-16T00:06:42.5971264Z",
+    "durationMin":  0,
+    "reposScanned":  0,
+    "totalViolations":  0,
+    "mustCount":  0,
+    "shouldCount":  0,
+    "fetchCount":  0,
+    "briefingFile":  "C:\\Falcon\\Brain Outputs\\reports\\night-shift\\dryrun-test\\morning-briefing-2026-05-16.md",
+    "dryRun":  true
+}

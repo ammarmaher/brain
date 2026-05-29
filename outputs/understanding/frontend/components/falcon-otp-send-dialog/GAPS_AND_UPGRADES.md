@@ -1,4 +1,4 @@
-# falcon-otp-send-dialog — GAPS AND UPGRADES
+﻿# falcon-otp-send-dialog — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -97,3 +97,9 @@ All shared.
 - For G4: external timer + disable resend via parent state.
 - For G3: pre-translate labels via TranslateService before passing.
 - For G5: when expired, show toast/notification externally + reset state.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 3** ([CODE] grep `<falcon-angular-otp-send-dialog>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

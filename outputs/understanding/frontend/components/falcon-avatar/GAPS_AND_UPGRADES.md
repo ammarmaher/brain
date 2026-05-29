@@ -1,4 +1,4 @@
-# falcon-avatar — GAPS AND UPGRADES
+﻿# falcon-avatar — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -120,3 +120,9 @@ export class FalconAngularAvatarGroupComponent {
 The **image-error fallback** (P1) is the highest-leverage fix — broken images are common in production and the broken-image graphic is a poor UX. Wiring `<img onerror>` to swap render mode is a small Stencil source change with big UX payoff.
 
 The **avatar group** companion is the second priority — currently every consumer that needs an avatar list hand-rolls the overlap. Centralising prevents drift.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-avatar>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

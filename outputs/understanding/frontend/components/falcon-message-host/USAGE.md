@@ -1,4 +1,4 @@
-# falcon-message-host — USAGE
+﻿# falcon-message-host — USAGE
 
 ## Real usage examples
 
@@ -127,3 +127,11 @@ The service is `providedIn: 'root'` — no manual provider registration needed.
 | Set `life: 0` for sticky messages | Set `life: 0` AND `closable: false` (immortal toast) |
 | Use `add([msg1, msg2])` for batch | Call `add()` in a loop (each triggers a render) |
 | Use `clear()` on route change | Manually `remove()` each message |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-message-host>` across `apps/` + `libs/falcon/` returned **3 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/signals/add-client-wizard.signals.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/services/state/add-user-state.signals.ts`
+- `apps/host-shell/src/app/app.ts`

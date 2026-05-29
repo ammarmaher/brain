@@ -1,0 +1,1575 @@
+<!-- ============================================================
+     Section 4 — Lessons Learned + Anti-Patterns
+     Source: project_add_client_wizard_waves_4_to_7_session_2026_05_17.md
+     Date: 2026-05-17 | Owner: Ammar
+     ============================================================ -->
+
+<style>
+  /* ---------- Section 4 scoped styles ---------- */
+  #section-04 {
+    --sev-high-bg: #fef2f2;
+    --sev-high-border: #dc2626;
+    --sev-high-text: #991b1b;
+    --sev-med-bg: #fffbeb;
+    --sev-med-border: #d97706;
+    --sev-med-text: #92400e;
+    --sev-low-bg: #eff6ff;
+    --sev-low-border: #2563eb;
+    --sev-low-text: #1e40af;
+    --sev-info-bg: #f3f4f6;
+    --sev-info-border: #6b7280;
+    --sev-info-text: #374151;
+    --good-bg: #ecfdf5;
+    --good-border: #059669;
+    --bad-bg: #fef2f2;
+    --bad-border: #dc2626;
+    --code-bg: #1f2937;
+    --code-text: #e5e7eb;
+    --doc-bg: #ffffff;
+    --doc-text: #111827;
+    --doc-muted: #6b7280;
+    --rule-accent: #6d28d9;
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--doc-text);
+    line-height: 1.65;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: var(--doc-bg);
+  }
+
+  #section-04 h1 { font-size: 2.25rem; border-bottom: 3px solid var(--rule-accent); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+  #section-04 h2 { font-size: 1.6rem; margin-top: 2.75rem; color: var(--rule-accent); }
+  #section-04 h3 { font-size: 1.2rem; margin: 0; }
+  #section-04 h4 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--doc-muted); margin: 1rem 0 0.4rem; }
+
+  #section-04 .lead { font-size: 1.05rem; color: var(--doc-muted); }
+  #section-04 blockquote.user-quote {
+    border-left: 4px solid var(--rule-accent);
+    background: #faf5ff;
+    padding: 0.75rem 1.2rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #4c1d95;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* ---------- Mistake cards ---------- */
+  #section-04 .mistake-card {
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  #section-04 .mistake-card.severity-high   { background: var(--sev-high-bg); border-color: var(--sev-high-border); }
+  #section-04 .mistake-card.severity-medium { background: var(--sev-med-bg);  border-color: var(--sev-med-border); }
+  #section-04 .mistake-card.severity-low    { background: var(--sev-low-bg);  border-color: var(--sev-low-border); }
+
+  #section-04 .mistake-card > header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+  }
+  #section-04 .badge {
+    display: inline-block;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  #section-04 .severity {
+    margin-left: auto;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  #section-04 .severity-high   .severity { background: var(--sev-high-border);  color: white; }
+  #section-04 .severity-medium .severity { background: var(--sev-med-border);   color: white; }
+  #section-04 .severity-low    .severity { background: var(--sev-low-border);   color: white; }
+
+  /* ---------- Anti-pattern cards ---------- */
+  #section-04 .anti-pattern {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-left: 5px solid var(--bad-border);
+    padding: 1.1rem 1.4rem;
+    margin: 1.4rem 0;
+    border-radius: 8px;
+  }
+  #section-04 .anti-pattern h3 { color: var(--bad-border); display: flex; align-items: center; gap: 0.6rem; }
+  #section-04 .anti-pattern h3::before {
+    content: "✗";
+    background: var(--bad-border);
+    color: white;
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+
+  /* ---------- Code blocks ---------- */
+  #section-04 pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 0.85rem 1.1rem;
+    border-radius: 6px;
+    font-family: "SF Mono", Monaco, Consolas, monospace;
+    font-size: 0.86rem;
+    overflow-x: auto;
+    line-height: 1.5;
+    margin: 0.4rem 0;
+  }
+  #section-04 code { font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 0.88em; }
+  #section-04 :not(pre) > code {
+    background: #f1f5f9;
+    color: #be185d;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.85em;
+  }
+
+  /* ---------- Side-by-side bad/good ---------- */
+  #section-04 .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin: 0.75rem 0;
+  }
+  @media (max-width: 760px) { #section-04 .ba-grid { grid-template-columns: 1fr; } }
+  #section-04 .ba-cell {
+    border-radius: 6px;
+    padding: 0.7rem 0.9rem;
+    background: #fff;
+    border: 1px solid;
+  }
+  #section-04 .ba-bad  { border-color: var(--bad-border);  background: var(--bad-bg); }
+  #section-04 .ba-good { border-color: var(--good-border); background: var(--good-bg); }
+  #section-04 .ba-cell-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+  #section-04 .ba-bad  .ba-cell-title { color: var(--bad-border); }
+  #section-04 .ba-good .ba-cell-title { color: var(--good-border); }
+
+  /* ---------- Standing rules ---------- */
+  #section-04 .rules-block {
+    background: #faf5ff;
+    border: 1px solid #d8b4fe;
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
+    margin: 1rem 0;
+  }
+  #section-04 .rules-block h3 { color: var(--rule-accent); }
+  #section-04 ol.rules-list { padding-left: 1.4rem; }
+  #section-04 ol.rules-list > li {
+    margin: 1rem 0;
+    padding: 0.7rem 0.9rem;
+    background: white;
+    border-radius: 5px;
+    border-left: 3px solid var(--rule-accent);
+  }
+  #section-04 .rule-title { font-weight: 600; color: #4c1d95; }
+  #section-04 .when-apply {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--doc-muted);
+  }
+  #section-04 .when-apply::before { content: "When to apply: "; font-weight: 700; color: var(--rule-accent); }
+
+  /* ---------- Pre-flight checklist ---------- */
+  #section-04 .checklist {
+    background: #eff6ff;
+    border: 2px solid var(--sev-low-border);
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    margin: 1.5rem 0;
+  }
+  #section-04 .checklist h2 { color: var(--sev-low-text); margin-top: 0; }
+  #section-04 .checklist ul {
+    list-style: none;
+    padding: 0;
+  }
+  #section-04 .checklist li {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #dbeafe;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  #section-04 .checklist li::before {
+    content: "☐";
+    color: var(--sev-low-border);
+    font-size: 1.25rem;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Estimates / KPIs ---------- */
+  #section-04 .kpi-card {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 2px solid #d97706;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  #section-04 .kpi-num {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #92400e;
+    display: block;
+    line-height: 1;
+  }
+  #section-04 .kpi-label { color: #78350f; font-weight: 600; }
+
+  /* ---------- Doctrines block ---------- */
+  #section-04 .doctrine-card {
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+    border-left: 4px solid #0891b2;
+  }
+  #section-04 .doctrine-letter {
+    display: inline-block;
+    background: #0891b2;
+    color: white;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.7rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+</style>
+
+<div id="section-04">
+
+  <h1>Section 4 — Lessons Learned + Anti-Patterns</h1>
+
+  <!-- ====================================================== -->
+  <!-- LESSONS OVERVIEW                                         -->
+  <!-- ====================================================== -->
+  <section id="lessons-overview">
+    <h2>Why this chapter exists</h2>
+
+    <p class="lead">
+      In the closing minutes of the Add Client wizard session — after Wave 7 had shipped, after every
+      build was green, after the user had personally verified the entire 5-step flow end-to-end — the
+      user paused and said:
+    </p>
+
+    <blockquote class="user-quote">
+      "I need you to make sure that you learn all the things that you made a mistake on, and make sure
+      that you have a good plan and good knowledge."
+    </blockquote>
+
+    <p>
+      That sentence is the reason this chapter exists. The other 49 pages of this report describe
+      <em>what we built</em>. This chapter is the durable artifact for <em>how to build better next
+      time</em>. It catalogs every concrete mistake, every anti-pattern that surfaced, and every rule
+      that — if I had followed it on the first iteration — would have saved an hour or three of
+      back-and-forth across the 10+ hour session.
+    </p>
+
+    <p>
+      Three audiences read this chapter:
+    </p>
+    <ul>
+      <li><strong>Future me</strong> — every Ammar session that touches the Add Client wizard, the
+        per-component signals doctrine, or the Falcon dialog component pattern. The rules here turn
+        into pre-flight checks.</li>
+      <li><strong>Other Ammar agents</strong> (Auth, Commerce, Core-Gateway, etc.) — most of the
+        anti-patterns surface in any Angular signals + OnPush + Falcon UI codebase. The lessons are
+        portable.</li>
+      <li><strong>The orchestrator (Adnan)</strong> — to know which agents to dispatch with what
+        constraints, and which constraints absolutely cannot be ignored ("I will test" being the
+        canonical example).</li>
+    </ul>
+
+    <div class="kpi-card">
+      <span class="kpi-num">~30%</span>
+      <span class="kpi-label">Estimated fewer iterations had I followed every rule in this chapter on Wave 4</span>
+    </div>
+
+    <p>
+      The estimate comes from counting the avoidable retries: M3 (null defaults) took 2 user
+      messages and 2 agent dispatches when 1 of each would have sufficed. M2 + M4 (SAR icon)
+      together added a full additional round-trip — invent the SVG, get rejected, redesign the API.
+      M5 (OnPush row-table) was diagnosed in Wave 6.1 with the wrong fix, surfaced again in
+      Wave 7, and needed a fresh investigation. M11 (Brain SK playbook) pushed Wave 4 forward
+      with the wrong field shape (string for <code>deliveryMethod</code> instead of the canonical
+      int enum) and the wrong assumption about <code>generatePassword</code> timing. Summing the
+      avoidable detours gives roughly 30% — the math is rough, but the lesson is precise:
+      <strong>load the playbook, grep the library, respect the constraints.</strong>
+    </p>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- MISTAKES CATALOG                                         -->
+  <!-- ====================================================== -->
+  <section id="mistakes-catalog">
+    <h2>The 12 Mistakes</h2>
+
+    <p>
+      Each card below captures one concrete mistake from the session. Severity is calibrated by
+      <strong>impact</strong> (wasted time + user frustration + risk of recurrence), not by how
+      embarrassing the error was. <span class="badge" style="background:var(--sev-high-border)">HIGH</span>
+      means it shipped a wrong-direction iteration that needed full redo;
+      <span class="badge" style="background:var(--sev-med-border)">MEDIUM</span> means it cost a
+      user message and a fresh agent dispatch; <span class="badge" style="background:var(--sev-low-border)">LOW</span>
+      means it cost a few minutes but did not derail the wave.
+    </p>
+
+    <!-- ============== M1 ============== -->
+    <article class="mistake-card severity-low">
+      <header>
+        <span class="badge">M1</span>
+        <h3>Built unit tests when user didn't ask</h3>
+        <span class="severity">Severity: low</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          During Wave 5.3, I dispatched Agent E to write unit tests + run live E2E verification for
+          the new dialog flow. The user had already indicated "I will test" earlier in the same
+          conversation. I forgot, and ran QA on autopilot.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Failed to re-read the user's recent constraints before dispatching the next agent. The
+          QA-after-each-wave pattern was so ingrained that "I will test" was filtered out as
+          noise instead of a hard constraint.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          Wave 5.3 agent dispatch was rejected by the user. ~15 minutes wasted on the dispatch +
+          context-loading of an agent whose output was never accepted. Trust slightly eroded — the
+          user had to repeat themselves.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>Before dispatching any agent, scan the last 3 user messages for hard
+          constraints.</strong> "I will test" is a hard constraint. "Don't refactor anything else"
+          is a hard constraint. "Use null, not empty string" is a hard constraint. Hard constraints
+          override the default workflow.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          If you're about to spawn an agent for QA/testing/verification, ask: "did the user say they
+          want this, or am I autopilot-adding it?" If autopilot, drop the dispatch.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M2 ============== -->
+    <article class="mistake-card severity-medium">
+      <header>
+        <span class="badge">M2</span>
+        <h3>Made up a fake SAR icon SVG</h3>
+        <span class="severity">Severity: medium</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          For the Saudi Riyal currency icon on the Step 4 client-applications row-table price
+          column, I hand-rolled a generic currency-S glyph. I never grepped the Falcon library
+          first. The canonical <code>&lt;falcon-angular-saudi-riyal-icon&gt;</code> component
+          already existed at <code>libs/falcon/src/shared-ui/lib/components/falcon-saudi-riyal-icon/</code>,
+          and was wired into the <code>svg-icon.registry.ts</code> CURRENCY_SAR entry that the user
+          eventually pointed me at.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Assumed an icon that "feels generic" wouldn't be in the library. The Falcon library has
+          396+ exports. Anything currency-related, anything brand-related, anything domain-specific
+          is almost certainly already there. The assumption was backwards.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          A fake SVG shipped temporarily in the wizard. The user spotted it ("this doesn't look
+          right"), pointed at the canonical icon, and Wave 6.1 + Wave 7 had to redo the API + the
+          consumer template. Roughly 25 minutes of redundant work.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>Always grep the library for an existing component before writing inline SVG or
+          inventing a glyph.</strong> Specifically:
+        </p>
+        <ul>
+          <li><code>libs/falcon/src/shared-ui/lib/components/</code> for icons</li>
+          <li><code>libs/falcon-ui-core/src/angular-wrapper/components/</code> for Falcon UI components</li>
+          <li><code>svg-icon.registry.ts</code> for the named SVG registry</li>
+        </ul>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          If you find yourself typing <code>&lt;svg viewBox=...&gt;</code> inside a feature
+          component, stop. Grep the library. The 396 exports are not all framework primitives — a
+          lot of them are domain-specific icons and badges that have already been designed.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M3 ============== -->
+    <article class="mistake-card severity-medium">
+      <header>
+        <span class="badge">M3</span>
+        <h3>Set defaults instead of null (repeated 2x)</h3>
+        <span class="severity">Severity: medium</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Initial <code>emptyClient*()</code> factories used <code>''</code> for strings,
+          <code>0</code> for numbers, and kept <code>security: 'normal'</code> and
+          <code>ownerRole: 'Account Owner'</code> as defaults. The user wanted everything truly null
+          so the UI could reflect "operator hasn't picked yet" and validation could enforce a
+          conscious choice. It took 2 user messages and 2 agent dispatches before I widened the
+          types from <code>T</code> to <code>T | null</code> and updated every factory.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Interpreted "make it null" as "use the empty representation that won't trip the form."
+          That is form-engineer's autopilot — Angular Reactive Forms historically punishes null. But
+          the user was talking about <strong>state truth</strong>: nothing should be in the model
+          until the operator chooses it. Two different mental models collided, and I didn't
+          recognize it the first time.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          Two full agent dispatches: the first kept defaults, the second only updated factories.
+          A third pass widened the types in <code>models/models.ts</code>. Roughly 40 minutes of
+          back-and-forth. User had to repeat themselves twice.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>"Make it null" means literally null.</strong> The sequence is:
+        </p>
+        <ol>
+          <li>Widen the form interface types in <code>models/models.ts</code> first
+            (<code>string</code> → <code>string | null</code>, etc.)</li>
+          <li>Update every <code>empty*()</code> factory to return all-null</li>
+          <li>Update validators to handle null (most "required" rules already do — confirm)</li>
+          <li>Update the wire builder to coalesce null → wire-acceptable value
+            (<code>?? ''</code>, <code>?? 0</code>, etc.) at the boundary</li>
+        </ol>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          When the user says "null" — literally search the code for empty-string and zero defaults
+          in form state. If you see <code>name: ''</code>, that's the trigger.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M4 ============== -->
+    <article class="mistake-card severity-medium">
+      <header>
+        <span class="badge">M4</span>
+        <h3>Used raw SVG string API instead of content projection</h3>
+        <span class="severity">Severity: medium</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Designed the <code>FalconAngularInputNumberComponent</code> icon API as
+          <code>[iconLeftSvg]="rawSvgString"</code> — consumer passes a raw SVG string. User pushed
+          back: "passing just the class for the icon… easy peasy." The redesign in Wave 7 replaced
+          the input with <code>iconLeft</code> boolean + <code>&lt;ng-content select="[falcon-input-number-icon-left]"&gt;</code>.
+          Consumer drops in the real icon component as a child.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Stencil's underlying <code>falcon-input-number-tw</code> has an <code>iconLeftSvg</code>
+          prop (because Stencil cross-framework consumers can't easily do projection). I mirrored
+          that into the Angular wrapper without thinking. Angular has a richer story — content
+          projection — and that's what an Angular consumer wants.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          API was wrong-shaped in Wave 6.1 + half of Wave 7. Redesign required: new
+          <code>booleanAttribute</code> input, new ng-content slot, new docs in the consumer
+          (<code>client-service-row-table</code>). Roughly 30 minutes.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          When the consumer pattern is "drop in any icon/badge/action component," use
+          <code>&lt;ng-content&gt;</code> projection — NOT raw string inputs. The whole reason a
+          component library exists is so consumers don't pass strings of SVG. Keep the Stencil
+          string prop for non-Angular consumers; the Angular wrapper layers ng-content on top.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          If you find yourself typing <code>@Input() iconLeftSvg: string</code> or
+          <code>[innerHTML]</code> binding in a wrapper, stop. The Angular wrapper exists to be more
+          ergonomic than the Stencil base. Slot-based composition is the more ergonomic choice
+          every time.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M5 ============== -->
+    <article class="mistake-card severity-high">
+      <header>
+        <span class="badge">M5</span>
+        <h3>Row-table validation didn't render on Next click</h3>
+        <span class="severity">Severity: high</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Wave 6.1 added <code>revealAllRowsErrors()</code> to flip every row's
+          <code>touched</code> signal so red borders would appear when the operator hit Next without
+          filling required fields. It didn't work. The user saw zero visual feedback on Next click.
+          The red state only appeared after manually focusing-and-blurring a dropdown inside the row.
+          Wave 7 diagnosed the real cause and fixed it.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          <strong>OnPush child + signal-array input + reference-stable mutation.</strong>
+          <code>&lt;falcon-angular-data-table&gt;</code> is OnPush. Its <code>[data]</code> input
+          binds to <code>rows()</code>. When <code>revealAllRowsErrors()</code> updated each row's
+          <code>touched</code> signal, the <code>rows</code> signal array reference DID NOT change
+          (touched is a per-row signal living inside the row object). OnPush + signal change
+          detection schedules a re-render only when the bound signal's tracked dependencies change
+          for the child. Mutating a row-internal signal doesn't count.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          User-reported bug. Surfaced after Wave 6.1 had already shipped + claimed live verification.
+          Wave 7 had to re-investigate + diagnose + fix. ~45 minutes plus erosion of "live verified"
+          trust. This is the most consequential bug of the session.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>OnPush + signal-array: reference identity matters.</strong> When you change
+          a tangential per-item state (touched, focus, validity, expansion) that the OnPush child
+          depends on, you MUST force a new reference on the upstream array. Pattern:
+        </p>
+        <pre>this.rows.update((rs) =&gt; [...rs]);  // spread to force new ref</pre>
+        <p>
+          The defensive fix in Wave 7 also auto-set the touched key in
+          <code>setPriceType</code>/<code>setPriceValue</code> so red state followed typing without
+          needing blur — that's a separate quality-of-life win, but the core rule is the array
+          spread.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          Whenever you write a method that mutates per-row state in a row-table or any OnPush list
+          view, ask: "would the parent array's reference change as a result?" If no, add a spread.
+          When in doubt, spread. The cost is one allocation per call; the benefit is correctness.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M6 ============== -->
+    <article class="mistake-card severity-medium">
+      <header>
+        <span class="badge">M6</span>
+        <h3>Skipped checking existing enums</h3>
+        <span class="severity">Severity: medium</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Typed <code>deliveryMethod</code> in the form model as
+          <code>'email' | 'sms' | 'both' | null</code> — a string literal union. The user asked for
+          an enum. The <code>DeliveryMethod</code> enum already existed at
+          <code>libs/falcon/src/shared-types/lib/enums/globels.ts:97</code> with
+          <code>Email=1, Sms=2, Both=3</code>. The wire payload uses int values, not strings.
+          My string-union shape would have shipped strings to the backend that the backend would
+          have rejected.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Same pathology as M2 — assumed the canonical type wasn't in the library and invented
+          one. Didn't grep <code>shared-types/lib/enums/</code> before designing the form model.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          Caught during Wave 6.1 review before reaching the backend. Required a re-do of the form
+          model + Step 3 template + wire builder. Roughly 20 minutes.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>Always grep <code>libs/falcon/src/shared-types/lib/enums/</code> for an existing
+          enum before inventing a new shape.</strong> If the user mentions an enum-y concept
+          (status, type, method, role, level), assume it exists. Backend probably already uses the
+          canonical version; using anything else means the wire builder has to translate.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          When you find yourself writing a string-literal-union for something the backend will
+          consume, stop. Search the enums folder. Then check the Brain SK playbook for the page —
+          the canonical enum is almost always listed in the wire-shape section.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M7 ============== -->
+    <article class="mistake-card severity-low">
+      <header>
+        <span class="badge">M7</span>
+        <h3>Stale Wave 4 popup vs Wave 4.2 toast confusion</h3>
+        <span class="severity">Severity: low</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          In Wave 4, backend validation errors (HTTP 200 + <code>isSuccessful:false</code>) routed
+          to the <code>default</code> rule in <code>FALCON_HTTP_UI_CONFIG</code> — a center popup.
+          User wanted those as a top-right toast. I initially tried to bend the 4xx rule path to
+          cover this, but those are different paths in the dispatcher: 4xx is for TRANSPORT errors;
+          isSuccessful:false is application-layer.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Conflated transport errors (HTTP 4xx/5xx, caught in the error handler arm of the observable)
+          with application errors (HTTP 200 with a structured failure envelope, caught in the
+          success arm via a "withMessages" hook). They look similar to the user — both are errors —
+          but they go through different code paths in the dispatcher.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          Wave 4.2 had to add a new <code>'applicationError'</code> bucket to
+          <code>FalconHttpUiErrorBucket</code> and a dedicated rule in the config. ~25 minutes.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>Backend validation errors (HTTP 200 + isSuccessful:false) → dedicated
+          <code>applicationError</code> bucket, NOT 4xx, NOT default.</strong> The dispatcher's
+          resolve-rule ladder has three rungs: HTTP status (4xx/5xx) → application bucket → default.
+          Each rung is for a specific error class.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          When designing error UI for a new endpoint: ask whether the failure comes through the
+          observable's <em>error</em> arm or its <em>success-with-failure-envelope</em> arm. If
+          success-with-envelope, you need the application bucket. If error-arm, you're in the
+          transport bucket.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M8 ============== -->
+    <article class="mistake-card severity-low">
+      <header>
+        <span class="badge">M8</span>
+        <h3>File size discipline broken twice</h3>
+        <span class="severity">Severity: low</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Original <code>hierarchy-page-state.service.ts</code> grew to 1080 lines before the
+          Wave 5.1 refactor. Even after the split (1 facade + 6 slices + 3 helpers), the slice
+          files landed at 285/196/175 LOC — within the soft 300-line cap, but
+          <code>models/models.ts</code> hit 431 LOC and the user pushed back. A subsequent extraction
+          into <code>wire-builders.ts</code> (254 LOC) brought <code>models.ts</code> down to 392.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Treated 400 LOC as a hard ceiling I'd notice when crossed, rather than a soft cap I should
+          eagerly extract around. Didn't include "is the file approaching cap?" as a pre-commit
+          check.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          User had to call out the breach. Refactor add-on. ~15 minutes.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>300–400 LOC is a SOFT cap.</strong> If a file is approaching 400, eagerly extract
+          helpers/sub-modules <em>before</em> the wave ships. Pre-finish check: run
+          <code>wc -l</code> on every file touched in the wave; anything &gt;400 needs a justification
+          or a pre-emptive extraction.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          When you find yourself adding "one more interface" to <code>models.ts</code> and the file
+          is at 380 lines, that's the trigger. Extract the new shape to a sibling file like
+          <code>wire-builders.ts</code> or <code><feature>.models.ts</code>.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M9 ============== -->
+    <article class="mistake-card severity-low">
+      <header>
+        <span class="badge">M9</span>
+        <h3>Built unit tests that broke the workspace</h3>
+        <span class="severity">Severity: low</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Wrote 58 spec files for the Wave 4.2 routing + position config. They all failed with
+          "No test suite found." After 30 minutes of debugging, root cause was incompatible versions:
+          workspace had vitest@4 + @analogjs@2.1.3 + vite@6, but vitest 4 requires vite 7. Fix was
+          downgrade vitest to 3.2.4 + upgrade @analogjs to 2.5.1. Then specs ran.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Assumed the workspace's test runner worked. Workspace hadn't been run with vitest in
+          weeks. Test infra rotted silently as other deps were bumped.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          30 minutes of debugging before the first spec ran. Mood: frustrating.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>Before writing 30+ specs in a workspace that hasn't been run recently, sanity-test
+          the runner first.</strong> One <code>sanity.spec.ts</code> with
+          <code>expect(1+1).toBe(2)</code>. Run it. Confirm green. THEN write the real specs.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          Look at the last commit date of <code>vitest.config.ts</code> or the lockfile. If it's
+          been weeks, sanity-test before investing.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M10 ============== -->
+    <article class="mistake-card severity-low">
+      <header>
+        <span class="badge">M10</span>
+        <h3>Trusted live verification gates blindly</h3>
+        <span class="severity">Severity: low</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Across several waves I claimed "live verified via Chrome MCP." In some cases the
+          renderer was frozen (the Wave 4 signal.set-in-switchMap bug) or the page was stale.
+          The "live verification" was hollow — a green build hash + a screenshot that wasn't of
+          the actual wave's UI.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Took a screenshot, saw something rendered, declared success. Didn't reload first.
+          Didn't verify the screenshot showed the new behavior, only that it showed the page.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          False confidence shipped. Then real bugs surfaced in the next user message. Trust
+          eroded — "live verified" started to feel meaningless.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>A green build hash ≠ a working runtime.</strong> Live verification requires:
+        </p>
+        <ol>
+          <li>Kill the existing <code>nx serve</code> and start fresh (or hard-reload Chrome)</li>
+          <li>Navigate to the scenario from a known-good starting state</li>
+          <li>Re-run the exact user-reported flow</li>
+          <li>Screenshot the post-state and reference the wave-specific element in the screenshot
+            ("Step 5 now shows the generated password value")</li>
+        </ol>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          If your screenshot doesn't visually prove the new behavior, the verification is
+          incomplete. "Page loaded" is not verification. "The button I just added is visible and
+          clickable" is verification.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M11 ============== -->
+    <article class="mistake-card severity-high">
+      <header>
+        <span class="badge">M11</span>
+        <h3>Didn't load the Brain SK flow playbook upfront</h3>
+        <span class="severity">Severity: high</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Wave 4 started without reading the Add Client folder-form playbook at
+          <code>C:\Falcon\Brain Outputs\understanding\pages\organization-hierarchy\Add Client\</code>.
+          I discovered <code>06-STEP_5_ACCOUNT_OWNER.md</code> and <code>07-VALIDATIONS.md</code>
+          AFTER making decisions that conflicted with the canonical spec. The playbook has the
+          exact wire shape, the V-rule catalog, the error-code-to-field map, the Kafka side-effects,
+          and the canonical enum decisions. All of it was sitting there waiting.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          The CLAUDE.md auto-load chain explicitly tells me to load the Brain SK playbook for the
+          page before implementation. I skipped that step on Wave 4 because the session started
+          mid-flow and I assumed prior context covered it. It didn't.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          M3 (defaults vs null), M6 (DeliveryMethod enum), and parts of M7 (error routing) all
+          would have been prevented by loading the playbook upfront. Roughly 1.5 hours of avoidable
+          rework. This is the most expensive mistake of the session.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>Load <code>falcon-wiki/00-MOCs/AI-Agent-Onboarding.md</code>,
+          <code>Brain SK CLAUDE.md</code>, and the page-specific playbook at session start.</strong>
+          The 8 verification questions in <code>IMPLEMENTATION_KNOWLEDGE_MAP.md</code> are the
+          grounding gate. Until you can answer all 8 with file citations, you haven't loaded
+          enough context.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          At session start, ask: "what page does this work touch?" If the answer is a known page
+          (organization-hierarchy, contact-groups, wallet-balance-management, etc.), find the
+          playbook folder. Read <code>README.md</code> + the relevant section files BEFORE writing
+          code.
+        </p>
+      </section>
+    </article>
+
+    <!-- ============== M12 ============== -->
+    <article class="mistake-card severity-low">
+      <header>
+        <span class="badge">M12</span>
+        <h3><code>@Input() iconLeft = false</code> failed for bare attribute use</h3>
+        <span class="severity">Severity: low</span>
+      </header>
+      <section class="what-happened">
+        <h4>What happened</h4>
+        <p>
+          Wave 7 redesigned the input-number icon API. New template usage was
+          <code>&lt;falcon-angular-input-number iconLeft&gt;</code> — bare attribute. Build failed
+          with "string not assignable to boolean" because Angular treats bare attributes as
+          empty strings, not <code>true</code>.
+        </p>
+      </section>
+      <section class="root-cause">
+        <h4>Root cause</h4>
+        <p>
+          Angular's strict template type-check enforces input types. A bare HTML attribute is
+          parsed as <code>""</code> (empty string). The input was typed <code>boolean</code>.
+          Mismatch.
+        </p>
+      </section>
+      <section class="impact">
+        <h4>Impact</h4>
+        <p>
+          Build broke once after the Wave 7 commit. Fix was one-line:
+          <code>@Input({ transform: booleanAttribute }) iconLeft = false</code>. ~5 minutes.
+        </p>
+      </section>
+      <section class="rule">
+        <h4>Rule going forward</h4>
+        <p>
+          <strong>When you want an <code>@Input()</code> to accept bare presence (HTML attribute
+          style: <code>&lt;comp flag&gt;</code>), use
+          <code>@Input({ transform: booleanAttribute })</code>.</strong> Import
+          <code>booleanAttribute</code> from <code>@angular/core</code>.
+        </p>
+      </section>
+      <section class="reminder">
+        <h4>How to spot this in the future</h4>
+        <p>
+          If you're adding a boolean input that consumers will use without an explicit value
+          binding (just <code>&lt;comp flag&gt;</code> instead of <code>[flag]="true"</code>),
+          use the transform. Same applies to <code>numberAttribute</code> for numeric inputs.
+        </p>
+      </section>
+    </article>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- ANTI-PATTERNS                                            -->
+  <!-- ====================================================== -->
+  <section id="anti-patterns">
+    <h2>Anti-Pattern Catalog</h2>
+
+    <p>
+      10 patterns that surfaced this session that should never appear in Falcon code again. For
+      each: the bad shape, the good shape, why the bad shape is wrong. Use these as Grep targets
+      during code review.
+    </p>
+
+    <!-- ============== AP1 ============== -->
+    <article class="anti-pattern">
+      <h3>1. Raw SVG string component inputs</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>// Component
+@Input() iconLeftSvg?: string;
+
+// Template
+&lt;falcon-input-number
+  [iconLeftSvg]="'&lt;svg&gt;...&lt;/svg&gt;'"&gt;
+&lt;/falcon-input-number&gt;</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>// Component
+@Input({ transform: booleanAttribute })
+  iconLeft = false;
+// + &lt;ng-content select="[falcon-input-number-icon-left]"&gt;
+
+// Template
+&lt;falcon-input-number iconLeft&gt;
+  &lt;falcon-angular-saudi-riyal-icon
+    falcon-input-number-icon-left&gt;
+  &lt;/falcon-angular-saudi-riyal-icon&gt;
+&lt;/falcon-input-number&gt;</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> raw SVG strings bypass the type system, lose accessibility
+        attributes, break tree-shaking (SVG bytes inline), and force consumers to do unsafe
+        <code>[innerHTML]</code> binding. Content projection lets the consumer drop in a real
+        component with its own bindings, ARIA labels, and styling.
+      </p>
+    </article>
+
+    <!-- ============== AP2 ============== -->
+    <article class="anti-pattern">
+      <h3>2. OnPush child with [data]=signal() where signal mutates but reference doesn't</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>revealAllRowsErrors() {
+  for (const row of this.rows()) {
+    row.touched.priceType.set(true);
+    row.touched.priceValue.set(true);
+  }
+  // Array ref unchanged — OnPush child won't refresh
+}</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>revealAllRowsErrors() {
+  for (const row of this.rows()) {
+    row.touched.priceType.set(true);
+    row.touched.priceValue.set(true);
+  }
+  // Force new array reference for OnPush
+  this.rows.update((rs) =&gt; [...rs]);
+}</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> OnPush + signal arrays require reference change to trigger
+        re-render in the child. Mutating per-item state inside the array doesn't change the array's
+        reference, so the OnPush child sees the same input and skips change detection. Spread the
+        array to force a new reference whenever you change tangential per-item state.
+      </p>
+    </article>
+
+    <!-- ============== AP3 ============== -->
+    <article class="anti-pattern">
+      <h3>3. signal.set() inside RxJS switchMap reading a signal-derived observable</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>toObservable(this.selectedNode).pipe(
+  switchMap((node) =&gt; this.api.fetch(node)),
+  tap((data) =&gt; {
+    this.dataSignal.set(data);
+    // Angular flags: write-in-tracked-context
+    // Renderer may freeze
+  })
+).subscribe();</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>toObservable(this.selectedNode).pipe(
+  switchMap((node) =&gt; this.api.fetch(node)),
+  tap((data) =&gt; {
+    untracked(() =&gt; this.dataSignal.set(data));
+  })
+).subscribe();</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> when a RxJS pipe is fed by <code>toObservable(signal)</code> the
+        downstream callbacks may run inside Angular's tracked context. Calling
+        <code>signal.set()</code> there is "write-in-tracked-context" and can produce circular
+        update warnings or — worse — silently freeze the renderer (the Wave 4 freeze bug).
+        Wrapping <code>.set()</code> in <code>untracked(() =&gt; …)</code> tells Angular this write
+        is not part of the reactivity graph and is safe.
+      </p>
+    </article>
+
+    <!-- ============== AP4 ============== -->
+    <article class="anti-pattern">
+      <h3>4. <code>@Input() flag = false</code> for bare-attribute use</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>// Component
+@Input() iconLeft = false;
+
+// Template
+&lt;falcon-input-number iconLeft&gt;...
+// ERROR: '""' is not assignable to 'boolean'</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>import { booleanAttribute } from '@angular/core';
+
+@Input({ transform: booleanAttribute })
+  iconLeft = false;
+
+// Template
+&lt;falcon-input-number iconLeft&gt;...
+// OK — bare attribute coerced to true</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> Angular's strict template type-checker treats bare attributes as
+        empty strings. <code>booleanAttribute</code> is the canonical coercer:
+        <code>""</code> → <code>true</code>, <code>"false"</code> → <code>false</code>, anything
+        else → <code>true</code>. Same family includes <code>numberAttribute</code> for numeric
+        inputs.
+      </p>
+    </article>
+
+    <!-- ============== AP5 ============== -->
+    <article class="anti-pattern">
+      <h3>5. Initializing form state with display defaults instead of null</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>emptyClientSettings(): ClientSettings {
+  return {
+    authority: 'Government',
+    security: 'normal',
+    userLimits: 100,
+    // UI shows preset values — operator
+    // never made a conscious choice
+  };
+}</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>// Widen types in models/models.ts first
+authority: AuthorityType | null;
+security: SecurityLevel | null;
+userLimits: number | null;
+
+emptyClientSettings(): ClientSettings {
+  return {
+    authority: null,
+    security: null,
+    userLimits: null,
+  };
+}</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> defaults masquerade as choices. The operator hits Next without
+        ever seeing the field, but the form ships preset values that look like decisions. Required
+        validation also can't enforce a conscious pick. <strong>Null = "operator hasn't chosen yet"</strong>;
+        defaults silently bypass that signal. Coalesce at the wire-builder boundary, not in form
+        state.
+      </p>
+    </article>
+
+    <!-- ============== AP6 ============== -->
+    <article class="anti-pattern">
+      <h3>6. Putting state services in a central <code>services/state/</code> folder when they belong to one component</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>// State lives outside its consumer
+services/state/
+  add-client-state.signals.ts
+  add-client-step-1.signals.ts
+  add-client-step-2.signals.ts
+  add-client-step-3.signals.ts
+
+// Wizard component reaches across folders</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>// State lives next to its consumer
+add-client-wizard/
+  signals/
+    add-client-wizard.signals.ts
+    index.ts  // ADD_CLIENT_WIZARD_PROVIDERS
+  client-information-step/
+    signals/
+      client-information-step.signals.ts
+  client-settings-step/
+    signals/
+      client-settings-step.signals.ts</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> central state folders create implicit cross-feature coupling and
+        make it hard to delete a feature cleanly. State with a single component owner belongs inside
+        that component folder. Provider hoisting at the wizard level guarantees pristine state on
+        every re-open via Angular DI lifecycle. Page-wide state that genuinely spans multiple
+        unrelated components (tree, users, drawer, settings) can stay at <code>services/state/</code>.
+      </p>
+    </article>
+
+    <!-- ============== AP7 ============== -->
+    <article class="anti-pattern">
+      <h3>7. Building a feature without reading the Brain SK playbook for it</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>// Session start
+// → open IDE
+// → start typing form interfaces
+// → invent the field list from React source
+// → discover canonical enum 90 minutes later
+// → discover backend wire shape 2 hours later
+// → redo work</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>// Session start
+// 1. Read falcon-wiki/00-MOCs/AI-Agent-Onboarding.md
+// 2. Read Brain SK CLAUDE.md
+// 3. Read Brain Outputs/understanding/pages/
+//      organization-hierarchy/Add Client/README.md
+// 4. Read 06-STEP_5_ACCOUNT_OWNER.md
+//        07-VALIDATIONS.md
+//        08-BACKEND_API.md
+//        12-ERROR_STATES.md
+// 5. NOW start coding</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> the playbook has the canonical wire shape, V-rule catalog, error
+        code map, and enum decisions. Without it, you invent a shape that the backend will reject,
+        miss validations the business wants, and design error UI for the wrong path. The playbook
+        load is mandatory pre-read; treating it as optional is the single most expensive mistake
+        you can make in a Falcon page session.
+      </p>
+    </article>
+
+    <!-- ============== AP8 ============== -->
+    <article class="anti-pattern">
+      <h3>8. Routing HTTP 200 + isSuccessful:false through the <code>default</code> rule</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>// FALCON_HTTP_UI_CONFIG
+rules: [
+  { bucket: '4xx',     ui: 'toast', position: 'top-right' },
+  { bucket: '5xx',     ui: 'dialog' },
+  { bucket: 'default', ui: 'dialog' },  // catches isSuccessful:false
+]
+// Business validation errors show as center popup</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>// FALCON_HTTP_UI_CONFIG
+rules: [
+  { bucket: '4xx',              ui: 'toast', position: 'top-right' },
+  { bucket: '5xx',              ui: 'dialog' },
+  { bucket: 'applicationError', ui: 'toast', position: 'top-right' },
+  { bucket: 'default',          ui: 'dialog' },
+]
+// Backend validation goes to toast — same lane as 4xx</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> HTTP 200 + <code>isSuccessful:false</code> is an application-layer
+        error, not a transport error and not "everything else." Routing it through
+        <code>default</code> conflates business validation with unexpected failures — the user sees
+        a center dialog for what should be inline form feedback. Add the
+        <code>applicationError</code> bucket and route it deliberately.
+      </p>
+    </article>
+
+    <!-- ============== AP9 ============== -->
+    <article class="anti-pattern">
+      <h3>9. Letting per-step API fetches multiply</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>// Each step's constructor fetches its own data
+clientInformationStep ngOnInit() {
+  this.api.generatePassword();
+  this.api.listAuthorityTypes();
+}
+clientSettingsStep ngOnInit() {
+  this.api.listSecurityLevels();
+}
+// 5 steps = 5 separate fetch waterfalls
+// Re-visiting a step re-fires its calls</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>// Wizard mount fires one forkJoin
+addClientWizard ngOnInit() {
+  forkJoin({
+    pwd:     this.api.generatePassword(),
+    auth:    this.api.listAuthorityTypes(),
+    sec:     this.api.listSecurityLevels(),
+    channels:this.api.listCommChannels(),
+    apps:    this.api.listApplications(),
+  }).subscribe((data) =&gt; {
+    untracked(() =&gt; this.state.cache.set(data));
+  });
+}
+// Steps consume from cached signals — zero new XHR</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> per-step fetches mean the wizard is at the mercy of the slowest
+        step's API on every navigation. They re-fire on back/forward. They make caching state
+        per-step instead of per-wizard. One <code>forkJoin</code> on mount gives the operator the
+        full wizard's data on entry; navigation between steps is local-only.
+      </p>
+    </article>
+
+    <!-- ============== AP10 ============== -->
+    <article class="anti-pattern">
+      <h3>10. Trusting a green build hash to mean working runtime</h3>
+      <div class="ba-grid">
+        <div class="ba-cell ba-bad">
+          <div class="ba-cell-title">Bad</div>
+<pre>// Wave wrap-up
+1. nx build admin-console
+2. Hash: fcbef6de9dbc5d9f — GREEN
+3. Open Chrome MCP, take screenshot
+4. Screenshot shows the page rendering
+5. Report: "live verified"</pre>
+        </div>
+        <div class="ba-cell ba-good">
+          <div class="ba-cell-title">Good</div>
+<pre>// Wave wrap-up
+1. nx build admin-console — GREEN
+2. Kill existing nx serve
+3. nx serve admin-console
+4. Hard-reload Chrome (Ctrl+Shift+R)
+5. Run the exact user-reported scenario
+6. Screenshot showing the NEW behavior (the
+   specific element/state the wave introduced)
+7. Report: "Step 5 generated-password value
+   = 'xK9!mP2qR' rendered at <screenshot-ref>"</pre>
+        </div>
+      </div>
+      <p>
+        <strong>Why bad:</strong> a green build hash means TypeScript compiled and bundling
+        succeeded. It does not mean the renderer didn't freeze, the signal didn't write into a
+        tracked context, the OnPush child didn't skip re-render, or that the new wave's UI is
+        actually showing on screen. Live verification is hard-reload + scenario re-run +
+        screenshot of the wave-specific element.
+      </p>
+    </article>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- STANDING RULES                                           -->
+  <!-- ====================================================== -->
+  <section id="standing-rules">
+    <h2>Standing Rules Codified</h2>
+
+    <p>
+      The 10 operational rules and 6 architectural doctrines from the session memory file. These
+      are the durable artifacts — what every future Ammar session that touches a Falcon wizard
+      should apply.
+    </p>
+
+    <div class="rules-block">
+      <h3>Operational rules (10)</h3>
+      <ol class="rules-list">
+        <li>
+          <div class="rule-title">"Make it null" means literally null — widen types first</div>
+          <span class="when-apply">Any time the user asks for null defaults, or whenever you design
+            form state from scratch. Widen <code>T</code> → <code>T | null</code> in
+            <code>models/models.ts</code> BEFORE updating factories.</span>
+        </li>
+        <li>
+          <div class="rule-title">OnPush + signal-array: reference identity matters</div>
+          <span class="when-apply">When you change a tangential per-item state (touched, focus,
+            validity) that an OnPush child depends on. Force a new array reference with
+            <code>signal.update(arr =&gt; [...arr])</code>.</span>
+        </li>
+        <li>
+          <div class="rule-title">No raw SVG strings in component APIs — use ng-content projection</div>
+          <span class="when-apply">Designing any Falcon wrapper component that accepts an icon,
+            badge, or action slot. Use <code>&lt;ng-content select="[slot-name]"&gt;</code>, not
+            <code>@Input() iconSvg: string</code>.</span>
+        </li>
+        <li>
+          <div class="rule-title">Always grep <code>libs/</code> for existing enums/icons/components before inventing</div>
+          <span class="when-apply">Whenever you're about to type an inline SVG, a string-literal
+            union, or a new component. Grep:
+            <code>libs/falcon/src/shared-types/lib/enums/</code>,
+            <code>libs/falcon/src/shared-ui/lib/components/</code>,
+            <code>libs/falcon-ui-core/src/angular-wrapper/components/</code>.</span>
+        </li>
+        <li>
+          <div class="rule-title">Test runner must be sanity-tested before writing 30+ specs</div>
+          <span class="when-apply">In any workspace where vitest hasn't been run in &gt; 1 week.
+            Write a single <code>sanity.spec.ts</code> with <code>expect(1+1).toBe(2)</code>. Run
+            it. Confirm green. Then commit to the real spec suite.</span>
+        </li>
+        <li>
+          <div class="rule-title"><code>untracked()</code> for signal.set inside RxJS pipes that read signals via toObservable</div>
+          <span class="when-apply">Any RxJS pipeline fed by <code>toObservable(signal)</code> where
+            a downstream callback calls <code>.set()</code> on another signal. Wrap the
+            <code>.set()</code> in <code>untracked(() =&gt; …)</code> to escape tracked context.</span>
+        </li>
+        <li>
+          <div class="rule-title">Load Brain SK CLAUDE.md + the page-specific playbook before starting</div>
+          <span class="when-apply">Session start for any Falcon page-level user action. The 8
+            verification questions in <code>IMPLEMENTATION_KNOWLEDGE_MAP.md</code> are the gate —
+            you haven't loaded enough until you can answer all 8 with file citations.</span>
+        </li>
+        <li>
+          <div class="rule-title"><code>@Input({ transform: booleanAttribute })</code> for bare-attribute boolean inputs</div>
+          <span class="when-apply">Any boolean input you expect consumers to use as a bare HTML
+            attribute (<code>&lt;comp flag&gt;</code> rather than <code>[flag]="true"</code>).
+            Import <code>booleanAttribute</code> from <code>@angular/core</code>.</span>
+        </li>
+        <li>
+          <div class="rule-title">Backend validation errors (HTTP 200 + isSuccessful:false) → applicationError rule</div>
+          <span class="when-apply">Designing error UI for any new endpoint. If failures come
+            through the observable's success arm with a failure envelope, you need the
+            <code>'applicationError'</code> bucket — NOT 4xx, NOT default.</span>
+        </li>
+        <li>
+          <div class="rule-title">"I will test" → don't autopilot live verification</div>
+          <span class="when-apply">Before dispatching an agent for QA or running a Chrome MCP
+            session. Scan the last 3 user messages for hard constraints. "I will test" is one of
+            them.</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="rules-block">
+      <h3>Architectural doctrines (6)</h3>
+
+      <div class="doctrine-card">
+        <span class="doctrine-letter">A</span>
+        <strong>State lives next to its consumer (per-component signals folder)</strong>
+        <p>
+          Per-component state goes inside the component folder at <code>signals/</code>. No central
+          <code>services/state/</code> for state with a single component owner. Page-wide state
+          spanning multiple unrelated components is the exception.
+        </p>
+      </div>
+
+      <div class="doctrine-card">
+        <span class="doctrine-letter">B</span>
+        <strong>Provider hoisting at the wizard component level (pristine state via DI lifecycle)</strong>
+        <p>
+          Per-step signal services are <code>@Injectable()</code> (no <code>providedIn</code>).
+          They get provided once at the wizard component via
+          <code>providers: [...ADD_CLIENT_WIZARD_PROVIDERS]</code>. Each wizard mount creates fresh
+          instances; no manual reset cascade.
+        </p>
+      </div>
+
+      <div class="doctrine-card">
+        <span class="doctrine-letter">C</span>
+        <strong>Eager loading on wizard mount (one forkJoin, steps consume from cache)</strong>
+        <p>
+          Every API dependency the wizard needs across its steps fires in one
+          <code>forkJoin</code> on mount. Steps read from cached signals. Step navigation fires zero
+          new XHRs. Cache resets on wizard close.
+        </p>
+      </div>
+
+      <div class="doctrine-card">
+        <span class="doctrine-letter">D</span>
+        <strong>Content projection > raw-string inputs (for icons, badges, actions)</strong>
+        <p>
+          Component slots use <code>&lt;ng-content select="[slot-name]"&gt;</code>. Consumer drops
+          in a real component with its own bindings. Never <code>[innerHTML]</code>, never SVG
+          strings.
+        </p>
+      </div>
+
+      <div class="doctrine-card">
+        <span class="doctrine-letter">E</span>
+        <strong>OnPush + signal arrays — force new reference on tangential state change</strong>
+        <p>
+          When you change a per-item state (touched, focus) that an OnPush child depends on, the
+          parent array reference must change too. Spread is the canonical fix:
+          <code>signal.update(arr =&gt; [...arr])</code>.
+        </p>
+      </div>
+
+      <div class="doctrine-card">
+        <span class="doctrine-letter">F</span>
+        <strong>Pure helpers for testability — extract routing/extraction logic from services</strong>
+        <p>
+          Logic that doesn't need Angular DI lives in standalone <code>.ts</code> files (e.g.
+          <code>falcon-http-ui-routing.ts</code>). Services delegate. Tests hit the helper
+          directly without TestBed bootstrap. Faster, more focused, no Angular zone or DI noise.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- PRE-FLIGHT CHECKLIST                                     -->
+  <!-- ====================================================== -->
+  <section id="prevention-checklist">
+    <h2>Pre-Flight Checklist (Forward-Applicable)</h2>
+
+    <p>
+      Run this 12-item checklist BEFORE starting any new wizard, page, or Falcon component task.
+      It encodes every lesson from this session into one scannable list. If any item is unchecked,
+      do not start writing code yet.
+    </p>
+
+    <div class="checklist">
+      <h2>Pre-Flight Checklist</h2>
+      <ul>
+        <li>Loaded <code>falcon-wiki/00-MOCs/AI-Agent-Onboarding.md</code> (source-prefix rule,
+          vault map, retrieval contract)</li>
+        <li>Loaded <code>C:\Falcon\Brain SK\CLAUDE.md</code> (learning-first task routing, flow
+          playbook doctrine, canonical knowledge root)</li>
+        <li>Loaded the specific page playbook
+          (<code>Brain Outputs/understanding/pages/&lt;page&gt;/&lt;flow&gt;/</code> — README first,
+          then section files for the wave's scope)</li>
+        <li>Grepped <code>libs/falcon/src/shared-types/lib/enums/</code> for any enum the new
+          feature might need (delivery method, status, role, level)</li>
+        <li>Grepped <code>libs/falcon/src/shared-ui/lib/components/</code> +
+          <code>libs/falcon-ui-core/src/angular-wrapper/components/</code> for any icon /
+          component the new feature might need (currency icons, dialogs, table cells)</li>
+        <li>Confirmed test runner can execute a <code>sanity.spec.ts</code> with
+          <code>expect(1+1).toBe(2)</code> BEFORE writing new tests (only if tests are explicitly
+          in scope — otherwise skip)</li>
+        <li>Skimmed the sibling wizard for pattern reference (e.g. Add User wizard for Add Client
+          work — per-step folder pattern, validation services, async-pending behavior)</li>
+        <li>Identified the OnPush boundaries — any signal-driven data input to a
+          <code>&lt;falcon-angular-data-table&gt;</code> or similar OnPush child needs
+          new-reference discipline on tangential changes</li>
+        <li>Per-step <code>signals/</code> folder skeleton is in place before writing logic (one
+          file per step, plus the wizard-wide signals folder)</li>
+        <li>Wizard-level signal service is set up and providers are hoisted at the wizard
+          component (<code>providers: [...ADD_X_WIZARD_PROVIDERS]</code>) for pristine state on
+          re-open</li>
+        <li>Eager-load <code>forkJoin</code> is planned for all wizard-mount-time APIs (password
+          generation, lookup lists, options) — single round-trip, cached in wizard state</li>
+        <li>Re-read the user's last 3 messages for hard constraints ("I will test", "make it
+          null", "use the existing X", etc.) — these override the default workflow</li>
+      </ul>
+    </div>
+
+    <p>
+      The checklist isn't a bureaucratic gate — it's a 90-second pre-flight that prevents the
+      hour-or-three rework cycle that every M1–M12 mistake in this section spawned. The cost
+      to run it is trivial. The cost to skip it is the entire next wave.
+    </p>
+
+    <p style="margin-top: 1.5rem; font-style: italic; color: var(--doc-muted); border-top: 1px solid #e5e7eb; padding-top: 1rem;">
+      <strong>End of Section 4.</strong> The next section (5) covers the architectural deep-dive
+      on the per-component signals doctrine and provider hoisting pattern that emerged from this
+      session as the new Falcon wizard standard.
+    </p>
+  </section>
+
+</div>
+<!-- /section-04 -->

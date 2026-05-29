@@ -46,3 +46,40 @@
 - The PRD uses **Uploaded Contact** for the count column; do NOT alias as "Records" / "Rows".
 - The PRD uses **Soft Delete**; do NOT alias as "Hide" / "Archive".
 - File types in PRD: `CSV`, `XLS`, `XLSX`. Frontend should accept exactly these (no `.tsv`, no `.json`).
+
+---
+
+## Resolutions (Wave 2 — 2026-05-17)
+
+### Q-CGM-04 — Failed status semantics [RECOMMENDED RESOLUTION]
+
+**Recommended addition: `Failed` status with optional `failureReason: string` field.**
+
+**Reasoning:**
+- [PRD] `latest-prd.md:41` lists only `In Progress` / `Completed`. **PRD-silent on parse-error case.**
+- [BRAIN-OUT] `backend/contact-group/DTO_DICTIONARY.md` `ContactGroupListItemDto.Status` is `string` — accepts any value at the wire level. Backend likely has more enum members internally.
+- [INFERRED] When file parsing fails (CSV malformed, XLS corrupted, etc.), the upload session presumably produces an error event. Without a `Failed` status, the row would stay `In Progress` forever, confusing users.
+- DECISION-PROTOCOL `F-022` conservative default: **make failure visible, not hidden.** Three-state `{In Progress, Completed, Failed}` is the conservative UX.
+- **Action:** propose to product team a PRD revision adding `Failed` + `failureReason`. Until then, frontend should display a tooltip on long-running `In Progress` rows: "If this status persists for more than 5 minutes, contact support."
+- **Confidence:** Medium-high — this is a UX best practice, not a PRD-stated rule.
+
+### Q-CGM-13 — `validated` file scope [RESOLVED via inference]
+
+**Resolution: the `validated` file is a schema-normalized version of the upload — header row guaranteed present, column names cleaned per BR-CGM-06.**
+
+**Reasoning:**
+- [PRD] `latest-prd.md:54` (BR-CGM-08): "Contact file CONTENT is NOT validated beyond parsing — whatever the user uploads is accepted."
+- [PRD] `latest-prd.md:31` (BR-CGM-06): "Column names: English letters only, no duplicates, no special chars, <=20 chars, spaces auto-converted to `_`."
+- [BRAIN-OUT] `backend/contact-group/ENDPOINT_REGISTRY.md` exposes `GET /api/contact-groups/{groupId}/files/{fileType}` with `fileType ∈ {original, validated}`.
+- **Inferred semantics:**
+  - `original` = the raw file the user uploaded (unmodified)
+  - `validated` = a re-serialized file with: (a) header row injected if user said "no header" + a default `column_1, column_2, ...` naming; (b) column names normalized (spaces → underscores, etc.); (c) maintains row order from original; (d) **does NOT filter or re-validate data cells** (per BR-CGM-08)
+- **Use case:** Falcon admins downloading for compliance audits should grab `original` (forensic integrity); business users downloading for re-use should grab `validated` (clean schema).
+- **Confidence:** Medium — this is inferred from the schema rules + naming convention. Confirm by reading the file-write handler.
+- **Action:** add `validated` file scope description to `backend/contact-group/FRONTEND_CONTRACT.md` so consumers don't have to infer.
+
+### Items NOT resolved (pending Drive deep-read or product input)
+
+- Q-CGM-01 (default max file size), Q-CGM-02 (Share scope across hierarchy), Q-CGM-03 (deleted shared-with user propagation), Q-CGM-05 (sub-node visibility depth), Q-CGM-06 (creator's account deleted), Q-CGM-07 (header-toggle-off behavior), Q-CGM-08 (Shared With (+N) threshold), Q-CGM-09 (self-share prevention), Q-CGM-10 (Normal User Create=Y interpretation), Q-CGM-11 (Falcon audit view of share lists), Q-CGM-12 (retention policy on soft-deleted), Q-CGM-14 (dynamic column schema in FRONTEND_CONTRACT), Q-CGM-15 (UploadSession TTL), Q-CGM-16 (Falcon download audit log), Q-CGM-17 (column case-sensitivity).
+
+All require either product team confirmation or deep handler code inspection.

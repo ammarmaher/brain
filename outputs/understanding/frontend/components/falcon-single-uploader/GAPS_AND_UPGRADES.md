@@ -1,4 +1,4 @@
-# falcon-angular-single-uploader — GAPS & UPGRADES
+﻿# falcon-angular-single-uploader — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -68,3 +68,9 @@
 ## Workaround availability
 - For #2 (edit hook): consumer can wrap the component and listen to `(fileEdit)`, then handle the replace flow before the picker re-opens.
 - For #6 (image fallback): consumer can preprocess the URL with a HEAD request before setting `file.url`.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-single-uploader>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

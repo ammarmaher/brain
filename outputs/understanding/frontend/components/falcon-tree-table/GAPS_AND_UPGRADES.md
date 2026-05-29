@@ -1,4 +1,4 @@
-# falcon-tree-table — GAPS & UPGRADES
+﻿# falcon-tree-table — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -91,3 +91,9 @@ All gaps belong in the shared component.
 ## Future-proof recommendation
 
 Adopt the Strategy E projection pattern from `<falcon-data-table>`. The tree-table is structurally similar (rows × columns → mount-points). Reusing the pattern would make `<falcon-angular-tree-table>` as powerful as `<falcon-angular-data-table>` for tree data.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-tree-table>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

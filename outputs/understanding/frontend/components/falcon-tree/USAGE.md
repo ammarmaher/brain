@@ -1,4 +1,4 @@
-# falcon-angular-tree — USAGE
+﻿# falcon-angular-tree — USAGE
 
 ## Real usage in active codebase
 - `apps/host-shell/src/app/playground/playground.page.html` — playground showcase (single + multi + density + searchable demos).
@@ -124,3 +124,9 @@ async focusNodeFromSearchResult(id: string): Promise<void> {
 - DO use `defaultExpandLevel` for initial expansion (avoids passing a full `expandedIds` list on first render).
 - DON'T add a custom hover-path effect — the component already handles it via `Set<id>`.
 - DON'T render large trees (n > 1000 nodes) without virtualization — none exists yet (P1 gap).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-tree>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

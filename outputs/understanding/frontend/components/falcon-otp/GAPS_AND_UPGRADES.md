@@ -1,4 +1,4 @@
-# falcon-otp — GAPS AND UPGRADES
+﻿# falcon-otp — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -79,3 +79,9 @@ All shared.
 - For G1: check `value.length === length` inside `(ngModelChange)`.
 - For G4: verify `autocomplete="one-time-code"` is set on Stencil; if not, file a Stencil-side gap.
 - For G3: query nativeElement.querySelector('input') and call focus.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 4** ([CODE] grep `<falcon-angular-otp>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

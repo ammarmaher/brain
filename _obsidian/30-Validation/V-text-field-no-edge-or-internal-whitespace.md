@@ -11,6 +11,15 @@ status: triangulated
 drift: false
 created: 2026-05-24
 xlsx: Brain Outputs/sources/Validation.xlsx (2026-05-24) — column "Allow Spaces?"
+module: account-mgmt
+feature: add-client
+verification: spot-checked
+last-verified: 2026-05-24
+tags: ["#status/superseded", "#module/account-mgmt", "#verification/spot-checked", "#layer/fe"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+evidence-link: project_validation_whitespace_wave_d_2026_05_24.md
 ---
 *** Validation V-text-field-no-edge-or-internal-whitespace — text field whitespace policy ***
 *** Origin: xlsx 2026-05-24 "Allow Spaces?" column · Backend: Commerce · 2026-05-24 ***

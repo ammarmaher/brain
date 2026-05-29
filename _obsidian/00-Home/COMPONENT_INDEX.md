@@ -10,6 +10,14 @@ created: 2026-05-15
 
 > Each component note lives under `60-Components/`. Notes hold back-links (pages using it, gaps, approved patterns, Brain Outputs dossier, Falcon Eyes reports). Notes do NOT duplicate dossier content — link only.
 >
+> **Theming context — Angular-first (2026-05-20):** Every component consumes the [[Falcon Tailwind Theme]] (SSOT) and must satisfy the [[Falcon Component Theme Contract]] (9 sections). **🟢 Current scope:** [[Falcon Angular Wrapper Pattern]] · [[Falcon Stencil-to-Angular Bridge]]. **🟡 Future placeholders (not current):** [[Falcon React Wrapper Future Pattern]] · [[Falcon Vue Wrapper Future Pattern]]. Gap analysis: [[Tailwind Falcon Alignment Scorecard]]. Cluster: [[36-Theming/README|36-Theming]].
+>
+> **Light Mode Visual Baseline (new 2026-05-20):** [[Falcon Light Mode Visual Baseline]] ★ · [[Falcon Current Color Usage Map]] · [[Falcon Current Spacing Radius Shadow Map]] · [[Falcon Current Hover Focus State Map]] · [[Falcon Organization Hierarchy Visual Standard]] ★ · [[Falcon Page Visual Consistency Rules]] · [[Falcon Do Not Change Visual Rules]] — locked baseline + guardrails for any visual change.
+>
+> **Component Recognition & Page Assembly (new 2026-05-20):** [[Falcon Component Recognition Playbook]] ★ · [[Falcon Page Assembly Playbook]] ★ · [[Falcon Component Selection Decision Tree]] · [[Falcon Component Capability Matrix]] · [[Falcon Screenshot To Component Mapping Guide]] · [[Falcon Component Gap Registry]] · [[Falcon New Page Implementation Checklist]] — recognize patterns → pick the right component → assemble pages → log capability gaps → ship via checklist.
+>
+> **Component Combination Intelligence (new 2026-05-20):** [[Falcon Component Composition Playbook]] ★ · [[Falcon Page Region Patterns]] · [[Falcon Component Combination Matrix]] · [[Falcon Data Table Composition Rules]] · [[Falcon Form Composition Rules]] · [[Falcon Popup and Drawer Composition Rules]] · [[Falcon Tree and Details Composition Rules]] — how components wire together · 9 composition families · 12 page regions · deep rules per area.
+>
 > **Canonical knowledge root:** [`Brain Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md`](../../../Brain%20Outputs/understanding/KNOWLEDGE_ROOT_INDEX.md). Component dossiers live at [`understanding/frontend/components/`](../../../Brain%20Outputs/understanding/frontend/components/) (62 components, 6 files each).
 >
 > Full dossier registry: [`outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY_DEEP.md`](../../outputs/understanding/frontend/FALCON_COMPONENT_REGISTRY_DEEP.md) · per-component folders at [`outputs/understanding/frontend/components/`](../../outputs/understanding/frontend/components/).

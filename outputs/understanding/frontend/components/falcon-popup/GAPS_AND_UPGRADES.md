@@ -1,4 +1,4 @@
-# falcon-popup — GAPS AND UPGRADES
+﻿# falcon-popup — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -166,3 +166,9 @@ export class FalconAngularPopupComponent implements OnInit {
 The variant-specific content (icon + title + body + buttons) layers on top via dialog's slots. Net result: popup becomes a thin layer of variant config + content composition, not an entire modal re-implementation.
 
 This is the SINGLE highest-leverage change for this component.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 8** ([CODE] grep `<falcon-angular-popup>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

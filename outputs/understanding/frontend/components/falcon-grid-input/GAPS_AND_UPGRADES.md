@@ -1,4 +1,4 @@
-# falcon-grid-input — GAPS AND UPGRADES
+﻿# falcon-grid-input — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -87,3 +87,9 @@ All shared.
 - For G1: validate / coerce inside `(falconGridCommit)` handler.
 - For G2: render error in a sibling cell-level container.
 - For G3: query nativeElement.querySelector('input').
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-grid-input>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.

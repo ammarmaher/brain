@@ -1,4 +1,4 @@
-# falcon-calendar — USAGE
+﻿# falcon-calendar — USAGE
 
 ## Real usage examples
 
@@ -86,3 +86,10 @@ NOT supported (no CVA). Use the legacy facade `<falcon-calendar>` for `[(ngModel
 | Use for inline calendar UI. | Use for input + popover. |
 | Pass `disabledDates` as JS array / fn. | Pass as `[attr.*]` string. |
 | Set `firstDayOfWeek` per locale. | Trust browser default for Arabic. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-calendar>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.ts`
+- `apps/host-shell/src/app/playground/playground.page.html`

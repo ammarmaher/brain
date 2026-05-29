@@ -1,4 +1,4 @@
-# send-credentials-popup (LEGACY) — USAGE
+﻿# send-credentials-popup (LEGACY) — USAGE
 
 ## Real usage in active codebase
 - _Verify with grep._ Likely Add Client final step in admin-console + management-console.
@@ -57,3 +57,11 @@ onSendCredentials(method: DeliveryMethod): void {
 - DO drive the visible flag from a signal.
 - DO reset `loading` on both success and error API responses.
 - DON'T extend this for new credential-delivery patterns — propose new slot-friendly variants of `<falcon-angular-popup>` instead.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep returned **0 consumers** AND **0 source files** under `libs/falcon-ui-core/` + `libs/falcon/` as of 2026-05-17.
+
+**STATUS: ORPHAN — flagged for deletion review.**
+
+Superseded by: `falcon-sending-credentials-dialog` (wrapper-only at `libs/falcon-ui-core/src/angular-wrapper/components/falcon-sending-credentials-dialog/`). The only remaining textual reference is a comment in `apps/admin-console/.../add-user-wizard.component.html:130` documenting the swap. Note: `falcon-sending-credentials-dialog` itself has NO dossier — flagged below as a MISSING component.

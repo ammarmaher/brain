@@ -1,4 +1,4 @@
-# falcon-tree-table — USAGE
+﻿# falcon-tree-table — USAGE
 
 ## Example 1 — Wallet `multi-3` tree (typical pattern)
 
@@ -110,3 +110,9 @@ import type {
 - DO — manage `expandedIds` via signal for full reactivity.
 - DON'T — embed Falcon Angular components inside cells via templates (not supported by wrapper today).
 - DON'T — use this for org-hierarchy chrome (use `<falcon-organization-hierarchy-tree-tw>`).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-tree-table>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`

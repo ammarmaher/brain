@@ -1,4 +1,4 @@
-# falcon-accordion — GAPS AND UPGRADES
+﻿# falcon-accordion — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -129,3 +129,9 @@ export interface FalconAccordionItem {
 
 ## Future-proof recommendation
 Land the header slot first (P1) — unblocks the "rich header with status badge" pattern that any settings page will eventually need.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-accordion>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

@@ -1,4 +1,4 @@
-# falcon-angular-uploader — GAPS & UPGRADES
+﻿# falcon-angular-uploader — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -72,3 +72,9 @@
 ## Workaround availability
 - For #1 (PrimeIcons): consumer can override the dropzone-empty content via `<span slot="placeholder">…</span>` to hide the residual `<i class="pi …">`. But the icon DOM still renders.
 - For #5 (retry): consumer can wrap the `<falcon-angular-uploader>` and render an overlay retry button on each error row.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-uploader>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

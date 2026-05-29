@@ -68,6 +68,23 @@ C:\Falcon\Brain SK\tools\falcon-eyes\
 | Falcon Eyes report root | `C:\Falcon\Brain Outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\` |
 | Brain SK mirror | `C:\Falcon\Brain SK\outputs\reports\falcon-eyes\<YYYY-MM-DD-HHmm>\` |
 
+## Component Knowledge Base integration (2026-05-18)
+
+Every Falcon component now has a **9-file dossier** — the 6 UI/decision files plus three new layers. Falcon Eyes MUST consult these when mapping a mismatch to a component and when planning a repair:
+
+| Dossier file | Falcon Eyes uses it to… |
+|---|---|
+| `RECOGNITION.md` | **Identify** which Falcon component owns a screen region — visual fingerprint + cross-library map (MUI / PrimeNG / Ant / Bootstrap / shadcn-Radix / plain HTML → Falcon). When the source is a React/HTML reference, match its components here. |
+| `BUSINESS.md` | Know the business rules/constraints the region must honor — so a "repair" never breaks a locked state or invariant. |
+| `INTEGRATION_VALIDATION.md` | Know backend wiring, V-rules, PES gating, skeleton↔wrapper layering — so a visual fix is not proposed where the cause is data/state. |
+| `OVERVIEW`/`API`/`USAGE`/`TOKENS` | The customization knobs (inputs → templates → slots → token override) for the repair plan. |
+
+Master references (read first for orientation):
+- `C:\Falcon\Brain Outputs\understanding\frontend\components\COMPONENT_LIBRARY_CONCLUSION.md` — all 62 components, decision spine, retired/orphan list.
+- `C:\Falcon\Brain Outputs\understanding\frontend\components\COMPONENT_PAGE_MODULE_MAP.md` — component ↔ page ↔ barrel ↔ backend module links.
+
+Rule: a Falcon Eyes repair map entry is incomplete until each mismatch cites the owning component's `RECOGNITION.md` (identification) and names the customization knob from its dossier (repair). The unified `brain-search` index (`node brain-search.mjs "<feature>"` in `Brain SK\scripts\vault-search\`) is the fast lookup across all dossiers.
+
 ## Default future source / destination
 
 | Side | URL |

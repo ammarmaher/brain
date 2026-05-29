@@ -22,6 +22,19 @@ created: 2026-05-15
 - [ERRORS](../../../Brain%20Outputs/understanding/backend/charging/ERRORS.md)
 - [FRONTEND_CONTRACT](../../../Brain%20Outputs/understanding/backend/charging/FRONTEND_CONTRACT.md)
 
+## Controller dossiers (Wave 5c · 2026-05-18)
+
+Per-controller 6-file dossiers live at `understanding/backend/charging/controllers/<Name>/`:
+
+| Controller | Endpoints | Primary pages | Findings |
+|---|---|---|---|
+| [WalletController](../../../Brain%20Outputs/understanding/backend/charging/controllers/WalletController/OVERVIEW.md) | Wallet CRUD · transfer · contract-balance-summary · reservation lifecycle | [[Wallets and Balance Management Flow]] · [[Contracts List Flow]] | — |
+| [LookupController](../../../Brain%20Outputs/understanding/backend/charging/controllers/LookupController/OVERVIEW.md) | Dropdown values for charging UI | Wallet UI · Charging Lab | — |
+| [TestKafkaController](../../../Brain%20Outputs/understanding/backend/charging/controllers/TestKafkaController/OVERVIEW.md) | Test Kafka publish + health | _(test harness)_ | 🟡 MEDIUM `[AllowAnonymous]` — see [[SECURITY-FINDINGS-2026-05-18]] |
+| [TestingChargingController](../../../Brain%20Outputs/understanding/backend/charging/controllers/TestingChargingController/OVERVIEW.md) | 9 simulation endpoints | Charging Lab admin tool | ⚠️ OPERATIONAL — mutates real balances; gated by `Settings:TestingCharging:Enabled` — see [[SECURITY-FINDINGS-2026-05-18]] |
+
+**Total: 4 controllers** documented during Wave 5c.
+
 ## PRDs this service implements
 
 - [[01 Account Management]] — **primary** for wallet & balance management (Wallet · WalletRecord · WalletTypeConfig · TransferTx)

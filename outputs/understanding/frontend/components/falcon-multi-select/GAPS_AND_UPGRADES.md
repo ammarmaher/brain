@@ -1,4 +1,4 @@
-# falcon-multi-select — GAPS AND UPGRADES
+﻿# falcon-multi-select — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -109,3 +109,9 @@ All gaps belong in the shared component.
 - For G3: cap option count or lazy-load via parent observable + re-feeding the `options` input.
 - For G7: query the inner Stencil element via the `multiSelectEl` ViewChild and call methods.
 - For G8: enforce maxSelected externally by capping the `valuesChange` array length before assignment.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 3** ([CODE] grep `<falcon-angular-multi-select>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

@@ -34,6 +34,12 @@ Navigation note. Brain Outputs holds the dossier.
 
 - See [GAP_REGISTRY.md](../../../Brain%20Outputs/understanding/pages/organization-hierarchy/GAP_REGISTRY.md) — filter by component `falcon-input`.
 
+## Theming & Tailwind
+
+- [[Tailwind CSS]] — library entry. Input is the heaviest consumer of arbitrary-value safelists (`bg-[length:var(--falcon-input-label-*)]` patterns). [[Tailwind Falcon Alignment Scorecard]] Wave 2 Phase D converts these to `@utility input-label-text` declarations.
+- [[Tailwind Custom Styles and Layers]] — the @utility refactor target pattern.
+- [[Tailwind Source Detection]] — why the safelist exists today.
+
 ## Visual difference reports
 
 - [[FALCON_EYES_INDEX]] — filter by component `falcon-input`.

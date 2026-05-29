@@ -14,6 +14,62 @@ created: 2026-05-15
 >
 > Companion notes: [[Frontend Understanding]] (top-level index) and [[Frontend Components Index]] (alternate component view).
 
+## Theming context — Angular-first (updated 2026-05-20)
+
+Every component consumes the [[Falcon Tailwind Theme]] (SSOT) and must satisfy the [[Falcon Component Theme Contract]] (9-section contract).
+
+**Theme governance:** [[Falcon Tailwind Theme]] · [[Falcon Component Theme Contract]] · [[Tailwind Falcon Alignment Scorecard]].
+
+**🟢 CURRENT delivery scope:** Stencil components + Angular wrappers. See [[Falcon Angular Wrapper Pattern]] · [[Falcon Stencil-to-Angular Bridge]].
+
+**🟡 FUTURE EXTENSION (NOT current scope):** React / Vue wrappers — see [[Falcon React Wrapper Future Pattern]] · [[Falcon Vue Wrapper Future Pattern]] (placeholders only). Architecture is framework-neutral by design, but no current audit checks React/Vue compliance.
+
+**Cardinal rule for wrappers:** they ONLY adapt framework APIs. They MUST NOT redesign components, override token values, or add CSS that bypasses the contract.
+
+**Audit + governance tooling (new 2026-05-20):**
+- [[Falcon Component Audit Scorecard]] ★ — score every component on 6 dimensions
+- [[Component Theme Contract Template]] — markdown stub per new component
+- [[Tailwind Implementation Review Checklist]] — pre-merge PR review
+- [[Tailwind Mental Model]] — 3-layer token doctrine
+
+**Light Mode Visual Baseline (new 2026-05-20):**
+
+Components consume the locked light-mode baseline. Read these BEFORE editing any component's tokens, hover/focus states, or visual style:
+
+- [[Falcon Light Mode Visual Baseline]] ★ — overall visual identity (surfaces, colors, borders, shadows, radius, spacing)
+- [[Falcon Current Color Usage Map]] — every color token with hex + where used per component
+- [[Falcon Current Spacing Radius Shadow Map]] — dimensional vocabulary per component
+- [[Falcon Current Hover Focus State Map]] — per-component hover/focus/active/disabled/selected behavior
+- [[Falcon Organization Hierarchy Visual Standard]] ★ — canonical reference page recipe
+- [[Falcon Page Visual Consistency Rules]] — page-builder rules
+- [[Falcon Do Not Change Visual Rules]] — strict guardrails (refusal list)
+
+**Component Recognition & Page Assembly (new 2026-05-20):**
+
+Before creating any new page, HTML, Angular template, or component, the Brain must recognize each visible UI pattern and map it to an existing Falcon component:
+
+- [[Falcon Component Recognition Playbook]] ★ — UI pattern → Falcon component lookup
+- [[Falcon Page Assembly Playbook]] ★ — compose components into full pages
+- [[Falcon Component Selection Decision Tree]] — reuse → extend → create
+- [[Falcon Component Capability Matrix]] — 9-column quick-pick (UI Pattern · Component · Wrapper · States · Slots · Tokens · Gaps · Use When · Do Not Use When)
+- [[Falcon Screenshot To Component Mapping Guide]] — 6-step process for designs / screenshots / HTML / React handoffs
+- [[Falcon Component Gap Registry]] — P0/P1/P2/P3 capability gaps
+- [[Falcon New Page Implementation Checklist]] — pre-merge 8-section gate
+
+**Component Combination Intelligence (new 2026-05-20):**
+
+How multiple components wire together — compositions, regions, deep rules per area:
+
+- [[Falcon Component Composition Playbook]] ★ — 9 composition families + anti-patterns
+- [[Falcon Page Region Patterns]] — 12 named page regions (R01–R12) with layout + components + rules
+- [[Falcon Component Combination Matrix]] — 7 canonical UI compositions with wiring templates + known gaps
+- [[Falcon Data Table Composition Rules]] — deep rules: cell templates, row actions, selection, pagination, sorting, empty state
+- [[Falcon Form Composition Rules]] — deep rules: control mapping, CVA, labels, grid layout, async validators, footer, unsaved changes
+- [[Falcon Popup and Drawer Composition Rules]] — deep rules: popup vs drawer decision, portal contract, z-index ladder, focus trap
+- [[Falcon Tree and Details Composition Rules]] — deep rules: split layout, node selection, tabs, PathPrefix, role-change PES gate
+
+Library entry: [[Tailwind CSS]]. Cluster: [[36-Theming/README|36-Theming]].
+
 ## Latest scan run — `2026-05-13-2337`
 
 - [COMPONENT_SCAN_REPORT (md)](../../Brain%20Outputs/reports/component-scans/2026-05-13-2337/COMPONENT_SCAN_REPORT.md)

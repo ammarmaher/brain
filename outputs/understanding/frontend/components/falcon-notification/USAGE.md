@@ -1,4 +1,4 @@
-# falcon-notification — USAGE
+﻿# falcon-notification — USAGE
 
 ## Real usage examples
 
@@ -115,3 +115,12 @@ For platform-wide changes, override the palette tokens in the global theme.
 | Use `iconBg=true` for distinctive notifications | Use `iconBg=true` everywhere (visual fatigue) |
 | Use `glossy=true` for modern look | Use `glossy=true` when render perf matters (backdrop-blur is expensive) |
 | Provide both `title` and `subtitle` for context | Skip subtitle and rely on long titles |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-notification-stack>` across `apps/` + `libs/falcon/` returned **4 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/signals/add-client-wizard.signals.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/services/state/add-user-state.signals.ts`
+- `apps/host-shell/src/app/app.ts`
+- `apps/host-shell/src/app/features/falcon-ui-showcase/falcon-ui-showcase.component.ts`

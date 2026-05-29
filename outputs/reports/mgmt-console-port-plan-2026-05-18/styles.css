@@ -1,0 +1,222 @@
+@page {
+  size: A4;
+  margin: 18mm 16mm 22mm 16mm;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: #1d2530;
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  color: #0f1721;
+  line-height: 1.25;
+  page-break-after: avoid;
+}
+
+h1 {
+  font-size: 24pt;
+  margin: 28pt 0 14pt 0;
+  border-bottom: 2pt solid #0f1721;
+  padding-bottom: 6pt;
+  letter-spacing: -0.5px;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+  font-size: 28pt;
+}
+
+h2 {
+  font-size: 17pt;
+  margin: 24pt 0 10pt 0;
+  padding-bottom: 4pt;
+  border-bottom: 1pt solid #c8d2dc;
+  color: #102a43;
+  page-break-before: auto;
+}
+
+h3 {
+  font-size: 13pt;
+  margin: 18pt 0 8pt 0;
+  color: #243b53;
+}
+
+h4 {
+  font-size: 11.5pt;
+  margin: 14pt 0 6pt 0;
+  color: #334e68;
+}
+
+h5, h6 {
+  font-size: 10.5pt;
+  margin: 10pt 0 4pt 0;
+  color: #486581;
+}
+
+p {
+  margin: 0 0 8pt 0;
+  text-align: left;
+  orphans: 3;
+  widows: 3;
+}
+
+blockquote {
+  border-left: 3pt solid #4a90a4;
+  background: #f0f6f9;
+  margin: 10pt 0;
+  padding: 8pt 12pt;
+  color: #243b53;
+  font-style: normal;
+  border-radius: 3pt;
+  page-break-inside: avoid;
+}
+
+blockquote p {
+  margin: 0;
+}
+
+ul, ol {
+  margin: 6pt 0 10pt 0;
+  padding-left: 22pt;
+}
+
+li {
+  margin: 3pt 0;
+}
+
+li > p {
+  margin: 2pt 0;
+}
+
+strong {
+  color: #0f1721;
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+a {
+  color: #1a73a3;
+  text-decoration: none;
+}
+
+code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 9.5pt;
+  background: #f3f6f9;
+  padding: 1pt 4pt;
+  border-radius: 2pt;
+  color: #b3261e;
+  word-wrap: break-word;
+}
+
+pre {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 9pt;
+  line-height: 1.42;
+  background: #0f1721;
+  color: #d6e3ea;
+  padding: 10pt 12pt;
+  border-radius: 4pt;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  margin: 10pt 0;
+}
+
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+  word-wrap: normal;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10pt 0;
+  font-size: 9.5pt;
+  page-break-inside: auto;
+  table-layout: auto;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tr {
+  page-break-inside: avoid;
+}
+
+th {
+  background: #102a43;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 6pt 8pt;
+  text-align: left;
+  border: 0.5pt solid #102a43;
+  vertical-align: top;
+}
+
+td {
+  padding: 5pt 8pt;
+  border: 0.5pt solid #c8d2dc;
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+tr:nth-child(even) td {
+  background: #f7f9fb;
+}
+
+hr {
+  border: 0;
+  border-top: 1pt solid #c8d2dc;
+  margin: 18pt 0;
+}
+
+/* Cover-page-ish styling for the document title */
+h1:first-of-type + p,
+h1:first-of-type + p + p,
+h1:first-of-type + h2 {
+  margin-top: 6pt;
+}
+
+/* Avoid breaks inside small tables and code blocks */
+table.small,
+table:has(tr:nth-child(-n+8):last-child) {
+  page-break-inside: avoid;
+}
+
+/* Page breaks before major sections */
+h1 {
+  page-break-before: always;
+}
+
+h1:first-of-type {
+  page-break-before: avoid;
+}
+
+/* Source-prefix tag styling */
+code:contains("[CODE]"),
+code:contains("[BRAIN-OUT]"),
+code:contains("[VAULT]"),
+code:contains("[BRAIN-SK]"),
+code:contains("[MEMORY]"),
+code:contains("[INFERRED]") {
+  background: #fef3e2;
+  color: #8a5a00;
+}
+
+/* "Definition of Done" emphasis */
+strong:contains("Definition of Done") {
+  color: #0d7c4d;
+}

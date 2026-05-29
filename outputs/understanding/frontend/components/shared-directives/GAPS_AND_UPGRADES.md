@@ -1,4 +1,4 @@
-# Shared directives — GAPS & UPGRADES
+﻿# Shared directives — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -72,3 +72,7 @@
 ## Workaround availability
 - For #1 / #2 (FalconFormValidate): consumers can avoid the directive entirely by relying on each Falcon UI input's built-in `errorMessage` + `state` Inputs.
 - For #3 (FalconEffectiveDate): consumer can write a custom validator function.
+
+## Wave 7 Findings (2026-05-17)
+
+**Meta-dossier.** Directive set indexed here cannot be grep'd as a single tag. Refresh deferred to Wave 8 directive-level audit.

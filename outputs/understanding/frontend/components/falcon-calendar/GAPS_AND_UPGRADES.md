@@ -1,4 +1,4 @@
-# falcon-calendar — GAPS AND UPGRADES
+﻿# falcon-calendar — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -100,3 +100,9 @@ All shared.
 - For G1: use `<falcon-angular-date-picker>` if Reactive Forms binding is needed.
 - For G2: use two `<falcon-angular-date-picker>` for start + end externally.
 - For G4: format dates via `Intl.DateTimeFormat` externally and pass.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-calendar>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

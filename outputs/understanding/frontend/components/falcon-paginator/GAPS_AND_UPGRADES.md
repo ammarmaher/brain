@@ -1,4 +1,4 @@
-# falcon-paginator — GAPS & UPGRADES
+﻿# falcon-paginator — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -60,3 +60,9 @@ No specs for `clampPage`, `interpolatePageReport`, `parsePaginatorTemplate`, `bu
 ## Future-proof
 
 Wrapper API parity is a 5-minute fix; should land before any new Angular feature needs the rows-per-page or current-page-report controls.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-paginator>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

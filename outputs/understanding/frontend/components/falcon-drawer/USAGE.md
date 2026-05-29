@@ -1,4 +1,4 @@
-# falcon-drawer — USAGE
+﻿# falcon-drawer — USAGE
 
 ## Real usage example (cited)
 
@@ -154,3 +154,7 @@ Body content gets layout utilities directly. The drawer panel's outer geometry (
 | Use `[modal]="false"` for non-blocking detail panels | Use `[modal]="false"` if click-out should still dismiss (it won't — see Stencil source line 105-109) |
 | Add body padding via inner `<div class="p-6">` | Mutate `--falcon-drawer-body-padding` per page (use it for global density) |
 | Bind `[(open)]` for state | Toggle DOM presence with `@if` AND `[open]` (redundant) |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-drawer>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.

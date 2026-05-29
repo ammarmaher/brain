@@ -1,4 +1,4 @@
-# falcon-angular-tree — GAPS & UPGRADES
+﻿# falcon-angular-tree — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -78,3 +78,9 @@
 - For #1 (parallel implementations): the legacy `<falcon-tree-panel>` exists today; new code can use `<falcon-angular-tree>` directly + assemble chrome manually.
 - For #2/#3 (row template): a consumer can wrap `<falcon-angular-tree>` and overlay a custom action layer absolutely positioned. Hacky.
 - For #4 (virtualization): truncate the tree client-side and load more on scroll. Manual.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-tree>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

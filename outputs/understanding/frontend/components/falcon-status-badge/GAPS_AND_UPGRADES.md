@@ -1,4 +1,4 @@
-# falcon-status-badge — GAPS & UPGRADES
+﻿# falcon-status-badge — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -66,3 +66,9 @@
 ## Future-proof recommendation
 
 Adopt the component. Then add `col.type='status'` to remove repetitive `<ng-template>` boilerplate.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 6** ([CODE] grep `<falcon-angular-status-badge>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

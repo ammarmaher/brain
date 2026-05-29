@@ -1,4 +1,4 @@
-# falcon-input — USAGE
+﻿# falcon-input — USAGE
 
 ## Real usage examples (active codebase)
 
@@ -181,3 +181,22 @@ import { FormsModule } from '@angular/forms'; // for ngModel
 | Use `useTailwind=true` (default). | Toggle to Shadow only if slots needed. |
 | Bind `(ngModelChange)` or `formControlName`. | Bind `[value]` directly. |
 | Add Tailwind utilities via `class=` or `wrapperClass`. | Add SCSS rules in consumer CSS. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-input>` across `apps/` + `libs/falcon/` returned **14 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/falcon-table-edit-row/falcon-table-edit-row.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-info-panel/falcon-org-info-panel.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-node-drawer/falcon-org-node-drawer.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-node-drawer/falcon-org-node-drawer.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/settings-tab/settings-tab.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-account-owner-step/client-account-owner-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step/user-personal-step.component.html`
+- `apps/host-shell/src/app/features/user-details/user-details-page.component.html`
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `libs/falcon/src/shared-ui/index.ts`

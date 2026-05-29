@@ -1,4 +1,4 @@
-# falcon-radio-group — GAPS AND UPGRADES
+﻿# falcon-radio-group — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -84,3 +84,9 @@ All shared.
 
 - For G3: use `<falcon-angular-tabs mode='radio-cards'>` instead.
 - For G1: pre-format label.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-radio-group>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

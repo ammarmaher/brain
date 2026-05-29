@@ -75,3 +75,20 @@ Status-aware edit gates · rate-card numeric ranges · destination-priority uniq
 ## Hubs
 
 - [[PRD_INDEX]] · [[AMMAR_BRAIN_HOME]] · [[BUSINESS_INDEX]] · [[VALIDATION_INDEX]] · [[API_INDEX]] · [[GAPS_INDEX]] · [[COMPONENT_INDEX]]
+
+
+---
+
+## Vol 44 cross-reference (added 2026-05-18)
+
+The [[VOL-44-TRUTH-TAUTOLOGIES]] atomic note carries direct BRD-extracted facts relevant to this module. See [[Vol 44 — Supporting Artifacts Research]] for the long-form treatment.
+
+
+
+## Vol 45 specialist cross-reference (added 2026-05-18)
+
+For wallet/balance/multi-contract deep dive, see:
+- [[WALLET-SPECIALIST-HUB]] (entry point)
+- [[Vol 45 — Wallet Specialist Guide]] (graph node)
+- Code-verified by Wave 11 mining agent — `AllocateOcsMonetaryBucketsPolicy.cs:35-46`, `OcsWallet` aggregate, `MongoUnitOfWork.cs`.
+

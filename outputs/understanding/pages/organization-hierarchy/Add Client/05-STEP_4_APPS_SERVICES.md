@@ -21,7 +21,7 @@ Mirror of Step 3, swapping CommChannel for Application:
 | Field | Type / UI | PRD rule | Backend DTO field | V-rule | Frontend validator | Drift |
 |---|---|---|---|---|---|---|
 | Application Name | display ([[Falcon Tag]] or text cell with [[Falcon Icon]]) | Master catalog read | `ApplicationResponse.Name` (MultiLanguage) · `ApplicationResponse.Icon` | — | Read-only | — |
-| Visibility | [[Falcon Toggle]] — default OFF | BR-AM-14 | Sparse list inclusion in `Applications.Services` | [[V-service-visibility-pricing-required]] | Same wiring as Step 3 | ⚠ enum→bool |
+| Visibility | [[Falcon Switch]] — default OFF | BR-AM-14 | Sparse list inclusion in `Applications.Services` | [[V-service-visibility-pricing-required]] | Same wiring as Step 3 | ⚠ enum→bool |
 | Pricing Type | dropdown ([[Falcon Dropdown]]) | BR-AM-16 | `Service.PriceType` `[ThrowIfNotEnumValue<ePricingType>]` | [[V-service-visibility-pricing-required]] | Conditional on Visibility = Show | — |
 | Price Value | numeric input ([[Falcon Input Number]]) SAR | BR-AM-17 | (inferred — `Service` nested type, fields beyond `AppId, PriceType` not documented) | [[V-service-visibility-pricing-required]] | Conditional on Visibility = Show. `Validators.required` + `Validators.min(0)` | ⚠ Documentation gap |
 
@@ -71,4 +71,4 @@ Same canonical Reactive Forms wiring per [[V-service-visibility-pricing-required
 
 ## Hubs
 
-- [[Organization Hierarchy]] · [[01 Account Management]] · [[Commerce Service]] · [[V-service-visibility-pricing-required]] · [[E-app-config]] · [[Falcon Data Table]] · [[Falcon Toggle]] · [[Falcon Dropdown]] · [[Falcon Input Number]] · [[Falcon Tag]] · [[Falcon Icon]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[AMMAR_BRAIN_HOME]]
+- [[Organization Hierarchy]] · [[01 Account Management]] · [[Commerce Service]] · [[V-service-visibility-pricing-required]] · [[E-app-config]] · [[Falcon Data Table]] · [[Falcon Switch]] · [[Falcon Dropdown]] · [[Falcon Input Number]] · [[Falcon Tag]] · [[Falcon Icon]] · [[PRD_INDEX]] · [[BACKEND_INDEX]] · [[VALIDATION_INDEX]] · [[AMMAR_BRAIN_HOME]]

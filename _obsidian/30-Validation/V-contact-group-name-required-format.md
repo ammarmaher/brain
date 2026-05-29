@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: false
 created: 2026-05-15
+module: contact-group
+feature: group-name
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contact-group", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-contact-group-name-required-format — Group Name required, ≤50, matches NamePattern ***
 *** Origin: PRD-04 Contact Group Management · Backend: contact-group · 2026-05-15 ***

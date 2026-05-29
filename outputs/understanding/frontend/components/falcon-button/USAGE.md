@@ -1,4 +1,4 @@
-# falcon-button — USAGE
+﻿# falcon-button — USAGE
 
 ## Real usage examples (cited from active source)
 
@@ -187,3 +187,23 @@ The wrapper auto-registers the Stencil tag via `defineFalconTwComponent('falcon-
 | Set `ariaLabel` when icon-only | Rely on icon visual to convey purpose to screen readers |
 | Override tokens via `class="my-host"` + `.my-host { --falcon-button-* }` | Override via `::ng-deep` or `[style]` |
 | Use `useTailwind=true` (default) for net-new code | Reach for `useTailwind=false` unless you specifically need Shadow isolation |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-button>` across `apps/` + `libs/falcon/` returned **15 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/falcon-table-edit-row/falcon-table-edit-row.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-node-drawer/falcon-org-node-drawer.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-node-drawer/falcon-org-node-drawer.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-node-header/falcon-org-node-header.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/settings-tab/settings-tab.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/add-client-wizard.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-settings-step/client-settings-step.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.ts`
+- `apps/admin-console/src/app/features/org-hierarchy-page/services/state/add-user-state.signals.ts`
+- `apps/host-shell/src/app/playground/playground.page.html`
+- `libs/falcon/src/shared-ui/lib/components/falcon-node-details-section/falcon-node-details-section.component.ts`

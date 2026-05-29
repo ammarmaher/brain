@@ -1,4 +1,4 @@
-# falcon-tabs — USAGE
+﻿# falcon-tabs — USAGE
 
 ## Real usage examples (cited from active source)
 
@@ -199,3 +199,13 @@ The wrapper auto-registers the Stencil tags via `defineFalconTwComponent('falcon
 | Pass `ariaLabel` to give the tablist a name | Rely on a `<h2>` outside the component to label it implicitly |
 | Drive `selectedValue` via signal | Set it imperatively in `setTimeout` |
 | Use `(valueChange)` or `[(selectedValue)]` for two-way | Subscribe to the raw `falcon-change` event from the Stencil tag |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-tabs>` across `apps/` + `libs/falcon/` returned **5 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.html`
+- `apps/host-shell/src/app/features/falcon-ui-showcase/gallery/showcase-code-panel.component.ts`
+- `apps/host-shell/src/app/features/falcon-ui-showcase/gallery/showcase-tabs-actions-demo.component.ts`
+- `apps/host-shell/src/app/features/user-details/user-details-page.component.html`
+- `apps/host-shell/src/app/playground/playground.page.html`

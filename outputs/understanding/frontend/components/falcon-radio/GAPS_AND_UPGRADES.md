@@ -1,4 +1,4 @@
-# falcon-radio — GAPS AND UPGRADES
+﻿# falcon-radio — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -74,3 +74,9 @@ All shared.
 
 - For G2: wrap label content with custom HTML in default slot.
 - For G5: pre-format label with text-prefix glyph.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 5** ([CODE] grep `<falcon-angular-radio>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

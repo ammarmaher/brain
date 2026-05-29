@@ -1,4 +1,4 @@
-# falcon-dropdown — USAGE
+﻿# falcon-dropdown — USAGE
 
 ## Real usage examples
 
@@ -128,3 +128,21 @@ For wrapper-scoped Tailwind extras (panel/trigger/options classes):
 | Use `iconUrl` for flag/avatar visuals. | Wrap in legacy `<falcon-form-field>` unless mixed-control layout demands it. |
 | Use `searchable=true` for long lists. | Hand-roll a filter on top of the component. |
 | Use `errorText` + `state="error"` together. | Use only one of the two. |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-dropdown>` across `apps/` + `libs/falcon/` returned **13 consumer file(s)** as of 2026-05-17:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/falcon-table-edit-row/falcon-table-edit-row.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-info-panel/falcon-org-info-panel.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-account-owner-step/client-account-owner-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-service-row-table/client-service-row-table.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-permissions-step/user-permissions-step.component.html`
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/user-role-status-step/user-role-status-step.component.html`
+- `apps/host-shell/src/app/features/auth/login-layout/login-layout.component.html`
+- `apps/host-shell/src/app/features/auth/login-layout/login-layout.component.ts`
+- `apps/host-shell/src/app/features/user-details/user-details-page.component.html`
+- `apps/host-shell/src/app/features/user-details/user-details-page.component.ts`
+- `apps/host-shell/src/app/playground/playground.page.html`

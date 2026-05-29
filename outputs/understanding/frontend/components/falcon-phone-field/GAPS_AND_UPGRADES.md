@@ -1,4 +1,4 @@
-# falcon-phone-field — GAPS AND UPGRADES
+﻿# falcon-phone-field — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -99,3 +99,9 @@ All shared.
 - For G1: add `Validators.required + customPhoneValidator()` externally.
 - For G2: drive `state='success'` after server confirm and override via token.
 - For G6: filter via `countries` input.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 5** ([CODE] grep `<falcon-angular-phone-field>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.

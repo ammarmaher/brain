@@ -1,4 +1,4 @@
-# falcon-form-field — GAPS AND UPGRADES
+﻿# falcon-form-field — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -89,3 +89,9 @@ Shared. But ultimately this component should be retired.
 
 - Continue using as-is in wizards; do not add new usages.
 - For label-for-control: set `inputId` explicitly on both the form-field and the inner input.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 5** ([CODE] grep `<falcon-form-field>` — pure-Angular tag — across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+**Gap: Pure-Angular component without a Stencil twin** — cross-framework parity NOT achievable until ported to Stencil. Priority: P2 for new tokens-only consumers.

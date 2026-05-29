@@ -7,6 +7,16 @@ severity: medium
 status: triangulated
 drift: false
 created: 2026-05-15
+module: contract
+feature: contract-rate
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/contract", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: 
 ---
 *** Validation V-contract-rate-per-unit-non-negative — RatePerUnit must be ≥ 0 ***
 *** Origin: PRD-03 Contract Packaging Charging Billing · Backend: commerce · 2026-05-15 ***

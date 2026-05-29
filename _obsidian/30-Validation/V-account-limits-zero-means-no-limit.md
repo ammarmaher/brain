@@ -7,6 +7,16 @@ severity: high
 status: triangulated
 drift: false
 created: 2026-05-15
+module: account-mgmt
+feature: account-limits
+verification: spot-checked
+last-verified: 2026-05-15
+tags: ["#status/triangulated", "#module/account-mgmt", "#verification/spot-checked", "#layer/be"]
+up: "[[V-rules-MOC]]"
+parent: "[[V-rules-MOC]]"
+supersedes: []
+superseded-by: []
+evidence-link: project_validation_input_caps_wave_g_2026_05_24.md
 ---
 *** Validation V-account-limits-zero-means-no-limit — Account Limits accept 0 as "no limit"; empty disallowed ***
 *** Origin: PRD-01 Account Management · Backend: Commerce · 2026-05-15 ***
