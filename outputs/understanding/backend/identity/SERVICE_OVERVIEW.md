@@ -67,7 +67,7 @@ See [`ENDPOINT_REGISTRY.md`](ENDPOINT_REGISTRY.md) for the full route table.
 
 | Direction | Topic | Producer/Consumer | Purpose |
 |---|---|---|---|
-| consume | `commerce.user-created.v1` | `UserCreationRequestedConsumer` | Commerce-triggered user creation (east-west) |
+| consume | `commerce.user-creation-requested.v1` | `UserCreationRequestedConsumer` | Commerce-triggered user creation (east-west) — topic name corrected 2026-05-28 per Wave 13 KAFKA-GAP-01 reconciliation; prior name `commerce.user-created.v1` was a doc typo (the consumer class name was always correct) |
 | consume | `commerce.identity-settings-sync.v1` | `IdentitySettingsSyncConsumer` | Sync tenant settings (password policy, login policy) from Commerce |
 | produce | `identity.user-events.v1` | `UserRoleLinkSyncRequestedEventPublisher` | Notify PES / Charging of user/role linkage changes |
 

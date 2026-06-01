@@ -15,7 +15,7 @@ Thin wrapper around the vendored Falcon icon font (`libs/falcon-theme/src/styles
 - For correct a11y posture (decorative-by-default).
 
 ## When NOT to use it
-- For SVG icons that aren't in the Falcon icon font — use raw `<svg>` or `<iconify-icon>` (Iconify is also installed; project memory mentions it as side-effect import — verify globally).
+- For SVG icons that aren't in the Falcon icon font: for a **platform-owned, exact** glyph (e.g. the SAR currency symbol) use the shared **`<falcon-svg-icon name="…">`** registry (`[CODE]` libs/falcon/src/shared-ui/lib/ui/svg-icon/svg-icon.component.ts + registry `svg-icon.registry.ts`; exported from `@falcon` as `SvgIconComponent` + `SVG_ICON_NAMES`). For a one-off third-party/brand mark use raw `<svg>` or `<iconify-icon>` (Iconify is also installed as a side-effect import — verify globally).
 - For images / avatars — use `<falcon-angular-avatar>`.
 - For brand logos — use raw `<img src>` or dedicated brand asset.
 
@@ -51,6 +51,7 @@ Thin wrapper around the vendored Falcon icon font (`libs/falcon-theme/src/styles
 - `falcon-angular-button` — should use `slot="icon-start"` with `<falcon-angular-icon>` (currently most consumers use `<i class="falcon-icon ...">` directly).
 - `falcon-angular-empty-state` — composes icon for the empty illustration.
 - `iconify-icon` — secondary side-effect import for non-Falcon icons (verified in some showcase components like `showcase-tabs-actions-demo.component.ts`).
+- `falcon-svg-icon` — the shared multi-path **SVG registry** (`libs/falcon/src/shared-ui/lib/ui/svg-icon/`, `SVG_ICON_REGISTRY` / `SVG_ICON_NAMES`, exported from `@falcon` as `SvgIconComponent`). The blessed home for platform-owned exact SVG glyphs the icon font cannot carry (e.g. `currency-sar`, already shared by wallet / applications-table / Add-Client / comm-mkt-view). Prefer this over re-drawing the SVG inline per feature.
 
 ## Ownership / responsibility
 Owned by Falcon UI Core. The vendored font is curated — adding new icons requires updating the font asset.

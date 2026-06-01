@@ -1,0 +1,120 @@
+{
+  "graph": {
+    "name": "falcon-knowledge-graph",
+    "version": "1.0.0",
+    "wave": 2,
+    "generated-at": "2026-05-27T19:00:00Z",
+    "delta-from-wave": 1,
+    "schema-file": "../GRAPH_SCHEMA.md",
+    "edge-count-this-wave": 520,
+    "evidence-only-edges": true,
+    "merge-instruction": "Concatenate with edges.json."
+  },
+  "edges": [
+    { "from": "wave:002", "to": "wave:001", "type": "DEPENDS_ON", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "tw:bg-falcon-teal-700", "to": "token:color-falcon-teal-700", "type": "MAPS_TO_TOKEN", "evidence-strength": "confirmed", "evidence": ["Tailwind auto-generates bg-falcon-* utilities from --color-falcon-* primitives"], "discovered-in-wave": 2 },
+    { "from": "tw:bg-falcon-neutral-0", "to": "token:color-falcon-neutral-0", "type": "MAPS_TO_TOKEN", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "tw:text-falcon-neutral-900", "to": "token:color-falcon-neutral-900", "type": "MAPS_TO_TOKEN", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "tw:text-falcon-teal-700", "to": "token:color-falcon-teal-700", "type": "MAPS_TO_TOKEN", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "tw:border-falcon-neutral-200", "to": "token:color-falcon-neutral-200", "type": "MAPS_TO_TOKEN", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "token:falcon-color-focus-ring", "to": "token:color-falcon-blue-500", "type": "CONFLICTS_WITH", "evidence-strength": "confirmed", "evidence": ["resolves to rgba(37,99,235,0.25) — BLUE", "but components use teal focus ring via --shadow-falcon-focus"], "notes": "P0-08 drift flagged by Wave 2 Group E", "discovered-in-wave": 2 },
+    { "from": "token:spacing-7", "to": "token:spacing-7", "type": "NEEDS_REVIEW", "evidence-strength": "confirmed", "evidence": ["Tailwind default 1.75rem overridden to 2.5rem", "[MEMORY] 2026-05-20 icon-padding"], "notes": "Override is intentional but undocumented in Tailwind contract", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-dialog", "to": "comp:falcon-popup", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "evidence": ["falcon-dialog OVERVIEW.md @deprecated annotation"], "discovered-in-wave": 2 },
+    { "from": "comp:falcon-toast", "to": "comp:falcon-notification", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-table", "to": "comp:falcon-data-table", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "send-credentials-popup", "to": "comp:falcon-popup", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-calendar-legacy", "to": "comp:falcon-date-picker", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-stepper-legacy", "to": "comp:falcon-stepper", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-multiselect-legacy", "to": "comp:falcon-multi-select", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-mobile-number", "to": "comp:falcon-phone-field", "type": "MIGRATION_TARGET_IS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-photo-uploader", "to": "comp:falcon-single-uploader", "type": "MIGRATION_TARGET_IS", "evidence-strength": "needs-review", "evidence": ["LEGACY annotation but no explicit migration target named"], "discovered-in-wave": 2 },
+    { "from": "comp:falcon-form-field", "to": "comp:falcon-input", "type": "MIGRATION_TARGET_IS", "evidence-strength": "needs-review", "evidence": ["form-field is LEGACY; new Falcon inputs have built-in label/error"], "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-select", "to": "comp:falcon-dropdown", "type": "RELATED_TO", "evidence-strength": "confirmed", "evidence": ["falcon-select is TS class alias only — HTML tag remains falcon-angular-dropdown"], "alias-relationship": true, "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-tree-panel", "to": "comp:falcon-tree", "type": "RELATED_TO", "evidence-strength": "confirmed", "evidence": ["tree-panel is parallel implementation, not a wrapper around <falcon-tree>"], "notes": "Two-implementations divergence — see GRAPH_GAPS Wave 3", "discovered-in-wave": 2 },
+
+    { "from": "theme:dark", "to": "theme:light", "type": "RELATED_TO", "evidence-strength": "confirmed", "evidence": ["dark cascade re-declares Layer 1+2 under .app-dark"], "discovered-in-wave": 2 },
+    { "from": "theme:system", "to": "theme:light", "type": "DEPENDS_ON", "evidence-strength": "confirmed", "evidence": ["system mode falls back to light when prefers-color-scheme: light"], "discovered-in-wave": 2 },
+    { "from": "theme:system", "to": "theme:dark", "type": "DEPENDS_ON", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-button", "to": "size:sm", "type": "HAS_SIZE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "size:md", "type": "HAS_SIZE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "size:lg", "type": "HAS_SIZE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "state:hover", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "state:focus-visible", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "state:active", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "state:disabled", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "state:loading", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-input", "to": "state:error", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-input", "to": "state:focus-visible", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-input", "to": "state:disabled", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-input", "to": "state:readonly", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-data-table", "to": "state:loading", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-data-table", "to": "state:selected", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-data-table", "to": "state:hover", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-tree", "to": "state:on-path", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-tree", "to": "state:selected", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-tree", "to": "state:expanded", "type": "HAS_STATE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-button", "to": "token:color-falcon-teal-500", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "token:shadow-falcon-focus", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "token:font-display", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-data-table", "to": "token:color-falcon-teal-tint", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "evidence": ["row-bg-selected"], "discovered-in-wave": 2 },
+    { "from": "comp:falcon-data-table", "to": "token:radius-falcon-md", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-card", "to": "token:shadow-falcon-card", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-menu", "to": "token:shadow-falcon-popover", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-input", "to": "token:spacing-7", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "evidence": ["icon-padding context — [MEMORY] 2026-05-20"], "discovered-in-wave": 2 },
+    { "from": "comp:falcon-search-input", "to": "token:spacing-7", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-password", "to": "token:spacing-7", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-email-field", "to": "token:spacing-7", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-phone-field", "to": "token:spacing-7", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-textarea", "to": "token:spacing-7", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-combobox", "to": "token:spacing-7", "type": "USES_CSS_VARIABLE", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-tabs", "to": "tw:bg-falcon-neutral-0", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-tabs", "to": "tw:border-falcon-neutral-200", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-card", "to": "tw:rounded-[14px]", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-button", "to": "tw:rounded-[10px]", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-status-badge", "to": "tw:rounded-full", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-tag", "to": "tw:rounded-full", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-avatar", "to": "tw:rounded-full", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-menu", "to": "tw:z-[9999]", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-tree-panel", "to": "tw:hover:bg-falcon-teal-100", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-notification", "to": "tw:bg-falcon-neutral-0", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-popup", "to": "tw:rounded-md", "type": "USES_TAILWIND_CLASS", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-photo-uploader", "to": "gap:scss-violates-no-scss-rule", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-form-field", "to": "gap:scss-violates-no-scss-rule", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-mobile-number", "to": "gap:scss-violates-no-scss-rule", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-stepper-legacy", "to": "gap:scss-violates-no-scss-rule", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-popup", "to": "gap:no-focus-trap-p0-a11y", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-popup", "to": "gap:no-tokens-file-paint-hardcoded", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-data-table", "to": "gap:loading-overlay-bg-hardcoded-no-dark", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-table", "to": "gap:loading-overlay-bg-hardcoded-no-dark", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-dropdown", "to": "gap:error-text-vs-errormessage-api-drift", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-multi-select", "to": "gap:error-text-vs-errormessage-api-drift", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-notification", "to": "gap:no-token-file-tailwind-inline", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-paginator", "to": "gap:wrapper-missing-pr3-inputs", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-uploader", "to": "gap:primeicons-residual-class", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-single-uploader", "to": "gap:primeicons-residual-class", "type": "HAS_GAP", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "comp:falcon-button", "to": "00-MOCs/Components-MOC", "type": "PARENT_MOC", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-input", "to": "00-MOCs/Components-MOC", "type": "PARENT_MOC", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+    { "from": "comp:falcon-data-table", "to": "00-MOCs/Components-MOC", "type": "PARENT_MOC", "evidence-strength": "confirmed", "discovered-in-wave": 2 },
+
+    { "from": "theme:light", "to": "00-MOCs/Architecture-MOC", "type": "PARENT_MOC", "evidence-strength": "needs-review", "discovered-in-wave": 2 },
+
+    { "from": "wave:002", "to": "comp:falcon-tree-panel", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "evidence": ["Two-impl divergence with falcon-tree — Wave 3 to confirm if intentional or migration target"], "discovered-in-wave": 2 },
+    { "from": "wave:002", "to": "token:falcon-color-primary", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "evidence": ["Promotion from semantic.css :root to @theme is Wave 1 fix path (71%→84%)"], "discovered-in-wave": 2 }
+  ]
+}

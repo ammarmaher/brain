@@ -1,0 +1,14 @@
+
+---
+
+## 2026-05-30-2254 — Night Shift Audit (autopilot) — RUN START
+
+- Mode: night-shift-audit (Code & Structure Validation), authorized "run it now" + autopilot.
+- Scratch branch: night-shift-audit/2026-05-30-2254 off polishing-v0.4 @ 38630f0e (working tree clean — no snapshot needed).
+- Prior delta: night-shift-audit/2026-05-30-0128 (report bbbe1574-0128) only did Wave 1 (admin contracts comment cleanup, 9ce41a41) + partial wallet 3a (24a69870); 20+ folders never deep-scanned.
+- Baseline build launched in background (bc6qecd3c): libs + admin + mgmt + host dev. libs=EXIT0, admin=EXIT0 confirmed; mgmt/host in flight.
+- 1st workflow (wnx67q7tp) FAILED: 24 schema-validated agents finished in 27s without calling StructuredOutput → 0 plan files. Schema-with-write-file pattern broke them.
+- Relaunched as v2 (w8asczz6h): no schema; the markdown plan file IS the deliverable; mixed models per user's "different model" hint — 18 Sonnet (routine) + 6 Opus (payment ×2, auth, 3 shared-lib units).
+- Authorized actions only: git status, nx build/lint/typecheck gates, LOCAL commits to scratch branch. FORBIDDEN: push, commit to main/working branch, git reset/stash on user branch, npm install, danger-zone auto-fixes, claiming runtime state without build evidence.
+- Reports → C:/Falcon/Brain Outputs/datasets/authority-dataset/_runtime-verification/night-shift-audit-2026-05-30-2254.md (at end).
+- Per-folder plans → C:/Falcon/plans/night-shift-audit-2026-05-30-2254/folder-plans/.

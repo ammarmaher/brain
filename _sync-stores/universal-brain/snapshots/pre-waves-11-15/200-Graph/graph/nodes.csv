@@ -1,0 +1,90 @@
+id,type,name,sot,in_module,service,evidence_primary,discovered_in_wave
+wave:001,Wave,Wave 1 — Foundation,,,,falcon-wiki/200-Graph/waves/WAVE-001-GRAPH-PLAYBACK.md,1
+app:host-shell,App,host-shell,,,,[MEMORY] project_host_shell_ng0201_domrendererfactory2_2026_05_20,1
+app:admin-console,App,admin-console,,,,[MEMORY] project_admin_console_host_shell_circular_build_fix_2026_05_17,1
+app:management-console,App,management-console,,,,Brain Outputs/datasets/authority-dataset/04-feature-parity-matrix/MATRIX.md,1
+app:comm-channels,App,comm-channels,,,,[MEMORY] project_admin_console_comm_marketplace_features_2026_05_19,1
+app:marketplace,App,marketplace,,,,[MEMORY] project_admin_console_comm_marketplace_features_2026_05_19,1
+mod:account-mgmt,Module,Account Management,,,,Brain Outputs/prd/modules/01-account-management/,1
+mod:user-mgmt,Module,User Management,,,,Brain Outputs/prd/modules/02-user-management/,1
+mod:contract-charging-billing,Module,Contract / Packaging / Charging / Billing,,,,Brain Outputs/prd/modules/03-contract-packaging-charging-billing-management/,1
+mod:contact-group-mgmt,Module,Contact Group Management,,,,Brain Outputs/prd/modules/04-contact-group-management/,1
+mod:templates,Module,Templates,,,,Brain Outputs/prd/modules/05-templates/,1
+mod:root-documents,Module,Root Documents (Identity / Auth shared),,,,Brain Outputs/prd/modules/root-documents/,1
+svc:access,Service,access,,,,Brain Outputs/understanding/backend/access/,1
+svc:charging,Service,charging,,,,Brain Outputs/understanding/backend/charging/,1
+svc:commerce,Service,commerce,,,,Brain Outputs/understanding/backend/commerce/,1
+svc:contact-group,Service,contact-group,,,,Brain Outputs/understanding/backend/contact-group/,1
+svc:core-gateway,Service,core-gateway,,,,Brain Outputs/understanding/backend/core-gateway/,1
+svc:identity,Service,identity,,,,Brain Outputs/understanding/backend/identity/,1
+svc:provisioning,Service,provisioning,,,,Brain Outputs/understanding/backend/provisioning/,1
+svc:system-gateway,Service,system-gateway,,,,Brain Outputs/understanding/backend/system-gateway/,1
+svc:templates,Service,templates,,,,Brain Outputs/understanding/backend/templates/,1
+page:add-contract,Page,Add Contract,,mod:contract-charging-billing,,Brain Outputs/understanding/pages/add-contract/,1
+page:change-password,Page,Change Password,,mod:user-mgmt,,Brain Outputs/understanding/pages/change-password/,1
+page:contact-groups-list,Page,Contact Groups List,,mod:contact-group-mgmt,,Brain Outputs/understanding/pages/contact-groups-list/,1
+page:contracts-list,Page,Contracts List,,mod:contract-charging-billing,,Brain Outputs/understanding/pages/contracts-list/,1
+page:create-contact-group,Page,Create Contact Group,,mod:contact-group-mgmt,,Brain Outputs/understanding/pages/create-contact-group/,1
+page:create-template-whatsapp,Page,Create Template (WhatsApp),,mod:templates,,Brain Outputs/understanding/pages/create-template-whatsapp/,1
+page:edit-contract,Page,Edit Contract,,mod:contract-charging-billing,,Brain Outputs/understanding/pages/edit-contract/,1
+page:edit-user,Page,Edit User,,mod:user-mgmt,,Brain Outputs/understanding/pages/edit-user/,1
+page:forgot-password,Page,Forgot Password,,mod:root-documents,,Brain Outputs/understanding/pages/forgot-password/,1
+page:login,Page,Login,,mod:root-documents,,Brain Outputs/understanding/pages/login/,1
+page:my-profile,Page,My Profile,,mod:user-mgmt,,Brain Outputs/understanding/pages/my-profile/,1
+page:organization-hierarchy,Page,Organization Hierarchy,,mod:account-mgmt,,Brain Outputs/understanding/pages/organization-hierarchy/,1
+page:templates-list,Page,Templates List,,mod:templates,,Brain Outputs/understanding/pages/templates-list/,1
+page:wallets-and-balance-management,Page,Wallets and Balance Management,,mod:contract-charging-billing,,Brain Outputs/understanding/pages/wallets-and-balance-management/,1
+vrule:account-name-format-xlsx-2026-05-24,ValidationRule,V-account-name-format-xlsx-2026-05-24,xlsx,mod:account-mgmt,svc:commerce,Brain SK/_obsidian/30-Validation/V-account-name-format-xlsx-2026-05-24.md,1
+vrule:person-name-format-xlsx-2026-05-24,ValidationRule,V-person-name-format-xlsx-2026-05-24,xlsx,mod:user-mgmt,,Brain SK/_obsidian/30-Validation/V-person-name-format-xlsx-2026-05-24.md,1
+vrule:username-format-xlsx-2026-05-24,ValidationRule,V-username-format-xlsx-2026-05-24,xlsx,mod:user-mgmt,,Brain SK/_obsidian/30-Validation/V-username-format-xlsx-2026-05-24.md,1
+vrule:account-name-format-uniqueness,ValidationRule,V-account-name-format-uniqueness (SUPERSEDED),prd,mod:account-mgmt,,Brain SK/_obsidian/30-Validation/V-account-name-format-uniqueness.md,1
+vrule:user-first-last-name-letters-only,ValidationRule,V-user-first-last-name-letters-only (SUPERSEDED),prd,mod:user-mgmt,,Brain SK/_obsidian/30-Validation/V-user-first-last-name-letters-only.md,1
+vrule:username-format-uniqueness-immutable,ValidationRule,V-username-format-uniqueness-immutable (SUPERSEDED),prd,mod:user-mgmt,,Brain SK/_obsidian/30-Validation/V-username-format-uniqueness-immutable.md,1
+vrule:text-field-no-edge-or-internal-whitespace,ValidationRule,V-text-field-no-edge-or-internal-whitespace (SUPERSEDED w/o replacement),wave-d-rollback,,,Brain SK/_obsidian/30-Validation/V-text-field-no-edge-or-internal-whitespace.md,1
+vrule:account-limits-zero-means-no-limit,ValidationRule,V-account-limits-zero-means-no-limit,prd,,,Brain SK/_obsidian/30-Validation/V-account-limits-zero-means-no-limit.md,1
+vrule:service-visibility-pricing-required,ValidationRule,V-service-visibility-pricing-required,prd,,,Brain SK/_obsidian/30-Validation/V-service-visibility-pricing-required.md,1
+vrule:template-levels-count-required-for-restricted,ValidationRule,V-template-levels-count-required-for-restricted,prd,mod:templates,,Brain SK/_obsidian/30-Validation/V-template-levels-count-required-for-restricted.md,1
+vrule:template-checker-level-integrity,ValidationRule,V-template-checker-level-integrity,prd,mod:templates,,Brain SK/_obsidian/30-Validation/V-template-checker-level-integrity.md,1
+vrule:password-security-level-enum,ValidationRule,V-password-security-level-enum,prd,mod:user-mgmt,,Brain SK/_obsidian/30-Validation/V-password-security-level-enum.md,1
+vrule:password-complexity-per-security-level,ValidationRule,V-password-complexity-per-security-level,prd,mod:user-mgmt,,Brain SK/_obsidian/30-Validation/V-password-complexity-per-security-level.md,1
+vrule:normal-user-limit-enforcement,ValidationRule,V-normal-user-limit-enforcement,prd,mod:user-mgmt,,Brain SK/_obsidian/30-Validation/V-normal-user-limit-enforcement.md,1
+vrule:login-lockout-3-wrong-attempts,ValidationRule,V-login-lockout-3-wrong-attempts,prd,mod:root-documents,,Brain SK/_obsidian/30-Validation/V-login-lockout-3-wrong-attempts.md,1
+vrule:contract-rate-per-unit-non-negative,ValidationRule,V-contract-rate-per-unit-non-negative,prd,mod:contract-charging-billing,,Brain SK/_obsidian/30-Validation/V-contract-rate-per-unit-non-negative.md,1
+vrule:contract-expiration-after-start,ValidationRule,V-contract-expiration-after-start,prd,mod:contract-charging-billing,,Brain SK/_obsidian/30-Validation/V-contract-expiration-after-start.md,1
+vrule:contract-edit-status-aware-fields,ValidationRule,V-contract-edit-status-aware-fields,prd,mod:contract-charging-billing,,Brain SK/_obsidian/30-Validation/V-contract-edit-status-aware-fields.md,1
+vrule:contract-currency-enum,ValidationRule,V-contract-currency-enum,prd,mod:contract-charging-billing,,Brain SK/_obsidian/30-Validation/V-contract-currency-enum.md,1
+vrule:contract-committed-value-positive,ValidationRule,V-contract-committed-value-positive,prd,mod:contract-charging-billing,,Brain SK/_obsidian/30-Validation/V-contract-committed-value-positive.md,1
+vrule:contact-group-share-policy-mode-mutex,ValidationRule,V-contact-group-share-policy-mode-mutex,prd,mod:contact-group-mgmt,,Brain SK/_obsidian/30-Validation/V-contact-group-share-policy-mode-mutex.md,1
+vrule:contact-group-name-required-format,ValidationRule,V-contact-group-name-required-format,prd,mod:contact-group-mgmt,,Brain SK/_obsidian/30-Validation/V-contact-group-name-required-format.md,1
+vrule:contact-group-file-type-allowlist,ValidationRule,V-contact-group-file-type-allowlist,prd,mod:contact-group-mgmt,,Brain SK/_obsidian/30-Validation/V-contact-group-file-type-allowlist.md,1
+vrule:contact-group-file-size-cap,ValidationRule,V-contact-group-file-size-cap,prd,mod:contact-group-mgmt,,Brain SK/_obsidian/30-Validation/V-contact-group-file-size-cap.md,1
+vrule:contact-group-column-name-shape,ValidationRule,V-contact-group-column-name-shape,prd,mod:contact-group-mgmt,,Brain SK/_obsidian/30-Validation/V-contact-group-column-name-shape.md,1
+vrule:charging-transfer-source-destination,ValidationRule,V-charging-transfer-source-destination,prd,mod:contract-charging-billing,svc:charging,Brain SK/_obsidian/30-Validation/V-charging-transfer-source-destination.md,1
+vrule:charging-no-applicable-rate,ValidationRule,V-charging-no-applicable-rate,prd,mod:contract-charging-billing,svc:charging,Brain SK/_obsidian/30-Validation/V-charging-no-applicable-rate.md,1
+vrule:charging-insufficient-balance,ValidationRule,V-charging-insufficient-balance,prd,mod:contract-charging-billing,svc:charging,Brain SK/_obsidian/30-Validation/V-charging-insufficient-balance.md,1
+vrule:account-ip-allowlist-enforcement,ValidationRule,V-account-ip-allowlist-enforcement,prd,mod:account-mgmt,,Brain SK/_obsidian/30-Validation/V-account-ip-allowlist-enforcement.md,1
+dto:account,DTO,E-account,,mod:account-mgmt,svc:commerce,Brain SK/_obsidian/40-API/E-account.md,1
+dto:account-settings,DTO,E-account-settings,,mod:account-mgmt,svc:commerce,Brain SK/_obsidian/40-API/E-account-settings.md,1
+dto:addon,DTO,E-addon,,mod:contract-charging-billing,svc:commerce,Brain SK/_obsidian/40-API/E-addon.md,1
+dto:app-config,DTO,E-app-config,,,svc:commerce,Brain SK/_obsidian/40-API/E-app-config.md,1
+dto:audit-event,DTO,E-audit-event,,,,Brain SK/_obsidian/40-API/E-audit-event.md,1
+dto:contract,DTO,E-contract,,mod:contract-charging-billing,svc:commerce,Brain SK/_obsidian/40-API/E-contract.md,1
+dto:cluster:e-entities-20-more,DTO,E-* (20 more — cluster placeholder),,,,Brain SK/_obsidian/40-API/,1
+evt:charging-ocs-wallet-events,KafkaEvent,Charging OCS Wallet Events,,,svc:charging,Brain SK/_obsidian/47-Events/Charging OCS Wallet Events.md,1
+evt:charging-order-payment-processed,KafkaEvent,Charging Order Payment Processed,,,svc:charging,Brain SK/_obsidian/47-Events/Charging Order Payment Processed.md,1
+evt:commerce-comm-channel-init,KafkaEvent,Commerce Comm-Channel Init,,,svc:commerce,Brain SK/_obsidian/47-Events/Commerce Comm-Channel Init.md,1
+evt:commerce-comm-channel-shown,KafkaEvent,Commerce Comm-Channel Shown,,,svc:commerce,Brain SK/_obsidian/47-Events/Commerce Comm-Channel Shown.md,1
+evt:commerce-comm-channel-visibility-changed,KafkaEvent,Commerce Comm-Channel Visibility Changed,,,svc:commerce,Brain SK/_obsidian/47-Events/Commerce Comm-Channel Visibility Changed.md,1
+evt:cluster:remaining-16,KafkaEvent,Kafka events (16 more — cluster placeholder),,,,Brain SK/_obsidian/47-Events/,1
+thememode:light,ThemeMode,Light theme,,,,[MEMORY] project_dark_mode_phase_b_theme_service_2026_05_17,1
+thememode:dark,ThemeMode,Dark theme,,,,[MEMORY] project_dark_mode_phase_e_migration_2026_05_17,1
+pesrule:cluster:47-keys,PESRule,PES key cluster (47 keys — cluster placeholder),,,,Brain Outputs/datasets/authority-dataset/03-pes-keys/REGISTRY-RAW.md,1
+pesrule:built-in-role-catalog,PESRule,BuiltInRoleCatalog (6 canonical roles),,,,[CODE] BuiltInRoleCatalog.cs:79-290,1
+arch:cluster:24-rules-8-adrs,ArchitectureRule,Architecture rules cluster (24 inc. 8 ADRs — cluster placeholder),,,,Brain SK/_obsidian/35-Architecture/,1
+br-cluster:am,BusinessRule,BR-AM-* cluster (42 rules),,mod:account-mgmt,,Brain Outputs/prd/modules/01-account-management/BUSINESS_RULES.md,1
+br-cluster:um,BusinessRule,BR-UM-* cluster (50 rules),,mod:user-mgmt,,Brain Outputs/prd/modules/02-user-management/BUSINESS_RULES.md,1
+br-cluster:cc,BusinessRule,BR-CC-* cluster (50 rules),,mod:contract-charging-billing,,Brain Outputs/prd/modules/03-contract-packaging-charging-billing-management/BUSINESS_RULES.md,1
+br-cluster:cgm,BusinessRule,BR-CGM-* cluster (38 rules),,mod:contact-group-mgmt,,Brain Outputs/prd/modules/04-contact-group-management/BUSINESS_RULES.md,1
+comp:cluster:63-components,Component,Component cluster (63 Falcon UI Core — cluster placeholder),,,,Brain Outputs/understanding/frontend/components/,1
+moc:cluster:76-mocs,MOC,MOC cluster (76 — 46 falcon-wiki + 30 Brain SK — cluster placeholder),,,,falcon-wiki/00-MOCs/ + Brain SK/_obsidian/*INDEX*.md,1
+scan:bootstrap-health,ScanMetadata,bootstrap-health.json,,,,Brain Outputs/scan-metadata/bootstrap-health.json,1

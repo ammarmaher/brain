@@ -1,0 +1,93 @@
+filters:
+  and:
+    - or:
+        - '"type" == "pending-question"'
+        - '"type" == "pending-question-resolution"'
+
+properties:
+  file.name:
+    displayName: Ticket
+  question-id:
+    displayName: Question ID
+  module:
+    displayName: Module
+  status:
+    displayName: Status
+  priority:
+    displayName: Priority
+  blocked-on:
+    displayName: Blocked On
+  due:
+    displayName: Due
+  last-verified:
+    displayName: Last Verified
+  # resolved: surfaced via sort on "Recently resolved" view
+  # resolved:
+  #   displayName: Resolved
+
+views:
+  - type: table
+    name: All open
+    filters:
+      and:
+        - or:
+            - '"type" == "pending-question"'
+            - '"type" == "pending-question-resolution"'
+        - or:
+            - '"status" == "OPEN"'
+            - '"status" == "open"'
+    order:
+      - file.name
+      - question-id
+      - module
+      - status
+      - priority
+      - blocked-on
+      - due
+      - last-verified
+    sort:
+      - column: priority
+        direction: ASC
+      - column: due
+        direction: ASC
+
+  - type: cards
+    name: Blocked
+    filters:
+      and:
+        - or:
+            - '"type" == "pending-question"'
+            - '"type" == "pending-question-resolution"'
+        # NOTE: "blocked-on is not empty" — Bases predicate syntax for non-empty arrays
+        # is not yet documented; the closest stable form is the size check below.
+        - 'blocked-on.length > 0'
+    order:
+      - file.name
+      - question-id
+      - module
+      - status
+      - priority
+      - blocked-on
+      - due
+    sort:
+      - column: priority
+        direction: ASC
+
+  - type: table
+    name: Recently resolved
+    filters:
+      and:
+        - or:
+            - '"type" == "pending-question"'
+            - '"type" == "pending-question-resolution"'
+        - '"status" == "RESOLVED"'
+    order:
+      - file.name
+      - question-id
+      - module
+      - status
+      - resolved
+      - last-verified
+    sort:
+      - column: resolved
+        direction: DESC

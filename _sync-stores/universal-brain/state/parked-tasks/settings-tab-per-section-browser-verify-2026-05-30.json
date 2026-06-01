@@ -1,0 +1,23 @@
+{
+  "parkedAt": "2026-05-30",
+  "parkedReason": "User pivoted to a new, independent task (wallet-balance-management Tailwind/Falcon revamp). This browser-verification task remains BLOCKED on a Docker Desktop restart (user action) and is preserved here so it can be resumed. It was NOT clobbered — moved out of current-task.json deliberately per brain lifecycle.",
+  "status": "blocked",
+  "taskId": "settings-tab-per-section-browser-verify-2026-05-30",
+  "title": "Browser verification: per-section PES Settings tab (mgmt + admin) - BLOCKED on Docker Desktop crash mid-test.",
+  "startedAt": "2026-05-30",
+  "blockers": ["Docker Desktop daemon died mid-verification. Several Docker Desktop.exe processes alive but daemon not responding (named pipe //./pipe/dockerDesktopLinuxEngine not open). Manual restart of Docker Desktop needed - likely a startup dialog/update is waiting for human interaction. Backend services (identity:7777, commerce:7038, system-gateway:7256, pes:5296) all dark. FE dev servers happen to still be running on host (4200/4301/4204) but useless without backend."],
+  "verifiedSoFar": {
+    "mgmt-accadmin-empty-state": "PASS - clean screenshot ID ss_1289dtavb captured. Lock icon + EN copy 'No settings available' / 'You don\\u2019t have permission to view any settings for this account.' No sections rendered, no Edit button. Mgmt sidebar correctly hides services tabs (acc-admin denied acc.services.view)."
+  },
+  "remainingCells": [
+    "mgmt accowner - all 3 editable, Add Client wizard Step 2 untouched",
+    "admin sysops on Falcon root - single RO cell (Pwd Security read-only ONLY)",
+    "admin sysadmin on Falcon root - Pwd+IPs editable, Quota hidden by BIZ-014",
+    "admin sysprod on Falcon root - empty-state",
+    "admin client-node sysops - IPs editable only",
+    "admin client-node sysprod - Quota editable only",
+    "AR locale empty-state text + RTL"
+  ],
+  "noCommits": true,
+  "nextStep": "Wait for user to restart Docker Desktop. Then: docker stop falcon-web-platform-ui-1; rm -rf .nx/cache/d .nx/workspace-data; docker start falcon-web-platform-ui-1; poll until 4200/4301/4204 ready; resume browser tests."
+}

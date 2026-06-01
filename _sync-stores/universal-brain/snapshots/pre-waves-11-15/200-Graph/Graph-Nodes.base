@@ -1,0 +1,54 @@
+filters:
+  and:
+    - file.path.startsWith("200-Graph/")
+properties:
+  graph-id:
+    displayName: Graph ID
+  graph-type:
+    displayName: Type
+  parent-moc:
+    displayName: Parent MOC
+  discovered-in-wave:
+    displayName: Discovered (wave)
+  last-confirmed-in-wave:
+    displayName: Last confirmed (wave)
+  sot:
+    displayName: Source of truth
+views:
+  - type: table
+    name: All graph nodes
+    order:
+      - graph-id
+      - graph-type
+      - parent-moc
+      - discovered-in-wave
+      - sot
+  - type: table
+    name: ValidationRule (xlsx SoT)
+    filters:
+      and:
+        - graph-type == "ValidationRule"
+        - sot == "xlsx"
+    order:
+      - graph-id
+      - applies-to-field
+      - applies-to-page
+      - discovered-in-wave
+  - type: table
+    name: Components by token-status
+    filters:
+      and:
+        - graph-type == "Component"
+    order:
+      - graph-id
+      - token-status
+      - discovered-in-wave
+  - type: table
+    name: Open Gaps
+    filters:
+      and:
+        - graph-type == "Gap"
+    order:
+      - graph-id
+      - applies-to-feature
+      - discovered-in-wave

@@ -1,0 +1,26 @@
+{
+  "status": "in_progress",
+  "taskId": "do-payment-seed-3-scenarios-2026-05-31",
+  "title": "Seed Do-Payment test data for 3 scenarios (success / insufficient / multi-wallet-priority) + identify PES-authorized users and the node each uses",
+  "startedAt": "2026-05-31",
+  "repo": "C:/Falcon/Falcon (charging + commerce + identity + essentials + web-platform-ui)",
+  "branch": "polishing-v0.4",
+  "mode": "cross-service backend seed + brain-first research",
+  "currentStep": "Parallel READ-ONLY research: (1) charging wallet model + deduction + wallet-strategy resolver; (2) commerce do-payment endpoint + order saga + node/comm-channel/pricing; (3) essentials stack state + seed mechanism + existing data + env target. Self: PES gate for comm-channels/service-pricing view.",
+  "nextStep": "Synthesize seed plan; confirm local-vs-cloud target if ambiguous; seed the 3 scenarios; deliver users + nodes table.",
+  "scenarios": {
+    "success": "Completed — fundable: wallet balance >= comm-channel price",
+    "insufficient": "Failed + OrderFailureReason.InsufficientFunds — total wallet balance < price",
+    "multiWalletPriority": "Failed + OrderFailureReason.CommChannelPriorityOrderRequired — no single wallet covers the price but multiple together do; user reorders in host-shell DoPaymentPriorityPopup"
+  },
+  "keyFacts": [
+    "Do-Payment is NOT PES-gated (no DoPayment key in PES registry). availableActions=[DoPayment,Disable] emitted by commerce AllowedFalconServiceActionsGenerator for Inactive/Expired comm-channels with Visibility + HasConfiguredPricing (PricingType + PriceValue both set). Ref BACKEND-BUGS-REGISTRY BUG-DOPAYMENT.",
+    "Real do-payment + wallet-priority flow lives ONLY in host-shell DoPaymentPriorityPopupComponent (apps/host-shell/.../shared-components/do-payment-priority-popup). mgmt-console intentionally omits it (comm-mkt-view.component.ts:249).",
+    "FE trigger: { id=commChannelId, accountId, nodeId, target='comm-channel' }. Calls CommChannelPaymentService.doPayment -> orderId; OrderStatusService.getOrderStatus; getVisibleCommChannels(nodeId) for reorder dialog.",
+    "6 seeded users, pwd Admin@1234; acc-* on test-tenant-001. Do-payment page reached via host-shell org-hierarchy -> CommChannels & Services (acc.service.view; acc-owner allow, acc-admin explicit-deny, acc-user deny per 21/21 PES gate).",
+    "charging TestingChargingController is WhatsApp-sim inspection (read GET wallets/balances/overview), gated by TestingCharging.Enabled. WalletController: get-account-wallets/debit/authorize/reserve/commit/release/transfer."
+  ],
+  "blockers": [],
+  "noCommitsToMainOrWorking": true,
+  "pushed": false
+}

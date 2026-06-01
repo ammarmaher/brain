@@ -1,0 +1,29 @@
+---
+name: project_comm_mkt_card_button_sot_size_2026_05_30
+description: Mgmt comm-mkt grid-card action buttons resized to the SoT .cm-btn (32px→36px) so card buttons match the SoT/list; card↔table action parity proven already-correct
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 866c6e66-3335-42dc-aa8c-26b7832738fd
+---
+
+Mgmt **CommChannels & Services .Mng** + **Marketplace & Applications .Mng** card SoT pixel-parity — fix 2026-05-30. Builds on [[project_commchannels_marketplace_dopayment_signalr_2026_05_30]].
+
+**UPDATE 3 (same day, same card):** user — "the button must use our Falcon custom component; follow brain-SK front-end skill validations." Per night-shift-audit playbook Agent 3 (Falcon component reuse before raw UI) + §5 broad-zone #8, the card's 3 raw `<button>`+arbitrary-hex-Tailwind action buttons → **`<falcon-angular-button>`** ([CODE] `@falcon/ui-core/angular`, exported angular-wrapper/index.ts:24). [CODE] `comm-mkt-card.component.ts`: added import+to `imports[]`; template `@for` now `<falcon-angular-button slot="actions" [variant]="btnVariant(a.id)" size="md" [disabled]="busy" (falconClick)="emit(a.id)">` with SoT glyph in `slot="icon-start"` + label in `slot="label"`; deleted `btnBase/btnDark/btnTeal/btnOutlineCheck` (the arbitrary-hex skins — Agent 2 win) + `btnClass()`→`btnVariant()`. **Variant map** (Falcon has NO neutral-slate variant): Disable→`primary-dark` (teal-700 #0d3f44 — was SoT slate #1F2937), Do Payment→`primary` (teal-500 #124c52 — was SoT #0d3f44), Enable→`outline-primary-dark` (white+teal-700 border/text = exact SoT outline-check). `(falconClick)` is the component's real event (`falcon-button-tw.tsx:55` bubbles+composed; `:71` suppresses while disabled/loading → no double-submit). **Visual deltas from SoT cm-btn** (cost of design-system component, user-requested): size 36→38px (Falcon md), radius 8→10px, Disable slate→teal-dark, DoPayment teal-shade shift, icon↔label gap 6→12px. NOT built (user builds), NO COMMITS. REMAINING raw `<button>` in feature (NOT yet converted, flagged): back-btn + view-toggle in `comm-mkt-view`. To pixel-match SoT with the Falcon button would need rootClass override or a new neutral-dark variant (danger-zone: new shared-component architecture).
+
+**UPDATE 2 (same day, same card):** (a) "status should be bigger, same as [SoT Aramco screenshot]" → status badge was `size="sm"` (10px); SoT `.status-badge` ([CODE] `styles.css:1320`) = 12px = Angular `md` EXACTLY ([CODE] `status-badge.tokens.css:36`; token comment says "Spec source: React .status-badge"). Changed `sm`→`md` on BOTH card ([CODE] `comm-mkt-card.component.ts:73`) AND list cell ([CODE] `comm-mkt-view.component.html:129`) ⇒ card=table=SoT (12px). (b) "fix the alignments" → SoT shows icon/title/badge TOP-aligned on priced cards, but shared `falcon-angular-card-status` top grid is `items-center` ([CODE] `card-status-tailwind-classes.ts:78`) so the tall badge+price column center-pushes icon/title down. Fix = `self-start` on all 3 header slots (media/title/status) in the card template — surgical: `<falcon-angular-card-status>` used ONLY by comm-mkt-card (grep-verified), NO shared-lib edit. Also status col `gap-1`→`gap-1.5` (4→6px badge↔price = SoT `.cm-card-price-stack`). NOT built (user builds), NO COMMITS. ⚠️ self-start deviates from SoT-CSS literal `align-items:center` but matches the SoT SCREENSHOT (user's target) — flagged.
+
+**User ask:** "card message buttons should be the same size as [the SoT reference screenshot]; cards must show the SAME action buttons as the table (table = source of truth); cards are view-mode, keep as cards not list. Don't build (I'll build)."
+
+**Deep-dive finding — action parity was ALREADY correct (no code change needed):** the grid card and the list data-table in `comm-mkt-view` BOTH derive actions from the ONE shared `COMM_MKT_ACTIONS` catalog via the SAME `commMktActionVisible()` predicate, fed the SAME `filtered()` rows by the page wrapper's single `[items]`. So they are architecturally identical:
+- [CODE] card: `resolveCommMktActions(item)` = filter `COMM_MKT_ACTIONS` by `commMktActionVisible` — `comm-mkt-card.component.ts`.
+- [CODE] table kebab: `rowActions` map with `visible:(row)=>commMktActionVisible(row,a)`, and `falcon-data-table.component.ts:1222` actually applies `a.visible(row)` when building the kebab → same set.
+- [CODE] gating: disable/enable = server `allowedActions`; doPayment = STATUS (`canDoPaymentForStatus` = Expired/InActive/Pending*) because BUG-DOPAYMENT strips it from availableActions — `comm-mkt-view.config.ts`.
+- i18n `commMkt.actions.{doPayment,disable,enable}` all present in `libs/falcon/src/language/i18n/en.json:50`.
+- ⇒ if the user saw card≠table at runtime it was a STALE bundle; rebuild reconciles.
+
+**The ONE real deviation = button SIZE.** SoT `.cm-btn` ([CODE] `Source_of_truth_theme/React/new react/admin/comm-mkt.css:337`) = height **36px / padding 0 14px** / gap 6px / radius 8 / 13px-600. Angular `btnBase` was `h-8` (32px) `px-3` (12px) — a prior "reduced to medium per user request" deviation. Everything else (gap 6px, radius 8, 13px-600, dark/teal/outline-check variants, inter-button gap token `--falcon-card-status-actions-gap:8px`, card pad 18×20, icon 24px) already matched.
+
+**FIX (1 line, shared card → covers BOTH pages):** `comm-mkt-card.component.ts` `btnBase`: `h-8`→`h-9` (36px), `px-3`→`px-3.5` (14px). Now pixel-identical to SoT `.cm-btn`. **Reverses the earlier 32px reduction** — flagged to user for easy correction if they wanted smaller. Both pages share `app-comm-mkt-card`, so one edit fixes Marketplace + CommChannels.
+
+🟢 EDIT DONE, NOT built (user builds). NO COMMITS. Card view (grid) vs list/kebab are different UI patterns by design — "same actions" = same SET/state, which is guaranteed; icons differ (card inline SVG vs kebab falcon-icon) by design.

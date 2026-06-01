@@ -79,6 +79,7 @@ Use this table to decide WHERE to load knowledge from. Trigger phrases listed.
 | Service error codes? | Brain Outputs/Understanding | `understanding/backend/<service>/ERRORS.md` | `errors for <service>` |
 | Platform-wide error catalog with HTTP status? | Authority Dataset | `13-error-catalog/CATALOG.md` | `what error codes does <feature> surface` |
 | FE error contract? | Authority Dataset | `13-error-catalog/FE-CONTRACT.md` | `frontend error contract` |
+| What were the Account-Management admin-console bugs + their fixes? | Authority Dataset | `13-error-catalog/account-mgmt-bugs-fixes-2026-05-29.md` | `account management bugs` · `account-mgmt bug fixes` · `node name validation fix` · `OTP timer bug` · `price zero not reflected` |
 | Kafka events feature F produces/consumes? | Brain Outputs/Understanding | `understanding/pages/<page>/10-KAFKA_SIDE_EFFECTS.md` (where exists) | `Kafka for <feature>` |
 
 ### Frontend questions (components · forms · i18n · UI)
@@ -190,6 +191,8 @@ When in doubt, follow the routing table → load the specific file → cite with
 
 ## See also
 
+- `BRAIN-SOURCE-OF-TRUTH-MANIFEST.md` — **the one doc that declares what is canonical** per knowledge type + the regeneration chain + drift policy. Read this BEFORE editing any derived artifact (MATRIX, graph node, report, feed). Rule: *derived artifacts are generated, never authored.* Rebuild everything via `graph/rebuild-brain.js`.
+- `BRAIN-ARCHITECTURE-CHART.md` — **full visual+tabular chart of the entire brain ecosystem** (every store, every folder, every flow, every prefix, every invariant). Read this if you want to see the WHOLE brain on one page; the Master Index routes questions, the chart shows shape.
 - `00-INDEX.md` — Authority dataset's own internal index
 - `00-VERIFICATION-GATE.md` — 19 falsifiable questions the dataset must answer
 - `VERIFICATION-STATUS.md` — what's verified vs not at runtime

@@ -1,0 +1,24 @@
+---
+name: falcon-comm-realtime-svc-built-2026-05-20
+description: Dedicated SignalR realtime service complete (Path A local-first). 9-wave night job. Service + gateway thinning + FE comment + 7/7 E2E vs live stack. 3 feature branches pushed to Azure DevOps. Realtime svc local-only (rule 7).
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 5eb1d0dd-4579-42ac-a10f-cb6a47a95d07
+---
+
+🟢 BUILT + PUSHED (mostly) — 2026-05-19/20 — 9-wave autonomous night job complete.
+
+Path A: new local service `falcon-comm-realtime-svc` at `C:\Falcon\Falcon\falcon-comm-realtime-svc` (branch `main`, 3 commits: af59c22 W2 core + 2f8df44 W8 Phase A polish + dec2172 W8 Phase C fixes; LOCAL ONLY per rule 7 — user creates the ADO repo + runs the one-command push in `PUSH-LATER.md`). Service owns SignalR OrderStatusHub + commerce.order-finalized.v1 Kafka consumer + Redis backplane (channel prefix `falcon-comm-realtime`) + Zitadel JWT + tenant-safe IDOR-safe group naming (claim-derived; client `order:{tenantId}:{orderId}`, Falcon `falcon:order:{orderId}`) + IOrderAccessPolicy seam (default-allow; ready for a future CommerceOrderAccessPolicy HTTP check) + health checks (`/health/live` liveness, `/health/ready` tag-predicated to Kafka + Redis) + fail-fast config validation. No business logic. Build 0/0 (`TreatWarningsAsErrors` on); 27/27 tests covering cross-tenant isolation, poison-loop commit-regardless, deny-path, fail-closed missing/unknown user-type, claim handling.
+
+Gateways thinned (~750 lines of duplicated Wave-4 hub/consumer code removed) and now only proxy `/hubs/*` with WebSocket upgrade: falcon-int-core-gateway-svc HEAD `cdbbe7c` (W5 03e9b37 + W7 cdbbe7c) PUSHED; falcon-int-system-gateway-svc HEAD `b4aed3d` (W5 af71dc1 + W7 85f3e70 + W8A b4aed3d) PUSHED; falcon-web-platform-ui HEAD `a8d1ae4a` (W6 comment polish) PUSHED — all to `polishing-v0.4-signalr-realtime` (off `polishing-v0.4`) on Azure DevOps as NEW remote branches, ready for PRs.
+
+W7 ran the full rule-8 matrix vs the live Docker stack: 7/7 PASS — service up + /health 200 + Kafka subscribed + Redis connected; negotiate 401-without/200-with token on both gateways; WebSocket upgrade end-to-end; Kafka→hub push reaches both Client + Falcon listeners; cross-tenant IDOR negative (Client of tenant A did NOT receive other-tenant event, Falcon did by design); reconnect + GET fallback; health under load. 6-agent Opus PR review (W8): architecture/security/backend/operations/frontend/tests — all PASS. Phase C addressed in-scope P1/P2 (3 new tests, fail-closed audience, lifetime doc, FluentAssertions pinned 8.x→7.x for the Xceed commercial-license issue, dead-policies documented). Only remaining P1s are production-path follow-ups (no ADO repo yet, no comm-realtime in docker-compose, no k8s manifest, env-var override for non-host-run, prod Redis password+TLS, azure-pipelines.yml — all expected per local-first scope + the infra repo's unrelated dirty state I didn't touch).
+
+2 morning decisions for the user: (1) W6 console scope — codebase shows the do-payment realtime FE is management-console + Core Gateway (already built Wave 4, runtime-verified aligned through the new architecture); admin-console has no do-payment popup at all — confirm intent vs the plan's "admin-console first" or add a popup to admin-console as a follow-up FE wave; (2) IDOR depth — claim-derived group naming makes cross-tenant subscription impossible (verified); residual = intra-tenant (client) + Falcon-global visibility (payload is `{orderId, status:int, failureReason:int}` only — no PII/money); IOrderAccessPolicy seam wired and ready for a `CommerceOrderAccessPolicy` HTTP ownership check — flip on or accept current posture?
+
+**Why:** Marks the transition from the planning phase to a runtime-verified, multi-reviewed, mostly-pushed implementation; future Falcon SignalR/realtime work should start from this service + these two morning decisions, not re-derive the architecture.
+
+**How to apply:** Read `C:\Falcon\reports\signalr-night-job\LOCAL-REALTIME-SVC-RESULT.md` FIRST (the morning report; covers everything in §1-§9). For design details: `W1-SERVICE-SPEC.md` (29 K tokens). For runtime evidence: `W7-E2E-VERIFICATION.md`. For per-aspect PR review: `W8-REVIEW-{architecture,security,backend,operations,frontend,tests}.md`. State / push refs / blockers / flagged decisions: `STATE.json`. Per-wave history: `PROGRESS-LOG.md`. The realtime service runs via `dotnet run` on host port 5210; dockerized gateways reach it at `host.docker.internal:5210`. Reusable Node SignalR test clients: `.w7-ws-client.mjs` + `.w7-reconnect-test.mjs`. The realtime svc is left running in background (`bxc8fro9d`) — kill or restart as needed.
+
+Relates: [[project_edit_price_revamp_checkpoint_2026_05_19]] (the prior planning + Path A/B analysis — superseded by this execution).

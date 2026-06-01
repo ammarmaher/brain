@@ -11,6 +11,40 @@ extracted: 2026-05-16
 > [!tldr]
 > Four flow playbooks (Add Client · Add User · Add Node · Edit Node) indexed by authority lens: PES gate · allowed roles · V-rules · entities consumed · BR rules · status transitions · error codes · Kafka events. Every row cites the playbook line where the fact lives — do not re-discover.
 
+## Live matrix (Dataview — auto-updating)
+
+> [!info] Dataview renders this section live by listing the per-flow `*.integration.md` files in this directory. The static fallback master matrix below remains the canonical cross-flow comparison; the Dataview query auto-pulls each integration file's frontmatter (PRD module, step count, playbook path) so adding a new integration file (e.g. for a future Add Wallet / Add Contract flow) auto-extends the matrix.
+
+```dataview
+TABLE WITHOUT ID
+  file.link as "Flow integration",
+  flow as "Flow",
+  prd-module as "PRD module",
+  steps as "Steps",
+  playbook as "Playbook path"
+FROM "Brain Outputs/datasets/authority-dataset/14-flow-playbook-integration"
+WHERE type = "flow-integration"
+SORT flow ASC
+```
+
+### When per-flow notes adopt module/feature taxonomy
+
+```dataview
+TABLE WITHOUT ID
+  file.link as "Flow",
+  module as "Module",
+  feature as "Feature",
+  steps as "Steps",
+  verification as "Verification",
+  last-verified as "Last Verified"
+FROM "Brain Outputs/datasets/authority-dataset/14-flow-playbook-integration"
+WHERE type = "flow-integration" AND module
+SORT module ASC, flow ASC
+```
+(This query is staged for when integration files gain the Wave 6 `module` / `feature` / `verification` keys. Today they only carry `flow` / `prd-module` / `steps` / `playbook` / `purpose` — the first query above is the active one.)
+
+## Static fallback (last hand-built before Dataview adoption)
+
 ## Flow inventory
 
 | Flow | Trigger entry point | Primary role(s) | # steps | PRD module | Playbook file path |
@@ -59,7 +93,7 @@ The columns above are summaries. Each flow has its own integration file with ful
    ┌────────────────────────────────────────────────────────────────┐
    │              Tenant now exists with an Account Owner            │
    │              (AccountSettings · MaxNodeLevel = N · MaxUserLimit)│
-   └────────────┬────────────────────────────────┬──────────────────┘
+   └────────────┬────────────────────────────┬──────────────────────┘
                 │                                │
                 ▼                                ▼
    ┌─────────────────────────┐    ┌─────────────────────────────────┐

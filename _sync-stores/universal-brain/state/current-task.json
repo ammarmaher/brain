@@ -1,0 +1,23 @@
+{
+  "status": "completed",
+  "completedAt": "2026-05-31",
+  "taskId": "user-profile-firstlast-name-validation-parity-2026-05-31",
+  "title": "Fix: First Name + Last Name validation on the User Profile / User Details edit screen must match Add User. checkPersonName had drifted (rejected internal spaces, apostrophes, hyphens; silently trimmed edge spaces). NO commits.",
+  "startedAt": "2026-05-31",
+  "repo": "C:/Falcon/Falcon/falcon-web-platform-ui",
+  "branch": "polishing-v0.4",
+  "mode": "Pure-function rule rewrite in shared @falcon lib + i18n (en+ar) + new vitest parity test + LIVE browser verification. NO git/commit/push.",
+  "currentStep": "DONE + RUNTIME-VERIFIED. 4 files: (1) shared-features/user-details/validations/validations.ts checkPersonName rewritten to mirror falcon-validations.ts personName EXACTLY (required -> edge-whitespace -> charset {letters,digits,space,',-} -> min2 -> max50 RAW); LETTERS_ONLY->PERSON_NAME_CHARSET; FieldErrorCode += 'whitespace'. (2) en.json + (3) ar.json hierarchy.userDetails.errors: added 'whitespace' + updated 'lettersAndDigitsOnly' text. (4) tools/validation-tests/user-profile-name-validations.test.ts NEW parity suite vs personNameValidator.",
+  "verification": "vitest 15/15 GREEN (incl new 4/4). host-shell build EXIT 0. LIVE host-shell :4200 accowner /profile (real mouse+keyboard, Claude-in-Chrome tab 642015620): app-user-details-page mounted; username readOnly; First Name: 'Mary Ann' ACCEPTED no error save-enabled (DECISIVE), \"O'Brien\" accepted, ' Mary' -> 'No leading or trailing spaces' value-not-trimmed save-disabled, 'Ahm@d' -> 'Allowed: letters, digits, spaces, apostrophe, hyphen' save-disabled; Last Name 'Smith-Jones' accepted. Restored originals + Cancel WITHOUT save -> accowner record NOT mutated. Matches Add User personNameValidator.",
+  "nextStep": "Complete. Await user. If user says commit: cherry-pick ONLY the 4 files (validations.ts, en.json, ar.json, user-profile-name-validations.test.ts) -> NEVER git add -A (working tree has many unrelated dirty files on polishing-v0.4, incl. a separate uncommitted shadow-row fix in service-pricing-table.component.ts). Optional follow-up the user may want: align the user-details USERNAME rule too (it still has a startsWithLetter check the Wave F xlsx dropped for Add User) -- offered, not done.",
+  "keyFacts": [
+    "'User Profile' (/profile, UserProfileRouteComponent -> app-user-details-page selfMode=true) AND admin/mgmt 'User Details' edit are the SAME shared component (libs/falcon/src/shared-features/user-details). One validations.ts fix covers all. RUNTIME-CONFIRMED the /profile path mounts it.",
+    "Add User was ALREADY correct (personNameValidator). DRIFT was only user-details checkPersonName (its 2026-05-21 LETTERS_ONLY copy missed Wave F 2026-05-24 charset+edge-whitespace). Fix = mirror personName + CI parity test so it can't drift again.",
+    "RUNTIME EVIDENCE this session is REAL tool outputs (not transcribed expectations). NOTE for future: a first chrome attempt used a stale/non-existent tabId (5) -> ALL actions errored, ZERO observations; I must always tabs_context_mcp to get the real tabId before driving + never write 'verified' without an actual observed value.",
+    "Dev server MF remotes are HEALTHY (console [MF] OK management_console + admin_console). The entry file is remoteEntry.MJS (not .js) -> an earlier curl of /remoteEntry.js 404'd = false alarm, not a corrupted server.",
+    "Trap (still true): live hierarchy.userDetails.errors i18n block is en.json~1967 / ar.json~1965 with STATIC messages; the 1900s 'errors' (classifications) block is a different area."
+  ],
+  "blockers": [],
+  "noCommitsToMainOrWorking": true,
+  "pushed": false
+}

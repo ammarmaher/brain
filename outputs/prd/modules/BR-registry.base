@@ -1,0 +1,34 @@
+filters:
+  and:
+    - 'file.name == "BUSINESS_RULES"'
+    - 'file.ext == "md"'
+    # Restrict to files inside prd/modules/*/ so we never pick up an unrelated
+    # BUSINESS_RULES.md elsewhere in the vault.
+    - 'file.path.startsWith("prd/modules/")'
+
+properties:
+  file.name:
+    displayName: File
+  module:
+    displayName: Module
+  file.mtime:
+    displayName: Last Edited
+  file.size:
+    displayName: Size (bytes)
+  # Module name is derived from the parent folder of BUSINESS_RULES.md.
+  # If Bases supports computed columns in your build, prefer something like:
+  #   formula: file.folder.name
+  # We leave it as a plain frontmatter property here so the column shows up
+  # even if formulas are unavailable — Ammar can tune in Obsidian later.
+
+views:
+  - type: table
+    name: BR files
+    order:
+      - file.name
+      - module
+      - file.mtime
+      - file.size
+    sort:
+      - column: file.mtime
+        direction: DESC

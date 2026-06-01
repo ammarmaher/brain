@@ -67,6 +67,22 @@ The dataset is **structurally complete + PES backend gate runtime-verified (21/2
 | `acc-user` deny on services / contract / org-hierarchy | All returned `false` | ✋ |
 | `app.admin-console.view` deny for all 3 acc-* users | All returned `false` | ✋ |
 
+### ✋ Browser-verified (2026-05-21) — service-pricing row mutations
+
+**Org Hierarchy → CommChannels & Services → BMW visibility toggle** confirmed working end-to-end by user (*"It's working 100%"*) on host-shell dev server (localhost:4200, build hash `9f189a8dd24c5992`). Closes the "data is removed after every row click" regression that had blocked Apps & Services + CommChannels tabs since Wave 7's wrong `scheduleDelayedReload` diagnosis.
+
+| Layer | Verification | Result |
+|---|---|---|
+| FE row patch from PUT response (no reload, no skeleton flash) | User toggled visibility on BMW comm-channel row; other rows stayed rendered + interactive throughout the round-trip | ✋ |
+| Per-row spinner replaces switch only on the busy row | Confirmed visually — other rows' switches remained clickable | ✋ |
+| BE PUT `/commerce/Node/comm-channel/visibility` → 200 returns partial wire row | DevTools network panel screenshot — `Status Code: 200 OK`, `Request Method: PUT` | ✋ |
+| `applyPartialRowPatch` merges partial response into local snapshot (visibility / status / canHide / availableActions) | Switch reflected new visibility immediately after PUT settled — no second GET fired | ✋ |
+| BE has zero eventual-consistency window | Verified via curl prior to fix: immediate GET after PUT returns consistent state every time — refutes Wave 7's 3-second-delay hypothesis | ✋ |
+
+**Topic file** (full root cause + fix detail): [MEMORY] `project_service_pricing_per_row_loader_wave_12_2026_05_21.md`. **Commits**: `029b7bdd` (Wave 11 build-fix) + `0f943248` (Wave 12 per-row loader) on `fix/visibility-switch-disabled-binding` (off `polishing-v0.4`). **Build-green**: host-shell + admin-console + management-console.
+
+**Platform rule that gained runtime evidence**: Stencil `<falcon-table-tw>` `loading=true` is a HARD SWAP — every data `<tr>` is unmounted from the DOM, only skeleton rows render. Bind `[loading]` only to flags that flip during initial-GET / explicit-reload / full-row-replacement flows, never during a row-level mutation. Row mutations need a `busyRowIds: Set<string>` signal + `isRowBusy(rowId)` cell-template guard.
+
 ### 🟡 Structurally checked
 
 | Item | Method |
@@ -95,25 +111,37 @@ The dataset is **structurally complete + PES backend gate runtime-verified (21/2
 | `environment.ts` URLs wired to cloud (`https://*.falconhub.space`) | Briefly swapped to localhost during this session, then **reverted by user** to keep cloud URLs (intentional — staging cert workaround). Localhost URLs preserved as commented alternates inside the file. | 🟡 Reverted by design |
 | Phase 5 scanner caught real drift on `mgmt-console/app.routes.ts` | Verified intentional (comms-hub route added) → MarkChecked sealed baseline → 67/67 clean | 🟢 Closed |
 
-### 🔴 Remaining FE-runtime blocker (workspace-scope, NOT dataset-scope)
+### 🟢 FE-runtime blocker — RESOLVED 2026-05-27
 
-The mgmt-console `nx serve` produced **40+ pre-existing Stencil/Angular compile errors** across:
-- `libs/falcon-studio/src/lib/components/*` (10+ files)
-- `libs/falcon-ui-core/src/angular-wrapper/components/*` (35+ files — every angular wrapper of a Falcon UI Core component)
-- `libs/falcon/src/shared-ui/lib/components/*` (5+ files)
+The 40+ Stencil/Angular wrapper compile errors documented 2026-05-16 (sample error: `tag missing in component decorator`) **no longer reproduce**. Both `nx serve management-console` AND `nx serve host-shell` compile clean on the current workspace (verified 2026-05-27 during Admin→Mgmt port Wave 7 Part A). The errors were fixed sometime between 2026-05-17 → 2026-05-24 during the many shared-lib waves (likely during dark-mode / validation-xlsx / service-pricing patches per `[MEMORY] MEMORY.md`).
 
-Sample error: `tag missing in component decorator` — appears at every `@Component({ selector: 'falcon-angular-...' ... })` site. Symptoms: cascading errors throughout the workspace; Angular tooling cannot find tags it expects.
+**Current FE-runtime status (2026-05-27):**
+- 🟢 `nx build management-console` GREEN (hash `6159fa2d9df4a167` with all 6 ported features wired)
+- 🟢 `nx serve management-console` GREEN (live at `http://localhost:4301`)
+- 🟢 `nx serve host-shell` GREEN (live at `http://localhost:4200`, build hash `5c3e559871b07d0b`)
+- 🟢 `libs/falcon-ui-core/src/components.d.ts` fresh (656 KB, May 24)
 
-**This is NOT caused by the authority dataset or the comms-hub port.** It is a systemic workspace state issue requiring deep FE expertise — likely a Stencil/Angular metadata regeneration or a tsconfig drift. Closing it would require a senior FE engineer to:
-1. Investigate the metadata generator that emits `@Component` decorators for Falcon UI Core wrappers
-2. Trace why the `tag` field is being stripped
-3. Reseed the generated files OR fix the upstream Stencil component metadata
+### ✋ Mgmt-console port — E2E RUNTIME-VERIFIED 2026-05-28 (16/18 cells GREEN)
 
-**Implication for the dataset's verification status:**
-- 🟢 Backend PES gate: **runtime-verified, 21/21 PASS** (closed end of session)
-- 🔴 FE route guard + Falcon UI Core rendering + i18n + RTL: **cannot be runtime-tested until the workspace compile errors are resolved**. This is a workspace-level blocker, independent of dataset correctness.
+Full browser-driven E2E ran 2026-05-28 against the live Docker stack (18 containers Up) with real test-user JWTs through the real PES gate. Evidence: `C:\Falcon\plans\runtime-verification-e2e-2026-05-28.md` (Waves 19→24).
 
-**Tracked separately**: this is not a `Q-*` for the dataset; it's a workspace-state issue that needs a developer ticket.
+**Net: 16 of 18 cells GREEN** (6 features × 3 acc-* roles). The 2 RED cells are pure **backend 500s** (`:7038/commerce/Node` + `/commerce/Setting`) — the FE mounts + gates correctly in both; only server-side data load fails. Filed as B-12 + B-13 for `ammar-core-commerce` / `ammar-core-gateway`.
+
+| Layer | Verification | Result |
+|---|---|---|
+| 6 routes reachable from host-shell `/management-console/*` | Navigated each as accowner | ✋ all mount |
+| PES route-guard enforcement per role | accadmin/accuser correctly denied to `/401` on comm-mgmt/marketplace/wallet/contracts | ✋ matches matrix |
+| Wallet acc-admin DENY (no PES key — FE fallback) | `GET identity/user/me → 200` → roleKey guard → `/401` (network-proven) | ✋ |
+| Contracts strongest-asymmetry (acc-admin + acc-user deny) | Both blocked at paired guard | ✋ |
+| Contact-groups acc-user UNIQUELY sees Shared tab | Confirmed in DOM | ✋ |
+| i18n labels resolve (en) | `common.refresh` / `walletMgmt.*` render translated, zero raw-key leaks | ✋ |
+| Falcon UI Core wrappers paint | 34-51 `falcon-*` custom elements per page | ✋ |
+
+**Critical loop lesson (Waves 20-23):** the first fix iteration (Wave 20) chased phantom bugs because the dev-server served a stale incremental Module Federation expose AND Chrome held a stuck disk-cache of it (B-15). Clean server rebuild + fresh browser context (Wave 23) eliminated the phantoms — the actual code was correct. **Always rebuild + clear browser cache before trusting an mgmt-console E2E result.**
+
+**Still pending (backend, out of FE remit):**
+- B-12 / B-13 — `:7038/commerce/Node` + `/commerce/Setting` return 500 for valid mgmt JWTs (blocks comm-mgmt list + wallet/accowner data load).
+- B-1 / B-2 / B-6 — role-filter / wallet-PES-key / visibility-filter backend items (FE mitigations in place).
 
 ## What is NOT verified
 

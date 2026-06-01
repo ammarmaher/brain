@@ -1,0 +1,53 @@
+{
+  "taskId": "brain-setup-trust-assessment-2026-05-27",
+  "title": "User-facing brain setup description + advantages/disadvantages + trust assessment + memorize",
+  "status": "in_progress",
+  "startedAt": "2026-05-27T00:00:00Z",
+  "owner": "claude",
+  "files_changed": [
+    "C:\\Falcon\\universal-brain\\state\\current-task.json",
+    "C:\\Falcon\\universal-brain\\state\\progress-log.md",
+    "C:\\Falcon\\universal-brain\\backups\\latest-restore-packet.md",
+    "C:\\Falcon\\universal-brain\\state\\task-history\\20260521_145000_service-pricing-shadow-row-delete.md",
+    "C:\\Falcon\\Brain Outputs\\datasets\\authority-dataset\\BRAIN-ARCHITECTURE-CHART.md",
+    "C:\\Falcon\\Brain Outputs\\datasets\\authority-dataset\\0-MASTER-INDEX.md"
+  ],
+  "context": "User asked: (1) describe current brain setup, (2) advantages + disadvantages for them, (3) trust assessment, (4) read CLAUDE.md right away, (5) make things be remembered, (6) give evidence. Non-Falcon-code task but Falcon-brain-meta — source-prefix protocol still applies because session-start hook auto-loaded.",
+  "evidence_walked": {
+    "authority_dataset_files": 133,
+    "understanding_files": 1392,
+    "brain_sk_files": 12485,
+    "falcon_wiki_files": 8204,
+    "prd_modules_files": 36,
+    "old_ui_dataset_files": 158,
+    "home_memory_files": 262,
+    "universal_brain_files": 8,
+    "sync_repo_files": 4796,
+    "sync_repo_last_commit": "1f57664 2026-05-24 Wave G input-layer digit caps",
+    "previous_task_status_before_archive": "completed (service-pricing shadow-row delete 2026-05-21)",
+    "verification_status_pes_backend": "21/21 runtime-verified 2026-05-16",
+    "verification_status_fe_ui": "blocked on 40+ Stencil/Angular compile errors",
+    "backups_dir_state_before_task": "EMPTY (no latest-restore-packet.md existed)"
+  },
+  "key_files_read": [
+    "C:\\Falcon\\.claude\\CLAUDE.md (87 lines)",
+    "C:\\Users\\User\\.claude\\CLAUDE.md (3 lines, graphify only)",
+    "C:\\Users\\User\\.claude\\projects\\C--Falcon\\memory\\MEMORY.md (lines 1-24 of 261 — TRUNCATED at autoload cap)",
+    "C:\\Falcon\\Brain Outputs\\datasets\\authority-dataset\\0-MASTER-INDEX.md (203 lines)",
+    "C:\\Falcon\\Brain Outputs\\datasets\\authority-dataset\\VERIFICATION-STATUS.md (255 lines)",
+    "C:\\Falcon\\.claude\\skills\\brain\\SKILL.md (first 60 lines)"
+  ],
+  "deliverables_emitted": [
+    "10-store inventory table (files+MB)",
+    "10-row advantage list with citations",
+    "12-row disadvantage list with citations",
+    "Per-store trust matrix with verification levels",
+    "Archived prior 2026-05-21 task to task-history",
+    "Refreshed latest-restore-packet.md (was missing)",
+    "BRAIN-ARCHITECTURE-CHART.md - 12 sections, 4 Mermaid diagrams, folder trees for all 10 stores, lifecycle flow, read/write matrix, routing tree, source-prefix protocol, verification ladder, 22 hygiene invariants, quick-reference card",
+    "Cross-link added from 0-MASTER-INDEX.md See also section"
+  ],
+  "runtime_verified": false,
+  "commits_made": false,
+  "nextStep": "User reviews. If approved, mark this task completed + archive to task-history/. If user pushes back on any claim, drill into that store with more evidence."
+}

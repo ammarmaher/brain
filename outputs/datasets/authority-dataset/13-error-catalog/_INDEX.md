@@ -38,6 +38,7 @@ purpose: "Answers 'where to look up error codes, HTTP statuses, owning services,
 | [`_INDEX.md`](./_INDEX.md) | This file — cluster entry MOC | small |
 | [`CATALOG.md`](./CATALOG.md) | Full error-code catalog (130 codes by status / service / feature / V-rule) + 3 defensive coding patterns | large |
 | [`FE-CONTRACT.md`](./FE-CONTRACT.md) | Frontend error-handling contract — 3 standing rules, status→UX mapping, 6 anti-patterns from old UI, 7 per-feature UX overrides, pre-merge checklist | large |
+| [`account-mgmt-bugs-fixes-2026-05-29.md`](./account-mgmt-bugs-fixes-2026-05-29.md) | Account-Management admin-console bug→root-cause→fix→status record (16 rows: 10 fixed-this-session, 3 already-fixed, 2 backend-flagged, 1 blocked). Build-green, not runtime-verified | medium |
 
 ## Quick answers
 
@@ -64,6 +65,10 @@ purpose: "Answers 'where to look up error codes, HTTP statuses, owning services,
 ### "Can I branch UI copy on `FalconKeys.Error.*` codes?"
 
 [`FE-CONTRACT.md`](./FE-CONTRACT.md) §1 Rule 3 — **no**. Branch on HTTP status, not codes. Codes are for logging / telemetry / debug overlays only. Anti-pattern §5.1 in FE-CONTRACT lists this as the #1 sin in the old UI.
+
+### "What were the Account-Management admin-console bugs and how were they fixed?"
+
+[`account-mgmt-bugs-fixes-2026-05-29.md`](./account-mgmt-bugs-fixes-2026-05-29.md) — all 16 rows with ID · screen · issue · root cause (file:line) · fix (file:line) · status. 10 fixed this session (e.g. BUG-09 falsy-zero price `@if(row.priceValue != null)`, BUG-15 zoneless OTP timer `markForCheck()`, BUG-08 node-name = account-name parity), 3 already-fixed (videos predate Wave-F), 2 backend-flagged (BUG-17 Commerce `UpdateSettingsHandler`, BUG-11 role-enum SoT), 1 blocked (BUG-16). Frontend-only, build-green, NOT runtime-verified.
 
 ### "Which feature does `NoApplicableRate` surface in?"
 

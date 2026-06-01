@@ -1,0 +1,14 @@
+---
+name: reference_add_client_user_validations_2026_05_20
+description: Single-stop map for all Add Client + Add User wizard validators with PRD↔V-rule↔code evidence trail
+metadata: 
+  node_type: memory
+  type: reference
+  originSessionId: d7033986-fff9-429d-bd16-127d2827b3de
+---
+
+🟢 KB 2026-05-20. Add Client (5 steps) + Add User (3 tabs) validations are PRD-prose-driven (no Excel sheets); 9 V-rules apply to Add Client, 7 to Add User. Authority chain: [BRAIN-OUT] `0-MASTER-INDEX.md` → `06-validation-by-feature/MATRIX.md` § 3.1 → `_obsidian/30-Validation/V-*.md` → wizard playbooks at `understanding/pages/organization-hierarchy/Add Client/02..07.md` + `flows/Add User.md` → [CODE] `libs/falcon/src/shared-utils/lib/validations/falcon-validations.ts` (named-validator registry — `ACCOUNT_NAME_MAX=30`, `PERSON_NAME_MAX=50`, `USERNAME_MAX=30`, `LETTERS_ONLY=/^[\p{L}\s'-]+$/u`, `STARTS_WITH_LETTER=/^\p{L}/u`) → per-step `validations.ts` injection-token providers in `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/<step>/validations/validations.ts` + `add-user-wizard/<tab>/validations/validations.ts`. Key drifts FE must mitigate: (a) Username PRD 30 vs backend 100 — FE enforces 30, (b) PasswordSecurityLevel PRD Normal/Advanced vs backend Low/Medium/High/Strict — FE submits backend codes (Q-UM-12 partial: Normal→Medium, Advanced→Strict), (c) AccountName letter-prefix missing in backend `[ThrowIf*]` — FE enforces, (d) AccountOwner Phone+Email missing `[ThrowIfNotPassed]` — FE enforces. Layer architecture: L1 named validators · L2 FormGroup cross-field (City→Country, Visibility↔Pricing reactive) · L3 async uniqueness via `accountNameUnique` (`GET /api/Node/ValidateAccountName`) + `userNameUnique` (`POST /api/user/exist`) debounced ≥250ms. Profile picture cap: 1 MiB, JPG/PNG/WEBP/etc., uploader-internal error (no host toast). One Excel artefact exists — `Permission list - Jawad` — but it's role-action authority (Q-UM-07 Tab 2 still uncaptured from Drive), NOT field validation. Related: [[project_falcon_component_validation_convention]] (3-layer doctrine) · [[project_photo_uploader_1mb_inline_error_2026_05_20]] · [[project_wizard_validations_prd_clean_2026_05_19]].
+
+**Why:** Brain SK request 2026-05-20 — Ammar asked for full deep-dive on all validations for both wizards with provenance.
+
+**How to apply:** Open this file before any change to validation rules, error messages, or wizard step components. The named-validator registry is the single source of truth — never duplicate regex/maxLength constants in step files. For new fields: (1) check the V-rule in `_obsidian/30-Validation/`, (2) check the backend `[ThrowIf*]` surface in `understanding/backend/<service>/VALIDATIONS.md`, (3) add to `falcon-validations.ts` registry if reusable or to the step's `validations.ts` injection-token if step-local. Source-prefix every claim.

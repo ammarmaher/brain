@@ -1,0 +1,66 @@
+from,to,type,evidence_strength,discovered_in_wave,notes
+vrule:account-name-format-xlsx-2026-05-24,vrule:account-name-format-uniqueness,REPLACES,confirmed,1,xlsx wins over PRD (SoT-flip 2026-05-24)
+vrule:person-name-format-xlsx-2026-05-24,vrule:user-first-last-name-letters-only,REPLACES,confirmed,1,xlsx wins over PRD
+vrule:username-format-xlsx-2026-05-24,vrule:username-format-uniqueness-immutable,REPLACES,confirmed,1,xlsx wins over PRD
+vrule:text-field-no-edge-or-internal-whitespace,wave:001,NEEDS_REVIEW,needs-review,1,Wave D added; Wave F rolled back; no xlsx replacement
+page:add-contract,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+page:change-password,mod:user-mgmt,IN_MODULE,confirmed,1,
+page:contact-groups-list,mod:contact-group-mgmt,IN_MODULE,confirmed,1,
+page:contracts-list,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+page:create-contact-group,mod:contact-group-mgmt,IN_MODULE,confirmed,1,
+page:create-template-whatsapp,mod:templates,IN_MODULE,confirmed,1,
+page:edit-contract,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+page:edit-user,mod:user-mgmt,IN_MODULE,confirmed,1,
+page:forgot-password,mod:root-documents,IN_MODULE,confirmed,1,
+page:login,mod:root-documents,IN_MODULE,confirmed,1,
+page:my-profile,mod:user-mgmt,IN_MODULE,confirmed,1,
+page:organization-hierarchy,mod:account-mgmt,IN_MODULE,confirmed,1,largest page dossier (25 files)
+page:templates-list,mod:templates,IN_MODULE,confirmed,1,
+page:wallets-and-balance-management,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+dto:account,mod:account-mgmt,IN_MODULE,confirmed,1,
+dto:account-settings,mod:account-mgmt,IN_MODULE,confirmed,1,
+dto:addon,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+dto:contract,mod:contract-charging-billing,IN_MODULE,confirmed,1,drift-count 19
+dto:account,svc:commerce,BELONGS_TO_SERVICE,confirmed,1,
+dto:account-settings,svc:commerce,BELONGS_TO_SERVICE,confirmed,1,
+dto:addon,svc:commerce,BELONGS_TO_SERVICE,confirmed,1,
+dto:contract,svc:commerce,BELONGS_TO_SERVICE,confirmed,1,
+evt:charging-ocs-wallet-events,svc:charging,PRODUCES_EVENT,needs-review,1,Wave 4 confirms via file body
+evt:charging-order-payment-processed,svc:charging,PRODUCES_EVENT,needs-review,1,Wave 4 confirms
+evt:commerce-comm-channel-init,svc:commerce,PRODUCES_EVENT,needs-review,1,Wave 4 confirms
+evt:commerce-comm-channel-shown,svc:commerce,PRODUCES_EVENT,needs-review,1,Wave 4 confirms
+evt:commerce-comm-channel-visibility-changed,svc:commerce,PRODUCES_EVENT,needs-review,1,Wave 4 confirms
+br-cluster:am,mod:account-mgmt,IN_MODULE,confirmed,1,42 rules
+br-cluster:um,mod:user-mgmt,IN_MODULE,confirmed,1,50 rules
+br-cluster:cc,mod:contract-charging-billing,IN_MODULE,confirmed,1,50 rules
+br-cluster:cgm,mod:contact-group-mgmt,IN_MODULE,confirmed,1,38 rules
+vrule:account-ip-allowlist-enforcement,mod:account-mgmt,IN_MODULE,confirmed,1,
+vrule:contract-rate-per-unit-non-negative,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+vrule:contract-expiration-after-start,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+vrule:contract-currency-enum,mod:contract-charging-billing,IN_MODULE,confirmed,1,F-002 fork (label vs code)
+vrule:contract-edit-status-aware-fields,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+vrule:contract-committed-value-positive,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+vrule:contact-group-share-policy-mode-mutex,mod:contact-group-mgmt,IN_MODULE,confirmed,1,
+vrule:contact-group-name-required-format,mod:contact-group-mgmt,IN_MODULE,confirmed,1,
+vrule:contact-group-file-type-allowlist,mod:contact-group-mgmt,IN_MODULE,confirmed,1,
+vrule:contact-group-file-size-cap,mod:contact-group-mgmt,IN_MODULE,confirmed,1,
+vrule:contact-group-column-name-shape,mod:contact-group-mgmt,IN_MODULE,confirmed,1,
+vrule:charging-transfer-source-destination,mod:contract-charging-billing,IN_MODULE,confirmed,1,F-014 fork: currency-mismatch reject
+vrule:charging-insufficient-balance,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+vrule:charging-no-applicable-rate,mod:contract-charging-billing,IN_MODULE,confirmed,1,
+vrule:password-security-level-enum,mod:user-mgmt,IN_MODULE,confirmed,1,F-002 fork (label vs code)
+vrule:password-complexity-per-security-level,mod:user-mgmt,IN_MODULE,confirmed,1,
+vrule:normal-user-limit-enforcement,mod:user-mgmt,IN_MODULE,confirmed,1,
+vrule:login-lockout-3-wrong-attempts,mod:root-documents,IN_MODULE,confirmed,1,
+vrule:template-levels-count-required-for-restricted,mod:templates,IN_MODULE,confirmed,1,
+vrule:template-checker-level-integrity,mod:templates,IN_MODULE,confirmed,1,
+wave:001,comp:cluster:63-components,NEXT_WAVE_TARGET,confirmed,1,Wave 2: expand component → token/variant/size/state
+wave:001,dto:cluster:e-entities-20-more,NEXT_WAVE_TARGET,confirmed,1,Wave 4: enumerate remaining 20 E-entities
+wave:001,evt:cluster:remaining-16,NEXT_WAVE_TARGET,confirmed,1,Wave 4: enumerate remaining 16 Kafka events
+wave:001,pesrule:cluster:47-keys,NEXT_WAVE_TARGET,confirmed,1,Wave 5: enumerate 47 PES keys
+wave:001,arch:cluster:24-rules-8-adrs,NEXT_WAVE_TARGET,confirmed,1,Wave 5: enumerate 24 architecture rules + 8 ADRs
+wave:001,br-cluster:am,NEXT_WAVE_TARGET,confirmed,1,Wave 5: enumerate BR-AM-* (42 rules)
+wave:001,br-cluster:um,NEXT_WAVE_TARGET,confirmed,1,Wave 5: enumerate BR-UM-* (50 rules)
+wave:001,br-cluster:cc,NEXT_WAVE_TARGET,confirmed,1,Wave 5: enumerate BR-CC-* (50 rules)
+wave:001,br-cluster:cgm,NEXT_WAVE_TARGET,confirmed,1,Wave 5: enumerate BR-CGM-* (38 rules)
+pesrule:built-in-role-catalog,wave:001,EVIDENCED_BY,confirmed,1,21/21 runtime-verified 2026-05-16

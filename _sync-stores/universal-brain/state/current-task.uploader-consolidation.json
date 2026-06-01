@@ -1,0 +1,50 @@
+{
+  "_note": "SIDECAR task-state. The shared current-task.json is held by a concurrent session (wallet-transfer-x-button). Per precedent, NOT stomping it; this sidecar is the durable record for the uploader-consolidation task.",
+  "taskId": "TASK-20260530-uploader-consolidation",
+  "title": "Consolidate all upload surfaces onto the configurable Falcon uploader (add avatar-pins mode + video icon; migrate User Details avatar + Templates Step 2 media admin+mgmt)",
+  "status": "in_progress",
+  "startedAt": "2026-05-30",
+  "updatedAt": "2026-05-30",
+  "goal": "Every remaining hand-rolled upload surface runs through the Falcon uploader family, avatar-pins mode + video icon added, all data/wire contracts preserved, 3 apps build-green, runtime-verified. No commits.",
+  "taskType": "refactor",
+  "branch": "polishing-v0.4",
+  "plan": [
+    "W0 brain+branch(polishing-v0.4)+baseline",
+    "W1 A1 avatar-pins mode on falcon-photo-uploader",
+    "W2 M1 User Details avatar migration",
+    "W3 A2 video icon + falcon-ui-core Stencil regen",
+    "W4 M2 Templates Step2 media admin+mgmt",
+    "W5 regression build + runtime verify (ammar-qa-web) + report"
+  ],
+  "completedSteps": [
+    "Investigation: 3 Explore agents (component inventory, consumer map, config+contracts)",
+    "Plan approved by user (rosy-tinkering-meerkat.md)",
+    "W0: branch polishing-v0.4; working tree = prior uncommitted WIP (build on top, never revert)",
+    "W1 A1 IMPLEMENTED by ammar-web-platform-ui (aad4ed60e4801b458): appearance input ('card'|'avatar', default 'card' so 5 existing consumers unchanged) + avatarSizePx(96) on falcon-photo-uploader; new bare-circle avatar branch w/ always-on edit pin + conditional delete pin + below-circle oversize line",
+    "W2 M1 IMPLEMENTED: user-details hero -> <falcon-photo-uploader appearance='avatar'>; PES gate preserved ([viewMode]=!(editMode && permFlags.canEditPicture)); wire {extension,fileBase64String} passed through setPicture byte-for-byte; clear->deletePhoto; dead code (dataUrlToPicture/onAvatarFile/initials/unused imports) removed; i18n hierarchy.userDetails.photoTooLarge added en(1998)+ar(1996)",
+    "SOURCE-VERIFIED by orchestrator (git diff both files): canEditPicture real (signals.ts:63), barrel import resolves (shared-ui/.../falcon-photo-uploader/index.ts), i18n key present. CAVEAT: empty-avatar fallback changed initials->person glyph (deliberate cross-surface consistency; FLAG to user)."
+  ],
+  "currentStep": "User chose restart+verify. Stopped wedged host-shell serve (PID 3548 CLI + 11884 executor, owned 4200/4204/4301), started FRESH nx serve host-shell (bg btddya8oc) -> 'Compiled successfully' on :4200, wedge cleared, uploader-tw chunks present. Re-running ammar-qa-web for live browser verification of M1/M2/A2 + regression.",
+  "nextStep": "On ammar-qa-web evidence: finalize report to user. FLAGS for user: (1) User Details empty-avatar initials->person glyph; (2) User Details now enforces 1MB cap (BR-UM-48) it didn't before.",
+  "filesChanged": [
+    "libs/falcon/src/shared-ui/lib/components/falcon-photo-uploader/falcon-photo-uploader.component.ts (A1 inputs + avatar mode doc)",
+    "libs/falcon/src/shared-ui/lib/components/falcon-photo-uploader/falcon-photo-uploader.component.html (A1 avatar branch)",
+    "libs/falcon/src/shared-features/user-details/components/user-details-page.component.ts (M1 handler + dead-code removal)",
+    "libs/falcon/src/shared-features/user-details/components/user-details-page.component.html (M1 swap to falcon-photo-uploader)",
+    "libs/falcon/src/language/i18n/en.json + ar.json (hierarchy.userDetails.photoTooLarge)"
+  ],
+  "risks": [
+    "Shared current-task.json contended by concurrent session — using this sidecar; do not stomp",
+    "Working tree has uncommitted file-uploader-shared edits (prior port) — build ON TOP, never revert",
+    "M1 adds a 1MB cap (BR-UM-48) User Details did not enforce before — intentional, FLAG to user",
+    "M1 empty-avatar fallback initials->person glyph — visual change, FLAG to user",
+    "A2 forces falcon-ui-core Stencil regen affecting Contact Groups document uploader — re-verify",
+    "SendMessage tool unavailable — cannot continue paused subagents; use fresh agents + own builds"
+  ],
+  "blockers": [
+    "W5 runtime verification BLOCKED: host-shell :4200 dev-serve wedged (103 TS2307 'Cannot find module ../dist/components/falcon-*'); root cause = falcon-ui-core dist regenerated while a serve was live + duplicate nx serve processes (PID 54212 + 3548) + concurrent sessions rebuilding the shared uploader lib. Fix = stop wedged/duplicate host-shell serves, let dist settle, fresh nx serve host-shell, re-run ammar-qa-web. Restarting :4200 may interrupt concurrent sessions -> needs user OK."
+  ],
+  "verificationStatus": "W1-W4 BUILD-GREEN x2 (both gates exit 0) + SOURCE-VERIFIED x2 (orchestrator git-diff + ammar-qa-web line-cited). Serve wedge FIXED (restarted clean; M1 CONFIRMED in live :4200 bundle via NG8102 citing user-details-page.component.html:152). W5 live interaction BLOCKED by NEW issue: login HTTP 500 for ALL users (sysadmin/accowner/sysops) -> environment.ts points at LOCAL Docker :7777 (a concurrent session set it; local identity login broken per [MEMORY] empty-FieldEncryption+Zitadel-throw). Fix = repoint env.ts to working *.falconhub.space remote, BUT that file is contended by a concurrent local-backend session. QA evidence C:/Falcon/qa/runs/2026-05-30-uploader-consolidation/. Awaiting user decision: repoint+verify vs accept-current.",
+  "noCommits": true,
+  "planFile": "C:/Users/User/.claude/plans/rosy-tinkering-meerkat.md"
+}

@@ -1,0 +1,63 @@
+{
+  "taskId": "waves-11-15-to-97-percent-2026-05-28",
+  "title": "Push every graph dimension to >=97% (Waves 11-15) — BE<->FE wire-level integration headline",
+  "status": "in_progress",
+  "startedAt": "2026-05-28T01:00:00Z",
+  "lastUpdatedAt": "2026-05-28T02:30:00Z",
+  "owner": "claude",
+  "plan_doc": "C:\\Falcon\\falcon-wiki\\200-Graph\\PLAN-WAVES-11-15-TO-97-PERCENT.md",
+  "snapshot_path": "C:\\Falcon\\universal-brain\\snapshots\\pre-waves-11-15\\",
+  "current_wave": "12 COMPLETE; 13 ready to trigger",
+  "waves_status": {
+    "wave_11_style_token_component": "COMPLETE (5 agents, 61 components disk-walked, 140 design tokens centralized, 1568 edges)",
+    "wave_12_be_fe_wire_level": "COMPLETE (6 agents, 150 endpoints, 260 DTOs, 20 Kafka events with directionality, 8 E2E flows, 35 components with DTO field bindings)",
+    "wave_13_validation_br_closure": "queued (next session — needs ~2.5h)",
+    "wave_14_architecture_patterns": "queued (~2h)",
+    "wave_15_consolidate_verify_pdf": "queued (~1.5h)"
+  },
+  "current_coverage_estimate": {
+    "from_wave_10_baseline": 0.94,
+    "after_wave_11": 0.97,
+    "after_wave_12": 0.985,
+    "after_wave_13_target": 0.99,
+    "after_wave_15_target": "every dimension >=0.97"
+  },
+  "wave_12_deliverables_landed": [
+    "200-Graph/waves/WAVE-012-GRAPH-PLAYBACK-2026-05-28.md — wave audit trail",
+    "200-Graph/BE_FE_WIRE_LEVEL_INTEGRATION_GRAPH.md — NEW headline doc with 8 flows + 150 endpoints + 20 Kafka events",
+    "200-Graph/graph/wave-deltas/wave-012.json — structured delta (380 nodes + 1210 edges summarized)"
+  ],
+  "wave_11_deliverables_landed": [
+    "200-Graph/waves/WAVE-011-SUPPLEMENTARY-2026-05-28.md (supplement to existing playback)",
+    "200-Graph/graph/wave-deltas/wave-011.json — 195 nodes + 1568 edges summarized",
+    "falcon-wiki/40-Tokens/INDEX.md — NEW token cluster MOC"
+  ],
+  "key_findings": {
+    "tokens_md_audit": "61/61 components have TOKENS.md on disk — earlier 'missing 23' estimate was wrong (counted inferred slugs)",
+    "endpoints_total": 150,
+    "dtos_total": 260,
+    "kafka_events_with_directionality": 20,
+    "be_fe_integration_flows_mapped": 8,
+    "kafka_gaps_surfaced": 10,
+    "p0_drifts_for_wave_13": [
+      "KAFKA-GAP-01 topic-name drift (Identity vs Commerce)",
+      "KAFKA-GAP-02 shared consumer group commerce-service",
+      "KAFKA-GAP-06 commerce.test-event in production config",
+      "Focus-ring color drift (semantic says blue, actual is teal)",
+      "Button fallback hex drift (#0d3f44 vs #124c52)",
+      "Semantic Tier-2 tokens not in @theme"
+    ]
+  },
+  "currentStep": "Waves 11+12 landed. Wave 13 ready (Validation + BR closure). User can: (a) continue Wave 13 in this session if budget allows, (b) start Wave 13 fresh in next session.",
+  "nextStep": "Wave 13: spawn 4 parallel agents to (1) parse 10 xlsx TSVs, (2) cross-walk 27 PRD-only V-rules vs xlsx, (3) trace 225 BR-* to enforcers using Wave 12 endpoint data, (4) reconcile Q-UM-07 standing-truth conflict. Expected delta: validation 95->99%, BR 90->98%.",
+  "safety_invariants_honored": [
+    "no_app_code_edits",
+    "no_git_commits_or_pushes",
+    "no_npm_docker_test_server",
+    "writes_confined_to_200_graph_and_40_tokens_and_universal_brain_state",
+    "evidence_only_edges",
+    "preserved_other_session_current_task_json",
+    "preserved_prior_wave_work_verbatim"
+  ],
+  "tokens_consumed_this_session_estimate": "~700K (6 Wave 12 agents at ~120K each + 5 Wave 11 agents at ~95K each + orchestrator overhead)"
+}

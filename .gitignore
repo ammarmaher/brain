@@ -58,3 +58,41 @@ Obsidian Vault/
 !**/*.example.*
 !**/*.template.*
 !**/*.sample.*
+
+# === Machine-specific bulk / experimental tooling (regenerable, kept out of the public repo) ===
+# IDE config
+.idea/
+# Redundant Obsidian zip (the canonical _obsidian/ vault is tracked instead)
+_obsidian.zip
+# Heavy / experimental tool trees (hundreds of MB of venvs, models, caches)
+tools/brain-boost/
+tools/brain-cognee/
+tools/brain-graphiti/
+tools/web-scrub/
+# Git worktrees are working checkouts of OTHER repos — must never be committed
+outputs/worktrees/
+**/worktrees/
+# Python / build caches that may appear inside synced stores
+**/__pycache__/
+**/.venv/
+**/.cache/
+# Large generated/compressed assets
+*.gz
+
+# === Cross-machine sync stores (_sync-stores/ added by the brain GitHub sync) ===
+# Never let a copied store nest its own .git (would create a broken gitlink/submodule)
+_sync-stores/**/.git/
+# Keep knowledge files; drop any bulk that slips into a synced store
+_sync-stores/**/node_modules/
+_sync-stores/**/_archive/**/node_modules/
+
+# === Secret-bearing memory notes — keep LOCAL only, never publish (placed after the
+# !**/*.md negation so it wins). These store live API keys. ===
+**/reference_stitch_api_key.md
+**/*_api_key.md
+**/*-api-key.md
+
+# === Scraped third-party (Meta/Facebook) API reference docs ===
+# Contain doc-example access tokens (CAA...) that trip secret scanners; not Falcon
+# brain core. Keep local, exclude from the public repo.
+outputs/datasets/Facebook documents/

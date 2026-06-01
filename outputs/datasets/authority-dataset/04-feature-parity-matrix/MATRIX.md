@@ -12,6 +12,54 @@ extracted: 2026-05-16
 > [!tldr]
 > 7 features compared across both consoles. Categorised into **Falcon-only**, **Falcon-mostly**, **Shared with config-flip**, and **Shared with Client-side enrichment**. Use this matrix to decide port direction + scope when copying features admin → mgmt (or planning the new UI rebuild).
 
+## Live matrix (Dataview — auto-updating)
+
+> [!info] Dataview renders this section live by listing the per-feature `*.compare.md` files in this directory. The static fallback master classification table below remains the canonical at-a-glance answer; the Dataview query adds frontmatter-driven richness (admin/mgmt routes, gateway choice, falcon-only flag) auto-pulled from each compare file.
+
+```dataview
+TABLE WITHOUT ID
+  file.link as "Feature compare",
+  feature as "Feature",
+  admin-side-app as "Admin app",
+  admin-side-route as "Admin route",
+  mgmt-side-app as "Mgmt app",
+  mgmt-side-route as "Mgmt route",
+  admin-side-gateway as "Admin GW",
+  mgmt-side-gateway as "Mgmt GW",
+  falcon-only as "Falcon only",
+  client-only as "Client only",
+  shared as "Shared"
+FROM "Brain Outputs/datasets/authority-dataset/04-feature-parity-matrix"
+WHERE type = "feature-compare"
+SORT feature ASC
+```
+
+### Filter — falcon-only features
+
+```dataview
+TABLE WITHOUT ID
+  file.link as "Feature",
+  admin-side-route as "Admin route",
+  admin-side-gateway as "Admin GW"
+FROM "Brain Outputs/datasets/authority-dataset/04-feature-parity-matrix"
+WHERE type = "feature-compare" AND falcon-only = true
+SORT feature ASC
+```
+
+### Filter — shared features ready for config-flip port
+
+```dataview
+TABLE WITHOUT ID
+  file.link as "Feature",
+  admin-side-route as "Admin route",
+  mgmt-side-route as "Mgmt route"
+FROM "Brain Outputs/datasets/authority-dataset/04-feature-parity-matrix"
+WHERE type = "feature-compare" AND shared = true AND falcon-only != true AND client-only != true
+SORT feature ASC
+```
+
+## Static fallback (last hand-built before Dataview adoption)
+
 ## Master classification
 
 | Feature | Class | Admin route | Mgmt route | Notes |

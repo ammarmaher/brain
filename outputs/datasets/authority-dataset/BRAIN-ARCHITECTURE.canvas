@@ -1,0 +1,187 @@
+{
+  "nodes": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": -800,
+      "y": -800,
+      "width": 600,
+      "height": 100,
+      "text": "# Falcon Brain Architecture\n\n*Visual twin of BRAIN-ARCHITECTURE-CHART.md*",
+      "color": "6"
+    },
+    {
+      "id": "session-hook",
+      "type": "text",
+      "x": -800,
+      "y": -640,
+      "width": 320,
+      "height": 140,
+      "text": "## SESSION RUNTIME\n\n- Session-start hook\n- .claude/CLAUDE.md (project)\n- MEMORY.md (auto-loaded index)\n- 18 skills + 50+ agents",
+      "color": "5"
+    },
+    {
+      "id": "state-layer",
+      "type": "text",
+      "x": -440,
+      "y": -640,
+      "width": 320,
+      "height": 200,
+      "text": "## LIVE SESSION STATE\n`C:\\Falcon\\universal-brain\\`\n\n- state/current-task.json\n- state/progress-log.md\n- backups/latest-restore-packet.md\n- state/task-history/\n- _archive/\n- snapshots/",
+      "color": "3"
+    },
+    {
+      "id": "store-1",
+      "type": "file",
+      "file": "Brain Outputs/datasets/authority-dataset/0-MASTER-INDEX.md",
+      "x": -800,
+      "y": -440,
+      "width": 320,
+      "height": 120,
+      "color": "4"
+    },
+    {
+      "id": "store-1-label",
+      "type": "text",
+      "x": -800,
+      "y": -310,
+      "width": 320,
+      "height": 80,
+      "text": "**1. Authority Dataset** [BRAIN-OUT]\n133 files / 6.8 MB\nrouting + permissions + drift",
+      "color": "4"
+    },
+    {
+      "id": "store-2-label",
+      "type": "text",
+      "x": -440,
+      "y": -440,
+      "width": 320,
+      "height": 120,
+      "text": "**2. Understanding** [BRAIN-OUT]\n`Brain Outputs/understanding/`\n1,392 files / 22.7 MB\n62 components + per-page + per-service dossiers",
+      "color": "4"
+    },
+    {
+      "id": "store-3-label",
+      "type": "text",
+      "x": -80,
+      "y": -440,
+      "width": 320,
+      "height": 120,
+      "text": "**3. Brain SK Obsidian** [BRAIN-SK]\n`Brain SK/_obsidian/`\n12,485 files / 300 MB\n25 V-rules + 15 E-* + skills",
+      "color": "4"
+    },
+    {
+      "id": "store-4-label",
+      "type": "text",
+      "x": 280,
+      "y": -440,
+      "width": 320,
+      "height": 120,
+      "text": "**4. Falcon Wiki** [VAULT]\n`falcon-wiki/`\n8,204 files / 702 MB\nADO architecture mirror",
+      "color": "4"
+    },
+    {
+      "id": "store-5-label",
+      "type": "text",
+      "x": -800,
+      "y": -180,
+      "width": 320,
+      "height": 100,
+      "text": "**5. PRD Modules** [BRAIN-OUT]\n`Brain Outputs/prd/modules/`\n36 files\nDrive-synced PRDs",
+      "color": "4"
+    },
+    {
+      "id": "store-6-label",
+      "type": "text",
+      "x": -440,
+      "y": -180,
+      "width": 320,
+      "height": 100,
+      "text": "**6. Old-UI Dataset** [BRAIN-OUT]\n`Brain Outputs/datasets/old-ui-dataset/`\n158 files\nfrozen origin/main reference",
+      "color": "4"
+    },
+    {
+      "id": "store-7-label",
+      "type": "text",
+      "x": -80,
+      "y": -180,
+      "width": 320,
+      "height": 100,
+      "text": "**7. Brain Skills** [BRAIN-SK]\n`brain-skills/` + `Brain SK/skills/`\nAngular · Tailwind · Nx rule books",
+      "color": "4"
+    },
+    {
+      "id": "store-8-label",
+      "type": "text",
+      "x": 280,
+      "y": -180,
+      "width": 320,
+      "height": 100,
+      "text": "**8. Home memory** [MEMORY]\n`~/.claude/.../C--Falcon/memory/`\n262 files / 45 KB MEMORY.md (compacted 2026-05-27)\nauto-loaded each session",
+      "color": "2"
+    },
+    {
+      "id": "sync-layer",
+      "type": "text",
+      "x": -800,
+      "y": 40,
+      "width": 800,
+      "height": 140,
+      "text": "## CROSS-DEVICE SYNC\n\n`C:\\falcon-brain-sync\\` ↔ github.com/ammarmaher/falcon-brain-sync (PRIVATE)\n\nMirrors 4 brain dirs via robocopy /MIR + git push/pull\n\nEnd-of-session: `.\\sync-from-canonical.ps1 -Push` + `git push`\nStart-of-session: `git pull` + `.\\sync-from-canonical.ps1 -Pull`",
+      "color": "1"
+    },
+    {
+      "id": "obsidian-sync",
+      "type": "text",
+      "x": 280,
+      "y": 40,
+      "width": 320,
+      "height": 140,
+      "text": "## OBSIDIAN SYNC\n(Brain SK vault only)\n\nObsidian's paid sync — note-level\nINDEPENDENT of git brain-sync\nBoth kept (belt + suspenders)",
+      "color": "1"
+    },
+    {
+      "id": "chart-md",
+      "type": "file",
+      "file": "Brain Outputs/datasets/authority-dataset/BRAIN-ARCHITECTURE-CHART.md",
+      "x": -800,
+      "y": 240,
+      "width": 600,
+      "height": 200,
+      "color": "6"
+    },
+    {
+      "id": "prefix-protocol",
+      "type": "text",
+      "x": -160,
+      "y": 240,
+      "width": 380,
+      "height": 200,
+      "text": "## SOURCE-PREFIX PROTOCOL\n\nEvery Falcon fact carries a prefix:\n- [CODE] file:line\n- [BRAIN-OUT] dataset path\n- [VAULT] falcon-wiki path\n- [BRAIN-SK] Brain SK path\n- [MEMORY] topic file\n- [INFERRED] reasoning (must flag)\n\nUnprefixed = CONVENTION VIOLATION",
+      "color": "5"
+    },
+    {
+      "id": "verification-ladder",
+      "type": "text",
+      "x": 280,
+      "y": 240,
+      "width": 320,
+      "height": 200,
+      "text": "## VERIFICATION LADDER\n\n🔴 unverified\n🟡 structural\n🟡 spot-checked\n🟢 code-verified\n🟢 build-verified\n✋ runtime-verified\n\nStanding truths:\n✋ PES 21/21\n🔴 FE UI blocked\n✅ Q-UM-07 RESOLVED 2026-05-19",
+      "color": "2"
+    }
+  ],
+  "edges": [
+    { "id": "e1", "fromNode": "session-hook", "toNode": "state-layer", "label": "loads" },
+    { "id": "e2", "fromNode": "store-1", "toNode": "store-2-label", "label": "routes to" },
+    { "id": "e3", "fromNode": "store-1", "toNode": "store-3-label", "label": "routes to" },
+    { "id": "e4", "fromNode": "store-1", "toNode": "store-4-label", "label": "routes to" },
+    { "id": "e5", "fromNode": "store-1", "toNode": "store-5-label", "label": "routes to" },
+    { "id": "e6", "fromNode": "store-1", "toNode": "store-6-label", "label": "routes to" },
+    { "id": "e7", "fromNode": "store-1", "toNode": "store-7-label", "label": "routes to" },
+    { "id": "e8", "fromNode": "state-layer", "toNode": "sync-layer", "label": "robocopy /MIR" },
+    { "id": "e9", "fromNode": "store-1", "toNode": "sync-layer", "label": "syncs" },
+    { "id": "e10", "fromNode": "store-1", "toNode": "chart-md", "label": "documented in" },
+    { "id": "e11", "fromNode": "store-8-label", "toNode": "session-hook", "label": "auto-loads" }
+  ]
+}

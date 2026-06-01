@@ -1,0 +1,163 @@
+{
+  "captureWindow": {
+    "startedISO": "2026-05-21T19:38:18+03:00",
+    "endedISO": "2026-05-21T19:47:30+03:00",
+    "note": "All evidence below was captured BEFORE the parallel Wave 1 session began modifying falcon-sending-credentials-dialog.component.ts (first failing compile observed at 19:48:43)."
+  },
+  "environment": {
+    "hostShell": "http://localhost:4200 (HTTP 200, 2752 bytes)",
+    "loginVerified": "sysadmin/Admin@1234 via UI login form",
+    "browserDeviceId": "d35ab80b-6e0a-4c9e-bf80-4134008c8e29",
+    "tabId": 642011430,
+    "viewport": {"w": 2560, "h": 1249, "dpr": 1.5}
+  },
+  "wizardPath": [
+    "Step 1/5 Client Information: filled Account Name=TestZIndex01, Finance ID=FIN-Z01-2026",
+    "Step 2/5 Settings: set Max Normal=10, Max System=10, Max Node Level=3",
+    "Step 3/5 CommChannels: toggled WhatsApp Visibility ON, Price Type=One Time Payment, Price Value=100",
+    "Step 4/5 Applications: skipped (optional)",
+    "Step 5/5 Account Owner: First=TestZ, Last=Owner, Username=testzowner01, Phone=+966 595604099, Email=testz.owner01@t2.sa, Role=Account Owner"
+  ],
+  "saveClickResult": "POST succeeded; Sending Credentials dialog OPENED; bleed-through observed (see screenshot ss_19199287p)",
+
+  "dialogBackdrop": {
+    "tag": "div",
+    "role": "presentation",
+    "classes": [
+      "fixed",
+      "inset-0",
+      "grid",
+      "place-items-center",
+      "p-6",
+      "bg-falcon-neutral-900/45",
+      "backdrop-blur-[2px]",
+      "falcon-sc-backdrop-in",
+      "z-[var(--falcon-dialog-z-index)]"
+    ],
+    "computedPosition": "fixed",
+    "computedZIndex": "auto",
+    "inlineStyleZIndex": "",
+    "rectViewport": "0,0 2560x1305",
+    "outerHTMLStart": "<div _ngcontent-ng-c876019977=\"\" role=\"presentation\" class=\"fixed inset-0 grid place-items-center p-6 bg-falcon-neutral-900/45 backdrop-blur-[2px] falcon-sc-backdrop-in z-[var(--falcon-dialog-z-index)]\">"
+  },
+
+  "rootCauseFinding": {
+    "summary": "Tailwind arbitrary z-index value `z-[var(--falcon-dialog-z-index)]` resolves to computed `z-index: auto` because the CSS custom property `--falcon-dialog-z-index` is NOT defined anywhere in the cascade (not on :root, not on any ancestor).",
+    "evidence": [
+      "backdropComputedZIndex == 'auto' (a Tailwind arbitrary value referencing an undefined var collapses to the JIT-compiled `z-index: var(--falcon-dialog-z-index)` which yields 'auto' when the var is unset)",
+      "Walked all relevant Falcon CSS custom properties on the backdrop's computed style: no --falcon-dialog-z-index, --falcon-sc-z-index, --falcon-z-modal, or --falcon-z-overlay defined",
+      "Result: position:fixed + z-index:auto puts the backdrop in the parent's local stacking context at the order it was inserted, NOT on a top-most layer",
+      "The dialog wrapper element falcon-angular-sending-credentials-dialog is rendered INSIDE falcon-angular-wizard-finalization > app-org-hierarchy-page-menu (page content), NOT portalled to body or to .falcon-overlay-container"
+    ],
+    "parallelOverlayContainerExists": {
+      "found": true,
+      "tag": "div",
+      "class": "falcon-overlay-container",
+      "computedZIndex": "100000",
+      "computedPosition": "fixed",
+      "rect": "0,0 2560x1305",
+      "note": "A proper top-layer container (z=100000) EXISTS in the DOM but the Sending Credentials dialog is NOT using it. Likely the intended Wave 1 fix path is to migrate this dialog to the existing falcon-overlay-container OR to <dialog showModal()> / popover top-layer."
+    }
+  },
+
+  "dialogStructureChain": [
+    {"tag": "h3", "text": "Sending Credentials", "pos": "static", "z": "auto", "classHint": "m-0 mb-2 text-xl font-bold text-falcon-neutral-900"},
+    {"tag": "header", "pos": "static", "z": "auto", "classHint": "text-center mb-6"},
+    {"tag": "section", "role": "dialog", "ariaModal": "true", "pos": "relative", "z": "auto", "hasTransform": true, "classHint": "relative w-full max-w-[880px] bg-falcon-neutral-0 rounded-[18px] shadow-[0_24px_60px_rgba(0,0,0,0.18)] px-12 py-12"},
+    {"tag": "div", "role": "presentation", "pos": "fixed", "z": "auto", "classHint": "fixed inset-0 grid place-items-center p-6 bg-falcon-neutral-900/45 backdrop-blur-[2px] falcon-sc-backdrop-in z-[var(--falcon-dialog-z-index)]"},
+    {"tag": "falcon-angular-sending-credentials-dialog", "pos": "static", "z": "auto", "rect": "0,0 0x0", "note": "Host element has NO painted size — its content is positioned via fixed inner backdrop"},
+    {"tag": "falcon-angular-wizard-finalization", "pos": "static", "z": "auto", "rect": "0,0 0x0"},
+    {"tag": "app-org-hierarchy-page-menu", "pos": "static", "z": "auto", "rect": "224,72 2336x1233"},
+    {"tag": "div.content", "pos": "static", "z": "auto"},
+    {"tag": "main", "pos": "static", "z": "auto"},
+    {"tag": "app-layout", "pos": "static", "z": "auto"},
+    {"tag": "app-root", "pos": "static", "z": "auto"},
+    {"tag": "body", "pos": "static", "z": "auto"},
+    {"tag": "html", "pos": "static", "z": "auto"}
+  ],
+
+  "stepperRailChain_ClientInformation_to_HTML": [
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "app-add-client-wizard", "pos": "static", "z": "auto"},
+    {"tag": "main", "pos": "static", "z": "auto"},
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "section", "pos": "relative", "z": "auto"},
+    {"tag": "app-org-hierarchy-page-menu", "pos": "static", "z": "auto"},
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "main", "pos": "static", "z": "auto"},
+    {"tag": "div", "pos": "static", "z": "auto"},
+    {"tag": "app-layout", "pos": "static", "z": "auto"}
+  ],
+
+  "fixedPositionedElements": [
+    {"class": "fixed inset-0 z-[2000] ... bg-[color:var(--color-falcon-teal-alpha-18)] hidden", "z": "2000", "rect": "0,0 0x0", "note": "hidden — global loading overlay, not relevant"},
+    {"class": "fixed inset-0 grid place-items-center p-6 bg-falcon-neutral-900/45 backdrop-blur-[2px] falcon-sc-backdrop-in z-[var(--falcon-dialog-z-index)]", "z": "auto", "rect": "0,0 2560x1305", "note": "THE BLEED-THROUGH BACKDROP"},
+    {"z": "2147483646", "rect": "0,0 2560x1305", "note": "Likely the Stencil/Web Components shadow root portal — empty"},
+    {"z": "2147483646", "hasTransform": true, "rect": "2477,124 0x0", "note": "Another empty portal slot"},
+    {"class": "falcon-overlay-container", "z": "100000", "rect": "0,0 2560x1305", "note": "PROPER TOP-LAYER CONTAINER - unused by this dialog"}
+  ],
+
+  "behaviorBaseline_PreSave": {
+    "focusOnSaveButton": true,
+    "buttonText": "Save"
+  },
+
+  "behaviorBaseline_AfterSaveDialogOpen": {
+    "activeElement_tag": "BUTTON",
+    "activeElement_text": "Save",
+    "activeElement_inDialog": false,
+    "activeElement_note": "Focus REMAINED on the Save button OUTSIDE the dialog after the modal opened. The dialog did NOT pull initial focus to its first interactive element.",
+    "tabbableCount_insideDialog": 6,
+    "tabbableCount_outsideDialog_StillReachable": 33,
+    "focusTrap": "NOT IMPLEMENTED — 33 page-level controls remain Tab-reachable while the modal is open",
+    "ariaModalAttr": "true",
+    "dialogRoleAttr": "dialog",
+    "backdropRoleAttr": "presentation",
+    "ariaModalNote": "aria-modal=true is set on the dialog section (good), but a11y semantics are contradicted by the absence of focus management"
+  },
+
+  "behaviorBaseline_ESCAndBackdrop": {
+    "ESC_keypress": "AMBIGUOUS — pressed ESC at 19:43 and the dialog appeared to close, BUT a webpack-dev-server compile-error overlay also appeared in the same window (parallel Wave 1 session pushed a failing compile at 19:48:43 with a HostListener-import error specifically adding an ESC keydown listener — this strongly implies the OLD baseline code does NOT have an ESC handler, and the perceived close was a side effect of the dev overlay appearing on top + subsequent interaction)",
+    "backdrop_click": "NOT TESTED in baseline window — environment became unstable before clean test was possible",
+    "completionSuccess_dialog": "NOT TESTED in baseline window — second Add User click triggered a build-error overlay because the parallel Wave 1 session also broke the completion-success-dialog.component.html template (NG5002 closing tag/block errors)"
+  },
+
+  "consoleErrors_DuringBaselineCapture": {
+    "windowStart": "19:38:17",
+    "windowEnd_before_Wave1_interference": "19:48:32",
+    "errorsCount": 0,
+    "notes": "Zero runtime errors during the baseline reproduce. The only console output was webpack-dev-server lifecycle messages + REMOTE-ROUTES bootstrap logs."
+  },
+
+  "Wave1_inProgress_evidence_outsideBaseline": {
+    "firstFailure": "2026-05-21T19:48:43+03:00",
+    "errors": [
+      {
+        "file": "libs/falcon-ui-core/src/angular-wrapper/components/falcon-sending-credentials-dialog/falcon-sending-credentials-dialog.component.ts",
+        "line": 161,
+        "code": "TS2304",
+        "message": "Cannot find name 'HostListener'.",
+        "context": "@HostListener('document:keydown.escape')",
+        "hint": "Wave 1 is adding an ESC keydown listener but forgot to import HostListener from @angular/core"
+      },
+      {
+        "file": "libs/falcon-ui-core/src/angular-wrapper/components/falcon-completion-success-dialog/falcon-completion-success-dialog.component.html",
+        "line": "70:3",
+        "code": "NG5002",
+        "message": "Unexpected closing tag 'div'."
+      },
+      {
+        "file": "libs/falcon-ui-core/src/angular-wrapper/components/falcon-completion-success-dialog/falcon-completion-success-dialog.component.html",
+        "line": "71:1",
+        "code": "NG5002",
+        "message": "Unexpected closing block. Did you forget to close the <dialog> element?"
+      }
+    ],
+    "firstSuccessfulReload": "2026-05-21T19:49:14+03:00",
+    "implication": "Any Chrome MCP capture taken after 19:48:43 reflects Wave 1 WIP, NOT baseline. The baseline window for fresh captures has closed for this session."
+  }
+}

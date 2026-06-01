@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    { "id": "n-entry", "x": 0, "y": 0, "width": 360, "height": 120, "type": "file", "file": "200-Graph/00_START_HERE.md", "color": "1" },
+    { "id": "n-schema", "x": 440, "y": 0, "width": 320, "height": 120, "type": "file", "file": "200-Graph/GRAPH_SCHEMA.md", "color": "1" },
+    { "id": "n-coverage", "x": 840, "y": 0, "width": 320, "height": 120, "type": "file", "file": "200-Graph/GRAPH_COVERAGE_REPORT.md", "color": "1" },
+
+    { "id": "n-moc", "x": 0, "y": 220, "width": 360, "height": 120, "type": "file", "file": "200-Graph/MOC_CONNECTIONS_INDEX.md", "color": "5" },
+    { "id": "n-components", "x": 440, "y": 220, "width": 320, "height": 120, "type": "file", "file": "200-Graph/COMPONENT_REGISTRY_GRAPH.md", "color": "5" },
+    { "id": "n-pages", "x": 840, "y": 220, "width": 320, "height": 120, "type": "file", "file": "200-Graph/PAGE_TO_COMPONENT_USAGE_GRAPH.md", "color": "5" },
+
+    { "id": "n-style-index", "x": 0, "y": 440, "width": 360, "height": 120, "type": "file", "file": "200-Graph/COMPONENT_STYLE_GRAPH_INDEX.md", "color": "4" },
+    { "id": "n-tokens", "x": 440, "y": 440, "width": 320, "height": 120, "type": "file", "file": "200-Graph/STYLE_TOKEN_GRAPH.md", "color": "4" },
+    { "id": "n-cssvar", "x": 840, "y": 440, "width": 320, "height": 120, "type": "file", "file": "200-Graph/CSS_VARIABLE_GRAPH.md", "color": "4" },
+    { "id": "n-tailwind", "x": 1240, "y": 440, "width": 320, "height": 120, "type": "file", "file": "200-Graph/TAILWIND_USAGE_GRAPH.md", "color": "4" },
+
+    { "id": "n-api", "x": 0, "y": 660, "width": 360, "height": 120, "type": "file", "file": "200-Graph/API_BUSINESS_ARCHITECTURE_GRAPH.md", "color": "6" },
+
+    { "id": "n-quality-orphans", "x": 0, "y": 880, "width": 360, "height": 120, "type": "file", "file": "200-Graph/ORPHAN_NODES_REVIEW.md", "color": "2" },
+    { "id": "n-quality-weak", "x": 440, "y": 880, "width": 320, "height": 120, "type": "file", "file": "200-Graph/WEAK_CLUSTERS_REVIEW.md", "color": "2" },
+    { "id": "n-roadmap", "x": 840, "y": 880, "width": 320, "height": 120, "type": "file", "file": "200-Graph/GRAPH_GAPS_AND_NEXT_STEPS.md", "color": "2" },
+
+    { "id": "n-wave-1", "x": 0, "y": 1100, "width": 200, "height": 100, "type": "file", "file": "200-Graph/waves/WAVE-001-GRAPH-PLAYBACK.md", "color": "3" },
+    { "id": "n-wave-2", "x": 220, "y": 1100, "width": 200, "height": 100, "type": "file", "file": "200-Graph/waves/WAVE-002-GRAPH-PLAYBACK.md", "color": "3" },
+    { "id": "n-wave-3", "x": 440, "y": 1100, "width": 200, "height": 100, "type": "file", "file": "200-Graph/waves/WAVE-003-GRAPH-PLAYBACK.md", "color": "3" },
+    { "id": "n-wave-4", "x": 660, "y": 1100, "width": 200, "height": 100, "type": "file", "file": "200-Graph/waves/WAVE-004-GRAPH-PLAYBACK.md", "color": "3" },
+    { "id": "n-wave-5", "x": 880, "y": 1100, "width": 200, "height": 100, "type": "file", "file": "200-Graph/waves/WAVE-005-GRAPH-PLAYBACK.md", "color": "3" },
+    { "id": "n-wave-6", "x": 1100, "y": 1100, "width": 200, "height": 100, "type": "file", "file": "200-Graph/waves/WAVE-006-GRAPH-PLAYBACK.md", "color": "3" },
+
+    { "id": "n-summary", "x": 1240, "y": 0, "width": 380, "height": 340, "type": "text", "text": "# Falcon Knowledge Graph\n\n**Coverage:** 90% (Wave 6)\n**Nodes:** ~840 across 35 types\n**Edges:** ~1900 typed\n\n**Validation SoT:** Validations.xlsx (NOT PRD)\n**Provenance:** every node carries source-prefix\n**Stop conditions:** 6/7 met\n\nOpen [[00_START_HERE]] to begin walking.", "color": "1" },
+
+    { "id": "n-validation-sot", "x": 1240, "y": 660, "width": 380, "height": 200, "type": "text", "text": "# Validation SoT (xlsx)\n\nValidations.xlsx supersedes PRD for fields it covers.\n\n- 47 mandatory xlsx-derived fields\n- 7 unique-constrained fields\n- 3 REPLACES edges from new → old V-rule\n- Snapshot: `Source_of_truth_theme/Validations.SOT-2026-05-24.xlsx`\n- Parsed: `.xlsx-parse/dump-SOT/*.tsv`", "color": "4" }
+  ],
+  "edges": [
+    { "id": "e1", "fromNode": "n-entry", "toNode": "n-schema", "label": "schema contract" },
+    { "id": "e2", "fromNode": "n-entry", "toNode": "n-coverage", "label": "quality measurement" },
+    { "id": "e3", "fromNode": "n-entry", "toNode": "n-moc" },
+    { "id": "e4", "fromNode": "n-moc", "toNode": "n-components" },
+    { "id": "e5", "fromNode": "n-moc", "toNode": "n-pages" },
+    { "id": "e6", "fromNode": "n-components", "toNode": "n-style-index", "label": "subgraph root" },
+    { "id": "e7", "fromNode": "n-style-index", "toNode": "n-tokens" },
+    { "id": "e8", "fromNode": "n-style-index", "toNode": "n-cssvar" },
+    { "id": "e9", "fromNode": "n-style-index", "toNode": "n-tailwind" },
+    { "id": "e10", "fromNode": "n-pages", "toNode": "n-api", "label": "calls" },
+    { "id": "e11", "fromNode": "n-coverage", "toNode": "n-roadmap", "label": "feeds" },
+    { "id": "e12", "fromNode": "n-quality-orphans", "toNode": "n-roadmap" },
+    { "id": "e13", "fromNode": "n-quality-weak", "toNode": "n-roadmap" },
+    { "id": "e14", "fromNode": "n-wave-1", "toNode": "n-wave-2", "label": "next" },
+    { "id": "e15", "fromNode": "n-wave-2", "toNode": "n-wave-3", "label": "next" },
+    { "id": "e16", "fromNode": "n-wave-3", "toNode": "n-wave-4", "label": "next" },
+    { "id": "e17", "fromNode": "n-wave-4", "toNode": "n-wave-5", "label": "next" },
+    { "id": "e18", "fromNode": "n-wave-5", "toNode": "n-wave-6", "label": "next" },
+    { "id": "e19", "fromNode": "n-validation-sot", "toNode": "n-pages", "label": "xlsx wins" }
+  ]
+}

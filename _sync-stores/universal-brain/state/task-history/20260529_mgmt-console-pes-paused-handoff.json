@@ -1,0 +1,43 @@
+{
+  "status": "parts-A-E-substantially-complete-3of4-browser-verified",
+  "taskId": "mgmt-console-authority-pes-parity-2026-05-29",
+  "title": "Mgmt console authority + PES: reports + plan + seeding + verification + Part E parity fixes + browser E2E (new-UI vs main)",
+  "startedAt": "2026-05-29T00:00:00Z",
+  "updatedAt": "2026-05-29",
+  "mode": "research+report+plan+seed+verify+IMPLEMENT+browser-E2E (multi-agent ultracode). NO COMMITS. Source edits in working tree.",
+  "userDirective": "do all + no change to business behavior + [authority] in PES don't touch controller + DO NOT touch DoPayment/insufficient-funds FE<->BE signals or implementation (active concurrent enhancement)",
+  "currentStep": "Parts A-D done. Part E implemented (#1/#2/#5/#7/#8; #6 proven unreachable). Browser E2E (Wave 4/P6) ran: #7 PASS, route-guard 18/18 PASS, #5 PASS, #2 PARTIAL.",
+  "browserE2E": {
+    "runDir": "C:/Falcon/qa/runs/2026-05-29-1200-mgmt-authority-pes-P6/ (VERDICT.md + A/B/C/D evidence)",
+    "#7_tab_visibility": "PASS — accowner sees CommChannels+Apps tabs; accadmin sees Hierarchy only.",
+    "route_guard_landing": "PASS 18/18 — 3 roles x 6 routes match the matrix + the API 69/69.",
+    "#5_contactgroup_ownonly": "PASS — accowner on accuser rows kebab=[View] only; own rows have Edit/Delete.",
+    "#2_adduser_dropdown": "PARTIAL — fail-closed code correct + accowner reaches wizard / accuser cannot; BUT dropdown rendered EMPTY because client-user session.roles=[] -> currentRole='' -> all userRole.other('',target) deny. Upstream session-population gap (Identity /user/me -> MFE session mapping), NOT a #2 defect. Also add-user-wizard.component.ts was under concurrent edit during the run.",
+    "method": "clean rebuild served on :4301 (hash f9c09590320e3623) federated by Docker host-shell :4200; R-10 screenshot-timeout -> a11y/DOM/network/console fallback (no screenshots); payment area NEVER touched (no DoPayment/Enable/Disable/Transfer/order/insufficient-funds).",
+    "envInstability": "the concurrent DoPayment/insufficient-funds enhancement was actively editing the working tree mid-run (15/173 builds red, HMR reloads); my #7/#5 files stayed unchanged, only #2's component was touched by that effort."
+  },
+  "newFinding": "client-user session.roles is EMPTY (localStorage falcon_user_session.roles=[]) -> disables the Add-User role-matrix dropdown for acc-owner. Does NOT affect resource-level PES (A/B/C all pass). Likely Identity /user/me -> MFE session mapping. OUT OF SCOPE — flagged, not fixed.",
+  "partE": {
+    "#1": "DONE+LIVE-PROVEN (ammar-auth) — role-matrix via PES at non-controller seam (CreateUserProcess.Handle + new RoleEditAuthorizationClient); admin->owner=403, legit=200, 178 tests.",
+    "#2": "CODE DONE (fail-closed); browser normal-path BLOCKED by upstream session.roles=[] + concurrent edits — re-verify after that gap is fixed + tree quiesces.",
+    "#5": "DONE + BROWSER-VERIFIED.",
+    "#7": "DONE + BROWSER-VERIFIED (kept per user 'do recommended').",
+    "#6": "NO CHANGE (proven unreachable).",
+    "#8": "DONE (pes-account-role-rules.json 92->245, 0-diff vs catalog+live PES)."
+  },
+  "notImplemented": {
+    "#3_#4_oldUI_route_guards": "new-UI already correct; old-UI/main = separate main PR (not done).",
+    "#7_M3_subnode_settings": "product decision.",
+    "#10_hygiene": "deferred.",
+    "payment_area": "OFF-LIMITS by user instruction (comm-mkt-view/comm-mkt-card/service-pricing/DoPayment/insufficient-funds) — owned by a concurrent effort; never touched."
+  },
+  "openItems": [
+    "Re-verify #2 normal-path once session.roles populated + working tree quiesces.",
+    "session.roles=[] upstream fix (flagged, out of scope).",
+    "nx serve management-console left RUNNING (PID ~52244/101016) for the concurrent effort's host-shell federation.",
+    "No commits — working tree mixes this task + FE-defect-hunt F4 + the payment enhancement; deconflict before any commit."
+  ],
+  "verification": { "apiPesGate": "69/69 PASS", "pesNetMutation": "0 (3046)", "browserE2E": "3/4 PASS, #2 partial", "feBuild": "green f9c09590320e3623", "identity_liveProven": true },
+  "blockers": [],
+  "noCommits": true
+}

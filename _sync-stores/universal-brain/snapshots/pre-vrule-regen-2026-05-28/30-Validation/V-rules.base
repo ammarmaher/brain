@@ -1,0 +1,77 @@
+filters:
+  and:
+    - '"type" == "validation-rule"'
+
+properties:
+  file.name:
+    displayName: ID
+  module:
+    displayName: Module
+  feature:
+    displayName: Feature
+  status:
+    displayName: Status
+  verification:
+    displayName: Verification
+  last-verified:
+    displayName: Last Verified
+  drift:
+    displayName: Drift
+  severity:
+    displayName: Severity
+
+views:
+  - type: table
+    name: All V-rules
+    order:
+      - file.name
+      - module
+      - feature
+      - status
+      - verification
+      - last-verified
+      - drift
+      - severity
+    sort:
+      - column: module
+        direction: ASC
+      - column: status
+        direction: ASC
+
+  - type: cards
+    name: Live rules only
+    filters:
+      and:
+        - '"type" == "validation-rule"'
+        - or:
+            - '"status" == "live"'
+            - '"status" == "triangulated"'
+    order:
+      - file.name
+      - module
+      - feature
+      - status
+      - verification
+      - last-verified
+      - severity
+    sort:
+      - column: module
+        direction: ASC
+      - column: severity
+        direction: ASC
+
+  - type: table
+    name: Superseded
+    filters:
+      and:
+        - '"type" == "validation-rule"'
+        - '"status" == "superseded"'
+    order:
+      - file.name
+      - module
+      - feature
+      - status
+      - last-verified
+    sort:
+      - column: last-verified
+        direction: DESC

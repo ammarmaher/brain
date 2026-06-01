@@ -1,0 +1,102 @@
+{
+  "graph": {
+    "name": "falcon-knowledge-graph",
+    "version": "1.0.0",
+    "wave": 1,
+    "generated-at": "2026-05-27T15:26:56Z",
+    "schema-file": "../GRAPH_SCHEMA.md",
+    "edge-count-this-wave": 132,
+    "evidence-only-edges": true,
+    "note": "Wave 1 emits primarily provenance + structural edges. Domain edges (USES_TOKEN, CONNECTS_TO_API, HAS_VALIDATION-xlsx-confirmed) ramp up Wave 2+."
+  },
+  "edges": [
+    { "from": "vrule:account-name-format-xlsx-2026-05-24", "to": "vrule:account-name-format-uniqueness", "type": "REPLACES", "evidence-strength": "confirmed", "evidence": ["[MEMORY] project_validation_xlsx_sot_flip_wave_f_2026_05_24.md", "Brain SK/_obsidian/30-Validation/V-account-name-format-uniqueness.md frontmatter superseded-by"], "discovered-in-wave": 1, "sot-rule": "xlsx-wins-over-prd" },
+    { "from": "vrule:person-name-format-xlsx-2026-05-24", "to": "vrule:user-first-last-name-letters-only", "type": "REPLACES", "evidence-strength": "confirmed", "evidence": ["[MEMORY] project_validation_xlsx_sot_flip_wave_f_2026_05_24.md"], "discovered-in-wave": 1, "sot-rule": "xlsx-wins-over-prd" },
+    { "from": "vrule:username-format-xlsx-2026-05-24", "to": "vrule:username-format-uniqueness-immutable", "type": "REPLACES", "evidence-strength": "confirmed", "evidence": ["[MEMORY] project_validation_xlsx_sot_flip_wave_f_2026_05_24.md"], "discovered-in-wave": 1, "sot-rule": "xlsx-wins-over-prd" },
+    { "from": "vrule:text-field-no-edge-or-internal-whitespace", "to": "wave:001", "type": "NEEDS_REVIEW", "evidence-strength": "needs-review", "evidence": ["[MEMORY] project_validation_xlsx_sot_flip_wave_f_2026_05_24 — Wave D rollback, no xlsx replacement"], "notes": "Wave D added this; Wave F rolled it back. Stays as superseded with no xlsx counterpart. Wave 3 confirms.", "discovered-in-wave": 1 },
+
+    { "from": "page:add-contract", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/add-contract/", "Brain Outputs/prd/modules/03-*/"], "discovered-in-wave": 1 },
+    { "from": "page:change-password", "to": "mod:user-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/change-password/"], "discovered-in-wave": 1 },
+    { "from": "page:contact-groups-list", "to": "mod:contact-group-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/contact-groups-list/"], "discovered-in-wave": 1 },
+    { "from": "page:contracts-list", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/contracts-list/"], "discovered-in-wave": 1 },
+    { "from": "page:create-contact-group", "to": "mod:contact-group-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/create-contact-group/"], "discovered-in-wave": 1 },
+    { "from": "page:create-template-whatsapp", "to": "mod:templates", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/create-template-whatsapp/"], "discovered-in-wave": 1 },
+    { "from": "page:edit-contract", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/edit-contract/"], "discovered-in-wave": 1 },
+    { "from": "page:edit-user", "to": "mod:user-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/edit-user/"], "discovered-in-wave": 1 },
+    { "from": "page:forgot-password", "to": "mod:root-documents", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/forgot-password/"], "discovered-in-wave": 1 },
+    { "from": "page:login", "to": "mod:root-documents", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/login/"], "discovered-in-wave": 1 },
+    { "from": "page:my-profile", "to": "mod:user-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/my-profile/"], "discovered-in-wave": 1 },
+    { "from": "page:organization-hierarchy", "to": "mod:account-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/organization-hierarchy/"], "discovered-in-wave": 1 },
+    { "from": "page:templates-list", "to": "mod:templates", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/templates-list/"], "discovered-in-wave": 1 },
+    { "from": "page:wallets-and-balance-management", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/understanding/pages/wallets-and-balance-management/"], "discovered-in-wave": 1 },
+
+    { "from": "dto:account", "to": "mod:account-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-account.md frontmatter"], "discovered-in-wave": 1 },
+    { "from": "dto:account-settings", "to": "mod:account-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-account-settings.md frontmatter"], "discovered-in-wave": 1 },
+    { "from": "dto:addon", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-addon.md frontmatter"], "discovered-in-wave": 1 },
+    { "from": "dto:contract", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-contract.md frontmatter"], "discovered-in-wave": 1 },
+
+    { "from": "dto:account", "to": "svc:commerce", "type": "BELONGS_TO_SERVICE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-account.md frontmatter service=commerce"], "discovered-in-wave": 1 },
+    { "from": "dto:account-settings", "to": "svc:commerce", "type": "BELONGS_TO_SERVICE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-account-settings.md"], "discovered-in-wave": 1 },
+    { "from": "dto:addon", "to": "svc:commerce", "type": "BELONGS_TO_SERVICE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-addon.md"], "discovered-in-wave": 1 },
+    { "from": "dto:contract", "to": "svc:commerce", "type": "BELONGS_TO_SERVICE", "evidence-strength": "confirmed", "evidence": ["Brain SK/_obsidian/40-API/E-contract.md"], "discovered-in-wave": 1 },
+
+    { "from": "evt:charging-ocs-wallet-events", "to": "svc:charging", "type": "PRODUCES_EVENT", "evidence-strength": "needs-review", "evidence": ["Brain SK/_obsidian/47-Events/Charging OCS Wallet Events.md — name implies producer"], "discovered-in-wave": 1, "notes": "Wave 4 will confirm by reading the event file body" },
+    { "from": "evt:charging-order-payment-processed", "to": "svc:charging", "type": "PRODUCES_EVENT", "evidence-strength": "needs-review", "evidence": ["Brain SK/_obsidian/47-Events/Charging Order Payment Processed.md"], "discovered-in-wave": 1 },
+    { "from": "evt:commerce-comm-channel-init", "to": "svc:commerce", "type": "PRODUCES_EVENT", "evidence-strength": "needs-review", "evidence": ["Brain SK/_obsidian/47-Events/Commerce Comm-Channel Init.md"], "discovered-in-wave": 1 },
+    { "from": "evt:commerce-comm-channel-shown", "to": "svc:commerce", "type": "PRODUCES_EVENT", "evidence-strength": "needs-review", "evidence": ["Brain SK/_obsidian/47-Events/Commerce Comm-Channel Shown.md"], "discovered-in-wave": 1 },
+    { "from": "evt:commerce-comm-channel-visibility-changed", "to": "svc:commerce", "type": "PRODUCES_EVENT", "evidence-strength": "needs-review", "evidence": ["Brain SK/_obsidian/47-Events/Commerce Comm-Channel Visibility Changed.md"], "discovered-in-wave": 1 },
+
+    { "from": "br-cluster:am", "to": "mod:account-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/prd/modules/01-account-management/BUSINESS_RULES.md"], "discovered-in-wave": 1 },
+    { "from": "br-cluster:um", "to": "mod:user-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/prd/modules/02-user-management/BUSINESS_RULES.md"], "discovered-in-wave": 1 },
+    { "from": "br-cluster:cc", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/prd/modules/03-contract-packaging-charging-billing-management/BUSINESS_RULES.md"], "discovered-in-wave": 1 },
+    { "from": "br-cluster:cgm", "to": "mod:contact-group-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "evidence": ["Brain Outputs/prd/modules/04-contact-group-management/BUSINESS_RULES.md"], "discovered-in-wave": 1 },
+
+    { "from": "vrule:account-ip-allowlist-enforcement", "to": "mod:account-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:contract-rate-per-unit-non-negative", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:contract-expiration-after-start", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:contract-currency-enum", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:contact-group-name-required-format", "to": "mod:contact-group-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:contact-group-file-type-allowlist", "to": "mod:contact-group-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:contact-group-file-size-cap", "to": "mod:contact-group-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:charging-transfer-source-destination", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:charging-insufficient-balance", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:charging-no-applicable-rate", "to": "mod:contract-charging-billing", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:password-security-level-enum", "to": "mod:user-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:password-complexity-per-security-level", "to": "mod:user-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:normal-user-limit-enforcement", "to": "mod:user-mgmt", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:login-lockout-3-wrong-attempts", "to": "mod:root-documents", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:template-levels-count-required-for-restricted", "to": "mod:templates", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "vrule:template-checker-level-integrity", "to": "mod:templates", "type": "IN_MODULE", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+
+    { "from": "wave:001", "to": "comp:cluster:63-components", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "evidence": ["WAVE-001-GRAPH-PLAYBACK.md decision log"], "discovered-in-wave": 1, "notes": "Wave 2: expand component → token + variant + size + state edges" },
+    { "from": "wave:001", "to": "dto:cluster:e-entities-20-more", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1, "notes": "Wave 4: enumerate remaining 20 E-entities" },
+    { "from": "wave:001", "to": "evt:cluster:remaining-16", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1, "notes": "Wave 4: enumerate remaining 16 Kafka events" },
+    { "from": "wave:001", "to": "pesrule:cluster:47-keys", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1, "notes": "Wave 5: enumerate 47 PES keys + emit GOVERNED_BY_PES_RULE edges" },
+    { "from": "wave:001", "to": "arch:cluster:24-rules-8-adrs", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1, "notes": "Wave 5: enumerate 24 architecture rules + 8 ADRs" },
+    { "from": "wave:001", "to": "br-cluster:am", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1, "notes": "Wave 5: enumerate BR-AM-* (42 rules)" },
+    { "from": "wave:001", "to": "br-cluster:um", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "wave:001", "to": "br-cluster:cc", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+    { "from": "wave:001", "to": "br-cluster:cgm", "type": "NEXT_WAVE_TARGET", "evidence-strength": "confirmed", "discovered-in-wave": 1 },
+
+    { "from": "pesrule:built-in-role-catalog", "to": "wave:001", "type": "EVIDENCED_BY", "evidence-strength": "confirmed", "evidence": ["[CODE] BuiltInRoleCatalog.cs:79-290", "[BRAIN-OUT] _runtime-verification/comms-hub-2026-05-16.md (21/21 PASS)"], "discovered-in-wave": 1, "verification": "runtime-verified" }
+  ],
+
+  "edge-summary-by-type": {
+    "REPLACES": 3,
+    "IN_MODULE": 33,
+    "BELONGS_TO_SERVICE": 4,
+    "PRODUCES_EVENT": 5,
+    "NEXT_WAVE_TARGET": 9,
+    "NEEDS_REVIEW": 1,
+    "EVIDENCED_BY": 1,
+    "DISCOVERED_IN_WAVE": "implicit for every node (343)"
+  },
+
+  "evidence-strength-totals": {
+    "confirmed": 56,
+    "needs-review": 6,
+    "inferred": 0
+  },
+
+  "wave-1-summary": "56 confirmed + 6 needs-review = 62 explicit edges + implicit DISCOVERED_IN_WAVE = ~405 edges total. Domain-edge density jumps Wave 2."
+}

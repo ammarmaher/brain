@@ -12,6 +12,26 @@ source: old-ui-dataset/10-pages/admin-console/<feature>/05-PES.md
 > [!tldr]
 > PES is ONE of many gate types. Every "is this UI element visible / clickable" decision can layer up to six gates on top of PES — session-type, node-type, mode, tab-visibility, server-driven rows, and composite gates. A porter who migrates a feature admin→mgmt without re-evaluating these gates ships broken UI. This matrix catalogs all 5 (+ the composite pattern) across the 7 features.
 
+## Live matrix (Dataview — auto-updating)
+
+> [!info] **TODO: convert to live query when gates have individual notes.** Today the 6 gate types live as code-citation tables inside this file (no per-gate `.md` notes exist in the vault). When each gate becomes an individual note in a future Wave (e.g. `Brain SK/_obsidian/70-Gates/G-session-type.md`, `G-node-type.md`, etc.), the query below will activate. Until then the static fallback **IS** the live matrix.
+
+```dataview
+TABLE WITHOUT ID
+  link(file.link, id) as "Gate",
+  module as "Module",
+  feature as "Feature",
+  gate-type as "Gate Type",
+  verification as "Verification",
+  last-verified as "Last Verified"
+FROM "Brain SK/_obsidian/70-Gates"
+WHERE type = "non-pes-gate"
+SORT gate-type ASC, feature ASC
+```
+(Above query returns empty today — `Brain SK/_obsidian/70-Gates/` does not exist yet. The hand-built static fallback below remains the authoritative source until gate notes are seeded.)
+
+## Static fallback (last hand-built before Dataview adoption)
+
 ## 1. The 6 non-PES gate types — definitions
 
 ### 1.1 Session-type gate
