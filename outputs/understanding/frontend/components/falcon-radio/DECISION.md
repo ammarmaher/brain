@@ -2,76 +2,103 @@
 
 ## Brain SK final recommendation
 
-**STATUS: READY. Use inside `<falcon-angular-radio-group>` for almost all cases.**
+**STATUS: READY. Use for a single mutually-exclusive option.** For multi-option choices the intent is "use a group", but note the Angular `<falcon-angular-radio-group>` ships no Light-DOM CSS for its own classes (see that dossier) — so production multi-option code today typically lays out `<falcon-angular-radio>` directly (shared `name`) or via the `wb-radio-pill` wrapper.
 
 ## Use this component for
 
-- A single radio inside a non-standard layout (e.g. one option per card).
-- Composing inside `<falcon-angular-radio-group>` (the group does this internally).
-- Composing inside `<falcon-angular-otp-send-dialog>` channel step.
+- A single circular option bound to a `value`, almost always part of a small exclusive set.
+- One radio per card/pill in a non-uniform layout (drive `checkedInput`/`disabledInput` from the parent).
+- The composing primitive inside the radio-group + app wrappers like `wb-radio-pill`.
 
 ## Avoid this component for
 
-- Multiple radios → use `<falcon-angular-radio-group>`.
-- Boolean → `<falcon-angular-checkbox>` / `<falcon-angular-switch>`.
+- A true on/off boolean → `<falcon-angular-switch>` / `<falcon-angular-checkbox>`.
+- One value from a long hidden list → `<falcon-angular-dropdown>`.
+- A segmented button-style single choice (no direct Falcon equivalent — raise a GAP).
 
-## Preferred render path
+## Preferred variant / render path
 
-`useTailwind=true`.
+**`useTailwind=true` (default)** — Light DOM. Best for Studio token-runtime mutation, cross-framework parity, and Tailwind overrides via `rowClass`/`markClass`/`labelClass`. Switch to `useTailwind=false` (Shadow) only for style isolation from a noisy parent stylesheet (the radio has no Shadow-only feature toggles).
 
-## Required upgrades
+## Required upgrades before wider use
 
-None blocking.
+None. Production-quality today. The gaps in `GAPS_AND_UPGRADES.md` are improvements, not blockers.
 
 ## Relationship to other components
 
-- Composed by `<falcon-angular-radio-group>`, `<falcon-angular-otp-send-dialog>`.
-- Sibling: checkbox, switch.
+- **Composed by:** `<falcon-angular-radio-group>` (which `@for`s radio children) and the app-level `wb-radio-pill`.
+- **Siblings** (same surface family, do not compose): `<falcon-angular-checkbox>`, `<falcon-angular-switch>`.
 
-## Exact rule for future implementation
+## Exact rule for future implementation tasks
 
-1. Need radio choice? → `<falcon-angular-radio-group>` first.
-2. Need one standalone radio in custom layout? → `<falcon-angular-radio>` with `[checkedInput]` parent-driven, OR CVA with matching `value`.
-3. Always set `name` consistently for exclusivity.
-4. Use `errorText` + `state="error"`.
+1. **One exclusive option?** Use `<falcon-angular-radio>` with `useTailwind=true`.
+2. **Always set a meaningful `value`** per radio; share `name` across an exclusive set.
+3. **Parent-driven check/disable** → `[checkedInput]` / `[disabledInput]` (NOT `[disabled]`). **Form-bound** → `formControlName`/`ngModel` whose value matches the radio's `value`.
+4. **Set `state="error"` AND `errorText`** together when validation fails.
+5. **Read the newly-checked value** on `(valueChange)` — never wait for an un-check event.
+6. **Multi-option?** Prefer a group, but verify the radio-group's Light-DOM styling gap (see that dossier) before relying on it; otherwise lay radios out directly with shared `name`.
 
 ---
 
 ## Dynamic capability assessment
 
-### 1. Static?
-- Inner dot via border-width-5 trick.
-- Native radio underneath.
+### 1. What is static today?
 
-### 2. Dynamic via inputs/outputs?
-- 13 inputs.
-- 1 wrapper output.
-- CVA + `checkedInput` bypass.
+- The border-width-5 dot mechanism (the "dot" is the thick teal border, not an element).
+- The native `<input type="radio">` underneath + visually-hidden treatment.
+- Required-asterisk character `*` (hardcoded; no i18n hook).
+- `__idSeq` autogen prefix `falcon-arad-`.
+- `success`/`warning` states are accepted but visually inert (G6).
 
-### 3. Dynamic via slots/templates?
-- Default slot for label content.
+### 2. What is already dynamic through inputs/outputs?
 
-### 4. Dynamic via tokens?
-- All visual axes.
+- `[CODE]` **15 wrapper `@Input`s** (2026-06-03 recount, B06-VERIFY — the 15 names enumerated here, grep-confirmed) — label / helperText / errorText / size / state / required / name / value / inputId / `checkedInput` (CVA bypass) / `disabledInput` (CVA bypass) / useTailwind / rowClass / markClass / labelClass.
+- `[CODE]` **One `@Output`: `(valueChange)`** (boolean). Stencil `falcon-change`/`falcon-blur` are bound internally; `falcon-focus` is emitted by the tags but NOT bound (G3).
+- Full CVA: `writeValue` (group-value comparison), `registerOnChange`, `registerOnTouched`, `setDisabledState` (shares the `disabled` signal with `disabledInput`).
 
-### 5. Dynamic via Tailwind?
-- 3 passthrough classes.
+### 3. What is already dynamic through slots / ng-template?
 
-### 6. Missing for reuse?
-- `description` (G2).
-- Method proxies (G4).
-- `errorMessage` alias (G1).
+- `[CODE]` None — the wrapper template is a pure attribute-forwarding tag-switcher; the Stencil tags render `{this.label}` text (no label `<slot>`). G5.
 
-### 7. Shared?
-- Yes.
+### 4. What is dynamic through token/theme overrides?
 
-### 8. Flags?
-- `description`, `iconUrl`, `errorMessage`.
+- Every visual axis via ~50 `--falcon-radio-*` tokens (mark size, border widths incl. the checked-dot width, colors, focus halo, helper/error type). Host-class + per-instance scope both work via the `:where()` chain.
+- Dark mode flips neutrals automatically; density category is declared but inert.
 
-### 9. Safest upgrade path?
-1. Add `description` + `errorMessage` alias.
-2. Method proxies.
+### 5. What is dynamic through Tailwind classes?
 
-### 10. Risky?
-- Border-width-5 dot trick — visual regressions if redone.
-- `checkedInput` bypass — depended on by radio-group.
+- `rowClass` / `markClass` / `labelClass` propagate into the `-tw` shell (`*-extra-class`). Host `class=` flows to the wrapper element (layout/spacing). Tailwind path only.
+
+### 6. What is missing to make this component reusable across pages?
+
+- Method proxies `setFocus()` / `select()` (G2).
+- `errorMessage` alias (G1) + `disabled` alias to match switch (G4).
+- `falcon-focus` re-emission (G3).
+- A `description` / rich-label slot (G5).
+
+### 7. What capability should be added to the shared component (not a page hack)?
+
+- The method proxies + the `disabled`/`errorMessage` aliases (G1/G2/G4) — small, additive, removes per-page DOM reach-ins (the wb-radio-pill `styles:` rule is one such reach-in).
+
+### 8. What flags / options / templates / slots would make it better?
+
+- `@Input() description?`, `@Input() iconUrl?`, `@Output() falconFocus`, async `setFocus()`/`select()`.
+
+### 9. What is the safest upgrade path?
+
+1. **Phase A (additive, zero risk):** add `errorMessage` + `disabled` alias inputs, `@Output() falconFocus`, and `setFocus()`/`select()` proxies (tag the inner element with a ref).
+2. **Phase B:** implement or remove `success`/`warning` visuals (decide first).
+3. **Phase C:** add a `description` input / label slot.
+
+All phases are additive — no consumer break.
+
+### 10. What is risky to change because other pages depend on it?
+
+- The **border-width-5 dot mechanism** — any redesign to a real inner-dot element risks visual regression across every consumer + the token contract (`--falcon-radio-border-width-checked`).
+- The **group-valued CVA contract** (`writeValue` compares to `value`) — many consumers (and the radio-group) depend on it; changing to a boolean toggle would break them.
+- The `checkedInput` / `disabledInput` bypass setters — depended on by the radio-group and `wb-radio-pill`.
+- The default `useTailwind=true` — flipping it changes DOM (Light ↔ Shadow) and would break consumers' arbitrary-variant selectors that target the Light-DOM structure.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B06). Recommendation unchanged (READY). Counts corrected: 1 `@Output` (`valueChange`); `setFocus`/`select` proxies + `falcon-focus` re-emit + aliases remain GAPs.
+🟢 RE-VERIFIED 2026-06-03 (W1-c VERIFY) — **`@Input` total corrected 17 → 15** (grep-confirmed, incl. the two setters `checkedInput`/`disabledInput`). Recommendation unchanged (READY).

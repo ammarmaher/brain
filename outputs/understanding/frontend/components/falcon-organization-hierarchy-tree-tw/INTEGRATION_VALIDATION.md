@@ -16,7 +16,7 @@ The component never issues HTTP. A consuming page's **state service** would own 
 | organization hierarchy / node tree | `GET` | Commerce | node tree response → `FalconOrgHierarchyNode` | System Gateway (`useGateway()`) | `[INFERRED]` — no production consumer wires this today (see gotcha) |
 | subtree on expand (lazy) | `GET` | Commerce | child nodes for a parent id | System Gateway | `[CODE]` `API.md` `falcon-toggle` is the lazy-load hook; the consumer fetches + reassigns `tree` |
 
-`[CODE]` `OVERVIEW.md` + `USAGE.md` Wave 7 sweep — the only verified consumers are the host-shell playground + showcase, neither of which calls a real backend. So **no backend wiring is exercised in production today** — the table above is the intended contract, not an observed one.
+`[CODE]` Verified 2026-06-03 — there are **ZERO live render consumers** (the prior playground + showcase consumers are gone). So **no backend wiring is exercised anywhere** — the table above is the intended contract, not an observed one. The live org-hierarchy tree (`<falcon-tree-panel>` via `<app-organization-hierarchy-tree>`) DOES wire Commerce: `[CODE]` organization-hierarchy-tree.component.ts injects `OrgHierarchyTreeApiService` (`getTree()` / `getChildren()`) — but that is a SEPARATE component, not this Stencil tree.
 
 ## Validation rules (V-*)
 | V-rule | Field | Trigger | Error code / message |
@@ -49,11 +49,11 @@ This component is the Phase 1 brief's other named org-hierarchy renderer — and
 
 ## Integration gotchas
 - `[CODE]` `OVERVIEW.md` + `USAGE.md` — **object props stringify if bound as `[attr.x]`** — `tree`, `rootActions`, `nodeActions`, `expandedIds` must be set via `el.tree = …` etc. in `ngAfterViewInit`.
-- `[CODE]` `OVERVIEW.md` — **no Shadow DOM = no style isolation** — global CSS that touches `[data-fohtree-render="tailwind"]` selectors WILL leak in/out; the `client-logo bank-{x}` brand classes depend on consumer CSS being present.
+- `[CODE]` `OVERVIEW.md` — **no Shadow DOM = no style isolation** — global CSS that touches `[data-fohtree-render="tailwind"]` selectors WILL leak in/out. (The `client-logo bank-{x}` brand-class dependency is currently MOOT — `node.brand` is unused — but the leakage risk for the data-`fohtree`-* selectors stands.)
 - `[CODE]` `USAGE.md` — `defineFalconTwComponent('falcon-organization-hierarchy-tree-tw')` must be awaited (e.g. in `ngOnInit`) before the tag upgrades.
-- `[CODE]` `TOKENS.md` — the companion `<style>` block uses `!important` at 3 sites (`tsx` lines 151/155/156) to beat Tailwind utility specificity for the sticky menu button — a known specificity smell (`GAPS_AND_UPGRADES.md` FOHT-06).
+- `[CODE]` the companion `<style>` block uses `!important` at 4 sites (`tsx` lines 156/158/165/166) to beat Tailwind utility specificity for the sticky menu button hover/open — a known specificity smell (`GAPS_AND_UPGRADES.md` FOHT-06).
 - `[CODE]` `GAPS_AND_UPGRADES.md` — `position: sticky; inset-inline-end` for the ⋮ menu button reveal may not behave in all browsers inside `overflow:hidden` scroll parents — runtime-test Chrome/Safari/Firefox/Edge.
 - `[INFERRED]` Because no Angular wrapper exists, there is no central place to inject the Commerce node query — every consuming project would re-implement the fetch + property-assignment boilerplate until FOHT-02 ships.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-organization-hierarchy-tree-tw.tsx` (header lines 1-90) + the 6 existing dossier files. **Light-DOM-only / no-Angular-wrapper / no-production-adoption** are ✅ VERIFIED from `OVERVIEW.md` + `GAPS_AND_UPGRADES.md` (grep-confirmed). Backend wiring is `[INFERRED]` — no production consumer exercises it; the table states the intended contract by analogy to the Commerce-owned hierarchy used by `<falcon-tree-panel>`.
+🟢 CODE-VERIFIED 2026-06-03 (B21) from the full `falcon-organization-hierarchy-tree-tw.tsx` (1207 ln) + the live `<app-organization-hierarchy-tree>`/`<falcon-tree-panel>` source. **Light-DOM-only / no-Angular-wrapper / zero-live-render-consumers** ✅ VERIFIED. The live Commerce wiring lives in the SEPARATE `OrgHierarchyTreeApiService` behind `<app-organization-hierarchy-tree>`, not this tree. `!important` corrected to tsx:156/158/165/166. Backend wiring for THIS component remains `[INFERRED]` (it has no live consumer).

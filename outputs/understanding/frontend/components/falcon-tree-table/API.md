@@ -79,7 +79,7 @@ interface FalconTreeNode {
 
 ## Slots (Stencil)
 
-- Per-row custom column slot when `column.type='custom'`: `<slot name="cell-${column.key}-${node.id}"></slot>` — consumer must wrap content with `slot="cell-<key>-<nodeId>"`. This is **a unique projection pattern** in the Falcon library — Stencil composes a per-row slot per cell with a deterministic name.
+- `[CODE]` falcon-tree-table-tw.tsx:630 — Per-row custom column slot when `column.type='custom'`: `<slot name={`cell-${column.key}-${String(node.id)}`} />` — consumer must wrap content with `slot="cell-<key>-<nodeId>"`. This is **a unique projection pattern** in the Falcon library — Stencil composes a per-row slot per cell with a deterministic name. (Contrast: `falcon-data-table` uses Strategy E `<td data-cell-mount>` + EmbeddedViewRef mounting — tree-table has NOT adopted that, GAP FTT-01.)
 
 ## ng-template inputs (Angular)
 
@@ -111,3 +111,6 @@ NONE — the Angular wrapper does NOT project Angular templates into cells. The 
 
 - `grid-template-columns` is computed via `buildGridTemplate()` per render and applied inline. Don't override via CSS — use the `column.width` field or per-component tokens.
 - `radio` column with same `radioName` across instances would collide on the DOM. The wrapper defaults to a generated id; the consumer can override.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08) against falcon-tree-table-tw.tsx (668 ln), falcon-tree-table.component.ts (128 ln, CVA), falcon-tree-table.types.ts (52 ln). All inputs/outputs/events/`@Method`s match. Confirmed live: the per-row named slot `cell-{key}-{id}` (tsx:630), 3 `@Method`s `select`/`expand`/`collapse` (tsx:199/204/212), full treegrid keyboard nav (ArrowDown/Up/Right/Left/Home/End — tsx:288-340), `role="treegrid"` + `aria-level` (tsx:363/485), CVA `[(selectedValue)]`/`formControlName`. No API drift — dossier was accurate.

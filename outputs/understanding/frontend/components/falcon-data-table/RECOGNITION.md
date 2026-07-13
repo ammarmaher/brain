@@ -46,3 +46,6 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - Hardcoding the shadow-row notch position — `targetColumn` is the only public contract.
 - Expecting `emptyMessageKey` to translate — it does not; pre-translate via `[emptyMessage]`.
 - Treating shadow rows as row-expansion (or vice versa) — they model different things (see Use-THIS table).
+
+## Verification
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08). Visual fingerprint (uppercase header, sort affordances, ⋮ kebab, shadow-row notch) re-confirmed against `falcon-table-tw.tsx` (1702 ln); the `⋮` kebab uses `falcon-icon` (no PrimeIcon); shadow body now mounts into `<div data-shadow-mount>`. Cross-library map `[INFERRED]`.

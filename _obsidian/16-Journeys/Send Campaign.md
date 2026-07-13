@@ -13,6 +13,8 @@ created: 2026-05-15
 # Send Campaign
 
 > A Normal User picks a Contact Group, picks a Template, composes a Send Transaction, and confirms. Backend resolves the **nearest-expiring Active contract** for the relevant CommChannel and charges against its wallet bucket. Provisioning fans out delivery. The day-to-day transactional flow every other journey eventually leads to.
+>
+> **2026-07-06: PRD-06 productizes this journey.** The concrete application is the [[06 Basic Send Application]]; the fully-specified journey node is [[Basic Send Message]] (real pages seeded — the forward-refs below are superseded by [[Basic Send App]] / [[Send Whatsapp Message]] / [[Send Voice IVR Message]]).
 
 ## Entry point in Brain Outputs
 
@@ -44,4 +46,4 @@ created: 2026-05-15
 
 ## Tags
 
-#type/journey #prd/04 #prd/05
+#type/journey #prd/04 #prd/05 #prd/06

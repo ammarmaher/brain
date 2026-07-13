@@ -32,4 +32,4 @@
 - The panel emits values but is **output-only** for the value set — there is no two-way `[(values)]`. The consumer owns the filter state and feeds it back via `[values]`.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-filter-panel-tw.tsx + the 6 UI-layer dossiers. 🔴 No production consumer (Wave 7 sweep: 0 consumers) — business flows are inferred from the documented intended use. Native-atoms constraint ✅ VERIFIED in live source.
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh) from `[CODE]` falcon-filter-panel-tw.tsx + falcon-filter-panel.tsx + .component.ts. 🔴 Still 0 production consumers (B12 sweep) — business flows inferred from intended use. Apply-is-an-explicit-commit, Clear-All-resets-to-empty-string, controlled-`localValues` rebuild, and native-atoms facts ✅ RE-VERIFIED in live source.

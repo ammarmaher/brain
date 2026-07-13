@@ -16,7 +16,7 @@
 | `[INFERRED]` No business invariant baked in | — | Like `falcon-calendar`, the picker is a pure decision surface. Unlike `falcon-dropdown` it locks no value; all date policy is host-injected. |
 
 ## Business constraints baked in
-- `[CODE]` `falcon-date-picker.tsx:150-154` **Selecting a date in the popup commits immediately AND closes the popup** — `handleCalendarChange` writes the value, emits `falcon-change`, and `closeInternal('select')`. The business intent: a date click *is* the decision; there is no "preview then confirm" step. (This is the deliberate behavior change from the legacy `<falcon-calendar>` PrimeNG component's Set/Cancel UX — see `falcon-calendar-legacy/BUSINESS.md`.)
+- `[CODE]` `falcon-date-picker.tsx:150-154` **Selecting a date in the popup commits immediately AND closes the popup** — `handleCalendarChange` writes the value, emits `falcon-change`, and `closeInternal('select')`. The business intent: a date click *is* the decision; there is no "preview then confirm" step. (This was the deliberate behavior change from the now-DELETED legacy `<falcon-calendar>` PrimeNG façade's Set/Cancel UX — `[CODE]` the façade no longer exists, `shared-ui/index.ts:312`.)
 - `[CODE]` `falcon-date-picker.tsx:119-123,168-184` **The text input is also editable** — the operator can type a date string; `parseInputValue` parses it via `toDate` and commits a normalized ISO value (or `null` on empty). Business intent: keyboard-fast date entry without forcing the popup.
 - `[CODE]` `falcon-date-picker.tsx:120` **`readonly` and `disabled` both block opening the popup** — `readonly` is a business statement "this date is shown but not yours to change in this context"; `disabled` is the harder "this field is not active at all".
 - `[INFERRED]` **Gregorian + ISO only** — `displayValue` (`falcon-date-picker.tsx:114-117`) always renders ISO `YYYY-MM-DD`; `locale` only changes the popup grid labels. For Hijri business contexts or a `DD MMM YYYY` display the host flow must convert/format externally (`GAPS_AND_UPGRADES.md` G4/G5).
@@ -24,11 +24,12 @@
 ## Business flows using this component
 | Flow | Page | Role of the component |
 |---|---|---|
-| `[CODE]` `applications-table.component.html` / `.ts` (consumer grep, `USAGE.md`) | admin-console org-hierarchy → Apps/Services tab | Effective-date entry for a service pricing change. |
-| `[CODE]` `falcon-table-edit-row.component.html` | admin-console org-hierarchy → inline table edit | Date entry inside an editable table row. |
-| `[CODE]` `falcon-calendar.component.{html,ts}` (legacy facade) + `falcon-effective-date.directive.ts` | `libs/falcon` legacy | The legacy `<falcon-calendar>` facade delegates here — these are migration consumers, not new business flows. |
-| `[CODE]` `playground.page.html` | host-shell playground | Component demo — not a business flow. |
-| `[INFERRED]` Form date fields (Add Client / Add User wizards) | organization-hierarchy | Any wizard step needing a date field. |
+| `[CODE]` `contract-information-step.component.html:37,48` | admin-console → contracts-cost-management Add wizard | **Contract Start Date + Expiration Date** capture (a "from–to" pair expressed as two pickers — no native range). |
+| `[CODE]` `contracts-edit-contract.component.html` | admin-console → edit contract | Editing the same contract dates. |
+| `[CODE]` `service-pricing-table.component.html:235` | `libs/falcon` shared service-pricing table | Effective-date entry for a service pricing change (with a per-instance `style=` token override). |
+| `[INFERRED]` Other form date fields | various wizards | Any wizard step needing a date field. |
+
+> `[CODE]` CORRECTION (2026-06-03): the prior dossier's `applications-table`, `falcon-table-edit-row`, `playground`, and the **legacy `<falcon-calendar>` façade** flows are gone — the façade was DELETED (`shared-ui/index.ts:312`) and the table consumers migrated. The live business flows are now the contracts wizard + service-pricing-table.
 
 ## Business gotchas
 - `[INFERRED]` **The picker cannot stop an illegal date by itself** — it only prevents what `min`/`max`/`disabledDates` describe. A business rule like the renew-day clamp must be passed in as a predicate; otherwise the operator can pick a date the backend will reject with `InvalidEffectiveDateForPeriodicPricingChange`.
@@ -37,4 +38,4 @@
 - `[INFERRED]` **No time component** — for a "scheduled at" business decision needing a time-of-day, this component covers only the date; pair it with a separate time control until G3 lands.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-date-picker.tsx` + `[CODE]` `falcon-date-picker.component.ts` + existing 6 dossier files. Effective-date business rules are `[MEMORY]`-sourced. The component carrying no baked-in business invariant is `[INFERRED]` from full source read.
+🟡 CODE-DERIVED (RE-VERIFIED 2026-06-03, B07) from `[CODE]` `falcon-date-picker.tsx` (270 ln) + `falcon-date-picker-tw.tsx` (411 ln) + `falcon-date-picker.component.ts` (202 ln). Select-commits-and-closes (tsx:150-154), lenient typed-input parse (tsx:168-179), readonly/disabled-both-block-open (tsx:120,126), required-marker (tsx:196-197) all re-confirmed. Business-flow table corrected to the contracts wizard + service-pricing-table (legacy façade deleted, applications-table/edit-row/playground gone). Effective-date rules remain `[MEMORY]`; no-baked-in-invariant is `[INFERRED]`.

@@ -1,11 +1,17 @@
-# falcon-calendar (LEGACY FACADE) — API
+# falcon-calendar (LEGACY FACADE — REMOVED) — API
+
+> **RECONCILE 2026-06-03 (B22):** The legacy `<falcon-calendar>` (class `FalconCalendarComponent`) is **DELETED** from production — the barrel comment at `shared-ui/index.ts:313` says so. `import { FalconCalendarComponent } from '@falcon'` no longer resolves. The surface below is what it last exposed (5 effective-date inputs were no-ops). For date fields use `<falcon-angular-date-picker>`; for an inline grid `<falcon-angular-calendar>`. ⚠ Note the unrelated modern Stencil `<falcon-calendar>` reuses the tag — this dossier is about the deleted `libs/falcon` Angular component.
 
 ## Selector
-- `<falcon-calendar>` — Angular bespoke standalone component.
+- `<falcon-calendar>` — Angular bespoke standalone component (single-render over PrimeNG `<p-datepicker>`). **Removed.**
 
-## Import path
+## Import path (no longer valid)
 ```ts
+// REMOVED — does not resolve in 2026-06-03 tree
 import { FalconCalendarComponent } from '@falcon';
+// Use instead:
+import { FalconAngularDatePickerComponent } from '@falcon'; // field + popover
+import { FalconAngularCalendarComponent } from '@falcon';   // inline month grid
 ```
 
 ## TypeScript types
@@ -47,4 +53,10 @@ import { FalconCalendarComponent } from '@falcon';
 - The `toIso` / `fromIso` helpers explicitly use local time (year/month/day) to avoid UTC rollback in negative offsets.
 
 ## Accessibility
-- Delegated to `<falcon-angular-date-picker>`.
+- Delegated to `<falcon-angular-date-picker>` (no a11y of its own).
+
+## Reflected / mutable / signal
+- _N/A._ Single-render Angular over PrimeNG — no Stencil `@Prop({reflect})`/`@Prop({mutable})`; legacy decorator `@Input`/`@Output` + plain fields (`draftValue`/`committedValue`/`snapshotValue`), no signals.
+
+## Verification
+🟡 CODE-DERIVED 2026-06-03 (B22) — the production source is DELETED and cannot be re-read; the @Input/@Output tables are preserved verbatim from the last verified dossier (archaeology, not live API). The deletion itself is 🟢 CODE-VERIFIED (folder gone + barrel comment at index.ts:313). Migration targets `<falcon-angular-date-picker>`/`<falcon-angular-calendar>` 🟢 confirmed live.

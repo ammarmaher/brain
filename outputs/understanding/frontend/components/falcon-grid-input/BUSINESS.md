@@ -22,8 +22,8 @@
 ## Business flows using this component
 | Flow | Page | Role of the component |
 |---|---|---|
-| Inline table-cell edit | data-table / table pages (admin + management consoles) | The cell editor itself — set/correct one value per row |
-| Bulk row adjustments | service / pricing / quota grids | Tab-through editing of many cells in sequence |
+| Contracts cost/price matrix edit | `[CODE]` contracts-cost-management — admin add-wizard `contract-details-step` + management `contracts-contract-details-section` | The editable matrix-cell editor (priority × destination price/cost grid) — the **live** consumer |
+| Bulk row adjustments | service / pricing / quota grids (intended) | Tab-through editing of many cells in sequence |
 
 ## Business gotchas
 - A grid-input commit is **not yet a saved record** — `falconGridCommit` is intent; the consumer still has to send the write and handle backend rejection. A committed cell can still fail server-side.
@@ -32,4 +32,4 @@
 - Numeric cells (price, quota) commit a raw string — the business rule "price must be a positive number" is entirely the consumer's to enforce.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-grid-input.tsx` + `falcon-grid-input.component.ts`. Consumer flows 🟡 from `OVERVIEW.md` "Known consumers" (data-table / table inline edit). String-only / blur-commits / no-error-state ✅ VERIFIED against source.
+🟢 code-verified (re-read 2026-06-03) from `[CODE]` `falcon-grid-input.tsx` + `falcon-grid-input.component.ts`. String-only / blur-commits / Escape-reverts / explicit-commit-only ✅ source-verified. Consumer flow 🟢 grep-verified to the Contracts cost-management price/cost matrix in both consoles (the prior "data-table / table" generic flow was speculative — corrected to the real consumer).

@@ -1,12 +1,13 @@
-# falcon-angular-stepper — TOKENS
+# falcon-stepper — TOKENS
 
 ## Token file path
-- `libs/falcon-ui-tokens/src/components/stepper.tokens.css`
+- `libs/falcon-ui-tokens/src/components/stepper.tokens.css` (**238 lines** — recount 2026-06-03).
 
-Selector scope (applies tokens to all 4 render surfaces):
+`[CODE]` Selector scope (gate-12 compliant — `:where()` keeps specificity 0, NOT `:root`; applies tokens to all 4 render surfaces):
 ```css
 :where(falcon-stepper, falcon-stepper-tw, falcon-angular-stepper, .falcon-stepper, [data-falcon-stepper]) { … }
 ```
+`[CODE]` Header (lines 1-37) documents the React visual SoT: `admin/addclient.css:95-169` (`.ac-stepper*`) + `admin/styles.css:2314-2364` (`.au-stepper*`). SSOT rule: Shadow CSS is the source of truth; the Tailwind helper reads these same tokens — no hardcoded hex/px/ms in the helper (re-verified 2026-06-03).
 
 ## Related Falcon theme tokens
 From `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
@@ -55,9 +56,11 @@ From `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
 - **Recommendation:** detect `dir="rtl"` (or read `getComputedStyle(host).direction === 'rtl'`) and swap arrow-key intent.
 
 ## Static style risks
-- **Risk:** `aria-orientation` not yet emitted for vertical mode (see GAPS).
-- **Risk:** inline width on `.falcon-stepper-fill` is `${fillPercent}%` — this is the documented "stepper fill bar escape hatch" (geometry from data, not a CSS var). No risk.
-- **Risk:** the `cubic-bezier(0.65, 0, 0.35, 1)` easing is captured in the token, but the `0.4s` literal in the Shadow CSS may be duplicated in the Tailwind helper. Audit.
+- `[CODE]` **Shadow CSS verified token-only 2026-06-03** — `falcon-stepper.css` (413 ln): grep for raw hex NOT inside a `var(--token, fallback)` returned ZERO. Every visual value reads a `--falcon-stepper-*` var; literals are structural or `var()`-fallbacks. No raw color hex.
+- `[CODE]` **Tailwind helper verified token-chain only 2026-06-03** — `stepper-tailwind-classes.ts` (334 ln) uses arbitrary-value utilities like `bg-[var(--falcon-stepper-track-color,#e5e7eb)]`; hex appears ONLY as a `var()` fallback inside the utility. Banner comment (lines 1-4) asserts "No hardcoded hex/px/ms — token chain only."
+- **Risk:** inline width on `.falcon-stepper-fill` is `${fillPercent}%` — the documented "fill-bar escape hatch" (geometry from data, not a CSS var). No risk.
+- **Risk:** `aria-orientation` not yet emitted on the outer group for vertical mode (see GAPS).
+- **Divergence:** the `-tw` twin defaults `labelPosition` to `'bottom-center'` while Shadow defaults `'top-center'` (`[CODE]` falcon-stepper-tw.tsx:85 vs falcon-stepper.tsx:69) — a per-render-path token-position asymmetry, not a literal-style risk, but worth aligning (see GAPS).
 
 ## No CSS / No SCSS guidance
 - No `.component.scss` files in the Falcon-UI-core path. Stencil consumes `falcon-stepper.css` only.
@@ -80,3 +83,6 @@ From `libs/falcon-theme/src/falcon-tailwind-tokens.css`:
 | Group label | — | — | — | `-group-label-margin-bottom` | `-group-label-color` | — | — | — | — | — | — | — |
 | Helper text | — | — | — | `-helper-margin-top` | `-helper-color` | — | — | — | — | — | — | — |
 | Error text | — | — | — | `-error-text-margin-top` | `-error-text-color` | — | — | `-error-text-color` | — | — | — | — |
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B21) — token file recounted at 238 lines, `:where()` gate-12 scope confirmed, 14 categories verbatim, Shadow CSS (413 ln) + Tailwind helper (334 ln) both verified token-only (zero raw hex outside `var()` fallbacks). Dark-mode + density gaps re-confirmed open (see GAPS).

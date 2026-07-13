@@ -56,4 +56,4 @@ The input has no PES key of its own — it inherits the gate of the **field** it
 - `[CODE]` **Never bind both `[value]` and `[(ngModel)]`** — `[value]` is a raw Stencil-prop passthrough that races CVA.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-input.component.ts` + `falcon-input.tsx` + cited step templates. Backend wiring + PES gate ✅ cross-referenced from `[MEMORY]` Wave 14/15 (user-confirmed working). Endpoint DTO field names 🟡 CODE-DERIVED from memory entries, not re-read from backend source.
+🟢 RE-VERIFIED 2026-06-03 (B01) — `disabledFromInput` setter (ts:124-127), `writeValue` `componentOnReady` push (ts:189-199), and the wrapper binding only input/change/clear/blur (G4) re-confirmed in live source. Backend wiring + PES gate ✅ cross-referenced from `[MEMORY]` Wave 14/15 (user-confirmed working). Endpoint DTO field names 🟡 CODE-DERIVED from memory entries, not re-read from backend source.

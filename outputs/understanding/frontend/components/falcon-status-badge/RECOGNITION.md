@@ -53,4 +53,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - Reusing `paid` as a generic "payment succeeded" color — it is a service-row lifecycle status, not a receipt indicator.
 
 ## Verification
-✅ VERIFIED — anatomy, the 9→4 bucket map, sizes, and dot behavior confirmed against `[CODE]` `falcon-status-badge.types.ts`, `falcon-status-badge.component.ts`, and `status-badge.tokens.css` (per `TOKENS.md`/`API.md`). Cross-library mapping is `[INFERRED]` from standard component parity.
+🟢 RE-VERIFIED 2026-06-03 (B10) — anatomy, the 9→4 bucket map, sizes, and dot behavior confirmed against `[CODE]` `falcon-status-badge.types.ts:6-17`, `falcon-status-badge.component.ts:23-70`, `status-badge.css:32-104`, and `status-badge.tokens.css:33-90`. The "hand-rolled chip" anti-pattern is now mostly historic (component broadly adopted). Cross-library mapping is `[INFERRED]` from standard component parity.

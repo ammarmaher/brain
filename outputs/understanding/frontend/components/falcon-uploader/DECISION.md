@@ -1,9 +1,12 @@
 # falcon-angular-uploader — DECISION
 
+> [!warning] REMOVED — do NOT use. Superseded by [[falcon-single-uploader]] / [[falcon-image-uploader]] / [[falcon-document-uploader]].
+> The component was DELETED 2026-05-31 (0 consumers). [CODE] `libs/falcon/src/shared-ui/index.ts:114-115`. The recommendation prose below is preserved for history only.
+
 ## Brain SK final recommendation
 
 ### Status
-- **READY** for new multi-file flows, **with the PrimeIcons residual flagged for fix**.
+- **REMOVED (deleted 2026-05-31, 0 app/feature consumers).** [CODE] `libs/falcon/src/shared-ui/index.ts:114-115`. For new multi-file flows use `<falcon-angular-document-uploader>`; for single-file use `<falcon-angular-single-uploader>`; for avatar/image use `<falcon-angular-image-uploader>`. The "READY / PrimeIcons residual" assessment below applied to the now-deleted component and is retained for history only.
 
 ### Use this component for
 - Multi-file attachment uploads (PDF / image / mixed).
@@ -102,3 +105,8 @@
 - Changing `FalconUploaderFileStatus` enum values — consumers may switch on them.
 - Changing `URL.createObjectURL` revocation timing — consumers may have copied the blob URL.
 - Removing the inline-width escape hatch on the progress bar — visual regression.
+
+> _N.B. — the §10 "risky to change" list is moot: the component is deleted. Risk now lives in the three successor components instead._
+
+## Verification
+🟢 code-verified (B23 reconcile 2026-06-03) — REMOVED status confirmed via [CODE] `libs/falcon/src/shared-ui/index.ts:114-115`. Successor recommendation (`falcon-document-uploader` / `falcon-single-uploader` / `falcon-image-uploader`) verified by live Glob of `libs/falcon-ui-core/src/angular-wrapper/components/`.

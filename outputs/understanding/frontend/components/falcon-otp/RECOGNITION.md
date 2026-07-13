@@ -33,7 +33,7 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 2. **Character class** — set `pattern` (`[0-9]` default; `[A-Z0-9]` for alphanumeric codes).
 3. **Masking** — `[mask]="true"` only for true PINs, not transient OTPs.
 4. **Completion handling** — until the wrapper proxies `falcon-complete`, detect completion in `(ngModelChange)` via `value.length === length` and auto-submit.
-5. **Tokens** — box size, gap, border, focus ring via `otp.tokens.css` vars.
+5. **Tokens** — box size (`--falcon-otp-box-size-{sm,md,lg}`), gap (`--falcon-otp-gap`), border (`--falcon-otp-border-color-focus`), focus ring (`--falcon-otp-ring-color-focus`) via `otp.tokens.css` vars. (State tokens have NO `-box-` infix — see TOKENS.md.)
 6. **Verification round-trip** — POST the value to `auth/verify-otp`; render the rejection by setting `[errorMessage]`. The component never validates correctness.
 7. **GAP** — a wrapper `(falconComplete)` output and proxied `clear()`/`setFocus()` do not exist on the Angular wrapper — raise as a library upgrade, do not hand-roll a parallel completion watcher into the library.
 
@@ -45,4 +45,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Using `<falcon-angular-otp>` for a password — masking is per-PIN, not a password substitute.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-otp.tsx` render tree. Cross-library mappings 🔴 INFERRED from standard library APIs.
+🟢 code-verified (re-read 2026-06-03) from `falcon-otp.tsx` + `falcon-otp-tw.tsx` render trees. Segmented-box fingerprint, `role="group"` "One-time passcode", mask→`type=password`, auto-advance ✅ source-verified. Cross-library mappings 🔴 INFERRED from standard library APIs. Token references corrected (no `-box-` infix on state tokens).

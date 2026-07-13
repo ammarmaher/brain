@@ -1,9 +1,9 @@
-# falcon-mobile-number — Recognition Layer
+# falcon-mobile-number (LEGACY — REMOVED) — Recognition Layer
 
-> Given an external design / screenshot / React or Angular snippet, identify the component to use. **For falcon-mobile-number the answer is almost always: use its successor `<falcon-angular-phone-field>` instead.**
+> Given an external design / screenshot / React or Angular snippet, identify the component to use. **For falcon-mobile-number the answer is always: use its successor `<falcon-angular-phone-field>` instead.**
 
-## ⚠ Recognition verdict
-`falcon-mobile-number` is a **deprecated old-UI component**, absent from the new codebase. If a design shows an intl-phone field, the component to reach for is **`<falcon-angular-phone-field>`** — see `falcon-phone-field/RECOGNITION.md`. This page exists so an agent encountering legacy old-UI markup recognizes it and knows the migration target.
+## RECONCILE 2026-06-03 (B22) — Recognition verdict
+`falcon-mobile-number` is **REMOVED from the production codebase** (`[CODE]` Glob of the folder = empty; 0 live consumers; barrel export gone). If a design shows an intl-phone field, the component to reach for is **`<falcon-angular-phone-field>`** — see `falcon-phone-field/RECOGNITION.md`. This page exists so an agent encountering legacy old-UI markup recognizes it and knows the migration target.
 
 ## Visual fingerprint
 `[CODE]` `falcon-mobile-number.component.html:1-32` — A translated label with a `*` required marker, then an `ngx-intl-tel-input` widget: a flag + dial-code dropdown fused to the left of a national-number `<input>`, all inside an error-aware bordered box (`.fpf-phone--error`). An error row with a `pi pi-info-circle` icon below. Visually it is *the same shape* as `<falcon-angular-phone-field>` — flag + dial code + tel input under one border — because the modern component was designed to replace it 1:1.
@@ -41,4 +41,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`) — **all steps
 - Treating it as a "façade over phone-field" — the live source is a standalone `ngx-intl-tel-input` component; it never delegated.
 
 ## Verification
-🟡 CODE-DERIVED from the `falcon-old-ui-main` worktree. 🔴 Component deprecated/absent in the new UI — recognition resolves to the successor `<falcon-angular-phone-field>`.
+🟢 CODE-VERIFIED 2026-06-03 (B22) — component confirmed REMOVED from production (Glob + grep); recognition resolves to the successor `<falcon-angular-phone-field>`. Visual-fingerprint + cross-library rows 🟡 CODE-DERIVED / `[BRAIN-OUT]` from the prior old-UI-worktree dossier. Prior 🔴 absence flag upgraded to a confirmed REMOVED verdict.

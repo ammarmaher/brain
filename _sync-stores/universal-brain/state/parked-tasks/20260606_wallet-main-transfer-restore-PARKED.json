@@ -1,0 +1,24 @@
+{
+  "status": "parked",
+  "parkedAt": "2026-06-06",
+  "parkedReason": "User pivoted to a new self-contained task (Contracts Add-wizard step-3 matrix required-empty red state). Wallet task was blocked awaiting USER login as accowner for the live PES probe (Wave 1.0) — no work lost; resume from this snapshot when the user returns to wallet.",
+  "taskId": "wallet-main-transfer-functionality-restore-2026-06-06",
+  "title": "Restore main-branch wallet TRANSFER functionality dropped by the rewrite (UI/UX unchanged, FE-only, PRD-aligned).",
+  "startedAt": "2026-06-06",
+  "mode": "fe-functionality-restore",
+  "branch": "feature/contracts-consumed-offered-falcon-tables (NOT polishing-v0.4; wallet rewrite committed at HEAD 330cf512; UNCOMMITTED tree work is all CONTRACTS by a concurrent session — do NOT touch)",
+  "repo": "C:/Falcon/Falcon/falcon-web-platform-ui",
+  "plan": "C:/Falcon/plans/wallet-main-functionality-restore/PLAN.md",
+  "currentStep": "Wave 0 COMPLETE (baseline GREEN: mgmt 597/27, admin 765/38; env healthy). At Wave 1.0 LIVE PES PROBE — awaiting user login as accowner to capture pes/authorize/resources for transfer-owner-owner.",
+  "nextStep": "USER ACTION: start/confirm mgmt dev server, log in as accowner, open wallet transfer drawer, pick a node source. Then capture the live pes/authorize request (lift sub+token), replay with actions:['transfer-owner-owner'] for two sibling node paths. ALLOW -> implement G1 async. DENY -> stop G1, keep parked.",
+  "decisions": {
+    "D1_perpair_PES_G1": "RESTORE — async/optimistic, probe-first. List = decision(q)!=='deny' (keep allow+unknown); Save = strict can(). Probe gates the wave.",
+    "D2_description_G2": "BOTH — config-driven: Client(mgmt)=always-required (main parity) via descriptionAlwaysRequired input; admin=per-path (PRD); per-path helper preserved.",
+    "D3_BR_AM_34_G6": "DEFER (user discarded) — out of scope; flag as separate PRD-completion task (needs backend balanceTransferLimitPct).",
+    "D4_dirty_tracking_G3": "Restore ONLY if Wave 3 finds main actually wires hasFormChanges to a cancel/close guard; else skip + document."
+  },
+  "gateCommand": "NX_DAEMON=false node node_modules/nx/dist/bin/nx.js test <app> --skip-nx-cache (from repo root)",
+  "baseline": { "management-console": "27 files / 597 tests PASS (exit 0)", "admin-console": "38 files / 765 tests PASS (exit 0)" },
+  "noCommits": true,
+  "memory": "reference_wallet_main_vs_now_transfer_gap_plan_2026_06_06.md ; project_wallet_client_empty_destination_perpair_pes_overblock_2026_06_06.md"
+}

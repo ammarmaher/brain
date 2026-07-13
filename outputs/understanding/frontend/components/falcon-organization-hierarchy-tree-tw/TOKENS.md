@@ -2,17 +2,25 @@
 
 ## Component token file
 
-`libs/falcon-ui-tokens/src/components/organization-hierarchy.tokens.css` (200+ lines).
+`libs/falcon-ui-tokens/src/components/organization-hierarchy.tokens.css` (**213 lines** — recount 2026-06-03). `:where()`-scoped → gate-12 compliant (specificity 0, NOT `:root`).
 
-Selector union (per source file):
+`[CODE]` ACTUAL selector union (lines 41-51 — re-read 2026-06-03; the prior dossier's union was incomplete):
 
+```css
+:where(
+  falcon-organization-hierarchy,            /* historic Shadow variants */
+  falcon-organization-hierarchy-tw,
+  falcon-organization-hierarchy-tree,       /* canonical Shadow (does not ship) */
+  falcon-organization-hierarchy-tree-tw,    /* THE live Stencil tag */
+  falcon-angular-organization-hierarchy,
+  falcon-angular-organization-hierarchy-tree,
+  app-organization-hierarchy-tree,          /* ← the host-shell WRAPPER selector */
+  .falcon-organization-hierarchy,
+  [data-falcon-organization-hierarchy]
+) { … }
 ```
-:where(falcon-organization-hierarchy, falcon-organization-hierarchy-tw,
-       falcon-angular-organization-hierarchy, .falcon-organization-hierarchy,
-       [data-falcon-organization-hierarchy]) { … }
-```
 
-Note — selector union references `falcon-organization-hierarchy` (Shadow) and `falcon-organization-hierarchy-tw` (Light) — but only the Light variant ships today. Tokens are forward-prepared for the Shadow variant when it arrives (FOHT-01).
+**KEY FINDING:** the union deliberately includes `app-organization-hierarchy-tree` — the live host-shell wrapper around `<falcon-tree-panel>`. So this token file styles BOTH the un-rendered Stencil `-tw` tree AND the live `falcon-tree-panel`-based wrapper. The token contract is the genuinely-shared SoT; the two render implementations diverge but consume the SAME tokens. (Note also: `--falcon-tree-*` rail/node/indicator/chevron/label tokens are shared with `falcon-tree` / `falcon-tree-table` — `[CODE]` the `<style>` block + inline styles read them directly.)
 
 ## Token categories (from source comment)
 
@@ -75,9 +83,9 @@ No `density` variant — fixed sizing per React V0.2 reference.
 
 ## Static style risks
 
-- Companion `<style>` block injects literal CSS rules. `!important` used at lines 151, 155, 156 (verified). **P3 — review specificity.**
-- Brand class names `client-logo bank-{x}` depend on consumer CSS. **GAP.**
-- Hex / px values used inside the `linear-gradient` rail definitions — these read from tokens (`--falcon-tree-rail-line-width`, `--falcon-tree-rail-color`) which is correct.
+- `[CODE]` Companion `<style>` block (`ORG_HIERARCHY_RAIL_STYLES`, tsx:69-227) injects literal CSS rules scoped to `[data-fohtree-render="tailwind"]`. `!important` used at tsx:156, 158, 165, 166 to override Tailwind utility specificity for menu-button bg/color/shadow. **P3 — review specificity.**
+- `[CODE]` Every visual value in that `<style>` block + the inline `style={{…}}` objects reads from `--falcon-tree-*` / `--falcon-org-hierarchy-*` tokens — verified token-only; the only non-token literals are structural (`border-radius: 3px` on scrollbar thumb tsx:187, `objectFit: 'cover'`, the SVG geometry, and one fallback `var(--color-falcon-neutral-500, #6b7280)` on the empty-state tsx:939). No raw color hex driving the chrome.
+- `[CODE]` `node.brand` is a DECLARED-BUT-UNUSED prop — the indicator renderer does NOT apply `client-logo bank-{x}` classes (correcting the prior dossier). So the "brand class leakage" risk is currently MOOT (no brand class is emitted), but the latent prop is a GAP.
 
 ## Token usage by aspect
 
@@ -90,4 +98,7 @@ No `density` variant — fixed sizing per React V0.2 reference.
 | Color | per-row + per-state surface and text colors |
 | Hover | row bg-hover, menu button bg-hover, rail color-active |
 | Focus | tree focus ring inheritance |
-| Disabled | row disabled state via `aria-disabled` |
+| Disabled | row disabled state via `aria-disabled` + `--falcon-tree-node-disabled-opacity` |
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B21) — token file recounted at 213 lines, `:where()` gate-12 scope confirmed, ACTUAL selector union re-read (includes `app-organization-hierarchy-tree` = the live wrapper, so the token contract is shared). Companion `<style>` block + inline styles verified token-driven; `!important` at tsx:156/158/165/166. RTL `[dir="rtl"]` rules confirmed (tsx:105-108, 213-218). Dark-mode bucket: NOT found (P2 gap stands).

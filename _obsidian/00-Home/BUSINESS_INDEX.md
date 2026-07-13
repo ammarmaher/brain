@@ -27,6 +27,7 @@ created: 2026-05-15
 | 03 — Contract / Packaging / Charging / Billing | [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/03-contract-packaging-charging-billing-management/BUSINESS_RULES.md) | [[03 Contract Packaging Charging Billing]] |
 | 04 — Contact Group Management | [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/04-contact-group-management/BUSINESS_RULES.md) | [[04 Contact Group Management]] |
 | 05 — Templates | [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/05-templates/BUSINESS_RULES.md) | [[05 Templates]] |
+| 06 — Basic Send Application | [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/06-basic-send-application/BUSINESS_RULES.md) | [[06 Basic Send Application]] |
 | — Root meta | [BUSINESS_RULES](../../../Brain%20Outputs/prd/modules/root-documents/BUSINESS_RULES.md) | [[Root Documents]] |
 
 Hub: [[PRD_INDEX]]. ~180 business rules extracted with cited PRD-line evidence (2026-04-24 sync; **STALE** at 21 days).
@@ -37,4 +38,4 @@ Hub: [[PRD_INDEX]]. ~180 business rules extracted with cited PRD-line evidence (
 
 ## Tags
 
-#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/root
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/06 #prd/root

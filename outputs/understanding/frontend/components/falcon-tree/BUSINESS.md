@@ -32,4 +32,4 @@
 - `[CODE]` falcon-tree-tw.tsx:586 — search auto-expands every matched branch so matches are reachable; an empty result renders the literal `"No matches"`.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-tree-tw.tsx + the 6 UI-layer dossiers. The "org-hierarchy uses falcon-tree-panel not falcon-tree" relationship ✅ VERIFIED against `OVERVIEW.md` + `GAPS_AND_UPGRADES.md`. No production consumer of `<falcon-angular-tree>` itself (playground only per Wave 7 sweep) — business flows are 🟡 inferred from intended use.
+🟡 CODE-DERIVED 2026-06-03 (B09) from `[CODE]` falcon-tree-tw.tsx + the 6 UI-layer dossiers. The "org-hierarchy uses falcon-tree-panel not falcon-tree" relationship ✅ RE-VERIFIED against `falcon-tree-panel.component.html:1` (renders `<falcon-tree-node>`). **No production consumer of `<falcon-angular-tree>` at all** (B09 sweep — the prior playground consumer was removed) — business flows are 🟡 inferred from intended use.

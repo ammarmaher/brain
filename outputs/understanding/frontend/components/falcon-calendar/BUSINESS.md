@@ -23,11 +23,11 @@
 ## Business flows using this component
 | Flow | Page | Role of the component |
 |---|---|---|
-| `[CODE]` `applications-table.component.ts` (consumer grep, `USAGE.md`) | admin-console org-hierarchy → Apps/Services tab | Inline date selection for a service's pricing-change effective date. |
-| `[CODE]` `playground.page.html` | host-shell playground | Component demo / design reference — not a business flow. |
-| `[INFERRED]` Inline date on detail panels | organization-hierarchy detail panels | Where a date must be visible-and-picked without an input field. |
+| **Date-picker popover** | every date field across the consoles | `[CODE]` falcon-date-picker-tw.tsx:392 — the grid embedded in `<falcon-angular-date-picker>` IS this component. All real date decisions flow through it transitively. |
+| `[INFERRED]` Inline date on detail panels | organization-hierarchy detail panels | Where a date must be visible-and-picked without an input field — no such standalone consumer exists in code today (2026-06-03). |
+| Studio / showcase gallery | host-shell `falcon-ui-showcase` | Component demo / design reference — not a business flow. |
 
-`[INFERRED]` Note: most *form* date entry in Falcon flows (Add Client, Add User wizards) uses `<falcon-angular-date-picker>` — the input+popover variant — because forms want a compact field, not an always-open grid. `falcon-calendar` is chosen specifically when the grid should stay visible.
+> `[CODE]` CORRECTION (2026-06-03): the prior dossier's `applications-table` + `playground` standalone consumers are **gone** — applications-table migrated to `<falcon-angular-date-picker>`, the playground route was removed. There are now **zero standalone `<falcon-angular-calendar>` business flows**; the component earns its keep entirely as the date-picker's embedded grid. Most *form* date entry uses `<falcon-angular-date-picker>` (compact field) — `falcon-calendar` would only be chosen when the grid must stay visible, which no current flow needs.
 
 ## Business gotchas
 - `[INFERRED]` An **empty / wrong month on open** is usually a *binding* problem, not a component fault: `componentWillLoad` (`falcon-calendar.tsx:74-78`) sets `viewDate` from `value` at load; if the parent sets `value` *after* first paint, the grid stays on the current month until the `@Watch('value')` (`falcon-calendar.tsx:80-84`) fires.
@@ -35,4 +35,4 @@
 - `[CODE]` `falcon-calendar.tsx:103` The whole-grid `disabled` flag and the per-cell `isDisabled` are OR-ed at click time — a builder cannot "enable one date" inside a fully-disabled calendar.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-calendar.tsx` + `[CODE]` `falcon-calendar.component.ts` + existing 6 dossier files. The applications-table effective-date business rule is `[MEMORY]`-sourced (integration plan, not yet confirmed wired). The component carrying *no* baked-in business invariant is `[INFERRED]` from full source read.
+🟡 CODE-DERIVED (RE-VERIFIED 2026-06-03, B07) from `[CODE]` `falcon-calendar.tsx` (267 ln) + `[CODE]` `falcon-calendar.component.ts` (118 ln) + `.utils.ts`. The disabled-click short-circuit (tsx:103), single-value model (tsx:45), and slash overlay (tsx:241-258) re-confirmed. Business-flow table corrected: zero standalone consumers (was 2); the component is now business-relevant only as the date-picker's embedded grid. The effective-date rule remains `[MEMORY]`-sourced; the no-baked-in-invariant claim is `[INFERRED]` from full source read.

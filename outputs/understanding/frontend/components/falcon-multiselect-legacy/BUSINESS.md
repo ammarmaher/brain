@@ -41,4 +41,4 @@
 - For any multi-value picker, the answer is `<falcon-angular-multi-select>` (see that component's 9 dossier files).
 
 ## Verification
-🔴 INFERRED / historical. CODE-DERIVED CORRECTION: `[CODE]` live-source check 2026-05-18 confirms the component's source directory and all files have been **deleted** — the existing 6 dossier files describe a now-removed Wave 3 stub. No business behavior remains.
+🟢 CODE-VERIFIED 2026-06-03 (B22) — deletion RE-CONFIRMED (Glob of `falcon-multiselect/` empty; 0 grep hits repo-wide; barrel exports only `FalconAngularMultiSelectComponent`, `shared-ui/index.ts:58`). Upgrades the prior 🔴/2026-05-18 historical correction to a confirmed REMOVED verdict. No business behavior remains; historical capability rows 🟡 CODE-DERIVED / `[BRAIN-OUT]`.

@@ -35,7 +35,8 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 3. **Rich content** — for multi-line / formatted content, project `slot="content"` instead of using `[content]`. Keep plain text in `[content]`.
 4. **Token override** — restyle the panel via `tooltip.tokens.css` vars (`--falcon-tooltip-panel-bg`, `-color`, `-offset`, `-panel-max-width`, arrow size/color). Apply via `rootClass`.
 5. **Pair with the control's own label** — when wrapping an icon-only `<falcon-angular-button>`, ALWAYS also set `ariaLabel` on the button (tooltip is sighted-only).
-6. **Upgrade, don't hand-roll** — collision-aware flip placement, `hideDelay`, `focusableTrigger` opt-out, `maxHeight`, show/hide animation are all known gaps (`[BRAIN-OUT]` `GAPS_AND_UPGRADES.md`) — raise them as shared upgrades rather than building a one-off positioner.
+6. **Use the Angular wrapper, not the raw tag, inside overlays** — `[CODE]` `<falcon-angular-tooltip>` promotes its panel into the browser Top Layer (`showPopover()` + `FalconStackingService`, Wave 6) so a hint on a control inside a drawer/dialog/transformed table row is NOT clipped by an ancestor stacking context. The raw `<falcon-tooltip>` tag renders inline and CAN be clipped.
+7. **Upgrade, don't hand-roll** — collision-aware flip placement, `hideDelay`, `focusableTrigger` opt-out, `maxHeight`, show/hide animation are all known gaps (`[BRAIN-OUT]` `GAPS_AND_UPGRADES.md`) — raise them as shared upgrades rather than building a one-off positioner.
 
 ## Anti-patterns
 - `[BRAIN-OUT]` `USAGE.md:89` Putting a link/button inside the tooltip without `interactive="true"` — it becomes unreachable (the panel hides before the pointer arrives).
@@ -46,4 +47,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Using the native `title=""` attribute in app code — banned; it is unstyled and uncontrollable.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-tooltip.tsx` render structure + `tooltip.tokens.css` references + `[BRAIN-OUT]` existing dossiers. Cross-library mapping is `[INFERRED]` from each library's documented API.
+🟡 CODE-DERIVED 2026-06-03 (B16) from `[CODE]` falcon-tooltip.tsx render structure + tooltip.tokens.css + the existing dossiers. Cross-library mapping is `[INFERRED]` from each library's documented API. Refreshed: added the Top-Layer-vs-raw-tag composition rule (Wave 6). Note: no React/Vue Falcon tooltip wrapper exists (Angular-only).

@@ -11,7 +11,7 @@
 |---|---|---|
 | Org hierarchy is a single tenant tree with a pinned root | `[CODE]` `tsx:9-12` "two stacked sections — ROOT HEADER pinned + RECURSIVE LIST" | The root account is always visible at the top; children scroll beneath it. |
 | Per-node + per-root actions are declarative | `[CODE]` `API.md` `rootActions` / `nodeActions` (`FalconOrgHierarchyAction[]`) | The business actions for the root and for each node are passed as data, not hand-coded — `highlight` flags the emphasized action. |
-| Brand identity per node | `[CODE]` `API.md` `node.brand` → `client-logo bank-{x}` | Each client node carries a recognizable brand bubble (Rajhi / SNB / BUPA / Aramco) so the operator identifies accounts visually. |
+| Brand identity per node | `[CODE]` `node.brand` declared in types | INTENDED to give each client node a recognizable brand bubble (Rajhi / SNB / BUPA / Aramco). **BUT `node.brand` is currently a latent/unused prop — the renderer applies `iconUrl`→`icon`→`initials` only (tsx:718-788), never a brand class.** So this business intent is NOT yet realized (GAP FOHT-08). |
 | Lazy hierarchy loading | `[CODE]` `API.md` `node.hasChildren` + `falcon-toggle` event | A node can declare it *has* children before they are fetched; expanding it is the trigger to load that subtree — the hierarchy is paged by depth. |
 | `[INFERRED]` Same Add Client / Add Node / Edit Node / Add User launch points as `<falcon-tree-panel>` | `[BRAIN-OUT]` Brain SK org-hierarchy playbooks | The `falcon-action` event with `isRoot` discriminator routes the same action ids to root-scoped vs node-scoped wizard flows. |
 
@@ -26,14 +26,14 @@
 | Flow | Page | Role of the component in the flow |
 |---|---|---|
 | Browse organization hierarchy | org-hierarchy (intended — see gotcha) | Left-rail navigator; `falcon-select` focuses a node. |
-| Add Client / Add Node / Edit Node / Add User | org-hierarchy | Root / node ⋮ menu items launch the respective wizard flows (`falcon-action` with `isRoot`). |
-| Showcase / playground | host-shell | `[CODE]` `USAGE.md` Wave 7 sweep — the ONLY verified live consumers today are the playground + showcase. |
+| Add Client / Add Node / Edit Node / Add User | org-hierarchy (intended) | Root / node ⋮ menu items WOULD launch the respective wizard flows (`falcon-action` with `isRoot`) — but no live page wires this. |
+| — | — | **NO live render consumer (2026-06-03).** The prior playground/showcase consumers are gone (playground route removed; showcase ref is a denylist string). |
 
 ## Business gotchas
-- `[CODE]` `GAPS_AND_UPGRADES.md` + `OVERVIEW.md` — **no verified production adoption.** Grep across the admin-console + management-console org-hierarchy pages found NO usage of `<falcon-organization-hierarchy-tree-tw>`. The live org-hierarchy panels in production currently use `<falcon-tree-panel>` (via the host-shell `<app-organization-hierarchy-tree>` wrapper) — see that component's `INTEGRATION_VALIDATION.md`. This component is a **parallel implementation**, not the shipping one. A builder must not assume changing it affects the live org-hierarchy page.
+- `[CODE]` **ZERO live render consumers (verified 2026-06-03).** Grep across the whole repo found NO `<falcon-organization-hierarchy-tree-tw>` render site. The live org-hierarchy panels use `<falcon-tree-panel>` (via the host-shell `<app-organization-hierarchy-tree>` wrapper). This component is a **parallel, un-rendered implementation** — a builder must NOT assume changing it affects the live org-hierarchy page. (Adopt-vs-delete is the open triage — see `GAPS_AND_UPGRADES.md` FOHT-05.)
 - `[CODE]` `tsx:13-16` In the root header the **brand SVG / icon is opinionated** per the React V0.2 reference; the root row's identity follows the locked spec, not arbitrary node data.
 - `[CODE]` `API.md` `falcon-toggle` carries `{ id, expanded }` — it is the lazy-load hook; a consumer that ignores it on a `hasChildren=true` node will show a chevron that opens to nothing.
 - `[CODE]` `API.md` — object props (`tree`, `rootActions`, `nodeActions`, `expandedIds`) must be set via element-property reflection — binding them as `[attr.x]` stringifies them and the tree silently renders empty.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-organization-hierarchy-tree-tw.tsx` (header lines 1-90 read) + the 6 existing dossier files. **No production adoption** is ✅ VERIFIED from the `GAPS_AND_UPGRADES.md` + `USAGE.md` Wave 7 grep — the live org-hierarchy panel uses `<falcon-tree-panel>`. The Add Client / Add Node / Edit Node / Add User launch mapping is `[INFERRED]` by analogy to `<falcon-tree-panel>` + the Brain SK playbooks, since this component is not the production consumer.
+🟢 CODE-VERIFIED 2026-06-03 (B21) from the full `falcon-organization-hierarchy-tree-tw.tsx` (1207 ln) + the live `<falcon-tree-panel>`/`<app-organization-hierarchy-tree>` templates. **Zero live render consumers** ✅ VERIFIED by repo-wide grep — the live org-hierarchy panel uses `<falcon-tree-panel>`. The Add Client/Node/Edit/User launch mapping is `[INFERRED]` by analogy. **Drift corrected:** `node.brand` is a latent unused prop (not class-driven); playground/showcase consumers gone.

@@ -42,29 +42,36 @@ Add `FalconAngularInputComponent` to the consuming standalone component's `impor
 | `flat` | `boolean` | `false` | **Stencil-Shadow path only.** Removes radius. |
 | `noFocusRing` | `boolean` | `false` | **Stencil-Shadow path only.** Removes focus halo. |
 | `useTailwind` | `boolean` | `true` | **Render-path switch.** `true` → `<falcon-input-tw>` (Light DOM). `false` → `<falcon-input>` (Shadow DOM). |
-| `wrapperClass` | `string` | `''` | Caller-supplied extra Tailwind classes on the wrapper. **Tailwind path only.** |
-| `inputClass` | `string` | `''` | Extra Tailwind classes on the native input. **Tailwind path only.** |
-| `labelClass` | `string` | `''` | Extra Tailwind classes on the label. **Tailwind path only.** |
+| `wrapperClass` | `string` | `''` | Caller-supplied extra Tailwind classes on the wrapper, forwarded as `wrapper-extra-class`. **Tailwind path only.** |
+| `inputClass` | `string` | `''` | Extra Tailwind classes on the native input (`input-extra-class`). **Tailwind path only.** |
+| `labelClass` | `string` | `''` | Extra Tailwind classes on the label (`label-extra-class`). **Tailwind path only.** |
+| `iconLeft` | `boolean` | `false` | `[CODE]` falcon-input.component.ts:97 — Wave 2026-05-17 unified icon-slot API. When `true`, projects `slot="icon-left"` content at the start edge (BOTH render paths). |
+| `iconRight` | `boolean` | `false` | `[CODE]` falcon-input.component.ts:98 — projects `slot="icon-right"` at the end edge (BOTH render paths). |
+| `inputMode` | `'numeric' \| 'decimal' \| 'text' \| 'tel' \| 'email' \| 'search' \| 'url' \| 'none' \| undefined` | `undefined` | `[CODE]` falcon-input.component.ts:99 — forwarded as the HTML `inputmode` attr to pin the on-screen keyboard. Used by `<falcon-input-number>` to force `'numeric'`. |
+
+> `[CODE]` There is **no `clearable`-aria-label** input on the wrapper. The Shadow tag exposes `clearAriaLabel` (default `'Clear input'`); the wrapper does NOT surface it (GAP G3). The Tailwind twin hardcodes `aria-label="Clear input"` (`[CODE]` falcon-input-tw.tsx:290).
 
 ### Stencil-only props (NOT exposed on Angular wrapper but available if you use the raw tag)
 
-| Prop | Type | Default |
-|---|---|---|
-| `autoFocusOnMount` | `boolean` | `false` |
-| `spellcheckMode` | `boolean` | `true` |
-| `clearAriaLabel` | `string` | `'Clear input'` |
+| Prop | Type | Default | Available on |
+|---|---|---|---|
+| `autoFocusOnMount` | `boolean` | `false` | Shadow `<falcon-input>` only `[CODE]` falcon-input.tsx:69 (NOT on `-tw`) |
+| `spellcheckMode` | `boolean` | `true` | Shadow only `[CODE]` falcon-input.tsx:70 (NOT on `-tw`) |
+| `clearAriaLabel` | `string` | `'Clear input'` | Shadow only `[CODE]` falcon-input.tsx:73 (the `-tw` twin hardcodes the label) |
 
-> Mutable prop `value: string` exists on both Stencil tags but Angular wrapper drives it via CVA — do not bind directly.
+> `[CODE]` Mutable prop `value: string` (`@Prop({ mutable: true, reflect: false })`, `@Watch`ed) exists on both Stencil tags but Angular wrapper drives it via CVA — do not bind directly.
 
 ## Outputs
 
+`[CODE]` The wrapper template (falcon-input.component.html) binds **four** Stencil events; the only Angular `@Output` is `blur`.
+
 | Name | Payload | Notes |
 |---|---|---|
-| `falcon-input` | `CustomEvent<{ value: string }>` | Native input event (keystroke). |
-| `falcon-change` | `CustomEvent<{ value: string }>` | Native change event (commit). |
-| `falcon-focus` | `CustomEvent<{ value: string }>` | Stencil Shadow only — NOT re-emitted by Angular wrapper. |
-| `falcon-blur` | `CustomEvent<{ value: string }>` | Wrapper invokes `onTouched()` so CVA marks dirty. |
-| `falcon-clear` | `CustomEvent<{ value: string }>` | Fires when clear-X is pressed (value becomes `''`). |
+| `(blur)` | `void` | `[CODE]` falcon-input.component.ts:107 — the **only** Angular `@Output`. Re-emitted from the Stencil `falcon-blur` (added 2026-05-21) so consumer templates writing `(blur)="onBlur('field')"` actually receive it. Without this, native DOM `blur` does not bubble and per-field `touched`-gated errors never surfaced. Fires AFTER CVA `onTouched()`. |
+| `falcon-input` | `CustomEvent<{ value: string }>` | Stencil keystroke event → wrapper `handleInput()` → CVA `onChange`. |
+| `falcon-change` | `CustomEvent<{ value: string }>` | Stencil commit event → ALSO routed through `handleInput()`. |
+| `falcon-clear` | `CustomEvent<{ value: string }>` | Stencil clear-X event → ALSO routed through `handleInput()` (value becomes `''`). |
+| `falcon-focus` | `CustomEvent<{ value: string }>` | Emitted by BOTH Stencil tags `[CODE]` falcon-input.tsx:96 / falcon-input-tw.tsx:111 — but **NOT bound/re-emitted by the Angular wrapper template** (GAP G4). |
 
 ## TypeScript types
 
@@ -114,17 +121,19 @@ Internal state uses Angular signals (`value`, `disabled`). External binding is s
 
 ## Methods (Stencil only — call via element ref)
 
-| Method | Description |
-|---|---|
-| `setFocus()` | Programmatically focuses the inner native input. |
-| `clear()` | Mirrors clear-button click. |
+| Method | Description | Available on |
+|---|---|---|
+| `setFocus()` | Programmatically focuses the inner native input. | BOTH tags `[CODE]` falcon-input.tsx:124 / falcon-input-tw.tsx:132 |
+| `clear()` | Mirrors clear-button click. | BOTH tags `[CODE]` falcon-input.tsx:130 / falcon-input-tw.tsx:137 |
 
-> The Angular wrapper does NOT proxy these methods. To call them, obtain the inner Stencil element via `ViewChild` + `nativeElement`. There is no Angular-side `focus()` / `clear()` method — **GAP**.
+> `[CODE]` The Angular wrapper does NOT proxy these methods. There is no Angular-side `focus()` / `clear()` method on `FalconAngularInputComponent` — **GAP G2**. To call them, obtain the inner Stencil element via `ViewChild` + `nativeElement` (the wrapper tags it `#inputEl`).
 
 ## Slots / template inputs
 
-- **Stencil Shadow (`<falcon-input>`)**: `slot="prefix"`, `slot="suffix"` (passed through via `<ng-content select="[slot=prefix]">` and `<ng-content select="[slot=suffix]">` in the wrapper).
-- **Stencil Light (`<falcon-input-tw>`)**: **NO SLOTS**. Prefix/suffix slots are unavailable in the Tailwind render path. This is a documented divergence — **GAP**.
+`[CODE]` falcon-input.component.html — slot wiring (corrected 2026-06-03; the prior dossier's "Tailwind path has no slots" is now **stale**):
+
+- **Stencil Light (`<falcon-input-tw>`, `useTailwind=true`, default)**: projects `slot="icon-left"` + `slot="icon-right"` (`[CODE]` html:41-42). The Stencil twin renders absolutely-positioned icon `<span>`s and prepends `--falcon-input-icon-input-padding-{start,end}` padding to the native input (`[CODE]` falcon-input-tw.tsx:243-284). **Still NO `prefix` / `suffix` slots in the Tailwind path** (GAP G1 — prefix/suffix differ from icon-left/right).
+- **Stencil Shadow (`<falcon-input>`, `useTailwind=false`)**: projects FOUR slots — `slot="prefix"`, `slot="suffix"`, `slot="icon-left"`, `slot="icon-right"` (`[CODE]` html:78-81). The Shadow `.tsx` renders `slot name="prefix"` + `iconLeft && slot name="icon-left"` inside the prefix `<span>`, mirrored for suffix (`[CODE]` falcon-input.tsx:226-285).
 - **Angular wrapper**: no `ng-template` inputs.
 
 ## Supported sizes / states / variants / appearances
@@ -137,11 +146,11 @@ Internal state uses Angular signals (`value`, `disabled`). External binding is s
 
 ## Constraints
 
-- Tailwind render path (`useTailwind=true`, default) does NOT support `prefix` / `suffix` slots.
-- Tailwind render path does NOT honor `borderless` / `shadowless` / `flat` / `noFocusRing` props — those are CSS-only on the Shadow path.
-- The wrapper-supplied `wrapperClass` / `inputClass` / `labelClass` only flow to the Tailwind path. In Shadow path, override tokens via host class (see USAGE.md).
-- `falcon-focus` event is not re-emitted by the Angular wrapper template (the wrapper only listens to `falcon-input`, `falcon-change`, `falcon-clear`, `falcon-blur`).
-- The Tailwind path emits a generic `Clear input` aria-label; the Shadow path supports custom `clearAriaLabel` via Stencil prop but the Angular wrapper does NOT expose it.
+- `[CODE]` Tailwind render path (`useTailwind=true`, default) supports `icon-left` / `icon-right` slots but NOT `prefix` / `suffix` slots (those are Shadow-only).
+- `[CODE]` Tailwind render path does NOT honor `borderless` / `shadowless` / `flat` / `noFocusRing` props — those are CSS-only on the Shadow path (`:host([borderless])` etc. in falcon-input.css:21-39). The Tailwind helper `falconInputWrapperClasses()` does not branch on them (GAP G5).
+- `[CODE]` The wrapper-supplied `wrapperClass` / `inputClass` / `labelClass` only flow to the Tailwind path (forwarded as `wrapper-extra-class` / `input-extra-class` / `label-extra-class`). In Shadow path they are not bound — override tokens via host class (see USAGE.md).
+- `[CODE]` `falcon-focus` event is not re-emitted by the Angular wrapper template (the wrapper binds only `falcon-input`, `falcon-change`, `falcon-clear`, `falcon-blur`) — GAP G4.
+- `[CODE]` The Tailwind twin hardcodes `aria-label="Clear input"`; the Shadow path supports custom `clearAriaLabel` via Stencil prop but the Angular wrapper does NOT expose it (GAP G3).
 
 ## Accessibility
 
@@ -152,3 +161,7 @@ Internal state uses Angular signals (`value`, `disabled`). External binding is s
 - Error message paragraph has `role="alert"`.
 - Required asterisk is `aria-hidden="true"`.
 - Clear button has `aria-label`, `tabindex={-1}`, and `onMouseDown={preventDefault}` so focus stays on the input.
+- `[CODE]` Projected icon `<span>`s in the `-tw` twin are `aria-hidden="true"` + `pointer-events-none` (falcon-input-tw.tsx:246-249/277-280) — decorative only.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03; RE-VERIFIED 2026-06-03 (W1-a) against falcon-input.component.ts (243 ln) + .html (84 ln) — all 30 inputs, the `disabledFromInput` boolean/string-truthy setter, the single `@Output() blur` (re-emitted from `falcon-blur` after CVA `onTouched()`), and the full CVA contract incl. the `writeValue` + `componentOnReady().then(push)` cell-remount guard confirmed verbatim. Drift corrected vs the pre-B01 dossier: `iconLeft`/`iconRight`/`inputMode` inputs + `(blur)` Output (the old `falconFocus` Output claim was wrong — no such Output exists); both render paths project icon slots; `setFocus`/`clear` exist on BOTH Stencil tags. W1-a verdict: PASS (no further drift).

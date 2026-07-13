@@ -1,8 +1,9 @@
-# falcon-angular-wizard — USAGE
+﻿# falcon-angular-wizard — USAGE
 
 ## Real usage in active codebase
-- `apps/host-shell/src/app/playground/playground.page.html` — playground showcase (5-step demo of the dual render path).
-- **No production consumer yet** in admin-console or management-console; the wizards in `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/` still use the legacy bespoke `<falcon-stepper>` directly.
+- **None (2026-06-03).** `[CODE]` grep `<falcon-angular-wizard[ >]` across `apps/` + `libs/falcon/` → **0 element usages**. The prior dossier's `apps/host-shell/.../playground/playground.page.html` showcase is gone (the playground route was removed — `[MEMORY]` B01) and the tag is NOT in the current `falcon-ui-showcase` folder.
+- The org-hierarchy Add Client / Add User wizards in `apps/{admin,management}-console/.../org-hierarchy-page/components/wizard-components/` still use the legacy `<falcon-stepper>` directly + manual footer; the end-of-wizard channel→submit→success flow is the separate `<falcon-angular-wizard-finalization>` orchestrator. **This shell is the standing migration target, un-adopted.**
+- Drift note: the examples below use `[(currentStep)]` banana-box on the wrapper. **That does not actually two-way bind** — the wrapper `currentStep` is a one-way `@Input` with no `currentStepChange` Output (the inner Stencil prop is mutable, so the element advances itself, but the new index is not pushed back to the host). Track the step via `(falconWizardStepChange)` instead, or feed `[currentStep]` one-way from a signal you also update in the step-change handler. (Examples retained as the intended ergonomics once a `currentStep` model is added — GAP.)
 
 ## Recommended NEW usage
 
@@ -129,3 +130,14 @@ async forceNext(): Promise<void> {
 - DO use `slot="footer-extra"` for tertiary actions (Cancel, Skip This Step) that don't fit Next/Back/Finish/Draft.
 - DON'T add custom CSS to override the footer layout — propose new tokens instead.
 - DON'T set `[stepControls]` to a non-array; the wrapper's `resolvedValidateStep` guards with `if (!this.stepControls?.length) return undefined;`.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-wizard>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.
+
+## Deep-Dive Sweep Consumer Sweep (2026-06-03 — B20)
+
+`[CODE]` grep `<falcon-angular-wizard[ >]` across `apps/` + `libs/falcon/` → **0 element usages** (the 4/14 grep hits that matched `falcon-angular-wizard*` were all `<falcon-angular-wizard-finalization>`, a DIFFERENT component, caught by prefix). No showcase consumer either (playground removed). **Adoption is still ZERO.** The wizard shell is production-ready but un-adopted; the real wizards use `<falcon-stepper>` + manual footer + `<falcon-angular-wizard-finalization>` for the finish flow.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B20 REFRESH). Consumer Sweep re-run (0 usages). `[(currentStep)]` caveat added (wrapper is one-way `@Input`, no `currentStepChange`). Recommended-usage code examples preserved from prior dossier (structurally valid; the two-way binding caveat now documented).

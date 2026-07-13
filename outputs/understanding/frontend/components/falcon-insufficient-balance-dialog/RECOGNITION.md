@@ -55,4 +55,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - `[INFERRED]` Assuming it composes `falcon-dialog` — it is self-contained; dialog props/behavior do not apply.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-insufficient-balance-dialog.tsx` render structure + `insufficient-balance-dialog.tokens.css` references + `[BRAIN-OUT]` existing dossiers. Cross-library mapping is `[INFERRED]` — no single-component analogue exists in the named libraries; the pattern is "dialog + sortable list" everywhere.
+🟡 CODE-DERIVED 2026-06-03 (B17 RE-VERIFIED) from `[CODE]` falcon-insufficient-balance-dialog.tsx render structure (:362-435) + tokens + `[BRAIN-OUT]` existing dossiers. Render anatomy + sibling routing table re-confirmed against live source. Cross-library mapping is `[INFERRED]` — no single-component analogue exists in the named libraries; the pattern is "modal + sortable list" everywhere. NOTE (B17): the live panel is now Top-Layer-promoted via a native `<dialog>` wrapper (focus-trap for free), and the footer Cancel/Proceed are raw `<button>` (not `<falcon-angular-button>` — a kit-consistency gap, see GAPS G-BTN).

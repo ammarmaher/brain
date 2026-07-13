@@ -25,18 +25,25 @@ ACTIVE — Stencil Shadow + Light (`<falcon-filter-panel-tw>`). Angular wrapper 
 
 ## Paths
 
-- Stencil Shadow: `libs/falcon-ui-core/src/components/falcon-filter-panel/falcon-filter-panel.tsx`
-- Stencil Light: `libs/falcon-ui-core/src/components/falcon-filter-panel-tw/falcon-filter-panel-tw.tsx`
-- Types: `libs/falcon-ui-core/src/components/falcon-filter-panel/falcon-filter-panel.types.ts`
-- Tokens: `libs/falcon-ui-tokens/src/components/filter-panel.tokens.css`
-- Tailwind helpers: `libs/falcon-ui-core/src/tailwind/filter-panel-tailwind-classes.ts`
-- Angular wrapper: `libs/falcon-ui-core/src/angular-wrapper/components/falcon-filter-panel/falcon-filter-panel.component.ts`
-- Angular selector: `falcon-angular-filter-panel`
+| Layer | Path |
+|---|---|
+| Stencil Shadow | `libs/falcon-ui-core/src/components/falcon-filter-panel/falcon-filter-panel.tsx` (192 ln) |
+| Stencil Shadow CSS | `libs/falcon-ui-core/src/components/falcon-filter-panel/falcon-filter-panel.css` (135 ln — token-with-fallback) |
+| Stencil Light | `libs/falcon-ui-core/src/components/falcon-filter-panel-tw/falcon-filter-panel-tw.tsx` (205 ln) |
+| Stencil Light CSS | _none_ — `[CODE]` the `-tw` variant has no styleUrl (`shadow:false`, classes only) |
+| Types | `libs/falcon-ui-core/src/components/falcon-filter-panel/falcon-filter-panel.types.ts` (28 ln) |
+| Tokens | `libs/falcon-ui-tokens/src/components/filter-panel.tokens.css` (70 ln) |
+| Tailwind helpers | `libs/falcon-ui-core/src/tailwind/filter-panel-tailwind-classes.ts` (96 ln) |
+| Angular wrapper TS | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-filter-panel/falcon-filter-panel.component.ts` (73 ln) |
+| Angular wrapper HTML | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-filter-panel/falcon-filter-panel.component.html` (34 ln — pure tag-switcher) |
+| Angular selector | `falcon-angular-filter-panel` |
+| Spec/tests | _none found_ (FFP-04) |
 
-## Consumers
+## Consumers (grep verified 2026-06-03)
 
-- Not yet consumed in production feature pages (verified via grep over apps/).
-- Playground + showcase only.
+- `[CODE]` **0 consumers** — `<falcon-angular-filter-panel>` / `<falcon-filter-panel>` / `<falcon-filter-panel-tw>` appear in NO `apps/` or `libs/falcon` file (re-confirmed B12, unchanged since Wave 7).
+- `[CODE]` Only the TYPES are re-exported from the main `falcon-ui-core` barrel (`index.ts:105/109` → `FalconFilterPanelDensity` + the types file). The wrapper class itself is reachable via `@falcon/ui-core/angular` but is imported by nobody.
+- Built but **unadopted** — showcase/playground only (and no showcase render found in apps/ this pass).
 
 ## Related components
 
@@ -47,3 +54,6 @@ ACTIVE — Stencil Shadow + Light (`<falcon-filter-panel-tw>`). Angular wrapper 
 ## Ownership
 
 Stencil core + Angular wrapper. The filter types are public contract — see API.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh). Paths + line counts re-confirmed; 0 consumers re-verified (grep, both selectors, apps + libs/falcon); only the TYPES are barrel-exported (index.ts:105/109). Status NEEDS-UPGRADE (native atoms) carried forward from DECISION.

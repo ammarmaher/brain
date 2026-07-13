@@ -1,0 +1,288 @@
+/*** Basic Send Application — home screen (Wave F1).
+ ***
+ *** Channel tabs (WhatsApp | IVR Voice) → sub-tabs (Outbox | Scheduled) →
+ *** toolbar (search + type filter) → transactions grid. Column sets, statuses
+ *** and row-action gating follow BR-BSA-52..54 / 71..74 and the React SoT
+ *** (REACT_REFERENCE.md §S1/S2). Mock-data-driven (backend GAP-BSA-01);
+ *** compose/details takeovers ship in Waves F2/F3 — actions toast until then. ***/
+import { DecimalPipe } from '@angular/common';
+import { afterNextRender, ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslatePipe, TranslateService } from '@falcon';
+import {
+  FalconAngularButtonComponent,
+  FalconAngularDataTableComponent,
+  FalconAngularDropdownComponent,
+  FalconAngularSaudiRiyalIconComponent,
+  FalconAngularSearchInputComponent,
+  FalconAngularStatusBadgeComponent,
+  FalconAngularTabsComponent,
+  FalconAngularTagComponent,
+  FalconDataTableCellDirective,
+  FalconMessageService,
+  type ColumnDef,
+  type FalconDataTableRowMenuAction,
+  type FalconTabOption,
+} from '@falcon/ui-core/angular';
+import { FormsModule } from '@angular/forms';
+
+import {
+  BSA_STATUS_META,
+  BSA_VOICE_TYPES,
+  BSA_WA_TYPES,
+  bsaActionAllowed,
+  type BsaChannel,
+  type BsaMode,
+  type BsaTransaction,
+} from './models/bsa.models';
+import {
+  BSA_VOICE_OUTBOX,
+  BSA_VOICE_SCHEDULED,
+  BSA_WA_OUTBOX,
+  BSA_WA_SCHEDULED,
+} from './data/bsa-mock-data';
+
+const ALL_TYPES = 'all';
+
+@Component({
+  selector: 'app-bsa-home',
+  imports: [
+    FalconAngularButtonComponent,
+    FalconAngularDataTableComponent,
+    FalconAngularDropdownComponent,
+    FalconAngularSaudiRiyalIconComponent,
+    FalconAngularSearchInputComponent,
+    FalconAngularStatusBadgeComponent,
+    FalconAngularTabsComponent,
+    FalconAngularTagComponent,
+    FalconDataTableCellDirective,
+    DecimalPipe,
+    FormsModule,
+    TranslatePipe,
+  ],
+  templateUrl: './bsa-home.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class BsaHomeComponent {
+  private readonly i18n = inject(TranslateService);
+  private readonly toast = inject(FalconMessageService);
+
+  /*** Page state — URL-param sync arrives with the details route in Wave F3. ***/
+  protected readonly channel = signal<BsaChannel>('whatsapp');
+  protected readonly mode = signal<BsaMode>('outbox');
+  protected readonly search = signal('');
+  protected readonly typeFilter = signal<string>(ALL_TYPES);
+  protected readonly page = signal(1);
+  /*** Platform standing rule: every data table defaults to page size 10. ***/
+  protected readonly pageSize = signal(10);
+  protected readonly rowsPerPageOptions = [10, 20, 50];
+
+  /*** Bumped when the language file resolves so pre-translated columns/actions
+   *** recompute (voice-records-tab precedent). ***/
+  private readonly langTick = signal(0);
+
+  /*** Data-table object props (rows/columns) must arrive AFTER the Stencil
+   *** element class has UPGRADED — pre-upgrade property sets become own
+   *** properties that shadow the class accessors, so the wrapper's changed-only
+   *** syncProps never lands them (every existing consumer loads data async
+   *** 100s of ms later, masking this). Gate on the element definition itself:
+   *** whenDefined resolves strictly after defineFalconComponentPair registers
+   *** <falcon-table-tw>, then the bindings CHANGE post-upgrade and stick. ***/
+  private readonly ready = signal(false);
+
+  constructor() {
+    this.i18n
+      .get('basicApp.col.id')
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.langTick.update((n) => n + 1));
+    afterNextRender(() => {
+      customElements
+        .whenDefined('falcon-table-tw')
+        .then(() => this.ready.set(true))
+        .catch(() => this.ready.set(true));
+    });
+  }
+
+  protected readonly channelTabs = computed<readonly FalconTabOption[]>(() => {
+    this.langTick();
+    return [
+      { value: 'whatsapp', label: this.i18n.translate('basicApp.tabs.whatsapp') },
+      { value: 'voice', label: this.i18n.translate('basicApp.tabs.voice') },
+    ];
+  });
+
+  protected readonly modeTabs = computed<readonly FalconTabOption[]>(() => {
+    this.langTick();
+    return [
+      { value: 'outbox', label: this.i18n.translate('basicApp.tabs.outbox') },
+      { value: 'scheduled', label: this.i18n.translate('basicApp.tabs.scheduled') },
+    ];
+  });
+
+  protected readonly typeOptions = computed(() => {
+    this.langTick();
+    const types = this.channel() === 'whatsapp' ? BSA_WA_TYPES : BSA_VOICE_TYPES;
+    return [
+      { value: ALL_TYPES, label: this.i18n.translate('basicApp.filter.all') },
+      ...types.map((t) => ({ value: t, label: t })),
+    ];
+  });
+
+  private readonly source = computed<readonly BsaTransaction[]>(() => {
+    if (this.channel() === 'whatsapp') {
+      return this.mode() === 'outbox' ? BSA_WA_OUTBOX : BSA_WA_SCHEDULED;
+    }
+    return this.mode() === 'outbox' ? BSA_VOICE_OUTBOX : BSA_VOICE_SCHEDULED;
+  });
+
+  /*** Search = case-insensitive substring across id/sender/template/type
+   *** (SoT filtering contract, REACT_REFERENCE §S2); type = exact match. ***/
+  private readonly filtered = computed<readonly BsaTransaction[]>(() => {
+    const q = this.search().trim().toLowerCase();
+    const type = this.typeFilter();
+    return this.source().filter((row) => {
+      if (type !== ALL_TYPES && row.type !== type) return false;
+      if (!q) return true;
+      return [row.id, row.sender, row.templateName, row.type, ...row.recipientGroups]
+        .join(' ')
+        .toLowerCase()
+        .includes(q);
+    });
+  });
+
+  protected readonly totalCount = computed(() => this.filtered().length);
+
+  protected readonly rows = computed<readonly BsaTransaction[]>(() => {
+    if (!this.ready()) return [];
+    const start = (this.page() - 1) * this.pageSize();
+    return this.filtered().slice(start, start + this.pageSize());
+  });
+
+  protected readonly columns = computed<ColumnDef[]>(() => {
+    this.langTick();
+    if (!this.ready()) return [];
+    const wa = this.channel() === 'whatsapp';
+    const scheduled = this.mode() === 'scheduled';
+    const cols: ColumnDef[] = [
+      { field: 'id', headerKey: this.i18n.translate('basicApp.col.id') },
+      { field: 'sender', headerKey: this.i18n.translate('basicApp.col.sender') },
+      {
+        field: 'templateName',
+        headerKey: this.i18n.translate(wa ? 'basicApp.col.template' : 'basicApp.col.ivr'),
+      },
+    ];
+    if (wa) cols.push({ field: 'language', headerKey: this.i18n.translate('basicApp.col.language') });
+    cols.push(
+      { field: 'type', headerKey: this.i18n.translate('basicApp.col.type') },
+      { field: 'createdAt', headerKey: this.i18n.translate('basicApp.col.created') },
+    );
+    if (scheduled) cols.push({ field: 'scheduledAt', headerKey: this.i18n.translate('basicApp.col.scheduled') });
+    cols.push(
+      { field: 'recipientCount', headerKey: this.i18n.translate('basicApp.col.count') },
+      { field: 'totalCost', headerKey: this.i18n.translate('basicApp.col.cost') },
+      { field: 'recipients', headerKey: this.i18n.translate('basicApp.col.recipients') },
+      { field: 'status', headerKey: this.i18n.translate('basicApp.col.status') },
+    );
+    return cols;
+  });
+
+  /*** Row menu — all four actions listed; per-status availability enforced in
+   *** the handler (BR-BSA-53/71). Per-row menu filtering is an E2 refinement. ***/
+  protected readonly rowActions = computed<ReadonlyArray<FalconDataTableRowMenuAction<BsaTransaction>>>(() => {
+    this.langTick();
+    const actions: FalconDataTableRowMenuAction<BsaTransaction>[] = [
+      { id: 'details', labelKey: this.i18n.translate('basicApp.actions.details'), icon: 'falcon-icon falcon-icon-info-circle' },
+    ];
+    if (this.mode() === 'scheduled') {
+      actions.push(
+        { id: 'edit', labelKey: this.i18n.translate('basicApp.actions.edit'), icon: 'falcon-icon falcon-icon-edit' },
+        { id: 'delete', labelKey: this.i18n.translate('basicApp.actions.delete'), icon: 'falcon-icon falcon-icon-trash' },
+      );
+    } else {
+      actions.push({ id: 'cancel', labelKey: this.i18n.translate('basicApp.actions.cancel'), icon: 'falcon-icon falcon-icon-close-circle' });
+    }
+    return actions;
+  });
+
+  protected readonly sendLabel = computed(() => {
+    this.langTick();
+    return this.i18n.translate(
+      this.channel() === 'whatsapp' ? 'basicApp.actions.sendWhatsapp' : 'basicApp.actions.sendVoice',
+    );
+  });
+
+  protected onChannelChange(value: string | number | null): void {
+    if (value !== 'whatsapp' && value !== 'voice') return;
+    this.channel.set(value);
+    this.typeFilter.set(ALL_TYPES);
+    this.search.set('');
+    this.page.set(1);
+  }
+
+  protected onModeChange(value: string | number | null): void {
+    if (value !== 'outbox' && value !== 'scheduled') return;
+    this.mode.set(value);
+    this.page.set(1);
+  }
+
+  protected onSearchChange(value: string): void {
+    this.search.set(value ?? '');
+    this.page.set(1);
+  }
+
+  protected onTypeChange(value: string | number | null): void {
+    this.typeFilter.set(String(value ?? ALL_TYPES));
+    this.page.set(1);
+  }
+
+  protected onPageChange(page: number): void {
+    this.page.set(page);
+  }
+
+  protected onRowsChange(rows: number): void {
+    this.pageSize.set(rows);
+    this.page.set(1);
+  }
+
+  protected onSend(): void {
+    /*** Compose takeover = Wave F2 (Send Whatsapp Message / Send Voice IVR Message). ***/
+    this.toast.add({
+      severity: 'info',
+      summary: this.i18n.translate('basicApp.toast.composeSoon'),
+      life: 3500,
+    });
+  }
+
+  protected onRowAction(event: { action: FalconDataTableRowMenuAction<BsaTransaction>; row: BsaTransaction }): void {
+    const id = event.action.id as 'details' | 'edit' | 'cancel' | 'delete';
+    if (!bsaActionAllowed(id, event.row, this.mode())) {
+      this.toast.add({
+        severity: 'warn',
+        summary: this.i18n.translate('basicApp.toast.notAvailable'),
+        life: 3500,
+      });
+      return;
+    }
+    /*** Details/Edit/Cancel/Delete behaviors land in Waves F3/F4. ***/
+    this.toast.add({
+      severity: 'info',
+      summary: `${event.action.labelKey} — ${event.row.id}: ${this.i18n.translate('basicApp.toast.actionSoon')}`,
+      life: 3500,
+    });
+  }
+
+  protected recipientsSummary(row: BsaTransaction): { first: string; extra: number } {
+    const all = [...row.recipientGroups, ...row.manualRecipients];
+    if (!all.length) return { first: '—', extra: 0 };
+    return { first: all[0], extra: all.length - 1 };
+  }
+
+  /*** Typed accessors for the strict template (`let-row` context is untyped). ***/
+  protected statusSeverity(row: BsaTransaction) {
+    return BSA_STATUS_META[row.status].severity;
+  }
+
+  protected statusLabelKey(row: BsaTransaction): string {
+    return BSA_STATUS_META[row.status].labelKey;
+  }
+}

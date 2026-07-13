@@ -1,0 +1,11 @@
+var acc = "000000000000000000a11001";
+print("=== Settings for owner a11001 ===");
+db.Settingss.find({$or:[{ownerId:acc},{OwnerId:acc}]}).forEach(s=>printjson(s));
+print("=== Applications catalog (id,name,visibility) ===");
+db.Applications.find({},{name:1,visibility:1}).limit(12).forEach(a=>printjson(a));
+print("=== CommunicationChannels catalog (id,name,visibility) ===");
+db.CommunicationChannels.find({},{name:1,visibility:1}).limit(12).forEach(c=>printjson(c));
+print("=== Existing Contracts for a11001 (name + first rate) ===");
+db.Contracts.find({$or:[{accountId:acc},{AccountId:acc}]}).limit(5).forEach(c=>printjson({_id:c._id,name:c.contractName||c.ContractName,currency:c.currency,rate0:(c.tariffPlan&&c.tariffPlan.rates&&c.tariffPlan.rates[0])}));
+print("=== ANY one contract full (to see rate field shape) ===");
+printjson(db.Contracts.findOne({}));

@@ -26,6 +26,7 @@ created: 2026-05-15
 | 3 | Contract / Packaging / Charging / Billing | [[03 Contract Packaging Charging Billing]] | commerce (Contract), charging, provisioning | Contracts & Cost Mng list, Add Contract 4-step wizard | 13 ✅ · 7 ⚠️ · 6 ❌ · 14 ❓ | Core built; periphery missing |
 | 4 | Contact Group Management | [[04 Contact Group Management]] | contact-group | Contact Groups list, Create Contact Group wizard, Share / Edit / Download | 14 ✅ · 2 ⚠️ · 5 ❌ · 8 ❓ | Backend ready; frontend pending (Story 115329) |
 | 5 | Templates | [[05 Templates]] | templates (architectural decision pending) | Templates list, Create Template (WhatsApp 2-step, Voice TBD), Approval flow | 3 ✅ · 2 ⚠️ · 21 ❌ · 1 ❓ | Architectural surprise — no public API yet |
+| 6 | Basic Send Application | [[06 Basic Send Application]] | **NONE YET** — new `basic-send` service planned (GAP-BSA-01); reads Charging/Templates/Contact-Group/Commerce | [[Basic Send App]], [[Send Whatsapp Message]], [[Send Voice IVR Message]], [[Basic Send WhatsApp Details]], [[Basic Send Voice Details]], [[WhatsApp Conversation]] | 96 BRs extracted · React-parity ruled (14 conflicts) · 0 built | Fully understood 2026-07-06; marketplace SKU only — execution plane unbuilt |
 | — | Root cross-module backlog | [[Root Documents]] | — | — | 1 ✅ · 1 ⚠️ · 8 ❌ · 1 ❓ | Meta backlog |
 
 ## Aggregate coverage
@@ -68,4 +69,4 @@ created: 2026-05-15
 
 ## Tags
 
-#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/root #gap
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/06 #prd/root #gap

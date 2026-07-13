@@ -46,12 +46,13 @@ None blocking.
 - Indeterminate-bar shape.
 
 ### 2. Dynamic via inputs/outputs?
-- 14 inputs (label, helperText, errorText, size, state, readonly, required, name, value, inputId, indeterminate, checkedInput, useTailwind, classes).
+- 16 wrapper inputs (label, helperText, errorText, size, state, readonly, required, name, value, inputId, indeterminate, checkedInput, useTailwind, rowClass, boxClass, labelClass). NO `disabled` input (CVA-only — G8).
 - 1 wrapper output (`valueChange`).
-- Stencil events: `falcon-change`, `falcon-blur`.
+- Stencil events: `falcon-change`, `falcon-blur`, `falcon-focus` (last NOT bound by the wrapper — G7).
+- Stencil methods: `setFocus()`, `toggle()` (NOT proxied — G4).
 
 ### 3. Dynamic via slots/templates?
-- Default slot for label content (rich label).
+- **None.** No default slot, no `<ng-content>`, no `ng-template` — `label` is plain text only (G2).
 
 ### 4. Dynamic via tokens?
 - All visual axes (~40 tokens).
@@ -77,5 +78,11 @@ None blocking.
 3. Add `preserveIndeterminate` opt-in.
 
 ### 10. Risky to change?
-- `checkedInput` bypass mechanism — used by checkbox-group. Don't remove without parallel API.
-- Default check glyph SVG — visual regression risk.
+- `checkedInput` bypass mechanism — used by checkbox-group AND the wallet allocation table. Don't remove without a parallel API.
+- The CVA-only `disabled` contract — anything relying on `setDisabledState` would break if disabled were re-routed.
+- Default check glyph / indeterminate-bar SVG — visual regression risk.
+- `indeterminate`-resets-on-toggle — table headers depend on this native-matching behavior.
+
+## Verification
+🟢 code-verified against the wrapper + both Stencil tags + token file (read 2026-06-03). Live consumer reality (5: wallet + Templates wizard + contact-groups) 🟢 grep-verified 2026-06-03. **Corrected:** dynamic-assessment slot row (no slot) + added `falcon-focus`/`setFocus`/`toggle`/`disabled` gaps.
+🟢 RE-VERIFIED 2026-06-03 (W1-c VERIFY) — PASS. 16-input enumeration + CVA-only-`disabled` (G8) re-confirmed against live code; recommendation unchanged (READY).

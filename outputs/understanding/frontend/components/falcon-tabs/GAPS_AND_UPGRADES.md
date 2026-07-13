@@ -1,4 +1,4 @@
-# falcon-tabs — GAPS AND UPGRADES
+﻿# falcon-tabs — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -89,7 +89,8 @@ Future enhancement, not currently requested.
 - No test for keyboard navigation Home / End wrapping with mixed disabled tabs.
 
 ## Missing Tailwind / token parity
-The Stencil Shadow source uses scoped CSS (`falcon-tabs.css`). The Light DOM source emits Tailwind utility classes through helpers. As with button, the two helpers can drift. The token file is the single SSOT — but the helper functions need to be kept aligned.
+The Stencil Shadow source uses scoped CSS (`falcon-tabs.css`). The Light DOM source emits Tailwind utility classes through `tabs-tailwind-classes.ts`. The token file is the single SSOT — both paths read the SAME `--falcon-tabs-*` tokens, so token-level parity is structural.
+- `[CODE]` **Render-path parity VERIFIED 2026-06-03 (B13):** `falcon-tabs-tw.tsx` (385 ln) mirrors `falcon-tabs.tsx` (396 ln) 1:1 in `@Prop`/`@Event`/`@Method`/slots/keyboard/ARIA/auto-select, sharing `falcon-tabs.utils.ts` + the identical JS `measureActiveTab()` indicator escape hatch. **One divergence (B-dim):** the `-tw` twin emits NO `part=` attributes (all parts are Shadow-only — Light DOM has no `::part`). The helper-vs-CSS drift risk is real but no live drift was found this pass.
 
 ## Performance risks
 - `measureActiveTab()` runs on every `componentDidUpdate` and `componentDidLoad`. For tabs that re-render frequently (parent recomputes `tabs[]` array reference), this is `getBoundingClientRect()` + inline style writes — non-zero cost. Memoising the indicator position keyed on `[activeIdx, tabs.length, orientation]` would skip redundant work.
@@ -140,3 +141,24 @@ export interface FalconTabOption {
 
 ## Future-proof recommendation
 The `falconTabActions` directive is a clever stop-gap but introduces fragility. Long-term: promote `header-end` into a real Stencil slot and migrate consumers. Keep `falconTabActions` as a deprecation shim that forwards into the new slot during the transition.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 5** ([CODE] grep `<falcon-angular-tabs>` across `apps/` + `libs/falcon/`) — superseded by B13.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B13)
+
+**Consumer count: 12 app files / 15 occurrences + 1 in `libs/falcon`** ([CODE] grep `<falcon-angular-tabs`). `falconTabActions` directive: 5 files. Component stays ACTIVE / preferred — adoption GREW (contracts-cost-management, contact-groups, templates-page joined; user-details moved to `libs/falcon`).
+
+Drift corrected vs prior dossier (no deletion/promotion flags):
+- **Consumer count + paths refreshed** — `organization-hierarchy/` → `org-hierarchy-page/`; `playground.page.html` retired; user-details now in `libs/falcon`.
+- **New wrapper method documented: `syncSelection(next?)`** (falcon-tabs.component.ts:209-224) — the controlled-tab escape hatch (Stencil selects optimistically; consumer snaps the visual back). Added to API/DECISION.
+- **`selectedValue=null` auto-select-vs-CVA footgun** surfaced (Stencil auto-selects tab 0 without emitting `falcon-change`, so the bound CVA value can lag on first paint). Added to API constraints + new gap T-CVA.
+- **`-tw` parity VERIFIED** (one divergence: no `part=`). Stencil source re-read line-by-line, promoting the prior "🟡 not re-read" caveats in BUSINESS/INTEGRATION to 🟢 code-verified.
+- **No new structural gaps** beyond the previously-listed P0 (`falconTabActions` fragility) / P1 (header slots, radio-cards panel slot, iconUrl) / P2 (lazy, badge, scrollable). All findings `safe-local` — see `FINDINGS/B13.md`.
+
+### T-CVA — first-paint value lag under CVA (P2, NEW)
+`[CODE]` falcon-tabs.tsx:77-80 / -tw.tsx:91-94 — when `selectedValue` (the bound FormControl/ngModel) starts `null` with a non-empty `tabs[]`, the Stencil auto-selects the first enabled tab but does NOT emit `falcon-change` → the Angular `value` signal / FormControl stays `null` while the UI shows tab 0 selected. **Fix:** either emit `falcon-change` for the auto-select, or have the wrapper seed `value` to the first enabled tab in `ngOnInit` when bound `null`. **Workaround today:** initialise the bound value to the intended first tab, not `null`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13) against all source layers (Stencil + `-tw` + wrapper + directive re-read). Added `syncSelection()` + the T-CVA first-paint footgun; render-path parity verified; consumer count refreshed to 12 + 1. No deletion/promotion flags — component stays ACTIVE / preferred; `falconTabActions` remains READY-but-fragile (P0 for runtime-orientation-switch consumers).

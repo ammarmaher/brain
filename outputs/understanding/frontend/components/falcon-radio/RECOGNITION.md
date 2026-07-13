@@ -42,7 +42,7 @@ Customization order (`feedback_falcon_custom_library_mandatory` — inputs → t
 - Native `<input type="radio">` or PrimeNG `<p-radioButton>` in app code — banned (`feedback_falcon_ui_library_only_no_native`).
 - Binding a boolean form control to a single radio expecting checkbox behavior — radio CVA `writeValue` takes the *group's* value and self-compares; it is not a boolean toggle.
 - Waiting for an "unchecked" event when another radio is picked — the browser fires no `change` on the un-checked radio; read the newly-checked value.
-- Expecting `[disabled]` as a template input — it does not exist; disable via the form control / group.
+- Expecting `[disabled]` as a template input — it does NOT exist under that name; the parent-driven disable input is `[disabledInput]` (or disable via the form control). `[disabled]="…"` silently no-ops.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-radio.tsx` + `falcon-radio.component.ts` + `falcon-radio.component.html`. Cross-library map 🔴 INFERRED from each library's public API. Border-width-5 mark, group-valued CVA, no-disabled-input, no-uncheck-event ✅ VERIFIED against source.
+🟡 RE-VERIFIED 2026-06-03 (B06) — CODE-DERIVED from `[CODE]` falcon-radio.tsx + falcon-radio.component.ts + falcon-radio.component.html. Cross-library map 🔴 INFERRED from each library's public API. Border-width-5 mark, group-valued CVA, no-uncheck-event ✅ VERIFIED against source. Note corrected: parent-driven disable input EXISTS but is named `disabledInput` (not `disabled`) — the "Expecting `[disabled]`" anti-pattern stands.

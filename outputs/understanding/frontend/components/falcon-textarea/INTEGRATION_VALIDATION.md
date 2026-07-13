@@ -42,4 +42,4 @@ The textarea **does not validate**. It renders `errorMessage` / `state='error'` 
 - `[CODE]` `falcon-textarea-tw.tsx:150-169` Auto-resize measures `scrollHeight` on every input — a known performance watch-point for very long content (`DECISION.md` risk #10).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-textarea-tw.tsx`, `falcon-textarea.component.ts`, `falcon-textarea.component.html`, `falcon-textarea.types.ts`. Three corrections to the legacy 6-file dossier documented above (icon slots exist; no `disabled` input; `FalconTextareaResize` is dead). Backend-module mapping 🔴 INFERRED — the textarea is genuinely module-agnostic.
+🟢 RE-VERIFIED 2026-06-03 (B01) — CODE-DERIVED from `falcon-textarea-tw.tsx`, `falcon-textarea.component.ts`, `falcon-textarea.component.html`, `falcon-textarea.types.ts` re-read this pass. The three legacy corrections (icon slots exist; no `disabled` input; `FalconTextareaResize` dead) re-confirmed; added: wrapper has ZERO `@Output`s (no `(blur)` re-emit, diverges from input — G1). Backend-module mapping 🔴 INFERRED — the textarea is genuinely module-agnostic.

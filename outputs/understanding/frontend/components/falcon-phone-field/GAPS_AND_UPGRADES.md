@@ -1,101 +1,131 @@
 # falcon-phone-field — GAPS AND UPGRADES
 
-## Missing capabilities
+> REFRESH 2026-06-03 — re-derived against live source. The "~250 country / virtualize the dropdown" perf concern is **stale/wrong**: `DEFAULT_PHONE_COUNTRIES` is **25** (`falcon-phone-field.utils.ts:8-34`); unvirtualized rendering is fine — that gap is downgraded/closed. New divergence + API-honesty gaps added.
 
-### G1 — Validation deferred (P1)
+## Missing / divergent capabilities (active source verified)
 
-By design, but documented poorly. The component does NOT validate the phone format. Consumers MUST add `Validators.required` + a libphonenumber-based validator (or strict regex).
+### G1 — `verifyIcon` + `*ExtraClass` + `appendTo` are `-tw`-only (P1) — **render-path parity**
 
-**Recommended fix:** ship an opt-in `@Input() validateOnBlur = false` + a pluggable validator function `validator?: (e164: string) => boolean`. OR document the Validators-only contract clearly.
+`[CODE]` The Light tag declares `verifyIcon` (`:100`), `wrapperExtraClass`/`inputExtraClass`/`labelExtraClass` (`:110-112`), and `appendTo: 'body'|'inline'` (`:124`). The Shadow tag declares NONE of them (and always renders the panel inline). Default `useTailwind=true` gets them; `useTailwind=false` silently loses them.
 
-### G2 — `verified` state not surfaced (P1)
+**Recommended fix:** add `verifyIcon` + the `*ExtraClass` props to the Shadow tag for parity. (`appendTo` is inherently Light-only — the Shadow panel can't portal out of the shadow root — so document that one as expected.)
 
-Same as email-field. No "verified ✓" visual.
+### G2 — `[maxlength]` is silently ignored (P1) — **API honesty / data correctness**
 
-### G3 — No method proxies (P2)
+`[CODE]` The User-Details consumer binds `[maxlength]="10"` (`user-details-page.component.html:457`) but the wrapper has **no `maxlength` input** — it falls through as an unknown attribute on the `<falcon-angular-phone-field>` host and never reaches the inner native `<input>`. The national number is therefore NOT capped at 10 digits by the field; only a Reactive Forms validator would cap it. A reader of the template would reasonably assume the cap works.
 
-### G4 — No `variant` / `appearance` (P2)
+**Recommended fix:** add a real `@Input() maxlength?: number` (+ `@Prop()` on both tags) forwarded to the native input, OR document loudly that length is validator-only and remove the misleading binding from consumers.
 
-### G5 — kebab-case Outputs (`falcon-country-change`, `falcon-verify`) (P3)
+### G3 — Verify button has no `aria-label` (P2) — **a11y**
 
-Same idiomatic concern as email-field — add camelCase aliases.
+`[CODE]` `falcon-phone-field.tsx:390-400` / `-tw:486-513` — the Verify `<button>` relies on its visible `verifyLabel` only (same as email-field). An explicit `aria-label` would be more robust for icon-heavy locales.
 
-### G6 — Default country list maintenance (P3)
+### G4 — No "verified ✓" state (P2)
 
-Built-in full list (~250 countries) lives in Stencil. Updates (e.g. new ISO codes) require Stencil-side work. Consider exposing the list as a public export so consumers can override / merge.
+`[CODE]` Neither tag has a `verified`/`verifying` prop. A verified number looks identical to an unverified one. Add `verified` (success border + check) + `verifying` (spinner in the button).
 
-### G7 — Country search predicate fixed (P3)
+### G5 — No method proxies on the wrapper (P2)
 
-Search by name+iso+dial-code. No alphabet locale-aware sorting (Arabic, etc.). Consider adding `searchFn?` input.
+`[CODE]` Both tags expose `@Method() setFocus()`, `openPanel()`, `closePanel()` — the wrapper proxies **none**. Add `async setFocus()` / `openCountryPicker()` / `closeCountryPicker()` proxies.
 
-### G8 — Flag-emoji vs flag-image (P2)
+### G6 — No `variant` / `appearance` (P2)
 
-Flags use `flagEmoji` strings by default. Some platforms render emoji inconsistently. Consider adding `flagUrl?` per country for image fallback.
+Does not follow the input Wave-9.C pattern. Only `size`/`state`.
 
-### G9 — No support for E.164 vs national-only display toggle (P3)
+### G7 — No `componentOnReady` value re-push (P2)
 
-The displayed value is always national; emitted is E.164. No way to display E.164 mode (e.g. for compact tables).
+`[CODE]` `falcon-phone-field.component.ts:166-168` — `writeValue` only sets the signal; same data-table-cell-remount race input/password guard against (the value rides `[attr.value]` declaratively).
 
-## Missing accessibility
+### G8 — Validation deferred (P2, by design)
 
-- Verify `aria-controls` on country trigger maps to country listbox.
-- Verify search input inside dropdown has appropriate `aria-label`.
-- Verify focus management after country select.
+`[CODE]` `falcon-phone-field.tsx:4-5` — strips non-digits + composes a string; never validates length/prefix/realness. Consumers MUST add `Validators.required` + a libphonenumber/regex validator. Intentional; document the contract. (Optional future: a pluggable `validator?: (e164) => boolean`.)
+
+### G9 — Default country list is a Stencil-internal const (P3)
+
+`[CODE]` `DEFAULT_PHONE_COUNTRIES` (25 entries) lives in `falcon-phone-field.utils.ts` and is NOT re-exported from the package barrel for app consumers to merge/extend. Consumers override wholesale via `[countries]`. Consider a public export so a consumer can `[...DEFAULT_PHONE_COUNTRIES, extra]`.
+
+### G10 — Country search is fixed (P3)
+
+`[CODE]` `filterCountries` matches ISO + name + dial-code substring (case-insensitive). No locale-aware sort (Arabic) and no pluggable `searchFn`. Acceptable; add `searchFn?` if needed.
+
+### G11 — Flag-emoji only (P3)
+
+`[CODE]` Flags are `flagEmoji` strings — OS-inconsistent rendering. No `flagUrl?` image fallback per country.
+
+### G12 — Wrapper re-declares its detail interfaces (P3) — **DRY**
+
+`[CODE]` `falcon-phone-field.component.ts:39-61` re-declares `Country`/`ChangeDetail`/`CountryChangeDetail`/`VerifyDetail` locally instead of importing from `falcon-phone-field.types.ts`.
+
+## Missing accessibility features
+
+- **A1 (G3):** verify-button `aria-label`.
+- **A2 (P3):** the active option isn't `aria-activedescendant`-tracked during keyboard nav within the open panel (Esc/outside-click are handled; arrow-key navigation *within* the list is not — only the chooser button opens via arrows). Consider full listbox keyboard nav.
+- **A3 (P2):** a future `verified` state needs `aria-live`.
 
 ## Missing tests
 
-- No Angular wrapper spec located.
+- `[CODE]` Grep 2026-06-03 → **no `*phone-field*.spec.ts` / `.e2e.ts`** for either tag or the wrapper. **GAP** — add a Stencil spec (`filterCountries`/`composeFullNumber`/`digitsOnly` units; open/close/Esc/outside-click; Shadow-inline vs `-tw`-portal) + a wrapper spec (CVA E.164/national split; `(blur)`/`(falcon-verify)`/`(falcon-country-change)` re-emit; Top-Layer acquire/release).
 
 ## Missing Tailwind / token parity
 
-- Verify country dropdown panel renders on both render paths.
+- Token contract clean + shared via `:where(... , .falcon-overlay-container)` so the portaled panel inherits tokens (gate-12-rescope). The `-tw` helper is the SSOT. Real parity risk = the **prop** divergence (G1) + the panel render-location divergence (inline vs portal), not the tokens.
 
 ## Performance risks
 
-- Full country list (~250) rendered eagerly in dropdown. Verify whether virtualization is in place; if not, ~250 DOM nodes per phone field per page is heavy. **Flag as performance concern.**
+- **Country list is 25, unvirtualized — fine.** (Corrects the prior "~250 nodes, virtualize" concern.)
+- The `-tw` panel adds `scroll`/`resize` reposition listeners while open (`:221-222`); they're removed on close + `disconnectedCallback` — no leak. Reposition is `requestAnimationFrame`-throttled.
 
 ## Visual / interaction risks
 
-- RTL flips chooser to the right.
-- Flag-emoji rendering varies across OSes — visual regression risk.
+- `[CODE]` Flag-emoji rendering varies across OSes — visual variance (G11).
+- `[CODE]` Inline (Shadow) vs portaled (`-tw`) panel can position/stack differently — verify both paths when changing the panel.
+- `[CODE]` Three 1px dividers are token-tuned — verify pixel alignment at 200% zoom.
 
 ## Recommended upgrade priority
 
 | ID | Title | Priority |
 |---|---|---|
-| G1 | Pluggable validator | P1 |
-| G2 | `verified` state | P1 |
-| G3 | Method proxies | P2 |
-| G4 | variant / appearance | P2 |
-| G8 | `flagUrl` option | P2 |
-| G6 | Public country list export | P3 |
-| G7 | `searchFn` input | P3 |
-| G5 | camelCase Output aliases | P3 |
-| Perf | Virtualize country dropdown | P2 |
+| G1 | Shadow-path parity for `verifyIcon` + `*ExtraClass` | P1 |
+| G2 | Real `maxlength` input (or remove the misleading binding) | P1 |
+| G4 | `verified` / `verifying` state | P2 |
+| G3 | Verify-button `aria-label` | P2 |
+| G5 | `setFocus()` / `openCountryPicker()` proxies | P2 |
+| G7 | `componentOnReady` value re-push | P2 |
+| G6 | `variant` / `appearance` | P2 |
+| G9 | Public `DEFAULT_PHONE_COUNTRIES` export | P3 |
+| G11 | `flagUrl` image fallback | P3 |
+| G12 | Import shared detail types | P3 |
+| ~~Perf~~ | ~~Virtualize country dropdown~~ | **CLOSED — list is 25, not ~250** |
 
 ## Concrete upgrade API
 
 ```ts
-@Input() verified = false;
-@Input() verifying = false;
-@Input() validator?: (e164: string) => boolean;
-@Input() variant: 'form' | 'grid' = 'form';
-@Input() appearance: 'default' | 'filled' | 'ghost' = 'default';
-@Input() searchFn?: (q: string, country: FalconPhoneFieldCountry) => boolean;
-@Input() displayMode: 'national' | 'e164' = 'national';
-@Output() countryChange = new EventEmitter<{ country: string; dialCode: string }>(); // camelCase alias
-@Output() verified = new EventEmitter<{ value: string; country: string }>();
-async setFocus(): Promise<void>;
-async clear(): Promise<void>;
-async openCountryPicker(): Promise<void>;
+// Both tags + wrapper
+@Input()/@Prop() maxlength?: number;        // forward to native input
+@Input()/@Prop() verified = false;
+@Input()/@Prop() verifying = false;
+@Input()/@Prop() variant: 'form' | 'grid' = 'form';
+@Input()/@Prop() appearance: 'default' | 'filled' | 'ghost' = 'default';
+@Method() async setFocus(): Promise<void>;        // + wrapper proxy
+@Method() async openPanel(): Promise<void>;       // + wrapper proxy (openCountryPicker)
+// Shadow tag: add verifyIcon + wrapperExtraClass/inputExtraClass/labelExtraClass (parity with -tw)
+// Barrel: export DEFAULT_PHONE_COUNTRIES
 ```
 
 ## Shared vs per-page
 
-All shared.
+All shared. The Top-Layer popover lifecycle + the country panel are intentionally in the component — never re-implement them per page.
 
 ## Workarounds today
 
-- For G1: add `Validators.required + customPhoneValidator()` externally.
-- For G2: drive `state='success'` after server confirm and override via token.
-- For G6: filter via `countries` input.
+- For G1: stay on `useTailwind=true` (default).
+- For G2: cap length via a Reactive Forms validator (the `[maxlength]` binding does nothing).
+- For G4: drive `state='success'` post-verify + token override.
+- For G5: reach `ViewChild('phoneFieldEl')` → the inner element.
+- For G9: pass a merged `[countries]` array.
+
+## Wave / Sweep Findings
+
+**Consumer count: ~10 files** (`[CODE]` grep `falcon-angular-phone-field` across `apps/` + `libs/falcon/`, 2026-06-03 — User-Details, forgot-password, both add-user steps, add-client owner, both templates button-cards, Studio gallery; see `USAGE.md`). Up from the prior sweep's 5.
+
+**Deep-Dive Sweep (2026-06-03):** corrected the popover-no-op claim (now Top-Layer-acquiring); closed the ~250-country virtualization gap (it's 25); added G1 (Shadow↔`-tw` divergence), G2 (dead `maxlength`), G3 (verify aria-label), G7 (no `componentOnReady` push). 2 HIGH-RISK-QUEUE (G1 prop/render-path parity, G2 data-correctness/API-honesty). No code changed.

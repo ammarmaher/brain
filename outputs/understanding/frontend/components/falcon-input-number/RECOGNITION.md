@@ -45,6 +45,7 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - Rendering a "%" or "kg" by hand-typing it into the value — there is no text suffix slot (GAP G2); render it as a sibling label or raise the gap.
 - `[attr.disabled]` instead of `[disabled]` — bypasses the `disabledFromInput` setter.
 - Treating `integer` truncation as a bug — it is the documented "whole numbers only" rule.
+- Switching to `useTailwind=false` (Shadow) for an error-state or letter-blocked field — Shadow drops `state` and lacks the numeric keystroke filter (G5/G5b). Stay on the default Tailwind path.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-input-number.component.ts` + `[VAULT]` API/USAGE/GAPS dossiers. Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]` standard-library knowledge. Spinner visual / currency-symbol behaviour 🟡 CODE-DERIVED from props + dossier (Stencil `.tsx` render not re-read in this pass).
+🟢 RE-VERIFIED 2026-06-03 (B01) — wrapper + BOTH Stencil `.tsx` re-read. Spinner visual / currency-symbol behaviour CODE-CONFIRMED (native `<button>` spinners; Intl-formatted display on blur). Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]`. Shadow-path parity caution added.

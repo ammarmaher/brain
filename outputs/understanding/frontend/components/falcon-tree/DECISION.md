@@ -38,20 +38,16 @@
 ## Dynamic capability assessment
 
 ### 1. What is static today?
-- Row structure (rails + chevron + multi-check + initials chip + icon + label + badge) — fixed.
-- Initials chip always present.
-- No virtualization.
-- No lazy children loader.
-- No DnD.
-- No row template / action slot.
-- Search is case-insensitive substring only (no custom predicate).
+- `[CODE]` Row structure (rails + chevron + multi-check + initials chip + icon + label + badge) — fixed.
+- `[CODE]` Initials chip ALWAYS present; renders alongside `node.icon` when both set (G8).
+- `[CODE]` Chevron `aria-label` (`Collapse`/`Expand`) + the `"No matches"` empty text are hardcoded English (no i18n).
+- No virtualization, no lazy children loader, no DnD, no row template / action slot.
+- `[CODE]` Search is case-insensitive single-field substring only — CONFIRMED (no custom predicate).
 
 ### 2. What is already dynamic through inputs/outputs?
-- `nodes[]`, `selectedValue` (CVA), `selectedValues`, `expandedIds`.
-- `density`, `selectionMode`, `disabled`, `searchQuery`, `defaultExpandLevel`.
-- `helperText`, `errorMessage`, `groupLabel`, `ariaLabel`.
-- 5 Outputs: `valueChange`, `valuesChange`, `expandChange`, `hoverChange`, `focusChange`.
-- 5 programmatic API methods (delegating to Stencil): `selectAndScrollTo`, `expandTo`, `expandAll`, `collapseAll`, `focusNode`.
+- `[CODE]` **15 wrapper `@Input`s** (incl. the `selectedValue` setter): `nodes`, `selectedValue` (CVA, single mode), `selectedValues`, `expandedIds`, `density`, `selectionMode`, `disabled`, `helperText`, `errorMessage`, `groupLabel`, `ariaLabel`, `searchQuery`, `defaultExpandLevel`, `useTailwind`, `rootClass`.
+- `[CODE]` **5 `@Output`s:** `valueChange`, `valuesChange`, `expandChange`, `hoverChange`, `focusChange` (each bridged from a `falcon-*` Stencil event). `falcon-blur` is bound to CVA `onTouched` but NOT re-emitted as a `(blur)` Output.
+- `[CODE]` **5 programmatic methods** delegating to Stencil `@Method`s: `selectAndScrollTo`, `expandTo`, `expandAll`, `collapseAll`, `focusNode`.
 
 ### 3. What is already dynamic through slots / ng-template?
 - _None observed in active source._
@@ -94,9 +90,12 @@
 6. Migrate consumers from `<falcon-tree-panel>` to `<falcon-angular-tree>` + new action slot directly.
 
 ### 10. What would be risky to change because other pages depend on it?
-- Removing CVA semantics.
-- Changing `FalconTreeNode` shape.
-- Changing the 7 locked-spec visual points — those are non-negotiable contracts with the React reference.
-- Renaming the Stencil event names.
-- Changing default density / selectionMode defaults.
-- Removing the silent file-size escape hatch (irrelevant for tree but applicable to siblings).
+- Removing single-mode CVA semantics.
+- Changing the `FalconTreeNode` shape (the wrapper barrel already re-aliases it to `FalconTreeRowNode` to avoid the tree-table clash — renaming would break that alias).
+- Changing the 7 locked-spec visual points — non-negotiable contracts with the React V0.2 reference.
+- Renaming the `falcon-*` Stencil event names (the wrapper template binds them by exact string).
+- Changing the default `density` / `selectionMode` / `useTailwind` defaults.
+- NOTE: with **0 current render consumers**, the immediate blast radius of an API change is small — but the convergence target (G1: fold `<falcon-tree-panel>` onto this component) means future-proofing the API now is worthwhile.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B09). Recommendation unchanged (NEEDS-UPGRADE for org-hierarchy parity; READY for plain selection trees). Counts confirmed: 15 wrapper `@Input`s, 5 `@Output`s, 5 delegated `@Method`s. Consumer count 0 (render). G2/G3 per-row template/action slot remain the keystone gap behind the `<falcon-tree-panel>` parallel implementation.

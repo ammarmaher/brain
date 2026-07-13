@@ -38,4 +38,4 @@
 - `[CODE]` `emptyMessageKey` does NOT translate — the component never calls an i18n service; the consumer pre-translates via `emptyMessage`. An "empty list" message that shows a raw key is a wiring mistake, not a missing translation.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 existing dossier files (API/USAGE/TOKENS are themselves source-grounded) + `falcon-data-table.component.ts` header (full read of lines 1-120) + `[MEMORY]` org-hierarchy entries. The users list, Comm Channels and Apps tabs are confirmed-working features per `[MEMORY]` Wave 17 — ✅ for those flows. Shadow rows are ✅ shipped (Wave 20/21).
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08) from the dossier files (themselves source-grounded) + `falcon-data-table.component.ts` (1612 ln) + `[MEMORY]` org-hierarchy entries. The users list, Comm Channels and Apps tabs are confirmed-working features per `[MEMORY]` Wave 17 — ✅ for those flows. Shadow rows are ✅ shipped (Wave 20/21) with a production consumer (admin/mgmt applications-table, Wave 22C/D). Business rules re-confirmed; the `availableActions[]`-FSM + `rowActions` predicate gating is unchanged.

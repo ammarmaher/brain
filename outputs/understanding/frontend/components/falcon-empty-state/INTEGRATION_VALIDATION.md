@@ -40,4 +40,4 @@ The empty-state runs **no validation** — no form control, no CVA (`[BRAIN-OUT]
 - `[CODE]` falcon-empty-state.tsx:41 — `iconName` resolves against the Falcon icon font; an unknown name renders an empty glyph (see `falcon-icon` dossier).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-empty-state.tsx + falcon-empty-state.component.ts. No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper. The `ariaLabel`-wrapper-gap (FES-05) and FES-01 table-composition gap ✅ VERIFIED against source + `[BRAIN-OUT]`.
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh) from `[CODE]` falcon-empty-state.tsx + falcon-empty-state.component.ts. No backend wiring, no V-rules, no PES — re-confirmed by the absence of `inject()`/HTTP/CVA in the wrapper (the wrapper injects nothing). The `ariaLabel`-wrapper-gap (FES-05) and the table-composition split (the data-table auto-mounts `<falcon-empty-data>`, NOT this — so FES-01's "auto-compose this in the table" is effectively superseded by empty-data) ✅ VERIFIED against source.

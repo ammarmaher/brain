@@ -95,3 +95,11 @@ Density is via `size` prop (`sm` / `md` / `lg`). Token map:
 ```html
 <falcon-angular-tabs class="compact-tabs" [tabs]="tabs" ... />
 ```
+
+## Static style risks (B13 re-verify)
+- `[CODE]` `falcon-tabs.css` (Shadow) is token-only; the only non-token inline values are the JS-set indicator `style.transform`/`width` (the documented escape hatch — geometry CSS vars can't carry `offsetLeft`).
+- `[CODE]` `tabs-tailwind-classes.ts` (consumed by `-tw`) emits only `*-[var(--falcon-tabs-*)]` arbitrary-value utilities + structural utilities; no hardcoded palette. The `-tw` twin's only inline value is the same indicator `style` escape hatch.
+- `[CODE]` The wrapper `.component.css` is host-width only (`:host{display:block;width:100%}` + a `falcon-tabs`/`falcon-tabs-tw` width rule). No paint risk.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13) — token file recount 243 ln / 14 categories, `:where()` scope confirmed (gate-12 compliant), Shadow CSS + `-tw` helper verified token-only (the indicator `style.transform`/`width` is the sole documented escape hatch on both paths).

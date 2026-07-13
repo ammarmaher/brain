@@ -3,7 +3,11 @@
 > Cross-cutting layer. Given an external design / screenshot / React or Angular snippet, identify `<falcon-angular-multi-select>` as the component to use, and how to compose it to parity.
 
 ## Visual fingerprint
-`[BRAIN-OUT]` `OVERVIEW.md` + `[CODE] falcon-multi-select.tsx` — A labeled, bordered field whose value area shows **multiple removable chips** (one per selected value), each with an × to remove it. When more values are selected than `maxChipsVisible` (default 3), a **"+N more" overflow pill** replaces the surplus. A trailing **chevron** opens a floating panel. The panel can carry: a **search input** at the top (`searchable`), a tri-state **"Select all"** row (`showSelectAll`), and a list of options each showing a **checkbox/checkmark** + `label`. A **clear-all (×)** affordance can sit in the trigger (`clearable`). The decisive tell vs a dropdown: the trigger shows **chips**, not a single value.
+`[BRAIN-OUT]` `OVERVIEW.md` + `[CODE]` falcon-multi-select.tsx — Two faces:
+
+**Selection face (`displayMode="default"`):** a labeled, bordered field whose value area shows **multiple removable chips** (one per selected value), each with an × to remove it. When more values are selected than `maxChipsVisible` (default 3), a **"+N more" overflow pill** replaces the surplus. A trailing **chevron** opens a floating panel. The panel can carry: a **search input** at the top (`searchable`), a tri-state **"Select all"** row (`showSelectAll`), and a list of options each showing a **checkmark** + `label`. A **clear-all (×)** affordance can sit in the trigger (`clearable`). The decisive tell vs a dropdown: the trigger shows **chips**, not a single value.
+
+**Display face (`displayMode="chip-list"` — the live look):** a borderless pill-style strip showing one (or a few) chips followed by a small teal **"+N" badge button**. No chevron, no trigger border. Clicking "+N" opens a small **dialog** listing every name with a teal circular check icon (an audience/tag viewer, e.g. a Templates "Shared with" cell) — `[CODE]` html:12-97. The tell: a compact pill strip with a teal "+N" badge and no field chrome.
 
 ## Cross-library equivalents
 | Library | Their component | Parity notes |
@@ -19,7 +23,8 @@
 The four pickers overlap — pick by **"one value or many?"** then **"closed list, typed, or checkboxes?"**
 | If the design shows… | Use | Not |
 |---|---|---|
-| **multiple** values as removable chips in a field, opened by a chevron | `<falcon-angular-multi-select>` | dropdown / select |
+| **multiple** values as removable chips in a field, opened by a chevron | `<falcon-angular-multi-select>` (default mode) | dropdown / select |
+| a compact **chip strip + "+N" badge** that opens a names dialog (display-only) | `<falcon-angular-multi-select displayMode="chip-list">` | a hand-rolled chip strip |
 | a **"+N more"** pill or a tri-state "Select all" row in a panel | `<falcon-angular-multi-select>` | — |
 | exactly **one** value picked from a closed list | `<falcon-angular-dropdown>` / `<falcon-angular-select>` | multi-select |
 | a typed input that suggests AND can create a new value | `<falcon-angular-combobox>` | multi-select |
@@ -47,9 +52,10 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Using multi-select for a single value — that is `<falcon-angular-dropdown>`; an array CVA for one value is wrong shape.
 - Reading selection count from visible chips — `maxChipsVisible` hides surplus behind "+N more"; the committed array is the truth.
 - Expecting `maxSelected` to cap selections — no such input (`G8`); cap via parent validators.
-- Binding `options` as an attribute — must be the `[options]` property or the Stencil initializer clobbers it (`falcon-multi-select.component.ts:140-160`).
+- Binding `options` as an attribute — must be the `[options]` property or the Stencil initializer clobbers it (`falcon-multi-select.component.ts:98-103,168-188`).
+- Relying on `slot="options"` in the default (Tailwind) render path — it is Shadow-only (`G11`).
 - Using it for a short always-visible permission list — `<falcon-angular-checkbox-group>` is the better recognition match there.
 - Native `<select multiple>` or PrimeNG `<p-multiSelect>` in app code — banned (`feedback_falcon_ui_library_only_no_native`).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE] src/angular-wrapper/components/falcon-multi-select/falcon-multi-select.component.ts` + `[CODE] src/components/falcon-multi-select/falcon-multi-select.{tsx,types.ts}` + `[BRAIN-OUT]` `OVERVIEW.md`. Cross-library map [INFERRED] from rendered structure. Used in 3 production consumers (filter panels + permission selectors) — fingerprint code-derived + feature-grounded.
+🟢 code-verified from `falcon-multi-select.component.{ts,html}` + `falcon-multi-select.{tsx,types.ts}` + `falcon-multi-select-tw.tsx` (read 2026-06-03). Cross-library map 🟡 `[INFERRED]` from rendered structure. Live use = 4 chip-list consumers in admin/mgmt Templates (display-only "Shared with") — selection-picker face is showcase-only; fingerprint code-verified + feature-grounded.

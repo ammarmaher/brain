@@ -44,4 +44,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Expecting Apply-on-Enter — there is no keydown handler; Apply must be clicked.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-filter-panel-tw.tsx + the 6 UI-layer dossiers. Cross-library map `[INFERRED]` from standard library APIs. The "hand-compose Falcon atoms for production" recommendation ✅ VERIFIED against `DECISION.md`.
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh) from `[CODE]` falcon-filter-panel-tw.tsx + falcon-filter-panel.tsx. Visual fingerprint (horizontal strip, 4 field types, trailing `ms-auto` Clear/Apply pair), the four built-in field types, and the no-custom-field-projection (FFP-02) all RE-VERIFIED. Cross-library map `[INFERRED]`. "Hand-compose Falcon atoms for production" ✅ matches `DECISION.md`.

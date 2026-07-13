@@ -57,11 +57,9 @@
 - Items are flat list (no grouping).
 
 ### 2. What is already dynamic through inputs/outputs?
-- `items` (array, property-bound).
-- `open`, `popup`, `appendTo`, `triggerLabel`, `disabled`.
-- `anchorEl` (HTMLElement, property-pushed).
-- Outputs: `falconMenuItemSelect`, `falconMenuOpen`, `falconMenuClose`.
-- Methods: `showAt()`, `hide()`, `openMenu()`, `closeMenu()`, `toggle()`.
+- `[CODE]` **9 wrapper `@Input`s** — `items` (property-pushed), `open`, `popup`, `appendTo`, `triggerLabel`, `disabled`, `anchorEl` (HTMLElement, property-pushed), `useTailwind`, `rootClass`.
+- `[CODE]` **3 `@Output`s** — `falconMenuItemSelect`, `falconMenuOpen`, `falconMenuClose` (each carries a `reason` on open/close).
+- `[CODE]` **5 wrapper methods** (all proxy a real Stencil `@Method`) — `showAt(el, event?)`, `hide()`, `openMenu()`, `closeMenu()`, `toggle()`. There is NO `setFocus()` (the prior dossier's claim was fabricated).
 
 ### 3. What is already dynamic through slots / ng-template?
 - `slot="trigger"` — custom trigger content.
@@ -97,11 +95,15 @@ All items 6.
 - Per-item `[badge]` / `[tooltip]` / `[shortcut]`.
 
 ### 9. What is the safest upgrade path?
-1. `appendTo="body"` first (fixes the most common shipping bug).
+1. `appendTo="body"` DOM-portal — now LOWER priority: the Wave-6 Top-Layer popover promotion already escapes `overflow:hidden` in supporting browsers. A true DOM-portal fallback only matters for non-popover browsers.
 2. Submenus via `items[].items` recursive (additive — current consumers unaffected).
 3. Per-item annotations (badge, tooltip, shortcut) — additive.
 4. Header/footer slots — additive.
 5. Custom item template directive — additive.
+6. Factor the duplicated navigability helpers in `falcon-menu.tsx` / `falcon-menu-tw.tsx` into a shared `falcon-menu.utils.ts` (parity-safety, like accordion/tabs) — additive refactor.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13). Recommendation unchanged (READY with constraints). Counts: 9 wrapper `@Input`s, 3 `@Output`s, 5 wrapper methods (NO `setFocus`); Top-Layer promotion documented; `appendTo="body"` re-scoped (Top-Layer mitigates clipping). `-tw` parity verified (no `part=`; helper-vs-CSS; off-screen seed vs `.anchor-fixed`).
 
 ### 10. What would be risky to change because other pages depend on it?
 - **The `FalconMenuItem.command` callback contract** — pages depend on this.

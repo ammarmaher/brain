@@ -1,146 +1,109 @@
 # falcon-notification — GAPS AND UPGRADES
 
-## Missing capabilities
+> B16 AUDIT findings for `falcon-notification` in prose. We fix NOTHING this pass. Row-level record in `FINDINGS/B16.md`.
 
-### P1 — No icon component composition
-Like popup, notification renders inline `<svg>` for the 4 intent icons. Should use `<falcon-angular-icon>`.
+## Headline — the canonical live surface; stack is superseded
 
-**Priority: P1**
+`[CODE]` This card IS the platform's live message renderer (via `<falcon-toast-adapter>` ← orchestrator). Two structural facts to flag (not bugs, but worth a Wave decision):
+1. **`<falcon-angular-notification-stack>` is superseded + inert** — `app.ts` mounts `<falcon-toast-adapter>` instead, AND `FalconNotificationService.active()` always returns `[]` (Phase-5 shim). The stack class + its `position`/appearance inputs + the position helper are kept (the helper is reused by the adapter), but the stack COMPONENT renders nothing if mounted. **Wave flag: the stack component is a SUPERSEDED-CANDIDATE** (the helper stays; the component could be deleted once no consumer mounts it). `risk-class = safe-local` (doc/decision).
+2. The card is reached via the orchestrator/facades, not direct embed — correct by design.
 
-### P1 — No hover-pause on auto-dismiss
-Unlike `<falcon-angular-toast>`, the notification's auto-dismiss timer doesn't pause on hover. Users who hover to read longer messages get them dismissed mid-read.
+## Missing capabilities (active source verified)
 
-**Priority: P1** — UX expectation.
+### G1 — No hover-pause on auto-dismiss (P1)
 
-### P1 — No body slot / rich content
-Notification supports `title` (required) and `subtitle` (string). No way to project rich content (formatted text, links, inline icons).
+`[CODE]` Unlike `<falcon-toast>` (which pauses on hover/focus), the card's `effect()`-driven timer (`[CODE]` falcon-notification.component.ts:282-294) does NOT pause on hover. A user hovering to read a long message gets it dismissed mid-read. **Proposed:** pointer-enter/leave handlers that pause/resume the `setTimeout` (mirror the toast's `remainingMs` logic). `risk-class = safe-local`.
 
-**Proposed:**
-- `<ng-content>` for rich body (replacing `subtitle` when projected).
+### G2 — `warning` intent renders the `info` icon, not `alert` (P2)
 
-**Priority: P1**
+`[CODE]` falcon-notification.component.ts:51 — `INTENTS.warning.icon = 'info'`; the `@case ('alert')` triangle exists in the SVG `@switch` (`[CODE]` lines 107-111) but no intent selects it. A consumer expecting ⚠ for `warning` gets an info-circle. **Proposed:** set `warning.icon = 'alert'`. `risk-class = safe-local` (visual change; behind an `iconName` override or a minor version to be safe).
 
-### P1 — Stack position is fixed
-Stack mounts at `top-[4.75rem] right-6` — hardcoded in the inline template. Other positions (bottom-right, top-center, etc.) require a fork.
+### G3 — No body slot / rich content (P1)
 
-**Proposed:** `[position]="FalconToastHostPosition"` on the stack — parity with toast-host.
+`[CODE]` `title` (required) + `subtitle` (string) only; no `<ng-content>`, no way to project formatted text / links / inline icons. **Proposed:** an optional `<ng-content>` that replaces `subtitle` when projected. `risk-class = safe-local` (additive).
 
-**Priority: P1**
+### G4 — `aria-live` always `polite` (P2 — a11y)
 
-### P2 — No action button
-Toast has `actionLabel` + `actionHref`. Notification has no action affordance — users can only dismiss.
+`[CODE]` falcon-notification.component.ts:74 — `aria-live="polite"` regardless of intent. The toast escalates to `assertive` for warning/error. For an `error` card a screen-reader user may not be interrupted. **Proposed:** an `aria-live` computed (`assertive` for error/warning, else `polite`). `risk-class = HIGH-RISK-QUEUE` (a11y semantics).
 
-**Proposed:** `actionLabel` + `actionHref` + `actionClick` output.
+### G5 — No action button (P2)
 
-**Priority: P2**
+`[CODE]` The toast has `actionLabel`/`actionHref`; the card has only the × dismiss. (The ORCHESTRATOR's `modal` channel carries `actionLabel`/`actionCallback`, but the toast card does not.) **Proposed:** `actionLabel` + `actionHref`/`actionCallback` + `(actionClick)` output on the card, threaded through the orchestrator + adapter. `risk-class = safe-local` (additive).
 
-### P2 — No `warning` icon (uses `info` icon)
-Looking at the source:
-```ts
-warning: { icon: 'info', ... }   // line 49
-```
-The warning intent uses the SAME icon as info, just with amber colors. Should use the `'alert'` icon (already declared in the IconKey union).
+### G6 — No icon-component composition (P2)
 
-**Priority: P2** — visual ambiguity.
+`[CODE]` 4 intent icons are hardcoded inline `<svg>` (`[CODE]` falcon-notification.component.ts:98-116). Not composed with `<falcon-angular-icon>`. `risk-class = safe-local`.
 
-### P2 — No token CSS file
-Like popup, no `libs/falcon-ui-tokens/src/components/notification.tokens.css`. All visual values are inline Tailwind utilities.
+### G7 — No `notification.tokens.css` (P2)
 
-**Priority: P2** — per-instance customisation impossible.
+`[CODE]` No dedicated token file (unlike toast/tooltip) — appearance is palette-Tailwind + inline `[style.*]` + config defaults. Per-instance non-input customization is impossible. **Proposed:** introduce `notification.tokens.css` (gate-12 scoped) and refactor the inline `[style.*]` to consume it. `risk-class = safe-local`.
 
-### P2 — No `aria-live="assertive"` for error / warning
-Always `polite`. Toast intelligently swaps to `assertive` for warning/error. Notification doesn't.
+### G8 — Dismiss `aria-label` not i18n-bridged; grouping; swipe-to-dismiss (P3)
 
-**Priority: P2** — a11y.
+`[CODE]` `aria-label="Dismiss"` hardcoded English (`[CODE]` line 130). No grouping/collapsing of multiple (moot for the live single-active-toast path, relevant only if the stack is revived). No swipe-to-dismiss on mobile. `risk-class = safe-local`.
 
-### P3 — No swipe-to-dismiss on mobile
-Standard mobile UX.
+## Corrected stale gaps (prior dossier)
 
-### P3 — No grouping / collapsing of multiple simultaneous notifications
-For 10+ simultaneous, viewport fills up.
-
-## Missing ng-template / template slots
-- No body / footer slots.
-- No icon override slot.
-
-## Missing flags / options / states
-- Hover-pause.
-- Stack position.
-- Action button.
-- Action callback.
-- Aria-live switch per severity.
-- Grouping.
-
-## Missing accessibility features
-- See P2 (no aria-live switch).
-- Dismiss button is the only focusable element — Tab through notification reaches only the × button.
+- ❌ ~~"Stack position is fixed/hardcoded (P1)"~~ — **STALE.** The stack HAS a `position` input (`top-right`/`top-left`/`bottom-right`/`bottom-left`, Wave 4.2) and the helper `falconNotificationStackContainerClasses` maps it (`[CODE]` falcon-notification-stack.component.ts:41-58/167). Removed.
+- ❌ ~~"Not wired into the HTTP error pipeline (the toast path is)"~~ — **STALE.** The card IS the HTTP-pipeline renderer (via `FalconHttpUiDispatcherService` → orchestrator → toast-adapter → card). Removed.
+- ❌ ~~"dismissDuration default 12"~~ — **STALE.** The default is config-owned (`FalconConfigurationService.notification.dismissDurationSec`); the input defaults to `undefined`. Removed.
 
 ## Missing tests
-- No `.spec.ts`.
-- No e2e for the auto-dismiss + manual dismiss flows.
+
+`[CODE]` **No `.spec.ts` for the card OR the stack OR the service in `falcon-ui-core`** (verified 2026-06-03). The auto-dismiss `effect()`, the resolved-getter fallback chain, the manual-vs-auto dismiss, and the intent→icon/color map are untested at the card level. (The orchestrator + dispatcher + the stack-position helper ARE tested in `apps/host-shell/tests/{falcon-message-orchestrator,falcon-http-ui-dispatcher,falcon-notification-stack-position}.spec.ts` — but those don't render the card.) GAP. `risk-class = safe-local`.
+
+## Missing cross-framework parity
+
+`[CODE]` **Angular-only** — there is intentionally no React/Vue notification (it is an Angular-wrapper-layer component, not a Stencil core component). Not a parity gap in the cross-framework sense; just note it cannot be reused outside Angular.
 
 ## Missing Tailwind / token parity
-N/A — Tailwind-direct.
+
+N/A — Tailwind-direct, single render path (no Shadow/`-tw` twin to diverge). The only "parity" concern is the missing token file (G7).
 
 ## Performance risks
-- Backdrop-blur is heavy.
-- Each notification renders independently via `@for` in the stack — fine for typical counts.
-- Auto-dismiss timer is per-notification — clean.
+
+- `[CODE]` `glossy=true` (default) uses `backdrop-blur-xl` + `backdrop-saturate-150` — GPU-heavy; low-end devices show without blur.
+- The countdown keyframe + the slide-in keyframe are cheap.
+- The live path renders ONE card at a time (orchestrator single-active) — no multi-card cost.
 
 ## Visual / interaction risks
-- The countdown bar is subtle (1px height by default) — easy to miss as a "time left" cue.
-- `glossy=true` (default) requires capable GPU for backdrop-blur. Low-end devices show without blur.
-- The stack is `position: fixed` at top-right with hardcoded offset — header height changes won't reflow.
 
-## Reusable upgrades needed
-1. **Hover-pause auto-dismiss** (P1).
-2. **`<falcon-angular-icon>` composition** (P1).
-3. **Body slot for rich content** (P1).
-4. **Stack position config** (P1).
-5. **Action button** (P2).
-6. **`alert` icon for warning intent** (P2).
-7. **`notification.tokens.css`** (P2).
-8. **aria-live per severity** (P2).
+- `[CODE]` The countdown bar is 1px by default (`countdownHeight`) — easy to miss as a time cue.
+- No hover-pause (G1) — long messages dismiss mid-read.
+- The accent bar is physically LEFT — may not mirror under RTL (TOKENS.md).
 
-## Priority: page-level vs shared
-All shared.
+## Recommended upgrade priority
 
-## Recommended upgrade API (proposed)
+| ID | Title | Priority | risk-class |
+|---|---|---|---|
+| (headline) | Decide fate of the superseded stack component | — | safe-local |
+| G1 | Hover-pause auto-dismiss | P1 | safe-local |
+| G3 | Body slot for rich content | P1 | safe-local |
+| G4 | `aria-live` per severity | P2 | HIGH-RISK-QUEUE (a11y) |
+| G5 | Action button on the card | P2 | safe-local |
+| G2 | `alert` icon for warning | P2 | safe-local |
+| G6 | `<falcon-angular-icon>` composition | P2 | safe-local |
+| G7 | `notification.tokens.css` | P2 | safe-local |
+| G8 | i18n dismiss label / grouping / swipe | P3 | safe-local |
 
-```ts
-@Component({ selector: 'falcon-angular-notification', ... })
-export class FalconAngularNotificationComponent implements OnDestroy {
-  readonly open = input<boolean>(true);
-  readonly intent = input<FalconNotificationIntent>('info');
-  readonly title = input.required<string>();
-  readonly subtitle = input<string>('');
-  
-  // NEW
-  readonly hoverPause = input<boolean>(true);
-  readonly actionLabel = input<string>('');
-  readonly actionHref = input<string>('');
-  readonly iconName = input<string>('');           // new — overrides intent default icon
-  
-  // ...existing visual props
-  
-  readonly dismiss = output<void>();
-  readonly actionClick = output<void>();           // new
-}
+## Fix-shared-vs-per-page
 
-// Stack additions
-@Component({ selector: 'falcon-angular-notification-stack', ... })
-export class FalconAngularNotificationStackComponent {
-  readonly position = input<FalconToastHostPosition>('top-right');  // new
-  // ...
-}
-
-// Service additions
-push(args: FalconNotificationPushArgs & {
-  actionLabel?: string;
-  actionHref?: string;
-  onAction?: () => void;
-}): number;
-```
+All gaps belong in the shared component / orchestrator. No per-page work.
 
 ## Future-proof recommendation
-Notification is the preferred passive-message component going forward — invest in the Tier-1 upgrades (hover-pause, body slot, action button) to make it a full replacement for toast in business-status use cases. Once feature parity is reached, the toast component can fade entirely to its PrimeNG-substrate role.
+
+The card is the canonical surface — invest the Tier-1 items (hover-pause, body slot) and the a11y `aria-live` switch to round it out. Decide the superseded `<falcon-angular-notification-stack>` component's fate: keep the position helper (the adapter uses it), delete or `@deprecated`-annotate the stack COMPONENT (it renders nothing). Introduce a token file (G7) for parity with toast/tooltip.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B16)
+
+**Consumer count: ~45 files** (`[CODE]` grep — the messaging family via orchestrator + facades + dispatcher + showcase + barrel).
+
+Corrected/added vs prior dossier:
+- Consumer count 4 → **~45** (the prior sweep matched only `<falcon-angular-notification-stack>`; the real adoption is via the service facades + orchestrator).
+- REMOVED three stale gaps (stack-position-fixed, not-HTTP-wired, 12s-default) — all corrected against live source.
+- ADDED the headline (canonical live surface; stack superseded + inert).
+- a11y `aria-live` (G4) tagged HIGH-RISK-QUEUE; everything else safe-local.
+- Documented the orchestrator as the routing brain + the 400→toast pipeline (INTEGRATION_VALIDATION).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B16) against all source layers + the orchestrator/adapter/dispatcher. Three stale gaps removed; eight live gaps re-derived. One HIGH-RISK-QUEUE item (G4); rest safe-local. No deletion executed — the stack component is a SUPERSEDED-CANDIDATE flagged for human triage.

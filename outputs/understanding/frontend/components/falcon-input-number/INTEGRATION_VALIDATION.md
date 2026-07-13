@@ -24,7 +24,7 @@
 | Integer enforcement | `integer=true` fields | every keystroke / paste | fractional part silently truncated via `Math.trunc` — no error |
 | Numeric range (real) | quota, price | submit | `Validators.min` / `Validators.max` on the Reactive `FormControl<number\|null>` — the authoritative guard |
 
-> `[CODE]` correction to `[VAULT]` GAP G5: the wrapper **does** declare `@Input() state: FalconInputNumberState` (falcon-input-number.component.ts:80). The error state can be driven by `state` + `errorMessage` together, same contract as `<falcon-angular-input>`.
+> `[CODE]` correction to `[VAULT]` GAP G5 (re-scoped 2026-06-03): the wrapper **does** declare `@Input() state: FalconInputNumberState` (ts:80), BUT it is only honored in the **Tailwind** path. The `-tw` twin forwards `state` to its inner `<falcon-input-tw>` (tw.tsx:46/306); the **Shadow** `<falcon-input-number>` has no `state` prop and drops it. So `state`+`errorMessage` paint the error ring only when `useTailwind=true` (the default). See `GAPS_AND_UPGRADES.md` G5 + the NEW G5b (Shadow lacks the numeric keystroke filter).
 
 ## PES keys gating this component
 | PES key | Action | Effect when denied |
@@ -58,4 +58,4 @@ The component has no PES key of its own — it inherits the gate of the **field*
 - `[CODE]` **Never bind both `[value]` and `[(ngModel)]`** — same race trap as `<falcon-angular-input>`.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-input-number.component.ts`. `state` input presence ✅ VERIFIED in source (corrects `[VAULT]` GAP G5). Backend wiring + PES gates 🟡 cross-referenced from `[MEMORY]` Wave 14; endpoint DTO names not re-read from backend source. Stencil `Intl` internals 🟡 CODE-DERIVED from the wrapper's header comment, Stencil `.tsx` not re-read in this pass.
+🟢 RE-VERIFIED 2026-06-03 (B01) — wrapper (160 ln) + BOTH Stencil `.tsx` (216 / 359 ln) re-read this pass. `state`-input presence confirmed AND the Shadow-drop + Shadow-numeric-filter-absence parity gaps newly documented (G5/G5b). `coerce()`/`componentOnReady` push/tag-switcher all re-confirmed in source. Backend wiring + PES gates 🟡 cross-referenced from `[MEMORY]` Wave 14; endpoint DTO names not re-read from backend source.

@@ -49,3 +49,6 @@ Customization order (per `feedback_falcon_custom_library_mandatory`): inputs →
 - Wrapping the tabs in a `flex-wrap` container when using `falconTabActions` — the action-lift assumes a single-row tablist.
 - `<p-tabView>` / `<p-tabPanel>` anywhere — PrimeNG uninstalled (`feedback_falcon_ui_library_only_no_native`).
 - Embedding a "(3)" count in the `label` string — works today but a per-tab badge slot is the intended (GAP) path; do not over-invest in label-string counts.
+
+## Verification
+🟡 CODE-DERIVED 2026-06-03 (B13) from `[CODE]` `falcon-tabs.tsx` (re-read) + `tabs.tokens.css` + `falcon-tabs.component.ts`. Visual fingerprint, both modes, the sliding-underline escape hatch, and the `falconTabActions` vs outer-flex-sibling distinction confirmed against live source. Cross-library mapping `[INFERRED]`; PrimeNG `<p-tabView>` replacement is `[BRAIN-OUT]`-confirmed (Wave PR-8).

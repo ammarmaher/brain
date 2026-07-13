@@ -1,104 +1,98 @@
 # falcon-dialog — GAPS AND UPGRADES
 
-## Missing capabilities
+> Gap IDs stabilised 2026-06-03 (B14). All findings this pass are DOC/audit only — nothing fixed.
 
-### P0 — `@deprecated` is documented in project memory but NOT in the source
-The registry + memory say "use `falcon-angular-popup` instead". The Stencil source has no `@deprecated` JSDoc, no `console.warn`, no compile-time signal. Easy to use accidentally for a flow that `popup` handles.
+## Missing capabilities (active source verified)
 
-**Proposed:** Add JSDoc `@deprecated Use <falcon-angular-popup> for action-required flows or <falcon-angular-confirm-dialog> for OK/Cancel prompts. This component is the underlying primitive only.` to both wrapper and Stencil source. Optionally add a one-time `console.warn` when rendered outside the known composition contexts.
+### G-DEP — `@deprecated` is governance-only, NOT in the source (P0 guard-rail)
+`[CODE]` The registry + memory say "use `falcon-angular-popup`". The Stencil source (`falcon-dialog.tsx`) and the wrapper (`falcon-dialog.component.ts`) have **no JSDoc `@deprecated`, no `console.warn`, no compile-time signal**. Easy to use accidentally for a flow `popup` handles.
 
-**Priority: P0** for guard rails.
+**Proposed:** Add JSDoc `@deprecated Use <falcon-angular-popup> for action-required flows or <falcon-angular-confirm-dialog> for OK/Cancel prompts. This is the underlying primitive only.` to wrapper + both Stencil sources. **risk-class: safe-local** (additive annotation).
 
-### P1 — `position="side-right"` overlaps with drawer concept
-The dialog has a `side-right` position that visually resembles a right-anchored drawer. Two components, one job — confusing. Remove `side-right` from the dialog's `FalconDialogPosition` union, point consumers to `falcon-angular-drawer`.
+### G-ERR — `errorMessage` is a dead prop (P1)
+`[CODE]` `falcon-dialog.tsx:52` + `falcon-dialog-tw.tsx:58` accept `errorMessage` and the wrapper exposes it (ts:76) but **no render anchor exists** in either Stencil core. A builder binding `[errorMessage]` gets nothing. Either remove it (breaking — gate behind major) or wire a body-banner render. **risk-class: safe-local** (removal is API-narrowing but no consumer depends on a no-op).
 
-**Priority: P1** — design system cleanup.
+### G-SIDE — `position="side-right"` overlaps the drawer concept (P1)
+`[CODE]` `falcon-dialog.tsx:50` + tokens `side-right-{width,height,radius}` — a right-anchored "drawer-shaped dialog" that lacks drawer edge defaults. Remove `side-right` from `FalconDialogPosition`; point consumers to `<falcon-angular-drawer position="right">`. **risk-class: HIGH-RISK-QUEUE** (public type-union change — could break a consumer binding `[position]="'side-right'"`).
 
-### P1 — `falconConfirm` / `falconCancel` events without UI
-These events exist on the Stencil source but no built-in button emits them. They're dead-weight in the API surface. Either:
-- Remove them (breaking change — gate behind major version).
-- Document explicitly that consumers project their own buttons + call `this.falconConfirm.emit()` manually (no API helper).
+### G-CONFIRM — `falconConfirm` / `falconCancel` events without a UI (P1)
+`[CODE]` Both Stencil cores declare `falcon-confirm`/`falcon-cancel` events and the wrapper re-emits them (ts:102-110), but **no built-in button emits them** — dead-weight on the API surface. Either remove (breaking) or document that consumers must project their own buttons + emit manually. **risk-class: safe-local** (doc) / HIGH-RISK if removed.
 
-**Priority: P1** — clarity.
+### G-A11Y-LABEL — no `closeAriaLabel` wrapper passthrough (P2 a11y/i18n)
+`[CODE]` `closeAriaLabel` exists on BOTH Stencil tags (default `'Close'`) but the wrapper does not bridge it → the × label is stuck English. Add `@Input() closeAriaLabel = 'Close'` + forward via `[attr.close-aria-label]`. **risk-class: HIGH-RISK-QUEUE** (a11y semantics) — though mechanically additive.
 
-### P1 — No `closeAriaLabel` wrapper passthrough
-Same gap as drawer.
+### G-METHOD — wrapper does not proxy `show()` / `hide()` (P2)
+`[CODE]` Both Stencil tags expose `@Method() show()` / `hide()`, but the wrapper has no Angular-side proxies. Consumers drive open/close via `[open]`/`[(open)]` (works) — but if a method proxy is wanted, reach into `ViewChild.nativeElement`. **risk-class: safe-local** (additive).
 
-### P2 — `dismissible` overrides both `closeOnBackdrop` and `closeOnEsc`
-The 3 props are confusing in combination. `dismissible=false` overrides the other two; `dismissible=true` lets them act independently. Simplify to a single `[dismissOptions]` object or pick one master flag.
+### G-DISMISS-API — 3 dismissal props are confusing in combination (P2)
+`dismissible` overrides both `closeOnBackdrop` + `closeOnEsc`. Consider a single `[dismissOptions]` object or one master flag. **risk-class: safe-local** (doc) / HIGH-RISK if the prop shape changes.
 
-**Priority: P2**
+### G-HEADER-ACTIONS — no header-actions slot (P2)
+No place for action buttons in the header strip beyond the close ×. Same as drawer. **risk-class: safe-local** (additive slot).
 
-### P2 — No `headerActions` slot
-Same as drawer — no place for action buttons in the header strip beyond the close ×.
+### G-FULLSCREEN — `full` size but no `[fullScreenAt]` breakpoint (P3)
+For responsive (md desktop / full mobile) consumers wrap their own breakpoint + dynamic `[size]`. **risk-class: safe-local**.
 
-### P2 — No `tone` / accent color strip
-Severity is present but only emitted as `data-severity` — the token consumption for severity-tinted headers is patchy.
+## Drift corrected this pass (B14 — 2026-06-03)
 
-### P3 — `full` size renders panel at full viewport, but no `[fullScreenAt]` breakpoint
-For responsive: dialog at md on desktop, full on mobile. Today consumers wrap with their own breakpoint logic + dynamic `[size]`.
+### DRIFT-TOPLAYER — native `<dialog falconOverlay="modal">` was undocumented (🟠)
+`[CODE]` `falcon-dialog.component.{ts,html,css}` + `falcon-overlay.directive.ts` — the prior dossier described a hand-rolled `position:fixed` backdrop + a z-index ladder. The live wrapper renders the Stencil tag inside a native `<dialog>` promoted into the **Top Layer** via `showModal()`; z-index is fallback-only. CORRECTED in OVERVIEW / API / INTEGRATION_VALIDATION / TOKENS. **risk-class: safe-local** (doc).
 
-## Missing ng-template / template slots
-- No directive-based slots — same situation as drawer.
-- No "footer slot fallback" — dialog footer only renders when projected.
+### DRIFT-CONSUMERS — consumer sweep was stale (🟠)
+`[CODE]` Prior dossier said "1 file (playground showcase only)" + cited `otp-dialog.component.ts`. grep 2026-06-03 → **9 app files / 19 occurrences + 2 lib / 3** (contact-groups share-dialog, templates flow modals, wallet confirm-save). `otp-dialog` uses `falcon-angular-popup` now, not dialog; `playground` is removed. CORRECTED in OVERVIEW / USAGE. **risk-class: safe-local** (doc).
 
-## Missing flags / options / states
-- No `tone` color strip (header bg tinted per severity).
-- No `[lazy]` content mode (body is rendered when open, destroyed when closed — same as drawer).
-- No `[fullScreenAt]="'sm' | 'md' | 'lg' | 'xl'"` responsive breakpoint.
+### DRIFT-FOOTER — `-tw` footer chrome vs Shadow bare footer (🟡)
+`[CODE]` falcon-dialog-tw.tsx:246-248 wraps `slot="footer"` in `<div class={falconDialogFooterClasses()}>` (token-driven chrome) **unconditionally**; falcon-dialog.tsx:246-248 (Shadow) renders a bare `<slot name="footer">` with no wrapper. So the default Tailwind path auto-adds footer padding/border/justify while the Shadow path does not — a minor Shadow↔`-tw` parity divergence. DOCUMENTED in API. **risk-class: safe-local**.
+
+### DRIFT-SEVERITY-STRIP — severity accent strip is `-tw`-only (🟡)
+`[CODE]` falcon-dialog-tw.tsx:214 renders `{severity && <span style={stripStyle} aria-hidden>}` (a 4px top strip). The Shadow `.tsx` has **no equivalent strip element** — severity on Shadow only reflects to `data-severity` + the token cascade (no painted strip). DOCUMENTED in API/TOKENS. **risk-class: safe-local**.
 
 ## Missing accessibility features
-- Same as drawer — no `<dialog>` element, focus trap is hand-rolled.
-- `aria-describedby` is set when `description` prop is used but NOT when only a default-slot description is projected.
+- **A1 (P2):** Esc + native modal focus containment exist (native `<dialog>.showModal()` + the hand-rolled Stencil trap) — good. But the close × label is not i18n (G-A11Y-LABEL).
+- **A2 (P3):** `aria-describedby` is set when the `description` prop is used but NOT when only a default-slot description is projected.
 
 ## Missing tests
-- No `.spec.ts` for the wrapper.
-- No e2e for the focus-trap correctness.
+- `[CODE]` Listing 2026-06-03 → **0 spec/e2e for any layer** (Shadow, `-tw`, wrapper, native-dialog shell). GAP G-TEST: add (a) a wrapper spec covering open/close signal sync + `openChange` + `closeOnEsc` mirror; (b) an e2e for focus-trap correctness + Top-Layer dismissal + the `-tw` footer chrome. **risk-class: safe-local**.
 
 ## Missing Tailwind / token parity
-- Light and Shadow renderers consume the same token contract. No divergence observed.
+- Both render paths share `--falcon-dialog-*` tokens. **Parity OK at the token level** — but the `-tw` footer chrome + severity strip render-divergence (DRIFT-FOOTER / DRIFT-SEVERITY-STRIP) means the visible result differs by path even with identical tokens.
 
 ## Performance risks
-- Same as drawer — global `keydown` listener while open.
-- Body content rendered/destroyed on each open/close — fine, but consumers should hoist state.
+- Global `document` keydown listener while open (cheap). Body content rendered/destroyed each open/close (fine — hoist state).
+- `falconDialogPanelStyle` / `…StripStyle` recompute on each render (`-tw`) — tiny object literals, no real risk.
 
 ## Visual / interaction risks
-- The `side-right` position uses the same code path as `center` — but renders right-anchored. This is essentially a "drawer-shaped dialog" — looks identical to a real `<falcon-angular-drawer>` but doesn't have drawer's edge-radius defaults. Visually inconsistent.
-- The dialog is the only overlay with `errorMessage` prop — but the prop has no rendering anchor in the Stencil source (it's accepted but not used in the visible markup). Dead prop.
-- `position="top"` doesn't fully animate — it scale-fades like center, doesn't slide down.
+- Two render paths can drift (the `-tw` footer chrome / severity strip already do).
+- `position="top"` scale-fades like center (doesn't slide down) — `[BRAIN-OUT]` cosmetic.
 
-## Reusable upgrades needed
-1. **Add `@deprecated` JSDoc** to wrapper + Stencil source.
-2. **Remove or fully document `falconConfirm` / `falconCancel`** events.
-3. **Drop `side-right` position** (use drawer).
-4. **Expose `closeAriaLabel`** in wrapper.
-5. **Remove dead `errorMessage` prop** OR wire it to render in the body.
+## Recommended upgrade priority
 
-## Priority: page-level vs shared
-All belong in the shared component — this is a substrate component used by others.
+| ID | Title | Priority | risk-class |
+|---|---|---|---|
+| G-DEP | `@deprecated` JSDoc + optional warn | P0 | safe-local |
+| G-ERR | Remove or wire `errorMessage` | P1 | safe-local |
+| G-SIDE | Drop `side-right` position | P1 | HIGH-RISK-QUEUE |
+| G-CONFIRM | Remove/document confirm/cancel events | P1 | safe-local |
+| G-A11Y-LABEL | Surface `closeAriaLabel` on wrapper | P2 | HIGH-RISK-QUEUE |
+| G-METHOD | Proxy `show()`/`hide()` on wrapper | P2 | safe-local |
+| G-TEST | Add wrapper + e2e specs | P2 | safe-local |
+| DRIFT-FOOTER | Align Shadow footer chrome with `-tw` | P3 | safe-local |
 
-## Recommended upgrade API (proposed)
+## Fix-shared-vs-per-page
+All gaps belong in the **shared Falcon component / token file**, not per-page. The wrapper is the single chokepoint that proves the Top-Layer overlay pattern.
 
-```ts
-/**
- * @deprecated Use <falcon-angular-popup> for action-required confirm flows,
- * or <falcon-angular-confirm-dialog> for OK/Cancel prompts. This component
- * is the underlying primitive — direct use is discouraged.
- */
-@Component({ selector: 'falcon-angular-dialog', ... })
-export class FalconAngularDialogComponent {
-  // Remove side-right from FalconDialogPosition
-  @Input() position: 'center' | 'top' = 'center';
+## Workarounds (if upgrade blocked)
+- For G-A11Y-LABEL today: switch to `useTailwind=false` Shadow path and set the Stencil prop directly via `[attr.close-aria-label]` (not surfaced — would need `CUSTOM_ELEMENTS_SCHEMA` + raw tag). Easier: accept English `'Close'`.
+- For G-CONFIRM today: project your own footer buttons + handle `(falconClick)`.
+- For G-SIDE today: use `<falcon-angular-drawer position="right">`.
 
-  // Remove or wire errorMessage
-  // (delete the input entirely until wiring exists)
-  
-  // Add closeAriaLabel pass-through
-  @Input() closeAriaLabel = 'Close';
-}
-```
+## Wave 7 Findings (2026-05-17)
+**Consumer count: 2** ([CODE] grep `<falcon-angular-dialog>`). See `USAGE.md` for the file list.
 
-## Future-proof recommendation
-**Reduce surface area.** This component should fade into substrate status: composed by popup + confirm-dialog, never used directly in net-new code. The deprecation message should bake in a 2-release migration window then physically remove the wrapper. Stencil tag can stay (it's still the substrate). 
+## Deep-Dive Sweep Findings (2026-06-03 — B14)
+**Consumer count: 9 app files / 19 occurrences + 2 in `libs/falcon`** ([CODE] grep `falcon-angular-dialog`).
 
-For the meantime: the component remains FUNCTIONAL — there's no urgent removal need. Just guard rails.
+Status stays **@deprecated-for-direct-use but FUNCTIONAL**. No deletion flag (genuine bespoke-body consumers exist: contact-groups share-dialog, wallet confirm-save, templates flow modal). Findings: DRIFT-TOPLAYER (architecture), DRIFT-CONSUMERS (sweep), DRIFT-FOOTER + DRIFT-SEVERITY-STRIP (`-tw`/Shadow parity), G-DEP/G-ERR/G-CONFIRM/G-A11Y-LABEL/G-SIDE/G-METHOD/G-TEST carried forward. **2 HIGH-RISK-QUEUE** (G-SIDE type-union change, G-A11Y-LABEL a11y); rest `safe-local`. See FINDINGS/B14.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B14) against all source layers + the new native-`<dialog>` shell + the shared overlay directive/service. Gap IDs restabilised; Top-Layer architecture + consumer-sweep + `-tw` footer/severity divergence are the major corrections. No deletion/promotion flags — stays ACTIVE-but-deprecated-for-direct-use.

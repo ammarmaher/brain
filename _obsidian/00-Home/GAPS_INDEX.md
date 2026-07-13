@@ -40,6 +40,7 @@ Every gap entry in any `GAP_REGISTRY.md` MUST link:
 | 03 — Contract / Packaging / Charging / Billing | [GAPS](../../../Brain%20Outputs/prd/modules/03-contract-packaging-charging-billing-management/GAPS.md) | 13 | 7 | 6 | 14 | [[03 Contract Packaging Charging Billing]] |
 | 04 — Contact Group Management | [GAPS](../../../Brain%20Outputs/prd/modules/04-contact-group-management/GAPS.md) | 14 | 2 | 5 | 8 | [[04 Contact Group Management]] |
 | 05 — Templates | [GAPS](../../../Brain%20Outputs/prd/modules/05-templates/GAPS.md) | 3 | 2 | 21 | 1 | [[05 Templates]] |
+| 06 — Basic Send Application | [GAPS](../../../Brain%20Outputs/prd/modules/06-basic-send-application/GAPS.md) — 3-layer register (PRD↔React parity + 14 ruled conflicts + backend CONFIRMED-ABSENT); counts not in the ✅/⚠️/❌ scheme because nothing is built yet | — | — | — | — | [[06 Basic Send Application]] |
 | — Root meta | [GAPS](../../../Brain%20Outputs/prd/modules/root-documents/GAPS.md) | 1 | 1 | 8 | 1 | [[Root Documents]] |
 | **TOTAL** | [PRD_GAP_SUMMARY](../../../Brain%20Outputs/prd/PRD_GAP_SUMMARY.md) | **69** | **21** | **45** | **42** | — |
 

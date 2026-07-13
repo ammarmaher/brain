@@ -26,8 +26,8 @@ Light DOM `<falcon-empty-state-tw>` via the Angular wrapper.
 
 ## Relationship to other components
 
-- Projected by `<falcon-angular-data-table>` via the `falconDataTableEmpty` directive.
-- NOT yet auto-composed by `<falcon-table>` core — consumer must use the wrapper's projection or build the empty cell manually.
+- **Richer sibling `<falcon-empty-data>`** — the decorated card tier (dashed border + gradient + disc + built-in CTA + info chip), which the data-table **auto-mounts** via `[emptyData]`. The two are complementary fidelity tiers, NOT duplicates. **Selection rule:** minimal look / projected-or-custom action (`slot="action"`) / heading semantics (`<h3>`) → THIS (`empty-state`); decorated card / empty data-table → `empty-data`.
+- Projected into a `<falcon-angular-data-table>` only via the manual `falconDataTableEmpty` directive (the auto-mount path uses `empty-data`, not this).
 - Composes with `<falcon-angular-button>` inside `slot="action"`.
 
 ## Exact rule
@@ -56,4 +56,7 @@ Light DOM `<falcon-empty-state-tw>` via the Angular wrapper.
    - `slot="action"` name — consumers (projection examples) rely on the literal `'action'` slot name.
    - `role="img"` semantics — screen readers expect a single accessible label.
 
-**Verdict:** Mature presentational component. Main path forward is adoption + auto-composition inside the table.
+**Verdict:** Mature presentational component, the **minimal-tier** empty visual. 3 minimal/action-less consumers (B12). Auto-composition inside the table is met by the sibling `<falcon-empty-data>` (FES-01 superseded); this component's path forward is the slot-projected / heading-semantics use case + the FES-05 `ariaLabel`-on-wrapper parity.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh). Recommendation unchanged (READY, minimal tier). Added the empty-data selection rule + FES-01-superseded note; consumer count 3 (all minimal). Reconcile flag (no merge) queued HIGH-RISK in FINDINGS/B12.

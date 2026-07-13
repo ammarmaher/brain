@@ -35,6 +35,7 @@ created: 2026-05-15
 | [[03 Contract Packaging Charging Billing]] | Contract · RateCardEntry · ContractDetail · Addon · WalletRecord · PriceUnit · Destination · Priority | [`commerce/`](../../../Brain%20Outputs/understanding/backend/commerce/) · [`charging/`](../../../Brain%20Outputs/understanding/backend/charging/) · [`provisioning/`](../../../Brain%20Outputs/understanding/backend/provisioning/) |
 | [[04 Contact Group Management]] | ContactGroup · ContactGroupColumn · ContactGroupRecord · SharePolicy · UploadSession | [`contact-group/`](../../../Brain%20Outputs/understanding/backend/contact-group/) |
 | [[05 Templates]] | Template · TemplateHeader/Body/Footer/Button/Variable · TemplateVersion · TemplateApprovalTrail · CommChannelConfig · CheckerLevel/User | [`templates/`](../../../Brain%20Outputs/understanding/backend/templates/) — **GAP-TM-01:** no public API yet · **GAP-TM-02:** no gateway route |
+| [[06 Basic Send Application]] | SendTransaction · RecipientResult · Attempt · ConversationRecord · MappingSpec · SenderId (+ reads of Template/IVR · ContactGroup · Wallet · Contract) | **GAP-BSA-01: no service exists** — entities live only in [ENTITIES.md](../../../Brain%20Outputs/prd/modules/06-basic-send-application/ENTITIES.md); planned `basic-send` service per [IMPLEMENTATION_PLAN](../../../Brain%20Outputs/prd/modules/06-basic-send-application/IMPLEMENTATION_PLAN.md) |
 
 Hub: [[PRD_INDEX]].
 
@@ -80,6 +81,10 @@ Built in parallel by 2 specialist agents (2D-A: PRDs 01+02 · 2D-B: PRDs 03+04+0
 ### PRD-05 Templates — skipped (GAP-TM-01 / GAP-TM-02)
 
 All 8 PRD-05 entities (Template · TemplateHeader/Body/Footer/Button/Variable · TemplateVersion · TemplateApprovalTrail · CheckerLevel · CheckerUser) have **no public API DTOs** in the Templates service per the GAP-TM-01 architectural decision. Reconciliation cannot be done until the architectural decision lands. The two CommChannelConfig-related entities belong to PRD-01 and are reconciled under [[E-comm-channel-config]] there.
+
+### PRD-06 Basic Send Application — skipped (GAP-BSA-01)
+
+All PRD-06 entities (SendTransaction · RecipientResult · Attempt · ConversationRecord · MappingSpec · SenderId) have **no backend at all** — the `basic-send` service is planned, not built. E-note reconciliation (`E-send-transaction` etc.) becomes possible only once the service's DTOs exist. Entity truth today: [ENTITIES.md](../../../Brain%20Outputs/prd/modules/06-basic-send-application/ENTITIES.md); backend grounding: [PLATFORM_GROUNDING.md](../../../Brain%20Outputs/prd/modules/06-basic-send-application/PLATFORM_GROUNDING.md).
 
 ## Drift summary across all 15 entities (~95 findings)
 

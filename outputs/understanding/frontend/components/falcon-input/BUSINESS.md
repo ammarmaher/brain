@@ -35,4 +35,4 @@
 - Wrapping in legacy `<falcon-form-field>` duplicates label rendering — a business-visible bug (two labels) if a builder both nests it and sets the built-in `label`.
 
 ## Verification
-✅ VERIFIED — Add Client / Add User / Add-Edit Node / Information panel are user-confirmed working features (`[MEMORY]` Wave 14/15, 2026-05-17/18). Falcon-only disable gate ✅ VERIFIED. Rule cross-references 🟡 CODE-DERIVED from the cited step templates.
+🟢 RE-VERIFIED 2026-06-03 (B01) — `hasError()` (ts:136-138), `writeValue(null)→''` (ts:188), `maxlength` keystroke-cap, and the Falcon-only disable gate all re-confirmed in live source. ✅ Add Client / Add User / Add-Edit Node / Information panel remain user-confirmed working features (`[MEMORY]` Wave 14/15). Rule cross-references 🟡 CODE-DERIVED from the cited step templates.

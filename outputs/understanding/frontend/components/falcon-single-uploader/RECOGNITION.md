@@ -25,10 +25,10 @@ Distinguishing signature: *one square tile (not a wide dropzone, not a circle), 
 ## Use THIS vs siblings
 | If the design shows… | Use | Not |
 |---|---|---|
-| exactly **one** file, a **square** preview tile with delete + edit (replace) overlays | `<falcon-angular-single-uploader>` | uploader |
-| **multiple** files, a drop area + a multi-row list with per-row progress | `<falcon-angular-uploader>` | single-uploader |
+| exactly **one** file, a **square** preview tile with delete + edit (replace) overlays | `<falcon-angular-single-uploader>` | the avatar-row uploaders |
+| an **avatar-row** uploader (circle/tile + waves + stack + banner + per-file list + retry), single OR multi-file | `<falcon-angular-document-uploader>` / `<falcon-angular-image-uploader>` (`file-uploader-shared`) | single-uploader |
 | exactly one **circular** avatar / profile photo | `<falcon-photo-uploader>` (legacy) | single-uploader (its preview is square) |
-| a bulk CSV / Excel import | a simple file picker / `mode="button"` `<falcon-angular-uploader>` | single-uploader |
+| a bulk CSV / Excel import (with S3 handshake) | `<falcon-angular-document-uploader>` | single-uploader |
 | an empty-data placeholder | `<falcon-angular-empty-state>` | single-uploader |
 
 ## Composition recipe to reach parity
@@ -44,7 +44,7 @@ Customization order (per `feedback_falcon_custom_library_mandatory`):
 
 ## Anti-patterns
 - Using it for an avatar/profile photo — its preview is square; the circular need is photo-uploader's job.
-- Using it for multiple files — wrong component; use `<falcon-angular-uploader>`.
+- Using it for the avatar-row look / multiple files / retry-banner UX — wrong component; use the `file-uploader-shared` family (`<falcon-angular-document-uploader>` / `image-uploader`).
 - Expecting `(fileEdit)` to swap the file by itself — it only emits; the consumer drives the replace.
 - Expecting the component to upload — it only paints state.
 - Looking for an `id` on `FalconSingleUploaderFile` — there is none (unlike the multi-file `FalconUploaderFile`).
@@ -52,4 +52,4 @@ Customization order (per `feedback_falcon_custom_library_mandatory`):
 - Native `<input type="file">` or PrimeNG `<p-fileUpload>` in app code — banned (`feedback_falcon_ui_library_only_no_native`).
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-single-uploader.component.ts` + `falcon-single-uploader.types.ts` + the 6 UI dossier files. Cross-library map is `[INFERRED]` mapping. The Ant `picture-card` parity is the closest `[INFERRED]` analogue.
+🟡 CODE-DERIVED / RE-VERIFIED 2026-06-03 (B19) from falcon-single-uploader.component.ts + .types.ts + the live `.tsx`. Sibling routing corrected to the `file-uploader-shared` family for the avatar-row/multi-file/CSV cases. Cross-library map is `[INFERRED]`; the Ant `picture-card maxCount={1}` parity is the closest `[INFERRED]` analogue.

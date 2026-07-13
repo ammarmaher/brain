@@ -1,14 +1,14 @@
-# falcon-input — GAPS AND UPGRADES
+﻿# falcon-input — GAPS AND UPGRADES
 
 ## Missing capabilities (active source verified)
 
-### G1 — Tailwind path lacks prefix/suffix slots (P1)
+### G1 — Tailwind path lacks `prefix`/`suffix` slots (icon-left/right now covered) (P2 — downgraded 2026-06-03)
 
-`<falcon-input-tw>` does not declare `slot="prefix"` / `slot="suffix"` rendering. The Angular wrapper template `<ng-content select="[slot=prefix]">` only flows through the Shadow path branch (`useTailwind=false`).
+`[CODE]` **CORRECTION (2026-06-03):** the 2026-05-17 unified icon-slot work added `slot="icon-left"` / `slot="icon-right"` to BOTH render paths (falcon-input-tw.tsx:243-284; wrapper html:41-42), so a leading/trailing **icon** is now achievable in Tailwind mode. What remains missing on the Tailwind twin is the original `slot="prefix"` / `slot="suffix"` pair (Shadow-only, falcon-input.tsx:226/282). For most "search glyph / SAR affordance" needs, `iconLeft`/`iconRight` is now the answer — the gap is narrower than originally documented.
 
-**Impact:** All consumers needing a leading icon (e.g. search glyph) or trailing affordance must currently use Shadow mode, losing Tailwind override + Studio token-runtime parity benefits.
+**Impact:** consumers needing the richer `prefix`/`suffix` semantics (e.g. an interactive button inside the field shell) still must use Shadow mode.
 
-**Recommended fix (P1):** add `<slot name="prefix">` and `<slot name="suffix">` placeholders inside `<falcon-input-tw>` between input and clear-button. Then the Angular wrapper's `<ng-content>` projections must move outside the `@if` branch.
+**Recommended fix (P2):** add `<slot name="prefix">` / `<slot name="suffix">` to `<falcon-input-tw>` and project them from the wrapper for full parity. Lower priority now that icon slots exist.
 
 ### G2 — Angular wrapper does not expose Stencil methods (P1)
 
@@ -50,9 +50,9 @@ Consumers with masked input (phone-without-country, credit card, dates as text, 
 
 **Recommended fix (P2):** add an optional `@Input() mask?: string` + an internal mask service hook, OR provide a separate `FalconInputMaskDirective` consumers can attach.
 
-### G8 — No leading/trailing icon by prop (P1)
+### G8 — No leading/trailing icon BY NAME-PROP (slot now exists) (P2 — downgraded 2026-06-03)
 
-To add an icon, consumers must use the Shadow path + slot OR add a sibling element. Adding `@Input() prefixIcon?: string` / `@Input() suffixIcon?: string` (icon names from the vendored Falcon icon font) would simplify common cases.
+`[CODE]` **CORRECTION (2026-06-03):** a projected icon now works in both paths via `[iconLeft]`/`[iconRight]` + `<span slot="icon-left">`. What is still absent is a string-name convenience prop (`@Input() prefixIcon?: string`) that would render a Falcon-icon-font glyph without the consumer projecting markup. That is a nice-to-have, no longer a P1 blocker (the slot covers the functional need).
 
 ### G9 — Validation hooks deferred (P3)
 
@@ -66,7 +66,7 @@ Per the registry's "validation deferred" pattern, `<falcon-angular-input>` does 
 
 ## Missing tests
 
-- `.spec.ts` exists for the Stencil tag (`libs/falcon-ui-core/src/components/falcon-input/falcon-input.spec.ts`) and an `.e2e.ts`. No corresponding Angular-wrapper component test was located via grep within this scope. **GAP — add `falcon-input.component.spec.ts` covering CVA writeValue / disabled / ngModel / error binding / clear-X.**
+- `[CODE]` `.spec.ts` (Jest `newSpecPage` — render/size/state/clear/a11y, **Shadow only**) and `.e2e.ts` (Puppeteer — events/slots/parts/token-override) BOTH exist for the Stencil tag (re-confirmed 2026-06-03). **NEITHER covers the `-tw` twin NOR the Angular wrapper.** GAPs: (a) add `falcon-input.component.spec.ts` covering CVA writeValue / disabled signal / ngModel / error binding / clear-X / the `(blur)` Output re-emit; (b) the e2e `prefix`/`suffix`/`icon-left` slot tests run against the Shadow tag only — the Tailwind twin's icon-slot padding is untested.
 
 ## Missing Tailwind / token parity
 
@@ -127,3 +127,21 @@ All gaps above belong in the **shared Falcon component**, not per-page. The wrap
 - For G2 today: `(blur)`-trigger refocus via native `(focus)` listener and `event.currentTarget.querySelector('input')?.focus()`.
 - For G3 today: drop down to raw `<falcon-input>` + CVA via `formControlName` is harder; use a thin local wrapper.
 - For G5 today: Shadow path only.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 14** ([CODE] grep `<falcon-angular-input>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B01)
+
+**Consumer count: 37 app files / 144 occurrences + 4 in `libs/falcon`** ([CODE] grep `<falcon-angular-input[\s>]`).
+
+Drift corrected vs prior dossier (no deletion/promotion flags; component stays ACTIVE/FLAGSHIP):
+- **G1 / G8 downgraded** — Tailwind path now has `icon-left`/`icon-right` slots (only `prefix`/`suffix` + string-name icon props remain missing).
+- **API drift fixed** — added `iconLeft`/`iconRight`/`inputMode` inputs; the real Angular `@Output` is `(blur)` (the prior `falconFocus` Output claim was fabricated — no such Output exists). `setFocus`/`clear` are `@Method`s on BOTH Stencil tags, not Shadow-only.
+- **No new structural gaps.** All findings are `safe-local` (doc) — see FINDINGS/B01.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B01) against all source layers. Gaps G1/G8 downgraded (icon slots exist); G2/G3/G4/G5 confirmed; test-gap clarified (Stencil spec+e2e exist Shadow-only, no wrapper/`-tw` spec). No deletion/promotion flags — component stays ACTIVE/FLAGSHIP.

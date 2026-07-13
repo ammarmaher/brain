@@ -36,8 +36,8 @@ Customization order (per `feedback_falcon_custom_library_mandatory`): inputs →
 3. **Slot** — project the actual control into the single default `<ng-content>` slot.
 4. **State sync** — keep the wrapper and the inner control in sync: `[errorKey]` on the wrapper AND `[state]="error ? 'error' : 'default'"` on the inner control; `[required]` here AND `aria-required` on the control.
 5. **Variants** — none; the component has no size/orientation/mode variants.
-6. **Token override** — none today: the component is SCSS-driven with no `--falcon-form-field-*` token contract (`TOKENS.md` — tokens are proposed-only, pending the G1 SCSS→Tailwind migration). Do not attempt token overrides until that lands.
-7. **Shared upgrade / GAP** — SCSS→Tailwind+tokens migration (G1), programmatic `for=`/`controlId` label association (G2), a `helperText` alias for `hint` (G6), and ultimately full deprecation in favour of built-in Falcon-input labels (G3) → all documented GAPS. Raise the upgrade; do not patch per-page.
+6. **Token override** — **none, by design**: the component is Tailwind-only (corrected 2026-06-03 — it is NOT SCSS-driven) with no `--falcon-form-field-*` token namespace. Label/hint colors come from the `--text-2` / `--text-muted` theme tokens (`TOKENS.md`). There is no per-instance override pattern; do not attempt one.
+7. **Shared upgrade / GAP** — programmatic `for=`/`controlId` label association (G2), a `helperText` alias for `hint` (G6), and ultimately full deprecation in favour of built-in Falcon-input labels (G3) → all documented GAPS. (The old "SCSS→Tailwind migration" gap is RESOLVED — no SCSS exists.) Raise the upgrade; do not patch per-page.
 
 ## Anti-patterns
 - Using `<falcon-form-field>` to wrap a `<falcon-angular-input>` (or any Falcon UI input) in NEW code — renders a double label; use the input's built-in `label`.
@@ -45,5 +45,7 @@ Customization order (per `feedback_falcon_custom_library_mandatory`): inputs →
 - Relying on the `<label>` being announced for the inner control — there is no `for=` association; set a shared id explicitly.
 - Setting `required` on the wrapper but forgetting `aria-required` on the slotted control — the two are not synced.
 - Setting `[errorKey]` on the wrapper but leaving the inner control's `state` at `default` — `hasError` does not cross-bind; drive both.
-- Adding new `--falcon-form-field-*` token overrides — there is no token contract yet; the component is SCSS-driven.
-- Treating it as a long-term component — it is LEGACY / NEEDS-DEPRECATION; the strategic direction is to retire it.
+- Adding `--falcon-form-field-*` token overrides — there is no such namespace; the component is Tailwind-only (use the `--text-*` theme tokens at the theme level if needed).
+- Treating it as a long-term component — it is LEGACY / NEEDS-DEPRECATION; the strategic direction is to retire it for Falcon-input usages.
+
+> **Verification:** 🟡 CODE-DERIVED from `falcon-form-field.component.ts` + `.html` (read in full, 2026-06-03/B24). Recognition routing (use built-in Falcon-input labels instead, for new code) is the load-bearing call. Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]` standard-library knowledge. Drift corrected: the component is Tailwind-only (no SCSS).

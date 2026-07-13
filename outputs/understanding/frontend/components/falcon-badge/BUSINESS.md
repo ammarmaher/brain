@@ -43,4 +43,4 @@
 - `[INFERRED]` A count badge showing `0` is usually a business mistake — most "Inbox N" patterns hide the badge entirely at zero. The component does not enforce this; the consumer must `*ngIf` it.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-badge.tsx + falcon-badge.component.ts + the 6 dossier files. No `BR-*` rule binds this presentational primitive. Three-badge vocabulary and `ariaLabel`-wrapper-gap ✅ VERIFIED against source.
+🟡 CODE-DERIVED from `[CODE]` falcon-badge.tsx + falcon-badge.component.ts + the 8 dossier files. No `BR-*` rule binds this presentational primitive. Three-badge vocabulary ✅ VERIFIED against source. REFRESH 2026-06-03 — the `ariaLabel`-gap is confirmed AND found broader than first noted (Shadow-only; default `-tw` path has no a11y-label surface — see API.md/GAPS FB-01). Zero-production-consumer status re-confirmed by grep (0 in `apps/`+`libs/falcon`).

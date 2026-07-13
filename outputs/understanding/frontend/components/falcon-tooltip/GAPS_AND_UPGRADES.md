@@ -1,121 +1,102 @@
 # falcon-tooltip — GAPS AND UPGRADES
 
-## Missing capabilities
+> B16 AUDIT findings for `falcon-tooltip` in prose. We fix NOTHING this pass. Row-level record in `FINDINGS/B16.md`.
 
-### P1 — No flip / collision-aware placement
-When the user requests `placement="right"` and there's no room on the right of the trigger, the tooltip overflows the viewport. There's no auto-flip to a different placement.
+## Headline — sound but ZERO-adoption primitive
 
-**Proposed:** Add `flipPlacement` array (e.g. `['right', 'left', 'top']` — try each in order) or `auto` mode that picks the best fit.
+`[CODE]` The tooltip is well-built (dual-render parity, Top-Layer promotion, pure-fn positioning) but has **0 feature-template consumers** (Consumer Sweep). It is not deprecated — it is simply unused. The opportunity is adoption (icon-only buttons across both consoles), not deletion. `risk-class = safe-local` (no action needed; an adoption recommendation, not a code change).
 
-**Priority: P1**
+## Missing capabilities (active source verified)
 
-### P1 — No `disabled` Watch
-The Stencil source's `disabled` prop has no `@Watch` — toggling `disabled=true` while the tooltip is OPEN doesn't close it. Consumer has to manually call `close()`.
+### G1 — No flip / collision-aware placement (P1)
 
-**Priority: P1** — a11y / unexpected behavior.
+`[CODE]` `computeOffset` honors ONLY the requested `placement` (`[CODE]` falcon-tooltip.utils.ts:22-48); a `placement="right"` tooltip with no room overflows the viewport. There is no auto-flip. The Top-Layer promotion fixes ANCESTOR-clipping but NOT viewport-edge overflow. **Proposed:** a `flipPlacement` array (try in order) or `placement="auto"` (best-fit) — `computeOffset` already returns x/y, so extending it to test alternatives is a moderate refactor with high payoff (Radix/Floating-UI parity). `risk-class = safe-local` (additive).
 
-### P2 — Hide delay hardcoded
-`scheduleHide()` uses a fixed 80ms timeout (line 109). Show delay is configurable via `delay` prop; hide is not. Some consumers want longer hide delay for hover-to-link flows.
+### G2 — No `@Watch('disabled')` (P1)
 
-**Proposed:** `hideDelay` input.
+`[CODE]` `disabled` has no `@Watch` (`[CODE]` falcon-tooltip.tsx:37) — toggling `disabled=true` while OPEN doesn't close the panel; the consumer must call `close()`. **Proposed:** add `@Watch('disabled')` that calls `scheduleHide('disabled')` when `true`. `risk-class = safe-local` (internal behavior; the `'disabled'` hide-reason already exists in the type, so it was clearly intended).
 
-**Priority: P2**
+### G3 — Angular wrapper does not proxy `open()` / `close()` (P2)
 
-### P2 — `<falcon-angular-icon>` should be used for trigger icons in examples
-Today examples use raw `<i class="falcon-icon ...">`. Document the icon-component pattern.
+`[CODE]` `<falcon-tooltip>`/`-tw` expose `@Method() open()` + `close()` but `FalconAngularTooltipComponent` has no proxies — reach into the inner Stencil element via `ViewChild`. Same class as falcon-input G2 / toast G1. `risk-class = safe-local`.
 
-**Priority: P2** — docs.
+### G4 — Hide delay hardcoded (P2)
 
-### P2 — Trigger gets `tabIndex=0` unconditionally
-This makes any wrapped element keyboard-focusable. For a tooltip wrapping a non-interactive span (e.g. a status badge), the badge becomes a focus stop. May surprise consumers.
+`[CODE]` `scheduleHide()` uses a fixed 80ms (`[CODE]` falcon-tooltip.tsx:110); show delay IS configurable (`delay`), hide is not. Note: the token file even declares `--falcon-tooltip-hide-delay: 80ms` (`[CODE]` tooltip.tokens.css:68) but the timer NEVER reads it — a token/behavior disconnect. **Proposed:** a `hideDelay` input (default 80) OR have `scheduleHide` read the token. `risk-class = safe-local`.
 
-**Proposed:** `[focusableTrigger]="false"` to opt out.
+### G5 — Trigger gets `tabIndex=0` unconditionally (P2)
 
-**Priority: P2**
+`[CODE]` falcon-tooltip.tsx:171 — any wrapped element becomes a focus stop; wrapping an element with an existing `tabIndex` doubles it. **Proposed:** `[focusableTrigger]="false"` opt-out. `risk-class = HIGH-RISK-QUEUE` (a11y/keyboard semantics — removing the default focus stop would break keyboard discovery for some; must be opt-out, not default-off).
 
-### P3 — No animation on show / hide
-Tooltip shows by appearing in DOM and applying transform. No fade-in / scale-in. Visually abrupt.
+### G6 — `aria-describedby` not persistent (P2 — a11y)
 
-**Proposed:** add motion tokens for show/hide opacity transition.
+`[CODE]` falcon-tooltip.tsx:171 — `aria-describedby` is set ONLY while showing (showLabel-gated). WAI-ARIA APG suggests a persistent association. **Proposed:** always emit the panel id on the trigger (panel exists in DOM only when open, so screen readers may not find the description otherwise). `risk-class = HIGH-RISK-QUEUE` (a11y semantics).
 
-**Priority: P3**
+### G7 — No Esc-to-dismiss (P3 — a11y)
 
-### P3 — No max-height (only max-width)
-For very long tooltip content, the panel can grow tall without bound. `maxHeight` input would help.
+`[CODE]` Close paths are pointer-leave / blur / programmatic only — no keyboard Esc. `risk-class = safe-local`.
 
-**Priority: P3**
+### G8 — No show/hide animation; arrow always on; no max-height (P3)
 
-## Missing ng-template / template slots
-- No `<ng-template falconTooltipContent>` directive — rich content uses `<slot name="content">` only.
+`[CODE]` The tooltip appears by DOM insertion + transform — no fade/scale (the `-enter-opacity`/`-enter-scale` tokens exist but aren't wired into a transition state, `[CODE]` tooltip.tokens.css:90-91). The arrow is always rendered (no `[arrow]="false"`). Only `maxWidth` exists, no `maxHeight`. `risk-class = safe-local`.
 
-## Missing flags / options / states
-- `flipPlacement` / `auto` placement.
-- `hideDelay`.
-- `[focusableTrigger]`.
-- `maxHeight`.
-- `arrow` toggle (currently arrow is always rendered as a `<span class="falcon-tooltip-arrow">`).
-- `showOnFocus` toggle (currently always on).
+## `-tw` vs Shadow parity
 
-## Missing accessibility features
-- The trigger `tabIndex=0` may be undesirable for non-interactive wrapping (e.g. a status text label that shouldn't be a focus stop).
-- No `aria-describedby` linking the trigger to the tooltip's panel id at all times — it's only set WHILE the tooltip is showing. WAI-ARIA APG suggests setting it persistently.
-- No keyboard shortcut to dismiss (Esc) — only blur / pointer-leave.
+`[CODE]` Prop/event/slot/role parity is CLEAN (content/placement/delay/disabled/interactive/maxWidth all mirrored; both emit `falcon-show`+`falcon-hide`; both project default + `content` slots; both `role="tooltip"`; both `aria-describedby` showLabel-gated). The ONE divergence is COSMETIC-by-necessity: the `-tw` arrow uses an inline `getArrowStyle()` style object (`[CODE]` falcon-tooltip-tw.tsx:155-191) because Tailwind has no attribute-selector arbitrary value to replace the Shadow CSS `[data-placement^='top'] .arrow {…}` rules — both read `--falcon-tooltip-arrow-*` tokens, so visually identical. NOT a gap, documented divergence.
 
 ## Missing tests
-- No `.spec.ts`.
-- No e2e for collision detection (because there isn't any).
 
-## Missing Tailwind / token parity
-- Light + Shadow renderers should match.
+`[CODE]` **NO `*tooltip*.spec.ts` / e2e in `falcon-ui-core`** (verified 2026-06-03). The placement math (`computeOffset` — a pure fn, trivially unit-testable), the show/hide debounce, the disabled-suppress, the interactive panel-hover, and the Top-Layer acquire/release are ALL untested. GAP. `risk-class = safe-local`.
+
+## Missing cross-framework parity
+
+`[CODE]` **No React (`libs/falcon-ui-react`) or Vue (`libs/falcon-ui-vue`) tooltip wrapper** (verified 2026-06-03 — zero `*tooltip*` files in either lib). Stencil core is cross-framework-capable; only Angular ships. `risk-class = safe-local`.
 
 ## Performance risks
-- `computeOffset()` runs in `requestAnimationFrame` after `panelEl` mounts. Cheap.
-- The Stencil source's `parseOffset()` does `getComputedStyle().getPropertyValue()` per show — micro-cost. Acceptable.
-- Pointer-enter / pointer-leave listeners are local to the trigger span — no global cost.
+
+- `computeOffset()` runs in one `requestAnimationFrame` after the panel mounts — cheap.
+- `parseOffset()` does `getComputedStyle().getPropertyValue()` per show — micro-cost, acceptable.
+- The Top-Layer acquire adds one rAF + one `querySelector` + `showPopover` per show — negligible.
 
 ## Visual / interaction risks
-- No collision avoidance — tooltips can overflow viewport.
-- No animation — abrupt appearance.
-- `interactive=true` requires the user to move pointer from trigger to panel without crossing a gap — the 8px offset is the gap. For touch / coarse pointer users this is finicky.
 
-## Reusable upgrades needed
-1. **Collision-aware flip placement** (P1).
-2. **`disabled` Watch** to auto-close (P1).
-3. **`hideDelay` input** (P2).
-4. **`focusableTrigger` opt-out** (P2).
-5. **Show/hide animation** (P3).
+- No viewport-edge collision avoidance (G1) — tooltips can overflow off-screen.
+- No animation (G8) — abrupt appearance.
+- `interactive=true` requires crossing the 8px gap from trigger to panel without it closing — finicky on coarse/touch pointers.
 
-## Priority: page-level vs shared
-All belong in the shared component.
+## Recommended upgrade priority
 
-## Recommended upgrade API (proposed)
+| ID | Title | Priority | risk-class |
+|---|---|---|---|
+| (headline) | ADOPT it (icon-only buttons across consoles) | — | safe-local |
+| G1 | Collision-aware flip placement | P1 | safe-local (additive) |
+| G2 | `@Watch('disabled')` auto-close | P1 | safe-local |
+| G6 | Persistent `aria-describedby` | P2 | HIGH-RISK-QUEUE (a11y) |
+| G5 | `focusableTrigger` opt-out | P2 | HIGH-RISK-QUEUE (a11y) |
+| G3 | Proxy `open()`/`close()` on wrapper | P2 | safe-local |
+| G4 | `hideDelay` input (or read the token) | P2 | safe-local |
+| G7 | Esc-to-dismiss | P3 | safe-local |
+| G8 | Animation / `arrow` toggle / `maxHeight` | P3 | safe-local |
 
-```ts
-@Component({ selector: 'falcon-angular-tooltip', ... })
-export class FalconAngularTooltipComponent {
-  @Input() content?: string;
-  @Input() placement: FalconTooltipPlacement = 'top';
-  @Input() delay = 100;
-  @Input() hideDelay = 80;                                          // new
-  @Input() disabled = false;
-  @Input() interactive = false;
-  @Input() maxWidth?: string;
-  @Input() maxHeight?: string;                                       // new
-  @Input() flipPlacement?: FalconTooltipPlacement[];                 // new
-  @Input() focusableTrigger = true;                                  // new
-  @Input() showOnFocus = true;                                       // new
-  @Input() arrow = true;                                             // new
+## Fix-shared-vs-per-page
 
-  // Outputs
-  @Output() falconShow = new EventEmitter<FalconTooltipShowDetail>();
-  @Output() falconHide = new EventEmitter<FalconTooltipHideDetail>();
-}
-```
-
-Stencil source:
-- Add `@Watch('disabled')` to close on disable.
-- Implement collision detection in `measurePanel()`.
-- Wire show/hide CSS transition via panel `data-state="visible"` attribute + tokens.
+All belong in the shared component. No per-page work.
 
 ## Future-proof recommendation
-Collision-aware flip is the most-asked tooltip feature in modern UI libraries (Radix UI, Floating UI). The current `computeOffset()` already returns x/y — extending it to try alternative placements is a moderate refactor with high payoff.
+
+Collision-aware flip (G1) is the most-asked tooltip feature in modern libraries (Radix, Floating UI) and `computeOffset` is already a pure x/y function — extending it to try alternative placements is the single highest-payoff upgrade. Pair with `@Watch('disabled')` (G2) and the two a11y items (G5/G6) and the tooltip is fully production-hardened — then DRIVE adoption.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B16)
+
+**Consumer count: 0** (`[CODE]` grep — zero `apps/**`; playground showcase removed).
+
+Corrected/added vs prior dossier:
+- Consumer count 1 → **0** (playground route gone; showcase → falcon-studio gallery).
+- ADDED: the Wave-6 Top-Layer/Popover promotion (a real wrapper behavior the prior dossier omitted) + clarified it fixes ANCESTOR-clipping, NOT viewport-edge overflow (G1 still open).
+- ADDED: G4 token/behavior disconnect (`--falcon-tooltip-hide-delay` token unread by the timer).
+- ADDED: no React/Vue parity; no spec/e2e.
+- ADDED: the `-tw` arrow inline-style divergence documented as accepted (NOT a gap).
+- a11y items (G5/G6) tagged HIGH-RISK-QUEUE; everything else safe-local.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B16) against all source layers. Gaps re-derived from live source; Top-Layer integration + token-disconnect + parity divergence added. Two HIGH-RISK-QUEUE a11y items (G5/G6); rest safe-local. No deletion — component is sound but unused (ADOPT, don't remove).

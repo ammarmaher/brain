@@ -1,6 +1,8 @@
-# falcon-organization-hierarchy-tree-tw — USAGE
+﻿# falcon-organization-hierarchy-tree-tw — USAGE
 
-## Example 1 — Playground demo (Angular template)
+> ⚠️ **No live render consumer exists (verified 2026-06-03).** The examples below are ILLUSTRATIVE — they show how this Stencil tag *would* be consumed if wired into an Angular template, but nothing in `apps/` currently renders it. The live org-hierarchy rail uses `<falcon-tree-panel>` via `<app-organization-hierarchy-tree>` instead (a different API). See the Consumer Sweep at the bottom.
+
+## Example 1 — Illustrative Angular consumption (NOT a live call site)
 
 ```html
 <falcon-organization-hierarchy-tree-tw
@@ -109,3 +111,14 @@ await defineFalconTwComponent('falcon-organization-hierarchy-tree-tw');
 - DON'T — bind object props as `[attr.x]` — they'll stringify.
 - DON'T — assume Shadow DOM style isolation — there isn't one.
 - DON'T — use this for non-org-hierarchy trees. The chrome is opinionated.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+**2 files (playground).** Superseded — the playground route has since been removed.
+
+## Consumer Sweep (2026-06-03 — B21)
+`[CODE]` `Grep` for `<falcon-organization-hierarchy-tree-tw` across the repo (excluding `dist/`) → **ZERO live render consumers.** Matches are the component's own source/types, `WAVE-5-GAP-CLOSE.md` (plan), and its `tokens.css`. The `FalconOrganizationHierarchyTree*` class is referenced only by type-imports + the Stencil `components.d.ts` registry + `web-types.json` + a denylist string array at `showcase-variant-tile.component.ts:44`.
+- Prior `playground.page.{html,ts}` consumers: GONE (route removed).
+- Live org-hierarchy rail: `<falcon-tree-panel>` (shared-ui) via `<app-organization-hierarchy-tree>` (host-shell) — `[CODE]` organization-hierarchy-tree.component.html:24. This Stencil tree is NOT in that path.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B21). Examples relabelled ILLUSTRATIVE (no live call site). Consumer Sweep re-run: zero live render consumers. The live rail is `<falcon-tree-panel>`.

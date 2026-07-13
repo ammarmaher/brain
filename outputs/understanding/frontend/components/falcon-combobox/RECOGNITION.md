@@ -1,6 +1,6 @@
 # falcon-combobox — Recognition Layer
 
-> Cross-cutting layer. Given an external design / screenshot / React or Angular snippet, identify `<falcon-angular-combobox>` as the component to use, and how to compose it to parity.
+> Cross-cutting layer. Given an external design / screenshot / React or Angular snippet, identify `<falcon-angular-combobox>` as the component to use, and how to compose it to parity. Sweep-refreshed 2026-06-03 (B04).
 
 ## Visual fingerprint
 `[CODE] falcon-combobox.tsx:230-317` — A labeled, bordered **text input** (not a button-trigger) with a trailing-edge icon zone. The icon zone shows either a **spinner** (`loading`) or a **clear (×)** button when there is a value. Typing into the input opens a floating panel of options below; the option whose `label` contains the query is shown. One option is highlighted as *active* (keyboard cursor) and one may be *selected*. An empty result shows a `noResultsMessage` row. The defining tell vs a dropdown: **the user types directly into the field** — the field is an `<input role="combobox">`, not a closed value display.

@@ -138,3 +138,6 @@ Build hashes (2026-05-20):
 
 - [[project_shadow_row_col_alignment_fix_2026_05_20_v2]] — sibling alignment work, confirms `--falcon-table-cell-padding-inline = 20px` is the SoT for body content edge.
 - [[project_data_table_single_height_token_2026_05_19]] — companion "single source of truth" contract for row height (`--falcon-table-row-height`).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). `headerInset` field confirmed live on BOTH `FalconTableColumnExt` (falcon-table.types.ts:43-52) and `ColumnDef` (falcon-data-table.types.ts); the `--falcon-table-header-padding-inline → var(--falcon-table-cell-padding-inline)` alias confirmed in table.tokens.css. Contract status unchanged (BUILD-GREEN, runtime-verification still pending per the header banner).

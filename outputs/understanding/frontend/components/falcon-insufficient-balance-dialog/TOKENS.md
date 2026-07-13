@@ -1,168 +1,87 @@
 # falcon-insufficient-balance-dialog — TOKENS
 
-Token file: `libs/falcon-ui-tokens/src/components/insufficient-balance-dialog.tokens.css`
+## Component token file
+`libs/falcon-ui-tokens/src/components/insufficient-balance-dialog.tokens.css` (**187 lines** — counted 2026-06-03). Imported into `libs/falcon-ui-tokens/src/index.css` (component-layer, bottom).
 
-Imported into: `libs/falcon-ui-tokens/src/index.css` (component-layer import order — bottom).
-
-Selector chain (Canonical Pattern C7):
+`[CODE]` Selector chain (gate-12 compliant — `:where()`, specificity 0, NOT `:root`):
 ```css
-:where(
-  falcon-insufficient-balance-dialog,
-  falcon-insufficient-balance-dialog-tw,
-  falcon-angular-insufficient-balance-dialog,
-  .falcon-insufficient-balance-dialog,
-  [data-falcon-insufficient-balance-dialog]
-) { ... }
+:where(falcon-insufficient-balance-dialog, falcon-insufficient-balance-dialog-tw,
+       falcon-angular-insufficient-balance-dialog, .falcon-insufficient-balance-dialog,
+       [data-falcon-insufficient-balance-dialog]) { … }
 ```
 
-## Token catalogue
+## Token categories
 
 ### Backdrop + panel chrome
 | Token | Default |
-| --- | --- |
+|---|---|
 | `--falcon-ib-dialog-backdrop-bg` | `rgba(15, 23, 42, 0.42)` |
-| `--falcon-ib-dialog-backdrop-z` | `1000` |
+| `--falcon-ib-dialog-backdrop-z` | **`99999`** (CORRECTED — was documented as `1000`; live value matches `--falcon-dialog-z-index` per the 2026-05-20 rev-3 ladder; insufficient-balance-dialog.tokens.css:55) |
 | `--falcon-ib-dialog-panel-bg` | `--color-falcon-neutral-0` |
 | `--falcon-ib-dialog-panel-radius` | `16px` |
-| `--falcon-ib-dialog-panel-padding-block` | `28px` |
-| `--falcon-ib-dialog-panel-padding-inline` | `28px` |
+| `--falcon-ib-dialog-panel-padding-block` / `-inline` | `28px` |
 | `--falcon-ib-dialog-panel-max-width` | `480px` |
 | `--falcon-ib-dialog-panel-shadow` | `0 25px 50px -12px rgba(0,0,0,0.25)` |
 
 ### Glossy mode (toggled by `[show-glossy="true"]`)
 | Token | Default |
-| --- | --- |
+|---|---|
 | `--falcon-ib-dialog-glossy-backdrop-filter` | `blur(8px) saturate(1.4)` |
 | `--falcon-ib-dialog-glossy-panel-filter` | `saturate(1.05)` |
 
-### Icon (toggled by `[show-icon-color]` / `[show-icon-background]`)
-| Token | Default |
-| --- | --- |
-| `--falcon-ib-dialog-icon-size` | `56px` |
-| `--falcon-ib-dialog-icon-color` | `--falcon-status-danger` (red) |
-| `--falcon-ib-dialog-icon-color-neutral` | `--color-falcon-neutral-400` |
-| `--falcon-ib-dialog-icon-bg` | `rgba(230, 57, 70, 0.10)` |
-| `--falcon-ib-dialog-icon-bg-size` | `72px` |
-| `--falcon-ib-dialog-icon-bg-radius` | `50%` |
+### Icon · Header text · List card · Row pill · Reorder buttons · Info pill · Error banner · Footer buttons
+`[CODE]` Full per-area token sets (unchanged 2026-06-03): icon (`-icon-size 56px`, `-icon-color` = `--falcon-status-danger`, `-icon-color-neutral`, `-icon-bg`, `-icon-bg-size 72px`), header (`-title-*` 18px/700/1.3, `-subtitle-*` 13px/1.5), list card (`-list-bg`, `-list-border`, `-list-radius 12px`), **row pill dimensions** (Wave 15 user-requested surface: `-row-height 42px`, `-row-min-width 280px`, `-row-gap`, `-row-padding-*`, `-row-radius 8px`, `-row-bg`, `-row-border`, `-row-hover-border` teal-500, `-row-dragging-opacity 0.55`, `-row-rank-*`, `-row-label-*`, `-row-grip-*`, `-row-controls-gap`), reorder buttons (`-btn-size 22px`, `-btn-radius 50%`, `-btn-bg`/`-fg`, `-btn-bg-hover` teal, `-btn-disabled-opacity 0.4`), info pill (teal-50/teal-700 family), error banner (red family), footer buttons (`-footer-btn-confirm-bg` teal-700, `-footer-btn-cancel-*`, `-footer-btn-disabled-opacity 0.55`).
 
-### Header text
-| Token | Default |
-| --- | --- |
-| `--falcon-ib-dialog-header-gap` | `12px` |
-| `--falcon-ib-dialog-title-color` | `--color-falcon-neutral-900` |
-| `--falcon-ib-dialog-title-font-size` | `18px` |
-| `--falcon-ib-dialog-title-font-weight` | `700` |
-| `--falcon-ib-dialog-title-line-height` | `1.3` |
-| `--falcon-ib-dialog-subtitle-color` | `--color-falcon-neutral-600` |
-| `--falcon-ib-dialog-subtitle-font-size` | `13px` |
-| `--falcon-ib-dialog-subtitle-line-height` | `1.5` |
-| `--falcon-ib-dialog-subtitle-max-width` | `460px` |
+## Token vs render-path application (IMPORTANT — refresh finding)
 
-### List card
-| Token | Default |
-| --- | --- |
-| `--falcon-ib-dialog-list-bg` | `--color-falcon-neutral-30` |
-| `--falcon-ib-dialog-list-border` | `1px solid --color-falcon-neutral-200` |
-| `--falcon-ib-dialog-list-radius` | `12px` |
-| `--falcon-ib-dialog-list-padding` | `14px` |
-| `--falcon-ib-dialog-drag-label-color` | `--color-falcon-neutral-500` |
-| `--falcon-ib-dialog-drag-label-font-size` | `12px` |
+`[CODE]` The Shadow `.css` consumes the `--falcon-ib-dialog-*` tokens cleanly. **BUT the `-tw` (default) twin reads several visuals as RAW `var(--color-falcon-*)` palette refs, NOT `--falcon-ib-dialog-*` tokens** (falcon-insufficient-balance-dialog-tw.tsx:202,359 — e.g. error banner `bg-[var(--color-falcon-red-50,#fef5f5)]`, drag-over border `border-[var(--color-falcon-teal-500,#124c52)]`). So a per-instance `style="--falcon-ib-dialog-..."` override may retint the Shadow path only; geometry tokens (row-height/gap/etc., read via `var(--falcon-ib-dialog-row-gap,14px)`) DO flow to both (GAP G-TOK, same family as B15 alert-dialog).
 
-### Row pill — dimensions (Wave 15 user-requested configurable surface)
-| Token | Default |
-| --- | --- |
-| `--falcon-ib-dialog-row-height` | `42px` |
-| `--falcon-ib-dialog-row-min-width` | `280px` |
-| `--falcon-ib-dialog-row-gap` | `10px` |
-| `--falcon-ib-dialog-row-padding-inline` | `12px` |
-| `--falcon-ib-dialog-row-padding-block` | `10px` |
-| `--falcon-ib-dialog-row-radius` | `8px` |
-| `--falcon-ib-dialog-row-bg` | `--color-falcon-neutral-0` (white) |
-| `--falcon-ib-dialog-row-border` | `1px solid --color-falcon-neutral-200` |
-| `--falcon-ib-dialog-row-hover-border` | `--color-falcon-teal-500` |
-| `--falcon-ib-dialog-row-dragging-opacity` | `0.55` |
-| `--falcon-ib-dialog-row-dragging-shadow` | `0 8px 20px -6px rgba(0,0,0,0.18)` |
-| `--falcon-ib-dialog-row-rank-color` | `--color-falcon-neutral-500` |
-| `--falcon-ib-dialog-row-rank-font-size` | `13px` |
-| `--falcon-ib-dialog-row-rank-width` | `18px` |
-| `--falcon-ib-dialog-row-label-color` | `--color-falcon-neutral-900` |
-| `--falcon-ib-dialog-row-label-font-size` | `13px` |
-| `--falcon-ib-dialog-row-label-font-weight` | `500` |
-| `--falcon-ib-dialog-row-grip-color` | `--color-falcon-neutral-400` |
-| `--falcon-ib-dialog-row-grip-size` | `14px` |
-| `--falcon-ib-dialog-row-controls-gap` | `8px` |
+## Wrapper-CSS backdrop literals (refresh finding)
 
-### Reorder buttons
-| Token | Default |
-| --- | --- |
-| `--falcon-ib-dialog-btn-size` | `22px` |
-| `--falcon-ib-dialog-btn-radius` | `50%` |
-| `--falcon-ib-dialog-btn-bg` | `--color-falcon-neutral-100` |
-| `--falcon-ib-dialog-btn-fg` | `--color-falcon-neutral-600` |
-| `--falcon-ib-dialog-btn-bg-hover` | `--color-falcon-teal-500` |
-| `--falcon-ib-dialog-btn-fg-hover` | `--color-falcon-neutral-0` |
-| `--falcon-ib-dialog-btn-disabled-opacity` | `0.4` |
-| `--falcon-ib-dialog-btn-icon-size` | `12px` |
-| `--falcon-ib-dialog-btn-icon-stroke` | `2` |
+`[CODE]` The Angular WRAPPER css (falcon-insufficient-balance-dialog.component.css:48-56) paints the native `::backdrop` with RAW literals — `background: rgba(15, 23, 42, 0.42)`, `backdrop-filter: blur(8px) saturate(1.4)`, `animation … 180ms` — NOT the `--falcon-ib-dialog-backdrop-bg` / `-glossy-backdrop-filter` tokens (which it instead NEUTRALISES on the host to `transparent`/`none` so only the native `::backdrop` paints). Tokens-over-literals smell (GAP G-BACKDROP, same as B15 alert-dialog wrapper `::backdrop`). The values happen to equal the token defaults, but a token override of `--falcon-ib-dialog-backdrop-bg` would NOT reach the native `::backdrop`.
 
-### Info pill ("first channel used automatically")
-| Token | Default |
-| --- | --- |
-| `--falcon-ib-dialog-info-bg` | `--color-falcon-teal-50` |
-| `--falcon-ib-dialog-info-fg` | `--color-falcon-teal-700` |
-| `--falcon-ib-dialog-info-padding-block` | `10px` |
-| `--falcon-ib-dialog-info-padding-inline` | `12px` |
-| `--falcon-ib-dialog-info-radius` | `8px` |
-| `--falcon-ib-dialog-info-margin-block-start` | `12px` |
-| `--falcon-ib-dialog-info-font-size` | `12.5px` |
-| `--falcon-ib-dialog-info-gap` | `8px` |
-| `--falcon-ib-dialog-info-icon-size` | `14px` |
+## Related Falcon theme tokens
+`--color-falcon-neutral-0/30/200/400/500/600/700/900`, `--color-falcon-teal-50/500/700`, `--color-falcon-red-*`, `--falcon-status-danger`. The token file's AUDIT comment (lines 7-9) asserts all external refs + fallbacks verified against `falcon-tailwind-tokens.css` (no invented tokens, no standard-Tailwind hex masquerading).
 
-### Error banner
-Same shape as info pill but with `--color-falcon-red-*` family.
+## Dark mode support
+`[INFERRED]` Inherits neutral inversion from `.app-dark` via the `--color-falcon-*` aliases. No IB-dialog-specific dark override. Not re-verified this pass.
 
-### Footer buttons
-| Token | Default |
-| --- | --- |
-| `--falcon-ib-dialog-footer-gap` | `10px` |
-| `--falcon-ib-dialog-footer-margin-block-start` | `16px` |
-| `--falcon-ib-dialog-footer-btn-padding-block` | `10px` |
-| `--falcon-ib-dialog-footer-btn-padding-inline` | `18px` |
-| `--falcon-ib-dialog-footer-btn-radius` | `8px` |
-| `--falcon-ib-dialog-footer-btn-font-size` | `14px` |
-| `--falcon-ib-dialog-footer-btn-font-weight` | `600` |
-| `--falcon-ib-dialog-footer-btn-cancel-bg` | white |
-| `--falcon-ib-dialog-footer-btn-cancel-fg` | `--color-falcon-neutral-700` |
-| `--falcon-ib-dialog-footer-btn-cancel-border` | `--color-falcon-neutral-200` |
-| `--falcon-ib-dialog-footer-btn-confirm-bg` | `--color-falcon-teal-700` |
-| `--falcon-ib-dialog-footer-btn-confirm-fg` | white |
-| `--falcon-ib-dialog-footer-btn-disabled-opacity` | `0.55` |
+## Density support
+No density tokens — row geometry is the per-instance override surface (`--falcon-ib-dialog-row-*`).
+
+## RTL support
+`[INFERRED]` The panel is centered + symmetric; the reorder buttons + grip flip naturally under `dir=rtl`. The directional chevron glyphs (up/down) are vertical, so RTL has no effect on them. Not re-verified.
+
+## Static style risks
+- `[CODE]` Shadow `.css` (451 ln) — token-driven; structural literals only.
+- `[CODE]` Wrapper `.component.css` — raw `::backdrop` literals (G-BACKDROP, above).
+- `[CODE]` `-tw` twin — raw `var(--color-falcon-*)` palette refs for error/drag-over visuals (G-TOK, above).
+- `[CODE]` Stencil `onDragStart` writes inline `ghost.style.*` (drag-image clone) incl. `boxShadow: '0 12px 24px -6px rgba(0,0,0,0.25)'` + `background: var(--falcon-ib-dialog-row-bg, #fff)` (tsx:170-179) — transient drag-ghost only, acceptable.
 
 ## Override patterns
-
-### Global (per-app theme)
-Override any token in the app's global theme entry — flows through `:where(...)` selector chain.
-
-### Per-instance (inline style)
-```html
-<falcon-angular-insufficient-balance-dialog
-  style="--falcon-ib-dialog-row-height: 56px; --falcon-ib-dialog-icon-color: #ff6b35"
-  ... />
-```
-
-### Per-instance (class)
 ```css
 .priority-dialog {
   --falcon-ib-dialog-row-height: 56px;
   --falcon-ib-dialog-row-min-width: 320px;
-  --falcon-ib-dialog-icon-color: #ff6b35;
-  --falcon-ib-dialog-footer-btn-confirm-bg: #ff6b35;
+  --falcon-ib-dialog-row-radius: 12px;     /* geometry → flows to BOTH paths */
+  --falcon-ib-dialog-icon-color: var(--color-falcon-amber-500);  /* colour → Shadow only on -tw (G-TOK) */
 }
 ```
 
-## Standing rules enforced
+## Token usage by state
 
-- ✅ `feedback_no_inline_styles_tokens_only.md` — every visual value via CSS custom property
-- ✅ `feedback_shadow_is_token_ssot.md` — Shadow `.css` consumes tokens; Light/TW mirrors the same tokens via Tailwind arbitrary values
-- ✅ `feedback_brain_skills_primeng_purge.md` — zero PrimeNG, no SCSS, Tailwind v4 utilities only on Light variant
-- ✅ Canonical Pattern C7 — selector chain reaches Shadow + Light + Angular wrapper + utility class + data-attr
+| State | Token(s) consumed |
+|---|---|
+| Backdrop | `-backdrop-bg`, `-backdrop-z` (99999), `-glossy-backdrop-filter` (when `show-glossy`) |
+| Panel | `-panel-bg`, `-panel-radius`, `-panel-padding-*`, `-panel-max-width`, `-panel-shadow`, `-glossy-panel-filter` |
+| Icon | `-icon-color` (danger) vs `-icon-color-neutral` (when `show-icon-color=false`), `-icon-bg`/`-icon-bg-size` (when `show-icon-background`) |
+| Row idle | `-row-bg`, `-row-border`, `-row-height`, `-row-radius`, `-row-rank-*`, `-row-label-*`, `-row-grip-*` |
+| Row hover | `-row-hover-border` (teal-500) |
+| Row dragging | `-row-dragging-opacity` (0.55), `-row-dragging-shadow` |
+| Reorder btn | `-btn-bg`/`-fg`, `-btn-bg-hover`/`-fg-hover` (teal), `-btn-disabled-opacity` (0.4) |
+| Info pill | `-info-bg`/`-fg` (teal-50/700) |
+| Error banner | red family (Shadow tokens; `-tw` reads raw `--color-falcon-red-*` — G-TOK) |
+| Footer | `-footer-btn-confirm-bg` (teal-700), `-footer-btn-cancel-*`, `-footer-btn-disabled-opacity` (0.55) |
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B17) — token file counted at 187 lines, gate-12 `:where()` scope confirmed. **`backdrop-z` DRIFT corrected `1000` → `99999`** (insufficient-balance-dialog.tokens.css:55). NEW findings: `-tw` reads raw palette refs for some visuals (G-TOK) + wrapper `::backdrop` raw literals (G-BACKDROP). Token catalogue otherwise re-confirmed against the live file.

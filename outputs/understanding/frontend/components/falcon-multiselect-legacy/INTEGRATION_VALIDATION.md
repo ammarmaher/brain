@@ -47,4 +47,4 @@
 - `[INFERRED]` If the original server-filter + infinite-scroll + cross-page Select-All capability is needed, raise it as enhancements on `<falcon-angular-multi-select>` (gaps G3 async-loading and a new dual-panel/paged variant), not as a revival here.
 
 ## Verification
-🔴 INFERRED / historical. CODE-DERIVED CORRECTION: `[CODE]` live-source check 2026-05-18 confirms the component source directory and all files have been **deleted**; the existing 6 dossier files describe a Wave 3 stub that no longer ships. No integration surface remains.
+🟢 CODE-VERIFIED 2026-06-03 (B22) — deletion RE-CONFIRMED (Glob empty; 0 grep hits; barrel exports only `FalconAngularMultiSelectComponent`). Upgrades the prior 🔴/2026-05-18 historical correction. No integration surface remains; historical rows 🟡 CODE-DERIVED / `[BRAIN-OUT]`.

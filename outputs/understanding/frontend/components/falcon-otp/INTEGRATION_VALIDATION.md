@@ -45,4 +45,4 @@ The component binds **nothing**. The owning flow (`OtpService` / `ForgotPassword
 - `[CODE]` `falcon-otp.tsx:341` SMS auto-fill is already wired (`autocomplete="one-time-code"`) — `GAPS_AND_UPGRADES.md` G4 ("verify SMS auto-fill") is satisfiable directly from source: it is present.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-otp.tsx` + `otp.service.ts` + `forgot-password-flow.service.ts`. Endpoints ✅ VERIFIED against live auth services. Correction vs `GAPS_AND_UPGRADES.md` G4: `autocomplete="one-time-code"` is present on box 0 (`falcon-otp.tsx:341`).
+🟢 code-verified (re-read 2026-06-03) from `falcon-otp.tsx` + `falcon-otp-tw.tsx` + `falcon-otp.component.ts` (+ auth `otp.service.ts` / `forgot-password-flow.service.ts`). Endpoints ✅ VERIFIED against the live auth services. `autocomplete="one-time-code"` present on box 0 (G4 resolved). `@Watch('value')` divergence-only re-sync, edge-triggered complete, un-proxied `setFocus()`/`clear()`, wrapper drops the `complete` flag (G1) ✅ source-verified. Live consumer path corrected: the OTP dialog now lives at `libs/falcon/src/shared-ui/lib/components/otp-dialog/` (moved out of host-shell).

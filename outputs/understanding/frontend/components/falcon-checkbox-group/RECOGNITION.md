@@ -56,4 +56,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Native `<fieldset>` + `<input type=checkbox>` or PrimeNG `<p-checkbox>` ad-hoc groups in app code — banned (`feedback_falcon_ui_library_only_no_native`).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE] src/angular-wrapper/components/falcon-checkbox-group/falcon-checkbox-group.component.ts` + `[BRAIN-OUT]` `OVERVIEW.md` + `[CODE] GAPS_AND_UPGRADES.md`. Cross-library map [INFERRED] from rendered structure. Used in 1 production consumer (user-role wizard) — fingerprint code-derived + feature-grounded.
+🟢 code-verified from `falcon-checkbox-group.component.{ts,html}` + the Stencil tags (read 2026-06-03). Cross-library map 🟡 `[INFERRED]` from rendered structure. **0 live consumers** (showcase-only) — fingerprint is code-derived, not yet feature-grounded; the design-intent permission/settings/filter uses are hand-rolled in production today.

@@ -1,4 +1,4 @@
-# falcon-tree-table — USAGE
+﻿# falcon-tree-table — USAGE
 
 ## Example 1 — Wallet `multi-3` tree (typical pattern)
 
@@ -110,3 +110,16 @@ import type {
 - DO — manage `expandedIds` via signal for full reactivity.
 - DON'T — embed Falcon Angular components inside cells via templates (not supported by wrapper today).
 - DON'T — use this for org-hierarchy chrome (use `<falcon-organization-hierarchy-tree-tw>`).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-tree-table>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`
+
+## Deep-Dive Sweep Consumer Sweep (2026-06-03 — B08)
+
+[CODE] grep `<falcon-angular-tree-table[\s>]` / `<falcon-tree-table[\s>]` / `<falcon-tree-table-tw[\s>]` across `apps/` → **0 production render-sites.** All hits are non-render: Tailwind safelist comments (`apps/{host-shell,admin-console}/src/tailwind.css`), wallet-balance code-comments (the wallet builds its own grid, does not render the component), the showcase registry tile, and `assets/component-docs/tree-table.md`. The Wave-7 `playground.page.html` consumer is gone (route removed). **Still no production feature page.**
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). Consumer sweep re-run → 0 production render-sites. Usage examples (wallet `multi-3`, CVA/Reactive-Forms, per-row Stencil slot) re-confirmed against the live wrapper + `-tw` source.

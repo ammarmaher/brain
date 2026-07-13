@@ -1,4 +1,4 @@
-# falcon-table — GAPS & UPGRADES
+﻿# falcon-table — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -44,7 +44,8 @@
 
 ### Row actions
 
-- Row-action `⋮` icon in the Shadow variant is `<i class="pi pi-ellipsis-v">` — **a leftover PrimeIcon reference!** (`falcon-table.tsx:655`). Should be a Falcon-icon-font class per the Wave PR-8 PrimeIcons removal. **P0 — direct violation of the no-PrimeIcons rule.**
+- **FT-01 RESOLVED (2026-06-03).** The row-action `⋮` icon is now `<i class="falcon-icon falcon-icon-ellipsis-v">` in BOTH render paths (`[CODE]` falcon-table.tsx:660 Shadow / falcon-table-tw.tsx:1621 via `falconTableRowActionIconClasses()`). The prior dossier's flagship P0 (PrimeIcon `pi pi-ellipsis-v` at `falcon-table.tsx:655`) is **stale** — the source has been fixed. (The only surviving `pi pi-ellipsis-v` is in the **compiled** `falcon-table.js:402`, a stale build artifact outside the `.tsx` source sweep scope — not a code defect.) The shadow-row chevron is likewise `falcon-icon falcon-icon-chevron-down`. **No PrimeIcon remains in live `.tsx`/`.css` source.**
+- `[CODE]` NEW per-row kebab gate: `actionsVisibleField` (`-tw`, Wave 27) hides the `⋮` for any row where `row[field] === false` — the platform "row-action gated on a row-level allowed-flag" mechanism. The actions `<td>` still mounts (column alignment preserved). Document, not a gap.
 
 ### Filtering
 
@@ -53,7 +54,7 @@
 
 ### Internationalization
 
-- Default English strings (`'No records to display.'`, `'Search…'`, `'Pagination'`) are bare literals — consumers must pass translated strings via `emptyMessage` / `ariaLabel`. Filter input placeholder `'Search…'` is **hardcoded in source** (`falcon-table.tsx:458`, `falcon-table-tw.tsx:513`). **P1 — add `searchPlaceholder` + `searchAriaLabel` props.**
+- Default English strings (`'No records to display.'`, `'Search…'`, `'Pagination'`) are bare literals — consumers must pass translated strings via `emptyMessage` / `ariaLabel`. Filter input placeholder `'Search…'` is **hardcoded in source** (`[CODE]` falcon-table.tsx:460, falcon-table-tw.tsx:1263 — line refs updated 2026-06-03). **P1 — add `searchPlaceholder` + `searchAriaLabel` props.** (Note: the Actions-column header IS now i18n-able via `actionsHeaderLabel` (`-tw`), and the shadow-row labels/aria-labels are i18n-able — the search placeholder is the main remaining hardcoded string.)
 - Sort glyph is Unicode `▲▼` — direction is fine across LTR/RTL but might collide with the Falcon icon font visual language. **P3.**
 
 ### Tailwind / token parity (Shadow vs Light)
@@ -68,14 +69,14 @@
 
 ### Tests
 
-- **No `.spec.ts` for either `falcon-table.tsx`, `falcon-table-tw.tsx`, or `falcon-table.component.ts`** visible alongside source. Project pattern uses Vitest + analog (`apps/`-side) — no unit-test coverage for the Stencil components beyond Stencil's own runtime contract. **P1**.
+- **FT-11 PARTIALLY RESOLVED (2026-06-03).** A Stencil spec now exists: `[CODE]` `falcon-table-tw.shadow.spec.ts` (346 ln, **16 specs**, Jest `newSpecPage`) covering the SHADOW-ROW internals — render fence, sticky-actions split, chevron toggle event, default action-button payloads (incl. `falcon-shadow-delete-request`), and i18n aria-labels (added Wave 22A, closes FU-08). **Still missing:** specs for the CORE table behaviour (sort / filter / lazy / selection / pagination) on either `falcon-table.tsx` or `falcon-table-tw.tsx`, and **zero** spec for the Angular basic wrapper `falcon-table.component.ts`. **P1 — narrower than originally documented (shadow internals are covered).**
 
 ## Reusable upgrades needed
 
 | ID | Title | Priority | Recommended API |
 |---|---|---|---|
-| FT-01 | PrimeIcon removal | **P0** | Replace `pi pi-ellipsis-v` at `falcon-table.tsx:655` with `falcon-icon falcon-icon-ellipsis-v` |
-| FT-02 | Keyboard sort | **P0** | Add `tabindex="0"` + `onKeyDown(Enter|Space) → headerClickHandler` on sortable `<th>` |
+| ~~FT-01~~ | ~~PrimeIcon removal~~ | **DONE 2026-06-03** | RESOLVED — `falcon-icon falcon-icon-ellipsis-v` is live in both `.tsx` paths. (Stale `pi` only in compiled `.js`.) |
+| FT-02 | Keyboard sort | **P0** | Add `tabindex="0"` + `onKeyDown(Enter|Space) → headerClickHandler` on sortable `<th>` (still missing in BOTH paths — falcon-table.tsx:556 / falcon-table-tw.tsx:1416) |
 | FT-03 | Grid keyboard nav | **P1** | Add Arrow/Home/End row nav per WAI-ARIA grid pattern |
 | FT-04 | i18n placeholders | **P1** | `searchPlaceholder`, `searchAriaLabel`, `paginationAriaLabel` props |
 | FT-05 | Compose `<falcon-empty-state>` | **P2** | Optional `emptyStateIcon`, `emptyStateDescription` so default empty cell renders the polished card |
@@ -105,3 +106,24 @@ All gaps above are **shared component fixes** — none should be patched per-pag
 ## Future-proof recommendation
 
 The basic Angular wrapper `<falcon-angular-table>` should be **fully deleted** once the project ships a stricter ESLint flat-block rule disallowing its selector. Today the JSDoc deprecation is silent. Adding a `@deprecated` ESLint rule + a migration codemod to `<falcon-angular-data-table>` is the cleanest path. **P2**.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-table>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B08)
+
+**Direct `<falcon-angular-table>` (basic wrapper) consumers: 0** ([CODE] grep — only comments/eslint/config refs, no render-site). Wave-7's playground consumer is gone.
+
+Drift corrected vs prior dossier (component stays ACTIVE substrate / basic wrapper stays `@deprecated`):
+- **FT-01 (P0) RESOLVED** — row-action `⋮` is `falcon-icon falcon-icon-ellipsis-v` in both `.tsx` paths; PrimeIcon survives only in the stale compiled `.js` (out of scope). This retires the flagship P0.
+- **FT-11 narrowed** — a 16-spec Stencil spec (`falcon-table-tw.shadow.spec.ts`) now covers shadow-row internals; core-behaviour + Angular-wrapper specs still absent.
+- **API drift filled** — added `actionsHeaderLabel` / `actionsVisibleField` (per-row kebab gate) / `expandedRowId` + the entire shadow-row prop+event suite + `row-expansion` slot + the `headerInset` Alignment-Contract type field; `data-shadow-mount` is now a `<div>` not a `<td>`; `stickyActions` default reverted to `false` (Wave 27). LOC recounted (Shadow 690, `-tw` 1702, types 227).
+- **Platform `loading`-hard-swap + `busyRowIds` consumer pattern** documented in API.md (spec note a, runtime-verified 2026-05-21).
+- FT-02 (keyboard sort, P0) + FT-03 (grid nav, P1) **still open in BOTH paths** — verified no `tabindex`/keydown on sortable `<th>` or data `<tr>`.
+- All findings `safe-local` (doc-only) EXCEPT FT-02/FT-03 (a11y, HIGH-RISK-QUEUE); no deletion/promotion flag. See FINDINGS/B08.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08) against falcon-table.tsx (690 ln) + falcon-table-tw.tsx (1702 ln) + the new `falcon-table-tw.shadow.spec.ts`. **FT-01 RETIRED** (PrimeIcon resolved in source); FT-11 narrowed (shadow spec exists); FT-02/FT-03 a11y gaps re-confirmed open in both paths. Component stays ACTIVE substrate; basic wrapper stays `@deprecated` with 0 consumers.

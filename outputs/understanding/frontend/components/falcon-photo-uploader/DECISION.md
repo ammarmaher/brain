@@ -1,10 +1,12 @@
 # falcon-photo-uploader (LEGACY) — DECISION
 
+> [!warning] REMOVED — do NOT use. Superseded by [[falcon-image-uploader]] (`<falcon-angular-image-uploader>`).
+> Deleted 2026-05-31 in the React-SoT image-uploader migration. [CODE] `libs/falcon/src/shared-ui/index.ts:7-9`. The migration shipped — the "roadmap" prose below is history.
+
 ## Brain SK final recommendation
 
 ### Status
-- **LEGACY-IN-USE.** Bespoke Angular component used by 6+ wizard step templates.
-- Roadmap: replace with a Falcon UI core "avatar uploader" (or `<falcon-angular-single-uploader>` with circular mask token override) when migration ships.
+- **REMOVED (deleted 2026-05-31).** [CODE] `libs/falcon/src/shared-ui/index.ts:7-9`. The migration the old dossier anticipated has SHIPPED: all former consumers now use `<falcon-angular-image-uploader>`. Note the actual target was **image-uploader**, not the `<falcon-angular-single-uploader>` + circular-mask token the old dossier guessed.
 
 ### Use this component for
 - Existing wizard avatar slots — keep them compiling.
@@ -20,11 +22,11 @@
 - **NONE.** Do not invest in this component. Plan the migration.
 
 ### Relationship to other components
-- `<falcon-angular-single-uploader>` — the most credible migration target. Apply `--falcon-single-uploader-tile-radius: 50%` for the circular look.
-- Future: a dedicated `<falcon-angular-avatar-uploader>` Falcon UI core component that owns the circular + drag-hint banner + label/sublabel composition.
+- **`<falcon-angular-image-uploader>` ([[falcon-image-uploader]]) — the realized replacement.** All avatar/picture slots use it now (`accept` bare extensions, `maxSizeMB`, `[multiple]=false`, `[showBanner]=false`, `[showStatusBadge]=false`, CVA `[ngModel]`, `(fileAdd)` exposing `nativeFile`).
+- `<falcon-angular-single-uploader>` ([[falcon-single-uploader]]) — the old dossier's "most credible migration target" guess; not the path that shipped.
 
 ### Exact rule for future implementation tasks
-> "Do NOT add new consumers of `<falcon-photo-uploader>`. For new avatar slots, use `<falcon-angular-single-uploader>` with a per-instance `--falcon-single-uploader-tile-radius: 50%` token override. The legacy component remains for existing wizards until migration."
+> "`<falcon-photo-uploader>` is DELETED — do not reference it. For avatar / picture upload use `<falcon-angular-image-uploader>` with `[multiple]=false` + `[showBanner]=false` + `[showStatusBadge]=false`, bind via `[ngModel]`, and read the raw file from `(fileAdd)`'s `nativeFile`. The File→base64 helpers are in `libs/falcon/src/shared-ui/lib/utils/picture-file.util.ts`."
 
 ---
 
@@ -73,4 +75,9 @@
   - `[(photo)]` data URL binding.
   - `(photoChange)` / `(fileSelected)`.
   - i18n keys for label / sublabel / dragHint / uploadBtn.
-- The migration must remap each of these to the new component's APIs.
+- The migration remapped each of these to `<falcon-angular-image-uploader>` (DONE — `[(photo)]` → `[ngModel]` + `(fileAdd).nativeFile`; the `photoData` base64 object is built in the consumer's `onClientPhotoPicked` handler and flows verbatim into `wire-builders.ts`).
+
+> _N.B. — §9/§10 are historical: the upgrade path executed and the component is gone. Current risk lives in `<falcon-angular-image-uploader>`._
+
+## Verification
+🟢 code-verified (B23 reconcile 2026-06-03) — REMOVED confirmed via [CODE] `libs/falcon/src/shared-ui/index.ts:7-9`; realized successor `<falcon-angular-image-uploader>` confirmed in migrated template [CODE] `client-information-step.component.html:2-13`.

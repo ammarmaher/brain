@@ -53,13 +53,9 @@
 - The "icon" per option is always a font-icon CSS class (`<i class="...">`).
 
 ### 2. What is already dynamic through inputs/outputs?
-- `tabs` (array of options).
-- `mode` (navigation vs radio-cards).
-- `size`, `orientation`.
-- `selectedValue` (two-way).
-- `ariaLabel`, `helperText`, `errorMessage`.
-- `useTailwind` render path.
-- `rootClass`.
+- `[CODE]` **10 wrapper `@Input`s** — `tabs`, `mode`, `size`, `orientation`, `selectedValue` (CVA-backed, two-way via `(valueChange)`/`[(ngModel)]`/`formControlName`), `ariaLabel`, `helperText`, `errorMessage`, `useTailwind`, `rootClass`.
+- `[CODE]` **1 `@Output`** — `valueChange` (the 3 Stencil events `falcon-change`/`falcon-blur`/`falcon-focus` are bridged internally; `falcon-blur` → `onTouched()`).
+- `[CODE]` **Wrapper method `syncSelection(next?)`** — controlled-component escape hatch to snap the optimistic Stencil selection back to the authoritative value.
 - Per-option `value`, `label`, `disabled`, `icon`, `helperText`.
 
 ### 3. What is already dynamic through slots / ng-template?
@@ -110,3 +106,7 @@ Replace `falconTabActions` MutationObserver lift with a proper Stencil `<slot na
 - **The `falcon-change` Stencil event** — removing it would break any non-Angular consumer that bypasses the wrapper.
 - **`FalconTabOption.value` typed as `string | number`** — narrowing to `string` would break the org-hierarchy mapping that uses `ClientTab` numeric enum values.
 - **Per-tab `disabled: true` is honored both for click and keyboard** — flipping this contract would break the org-hierarchy "hidden tabs" pattern.
+- **The `syncSelection()` wrapper method + optimistic-selection semantics** — guarded-tab-switch consumers (contracts/org-hierarchy) depend on the Stencil selecting optimistically then being snapped back. Changing the Stencil to wait for the Angular round-trip would break them.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13). Recommendation unchanged (READY; `falconTabActions` READY-but-fragile). Counts: 10 wrapper `@Input`s, 1 `@Output` (`valueChange`), wrapper method `syncSelection()`; CVA confirmed; `setFocus`/`select` on BOTH Stencil tags (not wrapper-proxied). `-tw` parity verified (one divergence: no `part=`).

@@ -34,7 +34,7 @@ Plus: an optional `*` **required asterisk** on the label, a teal **focus halo** 
 Customization order (`feedback_falcon_custom_library_mandatory`): inputs → templates → slots → variants → token override → shared upgrade → wrapper → GAP.
 1. **Inputs** — `[label]`, `[(ngModel)]` / `formControlName` (CVA), `[required]`, `[size]` (`sm`/`md`/`lg`), `[state]` (`default`/`error`/`success`/`warning`), `[helperText]`, `[errorText]`, `[readonly]`.
 2. **Tri-state** — `[indeterminate]="someSelected() && !allSelected()"`; re-derive it in `(valueChange)` since it resets on toggle.
-3. **Slot** — for a rich label (a link inside an agreement label), project content via `<ng-content>` instead of `[label]` (`API.md:61` — verify projection).
+3. **Slot** — **there is NO content slot** (the wrapper is a pure tag-switcher; neither Stencil tag declares a default `<slot/>`). A rich label (link inside an agreement label) is NOT supported — that is GAP G2; raise it, do not hand-roll a sibling.
 4. **Variant** — `[checkedInput]` is the parent-driven variant; use it **only** inside `<falcon-angular-checkbox-group>`.
 5. **Token override** — restyle box color / radius / check glyph via `checkbox.tokens.css` vars (`--falcon-checkbox-bg-checked`, `--falcon-checkbox-radius`, etc.); never hardcode hex/px.
 6. **Shared upgrade** — a `description` sub-label or `errorMessage` alias is a GAP (`GAPS_AND_UPGRADES.md` G1/G2) — raise it, do not hand-roll.
@@ -49,4 +49,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - Using a checkbox where the design needs a true third value ("unknown") — a checkbox is strictly boolean; use a dropdown.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` `falcon-checkbox.tsx` / `checkbox.tokens.css`. Cross-library mapping is `[INFERRED]` from standard component parity.
+🟢 code-verified from `falcon-checkbox.component.{ts,html}` + `falcon-checkbox.tsx` + `checkbox.tokens.css` (read 2026-06-03). Cross-library mapping 🟡 `[INFERRED]` from standard component parity. **Corrected:** the "rich label via `<ng-content>`" recipe step (there is no slot).

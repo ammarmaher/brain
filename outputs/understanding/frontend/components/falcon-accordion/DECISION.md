@@ -54,10 +54,8 @@
 - No CVA.
 
 ### 2. What is already dynamic through inputs/outputs?
-- `items` (array of `FalconAccordionItem`).
-- `mode`, `size`, `disabled`, `showChevron`, `ariaLabel`, `helperText`, `errorMessage`.
-- `expandedValues` (two-way).
-- Outputs: `valueChange`, `expand`, `collapse`.
+- `[CODE]` **11 wrapper `@Input`s** — `items`, `mode`, `size`, `disabled`, `showChevron`, `ariaLabel`, `helperText`, `errorMessage`, `expandedValues` (getter/setter), `useTailwind`, `rootClass`.
+- `[CODE]` **3 `@Output`s** — `valueChange` (full array), `expand` (`{value}`), `collapse` (`{value}`). NO `expandedValuesChange` → `[(expandedValues)]` does not banana-box.
 - Per-item props: `value`, `label`, `description`, `icon`, `disabled`.
 
 ### 3. What is already dynamic through slots / ng-template?
@@ -103,7 +101,11 @@ All items 6.
 5. Add `loadingValues` + `canToggle` (additive).
 
 ### 10. What would be risky to change because other pages depend on it?
-- **No production consumers** — risk is low. Land changes now.
-- BUT: the `slot="content-<value>"` naming pattern is used by tabs (`panel-<value>`) — keep consistent.
+- **No production consumers (B13 sweep = 0)** — risk is low. Land changes now.
+- BUT: the `slot="content-<value>"` naming pattern parallels tabs (`panel-<value>`) — keep consistent.
 - The `mode="single"` default — flipping to `multiple` would change render behavior.
 - The keyboard handler chain (ArrowUp/Down, Home, End) — removing keys would break keyboard users.
+- Adding an `expandedValuesChange` Output (to enable `[(expandedValues)]`) is additive and safe; adding CVA is additive (non-CVA consumers unaffected).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13). Recommendation unchanged (READY but UNADOPTED — 0 consumers). Counts: 11 wrapper `@Input`s, 3 `@Output`s; `[(expandedValues)]` corrected (no `expandedValuesChange`); CVA + header-slot + `single-locked` remain GAPs.

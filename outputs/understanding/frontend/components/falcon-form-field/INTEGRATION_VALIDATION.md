@@ -40,7 +40,7 @@ The wrapper has **no PES key of its own**.
 - `[INFERRED]` In the real consumers the inputs are fed from `computed()` signals over the step's `FormGroup` — e.g. `[errorKey]="firstNameError()?.key ?? null"` (`USAGE.md` Example 1).
 
 ## Skeleton ↔ app-wrapper layering
-- **No Stencil skeleton** — this is a pure-Angular bespoke component (`falcon-form-field.component.{ts,html,scss}`). It pre-dates the Stencil-skeleton + Angular-wrapper discipline. There is no Light/Shadow render path and no token contract (`GAPS_AND_UPGRADES.md` G1 — it still has a `.scss` file, violating the no-SCSS rule).
+- **No Stencil skeleton** — this is a pure-Angular bespoke component (`falcon-form-field.component.{ts,html}` — **no `.scss`/`.css`**, corrected 2026-06-03/B24). It pre-dates the Stencil-skeleton + Angular-wrapper discipline. There is no Light/Shadow render path and no per-component token file; styling is Tailwind utilities + `var(--text-*, fallback)` reads (`TOKENS.md`). (`GAPS_AND_UPGRADES.md` G1 "SCSS violation" is now RESOLVED/MOOT — the SCSS premise was drift.)
 - **App / state layer** — the consuming wizard step owns the `FormGroup`, the validators (`validations/validations.ts`), the API service, and computes the `errorKey`/`required`/`disabled` inputs the wrapper renders.
 - Per `feedback_library_skeleton_app_api`, a Stencil twin would split presentational chrome from the app's validation state — that port is the recommended (and currently un-done) upgrade.
 
@@ -50,7 +50,7 @@ The wrapper has **no PES key of its own**.
 - **`hasError` does not cross-bind the slotted control's `state`** (G5) — the consumer must drive both: `[errorKey]` on the wrapper AND `[state]="error ? 'error' : 'default'"` on the inner control (the real usage examples do exactly this).
 - **`required` asterisk ≠ `aria-required`** (G4) — set `required` on the wrapper for the visual and `aria-required` on the slotted control for AT.
 - **`label`/`hint`/`errorKey` are i18n keys** — passing a translated string ships a missing-translation artifact; both `en.json` and `ar.json` must carry the key.
-- `[CODE]` `falcon-form-field.component.html:34` Note the SCSS file still exists and the template carries one literal class `ff-slot` — a cleanup flag (`GAPS_AND_UPGRADES.md` G1), not a runtime risk.
+- `[CODE]` `falcon-form-field.component.html:16` The template carries one literal helper class `ff-slot` (a content-wrapper hook with no stylesheet rule behind it — no CSS file exists). Harmless cleanup flag, not a runtime risk. (Corrected 2026-06-03: there is NO SCSS file.)
 
 ## Verification
-✅ VERIFIED in production usage — `<falcon-form-field>` is consumed by the confirmed-working Add Client / Add User wizard steps (`USAGE.md` Wave 7 — 5 consumers). Template + signal behaviour (`hasError` precedence, error/hint exclusion, no `for=` on label) is ✅ VERIFIED against `[CODE]` `falcon-form-field.component.html` (read in full) + the existing `API.md`. Backend-wiring table is intentionally empty — the wrapper has zero backend surface by design. PES rows are 🔴 INFERRED — the wrapper sees only the resolved `disabled` boolean.
+🟢 RE-VERIFIED 2026-06-03 (B24) — consumed by the confirmed-working Add Client / Add User wizard steps in BOTH consoles + templates-page step1 (`USAGE.md` Consumer Sweep — 10 live templates). Template + signal behaviour (`hasError` precedence, error/hint exclusion, no `for=` on label) re-confirmed against `[CODE]` `falcon-form-field.component.ts` (33 ln) + `.html` (29 ln). **Drift corrected:** no `.scss`/`.css` file exists (G1 RESOLVED). Backend-wiring table is intentionally empty — zero backend surface by design. PES rows are 🔴 INFERRED — the wrapper sees only the resolved `disabled` boolean.

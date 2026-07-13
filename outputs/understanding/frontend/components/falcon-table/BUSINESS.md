@@ -15,7 +15,7 @@
 ## Business constraints baked in
 - `[CODE]` falcon-table.types.ts:170 — **shadow-row `bgVariant`** (`success`/`info`/`warning`/`primary`/`neutral`) is a *semantic* channel: the colour distinguishes the *kind* of pending change (type change vs value change). A builder must pick the variant that matches the business meaning, not an arbitrary colour.
 - `[INFERRED]` **The table never decides what a row means.** Selection mode, action availability, deleted-row visibility and shadow-row contents are all business decisions made by the consuming feature / state slice. The table is presentational — treat an empty table or a missing action as an *upstream* data / permission gap, not a table bug.
-- `[CODE]` falcon-table-tw.tsx:1207 — the global-filter input placeholder is the hardcoded literal `'Search…'`. For an Arabic business audience this is an untranslated string (see `GAPS_AND_UPGRADES.md` FT-04 / FT-11). Business impact: RTL pages show an English placeholder.
+- `[CODE]` falcon-table-tw.tsx:1263 — the global-filter input placeholder is the hardcoded literal `'Search…'` (line ref updated 2026-06-03). For an Arabic business audience this is an untranslated string (see `GAPS_AND_UPGRADES.md` FT-04). Business impact: RTL pages show an English placeholder. (The Actions-column header + shadow-row button labels ARE now i18n-able via `actionsHeaderLabel` / `shadow*Label` inputs.)
 
 ## Business flows using this component
 | Flow | Page | Role of the component |
@@ -32,4 +32,4 @@
 - `lazy` mode means **the backend owns sort / filter / page** — the table emits intent (`falcon-lazy-load`) and trusts the server's response. Client-side sort assumptions do not hold.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-table.types.ts + falcon-table-tw.tsx + the 6 UI-layer dossiers + `[MEMORY]` Wave 17 / PR-40937 entries. CommChannels / Apps tab usage ✅ VERIFIED (feature confirmed working by user 2026-05-18 per `[MEMORY]` project_commchannels_apps_tabs_wave17`). Shadow-row business semantics 🟡 CODE-DERIVED (no production shadow-row consumer confirmed yet).
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08) from `[CODE]` falcon-table.types.ts (227 ln) + falcon-table-tw.tsx (1702 ln) + the UI-layer dossiers + `[MEMORY]` Wave 17 / PR-40937 entries. Shadow-row `bgVariant` + `FalconTableShadowRowMeta` re-confirmed (types.ts:180-195). CommChannels / Apps tab usage ✅ VERIFIED (feature confirmed working per `[MEMORY]` project_commchannels_apps_tabs_wave17`). Shadow rows now have a production consumer (admin/mgmt applications-table — `[MEMORY]` Wave 22C/D).

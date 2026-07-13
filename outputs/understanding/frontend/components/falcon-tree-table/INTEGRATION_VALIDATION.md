@@ -48,4 +48,4 @@ The tree-table has **no PES key of its own.** Permission gating is expressed thr
 - Object inputs (`nodes`, `columns`, `expandedIds`) must be element properties, not `[attr.x]` — the wrapper handles this.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-tree-table-tw.tsx + falcon-tree-table.types.ts + the 6 UI-layer dossiers. "No Strategy E projection in the Angular wrapper" ✅ VERIFIED ([CODE] grep of the wrapper directory returned no `TemplateRef`/`ContentChild`). No production consumer — endpoint wiring is 🟡 inferred from the intended wallet-hierarchy pattern.
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08) from `[CODE]` falcon-tree-table-tw.tsx (668 ln) + falcon-tree-table.types.ts + the UI-layer dossiers + the wrapper (128 ln). "No Strategy E projection in the Angular wrapper" ✅ RE-VERIFIED (the wrapper has no `TemplateRef`/`ContentChild`/`falconTreeTableCell` directive; custom cells use only the Stencil per-row slot `cell-{key}-{id}` at tsx:630). No production consumer — endpoint wiring is 🟡 inferred from the intended wallet-hierarchy pattern.

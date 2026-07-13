@@ -1,9 +1,9 @@
-# falcon-angular-stepper — Business Layer
+# falcon-stepper — Business Layer
 
 > Layer 2 of 3. UI layer → `OVERVIEW.md` / `API.md` / `USAGE.md` / `TOKENS.md`. Integration layer → `INTEGRATION_VALIDATION.md`.
 > Source-prefix every fact: `[CODE]` `[BRAIN-OUT]` `[VAULT]` `[BRAIN-SK]` `[PRD]` `[INFERRED]`.
 
-> **Stencil-backed component, not the legacy sibling.** This dossier describes `<falcon-angular-stepper>` — the Falcon-UI-core Stencil component (`falcon-stepper.tsx`) plus its Angular CVA wrapper. The verified, confirmed-working wizard features (Add Client 5-step / Add User) currently run on the LEGACY bespoke `<falcon-stepper>` from `libs/falcon/src/shared-ui/` (see `falcon-stepper-legacy/`). Every business rule below is encoded in the Stencil component this folder documents; where a rule is also confirmed working in production it is marked ✅, where it lives only in the new component and awaits the migration it is marked 🟡.
+> **The live wizard rail (migration COMPLETE — 2026-06-03 correction).** This dossier describes `<falcon-angular-stepper>` — the Falcon-UI-core Stencil component (`falcon-stepper.tsx`) plus its Angular CVA wrapper. The prior dossier said the confirmed-working Add Client / Add User wizards still ran on a LEGACY bespoke stepper; that is now STALE. The legacy `dynamic-stepper` was DELETED 2026-05-17 (`[CODE]` libs/falcon/src/shared-ui/index.ts:11-13) and these flows now run on THIS component (21 occurrences / 13 files). Every business rule below is therefore ✅ production-carried, not 🟡 migration-pending.
 
 ## Business purpose
 `[BRAIN-OUT]` The stepper is how Falcon tells an operator *where they are inside a multi-step business process and which steps they are still allowed to reach*. In business terms it is a **progress contract**: it visualizes the sequence of decisions a flow demands (Add Client → Information, Settings, Channels, Applications, Owner) and, in `linear` mode, enforces that the operator commits each decision in order. It is the visible spine of every Falcon wizard.
@@ -27,10 +27,11 @@
 ## Business flows using this component
 | Flow | Page | Role of the component in the flow |
 |---|---|---|
-| Add Client wizard (5 steps) | organization-hierarchy | Progress spine: Information → Settings → Channels → Applications → Owner. Linear-gated. 🟡 currently on legacy stepper; this component is the migration target. |
-| Add User wizard | organization-hierarchy | Progress spine for the Add User flow (personal → role/status → permissions). 🟡 same migration status. |
-| Add Subscription / Add Service (future) | organization-hierarchy | `[INFERRED]` Any future ordered multi-step business form. |
-| Playground showcase | host-shell | `[CODE]` `playground.page.html` — dual render path + linear/non-linear demo. ✅ exercised. |
+| Add Client wizard (5 steps) | org-hierarchy-page (admin) | Progress spine: Information → Settings → Channels → Applications → Owner. Linear-gated. ✅ live on THIS component (`[CODE]` add-client-wizard.component.html:54). |
+| Add User wizard | org-hierarchy-page (admin + mgmt) | Progress spine for the Add User flow (personal → role/status → permissions). ✅ live. |
+| Templates wizard | templates-page (admin + mgmt) | Step rail for message-template authoring. ✅ live (`[CODE]` templates-wizard.component.html:93). |
+| Contracts Add wizard | contracts-cost-management (admin) | Step rail for contract creation. ✅ live. |
+| Create Contact Group | contact-groups (mgmt) | Step rail for contact-group creation. ✅ live. |
 
 ## Business gotchas
 - A blocked forward click is a **business statement** ("you have not finished this step"), not a UI bug — it intentionally does not advance and does not flash. Builders must listen to `falcon-navigation-blocked` and surface *why* (toast / field errors), otherwise the operator sees a dead click.
@@ -39,4 +40,4 @@
 - The stepper is presentation + navigation-gating only. It does **not** save, submit, or validate forms — that is the wizard wrapper / consumer. Treating the stepper as the owner of submit logic is the most common architectural mistake.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-stepper.tsx` + `falcon-stepper.utils.ts` (read in full) and the existing UI dossier. The step-gating rules (`linear` mode, `forwardLockedFrom`, completed-step revisit) are ✅ VERIFIED against the Stencil source. The "confirmed-working Add Client / Add User" features run on the LEGACY stepper — those flows prove the *business pattern* is correct, but this exact component has not yet carried that production traffic (migration pending — see `GAPS_AND_UPGRADES.md` item 1).
+🟢 CODE-VERIFIED 2026-06-03 (B21) from `[CODE]` `falcon-stepper.tsx` + `falcon-stepper.utils.ts` (read in full) + the live consumer templates. Step-gating rules (`linear` mode, `forwardLockedFrom`, completed-step revisit) ✅ VERIFIED against source. **Drift corrected:** this component now CARRIES the Add Client / Add User / Templates / Contracts / Contact-Group production traffic (migration off the deleted legacy stepper is DONE) — the 🟡 "migration-pending" markers in the prior dossier are removed.

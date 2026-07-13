@@ -17,7 +17,7 @@
 | V-rule | Field | Trigger | Error code / message |
 |---|---|---|---|
 | Native `accept` filter | file type | OS file picker | advisory only — `accept` on the inner `<input type="file">`. |
-| Consumer-driven rejection | the file | app logic decides | `fileError` output carries `FalconSingleUploaderErrorDetail { code: 'too-large' \| 'wrong-type' \| 'custom', message }`. Note: **no `'too-many'`** code — single-file, so it cannot occur. |
+| Consumer-driven rejection | the file | app logic decides | `(fileError)` output carries `FalconSingleUploaderErrorDetail { code: 'too-large' \| 'wrong-type' \| 'custom', message }`. **The wrapper DOES wire it** (`[CODE]` ts:75 + handleError ts:143-147 from `falcon-error`) — B19 correction vs prior "not emitted from core today"; the channel is end-to-end. Note: **no `'too-many'`** code — single-file. |
 | `required` form gate | the file slot | empty submit | `[CODE]` `falcon-single-uploader.component.ts:59` `required` input — CVA participates in form validity; an empty required slot is invalid. |
 
 `[CODE]` `OVERVIEW.md` — **validation is explicitly DEFERRED.** Mime/size rules run in app code, which sets `file.status` / `errorMessage`.
@@ -33,7 +33,7 @@
 `[CODE]` `falcon-single-uploader.component.ts:49-51` — `ngOnInit` calls `defineFalconTwComponent('falcon-single-uploader')` (Wave 5 lazy registration).
 
 ## Skeleton ↔ app-wrapper layering
-- **Stencil skeleton** — `<falcon-single-uploader>` (Shadow) / `<falcon-single-uploader-tw>` (Light DOM). Pure presentational; owns drag/drop, renders empty vs filled tile, no service, no validation.
+- **Stencil skeleton** — `<falcon-single-uploader>` (Shadow) / `<falcon-single-uploader-tw>` (Light DOM). Pure presentational; owns drag/drop, renders empty vs filled tile, no service, no validation. `[CODE]` **B19 a11y note:** the Shadow empty dropzone is keyboard-focusable (`tabIndex={disabled ? -1 : 0}`, .tsx:222) but the `-tw` twin hardcodes `tabindex={-1}` (-tw.tsx:229) — a render-path a11y DIVERGENCE; in the default Tailwind path the dropzone is reachable only via the focusable native input.
 - **Stencil utils** — `falcon-single-uploader.utils.ts` — pure helpers (file-type icon, size formatting, preview decision).
 - **Angular wrapper** — `<falcon-angular-single-uploader>`: the CVA layer, signal state, event re-emission. `useTailwind=true` (default) → Light-DOM path.
 - Per `feedback_library_skeleton_app_api` — skeleton service-free; the app performs the upload; the wrapper is a pure CVA bridge with no service injection.
@@ -49,4 +49,4 @@
 - `[INFERRED]` `accept`/`maxSize` are advisory — re-validate in app code; drag-drop can bypass the OS picker filter.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-single-uploader.component.ts` + `falcon-single-uploader.types.ts` + the 6 UI dossier files. "Validation deferred" ✅ VERIFIED in `OVERVIEW.md`. Backend-module attribution + error-pipeline non-wiring are `[INFERRED]`. The "no id" / "no too-many" deltas vs the multi-file uploader ✅ VERIFIED in the two `.types.ts` files.
+🟢 RE-VERIFIED 2026-06-03 (B19) against falcon-single-uploader.component.ts (154 ln) + .types.ts + the live `.tsx`. "Validation deferred" ✅ confirmed. `(fileError)` IS wired (ts:75/143-147) — corrected. `-tw` dropzone `tabindex={-1}` vs Shadow `0` a11y divergence added. Backend-module attribution + error-pipeline non-wiring remain `[INFERRED]` (no production consumer to anchor against). The "no id" / "no too-many" deltas vs the `file-uploader-shared` `FalconFileUploaderFile` (which HAS `id`+`errorCode`+`previewUrl`) ✅ confirmed.

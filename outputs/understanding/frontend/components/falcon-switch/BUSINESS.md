@@ -15,7 +15,7 @@
 ## Business constraints baked in
 - `[CODE]` `API.md:63` / `GAPS_AND_UPGRADES.md:25` **Strictly boolean — no tri-state.** A switch can only express on or off; "indeterminate / unknown" is impossible by design. If a setting has a third state, a switch is the wrong control.
 - `[CODE]` `API.md:27` **`value` (`'on'`) is the native form token, not the business answer** — the business answer is the boolean from `valueChange` / CVA.
-- `[CODE]` `API.md:29-30,65` **`channel-pill` ON/OFF labels (`textOn`/`textOff`) are display-only** — they render the *current state in words* (e.g. "Active"/"Inactive"); they are not selectable options and have no effect on `dot-knob` / `hidden-input` variants.
+- `[CODE]` falcon-switch.tsx:191-200 **Inner labels (`textOn`/`textOff`) are display-only** — they render the *current state in words* (e.g. "ON"/"OFF") and are not selectable options. CORRECTION (2026-06-03): they render in **ANY variant** when set (the `.tsx` gates only on `this.textOn || this.textOff`), NOT just `channel-pill` as the prior dossier claimed.
 - `[CODE]` `GAPS_AND_UPGRADES.md:9-13` **No built-in loading state.** A server-confirmed toggle (a feature flag the backend must acknowledge) has no native "pending" affordance — the host must gate `[disabled]` while the call is in flight. Treating a switch as instantly committed when the backend can still reject it is a business correctness risk.
 
 ## Business flows using this component
@@ -28,9 +28,10 @@
 | UI showcase / playground | host-shell `falcon-ui-showcase`, `playground.page` | Demonstration only — not a business flow. |
 
 ## Business gotchas
-- A switch flipped in the UI is **not necessarily committed** — if the backend owns the truth (service enable/disable, feature flag), the operator's flip is a *request*. The host must reflect the confirmed state after the call, and revert on failure. Optimistic flips that silently desync from the backend are a real-world bug.
-- `channel-pill` `textOn`/`textOff` strings are translatable display copy — they describe the state, they are not a two-option picker. Do not model a binary *choice between two named things* (e.g. "Monthly" vs "Yearly") as a switch — that is a radio / dropdown decision.
-- A switch is for a **standing setting**; a checkbox is for a **form-time fact** (`BUSINESS.md` of falcon-checkbox). Picking the wrong one mis-signals the persistence semantics to the operator.
+- A switch flipped in the UI is **not necessarily committed** — if the backend owns the truth (service enable/disable, feature flag, row visibility), the operator's flip is a *request*. The host must reflect the confirmed state after the call, and revert on failure. The service-pricing-table consumer drives the switch from `row.visible` (the confirmed state) precisely for this reason. Optimistic flips that silently desync are a real-world bug.
+- `textOn`/`textOff` strings are translatable display copy describing the *state*, not a two-option picker. Do not model a binary *choice between two named things* (e.g. "Monthly" vs "Yearly") as a switch — that is a radio / dropdown decision.
+- A switch is for a **standing setting**; a checkbox is for a **form-time fact**. Picking the wrong one mis-signals the persistence semantics to the operator.
+- `[CODE]` **A disabled switch is a statement** — the service-pricing toggle's `[disabled]="row.visibility && !row.canHide"` (G-25) communicates "this row cannot be hidden" by disabling rather than silently rejecting the click. A builder must not "fix" the greyed-out toggle — it is a deliberate state gate.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` consumer grep (`USAGE.md:91-99`, 7 files). The service enable/disable and Add Client service-row uses are 🟡 CODE-DERIVED — present in admin-console source; not independently confirmed as ✅ VERIFIED working features in `[MEMORY]`.
+🟢 RE-VERIFIED 2026-06-03 (B06) — standing-setting framing, the boolean-not-`value` business answer, and the strictly-boolean invariant re-confirmed. The service-pricing row-visibility toggle + add-client app/comm-channels per-row toggles re-grounded from live source. CORRECTED: `textOn`/`textOff` render in any variant (not channel-pill-only). The prior "applications-table / client-service-row-table" consumers were not at those exact paths this pass.

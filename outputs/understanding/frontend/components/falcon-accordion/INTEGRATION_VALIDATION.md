@@ -26,7 +26,7 @@
 
 ## State / signal pattern
 `[CODE]` `falcon-accordion.component.ts`
-- **No `ControlValueAccessor`** — `FalconAngularAccordionComponent` does not implement CVA (`GAPS_AND_UPGRADES.md` P1). Expansion state binds **only** via `[(expandedValues)]` two-way (or `[expandedValues]` + `(valueChange)`). `[(ngModel)]` / `formControlName` do not work.
+- **No `ControlValueAccessor`** — `FalconAngularAccordionComponent` does not implement CVA (`GAPS_AND_UPGRADES.md` P1/A1). Expansion state binds via `[expandedValues]` + `(valueChange)`. Note: there is NO `expandedValuesChange` Output, so the `[(expandedValues)]` banana-box does NOT auto-wire — bind the two explicitly. `[(ngModel)]` / `formControlName` do not work.
 - The wrapper holds expansion in a `signal<ReadonlyArray<string|number>>` (`falcon-accordion.component.ts:58`); `expandedValues` is a getter/setter over that signal; `handleChange` keeps signal + output in sync.
 - Stencil internal state: only `resolvedId` is `@State()` (`falcon-accordion.tsx:55`). `expandedValues` is `@Prop({ mutable:true })` — the component mutates it on toggle then emits `falcon-change`.
 - Outputs (wrapper): `valueChange` (the full expanded array), `expand` (`{value}`), `collapse` (`{value}`). Stencil events: `falcon-change`, `falcon-expand`, `falcon-collapse` — `expand`/`collapse` carry the single value, `change` carries the whole array.
@@ -42,7 +42,7 @@
 - `[CODE]` **Collapsed panels use the `hidden` attribute** (`falcon-accordion.tsx:214`) — projected content in a collapsed panel is removed from layout, focus order, and the a11y tree. Form controls inside a collapsed panel still exist in the Angular component tree (so `formControlName` bindings stay live and validation still runs) but are not reachable by the operator. A submit can fail on an invalid field the operator cannot see — the host flow should auto-expand the offending section.
 - `[CODE]` **Item icons are CSS class strings** — `icon: 'falcon-icon falcon-icon-cog'` renders `<i class={item.icon}>` (`falcon-accordion.tsx:183-187`), bypassing `<falcon-angular-icon>` (`GAPS_AND_UPGRADES.md` P2).
 - `[CODE]` **No per-item header slot** — the header is built only from `label` / `description` / `icon` props (`falcon-accordion.tsx:181-193`). Rich headers (status badge, action button) need the P1 `header-<value>` slot upgrade — do not hand-roll.
-- 🟡 **Minor correction to `OVERVIEW.md`** — it states "Zero matches in `apps/`"; the Wave 7 sweep in `USAGE.md` found **1** consumer (`playground.page.html`). The component is demoed in the playground but has no real-feature consumer. Both statements agree on the substance: under-leveraged, zero *production-feature* adoption.
+- 🟢 **Consumer count reconciled (2026-06-03):** the B13 Consumer Sweep finds **0** consumers in `apps/` and `libs/falcon/` — OVERVIEW + USAGE now agree on "0 / unadopted". The stale Wave-7 `playground.page.html` consumer is retired (the playground route is gone).
 
 ## Verification
-✅ VERIFIED against `[CODE]` `falcon-accordion.tsx` + `[CODE]` `falcon-accordion.component.ts` — the existing 6 dossier files (no CVA, slot pattern, methods, single-mode behavior) are accurate; one minor consumer-count wording inconsistency noted above (not back-edited). Backend ownership verified as none — the component is presentational.
+🟢 VERIFIED 2026-06-03 (B13) against `[CODE]` `falcon-accordion.tsx` + `falcon-accordion.component.ts` — no CVA, `content-<value>` slot pattern, methods, single-mode collapse-to-zero all re-confirmed. Backend ownership = none (presentational). Consumer count reconciled to 0; `[(expandedValues)]` corrected to `[expandedValues]` + `(valueChange)`.

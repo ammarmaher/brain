@@ -1,4 +1,4 @@
-# falcon-menu — GAPS AND UPGRADES
+﻿# falcon-menu — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -65,7 +65,7 @@ For a "Settings" header above the list, or a "Manage…" link below — no slots
 - No test for outside-click closure with composedPath().
 
 ## Missing Tailwind / token parity
-- Light + Shadow renderers should be parity-audited.
+- `[CODE]` **Light + Shadow render-path parity VERIFIED 2026-06-03 (B13):** `falcon-menu-tw.tsx` (430 ln) mirrors `falcon-menu.tsx` (472 ln) 1:1 in `@Prop`/`@Event`/`@Method`/keyboard/ARIA/`positionPanel()`/the `data-component="falcon-menu-panel"` Top-Layer hook. **Divergences (B-dim):** (1) `-tw` emits NO `part=` (Shadow-only); (2) `-tw` styles via `menu-tailwind-classes.ts`, Shadow via `falcon-menu.css`; (3) `-tw` seeds an off-screen `style={top/left:-9999px}` in anchor mode where Shadow uses the `.anchor-fixed` CSS class. Token contract identical. **Drift risk:** the navigability helpers (`isNavigable`/`firstEnabledIndex`/`lastEnabledIndex`/`moveActive`) + `positionPanel()` are DUPLICATED inline in both `.tsx` files (no shared `falcon-menu.utils.ts`, unlike accordion/tabs) — a fix to one must be hand-mirrored. New gap **M-UTILS** (factor into a shared utils module).
 
 ## Performance risks
 - Outside-click `mousedown` listener is global — fires on every mousedown when menu is open. Acceptable.
@@ -115,4 +115,23 @@ export interface FalconMenuItem {
 ```
 
 ## Future-proof recommendation
-**`appendTo="body"` is the highest-leverage fix.** Without it, any data-table or tree with `overflow: hidden` clips the menu — a common shipping bug. Land this before broader adoption.
+**(REVISED 2026-06-03)** `appendTo="body"` is NO LONGER the highest-leverage fix — the wrapper's **Wave-6 Top-Layer popover promotion** (falcon-menu.component.ts:253-338) already escapes `overflow:hidden` clipping in popover-supporting browsers (which the data-table + tree-panel rely on today). A true `appendTo="body"` DOM-portal now only matters as a non-popover-browser fallback. The new highest-leverage items are **submenu support** (P1, blocks categorised action trees) and **`<falcon-angular-icon>` composition** (P1, platform consistency).
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-menu>` across `apps/` + `libs/falcon/`) — tree-panel only (data-table render site is in `libs/falcon-ui-core`, outside the Wave-7 grep scope).
+
+## Deep-Dive Sweep Findings (2026-06-03 — B13)
+
+**Render sites: 2** (`falcon-tree-panel.component.html:149` + `falcon-data-table.component.html:51`, both in `libs/`). Apps reach the menu transitively (org-hierarchy via tree-panel; every list with row actions via data-table) — large effective footprint, only 2 literal hosts. Component stays ACTIVE / preferred.
+
+Drift corrected vs prior dossier (no deletion/promotion flags):
+- **API drift fixed — NO `setFocus()` Stencil method exists** (the prior API.md claim was fabricated). The 5 real `@Method`s are `openMenu`/`closeMenu`/`toggle`/`showAt`/`hide` (all proxied on the wrapper).
+- **Top-Layer popover promotion documented** (Wave 6) — the menu does NOT body-portal; the wrapper promotes the inline panel via the native `popover` API + `FalconStackingService`. This **mitigates the `appendTo="body"` clipping gap** → future-proof recommendation revised (submenus + icon-composition now top the list).
+- **gate-12 scope confirmed** — token file `:where()`-scoped + 2 action-menu override blocks (NOT `:root`); the menu does NOT need a `.falcon-overlay-container` selector (panel stays a Stencil-host descendant even in the Top Layer).
+- **TOKENS recount** — 147 ln / 10 categories; motion-token cheat-sheet corrected (`--falcon-menu-transition-*`, not `-motion-*`).
+- **New gap M-UTILS** — navigability + positioning helpers are DUPLICATED inline in both Stencil tags (no shared `.utils.ts`) → parity-drift risk.
+- **All findings `safe-local`** (doc + additive-API) — see `FINDINGS/B13.md`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13) against all source layers (Stencil + `-tw` + wrapper re-read). Removed the fabricated `setFocus()`; documented Top-Layer promotion + gate-12 scope; added gap M-UTILS (duplicated inline helpers); re-scoped `appendTo="body"` (Top-Layer mitigates clipping). No deletion/promotion flags — component stays ACTIVE / preferred.

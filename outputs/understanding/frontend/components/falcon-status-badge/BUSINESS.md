@@ -8,9 +8,10 @@
 ## PRD / business rules touched
 | Rule | Source | How this component enforces / surfaces it |
 |---|---|---|
-| `[CODE]` Every user/node row carries a lifecycle status | `[CODE]` `USAGE.md:76-77` — `org-hierarchy-page-menu.component.{html,ts}` | The org-hierarchy menu renders this badge for node/user status; status drives row actions (e.g. a `deleted` row routes user-details with `includeDeleted=true` — `[MEMORY]` `project_pr40937_include_deleted_lift`). |
-| `[CODE]` Service/application rows carry an enable/lifecycle status | `[CODE]` `USAGE.md:78-80` — `applications-table` + `client-service-row-table` | Service rows render the badge with the service-status set (`inactive`/`paid`/`expired`/`disabled`); `eFalconServiceStatus` from the backend maps onto these severities. |
-| `[CODE]` Comms hub entries carry a status | `[CODE]` `USAGE.md:81` — management-console `comms-hub.component.html` | The badge is the status visual on the client-facing comms hub list. |
+| `[CODE]` Every user/node row carries a lifecycle status | `[CODE]` org-hierarchy-page-menu.component.{html,ts} (both consoles) | The org-hierarchy menu renders this badge for node/user status; status drives row actions (e.g. a `deleted` row routes user-details with `includeDeleted=true` — `[MEMORY]` `project_pr40937_include_deleted_lift`). |
+| `[CODE]` Contact-group rows carry a status | `[CODE]` contact-groups-list.component.html:143-148 (both consoles) | The status column cell renders `<falcon-angular-status-badge [severity]="statusSeverity(row)" [label]="statusLabel(row)">`. |
+| `[CODE]` Service/application + contract rows carry an enable/lifecycle status | `[CODE]` add-client-wizard/{client-applications-step,client-comm-channels-step} + contracts-cost-management/contracts-view-contract | Rows render the badge with the service-status set (`inactive`/`paid`/`expired`/`disabled`); `eFalconServiceStatus` from the backend maps onto these severities. |
+| `[CODE]` Shared comm-mkt / pricing / user-details views carry status | `[CODE]` libs/falcon shared-features comm-mkt-view / service-pricing-table / user-details | The badge is the status visual across the shared feature surfaces. |
 | `[INFERRED]` Soft-deleted entities remain visible to Falcon admins | `[MEMORY]` `project_pr40937_include_deleted_lift` | The `deleted` severity (danger bucket) is the visual marker for a soft-deleted row that a Falcon admin can still see. |
 
 ## Business constraints baked in — STATUS ENUM → VISUAL BUCKET MAP
@@ -39,18 +40,18 @@ Other baked-in constraints:
 ## Business flows using this component
 | Flow | Page | Role of the component in the flow |
 |---|---|---|
-| Organization Hierarchy — node / user list | admin-console `org-hierarchy-page-menu` | Status pill per node/user row; status gates row actions. |
-| Applications / services table | admin-console org-hierarchy `applications-table` | Service-status pill per service row (`inactive`/`paid`/`expired`/`disabled`/`active`). |
-| Add Client — service row table | admin-console `add-client-wizard/client-service-row-table` | Service-status pill during client creation. |
-| Comms hub | management-console `comms-hub` | Status pill on client-facing comms entries. |
-| User / account list cells | any list via `<ng-template falconDataTableCell="status">` | Canonical status-cell render. |
+| Organization Hierarchy — node / user list | both consoles `org-hierarchy-page-menu` | Status pill per node/user row; status gates row actions. |
+| Contact Groups list | both consoles `contact-groups-list` | Status column cell (`falconDataTableCell field="status"`). |
+| Contracts & Cost Management | both consoles `contracts-cost-management` / `contracts-view-contract` | Contract/service status pill. |
+| Add Client — applications / comm-channels steps | admin-console `add-client-wizard` | Service-status pill during client creation. |
+| Shared comm-mkt / pricing / user-details | `libs/falcon` shared-features | Canonical status-cell render across shared surfaces. |
 
 ## Business gotchas
 - The 9→4 map means **`suspended`, `locked`, `inactive`, `disabled` are visually identical** (all neutral grey) — the operator distinguishes them by the *label text*, not the color. A builder must never drop the label to "just the dot" for a neutral-bucket status without an `aria-label`, or the four states become indistinguishable.
 - `paid` is a **success-bucket service status**, not a payment receipt — it means the service row is settled; do not reuse it as a generic "payment succeeded" toast color.
 - `pending` (warning/amber) is the same status a newly-created user lands in (`[MEMORY]` falcon-dropdown `BUSINESS.md` — user status is `Pending` at creation, never operator-chosen). The badge surfaces that lifecycle outcome; it is not an editable choice.
 - This is **not `<falcon-tag>`** — `<falcon-tag>`'s 7 `severity` values are a generic palette; `<falcon-status-badge>`'s 9 values are domain status enums. Using `<falcon-tag severity="warning">` for a `pending` account is semantically wrong even if it looks the same.
-- `[CODE]` `OVERVIEW.md:37` / `GAPS_AND_UPGRADES.md:7` **The biggest business risk is non-adoption** — admin-console `organization-hierarchy-menu.component.html:162-195` historically hand-rolled status chips in raw Tailwind. Hand-rolled chips drift from the SSOT bucket map, so two pages can show the same status in different colors. Always compose the shared component.
+- `[CODE]` **Historic non-adoption is now resolved** — the component is broadly composed (16 app files / 21 + 4 lib / 5, 2026-06-03). Any residual hand-rolled `bg-falcon-{color}-50 text-falcon-{color}-700` chip is a per-page leftover, not the norm; hand-rolled chips drift from the SSOT bucket map (two pages showing the same status in different colors), so always compose the shared component.
 
 ## Verification
-✅ VERIFIED — the 9-severity → 4-bucket map is confirmed in `[CODE]` `falcon-status-badge.types.ts:6-15`, `falcon-status-badge.component.ts:19-32`, and `status-badge.tokens.css` (per `TOKENS.md:19-27`). Consumer use in org-hierarchy / applications-table / comms-hub is ✅ VERIFIED present in source (`USAGE.md:74-81`, 6 files). The Organization Hierarchy page is a `[MEMORY]`-confirmed working feature. Soft-delete `deleted`-status visibility is ✅ VERIFIED via `[MEMORY]` `project_pr40937_include_deleted_lift` (landed 2026-05-17).
+🟢 RE-VERIFIED 2026-06-03 (B10) — the 9-severity → 4-bucket map confirmed in `[CODE]` `falcon-status-badge.types.ts:6-17`, `falcon-status-badge.component.ts:23-34`, `status-badge.tokens.css:33-73`. Consumer use ✅ VERIFIED present in source (Consumer Sweep — 16 app files / 21 occurrences + 4 lib files / 5; corrects the prior "6"). Organization Hierarchy is a `[MEMORY]`-confirmed working feature. Soft-delete `deleted`-status visibility ✅ VERIFIED via `[MEMORY]` `project_pr40937_include_deleted_lift`.

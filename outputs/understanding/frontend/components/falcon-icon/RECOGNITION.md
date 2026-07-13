@@ -51,3 +51,6 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Substituting a near-miss Falcon glyph because the exact one is missing — raise a registry addition; a wrong icon is a semantic defect.
 - Using `<falcon-angular-icon>` for a non-Falcon / custom SVG — it can only render glyphs in `falcon-icons.css`; use `<falcon-svg-icon>` (platform-owned exact glyph) or `<iconify-icon>` (third-party).
 - Re-drawing a platform-owned SVG (e.g. the SAR symbol) inline in a feature when it already exists in the shared SVG registry — call `<falcon-svg-icon name="currency-sar">` instead of duplicating the path.
+
+## Verification
+🟡 CODE-DERIVED 2026-06-03 (B11) from `falcon-icon.tsx` + `falcon-icon.component.ts` + `falcon-icons.css` (314 glyphs). Visual fingerprint + sibling routing (icon vs svg-icon vs avatar vs badge) re-confirmed. Cross-library mapping 🟡 `[INFERRED]`. comm-mkt-card confirmed as the live `icon-start` slot consumer.

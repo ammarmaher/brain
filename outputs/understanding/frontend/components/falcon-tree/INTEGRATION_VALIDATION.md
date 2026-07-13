@@ -45,4 +45,4 @@ The tree has **no PES key of its own.** Permission gating is expressed through t
 - Do not mutate `nodes` in place — pass a fresh array so change detection fires.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-tree-tw.tsx + falcon-tree.types.ts + the 6 UI-layer dossiers. No production consumer of `<falcon-angular-tree>` (playground only per Wave 7) — endpoint wiring is 🟡 inferred from the intended pattern; the parallel `<falcon-tree-panel>` carries the live org-hierarchy integration.
+🟡 CODE-DERIVED 2026-06-03 (B09) from `[CODE]` falcon-tree-tw.tsx + falcon-tree.types.ts + the 6 UI-layer dossiers. **No production consumer of `<falcon-angular-tree>` at all** (B09 sweep — playground folder removed) — endpoint wiring is 🟡 inferred from the intended pattern; the parallel `<falcon-tree-panel>` carries the live org-hierarchy integration.

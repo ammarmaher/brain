@@ -22,26 +22,33 @@ Wallet hierarchy, accounts tree-of-balances, any tree-with-per-row-columns view 
 
 ## Status
 
-ACTIVE — Stencil Shadow + Light (`falcon-tree-table-tw`). Angular wrapper `falcon-angular-tree-table` with ControlValueAccessor (CVA) for `[(selectedValue)]` via `[(ngModel)]`. Currently consumed only in playground + showcase (not yet in any production feature page).
+ACTIVE — Stencil Shadow + Light (`falcon-tree-table-tw`). Angular wrapper `falcon-angular-tree-table` with ControlValueAccessor (CVA) for `[(selectedValue)]` via `[(ngModel)]`. **Showcase / docs-only — NO production feature page renders it (verified 2026-06-03).** The wallet-balance feature *references* `<falcon-angular-tree-table>`/`<falcon-tree-table-tw>` only in code comments (it builds its own grid); the prior dossier's `playground.page.html` consumer is gone (route removed).
 
-## Paths
+## Source file paths
 
-- Stencil Shadow: `libs/falcon-ui-core/src/components/falcon-tree-table/falcon-tree-table.tsx` (597 LOC)
-- Stencil Light: `libs/falcon-ui-core/src/components/falcon-tree-table-tw/falcon-tree-table-tw.tsx`
-- Types: `libs/falcon-ui-core/src/components/falcon-tree-table/falcon-tree-table.types.ts`
-- Utils: `libs/falcon-ui-core/src/components/falcon-tree-table/falcon-tree-table.utils.ts` (`buildGridTemplate`, `flattenTree`, `findParentId`, `findFirstChildId`, `hasRadioColumn`, `toggleExpanded`, `formatRowId`)
-- Tokens: `libs/falcon-ui-tokens/src/components/tree-table.tokens.css`
-- Tailwind helpers: `libs/falcon-ui-core/src/tailwind/tree-table-tailwind-classes.ts`
-- Angular wrapper: `libs/falcon-ui-core/src/angular-wrapper/components/falcon-tree-table/falcon-tree-table.component.ts`
-- Angular selector: `falcon-angular-tree-table`
+| Layer | Path |
+|---|---|
+| Stencil Shadow | `libs/falcon-ui-core/src/components/falcon-tree-table/falcon-tree-table.tsx` (**596 LOC**) |
+| Stencil Shadow CSS | `libs/falcon-ui-core/src/components/falcon-tree-table/falcon-tree-table.css` (361 ln) |
+| Stencil Light (`-tw`) | `libs/falcon-ui-core/src/components/falcon-tree-table-tw/falcon-tree-table-tw.tsx` (**668 LOC**) |
+| Types | `libs/falcon-ui-core/src/components/falcon-tree-table/falcon-tree-table.types.ts` (52 ln) |
+| Utils | `libs/falcon-ui-core/src/components/falcon-tree-table/falcon-tree-table.utils.ts` (199 ln — `buildGridTemplate`, `flattenTree`, `findParentId`, `findFirstChildId`, `hasRadioColumn`, `toggleExpanded`, `formatRowId`) |
+| Tokens | `libs/falcon-ui-tokens/src/components/tree-table.tokens.css` |
+| Tailwind helpers | `libs/falcon-ui-core/src/tailwind/tree-table-tailwind-classes.ts` |
+| Angular wrapper TS | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-tree-table/falcon-tree-table.component.ts` (128 ln) |
+| Angular wrapper HTML | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-tree-table/falcon-tree-table.component.html` (51 ln) |
+| Angular wrapper CSS | `libs/falcon-ui-core/src/angular-wrapper/components/falcon-tree-table/falcon-tree-table.component.css` (11 ln) |
+| Angular selector | `falcon-angular-tree-table` |
+| Spec/tests | **NONE** — no `.spec.ts` for the Stencil tags, the wrapper, or the (non-trivial) `*.utils.ts` pure fns (GAP FTT-07). |
 
-## Consumers in active source
+## Consumers in active source (grep verified 2026-06-03)
 
-- `apps/host-shell/src/app/playground/playground.page.html` (playground)
-- `apps/host-shell/src/app/features/falcon-ui-showcase/showcase-data/registry.ts` (showcase tile)
-- `apps/host-shell/src/assets/component-docs/tree-table.md` (docs)
-- `apps/admin-console/src/tailwind.css` (Tailwind safelist inline)
-- **No production feature page consumer.** GAP — once a production tree-shaped view lands, this is the target.
+`[CODE]` grep `<falcon-angular-tree-table[\s>]` / `<falcon-tree-table[\s>]` / `<falcon-tree-table-tw[\s>]` across `apps/` → **ZERO production render-sites.** All hits are non-render:
+- `apps/{host-shell,admin-console}/src/tailwind.css` — Tailwind safelist comments
+- `apps/{admin,management}-console/.../wallet-balance-management/wallet-balance-management.component.ts:236/254/298/352` — **code comments only** (the wallet builds its own 3-column grid; it does NOT render the tree-table component)
+- `apps/host-shell/src/assets/component-docs/tree-table.md` — docs
+- `apps/host-shell/.../falcon-ui-showcase/showcase-data/registry.ts` — showcase tile
+- **No production feature page renders it.** GAP — once a production tree-shaped view lands, this is the target. (The Wave-7 `playground.page.html` consumer is gone — route removed.)
 
 ## Related components
 
@@ -53,3 +60,6 @@ ACTIVE — Stencil Shadow + Light (`falcon-tree-table-tw`). Angular wrapper `fal
 ## Ownership
 
 Stencil core + Angular wrapper (CVA). Maintained as the wallet hierarchy / accounts-tree visual primitive.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). Source-file table recounted (Shadow 596 ln, `-tw` 668 ln, wrapper 128 ln, utils 199 ln); CVA wrapper confirmed. Consumers re-grepped → **0 production render-sites** (Tailwind-safelist + wallet-comment + showcase/docs only); Wave-7 playground consumer removed.

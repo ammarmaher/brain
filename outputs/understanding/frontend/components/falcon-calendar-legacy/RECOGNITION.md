@@ -42,4 +42,4 @@ If a screenshot shows a date popup with explicit **Set / Cancel** (or **Apply / 
 - Treating the existing 6 dossier files as fully accurate — they describe a Wave-3 façade that does not match the only surviving source (see `INTEGRATION_VALIDATION.md`).
 
 ## Verification
-🔴 INFERRED + 🟡 CODE-DERIVED from `[CODE]` `deprecated-falcon-web-platform-ui/.../falcon-calendar.component.ts` + the existing 6 dossier files. **Recognition rule: any design matching this component routes to a modern sibling — `<falcon-calendar>` legacy is an ORPHAN flagged for deletion.**
+🟢 CODE-VERIFIED 2026-06-03 (B22) — legacy component REMOVED from production RE-CONFIRMED (Glob empty; 0 live consumers; barrel comment at index.ts:313). Visual-fingerprint + cross-library rows 🟡 CODE-DERIVED / `[BRAIN-OUT]` from the deprecated-repo source + prior dossier. **Recognition rule: any design matching this component routes to `<falcon-angular-date-picker>` (field) or `<falcon-angular-calendar>` (inline grid). ⚠ A Set/Cancel popup → date-picker + a footer-action feature request, never PrimeNG revival.**

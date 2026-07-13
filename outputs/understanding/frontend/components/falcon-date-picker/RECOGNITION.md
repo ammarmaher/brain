@@ -15,7 +15,7 @@
 | Library | Their component | Parity notes |
 |---|---|---|
 | MUI | `<DatePicker>` (the field + popover one, not `<DateCalendar>`) | direct 1:1 — MUI's `<DatePicker>` is the field; `<DateCalendar>` is the inline grid. |
-| PrimeNG | `<p-calendar>` / `<p-datepicker>` (default, non-inline) | direct 1:1 — this component **replaced** `<p-calendar>`. The legacy `<falcon-calendar>` facade was the PrimeNG one. |
+| PrimeNG | `<p-calendar>` / `<p-datepicker>` (default, non-inline) | direct 1:1 — this component **replaced** `<p-calendar>`. The legacy `<falcon-calendar>` PrimeNG façade that used to delegate here is now DELETED (`[CODE]` `shared-ui/index.ts:312`). |
 | Ant Design | `<DatePicker>` | direct 1:1. For range, Ant `<DatePicker.RangePicker>` → not supported here (compose two). |
 | Bootstrap | `<input type="date">` / `flatpickr` / `bootstrap-datepicker` (field mode) | upgrade target. |
 | shadcn / Radix | `<DatePicker>` (Popover + Calendar composition) | direct 1:1 — shadcn's date-picker is exactly Popover-wrapping-Calendar; Falcon's is the same shape. |
@@ -30,7 +30,7 @@
 | a date **and** a time-of-day picker | not supported — pair with a separate time control; raise GAP G3 | date-picker |
 | a date shown as `DD MMM YYYY` (not ISO) | not supported — format externally for display; raise GAP G4 | date-picker |
 | a Hijri / Umm-al-Qura field | not supported — convert dates externally; raise GAP G5 | date-picker |
-| a legacy PrimeNG `<falcon-calendar>` tag in old code | migrate it to this | keep the legacy facade |
+| a legacy PrimeNG `<falcon-calendar>` tag in old code | this (the façade is already DELETED — `[CODE]` `shared-ui/index.ts:312`) | a non-existent legacy facade |
 | a generic text field (not a date) | `<falcon-angular-input>` | date-picker |
 
 ## Composition recipe to reach parity
@@ -55,4 +55,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Native `<input type="date">` or PrimeNG `<p-calendar>` in new app code — banned (`feedback_falcon_ui_library_only_no_native`).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-date-picker.tsx` rendered structure + `[CODE]` `falcon-date-picker.component.ts` inputs + `[VAULT]` `_LEARNINGS_POPOVER_PORTAL_PATTERN.md`. Cross-library mapping is `[INFERRED]` from each library's documented field-vs-inline date split.
+🟡 CODE-DERIVED (RE-VERIFIED 2026-06-03, B07) from `[CODE]` `falcon-date-picker.tsx` (270 ln) rendered structure + `[CODE]` `falcon-date-picker.component.ts` inputs + `[BRAIN-OUT]` `_LEARNINGS_POPOVER_PORTAL_PATTERN.md`. Corrected the deleted-legacy-façade routing rows. Cross-library mapping is `[INFERRED]` from each library's documented field-vs-inline date split.

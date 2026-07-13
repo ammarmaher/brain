@@ -21,10 +21,11 @@
 ## Business flows using this component
 | Flow | Page | Role of the component in the flow |
 |---|---|---|
-| Bulk row selection | admin / management organization-hierarchy lists | Header tri-state "select all" + per-row include/exclude (via `<falcon-angular-table>`) — defines which rows a bulk action applies to. |
-| Filter panels | admin-console org-hierarchy tabs | Boolean filter facets ("show disabled only") — each checkbox is one filter predicate. |
-| Multi-select option panel | anywhere `<falcon-angular-multi-select>` is used | Internal composition primitive — each option row is a checkbox; the group reports the combined selection. |
-| Wizard consent / opt-in fields | Add Client / Add User wizards (org-hierarchy) | Standalone boolean fields the operator must affirmatively set before the step validates. |
+| Wallet channel allocation | new-wallet-balance allocation table (admin) + client view (mgmt) | Per-channel header checkbox toggles whether a channel participates in the wallet split; the "at least one channel" rule guards the last toggle (`[CODE]` wb-allocation-table.component.html:120-125). |
+| Template message-structure options | Templates wizard step 2 (admin + mgmt) | Boolean opt-ins (security recommendation, expiry-enabled, …) that reveal dependent fields when checked (`[CODE]` step2-message-structure.component.html:92,104,129). |
+| Contact-group preview/configure | create-contact-group preview step (mgmt) | A configure-time boolean toggle (`[CODE]` preview-configure-step.component.html:36). |
+| Bulk row selection / tri-state header | tables | Header tri-state "select all" + per-row include/exclude — defines which rows a bulk action applies to. |
+| Wizard consent / opt-in fields | wizards | Standalone boolean fields the operator must affirmatively set before the step validates. |
 
 ## Business gotchas
 - A checkbox left unchecked is a **recorded "no"**, not "unanswered" — do not build flows that distinguish the two on a checkbox. Use a dropdown with an explicit "Not specified" option if "unknown" must be representable.
@@ -33,4 +34,4 @@
 - Using a raw `*ngFor` of checkboxes to model a multi-value field bypasses the group's shared-value contract — the resulting payload shape will not match what the backend expects (see `<falcon-angular-checkbox-group>`).
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` `falcon-checkbox.component.ts` API. Consent-gate and tri-state semantics are 🟡 CODE-DERIVED (consumer count is 1 — playground only per `USAGE.md:84`); they are not yet ✅ VERIFIED against a confirmed-working production feature.
+🟢 code-verified against `falcon-checkbox.component.ts` (read 2026-06-03) + the live consumers. Consumer count corrected 1→5 — the channel-toggle (wallet) + opt-in (Templates wizard) uses are real production features, so the boolean-fact / guarded-toggle semantics are now feature-grounded (not playground-only). Consent-gate / requiredTrue pattern 🟡 code-derived (no live `[required]` consent checkbox cited).

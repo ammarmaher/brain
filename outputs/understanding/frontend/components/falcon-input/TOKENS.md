@@ -2,11 +2,11 @@
 
 ## Component token file
 
-`libs/falcon-ui-tokens/src/components/input.tokens.css` (~204 lines).
+`libs/falcon-ui-tokens/src/components/input.tokens.css` (**~237 lines** — recount 2026-06-03).
 
-The `:where(falcon-input, falcon-input-tw, falcon-angular-input, .falcon-input, [data-falcon-input])` selector ensures Shadow + Light + Angular host + utility-class consumers ALL read the same `--falcon-input-*` variables.
+`[CODE]` The `:where(...)` selector was **extended 2026-05-24** to also cover `falcon-password*` tags (`<falcon-password-tw>` inlines the input rendering using the same `falconInput*Classes()` helpers, so its `--falcon-input-*` references must resolve here). Full selector: `:where(falcon-input, falcon-input-tw, falcon-angular-input, .falcon-input, [data-falcon-input], falcon-password, falcon-password-tw, falcon-angular-password, .falcon-password, [data-falcon-password])`. `:where()` keeps specificity 0 so per-instance overrides still win. **gate-12 compliant** (scoped, not `:root`).
 
-## Token categories (14 declared)
+## Token categories (15 declared)
 
 1. CONTAINER — `--falcon-input-width / min-width / max-width`.
 2. LABEL — `--falcon-input-label-color`, `--falcon-input-label-color-error`, font family / size / weight / line-height, margin-bottom, cursor, required asterisk color.
@@ -20,8 +20,9 @@ The `:where(falcon-input, falcon-input-tw, falcon-angular-input, .falcon-input, 
 10. PREFIX / SUFFIX — gap, color, size for both prefix + suffix slots.
 11. HELPER TEXT — color, font-size, font-weight, margin-top, padding-x.
 12. ERROR TEXT — color, font-size, font-weight, line-height, margin-top, padding-x.
-13. CLEAR BUTTON — size, color, color-hover, bg, bg-hover, radius.
+13. CLEAR BUTTON — size (18px), color, color-hover, bg (transparent), bg-hover, radius (`--falcon-radius-full`).
 14. MOTION — transition-duration (150ms), transition-easing (ease).
+15. ICON SLOTS (added 2026-05-17) — `--falcon-input-icon-color` (neutral-600 / `#6b7280`), `-icon-color-disabled`, `-icon-color-error`, `-icon-size` (16px), `-icon-gap`, `-icon-start-offset`/`-end-offset` (10px), and the padding tokens `--falcon-input-icon-input-padding-start` / `-end` (1.5rem) the `-tw` twin prepends to the native input when `iconLeft`/`iconRight` is set. These padding tokens are also consumed by the email/date-picker/dropdown/multi-select/textarea `-tw` controls (`[CODE]` input.tokens.css:230-236).
 
 ## Related Falcon theme tokens (from `falcon-tailwind-tokens.css`)
 
@@ -80,9 +81,10 @@ Falcon theme handles RTL via `:where([dir='rtl'], [dir='rtl'] *)` overrides at t
 
 ## Static style risks
 
-- The Stencil Shadow CSS file `libs/falcon-ui-core/src/components/falcon-input/falcon-input.css` likely has rules referencing the same tokens. Token contract is fine, but if any hex / px is hardcoded in that file, mark as GAP.
-- `falcon-input.component.css` in the Angular wrapper is only `:host { display: block; width: 100%; }` — no static risks.
-- `add-client-special-input` token-override pattern is used in admin-console wizard — verified clean.
+- `[CODE]` The Stencil Shadow CSS `libs/falcon-ui-core/src/components/falcon-input/falcon-input.css` (317 ln) is **token-only — VERIFIED clean 2026-06-03**: every visual value reads a `--falcon-input-*` var; the only literals are structural (`@apply flex`, `border: 0`, `outline-offset: 1px`, the variant fallbacks like `9999px`/`14px` which sit inside `var(--token, fallback)`). No raw color hex.
+- `[CODE]` `falcon-input.component.css` in the Angular wrapper is `:host { display: block; width: 100%; }` + a `:host.falcon-angular-input falcon-input { … }` width rule — no static risks.
+- `[CODE]` `falcon-input-tw.tsx` writes ONE inline `style={{ color: 'var(--falcon-input-icon-color, #6b7280)' }}` on the icon `<span>` (lines 247/279) — token-with-fallback, acceptable; the only inline-style in the component.
+- `add-client-special-input` token-override pattern is used in the add-client wizard — verified clean.
 
 ## No CSS / no SCSS guidance
 
@@ -107,3 +109,6 @@ Falcon theme handles RTL via `:where([dir='rtl'], [dir='rtl'] *)` overrides at t
 | Warning | `--falcon-input-bg-warning`, `--falcon-input-border-color-warning`, `--falcon-input-shadow-warning` |
 | Disabled | `--falcon-input-bg-disabled`, `--falcon-input-border-color-disabled`, `--falcon-input-shadow-disabled`, `--falcon-input-text-color-disabled` |
 | Loading | _None observed in active source._ (Input has no built-in loading state. Compose externally if needed.) |
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 — token file recounted at 237 lines, `:where()` password-extension + icon-slot category (15) confirmed, Shadow CSS verified token-only (no raw hex).

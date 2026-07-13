@@ -30,7 +30,7 @@ Customization order (`feedback_falcon_custom_library_mandatory` — inputs → t
 1. **Inputs** — `[value]` (current cell value), `[originalValue]` (the persisted value for Escape-revert — always set this), `[autoFocus]` (leave `true`), `[disabled]` for read-only cells.
 2. **Wiring** — handle `(falconGridCommit)` → send the cell write; `(falconGridCancel)` → close the editor, no write; `(falconGridNavigate)` → move focus to the adjacent cell (the host table MUST implement this or Tab loses focus).
 3. **Host integration** — render it from the table's custom-cell / edit-cell template; the table owns which cell is editing.
-4. **Tokens** — restyle via `grid-input.tokens.css` `--falcon-grid-input-*` (compact bg/border, minimal ring) — never hardcode.
+4. **Tokens** — restyle via the inherited `--falcon-input-*` tokens (compact bg/border, focus ring) — NOT `--falcon-grid-input-*` (those 2 focus-ring tokens are orphan/unwired today; see TOKENS.md). Never hardcode.
 5. **Upgrade** — a numeric `mode`, an error state, or method proxies are GAPs (`DECISION.md` G1/G2/G3) — raise, do not hand-roll a red border.
 
 ## Anti-patterns
@@ -42,4 +42,4 @@ Customization order (`feedback_falcon_custom_library_mandatory` — inputs → t
 - Expecting numeric parsing or a red error border — string-only, no error state; the consumer owns both.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-grid-input.tsx` + `falcon-grid-input.component.ts` + `falcon-grid-input.component.html`. Cross-library map 🔴 INFERRED from each library's public API. Blur-commits, Tab-hijack, string-only, no-error-state ✅ VERIFIED against source.
+🟢 code-verified (re-read 2026-06-03) from `[CODE]` `falcon-grid-input.tsx` + `falcon-grid-input-tw.tsx` + `falcon-grid-input.component.ts` + `.html`. Blur-commits, Tab-hijack, string-only, no-error-state ✅ source-verified. Live fingerprint confirmed against the Contracts cost-management matrix consumer. Cross-library map 🔴 INFERRED from each library's public API. Token reference corrected (`--falcon-input-*`, not orphan `--falcon-grid-input-*`).

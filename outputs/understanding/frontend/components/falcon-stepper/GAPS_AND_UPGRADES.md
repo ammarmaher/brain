@@ -1,59 +1,44 @@
-# falcon-angular-stepper — GAPS & UPGRADES
+﻿# falcon-stepper — GAPS & UPGRADES
 
-## Missing capabilities
+## Resolved since prior dossier (2026-06-03 — B21)
 
-### 1. (P0) Real consumers not migrated yet
-- **Gap:** the active wizards in admin-console + management-console still import the LEGACY bespoke `FalconStepperComponent` from `@falcon` (the bespoke component under `libs/falcon/src/shared-ui/lib/components/falcon-stepper/`), not this new Stencil-paired one.
-- **Where:** `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/add-client-wizard.component.ts:6-14` (and the parallel `add-user-wizard` + management-console mirrors).
-- **Impact:** the Falcon UI core component has not seen production traffic yet — first migration is the de-risking moment.
-- **Recommendation:** plan a Wave that swaps the legacy stepper import for `FalconAngularStepperComponent`; reuse `FalconStepperStep[]` shape directly (it is more expressive than the legacy directive-based content-projection).
-- **Risk:** the legacy component uses `<falcon-step>` content directives with TemplateRef — the migration must convert each step body into a slotted `<div slot="content-{value}">`.
+### ✅ G1 — Real consumers migrated (was P0 "not migrated yet")
+- **RESOLVED.** The prior dossier's headline gap — "wizards still on the legacy bespoke stepper" — is closed. The legacy `dynamic-stepper` was DELETED 2026-05-17 (`[CODE]` libs/falcon/src/shared-ui/index.ts:11-13) and `<falcon-angular-stepper>` is now live across **21 occurrences / 13 files**: Add Client / Add User (admin + mgmt), Templates wizard (admin + mgmt), Contracts Add (admin), Create Contact Group (mgmt). The component has carried production traffic.
 
-### 2. (P1) No per-step custom indicator slot
-- **Gap:** the dot content is hard-coded (number / check / pulse / icon). There is no `ng-template` or slot for a fully custom dot (e.g., a small avatar for a "person who completed the step").
-- **Recommendation:** add `<slot name="dot-{value}">` in Stencil + matching `*falconStepperDot` directive on the Angular wrapper. Falls back to the current logic when no slot is provided.
-- **API proposal (Angular side):**
-  ```ts
-  @Directive({ selector: '[falconStepperDot]' })
-  export class FalconStepperDotDirective {
-    @Input('falconStepperDot') value!: string | number;
-    readonly tpl = inject(TemplateRef);
-  }
-  ```
-  Then in the wrapper: query `@ContentChildren(FalconStepperDotDirective)` and render the template inside `<div slot="dot-{value}">` for each match.
+### ✅ G5 — Forward-navigation validation hook shipped (was P2 "no validation hook")
+- **RESOLVED.** The Stencil component + wrapper now expose `forwardLockedFrom: ReadonlyArray<string|number>` (`[CODE]` falcon-stepper.component.ts:111, falcon-stepper.tsx:83) — a consumer-driven gate that rejects forward clicks from any locked step value WITHOUT mutating `activeValue` (no flash), and emits `falcon-navigation-blocked` (reason `'forward-locked'`) re-surfaced as the wrapper `@Output() navigationBlocked` (`[CODE]` ts:124). The live wizards bind `[forwardLockedFrom]="forwardLockedFrom()"` + `(navigationBlocked)="…"`. The earlier note "only the wizard wrapper has it" is obsolete — the bare stepper now gates forward nav itself.
 
-### 3. (P1) No per-step custom label slot
-- **Gap:** label text is `step.label` only. There is no slot for label + small chip + tooltip.
-- **Recommendation:** add `<slot name="label-{value}">` plus matching Angular directive. Same pattern as dot slot.
+## Still-missing capabilities
 
-### 4. (P2) `step.icon` collides with number rendering
-- **Gap:** when both `icon` is set and `showStepNumbers=true`, the icon is hidden on the active state but shown on upcoming/completed/error states — inconsistent semantics. See `renderDotContent()` in `falcon-stepper.tsx` lines 227-264.
-- **Recommendation:** treat `icon` as a "replacement for the number entirely". Either:
-  - Always render icon when present (drop the `state !== 'active'` guard), OR
-  - Add a separate `iconBehavior: 'always' | 'when-completed' | 'when-non-active'` prop.
+### G2 (P1) No per-step custom indicator slot
+- **Gap:** dot content is hard-coded (number / check / pulse / icon). No `ng-template` / slot for a fully custom dot (e.g. a small avatar).
+- **Recommendation:** add `<slot name="dot-{value}">` in Stencil + a matching `[falconStepperDot]` directive on the Angular wrapper; query `@ContentChildren` and render the template into the slot, falling back to current logic.
 
-### 5. (P2) No validation hook
-- **Gap:** the stepper does not gate forward navigation on a validation callback. Linear mode only blocks "skip past current+1"; it doesn't block "go forward from current" when the current step's form is invalid.
-- **Where stepped around today:** `<falcon-angular-wizard>` adds `validateStep?: (step: number) => boolean | Promise<boolean>` and a `stepControls` bridge — but pure stepper consumers (without the wizard wrapper) cannot block forward nav.
-- **Recommendation:** add `canAdvance?: (currentValue, nextValue) => boolean | Promise<boolean>` Prop on the Stencil component (Light + Shadow). Wrapper exposes the same. Emit `falcon-blocked` event when validation fails so consumers can show a toast.
+### G3 (P1) No per-step custom label slot
+- **Gap:** label text is `step.label` only. No slot for label + chip + tooltip.
+- **Recommendation:** add `<slot name="label-{value}">` + matching Angular directive (same pattern as G2).
 
-### 6. (P2) `errorMessage` shows under the WHOLE stepper, but per-step error has no visual error message location
+### G4 (P2) `step.icon` collides with number/active rendering
+- **Gap:** `[CODE]` `renderDotContent()` (falcon-stepper.tsx:272-309) shows `step.icon` only when `state !== 'active'`; on the active step the icon is hidden in favour of the pulse — inconsistent semantics if a consumer expects a persistent icon.
+- **Recommendation:** treat `icon` as a full replacement for the number/pulse, or add an `iconBehavior: 'always' | 'when-completed' | 'when-non-active'` prop.
+
+### G6 (P2) `errorMessage` shows under the WHOLE stepper, but per-step error has no visual error message location
 - **Gap:** `step.errorMessage` paints the dot red but the message text is invisible. Users see "this step is broken" but no hint of why.
 - **Recommendation:** render `step.errorMessage` either as a tooltip on the dot OR inline next to the per-step label (`<span class="falcon-stepper-step-error">`). Add `--falcon-stepper-step-error-*` tokens.
 
-### 7. (P2) Vertical orientation does not support `labelPosition`
+### G7 (P2) Vertical orientation does not support `labelPosition`
 - **Gap:** `labelPosition` is honored only in horizontal mode. Vertical always renders labels beside the dot (effectively `'side'`).
-- **Recommendation:** support `labelPosition="top"` for vertical (renders label above the dot) since some workflows want the label visually before the dot.
+- **Recommendation:** support `labelPosition="top"` for vertical.
 
-### 8. (P2) No "click on completed step jumps to it" affordance signal
-- **Gap:** the dot is clickable on completed steps but there's no hover-cursor change or visual hint to suggest "you can click this".
-- **Recommendation:** add `cursor: pointer` plus `:hover` token state for completed dots, and document that completed dots are interactive even in linear mode.
+### G8 (P2) No "click on completed step jumps to it" affordance signal
+- **Gap:** completed dots are clickable but there's no hover-cursor change / visual hint.
+- **Recommendation:** add `cursor: pointer` + a `:hover` token state for completed dots; document that completed dots are interactive even in linear mode.
 
-### 9. (P3) No "Pause/Resume" semantics
-- **Gap:** there's no way to mark a step as "in progress" distinct from "active". For long-running async flows where the active step is doing work, the dot should pulse or show a spinner.
-- **Recommendation:** add `step.status?: 'in-progress' | undefined` for fine-grained dot decoration.
+### G9 (P3) No "Pause/Resume" / in-progress semantics
+- **Gap:** no way to mark a step "in progress" distinct from "active" (for long async work).
+- **Recommendation:** add `step.status?: 'in-progress'` for fine-grained dot decoration.
 
-### 10. (P3) No `currentPageReportTemplate`-style helper for "Step X of Y"
+### G10 (P3) No `currentPageReportTemplate`-style helper for "Step X of Y"
 - **Gap:** consumers must build this string manually.
 - **Recommendation:** expose a `stepIndicatorFormat?: string` Prop with `{current}` / `{total}` tokens, rendered above or below the stepper as opt-in.
 
@@ -73,8 +58,7 @@
   - Shadow/Light parity (snapshot the DOM under both modes).
 
 ## Missing Tailwind / token parity
-- **Drag:** `falcon-stepper-tw` has a Wave 10D default of `labelPosition='bottom-center'` while the Shadow default is `'top-center'`. Visual divergence between the two render paths for the same `steps` input. The Tailwind helper compensates but the contract is now non-symmetric.
-- **Recommendation:** align defaults — pick one (`'bottom-center'` matches React reference parity) and document the change.
+- `[CODE]` **`labelPosition` default asymmetry** — `falcon-stepper-tw.tsx:85` defaults `'bottom-center'` (Wave 10D) while `falcon-stepper.tsx:69` (Shadow) + the wrapper (`falcon-stepper.component.ts:100`) default `'top-center'`. For the same `[steps]` with NO explicit `labelPosition`, the two render paths place labels differently. Mitigated in practice because every live consumer passes `labelPosition="bottom-center"` explicitly, AND `useTailwind=true` (the `-tw` path) is the default — so the asymmetry is latent, not active. **Recommendation:** align defaults (pick `'bottom-center'` for React parity) and document. **G5/forwardLockedFrom parity is OK** — both render paths implement `resolveNavigationBlock()` identically (`[CODE]` falcon-stepper.tsx:176-196 ≡ falcon-stepper-tw.tsx:183-203).
 
 ## Performance risks
 - `_steps` setter pushes to the live element on every parent ref change. If the parent component re-creates the array on every CD cycle, this re-renders the dot row each time. Currently mitigated by `OnPush` + immutable signals in real consumers, but a `trackBy(value)` semantic is missing inside Stencil's `this.steps.map()`. The Stencil `key={String(step.value)}` is present (good), but if `step.value` changes (which it shouldn't) the dot would re-create instead of reuse.
@@ -84,7 +68,32 @@
 - The pulse animation runs continuously when `showStepNumbers=false` and the dot is active. On reduced-motion preference users (prefers-reduced-motion: reduce), this should pause. _None observed in active source._
 
 ## Reusable upgrade priority — fix in shared component vs per-page
-- All of items 1–10 SHOULD be implemented in the shared Falcon component, NOT per-page. Per-page workarounds (custom CSS, overlay buttons, bespoke validation gates) would fragment the visual contract.
+- All of G2–G10 SHOULD be implemented in the shared Falcon component, NOT per-page. Per-page workarounds (custom CSS, overlay buttons, bespoke validation gates) would fragment the visual contract.
 
 ## Workaround availability
-- For validation gating today: use `<falcon-angular-wizard>` which wraps this stepper and adds `validateStep` plus `stepControls`. The wizard is the canonical "stepper + nav + validation" composition.
+- For validation gating: ALREADY shipped — use `[forwardLockedFrom]` + `(navigationBlocked)` on the bare stepper (G5 resolved). For the full Next/Back/Finish UX, use `<falcon-angular-wizard>` which composes this stepper.
+
+## Recommended upgrade priority
+| ID | Title | Priority |
+|---|---|---|
+| G2 | Per-step custom dot slot + `[falconStepperDot]` | P1 |
+| G3 | Per-step custom label slot | P1 |
+| G6 | Inline per-step error message text | P2 |
+| (parity) | Align `labelPosition` default Shadow↔`-tw` | P2 |
+| (a11y) | `aria-orientation` on outer group for vertical | P1 |
+| (tokens) | Dark-mode `--falcon-stepper-*` overrides | P2 |
+| G7 | `labelPosition` honored in vertical | P2 |
+
+## Wave 7 Findings (2026-05-17)
+**Consumer count: 5.** Superseded by the B21 sweep below.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B21)
+**Consumer count: 21 app occurrences / 13 files** (`[CODE]` grep `<falcon-angular-stepper`).
+Drift corrected vs prior dossier (component stays ACTIVE/PREFERRED):
+- **G1 RESOLVED** — legacy `dynamic-stepper` deleted 2026-05-17; this component now carries all wizard traffic (Add Client/User, Templates, Contracts, Contact Group).
+- **G5 RESOLVED** — `forwardLockedFrom` + `navigationBlocked` shipped (consumer-driven forward-nav gate).
+- **API drift fixed** — `navigationBlocked` IS the 4th wrapper `@Output`; `showStepNumbers` default is `false` (not `true`); `playground.page.html` consumer removed.
+- **No new structural gaps.** Remaining items G2/G3/G4/G6–G10 + the `labelPosition` default asymmetry are all `safe-local` (additive). See FINDINGS/B21.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B21) against all source layers. G1 + G5 closed (migration done; validation gate shipped). No deletion/promotion flags — component stays ACTIVE/PREFERRED.

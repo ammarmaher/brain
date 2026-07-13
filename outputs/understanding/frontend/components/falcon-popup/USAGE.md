@@ -1,92 +1,26 @@
 # falcon-popup — USAGE
 
-## Real usage examples
+## Real usage examples (active codebase)
 
-### 1. Delete confirmation (cited)
+### 1. Via the app-shell hosts (the dominant real pattern)
+Most popup usage flows through TWO singleton host components, NOT inline tags:
 
-`apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html` (grep hit; pattern):
+- `[CODE]` `falcon-http-error-dialog-host.component.ts:33-46` — binds `FalconHttpErrorDialogService` signals to a `<falcon-angular-popup [hideCancel]="true" variant="error">`. Any code calls `FalconHttpErrorDialogService.show({ title, body, hint, okLabel })`; the host opens an OK-only error popup. Both `(confirm)`/`(cancel)` call `dialog.close()`.
+- `[CODE]` `falcon-unsaved-changes-host.component.ts:30-39` — renders `<falcon-angular-popup [open]="true" variant="unsaved">` when `FalconUnsavedChangesService.active()` is set; `(confirm)`→`accept()` (discard & leave), `(cancel)`→`reject()` (stay). Feature code calls `this.unsaved.confirm({ bodyOverride }).subscribe(leave => …)`.
 
 ```html
+<!-- falcon-http-error-dialog-host (mount ONCE in the app shell) -->
 <falcon-angular-popup
-  [open]="confirmDelete()"
-  variant="delete"
-  [name]="userName()"
-  (confirm)="onConfirmDelete()"
-  (cancel)="confirmDelete.set(false)" />
+  [open]="dialog.open()" [variant]="variant()" [hideCancel]="true"
+  [titleOverride]="dialog.title()" [bodyOverride]="dialog.body()" [hintOverride]="dialog.hint()"
+  [confirmLabelOverride]="resolvedOkLabel()"
+  [glossy]="glossy()" [iconBg]="iconBg()" [iconColor]="iconColor()"
+  (confirm)="onAcknowledge()" (cancel)="onAcknowledge()" />
 ```
 
-Notes:
-- `variant="delete"` provides the trash icon + "Delete this record?" title + red Delete button.
-- `[name]` is interpolated into the body string: `"You're about to permanently delete \"<name>\""`.
-- `(confirm)` fires on Delete button click.
-- `(cancel)` fires on Cancel / × / backdrop / Esc.
-
-### 2. Unsaved changes warning
+### 2. Delete confirmation (direct tag)
 
 ```html
-<falcon-angular-popup
-  [open]="hasUnsavedChanges()"
-  variant="unsaved"
-  (confirm)="onDiscardAndLeave()"
-  (cancel)="onStayOnPage()" />
-```
-
-Notes:
-- `variant="unsaved"` provides the info-circle icon + warning intent + amber chip.
-- "Discard & leave" is a red destructive button despite being the "confirm" action — `confirmTone: 'danger'` for the unsaved variant.
-
-### 3. Save / publish confirmation
-
-```html
-<falcon-angular-popup
-  [open]="confirmSave()"
-  variant="save"
-  [hintOverride]="changedFieldsHint()"
-  (confirm)="onPublish()"
-  (cancel)="confirmSave.set(false)" />
-```
-
-Notes:
-- `variant="save"` uses success intent + green chip + git-pull-create icon.
-- `[hintOverride]` lets the consumer compute "3 fields changed · 1 permission updated" dynamically.
-
-### 4. Error fallback
-
-```html
-<falcon-angular-popup
-  [open]="errorOpen()"
-  variant="error"
-  [titleOverride]="customErrorTitle()"
-  [bodyOverride]="customErrorBody()"
-  (confirm)="onRetry()"
-  (cancel)="errorOpen.set(false)" />
-```
-
-Notes:
-- `variant="error"` uses danger intent + red chip.
-- Confirm button label defaults to "Try again" (override via `confirmLabelOverride`).
-- Useful for surfacing API errors.
-
-## Recommended usage for new Angular pages
-
-```ts
-// In component
-protected confirmDelete = signal(false);
-
-protected onClickDelete() {
-  this.confirmDelete.set(true);
-}
-
-protected onConfirmDelete() {
-  this.api.delete(this.id).subscribe(() => {
-    this.confirmDelete.set(false);
-  });
-}
-```
-
-```html
-<button (click)="onClickDelete()">Delete</button>
-
 <falcon-angular-popup
   [open]="confirmDelete()"
   variant="delete"
@@ -94,46 +28,99 @@ protected onConfirmDelete() {
   (confirm)="onConfirmDelete()"
   (cancel)="confirmDelete.set(false)" />
 ```
+Notes: `variant="delete"` → trash icon + "Delete this record?" + red Delete button; `[name]` interpolates into the body; `(cancel)` fires on Cancel / × / backdrop / Esc.
+
+### 3. Unsaved-changes warning
+```html
+<falcon-angular-popup [open]="hasUnsavedChanges()" variant="unsaved"
+  (confirm)="onDiscardAndLeave()" (cancel)="onStayOnPage()" />
+```
+> "Discard & leave" is a **red** destructive button despite being the "confirm" action — `confirmTone: 'danger'` for `unsaved`. This is intentional; do NOT "fix" it to primary.
+
+### 4. Save / publish confirmation
+```html
+<falcon-angular-popup [open]="confirmSave()" variant="save"
+  [hintOverride]="changedFieldsHint()"
+  (confirm)="onPublish()" (cancel)="confirmSave.set(false)" />
+```
+> `[hintOverride]` overrides the placeholder default hint ("3 fields changed · 1 permission updated").
+
+### 5. Error fallback (direct, OK-only)
+```html
+<falcon-angular-popup [open]="errorOpen()" variant="error" [hideConfirm]="false" [hideCancel]="true"
+  [titleOverride]="customErrorTitle()" [bodyOverride]="customErrorBody()"
+  (confirm)="onRetry()" (cancel)="errorOpen.set(false)" />
+```
+
+## Recommended usage for new Angular pages
+```ts
+protected confirmDelete = signal(false);
+protected onConfirmDelete() {
+  this.api.delete(this.id).subscribe(() => this.confirmDelete.set(false)); // close AFTER async
+}
+```
+```html
+<falcon-angular-popup [open]="confirmDelete()" variant="delete" [name]="record.name"
+  (confirm)="onConfirmDelete()" (cancel)="confirmDelete.set(false)" />
+```
+
+> For global error surfacing, prefer `FalconHttpErrorDialogService.show(...)` (don't mount your own error popup). For unsaved-changes guards, prefer `FalconUnsavedChangesService.confirm(...)`.
 
 ## Reactive forms inside popup
-Not supported — popup is a passive confirmation modal, no form fields.
+Not supported — popup is a passive confirmation modal, no form fields, no slots.
 
 ## ngModel example
 N/A.
 
 ## Tailwind-only usage
-The component IS Tailwind — its inline template uses utility classes throughout. Consumers don't add Tailwind around the popup; they bind props.
+The component IS Tailwind — its inline template uses utility classes throughout. Consumers bind props, they don't add Tailwind around the popup.
 
 ## Token override
-The popup template uses Falcon palette tokens (`bg-falcon-neutral-0`, `text-falcon-red-700`, etc.) but does NOT have a dedicated token file. To restyle, you'd need to mutate the palette tokens globally — not per-instance overridable.
-
-**Gap:** consider a `popup.tokens.css` for per-variant per-instance overrides.
+`[CODE]` The popup has **no dedicated token file** — its inline template uses Falcon palette tokens directly (`bg-falcon-neutral-0`, `text-falcon-red-700`, etc.). To restyle you'd mutate the palette globally — not per-instance overridable. The `glossy`/`iconBg`/`iconColor` toggles are the only per-instance knobs. **Gap:** a `popup.tokens.css` (GAP G-TOKENS).
 
 ## Bad usage to avoid
-- Don't pass empty-string overrides expecting "show me empty" — empty string is treated as "no override". Pass `' '` (single space) if you genuinely want to render empty.
-- Don't use this for non-decision-required dialogs (e.g. "Here's some info, dismiss to continue") — popup forces 2 buttons.
-- Don't use this for a save-then-route flow where the form might be invalid — the popup assumes the form is valid before opening.
-- Don't render multiple popups simultaneously — no focus stack; the second one steals.
-- Don't rely on this for keyboard focus trap — there isn't one. (P0 gap.)
+- Don't pass empty-string overrides expecting "show me empty" — `''` is treated as "no override" (`pick()`, ts:343). Pass `' '` (single space) for genuinely empty.
+- Don't use this for non-decision dialogs ("here's some info, dismiss") — popup forces buttons (use `[hideCancel]`/`[hideConfirm]` for single-CTA, or a notification for passive info).
+- Don't use this for a decision OUTSIDE the 4 variants — use `falcon-angular-confirm-dialog` (variants are a closed set).
+- Don't toggle `[open]=false` in the `(confirm)` handler BEFORE async work finishes — the popup vanishes and the user can't retry on failure.
+- Don't bind `(falconClick)` on the footer buttons — `[CODE]` ts:199/207 the Stencil event is `(falcon-click)` (dash-separated); `(falconClick)` no-ops.
+- Don't render two popups simultaneously — each `showModal()` lands above the last in the Top Layer, but two passive confirms competing is confusing UX.
+- Don't expect rich body content — there are no slots.
 
-## Import requirements
+## Import requirements (standalone component)
 ```ts
+import { FalconAngularPopupComponent } from '@falcon/ui-core';
+
 @Component({
   standalone: true,
   imports: [FalconAngularPopupComponent],
-  // schemas not needed — popup is pure Angular (no Stencil tag exposed to consumer)
+  // CUSTOM_ELEMENTS_SCHEMA NOT needed on the host — popup declares it internally for <falcon-button-tw>.
 })
 ```
-
-The component's `ngOnInit()` calls `defineFalconTwComponent('falcon-button')` to register the underlying `<falcon-button-tw>` footer buttons. This is automatic.
+`[CODE]` ts:296-298 — the component's `ngOnInit()` calls `defineFalconTwComponent('falcon-button')` so the footer `<falcon-button-tw>` upgrades even if no `falcon-angular-button` has mounted yet.
 
 ## Do / Don't
 
 | Do | Don't |
 |---|---|
 | Use `variant="delete"` for destructive actions | Use `variant="error"` for delete confirms |
-| Bind `[name]` for delete variant | Inject the name into `bodyOverride` manually (loses the formatting) |
-| Use signals for `[open]` | Use a `setTimeout` to toggle visibility |
-| Treat empty-string overrides as "no override" | Pass `''` to render empty (will fall back to variant default) |
-| Handle async work in `(confirm)` and toggle `[open]` after | Toggle `[open]=false` in the confirm handler BEFORE async work completes (user sees the popup vanish then unable to retry on failure) |
-| Use this for any of the 4 canonical decisions | Use this for "show info" or "select option" UX |
+| Bind `[name]` for the delete variant | Inject the name into `bodyOverride` manually |
+| Use `[hideCancel]`/`[hideConfirm]` for single-CTA | Render a passive info popup with both buttons |
+| Prefer `FalconHttpErrorDialogService` for errors | Mount your own error popup inline |
+| Close `[open]` AFTER async completes | Close before async (user can't retry on failure) |
+| Bind `(confirm)` / `(cancel)` (component outputs) | Bind `(falconClick)` on the footer buttons |
+
+## Consumer Sweep (2026-06-03)
+
+[CODE] grep `falcon-angular-popup` across `apps/` → **5 files / 9 occurrences**; **0 direct in `libs/falcon`** (composed by 2 host components inside `falcon-ui-core`). Full app list:
+
+- `apps/{admin,management}-console/.../templates-page/components/templates-wizard/templates-wizard.component.ts` (1 each).
+- `apps/admin-console/.../new-wallet-balance/components/wb-confirm-save-modal/wb-confirm-save-modal.component.ts` (3) + `new-wallet-balance/__tests__/confirm-save-modal.spec.ts` (3, test).
+- `apps/host-shell/.../falcon-ui-showcase/library-section/library-section.component.ts` (1, showcase).
+
+**Effective reach is wider:** the `FalconAngularHttpErrorDialogHostComponent` + `FalconUnsavedChangesHostComponent` (both in `falcon-ui-core`) compose the popup for the global HTTP-error + unsaved-changes flows, so every page that triggers an interceptor error or a dirty-form guard uses it indirectly.
+
+> `[INFERRED]` The prior dossier's 8 hits (org-hierarchy add-user/add-client/page-menu/applications-table, otp-dialog, `shared-ui/index.ts`) are stale: the wizards now route discard through the unsaved-changes host / templates-wizard; otp-dialog's popup ref no longer matches the grep. The direct count fell, but indirect (host-driven) usage rose.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B14). Host-composition examples confirmed against falcon-http-error-dialog-host.component.ts:33-46 + falcon-unsaved-changes-host.component.ts:30-39. `(falcon-click)` dash-event confirmed (ts:199/207). Consumer Sweep re-run (`falcon-angular-popup` → 5 app files / 9 + 2 lib hosts).

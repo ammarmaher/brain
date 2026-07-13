@@ -45,5 +45,8 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Using `falcon-badge` for an account/service/order **lifecycle status** — that is `<falcon-status-badge>`; the wrong choice decouples colour from the domain bucket map.
 - Hand-rolling a count badge with raw Tailwind (`bg-teal-500 rounded-full px-2`) — `[BRAIN-OUT]` GAPS_AND_UPGRADES.md:7 — production currently does this; adopt the component instead.
 - Rendering a `0` count without `*ngIf` — most count patterns hide at zero.
-- Building a dot-only badge via `<falcon-angular-badge dot>` and expecting an accessible label — the wrapper lacks `ariaLabel` (FB-01); use the Stencil `<falcon-badge>` tag.
+- Building a dot-only badge via `<falcon-angular-badge dot>` and expecting an accessible label — neither the wrapper nor the default `-tw` twin exposes `ariaLabel` (FB-01, expanded 2026-06-03); use the **Shadow** `<falcon-badge ariaLabel="…">` tag specifically (`useTailwind=false` is not enough — the wrapper still won't forward the prop).
 - Passing an `iconName` not in the Falcon icon font — renders an empty `<i>` silently.
+
+## Verification
+🟡 CODE-DERIVED from `falcon-badge.tsx` + `falcon-badge.component.html`. REFRESH 2026-06-03 — the `<ng-content>` projection (used by the parity recipe) and the Shadow-only `ariaLabel` constraint re-confirmed against live source; cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]` standard-library knowledge.

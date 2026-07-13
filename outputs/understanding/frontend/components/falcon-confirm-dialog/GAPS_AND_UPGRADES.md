@@ -1,124 +1,96 @@
 # falcon-confirm-dialog — GAPS AND UPGRADES
 
-## Missing capabilities
+## Headline finding (2026-06-03, B15)
 
-### P1 — Footer buttons are not `<falcon-angular-button>`
-The Stencil source renders raw `<button class="falcon-confirm-btn falcon-confirm-btn--accept">` (lines 124-138). The Angular wrapper template ALSO renders raw `<button>` tags. Neither uses the design-system button primitive.
+**The component is DORMANT and SUPERSEDED.** The Angular wrapper is 100% commented out (`[CODE]` falcon-confirm-dialog.component.ts:1-79, falcon-confirm-dialog.component.html:1-46), `index.ts` exports `export {}` (`[CODE]` :6-7), and there are **zero render consumers** (`[CODE]` grep across `apps/` + `libs/falcon/` + `libs/falcon-ui-core/`). The confirm UX migrated to `FalconConfirmService.confirm()` → `<falcon-angular-popup variant="error">` (`[CODE]` falcon-confirm.service.ts:91-105, falcon-modal-adapter.component.ts:51-61). The Stencil tags + Tailwind helper + token file are dead code. This dominates the gap list below.
 
-**Consequences:**
-- Loading state (busy spinner during async accept) not available.
-- Disabled state requires manual class binding.
-- Token contract diverges from `<falcon-angular-button>`.
-- Severity-styled buttons can drift from button token semantics.
+## Missing capabilities (active source verified)
 
-**Fix:**
-- Wrapper template should render `<falcon-angular-button variant="primary" [label]="acceptLabel" (falconClick)="onAccept()">` and `<falcon-angular-button variant="ghost" [label]="rejectLabel" (falconClick)="onReject()">`.
-- Stencil source similarly should compose `<falcon-button-tw>`.
+### G1 — Dormant component: delete-or-revive decision needed (P1 — HIGH-RISK-QUEUE)
 
-**Priority: P1** — design system consistency.
+`[CODE]` The Stencil pair (`falcon-confirm-dialog` + `falcon-confirm-dialog-tw`), the dead Tailwind helper (`confirm-dialog-tailwind-classes.ts` — its two exported functions are never imported), and the token file (`confirm-dialog.tokens.css`) all exist with no live wrapper and no consumers. Keeping them costs build time + Stencil compile + a `:where()` token block + registration entries (stub-seeder, define-custom-elements) for nothing.
 
-### P1 — No `loading` / async accept state
-Common pattern: "Approve" button kicks off API call; needs spinner. Today the consumer has to close the dialog optimistically or manage external loading state.
+**Recommended fix (queued):** either (a) DELETE the trio + helper + token file + registration entries, or (b) consciously revive it with an owning decision and a documented niche distinct from `<falcon-popup>` and `<falcon-angular-alert-dialog>`. **HIGH-RISK-QUEUE** — touches the umbrella loader registration + token build; needs human sign-off (do not auto-fix this pass).
 
-**Proposed:**
-```ts
-@Input() loading = false;
-@Input() acceptDisabled = false;
-```
+### G2 — Overlaps two live confirm surfaces (P1 — design)
 
-**Priority: P1**
+Three components could each render an "are you sure?": this confirm-dialog (dormant), `<falcon-angular-popup variant="error">` (the live `FalconConfirmService` renderer), and `<falcon-angular-alert-dialog>` (the icon-led rich confirm). The confirm-dialog adds no capability the other two lack. Reviving it without a sharp differentiator perpetuates the overlap.
 
-### P1 — Icon is CSS class string, not `<falcon-angular-icon>`
-Same as the popup gap — using `<i class="falcon-icon falcon-icon-X">` bypasses the icon abstraction.
+**Recommended fix:** fold any unique need into `<falcon-popup>` or `<falcon-angular-alert-dialog>`; do not maintain three confirm paths.
 
-**Priority: P1**
+### G3 — Footer buttons are raw `<button>`, not `<falcon-angular-button>` (P2 — house rule)
 
-### P2 — No focus trap (inherited from substrate dialog)
-Wait — the substrate `<falcon-dialog>` DOES have focus trap. Verified in source (lines 142-166). So confirm-dialog inherits it. Good.
+`[CODE]` tsx:124-139 + tw.tsx:89-102 render raw `<button class="falcon-confirm-btn …">` / inlined-Tailwind `<button>`. Neither composes the design-system button primitive. Consequences: no `loading` (busy spinner), no `disabled` state, button-token contract diverges from `<falcon-angular-button>`. Falcon-component-over-native violation.
 
-### P2 — No `[asTertiaryButton]` / 3-button mode
-For "Save / Discard / Cancel" patterns. Today only 2 buttons supported.
+### G4 — Icon is a CSS-class string, not `<falcon-angular-icon>` (P2)
 
-**Priority: P2**
+`[CODE]` tsx:113-115 / tw.tsx:81 render `<i class="falcon-confirm-icon {icon}">`. Bypasses the icon abstraction (same gap as the popup). Pass `"falcon-icon falcon-icon-X"`; an `<svg>` does not work.
 
-### P2 — `aria-describedby` not linked
-The message text has no `id` exposed for the dialog's `aria-describedby` to link to.
+### G5 — Shadow ↔ `-tw` token/parity break on the accept button (P2 — parity)
 
-**Priority: P2** — a11y improvement.
+`[CODE]` Shadow CSS reads `--falcon-confirm-dialog-accept-bg` (`[CODE]` css:58) but the `-tw` twin's accept button reads `bg-[var(--falcon-teal-700,#124c52)]` (`[CODE]` tw.tsx:98) — a DIFFERENT var. So a consumer overriding `--falcon-confirm-dialog-accept-bg` retints the Shadow accept button but NOT the `-tw` accept button. The `-tw` reject button uses `bg-falcon-neutral-100` (utility) while Shadow uses `--falcon-confirm-dialog-reject-bg`. Severity also does not retint the `-tw` accept button. **Render-path drift.**
 
-### P3 — Wrapper's `title` vs Stencil's `heading`
-The wrapper renames `heading` to `title`. Possibly intentional for parity with `<falcon-angular-dialog>` which also uses `title`. Document this clearly.
+### G6 — No 3-button mode / tertiary action (P3)
 
-**Priority: P3** — clarity.
+`[CODE]` Only a fixed reject+accept pair (tsx:124-139). "Save / Discard / Cancel" patterns need a third button — not supported; the footer is not consumer-projectable.
 
-## Missing ng-template / template slots
-- No `<ng-template falconConfirmDialogActions>` directive for custom button content.
-- No `<ng-content select="[slot=footer]">` — accept/reject are locked-in.
+### G7 — No `aria-describedby` from message → dialog (P2 — a11y)
 
-## Missing flags / options / states
-- No `[loading]`, `[acceptDisabled]`, `[rejectDisabled]`.
-- No tertiary button.
-- No "danger confirm" tone separation (severity drives accept button tone via token, but not finely).
+`[CODE]` The message text (`.falcon-confirm-message`) has no `id` exposed for the composed dialog's `aria-describedby`. The confirm-dialog sets no `role`/`aria-label` of its own — it relies entirely on `<falcon-dialog>` for dialog semantics. A screen reader gets the heading via the dialog but the message body is not formally associated.
 
-## Missing accessibility features
-- See P2 above (aria-describedby).
-- The reject button is rendered FIRST in DOM order, accept SECOND — keyboard tab focuses reject first. Conventional pattern? Generally accept is the primary so primary should be focused. **Recheck** the source — confirm-dialog renders reject FIRST (line 124), accept SECOND. Verify this matches WAI-ARIA APG dialog patterns.
+### G8 — Reject-first DOM order, no auto-focus control (P3 — a11y)
+
+`[CODE]` Reject button renders FIRST (tsx:124), Accept SECOND (tsx:132) → keyboard Tab lands on Reject first. There is no `autoFocusButton: 'confirm' | 'cancel'` input. May be a safety-by-default choice for destructive confirms, but it diverges from "primary action focused first" and is not configurable.
 
 ## Missing tests
-- No `.spec.ts`.
-- No integration test for the (reject) firing on all dismissal paths.
+
+- `[CODE]` **No `.spec.ts` and no `.e2e.ts` on disk** for the confirm-dialog (verified 2026-06-03). The reject-on-all-dismissal contract, the self-close-on-accept behavior, and Shadow↔`-tw` parity are untested. (Contrast `<falcon-input>`, which ships both.) Given dormancy, the live confirm path's coverage lives in `apps/host-shell/tests/falcon-message-orchestrator.spec.ts` instead.
 
 ## Missing Tailwind / token parity
-- Light + Shadow renderers should be reviewed for parity (not deeply audited in this pass).
-- The token file `confirm-dialog.tokens.css` is small (29 lines) — mostly button + body padding tokens. No issue.
+
+- The dead `confirm-dialog-tailwind-classes.ts` helpers (`falconConfirmDialogAcceptClasses()` / `falconConfirmDialogRejectClasses()`) are NOT consumed by the `-tw` twin (the twin inlines its own classes) — orphaned code.
+- Accept-button var mismatch (G5) is a genuine token-parity break.
 
 ## Performance risks
-None — passive component.
+
+None — the component never renders.
 
 ## Visual / interaction risks
-- Reject and accept buttons share the same hardcoded `<button>` markup with different modifier classes. No focus halo unless tokens declare it.
-- Severity color flow: `severity="danger"` should make the accept button red — verify the token wiring on the actual implementation.
 
-## Reusable upgrades needed
-1. **Replace inline `<button>` with `<falcon-angular-button>` / `<falcon-button-tw>`** — P1.
-2. **Add `loading` / `acceptDisabled` / `rejectDisabled`** — P1.
-3. **Replace `icon` CSS class with `<falcon-angular-icon>`** — P1.
-4. **Tertiary button slot or input** — P2.
-5. **Link `aria-describedby` to message** — P2.
+- Two render paths CAN drift (and already do on the accept-button color — G5).
+- If revived without the G3/G4 fixes, async-accept flows would have no spinner and the icon would bypass the icon component.
 
-## Priority: page-level vs shared
-All belong in the shared component.
+## Recommended upgrade priority
 
-## Recommended upgrade API (proposed)
+| ID | Title | Priority | Risk-class |
+|---|---|---|---|
+| G1 | Delete-or-revive the dormant trio + helper + token file | P1 | HIGH-RISK-QUEUE |
+| G2 | Resolve overlap with popup / alert-dialog | P1 | design (queue) |
+| G3 | Compose `<falcon-angular-button>` in the footer | P2 | safe-local (only if revived) |
+| G4 | Use `<falcon-angular-icon>` for the body icon | P2 | safe-local (only if revived) |
+| G5 | Fix Shadow↔`-tw` accept-button token parity | P2 | safe-local (only if revived) |
+| G7 | Link `aria-describedby` to the message | P2 | safe-local (only if revived) |
+| G8 | `autoFocusButton` + review reject-first order | P3 | safe-local (only if revived) |
+| G6 | Tertiary button | P3 | safe-local (only if revived) |
 
-```ts
-@Component({ selector: 'falcon-angular-confirm-dialog', ... })
-export class FalconAngularConfirmDialogComponent {
-  @Input() open = false;
-  @Input() title?: string;
-  @Input() message?: string;
-  @Input() iconName?: string;             // new — use falcon-angular-icon
-  @Input() acceptLabel = 'OK';
-  @Input() rejectLabel = 'Cancel';
-  @Input() severity: FalconDialogSeverity = 'info';
-  @Input() size: FalconDialogSize = 'sm';
-  @Input() position: FalconDialogPosition = 'center';
-  @Input() closable = true;
-  @Input() closeOnBackdrop = true;
-  @Input() closeOnEsc = true;
-  @Input() loading = false;                // new
-  @Input() acceptDisabled = false;         // new
-  @Input() rejectDisabled = false;         // new
-  @Input() tertiaryButton?: { label: string; tone: 'ghost' | 'primary'; on: () => void };
+## Fix-shared-vs-per-page
 
-  @Output() accept = new EventEmitter<void>();
-  @Output() reject = new EventEmitter<void>();
-  @Output() tertiary = new EventEmitter<void>();
-  @Output() openChange = new EventEmitter<boolean>();
-}
-```
+All gaps belong in the shared component (or in the delete decision). There are no per-page hacks — there are no pages.
 
-Template would render `<falcon-angular-button>` instances composed in the footer.
+## Wave findings
 
-## Future-proof recommendation
-This component is currently unused in production. **Now is the time to land the structural fixes** (button composition, icon component, async state) before consumers start adopting it.
+- **Deletion flag:** YES — candidate for removal (G1). The component is dormant with zero consumers and a live replacement (`FalconConfirmService` → popup). Queue for an owning delete-or-revive decision.
+- **Promotion flag:** none.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B15)
+
+**Consumer count: 0** ([CODE] grep across `apps/` + `libs/falcon/` + `libs/falcon-ui-core/`).
+
+Drift corrected vs prior dossier:
+- **Wrapper is dormant** (commented out) — prior dossier described it as live with a `client-settings-step` consumer (now stale/gone).
+- **`FalconConfirmService` EXISTS** and is the live confirm path — prior `INTEGRATION_VALIDATION.md` claimed "no dedicated confirm service in the read sources." Corrected.
+- **New gaps surfaced:** G1 (dormant/delete-or-revive), G5 (Shadow↔`-tw` accept-button token mismatch), dead Tailwind helper, no spec/e2e on disk.
+- All actionable fixes are **only relevant if the component is revived**; the live recommendation is the G1 delete-or-revive decision. See FINDINGS/B15.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B15) against all source layers. Dormancy + zero-consumers + the live `FalconConfirmService`→popup replacement re-confirmed. Deletion flag raised (G1). G5 token mismatch verified in source. No tests on disk verified.

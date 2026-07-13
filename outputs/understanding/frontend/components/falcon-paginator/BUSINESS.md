@@ -25,7 +25,7 @@
 |---|---|---|
 | `[BRAIN-OUT]` Every Falcon table footer | admin-console + management-console list pages | Auto-composed inside `<falcon-table>` / `<falcon-angular-data-table>` when `paginated=true`; drives the server-side page fetch. |
 | `[MEMORY]` org-hierarchy tab lists (CommChannels, Apps/Services, users) | admin-console org-hierarchy | Footer paging of the service / user lists rendered by the shared data table. |
-| `[CODE]` `playground.page.html` (consumer grep, `USAGE.md`) | host-shell playground | Component demo — the only standalone `<falcon-angular-paginator>` consumer. |
+| `[CODE]` `<falcon-angular-custom-table-footer>` nav region (B09 sweep, `USAGE.md`) | library footer composed by `<falcon-angular-data-table>` | The SOLE `<falcon-angular-paginator>` consumer — the 3-section table footer uses it for the `« ‹ [page] of N › »` center cluster. (The prior playground consumer was removed.) |
 
 ## Business gotchas
 - `[INFERRED]` **The paginator does not fetch data** — emitting a page number is the *whole* of its job. A business flow that wires `(valueChange)` but forgets to re-query the backend will see the page indicator move while the rows stay stale.
@@ -34,4 +34,4 @@
 - `[INFERRED]` Not for **"load more"** or **infinite scroll** — those are different business UX patterns (`DECISION.md`); the paginator is the explicit numbered-page model.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-paginator.tsx` + `[CODE]` `falcon-paginator.component.ts` + existing 6 dossier files. Server-paging flows are `[MEMORY]`/`[INFERRED]`. The component carrying no baked-in business invariant is `[INFERRED]` from full source read.
+🟡 CODE-DERIVED 2026-06-03 (B09) from `[CODE]` `falcon-paginator.tsx` + `[CODE]` `falcon-paginator.component.ts` + the 6 dossier files. Server-paging flows are `[MEMORY]`/`[INFERRED]`. Consumer corrected: sole consumer is `falcon-custom-table-footer` (B09), playground removed. No baked-in business invariant — `[INFERRED]` from full source read.

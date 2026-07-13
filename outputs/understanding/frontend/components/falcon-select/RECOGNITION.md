@@ -1,7 +1,7 @@
 # falcon-select — Recognition Layer
 
-> Cross-cutting layer. Given an external design / screenshot / React or Angular snippet, identify the component to use and how to compose it.
-> **`falcon-select` is a pure TS alias of `falcon-dropdown`.** Canonical recognition layer → `../falcon-dropdown/RECOGNITION.md`. This file disambiguates the alias only.
+> Cross-cutting layer. Given an external design / screenshot / React or Angular snippet, identify the component to use and how to compose it. Sweep-refreshed 2026-06-03 (B04).
+> **`falcon-select` is a pure TS alias of `falcon-dropdown`** (DEAD-CANDIDATE barrel, 0 real consumers — prefer `<falcon-angular-dropdown>`). Canonical recognition layer → `../falcon-dropdown/RECOGNITION.md`. This file disambiguates the alias only.
 
 ## Visual fingerprint
 `[CODE] src/angular-wrapper/components/falcon-select/index.ts` — **There is nothing visually distinct.** The alias renders the exact `falcon-dropdown` UI: a labeled bordered field showing the current single selection (or placeholder) with a trailing chevron; click opens a floating option panel; optional search input, clear (×), per-option `iconUrl`.

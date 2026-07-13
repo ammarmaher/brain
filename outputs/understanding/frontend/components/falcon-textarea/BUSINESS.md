@@ -32,4 +32,4 @@
 - An empty textarea is a legitimate business state (free-text is usually optional); do not assume emptiness is an error unless a `required` rule says so.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-textarea-tw.tsx` + `falcon-textarea.component.ts` + `falcon-textarea.types.ts`, cross-checked against the existing 6 dossier files. Consumer flows ✅ VERIFIED as Add Client / Add User are user-confirmed working features (`[MEMORY]` 2026-05-18).
+🟢 RE-VERIFIED 2026-06-03 (B01) — every `[CODE]` line ref re-confirmed against live source; the "no `disabled` input" + "counter gated on maxlength" + "integer/null business states" claims hold. Consumer set broadened to templates/contracts/wallet flows (USAGE.md). 🟡 backend-module mapping remains module-agnostic (the textarea owns no data).

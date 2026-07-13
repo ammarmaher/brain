@@ -64,6 +64,7 @@ SORT length(rows) DESC
 | [[03 Contract Packaging Charging Billing]] | Commerce (primary) · Charging · Provisioning |
 | [[04 Contact Group Management]] | Contact Group (primary) · Access · Templates (link-to-template) |
 | [[05 Templates]] | Templates (primary, with GAP-TM-01/02) · Commerce (CommChannelConfig) |
+| [[06 Basic Send Application]] | **NONE YET (GAP-BSA-01)** — new `basic-send` service planned ([[Basic Send Service]]); will consume Charging · Templates · Contact Group · Commerce · Provisioning · Access |
 
 **Cross-cutting permission matrices** (enforced by [[Access PES Service]]): [[Falcon Roles Permission Matrix]] · [[Contact Group Permission Matrix]] · [[User Statuses]] · folder hub [[12-Permissions/README|12-Permissions]].
 
@@ -85,6 +86,7 @@ SORT length(rows) DESC
 ## Known gateway gaps
 
 - **GAP-TM-02** — Core Gateway is missing `/api/communication-channel-configs/*` route → Templates UI cannot ship until added
+- **GAP-BSA-02** — No `bsa-cluster`/`/bsa/*` route on either gateway (service itself does not exist yet — GAP-BSA-01); onboard container BEFORE routes (YARP crashes on address-less cluster, templates-svc precedent)
 
 ## Related hubs
 
@@ -92,4 +94,4 @@ SORT length(rows) DESC
 
 ## Tags
 
-#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #service/access #service/charging #service/commerce #service/contact-group #service/core-gateway #service/identity #service/provisioning #service/system-gateway #service/templates #gap #blocked #security
+#type/index #prd/01 #prd/02 #prd/03 #prd/04 #prd/05 #prd/06 #service/access #service/charging #service/commerce #service/contact-group #service/core-gateway #service/identity #service/provisioning #service/system-gateway #service/templates #gap #blocked #security

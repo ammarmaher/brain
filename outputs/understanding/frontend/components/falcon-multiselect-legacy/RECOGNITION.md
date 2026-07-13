@@ -45,4 +45,4 @@ There is **no component to compose** — it is deleted. If a design genuinely re
 - Hand-rolling a bespoke transfer list in an app — banned (`feedback_falcon_ui_library_only_no_native`); raise the gap.
 
 ## Verification
-🔴 INFERRED / historical. CODE-DERIVED CORRECTION: `[CODE]` live-source check 2026-05-18 confirms the component is **deleted**. This recognition file exists only to redirect any encounter with the legacy name to the live components. Never a recognition target.
+🟢 CODE-VERIFIED 2026-06-03 (B22) — deletion RE-CONFIRMED (Glob empty; 0 grep hits repo-wide). Upgrades the prior 🔴/2026-05-18 historical correction. This recognition file exists only to redirect any encounter with the legacy name to the live `<falcon-angular-multi-select>`. Never a recognition target.

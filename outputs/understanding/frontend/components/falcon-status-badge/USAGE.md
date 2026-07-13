@@ -1,6 +1,24 @@
 # falcon-status-badge — USAGE
 
-## Example 1 — Inside a data-table cell template (RECOMMENDED)
+## Real usage examples (active codebase)
+
+### Example 1 — Inside a data-table cell template (RECOMMENDED, production)
+
+`[CODE]` `apps/admin-console/src/app/features/contact-groups/contact-groups-list/contact-groups-list.component.html:143-148` (mirrored in management-console):
+
+```html
+<!-- Status -->
+<ng-template falconDataTableCell field="status" let-row>
+  <falcon-angular-status-badge
+    [severity]="statusSeverity(row)"
+    [label]="statusLabel(row)">
+  </falcon-angular-status-badge>
+</ng-template>
+```
+
+> `statusSeverity(row)` maps the row's backend status to one of the 9 `FalconStatusBadgeSeverity` values; `statusLabel(row)` returns the pre-translated word. The component owns the color, the consumer owns the word.
+
+### Example 2 — Generic data-table cell with translate pipe
 
 ```html
 <falcon-angular-data-table [data]="users()" [columns]="cols">
@@ -13,7 +31,7 @@
 </falcon-angular-data-table>
 ```
 
-## Example 2 — Standalone
+### Example 3 — Standalone
 
 ```html
 <falcon-angular-status-badge severity="active" label="Active"></falcon-angular-status-badge>
@@ -21,23 +39,27 @@
 <falcon-angular-status-badge severity="deleted" label="Deleted" size="sm"></falcon-angular-status-badge>
 ```
 
-## Example 3 — Dot-only mode
+### Example 4 — Dot-only mode (with the Stencil-tag a11y workaround)
 
 ```html
 <falcon-angular-status-badge severity="active" label="" [dot]="true"></falcon-angular-status-badge>
 ```
 
-On the Stencil tag you can additionally set `aria-label="Active"` so screen readers announce the state when no text is visible:
+`[CODE]` Because the wrapper does NOT expose `ariaLabel` (FSB-03), a dot-only badge via the wrapper is silent to screen readers. Drop to the raw Stencil tag to set it:
 
 ```html
 <falcon-status-badge-tw severity="active" aria-label="Active" dot></falcon-status-badge-tw>
 ```
 
+## Recommended usage for NEW Angular pages
+
+Defaults are tuned for table cells: `useTailwind=true`, `severity='active'`, `size='md'`, `dot=true`. Always pass the real `[severity]` + a pre-translated `[label]`. Render inside `<ng-template falconDataTableCell="status">` for list pages.
+
 ## Tailwind-only usage
 
-The Light DOM variant relies on per-severity helpers in `status-badge-tailwind-classes.ts`. Do NOT bypass `[severity]` by writing utility classes directly — the severity contract drives accessibility-tested color buckets.
+The Light DOM variant relies on per-severity helpers in `status-badge-tailwind-classes.ts` that consume `--falcon-status-badge-*` tokens via arbitrary-value utilities (`bg-[color:var(--falcon-status-badge-active-bg)]`, etc.). Do NOT bypass `[severity]` by writing utility classes directly — the severity contract drives the accessibility-tested color buckets.
 
-## Token override pattern
+## Token override (per-instance) pattern
 
 ```css
 .alert-page-status {
@@ -46,25 +68,51 @@ The Light DOM variant relies on per-severity helpers in `status-badge-tailwind-c
 }
 ```
 
+> Revalidate WCAG-AA contrast after any bucket-color override.
+
 ## Bad usage to avoid
 
-- DO NOT hand-roll status chips with Tailwind utilities — that's what admin-console's `organization-hierarchy-menu.component.html:162-195` currently does. The shared component exists for consistency. **Refactor opportunity — see GAPS.**
-- DO NOT pass an arbitrary `severity` string — the TypeScript type forbids it; the renderer falls back to neutral.
-- DO NOT use `<falcon-badge>` (semantic-bucket variants) when `<falcon-status-badge>` (workflow-state palette) is the right semantic.
+- **DO NOT** hand-roll status chips with `bg-falcon-{color}-50 text-falcon-{color}-700` Tailwind combinations — the shared component exists for consistency, and hand-rolled chips drift from the SSOT bucket map.
+- **DO NOT** pass an arbitrary `severity` string — the TS type forbids it; the renderer falls back to the neutral bucket.
+- **DO NOT** use `<falcon-badge>` (semantic-bucket variants) or `<falcon-tag>` (generic 7-value palette) when `<falcon-status-badge>` (workflow-state palette) is the right semantic.
+- **DO NOT** rely on the wrapper exposing `ariaLabel` — it does not (FSB-03); use the Stencil-tag workaround for dot-only mode.
+- **DO NOT** use `*ngIf`/`*ngFor` around it — use `@if`/`@for`.
 
-## Import requirements
+## Import requirements (standalone component)
 
-```typescript
-import { FalconAngularStatusBadgeComponent }
-  from '@falcon-ui-core/angular-wrapper/components/falcon-status-badge';
-import type { FalconStatusBadgeSeverity, FalconStatusBadgeSize }
-  from '@falcon-ui-core/components/falcon-status-badge/falcon-status-badge.types';
+```ts
+import { FalconAngularStatusBadgeComponent } from '@falcon/ui-core';
+import type { FalconStatusBadgeSeverity, FalconStatusBadgeSize } from '@falcon/ui-core';
+
+@Component({ standalone: true, imports: [FalconAngularStatusBadgeComponent], ... })
 ```
 
 ## Do / Don't
 
-- DO — use this for workflow-state row cells (user status, account status, service status).
-- DO — translate the label outside the component; pass pre-translated string via `[label]`.
-- DO — choose `dot=false` for dense table cells; `dot=true` for headers / hero status.
-- DON'T — hand-roll status chips with `bg-falcon-{color}-50 text-falcon-{color}-700` Tailwind combinations — those become unmaintainable across pages.
-- DON'T — use this for generic count / notification badges (use `<falcon-badge>`).
+| Do | Don't |
+|---|---|
+| Use for workflow-state row cells (user / account / service). | Use for generic count / notification badges (`<falcon-badge>`). |
+| Translate the label outside; pass a pre-translated `[label]`. | Pass an i18n key as the label. |
+| Choose `dot=false` for dense cells; `dot=true` for headers / hero status. | Hand-roll `bg-falcon-{color}-50 text-falcon-{color}-700` chips. |
+| Pass a real `[severity]` from the 9-value union. | Pass an arbitrary off-vocabulary string. |
+
+## Consumer Sweep (2026-06-03)
+
+`[CODE]` grep `falcon-angular-status-badge` across `apps/` → **16 files / 21 occurrences**; across `libs/falcon/` → **4 files / 5 occurrences**. Full list:
+
+**apps/ (16 files):**
+- `apps/{admin,management}-console/.../contracts-cost-management/contracts-cost-management.component.html` + `.ts` (admin) + `components/contracts-view-contract/contracts-view-contract.component.{html,ts}` (both)
+- `apps/{admin,management}-console/.../contact-groups/contact-groups-list/contact-groups-list.component.{html,ts}` (status cell)
+- `apps/{admin,management}-console/.../org-hierarchy-page/components/org-hierarchy-page-menu.component.{html,ts}`
+- `apps/admin-console/.../org-hierarchy-page/components/wizard-components/add-client-wizard/{client-comm-channels-step,client-applications-step}.component.html`
+
+**libs/falcon/ (4 files):**
+- `libs/falcon/src/shared-features/comm-mkt-view/comm-mkt-view.component.html`
+- `libs/falcon/src/shared-features/comm-mkt-view/components/card/comm-mkt-card.component.ts`
+- `libs/falcon/src/shared-features/service-pricing-table/service-pricing-table.component.html`
+- `libs/falcon/src/shared-features/user-details/components/user-details-page.component.html` (2 occurrences)
+
+> `[INFERRED]` count rose from the prior Wave-7 "6" (and the OVERVIEW's stale "no consumers found") as contracts-cost-management, contact-groups, and the shared comm-mkt-view/service-pricing-table/user-details features adopted the component, and the folder renamed `organization-hierarchy/` → `org-hierarchy-page/`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B10). Example 1 confirmed against live source (contact-groups-list.component.html:143-148). Consumer Sweep re-run (`falcon-angular-status-badge` → 16 app files / 21 occurrences + 4 lib files / 5 occurrences) — corrects the prior "no consumers" / Wave-7 "6".

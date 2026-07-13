@@ -1,4 +1,4 @@
-# falcon-input-number — GAPS AND UPGRADES
+﻿# falcon-input-number — GAPS AND UPGRADES
 
 ## Missing capabilities
 
@@ -22,13 +22,29 @@ No `setFocus()` / `stepUp()` / `stepDown()` exposed publicly.
 
 Some locales prefer `()` for negatives. Intl handles this via `signDisplay` and currency display options — not exposed.
 
-### G5 — No `state` input (P2)
+### G5 — `state` input exists on wrapper but is DROPPED in Shadow mode (P2 — re-scoped 2026-06-03)
 
-Missing `state: 'default' | 'error' | 'success' | 'warning'` on the wrapper despite passing through `errorMessage`. Pattern divergence from input / dropdown / textarea.
+`[CODE]` **CORRECTION + DEEPER FINDING:** the wrapper DOES declare `@Input() state` (ts:80) and the Tailwind `-tw` twin forwards it to its inner `<falcon-input-tw>` (tw.tsx:46/306). BUT the **Shadow** `<falcon-input-number>` has **no `state` prop at all** (falcon-input-number.tsx — never declared, never passed to its inner `<falcon-input>`). So `useTailwind=false` + `[state]="'error'"` paints NO error ring. Since `useTailwind=true` is the default this rarely bites, but it is a true Shadow↔tw parity break.
 
-### G6 — No keyboard step (Up/Down arrows) (P2)
+**Recommended fix:** add `@Prop({reflect:true}) state` to `<falcon-input-number>` and forward it to the inner `<falcon-input>` (mirror the `-tw` twin).
 
-When `showButtons=false`, user has no easy way to step. Browser-native `<input type=number>` would handle Up/Down arrows — verify whether Stencil/Angular composition does.
+### G5b — Shadow path lacks the DOM numeric keystroke/paste/beforeinput filter (P1 — NEW 2026-06-03)
+
+`[CODE]` The `-tw` twin attaches host-level `keydown` / `paste` / `beforeinput` listeners (tw.tsx:147-283, Wave 7.10) that block non-numeric input at the keyboard level (resolves the "letters accepted by integer-only input" bug class). The **Shadow** `<falcon-input-number>` has **NO such filter** — it relies solely on blur-time `parse()`, so in Shadow mode a user can type `abc12` and see it until blur. Real behavior divergence.
+
+**Recommended fix:** lift the numeric-filter handlers into a shared util both Stencil components attach in `componentDidLoad`.
+
+### G5c — `inputExtraClass` + spinner tokens are `-tw`-only (P3 — NEW 2026-06-03)
+
+`[CODE]` Shadow path binds `root-class` but not `input-extra-class` (html:74 vs 39); and the `-tw` spinner buttons hardcode palette utilities instead of `--falcon-input-number-spinner-*` (tw.tsx:331/347), so spinner token overrides only affect the Shadow path. The standalone `falconInputNumberSpinnerClasses()` helper is declared but unused (DRY). `safe-local`.
+
+### G5d — wrapper `state` input (legacy note)
+
+Pattern parity with input/dropdown/textarea is now present on the wrapper surface (see G5). Superseded.
+
+### G6 — No keyboard step (Up/Down arrows) (P2 — CONFIRMED 2026-06-03)
+
+`[CODE]` CONFIRMED no arrow-key step. The `-tw` numeric filter's `isControlKey()` lets `ArrowUp`/`ArrowDown` through (tw.tsx:212-214) but there is **no handler that calls `stepUp`/`stepDown` on arrow keys** — and the inner field is `type="text"`, not native `type="number"`, so the browser provides no stepping either. When `showButtons=false` there is no keyboard step at all.
 
 ### G7 — Long-press spinner not implemented (P3)
 
@@ -95,3 +111,25 @@ All shared.
 - For G2: pass `mode='currency'` if needing a symbol; otherwise render prefix/suffix externally outside the component.
 - For G6: use `showButtons=true`.
 - For G1: trigger `blur()` programmatically on form submit.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 2** ([CODE] grep `<falcon-angular-input-number>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B01)
+
+**Consumer count: ≈16 app files** (0 in `libs/falcon`) ([CODE] grep `<falcon-angular-input-number[\s>]`). Component stays ACTIVE/PREFERRED — no deletion/promotion flag. The 2026-05-17 tag-switcher refactor is solid; gaps are Shadow-path parity + missing tests.
+
+NEW / re-scoped gaps this pass (all evidence-backed):
+- **G5 re-scoped** — `state` exists on wrapper but Shadow `<falcon-input-number>` has no `state` prop → error ring lost in Shadow mode. (P2, `HIGH-RISK-QUEUE`? No — behavior/render-path change but additive; classified `safe-local` for the doc, fix itself is a Stencil prop add — flag to humans as a render-path-behavior change.)
+- **G5b (NEW, P1)** — Shadow path lacks the numeric keystroke/paste/beforeinput filter the `-tw` twin has → letters typeable in Shadow mode. **`HIGH-RISK-QUEUE`** (behavior change touching input filtering).
+- **G5c (NEW, P3)** — `inputExtraClass` + spinner tokens are `-tw`-only; `falconInputNumberSpinnerClasses()` unused (DRY). `safe-local`.
+- **G6 confirmed** — no arrow-key step; field is `type="text"`.
+- **Stale barrel comment** — `index.ts` still says "composed wrapper around `<falcon-angular-input>` + spinner buttons" (false since the tag-switcher refactor). `safe-local`.
+- **No `.spec`/`.e2e`.**
+- See FINDINGS/B01.md for the row-level list + risk-class.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B01) against wrapper (160 ln) + both Stencil `.tsx` (216/359 ln) + types + token file. Tag-switcher refactor confirmed; NEW Shadow-parity gaps G5b (numeric filter — 🔴 P1/HIGH-RISK-QUEUE) + G5 (`state` drop) + G5c (spinner hardcode/unused helper) all evidence-backed. No deletion/promotion flags — component stays ACTIVE/PREFERRED.

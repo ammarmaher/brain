@@ -2,102 +2,86 @@
 
 ## Brain SK final recommendation
 
-### Use this component for
-- Confirmations that DON'T map to the 4 `falcon-popup` canonical variants (Approve / Reject, Continue / Go back, Activate / Deactivate, etc.).
-- OK / Cancel prompts with explicit accept/reject labels.
-- Confirmations where `severity` should drive the accent (info / success / warning / danger).
-- A specialised composed dialog without rolling your own.
+**STATUS: DORMANT / SUPERSEDED — DO NOT USE; delete-or-revive decision pending.** `[CODE]` The Angular wrapper is commented out (falcon-confirm-dialog.component.ts:1-79), `index.ts` exports `export {}`, and there are zero render consumers. For any confirm need, use **`FalconConfirmService.confirm()`** (renders `<falcon-angular-popup variant="error">`) or **`<falcon-angular-alert-dialog>`** for icon-led acknowledgements.
 
-### Avoid this component for
-- The 4 canonical decision flows — use `<falcon-angular-popup>`.
-- Form-bearing dialogs — use `<falcon-angular-dialog>`.
-- Single-action acknowledgments ("Got it" only) — use `<falcon-angular-notification>`.
+## Use this component for
 
-### Preferred render path
-`useTailwind=true` (default).
+**Nothing new.** It is dormant. (As-designed it was for small "are you sure?" prompts with custom verbs that don't fit a `<falcon-popup>` variant — that need is now met by `FalconConfirmService`.)
 
-### Required upgrades before wider use
-**Tier 1:**
-1. Replace internal `<button>` with `<falcon-angular-button>` (or `<falcon-button-tw>` in Stencil).
-2. Add `loading` / `acceptDisabled` / `rejectDisabled` inputs.
-3. Replace `icon` CSS class with `<falcon-angular-icon>`.
+## Avoid this component for
 
-**Tier 2:**
-4. Add tertiary button slot.
-5. Link `aria-describedby` to message.
-6. Add `<ng-template falconConfirmDialogBody>` directive for richer body content.
+- **Everything** — it does not render. Specifically:
+  - Imperative confirms → `FalconConfirmService.confirm()`.
+  - The 4 canonical flows → `<falcon-angular-popup>`.
+  - Icon-led / subtitle "are you sure?" → `<falcon-angular-alert-dialog>`.
+  - Forms / custom modal bodies → `<falcon-angular-dialog>`.
 
-### Relationship to other components
+## Preferred variant / render path
+
+N/A (dormant). If revived, `useTailwind=true` (Light DOM) would be the default — but note the `-tw` accept-button token mismatch (GAP G5) would need fixing first.
+
+## Required upgrades before any use
+
+**An owning delete-or-revive decision (GAP G1).** Until then the component must not be adopted. If revived: G3 (compose `<falcon-angular-button>`), G4 (`<falcon-angular-icon>`), G5 (fix Shadow↔`-tw` accept-button token parity), G7 (`aria-describedby`), plus a `.spec.ts` (none exists).
+
+## Relationship to other components
 
 | Component | Relationship |
 |---|---|
-| `falcon-angular-dialog` | **Composed internally.** Confirm-dialog wraps dialog with specialised accept/reject layout. |
-| `falcon-angular-popup` | Alternative for the 4 canonical decision flows. |
-| `falcon-angular-button` | Should be composed for accept/reject (today they're raw `<button>`). |
-| `falcon-angular-icon` | Should be used for the body icon (today it's a CSS class). |
+| `<falcon-dialog>` / `<falcon-dialog-tw>` | **Composed internally** as the chrome substrate (`[CODE]` tsx:100, tw.tsx:69). |
+| `<falcon-angular-popup>` | The LIVE renderer `FalconConfirmService` uses for `action-required` — the de-facto replacement. |
+| `<falcon-angular-alert-dialog>` | The LIVE rich-confirm substrate (icon + title + subtitle + 2 buttons). |
+| `FalconConfirmService` + `<falcon-angular-confirm-dialog-host>` | The imperative confirm path that bypasses this component entirely. |
 
-### Exact rule for future implementation tasks
-> Use `<falcon-angular-confirm-dialog>` for non-canonical Approve/Reject style confirmations. Set `severity` to match the action intent. Pass `acceptLabel` and `rejectLabel` explicitly. Treat the `(reject)` event as the universal cancel handler — it fires for all dismissal paths (backdrop, Esc, ×, reject button). Use the projected body slot for additional context (date pickers, inline notes). Be aware: today's implementation uses raw `<button>` elements internally — async accept actions won't have built-in spinner support until the Tier-1 upgrade lands.
+## Exact rule for future implementation tasks
 
-### Status
-**READY but UNDER-LEVERAGED.** Production-grade for static confirmations. Needs Tier-1 upgrades before async / loading-aware flows can use it.
+> **Do NOT use `<falcon-angular-confirm-dialog>`.** It is dormant (wrapper commented out, `export {}`, zero consumers). For a confirm prompt inject `FalconConfirmService` and call `.confirm({ title, body, confirmLabel?, cancelLabel?, hideCancel? }).subscribe(accepted => …)`. For an icon-led acknowledgement modal use `<falcon-angular-alert-dialog>`. If a task explicitly asks to use or revive this component, treat it as GAP G1 (delete-or-revive) and surface the decision — do not silently uncomment the wrapper.
 
 ---
 
 ## Dynamic capability assessment
 
 ### 1. What is static today?
-- The 2-button layout (accept + reject).
-- The button DOM (raw `<button>`).
-- The icon rendering path (`<i class="...">`).
-- The text-only message body.
-- The substrate is always `<falcon-dialog>`.
+
+- **Everything** — the component never renders (wrapper commented out). The Stencil tags' rendered DOM (when forced) is a fixed 2-button footer (Reject first, Accept second), a centered icon `<i>`, a one-line message, raw `<button>`s.
 
 ### 2. What is already dynamic through inputs/outputs?
-- `open`, `title`, `message`, `icon`, `acceptLabel`, `rejectLabel`, `severity`, `size`, `position`, `closable`, `closeOnBackdrop`, `closeOnEsc`.
-- `useTailwind`, `rootClass`.
-- Outputs: `accept`, `reject`, `openChange`.
+
+- `[CODE]` On the Stencil tags (live but unused): `open` / `heading` / `message` / `icon` / `acceptLabel` / `rejectLabel` / `severity` / `size` / `position` / `closable` / `closeOnBackdrop` / `closeOnEsc`; events `falcon-confirm-accept` / `falcon-confirm-reject` / `falcon-confirm-open-change`.
+- On the Angular wrapper (DORMANT — commented): `open` / `title` / `message` / `icon` / `acceptLabel` / `rejectLabel` / `severity` / `size` / `position` / `closable` / `closeOnBackdrop` / `closeOnEsc` / `useTailwind` / `rootClass`; outputs `accept` / `reject` / `openChange`. **None are reachable** (class not exported).
 
 ### 3. What is already dynamic through slots / ng-template?
-- (default) — additional body content projected below the message.
 
-### 4. What is dynamic through token / theme overrides?
-- Button colors, padding, radius.
-- Body gap / padding.
-- Icon size.
-- Message font / color.
-- Action gap.
+- `[CODE]` One default `<slot>` in the body (tsx:119, tw.tsx:85). The footer is locked. No `ng-template` inputs.
+
+### 4. What is dynamic through token/theme overrides?
+
+- `[CODE]` 15 `--falcon-confirm-dialog-*` tokens (body / icon / message / actions / buttons) — but the `-tw` accept button reads `--falcon-teal-700`, NOT `--falcon-confirm-dialog-accept-bg` (G5 parity break). Chrome tokens inherited from `dialog.tokens.css`.
 
 ### 5. What is dynamic through Tailwind classes?
-- Inside the projected body slot.
-- Not on the host or footer buttons.
+
+- `[CODE]` The `-tw` twin inlines its utilities; the dead `confirm-dialog-tailwind-classes.ts` helpers are unused. Consumers cannot pass arbitrary wrapper classes (no `wrapperClass`-style input; `rootClass` only forwards to the dialog).
 
 ### 6. What is missing to make this component reusable across pages?
-- Loading state for async accept.
-- Disabled states for accept / reject independently.
-- Tertiary button.
-- Button composition with `<falcon-angular-button>` for token alignment.
-- Icon composition with `<falcon-angular-icon>`.
-- Richer body content via dedicated slot.
 
-### 7. What capability should be added to the shared component instead of a one-off page hack?
-All items 6.
+- A live (uncommented) wrapper, an owning niche distinct from popup/alert-dialog, `loading`/`disabled` button states, `<falcon-angular-button>` composition, `<falcon-angular-icon>`, `aria-describedby`, Shadow↔`-tw` parity, and a spec. In short: it needs a revive decision (G1) before any reuse.
+
+### 7. What capability should be added to shared component (not page hack)?
+
+- Nothing should be added until G1 is decided. If revived, items in §6 go into the shared component, not per-page.
 
 ### 8. What flags / options / templates / slots would make it better?
-- `[loading]`, `[acceptDisabled]`, `[rejectDisabled]`.
-- `[tertiaryButton]` config.
-- `<ng-content select="[slot=body-extra]">` for context content.
-- `[iconName]` (using falcon-angular-icon).
-- `[aria-describedby-id]` for explicit a11y wiring.
+
+- `[loading]` / `[acceptDisabled]` / `[rejectDisabled]`, a tertiary-button slot, `[autoFocusButton]`, an `[iconName]` (falcon-icon) input — all moot while dormant.
 
 ### 9. What is the safest upgrade path?
-1. Compose `<falcon-angular-button>` internally (preserves API; visible visual change to button geometry).
-2. Add `loading` / `disabled` inputs (additive).
-3. Add `iconName` input alongside the legacy `icon` (gradual migration).
-4. Add tertiary button (additive).
 
-### 10. What would be risky to change because other pages depend on it?
-- **No production consumers today** — risk is low. This is the right time for structural fixes.
-- BUT: `acceptLabel`/`rejectLabel` defaults of `'OK'` / `'Cancel'` are conventional. Don't change defaults.
-- The `(reject)` event firing for ALL dismissal reasons is the documented contract.
-- The wrapper's `title` (vs Stencil's `heading`) is the public API — don't rename back.
+1. **Decide G1 (delete-or-revive).** Safest is likely DELETE (zero consumers, live replacement exists) — but that touches the umbrella registration + token build → HIGH-RISK-QUEUE, human sign-off.
+2. If revived: uncomment wrapper → fix G5 token parity → compose `<falcon-angular-button>` (G3) + `<falcon-angular-icon>` (G4) → add `aria-describedby` (G7) → add spec. All additive once the wrapper is live.
+
+### 10. What is risky to change because other pages depend on it?
+
+- **Nothing depends on it** — risk of changing the component is low. The risk in DELETING is the umbrella loader registration (`define-custom-elements.ts`, `stub-seeder.cjs`) + the `confirm-dialog.tokens.css` `:where()` block that also lists `falcon-dialog` tags (removing it must not strip dialog-token coverage). Those make G1 a queued, sign-off item rather than a safe-local fix.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B15). Recommendation flipped from the prior "READY but UNDER-LEVERAGED" to **DORMANT/SUPERSEDED** — the wrapper is commented out and the live confirm path is `FalconConfirmService`→popup. Delete-or-revive (G1) raised as the single gating decision; counts corrected (0 consumers; wrapper not exported).

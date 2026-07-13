@@ -2,9 +2,11 @@
 
 ## Component token file
 
-`libs/falcon-ui-tokens/src/components/badge.tokens.css` (85 lines, 4 categories).
+`libs/falcon-ui-tokens/src/components/badge.tokens.css` (~84 lines).
 
-Selector union covers `falcon-badge`, `falcon-badge-tw`, `falcon-angular-badge`.
+Selector union: `:where(falcon-badge, falcon-badge-tw, falcon-angular-badge, .falcon-badge, [data-falcon-badge])` — covers Shadow + Light + Angular host + utility-class + data-attr consumers. **Gate-12 compliant** — scoped under `:where(...)`, NOT `:root` (`[CODE]` badge.tokens.css:17), so the ~30 badge vars do not pollute `:root`.
+
+> Header comment lists 5 categories (LAYOUT / TYPOGRAPHY / SURFACE / DOT / SIZING) though SIZING is folded into LAYOUT's `*-sm`/`*-lg` overrides + TYPOGRAPHY's `*-font-size-sm/lg` (no separate block). Effectively 4 token groups (verified 2026-06-03).
 
 ## Token categories (4)
 
@@ -60,3 +62,10 @@ No density variants; `[size]` covers size differences (sm/md/lg).
 | Hover | None (badges aren't interactive) |
 | Focus | None |
 | Disabled | inherited |
+
+## Solid appearance reuses the dot tokens (verified 2026-06-03)
+
+There is **no** `--falcon-badge-{variant}-solid-bg` token. The Tailwind helper paints the `solid` appearance background from the **dot** token family (`[CODE]` badge-tailwind-classes.ts:35-48 → `--falcon-badge-primary-dot-bg`, `--falcon-badge-success-dot-bg`, …), which `falconBadgeDotClasses()` ALSO consumes (`[CODE]` :114-127). So per variant, the solid-badge fill and the leading-dot colour are the SAME variable — overriding one moves the other. See GAPS FB-04 (safe-local: add aliased `*-solid-bg` tokens). The `subtle` surface uses the documented `--falcon-badge-{variant}-bg/-fg` pairs; `outline` reuses subtle's fg as `currentColor` border with a transparent bg (`[CODE]` :51-56).
+
+## Verification
+🟢 code-verified — categories, the `:where()` gate-12 scope, and the solid-uses-dot-token aliasing re-checked against `badge.tokens.css` + `badge-tailwind-classes.ts` on 2026-06-03 (REFRESH). Dark-mode/RTL claims 🟡 code-derived (inherits master palette; not re-tested in a browser).

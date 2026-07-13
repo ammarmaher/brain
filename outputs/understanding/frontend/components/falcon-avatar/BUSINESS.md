@@ -36,8 +36,8 @@
 
 ## Business gotchas
 - `[CODE]` falcon-avatar.tsx:46 — a node with **no logo and no resolvable name** falls through to an empty surface (just the teal disc). Treat an empty avatar as a *data-completeness signal* — the node record is missing both image and name.
-- `[BRAIN-OUT]` OVERVIEW.md:46, GAPS_AND_UPGRADES.md:124-128 — **zero production consumers** as of the Wave 7 sweep. Org-hierarchy still uses raw `<img>`. A builder asked to "show the node logo" should adopt this component, not hand-roll another `<img>`.
+- `[BRAIN-OUT]` OVERVIEW.md, USAGE.md Consumer Sweep — adoption is **starting**: the `wallet-balance-management` header is the first live consumer (account-logo avatar). Most org-hierarchy node imagery still uses raw `<img>`. A builder asked to "show the node logo" should adopt this component, not hand-roll another `<img>`. (B11 corrected the prior "zero production consumers" claim.)
 - `[INFERRED]` Status `online/offline/busy/away` is a **user-presence model** Falcon does not yet emit — there is no live-presence backend. Do not wire `[status]` until a presence source exists; otherwise it always shows a stale value.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-avatar.tsx + the existing 6 dossier files. No `BR-*` rule binds this presentational primitive. Node-identity contract and zero-adoption state ✅ VERIFIED against source + `[BRAIN-OUT]` dossiers.
+🟡 CODE-DERIVED 2026-06-03 (B11) from `[CODE]` falcon-avatar.tsx + the dossier. No `BR-*` rule binds this presentational primitive. Node-identity contract ✅ VERIFIED against source. Adoption state corrected: **1 live consumer** (wallet-balance-management) — prior "zero adoption" was stale.

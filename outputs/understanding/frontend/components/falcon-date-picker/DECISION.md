@@ -2,7 +2,7 @@
 
 ## Brain SK final recommendation
 
-**STATUS: READY for basic date entry. NEEDS-UPGRADE for CVA + range + time + Hijri.**
+**STATUS: READY for basic date entry (default `useTailwind=true` ONLY). NEEDS-UPGRADE for CVA (G1) + range (G2) + time (G3) + the two a11y gaps (no keyboard-open / no focus-trap). The Shadow path (`useTailwind=false`) is NOT recommended — it still has the RC#4 first-click bug.**
 
 ## Use this component for
 
@@ -48,12 +48,13 @@ P1: G1 (CVA), G2 (range), G3 (time).
 - No time component.
 
 ### 2. Dynamic via inputs/outputs?
-- 19 inputs.
-- 5 outputs.
-- NO CVA.
+- `[CODE]` **24 inputs** (2026-06-03 recount, falcon-date-picker.component.ts:63-93 — incl. `disabledIcon*` + `iconLeft`).
+- `[CODE]` **5 outputs** (`falconChange`/`falconBlur`/`falconOpen`/`falconClose`/`valueChange`, ts:95-99).
+- NO CVA (G1).
+- Stencil `open()`/`close()` `@Method`s exist but are NOT proxied on the wrapper (G6).
 
 ### 3. Slots/templates?
-- None.
+- `[CODE]` One: `slot="icon-left"` (projected when `[iconLeft]="true"`, wrapper html:31,62). No `icon-right` (trailing calendar glyph). No `ng-template`.
 
 ### 4. Tokens?
 - All input + calendar tokens.
@@ -84,5 +85,10 @@ P1: G1 (CVA), G2 (range), G3 (time).
 
 ### 10. Risky?
 - Adding CVA could conflict with existing `(valueChange)` users — must be additive.
-- Range mode breaks value type — opt-in via `mode` input.
-- Popover positioning — visual regressions easy.
+- Range mode breaks the value type — opt-in via `mode` input.
+- Popover positioning + the portal lifecycle (`ensurePortaled` / RC#1-5) — visual regressions easy; touch only with the `*falconDataTableShadowCol` regression scenario in hand (`[BRAIN-OUT]` `_LEARNINGS_POPOVER_PORTAL_PATTERN.md` :273).
+- The `falcon-change` detail shape `{ value, date }` — the value is consumed two-way; changing it breaks consumers.
+- `useTailwind=true` default — flipping it re-introduces the RC#4 first-click bug and drops the portal/Top-Layer fixes.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B07). Recommendation: READY on `-tw` only / NEEDS-UPGRADE for CVA+range+time+a11y. Counts corrected: 24 inputs, 5 outputs, 1 slot, `open`/`close` Stencil methods un-proxied. Shadow-path RC#4 + portal-lifecycle elevated as the main change-risk surface.

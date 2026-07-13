@@ -2,107 +2,91 @@
 
 ## Real usage in the workspace
 
-[applications-table.component.html](../../../../../Falcon/falcon-web-platform-ui/apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/applications-table/applications-table.component.html) — fired from the `doPayment` row action; consumed by both `comm-channels-tab` + `apps-services-tab` (they share `ApplicationsTableComponent`).
+`[CODE]` The ONLY production render site is `apps/host-shell/src/app/shared-components/do-payment-priority-popup/do-payment-priority-popup.component.html:5-…` — a feature wrapper that owns the do-payment orchestration in its `.ts` and binds the dialog's inputs/outputs here. (The showcase `library-section.component.ts:945` renders a static demo.)
 
-## Minimal template
+### Example 1 — the live do-payment popup binding
+
+`apps/host-shell/.../do-payment-priority-popup/do-payment-priority-popup.component.html`:
 
 ```html
+<!-- The library tag is purely presentational; this wrapper owns the API orchestration in its .ts. -->
 <falcon-angular-insufficient-balance-dialog
   [open]="dialogOpen()"
-  [items]="channels()"
-  [loading]="loading()"
-  [busy]="submitting()"
-  [errorMessage]="error()"
+  [items]="dialogItems()"
+  [loading]="dialogLoading()"
+  [busy]="dialogBusy()"
+  [errorMessage]="dialogError() ?? undefined"
+  [showGlossy]="showGlossy"
+  [showIconColor]="showIconColor"
+  [showIconBackground]="showIconBackground"
+  [allowDragDrop]="allowDragDrop"
+  [fit]="fit"
   [headingText]="'falcon.dialogs.insufficientBalance.title' | translate"
   [subtitle]="'falcon.dialogs.insufficientBalance.subtitle' | translate"
   [confirmLabel]="'falcon.dialogs.insufficientBalance.proceed' | translate"
   [cancelLabel]="'falcon.dialogs.insufficientBalance.cancel' | translate"
+  [dragLabel]="'falcon.dialogs.insufficientBalance.dragLabel' | translate"
+  [firstAutoLabel]="'falcon.dialogs.insufficientBalance.firstAuto' | translate"
+  [moveUpLabel]="'falcon.dialogs.insufficientBalance.moveUp' | translate"
+  [moveDownLabel]="'falcon.dialogs.insufficientBalance.moveDown' | translate"
   (falconProceed)="onProceed($event.orderedIds)"
-  (falconCancel)="dialogOpen.set(false)" />
+  (falconCancel)="onCancel($event.reason)" />
 ```
 
-## Without glossy + neutral icon
+- All labels are bound to `| translate` keys (the dialog takes pre-translated strings). `[errorMessage]` uses `?? undefined` — never pass `null`.
+
+### Example 2 — the LIVE do-payment orchestration shape (corrected 2026-06-03)
+
+`apps/host-shell/.../do-payment-priority-popup/do-payment-priority-popup.component.ts:10-22` (banner) describes the real flow:
+
+```text
+1. doPayment(emptyPriorities) → orderId
+2. OrderStatusRealtimeService.joinOrder(orderId) + subscribe "OrderFinalized" push
+3. catch-up getOrderStatus GET once (order may finalize before the socket opens)
+4. fallback getOrderStatus GET if no push within environment.orderStatus.pollTimeoutMs
+5. terminal status → handleTerminal:
+   • Completed → success
+   • Failed + CommChannelPriorityOrderRequired (ANY walletType — server is authoritative;
+     FE no longer AND-guards on walletType) → getVisibleCommChannels(nodeId) → open THIS dialog
+   • InsufficientFunds → Falcon confirm "Top up balance"
+   • WalletNotConfigForTheNode → Falcon confirm explainer
+6. on (falconProceed) → doPayment(orderedPriorities) → repeat
+```
+
+> **DRIFT CORRECTION:** the prior dossier's illustrative `submit()` sample AND-guarded on `status.walletType === WalletType.MultipleWallets`. The LIVE code REMOVED that guard (`[CODE]` :17-18) — `CommChannelPriorityOrderRequired` alone now opens the dialog. Also: the live flow uses a SignalR `OrderFinalized` push + a bounded GET fallback, NOT a fixed 2s `SimplePollService` loop (that was the older illustrative sample).
+
+### Example 3 — Without glossy + neutral icon
 
 ```html
 <falcon-angular-insufficient-balance-dialog
-  [open]="open"
-  [items]="items"
-  [showGlossy]="false"
-  [showIconColor]="false"
-  [showIconBackground]="false"
-  ... />
+  [open]="open" [items]="items"
+  [showGlossy]="false" [showIconColor]="false" [showIconBackground]="false" ... />
 ```
 
-## Real backend wire-up (Falcon Commerce)
-
-```ts
-import {
-  CommChannelPaymentService,
-  OrderStatusService,
-  SimplePollService,
-  ProcessState,
-  OrderFailureReason,
-  WalletType,
-} from '@falcon';
-
-private payment     = inject(CommChannelPaymentService);
-private orderStatus = inject(OrderStatusService);
-private poll        = inject(SimplePollService);
-
-onDoPayment(commChannelId: string, accountId: string, nodeId: string) {
-  this.submit(commChannelId, accountId, nodeId, []);
-}
-
-onProceed(orderedIds: string[]) {
-  const priorities = orderedIds.map((channelId, i) => ({ commChannelPriorityId: i + 1, channelId }));
-  this.submit(this.activeChannelId!, this.accountId, this.nodeId, priorities);
-}
-
-private submit(commChannelId: string, accountId: string, nodeId: string, priorities: CommChannelPriority[]) {
-  this.busy.set(true);
-  this.payment.doPayment({ accountId, commChannelId, commChannelPriorityIds: priorities })
-    .subscribe(({ orderId }) => this.beginPoll(orderId, commChannelId, accountId, nodeId));
-}
-
-private beginPoll(orderId, commChannelId, accountId, nodeId) {
-  this.poll.watch({
-    serviceMethod: () => this.orderStatus.getOrderStatus(orderId),
-    intervalSeconds: 2,
-    shouldStop: s => s.status !== ProcessState.Pending && s.status !== ProcessState.Running,
-  }).data$.subscribe(status => {
-    this.busy.set(false);
-    if (status.status === ProcessState.Completed) {
-      this.open.set(false);
-      return;
-    }
-    if (status.failureReason === OrderFailureReason.CommChannelPriorityOrderRequired
-     && status.walletType === WalletType.MultipleWallets) {
-      this.loading.set(true);
-      this.open.set(true);
-      this.payment.getVisibleCommChannels(nodeId).subscribe(channels => {
-        this.items.set(channels.sort((a, b) => a.PriorityOrder - b.PriorityOrder)
-          .map(c => ({ id: c.ChannelId, label: c.ChannelName })));
-        this.loading.set(false);
-      });
-    }
-  });
-}
-```
-
-## Generic (non-commerce) usage
+### Example 4 — Generic (non-payment) reuse
 
 ```html
 <falcon-angular-insufficient-balance-dialog
-  [open]="open"
-  [items]="recipients"
+  [open]="open" [items]="recipients"
   [headingText]="'campaign.prioritizeRecipients.title' | translate"
-  [subtitle]="'campaign.prioritizeRecipients.subtitle' | translate"
   [confirmLabel]="'campaign.prioritizeRecipients.send' | translate"
+  [firstAutoLabel]="'campaign.prioritizeRecipients.firstAuto' | translate"
   (falconProceed)="dispatchInOrder($event.orderedIds)"
   (falconCancel)="open = false" />
 ```
 
-## Per-instance dimension override
+> Override `headingText` / `confirmLabel` / `firstAutoLabel` for non-payment domains — the defaults lean payment-flavored.
+
+### On Proceed — map ordered IDs to priorities
+
+```ts
+onProceed(orderedIds: string[]) {
+  const priorities = orderedIds.map((channelId, i) => ({ commChannelPriorityId: i + 1, channelId }));
+  // resubmit doPayment with `priorities`; index 0 = top priority = commChannelPriorityId 1
+}
+```
+
+## Per-instance dimension / token override
 
 ```html
 <falcon-angular-insufficient-balance-dialog
@@ -110,21 +94,38 @@ private beginPoll(orderId, commChannelId, accountId, nodeId) {
   ... />
 ```
 
+> `[CODE]` Per-instance `style="--falcon-ib-dialog-*"` tokens cascade into the SHADOW path cleanly. **CAVEAT:** the `-tw` (default) twin reads several values as raw `var(--color-falcon-*)` palette refs rather than `--falcon-ib-dialog-*` tokens (e.g. the error banner `bg-[var(--color-falcon-red-50,…)]`, the drag-over border `var(--color-falcon-teal-500,…)`), so a per-instance `--falcon-ib-dialog-*` override may retint the Shadow path only (GAP G-TOK). Geometry tokens (`row-height`/`row-gap`/etc.) DO flow to both.
+
 ## Import requirements
 
 ```ts
-@Component({
-  standalone: true,
-  imports: [FalconAngularInsufficientBalanceDialogComponent],
-})
+@Component({ standalone: true, imports: [FalconAngularInsufficientBalanceDialogComponent] })
 ```
 
-The underlying `-tw` Stencil tag registers automatically via `defineFalconTwComponent('falcon-insufficient-balance-dialog')` inside the wrapper's `ngOnInit`.
+The `-tw` tag registers automatically via `defineFalconTwComponent('falcon-insufficient-balance-dialog')` in the wrapper's `ngOnInit`. The wrapper also relocates its host to `<body>` in `ngOnInit` (`appendTo='body'` default) and detaches in `ngOnDestroy`.
 
-## Bad usage to avoid
+## Do / Don't
 
-- **Don't toggle `[open]=false` mid-submit** — the user loses the ability to retry on server failure.
-- **Don't re-sort items inside the dialog** — caller owns the seed order.
-- **Don't try to read the dialog's working state externally** — it's encapsulated; subscribe to `(falconProceed)`.
-- **Don't pass raw `null` to `errorMessage`** — use `undefined` (Angular wrapper input is `string | undefined`).
-- **Don't use this for binary yes/no decisions** — use `<falcon-angular-popup>`.
+| Do | Don't |
+|---|---|
+| Bind `[open]` + handle `(openChange)` / `(falconCancel)` | Use a `[(open)]` banana-box (none — it's manual get/set + `openChange`) |
+| Pass `undefined` to `[errorMessage]` when no error | Pass `null` (wrapper input is `string \| undefined`) |
+| Pass pre-translated label strings | Pass raw i18n keys (the dialog renders the string as-is) |
+| Bind `[items]` as a property | Try to set it as an attribute |
+| Subscribe to `(falconProceed)` for the committed order | Try to read the dialog's in-progress working order externally |
+| Let the operator dismiss before submit | Toggle `[open]=false` mid-submit (loses the retry path; the dialog also suppresses dismissal while `busy`) |
+| Override labels for non-payment reuse | Re-introduce a `walletType` AND-guard before opening (REMOVED 2026-06-02) |
+| Use `<falcon-angular-popup>` for binary yes/no | Use THIS for a 2-option decision |
+
+## Consumer Sweep (2026-06-03)
+
+[CODE] grep `<falcon-angular-insufficient-balance-dialog>` across `apps/` + `libs/falcon/` → **2 RENDER sites**:
+- `apps/host-shell/.../do-payment-priority-popup/do-payment-priority-popup.component.html:5` — the ONLY production render.
+- `apps/host-shell/.../falcon-ui-showcase/library-section/library-section.component.ts:945` — static showcase demo.
+
+[CODE] Other matches reference the TYPE/orchestration, not a render: `do-payment-priority-popup.component.ts` (the orchestrator), `new-wallet-balance` `data/transfer-request.ts` + `validations/validations.ts` + 3 `__tests__/*.spec.ts` (reuse the `IbDialogItem`/priority shape), `wallet-balance-management` `models/transfer.models.ts` + `validations/validations.ts` + `balance-transfer.component.ts`, `marketplace-applications` + `comms-hub` + `showcase-data` registry/skeletons. (`libs/falcon/` → **0 render sites**.)
+
+> `[INFERRED]` Consumer count unchanged from the prior "3" in spirit (the dialog has exactly ONE live render site + one demo); the extra type/data references are the wallet-transfer features borrowing the priority-list shape, not new render sites.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B17). Example 1 confirmed against do-payment-priority-popup.component.html:5-…; the orchestration shape (Example 2) corrected to the LIVE SignalR-push + walletType-guard-removed flow (do-payment-priority-popup.component.ts:10-22). Consumer Sweep re-run → 2 render sites (1 live + 1 demo). `-tw` token-parity caveat (G-TOK) added.

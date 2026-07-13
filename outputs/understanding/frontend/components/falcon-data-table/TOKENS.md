@@ -11,13 +11,14 @@ Selector union in `data-table.tokens.css`:
 :where(falcon-data-table, falcon-data-table-tw, falcon-angular-data-table, .falcon-data-table, [data-falcon-data-table]) { … }
 ```
 
-Selector union in `table.tokens.css`:
+Selector union in `table.tokens.css` (`[CODE]` :31-32 — corrected 2026-06-03; it explicitly lists the `falcon-data-table*` host tags too):
 
 ```
-:where(falcon-table, falcon-table-tw, falcon-angular-table, .falcon-table, [data-falcon-table]) { … }
+:where(falcon-table, falcon-table-tw, falcon-angular-table, .falcon-table, [data-falcon-table],
+       falcon-data-table, falcon-data-table-tw, falcon-angular-data-table, .falcon-data-table, [data-falcon-data-table]) { … }
 ```
 
-Both blocks set tokens on the same host (because `<falcon-angular-data-table>` is both a `falcon-angular-data-table` host AND wraps a `falcon-table-tw` child). The Light DOM lets these cascade.
+Both blocks set tokens on the same host (because `<falcon-angular-data-table>` is both a `falcon-angular-data-table` host AND wraps a `falcon-table-tw` child). The `table.tokens.css` selector was extended to include the data-table host so `--falcon-table-row-height` inherits to BOTH the inner `<falcon-table-tw>` cells AND the sibling `<falcon-angular-custom-table-footer>`. The Light DOM lets these cascade. **Both files are gate-12 compliant** (`:where()`, not `:root`).
 
 ## Token categories (data-table.tokens.css)
 
@@ -140,3 +141,6 @@ The shadow-row feature owns 9 tokens, all prefixed `--falcon-data-table-shadow-*
 | Sticky-thead shadow | `--falcon-data-table-scroll-header-shadow` (alias) |
 | Global filter bg | `--falcon-data-table-global-filter-bg` |
 | Frozen cell z-index | `--falcon-data-table-frozen-cell-z` (1), `--falcon-data-table-frozen-header-z` (2) |
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). Both token files re-confirmed gate-12-compliant (`:where()`); corrected the `table.tokens.css` selector note to show it now includes the `falcon-data-table*` host tags (so `--falcon-table-row-height` reaches the inner cells AND the sibling custom footer).

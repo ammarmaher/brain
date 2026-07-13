@@ -51,4 +51,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Wiring `(valueChange)` but not re-fetching the page from the backend — the strip moves, the data goes stale.
 
 ## Verification
-✅ VERIFIED against `[CODE]` `falcon-paginator.tsx` rendered structure + `[CODE]` `falcon-paginator.component.ts` inputs. Cross-library mapping is `[INFERRED]` — though the PrimeNG mapping is `[CODE]`-confirmed by the deliberately PrimeNG-shaped `paginatorTemplate` token vocabulary.
+✅ RE-VERIFIED 2026-06-03 (B09) against `[CODE]` `falcon-paginator.tsx` rendered structure + `[CODE]` `falcon-paginator.component.ts` inputs. Cross-library mapping is `[INFERRED]` — the PrimeNG mapping is `[CODE]`-confirmed by the deliberately PrimeNG-shaped `paginatorTemplate` vocabulary. Composition recipe + anti-patterns unchanged; consumer note corrected (sole consumer = `falcon-custom-table-footer`).

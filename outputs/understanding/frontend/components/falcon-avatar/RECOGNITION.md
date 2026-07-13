@@ -47,4 +47,7 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Passing a full name ("John Doe") as `initials` — overflows the disc; compute 2 uppercase chars.
 - Using `[status]` for account lifecycle state — that is `<falcon-status-badge>`'s job; avatar status is *user presence* only.
 - Resizing via Tailwind `w-`/`h-` utilities — use the `size` prop so the initials font-size token scales with it.
-- Hand-rolling a raw `<img class="rounded-full">` for a node logo — adopt this component instead (`OVERVIEW.md:46` — org-hierarchy still does this; it is the migration target).
+- Hand-rolling a raw `<img class="rounded-full">` for a node logo — adopt this component instead (org-hierarchy still does this; it is the migration target — and `wallet-balance-management` already adopted it for the account-logo header).
+
+## Verification
+🟡 CODE-DERIVED 2026-06-03 (B11) from `falcon-avatar.tsx` + `falcon-avatar-tw.tsx`. Visual fingerprint + fallback chain re-confirmed against source. Cross-library mapping 🟡 `[INFERRED]` standard-library knowledge. Sibling routing cross-checked vs OVERVIEW "When NOT to use it".

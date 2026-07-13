@@ -2,79 +2,91 @@
 
 ## Brain SK final recommendation
 
-**STATUS: READY for verify-button flows. NEEDS-UPGRADE for `verified` state visual.**
+**STATUS: READY for verify-button email flows. NEEDS-UPGRADE for (a) a `verified`/`verifying` state visual (G2) and (b) Shadow-path parity for `verifyIcon` + `*ExtraClass` (G1).**
 
 ## Use this component for
 
-- Email entry requiring a verify-button affordance.
-- Account-owner / profile email fields.
+- Email entry requiring an in-field Verify button (the User-Details email field is the flagship — PES-gated `canEditEmail`).
+- Account-owner / profile email fields where the single-element verify look is wanted.
 
 ## Avoid this component for
 
-- Plain email without verify → `<falcon-angular-input type='email'>` is sufficient.
-- Generic text → input.
+- Plain email with no verify → `<falcon-angular-input type="email">` is sufficient.
+- Generic text → `<falcon-angular-input>`. Phone → `<falcon-angular-phone-field>`. Password → `<falcon-angular-password>`.
 
 ## Preferred render path
 
-`useTailwind=true`.
+**`useTailwind=true` (default).** This is also the ONLY path that honors `verifyIcon` + `wrapperClass`/`inputClass`/`labelClass` today (the Shadow tag lacks them — G1). Use Shadow only for style isolation, accepting the loss of those props.
 
-## Required upgrades
+## Required upgrades before wider use
 
-P1: G2 (`verified` state).
+None block production use. Prioritize G2 (`verified` state) for any flow that needs a confirmation badge, and G1 (Shadow parity) before recommending `useTailwind=false`.
 
-## Relationship
+## Relationship to other components
 
-- Sibling: `<falcon-angular-input>`.
-- Pairs with `<falcon-angular-otp-send-dialog>` for verify-via-OTP flows.
+- **Sibling family:** `<falcon-angular-phone-field>` (same verify-button + single-border + 1px-divider family; phone adds a country chooser, email is the chooser-less sibling — same token shape).
+- **Sibling:** `<falcon-angular-input type="email">` (plain email, no verify).
+- Pairs with a consumer-owned OTP/verification flow (the component only emits `falcon-verify`).
+- Does NOT compose `<falcon-input>` — renders its own native `<input type="email">`.
 
-## Exact rule
+## Exact rule for future implementation tasks
 
-1. Email + verify button? → `<falcon-angular-email-field>`.
-2. Pair with Reactive Forms `Validators.email`.
-3. Sync `verifyDisabled` with form validity.
-4. Handle `(falcon-verify)` to trigger send.
+1. **Email + verify affordance?** → `<falcon-angular-email-field [verifyButton]="true">` with `useTailwind=true`.
+2. **Validate** via Reactive Forms `Validators.email` (+ `Validators.required`) — the component never validates format.
+3. **Sync `[verifyDisabled]`** with form validity (and/or a PES result) so verify can't fire on a malformed/disallowed address.
+4. **Bind `(blur)`** so `touched` updates (native blur does not bubble) and required errors paint.
+5. **Gate edit** via `[readonly]` off a PES flag (as User-Details does with `canEditEmail`), not a non-existent `[disabled]` input.
+6. **Override visuals** via `--falcon-email-field-*` tokens. The `*Class` inputs DO flow (to `-tw`).
+7. **Handle `(falcon-verify)`** to launch the challenge.
 
 ---
 
 ## Dynamic capability assessment
 
-### 1. Static?
-- Single-element border treatment.
-- Verify-button label text (consumer sets).
-- No verified state visual.
+### 1. What is static today?
+- The single-element border + 1px verify divider.
+- Verify-button label text (consumer-supplied) — no built-in i18n key.
+- No `verified` / `verifying` state visual.
+- `verifyIcon` + `*ExtraClass` honored on `-tw` only (G1).
 
-### 2. Dynamic via inputs/outputs?
-- 17 inputs.
-- 1 output (`falcon-verify`).
-- CVA.
+### 2. What is already dynamic through inputs/outputs?
+- 21 wrapper `@Input`s (label/placeholder/helper/error/size/state/readonly/required/verifyButton/verifyLabel/verifyDisabled/verifyIcon/name/inputId/autocomplete/useTailwind/wrapperClass/inputClass/labelClass/iconLeft/iconRight/inputMode).
+- 2 `@Output`s — `(falcon-verify)` (aliased `verifyOut`) + `(blur)` (re-emitted Stencil `falcon-blur`).
+- Full CVA (writeValue/registerOnChange/registerOnTouched/setDisabledState).
 
-### 3. Slots/templates?
-- None.
+### 3. What is dynamic through slots / ng-template?
+- `slot="icon-left"` + `slot="icon-right"` (the latter suppressed when `verifyButton` is on). No `ng-template` inputs.
 
-### 4. Tokens?
-- All input tokens + verify-button tokens + partition.
+### 4. What is dynamic through token/theme overrides?
+- The full standalone `--falcon-email-field-*` set (14 categories) via the `:where()` chain. Dark mode auto-flips; density via input-height aliases.
 
-### 5. Tailwind?
-- 3 passthrough classes.
+### 5. What is dynamic through Tailwind classes?
+- Host `class=`; plus `wrapperClass`/`inputClass`/`labelClass` → forwarded as `*-extra-class` to the `-tw` twin (these DO flow, unlike password's dead ones).
 
-### 6. Missing for reuse?
-- `verified` state (G2).
-- Leading icon (G6).
-- variant / appearance (G8).
-- Method proxies (G7).
+### 6. What is missing to make this component reusable across pages?
+- `verified`/`verifying` state (G2).
+- Shadow-path `verifyIcon` + `*ExtraClass` parity (G1).
+- Verify-button `aria-label` (G3).
+- `componentOnReady` value re-push for data-table cells (G4).
+- `setFocus()` wrapper proxy (G5).
+- `variant`/`appearance` (G6).
 
-### 7. Shared?
-- Yes.
+### 7. What capability should be added to the shared component (not page hack)?
+- The `verified`/`verifying` visual + the Shadow parity + the method proxy — all in the shared Stencil pair + wrapper.
 
-### 8. Flags?
-- `verified`, `verifying`, `leadingIcon`, `variant`, `appearance`.
+### 8. What flags / options / templates / slots would make it better?
+- `@Input() verified`, `verifying`, `variant`, `appearance`; `@Method() setFocus()`; Shadow-tag `verifyIcon`.
 
-### 9. Safest path?
-1. Add `verified` + `verifying` inputs.
-2. Add leading icon.
-3. Add variant / appearance.
-4. Add method proxies.
+### 9. What is the safest upgrade path?
+1. **Phase A (additive):** `verified`/`verifying` inputs + token-driven visuals; `setFocus()` proxy; verify-button `aria-label`. Zero break.
+2. **Phase B (parity):** add `verifyIcon` + `*ExtraClass` to the Shadow tag.
+3. **Phase C:** `variant`/`appearance`; `componentOnReady` push.
 
-### 10. Risky?
-- Verify button position is RTL-sensitive — visual regression risk.
-- Single-element border is token-tuned — token changes can desynchronize input + button heights.
+### 10. What is risky to change because other pages depend on it?
+- The `(falcon-verify)` / `(blur)` output names — only add aliases, never remove (User-Details depends on `(blur)` for touched).
+- The default `useTailwind=true` — flipping changes DOM (Light↔Shadow) AND drops `verifyIcon`/`*ExtraClass`.
+- The single-element border token tuning — height/radius edits desync input vs button.
+- `verifyDisabled` semantics (button-only) — do not conflate with the field-level readonly gate.
+
+## Verification
+🟢 code-verified (2026-06-03). Corrected: input count = 21 (incl. `verifyIcon`/`iconLeft`/`iconRight`/`inputMode`); 2 outputs (`falcon-verify` + `blur`); slots `icon-left`/`icon-right` exist; added the G1 Shadow↔`-tw` divergence and the no-`verified`-prop fact.

@@ -1,12 +1,16 @@
-# falcon-multiselect (LEGACY STUB) — API
+# falcon-multiselect (LEGACY STUB — REMOVED) — API
+
+> **RECONCILE 2026-06-03 (B22):** The stub is **DELETED.** `import { FalconMultiselectComponent } from '@falcon'` no longer resolves (the barrel exports only `FalconAngularMultiSelectComponent`, `shared-ui/index.ts:58`). The surface below is what the stub last exposed — nearly all inputs were silent no-ops. For multi-select use `<falcon-angular-multi-select>`.
 
 ## Selector
-- `<falcon-multiselect>` — Angular bespoke standalone component.
+- `<falcon-multiselect>` — Angular bespoke standalone component (single-render, no Stencil twin). **Removed.**
 
-## Import path
+## Import path (no longer valid)
 ```ts
+// REMOVED — does not resolve in 2026-06-03 tree
 import { FalconMultiselectComponent } from '@falcon';
-import { FalconMultiselectItem } from 'libs/falcon/src/shared-ui/lib/components/falcon-multiselect/falcon-multiselect.models';
+// Use instead:
+import { FalconAngularMultiSelectComponent } from '@falcon';
 ```
 
 ## TypeScript types
@@ -75,4 +79,10 @@ All preserved on the public surface. Most fire only via the embedded multi-selec
 - The embedded `<falcon-angular-multi-select>` only displays a single list.
 
 ## Accessibility
-- Delegated to `<falcon-angular-multi-select>`.
+- Delegated to `<falcon-angular-multi-select>` (no a11y of its own).
+
+## CVA / signal / reflected / mutable
+- **No CVA.** Two-way `[selectedIds]` + `(selectedIdsChange)` only — could not be a Reactive-Forms control. Legacy decorator `@Input`/`@Output`, no signals. No Stencil reflected/mutable props (single-render).
+
+## Verification
+🟡 CODE-DERIVED 2026-06-03 (B22) — the source is DELETED and cannot be re-read; the input/output tables are preserved verbatim from the last verified Wave-3 dossier (archaeology, not live API). The deletion itself is 🟢 CODE-VERIFIED (folder + barrel export gone). Migration target `<falcon-angular-multi-select>` 🟢 confirmed live.

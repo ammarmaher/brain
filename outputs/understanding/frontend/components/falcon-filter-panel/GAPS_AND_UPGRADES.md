@@ -1,4 +1,4 @@
-# falcon-filter-panel — GAPS & UPGRADES
+﻿# falcon-filter-panel — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -28,8 +28,8 @@
 
 ### A11y
 
-- Container has no `role="search"` or `role="form"` despite being a form-like region.
-- Apply / Clear All are native `<button>` — should be `<falcon-angular-button>` for visual + a11y parity.
+- `[CODE]` **CORRECTION (B12):** the container **DOES** set `role="search"` + `aria-label="Filters"` on BOTH variants (`falcon-filter-panel.tsx:159`, `falcon-filter-panel-tw.tsx:172-173`). The prior "no role" gap is **CLOSED** — no action needed.
+- Apply / Clear All are native `<button>` — should be `<falcon-angular-button>` for visual + a11y parity (folded into FFP-01).
 
 ### Tests
 
@@ -70,3 +70,26 @@ All gaps in shared component. The whole point of this panel is consistency above
 ## Future-proof recommendation
 
 This component is the most "behind" of Agent 2's roster — native atoms + no projection + camelCase events all need updating. Recommend a Wave to migrate it to Falcon atoms + Strategy E projection in one pass.
+
+### FFP-06 (NEW B12) — Light/Shadow token drift in the Tailwind helper (P2, safe-local)
+
+`[CODE]` filter-panel-tailwind-classes.ts hardcodes layout values that the Shadow CSS reads from tokens: `h-9`/`h-8` (vs `--falcon-filter-panel-input-height{,-compact}`), `text-[13px]`/`text-xs` (vs `-input-font-size{,-compact}`), `p-2`/`p-3`/`gap-2`/`gap-3` (vs `-padding{,-compact}`/`-gap{,-compact}`), `gap-1.5` on the daterange, `text-white` on apply, and the focus box-shadow `rgba(13,63,68,0.08)…`. **Impact:** overriding e.g. `--falcon-filter-panel-input-height` moves the Shadow path but NOT the (default) Light path. **Recommended fix (P2, safe-local):** thread the tokens through the helper's arbitrary-value utilities for full parity.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-filter-panel>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B12)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-filter-panel>` / `<falcon-filter-panel>` / `<falcon-filter-panel-tw>` across `apps/` + `libs/falcon` — ZERO renders, unchanged since Wave 7). Only the TYPES are barrel-exported (`falcon-ui-core/src/index.ts:105/109`).
+
+- **`role="search"` gap CLOSED** — set on BOTH variants (correction above); API.md + this file's A11y bullet were stale.
+- **FFP-06 added** — Light/Shadow token drift in the Tailwind helper (hardcoded `h-9`/`text-[13px]`/`p-3` etc.). `safe-local`.
+- **Token-name drift fixed** in TOKENS.md (no `--falcon-size-control-*`/chevron token; focus ring is a hardcoded literal).
+- **Zero-adoption persists** — the component remains NEEDS-UPGRADE (native atoms) AND unadopted. **Recommendation reaffirmed:** for production filter strips hand-compose Falcon atoms (`<falcon-angular-input>`/`<falcon-angular-dropdown>`/`<falcon-angular-date-picker>`/`<falcon-angular-button>`) until FFP-01 + FFP-02 land; consider formally parking this component. The FFP-01 (Falcon atoms) migration touches the public render + event surface → **HIGH-RISK-QUEUE** (not done this pass).
+- No deletion flag (it is structurally sound + cross-framework), but it is the lowest-priority-for-production component in its roster.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh). 0 consumers re-verified; `role="search"` gap corrected to CLOSED; FFP-06 (token drift) added; token-name drift fixed. FFP-01 (native→Falcon atoms) flagged HIGH-RISK-QUEUE. No deletion/promotion flag.

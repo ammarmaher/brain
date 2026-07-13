@@ -48,4 +48,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`) — for Angular
 - Using falcon-table for indented / expandable hierarchical data — that is `<falcon-angular-tree-table>` (see the table-vs-tree-vs-tree-table split above).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-table-tw.tsx + falcon-table.types.ts + the 6 UI-layer dossiers. Cross-library map `[INFERRED]` from standard library APIs. Data-table-is-the-consumer-surface routing ✅ VERIFIED against `OVERVIEW.md` + Wave 17 `[MEMORY]`.
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08) from `[CODE]` falcon-table-tw.tsx (1702 ln) + falcon-table.types.ts (227 ln) + the UI-layer dossiers. Visual-fingerprint `⋮` + chevron glyphs confirmed as `falcon-icon falcon-icon-{ellipsis-v,chevron-down}` (no PrimeIcon). Cross-library map `[INFERRED]` from standard library APIs. Data-table-is-the-consumer-surface routing ✅ VERIFIED against `OVERVIEW.md` + Wave 17 `[MEMORY]`.

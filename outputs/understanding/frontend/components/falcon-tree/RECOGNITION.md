@@ -46,4 +46,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Using `multiple` mode and expecting a parent-click to select descendants — selection is self-only; no cascade.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-tree-tw.tsx + the 6 UI-layer dossiers. Cross-library map `[INFERRED]` from standard library APIs. The falcon-tree vs falcon-tree-table vs falcon-tree-panel split ✅ VERIFIED against `OVERVIEW.md` + `DECISION.md`.
+🟡 CODE-DERIVED 2026-06-03 (B09) from `[CODE]` falcon-tree-tw.tsx + the 6 UI-layer dossiers. Cross-library map `[INFERRED]` from standard library APIs. The falcon-tree vs falcon-tree-table vs falcon-tree-panel split ✅ RE-VERIFIED against `OVERVIEW.md` + `falcon-tree-panel.component.html:1`.

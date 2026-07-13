@@ -46,5 +46,9 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - Using it for an icon+title+description card picker — use `<falcon-angular-tabs mode='radio-cards'>`.
 - Pre-formatting a description into the `label` string to fake a two-line option — raise GAP G1 instead.
 
+## Implementation note for recognition
+
+When you recognize "a managed radio set" and reach for `<falcon-angular-radio-group>`, remember the **divergence**: the Angular component composes `<falcon-angular-radio>` children in a plain `<div>` (NOT the Stencil group element), and it ships no Light-DOM styling for its own classes. So composing to parity today means: pass `[options]` + bind via CVA, AND supply a layout `class` (arbitrary-variant utilities targeting `.falcon-radio-group-options`) — exactly as the wallet consumer does. If you want a fully self-styled group, that's GAPS G2, not something to fake per page.
+
 ## Verification
-🟡 CODE-DERIVED from `falcon-radio-group.component.ts` + `[VAULT]` API/USAGE/GAPS dossiers. `errorText` input name ✅ VERIFIED in source. Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]` standard-library knowledge. Child-radio visual detail 🟡 CODE-DERIVED (the `<falcon-angular-radio>` `.tsx` not re-read in this pass).
+🟡 RE-VERIFIED 2026-06-03 (B06) — CODE-DERIVED from falcon-radio-group.component.ts + .component.html + .types.ts. `errorText` input name + the orphaned-Stencil-group divergence + the missing Light-DOM CSS ✅ VERIFIED in source. Child-radio `.tsx` re-read this pass (border-width-5 confirmed). Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]`.

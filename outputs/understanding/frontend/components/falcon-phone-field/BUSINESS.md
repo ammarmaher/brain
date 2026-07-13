@@ -43,4 +43,4 @@
 - If the country a tenant needs is missing, that is a **country-list business gap** (extend `[countries]`), not a UI defect.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-phone-field.tsx` / `.utils.ts` / `.component.ts` + auth-flow services. Account-owner usage ✅ VERIFIED (Add Client / Add User confirmed working by user 2026-05-18). Verified-state absence 🔴 INFERRED from prop surface.
+🟢 code-verified (2026-06-03) — re-read `falcon-phone-field.tsx` (`buildDetail`/`composeFullNumber` `:202-211`, `selectCountry` re-emit `:260-268`, `handleVerifyClick` guard `:270-274`, default `country='SA'` `:51`) + `.utils.ts` (`DEFAULT_PHONE_COUNTRIES` = 25, `:8-34`). All business facts confirmed; no corrections needed this pass. Flagship consumer is the shared User-Details page (`verifyButton`+`verifyIcon`, PES-gated `canEditPhone`) + the forgot-password SMS-OTP capture. Verified-state absence ✅ VERIFIED against source (no `verified` prop on either tag).

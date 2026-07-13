@@ -1,31 +1,53 @@
-# falcon-angular-stepper — USAGE
+# falcon-stepper — USAGE
 
 ## Real usage in active codebase
-- **`apps/host-shell/src/app/playground/playground.page.html`** — playground showcases dual render path + sizes + modes + linear/non-linear.
-- The org-hierarchy wizards currently consume the LEGACY bespoke `<falcon-stepper>` from `libs/falcon/src/shared-ui/lib/components/falcon-stepper/`, NOT this new `<falcon-angular-stepper>`. See `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/add-client-wizard.component.ts:6-14` (imports `FalconStepperComponent` from `@falcon` barrel — that is the legacy bespoke one).
-- Migration to `<falcon-angular-stepper>` for these wizards is the recommended next step but has NOT happened yet (see `GAPS_AND_UPGRADES.md`).
 
-## Recommended NEW usage (no consumer in production today)
+### Example 1 — flagship: rail-only stepper + external panels (Add Client wizard)
+`[CODE]` `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/add-client-wizard.component.html:54-72`:
+```html
+<div class="pt-2 shrink-0">
+  <falcon-angular-stepper
+    [steps]="stepperSteps()"
+    [activeValue]="stepperActiveValue()"
+    [completedValues]="stepperCompletedValues()"
+    [forwardLockedFrom]="forwardLockedFrom()"
+    mode="linear"
+    orientation="horizontal"
+    size="md"
+    labelPosition="bottom-center"
+    [showStepNumbers]="false"
+    [showCheckOnComplete]="true"
+    (valueChange)="onStepperValueChange($event)"
+    (navigationBlocked)="onNavigationBlocked($event)" />
+</div>
+<!-- *** Panels — rendered OUTSIDE the rail (the wrapper is rail-only by design). *** -->
+<!-- *** Only one step component is mounted at a time (the viewChild refs in .ts -->
+<!-- *** key off it for revealErrors()). *** -->
+<div class="flex-1 min-h-0 overflow-y-auto p-6"> … @switch panels … </div>
+```
+This is the canonical live pattern: stepper = rail only; the wizard mounts the active step's panel beneath it via `@switch`, and `[forwardLockedFrom]` gates forward navigation while the current step is invalid. `(navigationBlocked)` triggers `revealErrors()` on the offending step.
+
+### Example 2 — Templates wizard (same pattern, both consoles)
+`[CODE]` `apps/management-console/.../templates-page/components/templates-wizard/templates-wizard.component.html:93` ("rail only + @switch panels — mirrors Hierarchy add-user-wizard") — identical input set: `[steps]`, `[activeValue]`, `[completedValues]`, `[forwardLockedFrom]`, `mode="linear"`, `labelPosition="bottom-center"`, `(valueChange)`, `(navigationBlocked)`.
+
+### Example 3 — Add User wizard (admin + management)
+`[CODE]` `apps/{admin,management}-console/.../org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html` — same shape; the `add-user-wizard.component.ts` imports `FalconAngularStepperComponent` from `@falcon` / `@falcon/ui-core`.
+
+> NOTE: the prior dossier said wizards still ran on the LEGACY bespoke stepper. That is STALE — legacy deleted 2026-05-17; all consumers are now `<falcon-angular-stepper>`.
+
+## Recommended NEW usage
 
 ### Basic linear stepper with horizontal layout
 ```ts
-// component.ts
 protected readonly steps: FalconStepperStep[] = [
-  { value: 'info',     label: 'Account Info'   },
-  { value: 'settings', label: 'Settings'       },
-  { value: 'channels', label: 'Communication'  },
-  { value: 'apps',     label: 'Applications'   },
-  { value: 'owner',    label: 'Account Owner'  },
+  { value: 'info',     label: 'Account Info'  },
+  { value: 'settings', label: 'Settings'      },
+  { value: 'channels', label: 'Communication' },
 ];
 protected readonly active = signal<string>('info');
 protected readonly completed = signal<readonly string[]>([]);
-
-protected onChange(detail: FalconStepperChangeDetail): void {
-  this.active.set(detail.value as string);
-}
 ```
 ```html
-<!-- component.html -->
 <falcon-angular-stepper
   [steps]="steps"
   [activeValue]="active()"
@@ -34,49 +56,39 @@ protected onChange(detail: FalconStepperChangeDetail): void {
   orientation="horizontal"
   size="md"
   labelPosition="bottom-center"
-  groupLabel="Add Client"
   (valueChange)="active.set($any($event))"
   (stepComplete)="onWizardFinish()">
-  <div slot="content-info">…step 1 content…</div>
-  <div slot="content-settings">…step 2 content…</div>
-  <div slot="content-channels">…step 3 content…</div>
-  <div slot="content-apps">…step 4 content…</div>
-  <div slot="content-owner">…step 5 content…</div>
+  <div slot="content-info">…step 1…</div>
+  <div slot="content-settings">…step 2…</div>
+  <div slot="content-channels">…step 3…</div>
 </falcon-angular-stepper>
 ```
 
-### Reactive Forms binding (CVA)
+### Forward-validity gate (the live pattern)
 ```ts
-this.form = this.fb.group({
-  step: this.fb.control<string | null>('info'),
-});
+// when the current step's FormGroup is invalid, lock forward nav from it
+protected readonly forwardLockedFrom = computed<(string|number)[]>(() =>
+  this.currentStepValid() ? [] : [this.active()]);
 ```
 ```html
 <falcon-angular-stepper
-  [steps]="steps"
-  [completedValues]="completed()"
-  formControlName="step" />
-```
-
-### ngModel binding
-```html
-<falcon-angular-stepper
-  [steps]="steps"
-  [(ngModel)]="active"
-  [completedValues]="completed()" />
+  [steps]="steps" [activeValue]="active()" [completedValues]="completed()"
+  [forwardLockedFrom]="forwardLockedFrom()"
+  (valueChange)="active.set($any($event))"
+  (navigationBlocked)="revealErrorsFor($event.attemptedValue)" />
 ```
 
-### Vertical layout with per-step content
+### Reactive Forms / ngModel binding (CVA)
 ```html
-<falcon-angular-stepper
-  [steps]="steps"
-  [(activeValue)]="active"
-  orientation="vertical"
-  size="lg"
-  labelPosition="side">
+<falcon-angular-stepper [steps]="steps" [completedValues]="completed()" formControlName="step" />
+<falcon-angular-stepper [steps]="steps" [(ngModel)]="active" [completedValues]="completed()" />
+```
+
+### Vertical layout with inline per-step content
+```html
+<falcon-angular-stepper [steps]="steps" [(activeValue)]="active" orientation="vertical" size="lg">
   <div slot="content-info">…</div>
   <div slot="content-settings">…</div>
-  <div slot="content-channels">…</div>
 </falcon-angular-stepper>
 ```
 
@@ -85,58 +97,55 @@ this.form = this.fb.group({
 <falcon-angular-stepper class="add-client-stepper" [steps]="steps" [(activeValue)]="active" />
 ```
 ```css
-/* in any place Tailwind can scan — DO NOT use SCSS in a component */
+/* anywhere Tailwind can scan — DO NOT use SCSS in a component */
 :where(.add-client-stepper) {
   --falcon-stepper-circle-bg-active: var(--color-falcon-teal-600, #095a61);
   --falcon-stepper-circle-shadow-active: 0 0 0 6px rgba(13,63,68,0.15);
   --falcon-stepper-label-color-active: var(--color-falcon-teal-600, #095a61);
 }
 ```
-Token-override pattern follows the same convention demonstrated in `client-information-step.component.html:16-17` for `<falcon-angular-input class="add-client-special-input">`.
+Same convention as `<falcon-angular-input class="add-client-special-input">` (client-information-step.component.html).
 
 ## Render-mode guidance
-- **Default (`useTailwind=true`)** for any consumer that lives inside the apps' Tailwind v4 scanner — Light DOM lets the consumer's utility classes cascade in and lets `@source inline(...)` safelists pick up runtime-built class strings.
-- **`useTailwind=false`** (Shadow) when:
-  - The stepper is embedded in a foreign host that doesn't import Falcon Tailwind.
-  - The consumer wants maximum style isolation.
-  - Token-only theming via the Studio (the Studio mutates `--falcon-stepper-*` tokens, which propagate into Shadow).
+- **Default (`useTailwind=true`)** for any consumer inside the apps' Tailwind v4 scanner — Light DOM lets the consumer's utilities cascade and lets `@source inline(...)` safelist runtime-built class strings. **Every live consumer uses this.**
+- **`useTailwind=false`** (Shadow) only when embedded in a foreign host outside Falcon Tailwind reach, or when hard style isolation is required.
 
 ## Tailwind-only usage
-- ALL visual extensions must live in tokens (`--falcon-stepper-*`) or in Tailwind utility classes via `class="…"` / `rootClass="…"` on the wrapper element.
-- NEVER add a `*.component.scss` file with rules. The Angular component CSS file is an empty placeholder.
-
-## Admin-console / management-console example (future-state)
-When wizards migrate off the legacy stepper, the call site becomes:
-```html
-<!-- inside add-client-wizard.component.html (post-migration sketch) -->
-<falcon-angular-stepper
-  class="flex-shrink-0"
-  [steps]="visibleSteps()"
-  [activeValue]="stepperActiveValue()"
-  [completedValues]="completedValues()"
-  mode="linear"
-  size="md"
-  labelPosition="bottom-center"
-  groupLabel="hierarchy.addClient.title' | translate" />
-```
-Plus the wizard footer (Next/Back/Cancel/Finish) is then provided by `<falcon-angular-wizard>` wrapping this stepper, OR by a bespoke footer row beneath the stepper.
+- ALL visual extensions live in tokens (`--falcon-stepper-*`) or Tailwind utilities via `class=` / `rootClass=` on the wrapper. NEVER add a `*.component.scss` with rules — the wrapper CSS is `:host{display:block}` only.
 
 ## Import requirements
-- Standalone consumer must import `FalconAngularStepperComponent` in its `imports: []` array.
-- `CUSTOM_ELEMENTS_SCHEMA` is NOT needed in the consumer — the wrapper itself owns the schema.
-- `ngOnInit()` calls `defineFalconTwComponent('falcon-stepper')` automatically to register both Shadow + Light tags on demand.
+- Standalone consumer imports `FalconAngularStepperComponent` in `imports: []`.
+- `CUSTOM_ELEMENTS_SCHEMA` NOT needed (the wrapper owns it — `[CODE]` ts:63).
+- `ngOnInit()` calls `defineFalconTwComponent('falcon-stepper')` automatically to register both tags.
 
 ## Bad usage to avoid
 - DO NOT mutate `el.steps` directly from the consumer; pass through `[steps]`.
-- DO NOT use `*ngFor` in the consumer's `slot="content-{value}"` projections; named slots must be top-level direct children of the wrapper (Stencil constraint).
-- DO NOT use `<p-stepper>` or `<p-step>` anywhere — PrimeNG is uninstalled (Wave PR-8).
-- DO NOT use the bespoke legacy `<falcon-stepper>` from `libs/falcon/src/shared-ui/` for new code; it is REFERENCE-ONLY.
+- DO NOT use `*ngFor` for `slot="content-{value}"` projections; named slots must be top-level direct children (Stencil constraint). Use `@for` only to build the panels host content if needed, but each slot node stays direct.
+- DO NOT use `<p-stepper>` / `<p-step>` anywhere — PrimeNG is uninstalled.
+- DO NOT target the deleted legacy bespoke stepper — it no longer exists (`falcon-stepper-legacy/`).
 - DO NOT pass duplicate `value` entries in `steps[]`.
+- DO NOT treat `(stepClick)` as "navigation happened" — it fires even on a blocked click; listen to `(valueChange)`.
+- DO NOT bind both `[value]`-style raw passthrough and `[(activeValue)]`.
 
 ## Do / Don't
-- DO use `mode="linear"` for required-validation flows; allow `non-linear` only when each step is independent.
-- DO surface helper text or top-level error via the wrapper inputs (`helperText` / `errorMessage`), not by adding sibling elements.
-- DO set `step.optional = true` to render the "Optional" tag — never add it as a label suffix.
-- DO use `step.icon` only when `showStepNumbers=false` is intentional, otherwise the icon and number may collide visually.
-- DON'T paint your own custom dot CSS — that violates the token-SSOT rule; override tokens instead.
-- DON'T animate the fill bar with JS — the fill transition is owned by `--falcon-stepper-fill-transition-duration` + easing token.
+| Do | Don't |
+|---|---|
+| Use `mode="linear"` for ordered/validated flows. | Use `non-linear` when later steps consume earlier data. |
+| Gate forward nav via `[forwardLockedFrom]` + `(navigationBlocked)`. | Hand-roll a click-interception gate. |
+| Surface top-level message via `helperText`/`errorMessage`. | Add sibling message elements. |
+| Mount panels externally (rail-only stepper). | Expect the stepper to render Next/Back. |
+| Override tokens via host class. | Hardcode hex/px or paint custom dot CSS. |
+| Set `step.optional = true` for the Optional tag. | Append "(optional)" to the label string. |
+
+## Consumer Sweep (2026-06-03)
+`[CODE]` grep `<falcon-angular-stepper` across `apps/` → **21 occurrences / 13 files** (HTML render + TS imports). Enumerated:
+- `apps/admin-console/.../org-hierarchy-page/components/wizard-components/add-client-wizard/add-client-wizard.component.{html (1), ts (2)}`
+- `apps/{admin,management}-console/.../org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.{html (2), ts (2)}`
+- `apps/{admin,management}-console/.../templates-page/components/templates-wizard/templates-wizard.component.{html (2), ts (1)}`
+- `apps/admin-console/.../contracts-cost-management/components/contracts-add-wizard/contracts-add-wizard.component.html (2)`
+- `apps/management-console/.../contact-groups/create-contact-group/create-contact-group.component.{html (1), ts (1)}`
+
+> `[INFERRED]` count rose from the prior "5" sweep because (a) the legacy→Stencil migration completed across both consoles, and (b) templates / contracts / contact-groups wizards adopted the rail. The prior `playground.page.html` entry is gone (route removed).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B21). Example 1 (add-client-wizard rail-only + `[forwardLockedFrom]` + `(navigationBlocked)`) and Example 2 (templates-wizard) confirmed against live source. Consumer Sweep re-run (`<falcon-angular-stepper` → 21 occurrences / 13 files). Prior "wizards on legacy stepper" + "playground consumer" claims corrected.

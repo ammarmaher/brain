@@ -32,4 +32,4 @@
 - The spinner does not mean the component is working — it means the *consumer* said a search is in flight. If results never arrive, the bug is in the consumer's query, not here.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-search-input.tsx` + `falcon-search-input.component.ts`. Consumer usage (header / filter / table) 🟡 from `OVERVIEW.md` "Known consumers". No-CVA / search-only construction ✅ VERIFIED against source.
+🟢 code-verified (re-read 2026-06-03) from `[CODE]` `falcon-search-input.tsx` + `falcon-search-input.component.ts`. No-CVA / search-only construction / debounce-as-cost-knob / clear-also-searches ✅ source-verified. Consumer usage (header / filter / table) 🔴 INFERRED — there are **zero live consumers** (grep 2026-06-03); the business flows listed are intended homes, not observed usage.

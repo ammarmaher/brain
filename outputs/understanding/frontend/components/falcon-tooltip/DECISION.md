@@ -41,7 +41,7 @@
 > Use `<falcon-angular-tooltip>` around any icon-only `<falcon-angular-button>` to provide a visible label for sighted users. ALWAYS pass `ariaLabel` on the button as well — tooltip is sighted-only. Use `placement="top"` as default; use `placement="bottom"` for header-level icons; `right` / `left` for sidebar layouts. Set `interactive=true` when the tooltip content has a link or button. Use `[content]` for plain text; `<slot name="content">` for rich content with formatting. Today there is NO collision detection — choose placement carefully or set `maxWidth` to constrain.
 
 ### Status
-**READY** for production. Tier-1 upgrades (collision flip + disabled watch) would unlock broader adoption.
+**READY** for production but **ZERO-adoption** (0 feature-template consumers as of 2026-06-03 — the prior playground showcase was removed). Tier-1 upgrades (collision flip + `@Watch('disabled')`) would harden it; the real ask is ADOPTION — pair it with icon-only buttons across both consoles. Wave-6 Top-Layer promotion already makes it safe inside drawers/dialogs. No React/Vue Falcon wrapper exists (Angular-only).
 
 ---
 
@@ -106,6 +106,10 @@ All items 6.
 ### 10. What would be risky to change because other pages depend on it?
 - **The 12 placement values** — removing one would break consumers.
 - **The default `placement="top"`** — flipping would relocate every tooltip.
-- **The trigger `tabIndex=0`** — removing would break keyboard tooltip discovery.
-- **The 100ms show delay default** — changing to 0 would feel instant (could be desired but is a perceptual shift).
-- **The `interactive=false` default** — flipping would let users hover panels by default (could cause unexpected non-dismissal).
+- **The trigger `tabIndex=0`** — removing would break keyboard tooltip discovery (HIGH-RISK; must stay opt-out, not default-off).
+- **The 100ms show delay default** — changing to 0 would feel instant (perceptual shift).
+- **The `interactive=false` default** — flipping would let users hover panels by default (unexpected non-dismissal).
+- **The Top-Layer/Popover promotion** (Wave 6) — `FalconStackingService` registration + `popover="manual"` + the UA-default-clearing inline styles; changing the panel's `data-component="falcon-tooltip-panel"` attribute would silently break the wrapper's panel probe (`acquireTopLayer` queries that exact selector).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B16). Recommendation unchanged (READY) but status sharpened to ZERO-adoption + Top-Layer-safe. Risk list extended with the Wave-6 Popover promotion + the panel `data-component` probe dependency.

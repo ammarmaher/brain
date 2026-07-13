@@ -3,7 +3,7 @@
 > Given an external design / screenshot / React or Angular snippet, identify `<falcon-angular-search-input>` as the component to use, and how to compose it to parity.
 
 ## Visual fingerprint
-A single-line, bordered field with a **leading magnifier icon** and the placeholder `Search…` `[CODE]` `falcon-search-input.tsx:34`. When it holds text, a **clear-X** appears on the trailing edge `[CODE]` `falcon-search-input.tsx:122` (`clearable` follows whether a value exists). When a search is in flight, a small **spinner** shows on the trailing side `[CODE]` `falcon-search-input.tsx:128-135`. Crucially it has **no label, no helper text, no error line** — it is a bare field, never part of a labeled form row. Same height / border / focus-ring as `<falcon-angular-input>` because it *is* one internally (`variant="search"`).
+A single-line, bordered field with the placeholder `Search…` (`[CODE]` `falcon-search-input.tsx:34`). The **leading magnifier** is contributed by the composed `<falcon-input variant="search">` (`[CODE]` `falcon-search-input.tsx:116-117`), NOT by search-input markup — search-input renders only the root `<div>`, the inner input, and the spinner (no icon of its own). When it holds text, a **clear-X** appears on the trailing edge (`[CODE]` `falcon-search-input.tsx:122` — `clearable={!!internalValue}`). When a search is in flight, a small **spinner** shows on the trailing side (`[CODE]` `falcon-search-input.tsx:128-135`). Crucially it has **no label, no helper text, no error line** — it is a bare field, never part of a labelled form row. Same height / border / focus-ring as `<falcon-angular-input>` because it *is* one internally (`variant="search"`).
 
 ## Cross-library equivalents
 | Library | Their component | Parity notes |
@@ -41,4 +41,4 @@ Customization order (`feedback_falcon_custom_library_mandatory` — inputs → t
 - Using it for combobox-style suggestions, a savable form field, or a searchable dropdown — wrong component (see table).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-search-input.tsx` + `falcon-search-input.component.ts` + `falcon-search-input.component.html`. Cross-library map 🔴 INFERRED from each library's public API. Double-event-on-clear, built-in-debounce, no-CVA ✅ VERIFIED against source.
+🟢 code-verified (re-read 2026-06-03) from `[CODE]` `falcon-search-input.tsx` + `falcon-search-input-tw.tsx` + `falcon-search-input.component.ts` + `.html`. Magnifier-is-inherited (not search-input's own markup), double-event-on-clear, built-in-debounce, no-CVA ✅ source-verified. Cross-library map 🔴 INFERRED from each library's public API. Corrects prior fingerprint that mis-cited the magnifier to the placeholder line.

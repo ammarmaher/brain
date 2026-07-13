@@ -26,7 +26,7 @@
 |---|---|---|
 | an always-visible month grid, no input box | `<falcon-angular-calendar>` | date-picker |
 | a text input with a calendar icon that opens a popup grid | `<falcon-angular-date-picker>` | calendar |
-| a legacy PrimeNG `p-calendar` migration needing `[(ngModel)]` | `<falcon-calendar>` legacy facade (`libs/falcon`) | this Stencil-paired one |
+| a legacy PrimeNG `p-calendar` migration needing `[(ngModel)]` | `<falcon-angular-date-picker>` (the legacy `<falcon-calendar>` façade was DELETED — `[CODE]` `libs/falcon/src/shared-ui/index.ts:312`) | a non-existent legacy facade |
 | a date *range* (start–end highlighted) | not supported — two `<falcon-angular-date-picker>` side by side, or raise the range GAP | calendar |
 | month-only / year-only picker | not supported — raise GAP G3 | calendar |
 | a Hijri / Umm-al-Qura grid | not supported — convert dates externally, raise GAP G4 | calendar |
@@ -51,4 +51,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Native `<input type="date">` or PrimeNG `<p-calendar>` in new app code — banned (`feedback_falcon_ui_library_only_no_native`).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-calendar.tsx` rendered structure + `[CODE]` `falcon-calendar.component.ts` inputs. Cross-library mapping is `[INFERRED]` from each library's documented inline-calendar vs date-picker split.
+🟡 CODE-DERIVED (RE-VERIFIED 2026-06-03, B07) from `[CODE]` `falcon-calendar.tsx` (267 ln) rendered structure + `[CODE]` `falcon-calendar.component.ts` inputs. Corrected the deleted-legacy-façade routing row. Cross-library mapping is `[INFERRED]` from each library's documented inline-calendar vs date-picker split.

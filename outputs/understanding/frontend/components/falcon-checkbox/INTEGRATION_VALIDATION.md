@@ -36,16 +36,17 @@
 `[CODE]` `API.md:51,68` Toggling **auto-resets `indeterminate`** — the host must re-derive and re-apply it (e.g. in `valueChange`) if the tri-state must persist after interaction. For a table header, the host typically recomputes `indeterminate = someSelected() && !allSelected()` as a `computed` signal off the selection set.
 
 ## Skeleton ↔ app-wrapper layering
-`[CODE]` `OVERVIEW.md:28-35`
-- **Stencil skeleton** — `<falcon-checkbox>` (Shadow DOM) / `<falcon-checkbox-tw>` (Light DOM). Pure presentational; wraps a real native `<input type="checkbox">` for full A11y (`API.md:73`).
-- **Angular wrapper** — `<falcon-angular-checkbox>`: CVA host, dual render path (`useTailwind` default `true`), `indeterminate` + `checkedInput` setters, shared `size`/`state` contract with `<falcon-angular-input>` / `<falcon-angular-dropdown>`.
-- Per the `feedback_library_skeleton_app_api` doctrine, the library component never fetches or owns data — the host step owns the `FormControl` and any PES/validation logic.
+`[CODE]` falcon-checkbox.component.{ts,html} + falcon-checkbox.tsx
+- **Stencil skeleton** — `<falcon-checkbox>` (Shadow, `shadow:true`) / `<falcon-checkbox-tw>` (Light DOM, `shadow:false`). Pure presentational; each wraps a real native `<input type="checkbox">` for full A11y (tsx:175-196). Near-perfect Shadow↔`-tw` parity: same props/events/methods, identical `applyChange`/`@Watch` logic; only class names differ.
+- **Angular wrapper** — `<falcon-angular-checkbox>`: CVA host (pure tag-switcher template, NO `<ng-content>`), dual render path (`useTailwind` default `true`), `indeterminate` + `checkedInput` setters, `value$`/`disabled`/`indeterminateState` signals, shared `size`/`state` contract with `<falcon-angular-input>` / `<falcon-angular-dropdown>`.
+- Per `feedback_library_skeleton_app_api` — the library never fetches or owns data; the host owns the `FormControl` + PES/validation.
 
 ## Integration gotchas
-- `[CODE]` `USAGE.md:70` / `API.md:69` **Never bind `[(ngModel)]` and `[checkedInput]` on the same instance** — two owners for one value; they will fight. `checkedInput` is the checkbox-group escape hatch only.
-- `[CODE]` `API.md:68` **`indeterminate` is lost on toggle** — a header checkbox that "forgets" its partial state after a click is not a bug; the host must recompute it.
-- `[CODE]` `USAGE.md:72` **No PrimeIcons** — the check glyph is a built-in Falcon icon asset; do not inject `pi pi-check`.
-- `[INFERRED]` Per the `falcon-dropdown` `[disabled]` trap — if a future build adds a `disabled` input, prefer the property binding `[disabled]="true"` over `[attr.disabled]` so the wrapper setter fires (this component currently exposes `readonly`, not `disabled`).
+- `[CODE]` **Never bind `[(ngModel)]` and `[checkedInput]` on the same instance** — two owners for one value; they will fight. `checkedInput` is the parent-driven-selection bypass (used by checkbox-group + the wallet allocation table).
+- `[CODE]` **`indeterminate` is lost on toggle** (`handleChange` sets it false — ts:119) — a header checkbox that "forgets" its partial state after a click is not a bug; the host must recompute it.
+- `[CODE]` **No `disabled` `@Input`** — disabled is driven ONLY via CVA `setDisabledState` (a disabled `FormControl`), which feeds the internal `disabled` signal → `[attr.disabled]` on the Stencil tag (html:16,38). A `[disabled]="true"` template binding silently no-ops; use `readonly` for a non-CVA lock. (GAP G8.)
+- `[CODE]` **`falcon-focus` is emitted by both tags but NOT bound by the wrapper** (GAP G7) — attach a native focus listener if a focus signal is needed.
+- `[CODE]` **No PrimeIcons** — the check glyph is a built-in inline SVG; do not inject `pi pi-check`.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` `falcon-checkbox.component.ts` / `falcon-checkbox.tsx` API surface. No production consumer beyond playground (`USAGE.md:84`), so wiring is not ✅ VERIFIED end-to-end. A full-fidelity pass should read `falcon-checkbox.component.ts` CVA implementation directly.
+🟢 code-verified from `falcon-checkbox.component.{ts,html}` + `falcon-checkbox.tsx` + `falcon-checkbox-tw.tsx` (read 2026-06-03). CVA + `checkedInput` bypass + indeterminate-reset + CVA-only-disabled all 🟢 confirmed in source. Wiring now feature-grounded (5 live consumers — wallet + Templates wizard). `<ng-content>` rich-label claim removed (false). Backend endpoints 🟡 `[INFERRED]` (checkbox owns no data).

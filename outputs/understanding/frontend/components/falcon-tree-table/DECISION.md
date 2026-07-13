@@ -64,3 +64,6 @@ Light DOM (`<falcon-tree-table-tw>`) via the Angular wrapper with `[useTailwind]
    - Keyboard nav implementation — well-engineered; arrow-key handling must match WAI-ARIA treegrid pattern strictly.
 
 **Verdict:** Mature Stencil core. Angular wrapper has a clear path to feature-parity with `<falcon-data-table>` by adopting Strategy E.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). Recommendation unchanged. Confirmed live: CVA wrapper (128 ln), 3 `@Method`s, full treegrid keyboard nav, per-row named-slot custom cells (tsx:630), NO Strategy E in the wrapper, NO spec/utils tests, 0 production render-sites. The "adopt Strategy E + add utils specs" upgrade path stands.

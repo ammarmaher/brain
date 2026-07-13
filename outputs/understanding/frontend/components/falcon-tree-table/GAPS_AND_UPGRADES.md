@@ -1,4 +1,4 @@
-# falcon-tree-table — GAPS & UPGRADES
+﻿# falcon-tree-table — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -91,3 +91,23 @@ All gaps belong in the shared component.
 ## Future-proof recommendation
 
 Adopt the Strategy E projection pattern from `<falcon-data-table>`. The tree-table is structurally similar (rows × columns → mount-points). Reusing the pattern would make `<falcon-angular-tree-table>` as powerful as `<falcon-angular-data-table>` for tree data.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-tree-table>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B08)
+
+**Consumer count: 0 production render-sites** ([CODE] grep — only Tailwind safelist comments, wallet code-comments, showcase tile, docs MD). The component stays ACTIVE / showcase-only.
+
+Findings vs prior dossier (all gaps re-confirmed; component otherwise unchanged):
+- **Consumer reality corrected** — prior dossier listed `playground.page.html` (gone, route removed) + wallet as a near-consumer. The wallet only *references* the tree-table in comments and builds its own grid. Net: NO production render-site. Corrected in OVERVIEW/USAGE.
+- **No spec exists** (FTT-07) — re-confirmed `[CODE]` grep: zero `*tree-table*.spec.ts` for the Stencil tags, the wrapper, OR the non-trivial pure-fn `falcon-tree-table.utils.ts` (`flattenTree`/`findParentId`/`findFirstChildId`/`hasRadioColumn`/`buildGridTemplate`). The single highest-value, lowest-risk upgrade.
+- **No Strategy E in the Angular wrapper** (FTT-01) — re-confirmed: the wrapper (128 ln) has no `TemplateRef`/`ContentChild`/`falconTreeTableCell` directive; custom cells use only the Stencil per-row named slot `cell-{key}-{id}` (tsx:630). Contrast `falcon-data-table` which DID adopt Strategy E.
+- API itself is accurate (no drift) — inputs/outputs/`@Method`s/keyboard-nav all verified live.
+- All findings `safe-local` (doc + missing-test). No deletion/promotion flag. See FINDINGS/B08.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08) against falcon-tree-table-tw.tsx (668 ln) + falcon-tree-table.component.ts (128 ln) + .utils.ts (199 ln). All gaps (FTT-01 no Strategy E, FTT-07 no specs, no multi-select/sort/pagination, dead `@Watch`) re-confirmed open; API verified accurate (no drift); consumers corrected to 0 production render-sites. Component stays ACTIVE / showcase-only. 0 HIGH-RISK.

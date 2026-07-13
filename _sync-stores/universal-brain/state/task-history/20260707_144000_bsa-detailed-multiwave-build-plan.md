@@ -1,0 +1,7 @@
+# COMPLETED — bsa-detailed-multiwave-build-plan (2026-07-07)
+Deliverable: Brain Outputs/prd/modules/06-basic-send-application/BUILD_PLAN_DETAILED.md
+- Part A: L0 lib fitness (task_e08e9a6d + wrapper sweep + table stored-XSS) -> L1 packaging (LICENSE/private, ng-packagr dist for 69 wrappers, exports->dist, peerDeps, studio/runtime inversion, split libs/falcon presentational vs 15 HTTP services) -> L2 publish Option A Azure Artifacts npm feed via changesets / Option B npm-pack tarballs (A = B + registry) -> L3 external smoke consumer + basic-app switch-day recipe (source aliases REMAIN while co-located: MF singleton constraint) -> L4 docs/coverage floor. Grounded in reports/fe-library-npm-audit-2026-07-06 Plan-1 (65%->95%).
+- Part B: communication — MF injector reality (host provides auth/http/i18n/theme/toasts via shared singletons; app.config matters standalone-only), HTTP path (HttpService+useGateway->RuntimeBaseUrlInterceptor->host bearer->/bsa/*), envelope+error->i18n mapping, NO_TOASTER+retry landing pattern, Idempotency-Key, polling cadences, BsaApi port + BsaMockApiService mock-first flag, PES resolveFlags fail-closed.
+- Part C: F2-F9 function-level (ComposeStore/DetailsStore/ConversationStore method signatures, validators, component trees, N/E lib-component placement per wave) + W-PES + W-DARK.
+- Part D: DAG (L-track independent of F-track; F<-B couplings; mock-first rule) + relative estimates + carried risks.
+Linked from module OVERVIEW + vault 15-PRD note. No code changes this task.

@@ -12,7 +12,7 @@
 | Grouped settings toggles | `[BRAIN-OUT]` `OVERVIEW.md` "Settings pages with grouped toggles" | a settings section's boolean options are committed as a set. |
 | Filter criteria | `[BRAIN-OUT]` `OVERVIEW.md` "Filter panel sections" | a multi-criterion filter expresses an OR-set of checkboxes. |
 
-`[CODE] GAPS_AND_UPGRADES.md` Wave 7 — **consumer count is 1**. `[INFERRED]` No specific `BR-*` id is mapped; the business contract is "a visible set of independent booleans", enforced structurally by the array CVA.
+`[CODE]` grep 2026-06-03 — **consumer count is 0** (showcase-only; the permission/settings/filter uses are design intent, not yet wired — real grouped checkboxes today are hand-rolled). `[INFERRED]` No specific `BR-*` id is mapped; the business contract is "a visible set of independent booleans", enforced structurally by the array CVA.
 
 ## Business constraints baked in
 - `[CODE] falcon-checkbox-group.component.ts:90-92` — selection is decided by **value equality** (`selected().includes(value)`); each option's `value` is the business key committed to the array.
@@ -54,4 +54,4 @@
 - Choosing checkbox-group over `falcon-multi-select` is a business-readability call: use the group when the operator must *see every option* (permissions a reviewer signs off); use multi-select when the list is long enough that hiding it behind a trigger is acceptable.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE] src/angular-wrapper/components/falcon-checkbox-group/falcon-checkbox-group.component.ts` + `[CODE] GAPS_AND_UPGRADES.md`. 1-consumer status ✅ VERIFIED via Wave 7 grep. Permission-picker use is real but no `BR-*` id is formally mapped — business rules are code-derived.
+🟢 code-verified from `falcon-checkbox-group.component.ts` (read 2026-06-03) — value-equality (ts:90-92), disabled-OR (ts:94-96), no-phantom-write toggle (ts:98-113) all confirmed. Consumer count corrected 1→0 (grep-verified — showcase-only; permission-picker use is design intent, NOT a live feature). No `BR-*` id formally mapped — business rules code-derived.

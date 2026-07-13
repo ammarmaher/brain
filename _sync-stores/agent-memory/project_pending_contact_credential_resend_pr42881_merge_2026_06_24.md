@@ -1,0 +1,19 @@
+---
+name: project_pending_contact_credential_resend_pr42881_merge_2026_06_24
+description: "Identity PR 42881 (Pending contact-change credential re-issue) — merge with main resolved, enum 1/2/3 coexistence, redeployed"
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 78202c44-46b8-4951-aff5-ddb5bdbcf297
+---
+
+**Edit-User contact-change credential re-issue — DRAFT PR 42881** (`feat/identity-pending-contact-credential-resend` → main, identity-svc). When an admin edits a **Pending** user's email/phone, `UpdateUserProfileHandler` regenerates a temp password (`SetPasswordAsync` BEFORE Mongo persist so a provider fail stays retryable) and publishes `UserCredentialsGeneratedDomainEvent` AFTER persist with `Reason = eCredentialNotificationReason.ContactUpdated` and delivery = `(emailChanged, phoneChanged) switch {(true,true)=>Both,(true,false)=>Email,_=>Sms}` (email change→email, phone→SMS, both→both). Non-Pending (Active/etc.) contact change still goes through OTP verify, NO reissue. Handler deps added: `IRepository<TenantSettings>`, `PasswordPolicy`, `IPublisher`.
+
+**Merge-with-main RESOLVED 2026-06-24** (merge commit `ab58e1c`, pushed; PR `mergeStatus=succeeded`). Main had merged PR 42786 (Locked→Pending unlock reissue, commit `e276e2d`) which collided in 3 files:
+- `eCredentialNotificationReason` (Enums.cs): **AccountCreated=1, AccountUnlocked=2 (unlock, RESERVED verbatim), ContactUpdated=3 (this PR)**. My ContactUpdated was originally =2 → collided with unlock's AccountUnlocked=2 → moved to 3. Numbering is now load-bearing; do NOT renumber.
+- `UserCredentialsNotificationHandler.cs`: kept main's **GSD-005 HTML-encoding** (`WebUtility.HtmlEncode` of firstName/username/password + `using System.Net;`) AND grafted my ContactUpdated email + SMS wording onto the AccountUnlocked + AccountCreated branches. Resolution = superset (both flows coexist), NOT ours/theirs.
+- Domain event doc = superset (all 3 reasons).
+
+Build 0-err; full suite **206 pass / 3 fail** — the 3 are PRE-EXISTING on main (`ResendOtpProcessTests` ×2, `UserCreationRequestedConsumerTests` ×1), merge added zero new failures. My 5 `UpdateUserProfileHandlerTests` pass. Redeployed in Docker (`docker restart falcon-identity-1` → recompiled merged source, healthy on :7777). SMTP→Mailpit proven (probe 0→1). Account-creation welcome template safe (CreateUserProcess publishes 6-arg event → defaults AccountCreated). FE verify-button-hidden-for-Pending part is separate (uncommitted on polishing-v0.4). Sibling: [[project_unlock_locked_to_pending_reissue_credentials_2026_06_23]]; umbrella: [[project_edit_user_by_status_v3_decisions_plan_2026_06_24]].
+
+**FOLLOW-UP refactor 2026-06-24 (review-workflow-driven, UNCOMMITTED on the same branch, 4 files +13/-7):** the "no settings → Advanced" magic default (`settings?.PasswordSecurityLevel ?? ePasswordSecurityLevel.Advanced`) was copy-pasted in 3 handlers (CreateUserProcess, ChangeUserStatusProcess, UpdateUserProfileHandler). Now SINGLE-SOURCED in a new pure overload `PasswordPolicy.Generate(TenantSettings? settings) => Generate(settings?.PasswordSecurityLevel ?? Advanced)` — all 3 sites call `passwordPolicy.Generate(settings)`. Do NOT re-duplicate the `?? Advanced` literal; add level-resolution there. PasswordPolicy stays a pure Singleton (NO IRepository injected — `settingsRepository.GetAsync` stays in each handler; rejected an injectable TemporaryPasswordIssuer service as over-churn for identical behavior). SetPasswordAsync stays inline BEFORE persist in each handler (folding it into a shared helper was REJECTED — would break retry-safety ordering). Also `UpdateUserProfileHandler` dead `var reissueDelivery = eDeliveryMethod.Both` → `eDeliveryMethod reissueDelivery = default` (initializer never read; switch always assigns before the gated Publish). Build 0-err/0-warn, suite 206✅/3 PRE-EXISTING, redeployed Docker healthy :7777. Behavior byte-identical.

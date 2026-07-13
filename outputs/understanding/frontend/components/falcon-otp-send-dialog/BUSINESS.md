@@ -47,4 +47,4 @@
 - A re-opened dialog is always fresh — do not expect it to remember a previously entered code.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-otp-send-dialog.tsx` / `.utils.ts` / `.types.ts` + auth OTP services. Add Client account-owner usage 🟡 CODE-DERIVED from `OVERVIEW.md` consumer list (not user-confirmed in this pass).
+🟢 CODE-VERIFIED (RE-VERIFIED 2026-06-03, B07) from `falcon-otp-send-dialog.tsx` (366 ln) / `.utils.ts` / `.types.ts`. The intent-not-outcome model (tsx:152-181), close-resets-state (tsx:94-103), Verify-gated-on-complete (tsx:318), every-label-a-prop (tsx:55-62), and the `@Method`s (tsx:112-133) all re-confirmed. ⚠️ Business-flow table is now `[INFERRED]` — there are **zero live consumers** as of 2026-06-03 (the Add Client / login usages cited are the intended use, not current code). The no-business-invariant claim is `[INFERRED]` from full source read.

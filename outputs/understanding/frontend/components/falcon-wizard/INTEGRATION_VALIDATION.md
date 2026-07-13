@@ -37,7 +37,7 @@ The wizard has **no PES key of its own** — it is an orchestration shell.
 
 ## State / signal pattern
 `[CODE]` `falcon-wizard.tsx` + `falcon-wizard.component.ts` (per `API.md`):
-- `currentStep` is `@Prop({ mutable: true })` — two-way; the consumer typically drives a `signal<number>(0)` and binds `[(currentStep)]`.
+- `currentStep` is `@Prop({ mutable: true })` on the Stencil element — but `[CODE]` **the Angular wrapper exposes it as a one-way `@Input` with NO `currentStepChange` Output** (falcon-wizard.component.ts:45). So `[(currentStep)]` on `<falcon-angular-wizard>` does NOT round-trip the self-advanced index back to the host; track the step via `(falconWizardStepChange)` (drift corrected 2026-06-03 — GAP G-MODEL-1).
 - `[stepControls]` accepts `ReadonlyArray<AbstractControl | null>` (one per step). The wrapper derives `resolvedValidateStep` from it; the derived validator guards with `if (!this.stepControls?.length) return undefined;`.
 - 6 wrapper Outputs: `falconWizardNext`, `falconWizardBack`, `falconWizardFinish`, `falconWizardDraft`, `falconWizardStepChange`, `falconStepValidationFail`.
 - `[INFERRED]` Error-pipeline: a failed Finish *submit* (the consumer's API call) flows through the host-shell HTTP error pipeline (`falcon-http-ui.config.ts` — 400 → top-right toast, 5xx → popup) — the wizard itself emits no HTTP errors.
@@ -58,4 +58,4 @@ The wizard has **no PES key of its own** — it is an orchestration shell.
 - `[INFERRED]` **Wire-format / gateway concerns** belong to the step body services, not the wizard — the same camelCase-wire + `useGateway()` + `FALCON_ROOT_NODE.id → null` rules the org-hierarchy memory entries describe apply to the *consumer's* API calls, not to the wizard component.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-wizard.tsx` (read in full) + the existing UI dossier. The validation-gate behaviour (`validateStep` await-aware, `canProceed` hard-gate, bounds check, `stepControls` precedence) is ✅ VERIFIED against source. Backend-wiring rows are 🔴 INFERRED — the wizard has zero backend surface by design; the empty table is intentional and data ownership is attributed to the host flow's module + step bodies.
+🟢 RE-VERIFIED 2026-06-03 (B20 REFRESH) — validation-gate behaviour (`validateStep` await-aware, `canProceed` hard-gate, bounds check, `stepControls` precedence, `resolvedValidateStep` derivation) re-confirmed against `falcon-wizard.tsx` + `falcon-wizard.component.ts`. Drift corrected: wrapper `currentStep` is one-way (no `currentStepChange`). Backend-wiring rows remain 🔴 INFERRED by design (the wizard has zero backend surface; data ownership = host flow's module + step bodies).

@@ -89,19 +89,21 @@ interface FalconOrgHierarchyActionDetail { readonly actionId: string; readonly n
 
 NO — not a form control.
 
-## Accessibility
+## Accessibility (verified 2026-06-03 against full source)
 
-- Outer container `role="tree"` (likely — verify in unread portion of source) + `aria-label`
-- Per-row `role="treeitem"`
-- Per-row `aria-expanded` when collapsible
-- Per-row `aria-selected`
-- Per-row `aria-level`
-- Keyboard nav (Arrow keys, Home/End, Space/Enter — verify in unread portion of source)
-- The floating ctx menu opens on `⋮` click and reads its anchor via captured `MouseEvent.currentTarget` for positioning.
+- `[CODE]` Outer container `role="tree"` + `aria-label={ariaLabel || tree.name}` (tsx:979-980).
+- `[CODE]` Per-row `role="treeitem"` (tsx:861, root tsx:998) with `aria-level` (tsx:863 `depth+2`; root `aria-level={1}` tsx:999), `aria-posinset` (tsx:864), `aria-setsize` (tsx:865), `aria-selected` (tsx:866), `aria-expanded` when `hasChildren` (tsx:867), `aria-disabled` (tsx:868).
+- `[CODE]` Chevron button `aria-label={isOpen ? 'Collapse' : 'Expand'}` (tsx:694); ctx-menu trigger `aria-haspopup="menu" aria-expanded` (tsx:805-806); ctx-menu `role="menu"` + items `role="menuitem"` (tsx:1118/1145).
+- `[CODE]` **GAP — NO roving keyboard navigation.** Rows are `tabIndex={isDisabled ? -1 : 0}` (tsx:862) but there is **NO `onKeyDown` handler anywhere** in the component (grep: zero `onKeyDown`/Arrow/Enter). A keyboard user can Tab onto a row but cannot Arrow/Enter/Space to expand or select it — only mouse `onClick` drives selection/expansion. Only the ctx-menu has keyboard dismissal (`@Listen('keydown')` Escape, tsx:330-335). This is a meaningful a11y gap vs the stepper (which has full arrow-key nav).
+- `[CODE]` The floating ctx menu opens on `⋮` click, reads its anchor via `event.currentTarget.getBoundingClientRect()` for viewport-fixed positioning (tsx:397-408), repositions on window scroll/resize, and dismisses on outside-`mousedown` (tsx:337-345) or Escape.
 
 ## Important constraints
 
 - **Light DOM only** — no Shadow DOM companion. Style isolation is consumer's responsibility.
 - **No Angular wrapper** — Angular consumers use the Stencil tag directly. Object props (`tree`, `rootActions`, `nodeActions`, `expandedIds`) must be set via element-property reflection if you bind them from a TS file.
 - The companion `<style>` block inside the `.tsx` source is injected as a `data-fohtree-render="tailwind"` -scoped stylesheet — it handles rail SVG geometry, sticky menu-button reveal, name clamp, chevron rotation, ctx-menu animation.
-- Brand bubble rendering reads `node.brand` and applies `client-logo bank-{x}` class names — these classes must exist in the consumer's theme CSS.
+- `[CODE]` `node.brand` is declared in the type (`FalconOrgHierarchyNode.brand`) and documented for `client-logo bank-{x}` classes, but the indicator renderer (tsx:718-788) only consumes `iconUrl` → `icon` → `initials` — **`brand` is NOT applied to any element** in the current source (latent prop). The indicator bubble is token-styled (`--falcon-tree-indicator-*`), not brand-class-styled.
+- `[CODE]` The component is robust to a `null`/empty `tree` (renders a "No tree data" placeholder, tsx:936-944) and coalesces `undefined` `expandedIds` before array ops (tsx:372).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B21) against falcon-organization-hierarchy-tree-tw.tsx (1207 ln) + .types.ts (59 ln). Props/events/methods/types confirmed. **A11y corrected:** `role="tree"`/`treeitem`/`aria-*` confirmed present; the prior "keyboard nav (Arrow/Home/End/Space/Enter)" claim is FALSE — there is no `onKeyDown` (GAP). `node.brand` is a latent (unused) prop.

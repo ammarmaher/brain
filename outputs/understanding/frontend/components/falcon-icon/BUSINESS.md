@@ -9,12 +9,12 @@
 
 ## The central icon-font registry contract
 `[CODE]` falcon-icon.tsx:14-16,34-35 — falcon-icon is the **consumer of a central registry**: it renders `<i class="falcon-icon falcon-icon-{name}">`, and the `{name}` must resolve to a glyph defined in the vendored font CSS. The registry is a single global stylesheet:
-- `[CODE]` `libs/falcon-theme/src/styles/falcon-icons.css` — the registry file. Verified present: **386 lines, ~322 `falcon-icon-*` class declarations.**
+- `[CODE]` `libs/falcon-theme/src/styles/falcon-icons.css` — the registry file. Verified present: **386 lines, exactly 314 glyph `.falcon-icon-*::before { content: … }` declarations** (codepoints `\e900`–`\ea39`) + 2 utility classes (`.falcon-icon-fw`, `.falcon-icon-spin`).
 - `[CODE]` `libs/falcon-theme/src/assets/fonts/falcon-icons/` — the font asset. Verified present.
 
 **The contract:** an icon name is *only* valid if `.falcon-icon-{name}` exists in `falcon-icons.css`. There is no TypeScript union, no runtime check — `[CODE]` falcon-icon.tsx:34-40 renders the class unconditionally. An unknown name produces an **empty `<i>`** (`[BRAIN-OUT]` GAPS_AND_UPGRADES.md notes this). Adding a new icon is a *registry change* — the font asset + `falcon-icons.css` must be regenerated; it is **not** a per-component change.
 
-`[CODE-DERIVED CORRECTION]` `[BRAIN-OUT]` OVERVIEW.md:23 + API.md:59 state "**122 icons** migrated from PrimeIcons". The live `falcon-icons.css` carries **~322 icon-class declarations** — substantially more than 122. The "122" figure is stale (it likely reflects the PrimeIcons-migration subset, not the full current font). For any "is icon X available?" question, **read `falcon-icons.css` directly** — it is the live registry; the dossier count is not. *(Old dossier files left unedited per task rule; correction recorded here.)*
+`[CODE-DERIVED CORRECTION]` Prior dossiers/memory stated "**122 icons** migrated from PrimeIcons". The live `falcon-icons.css` carries **exactly 314 glyph declarations** — substantially more than 122. The "122" figure is stale (the PrimeIcons-migration subset, not the full current font). **B11 corrected OVERVIEW/API/USAGE/GAPS/DECISION to 314** (this earlier file's "~322" estimate is now pinned to the exact 314). For any "is icon X available?" question, **read `falcon-icons.css` directly** — it is the live registry.
 
 ## PRD / business rules touched
 | Rule | Source | How this component enforces / surfaces it |
@@ -42,4 +42,4 @@
 - `[CODE]` falcon-icon.tsx — colour inherits from the parent (`currentColor`); the icon has no `color` input (`[BRAIN-OUT]` GAPS_AND_UPGRADES.md:35-39 — a shorthand is a proposed gap). To colour an icon, colour the parent.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-icon.tsx + falcon-icon.component.ts + falcon-icons.css (registry verified: ~322 declarations). No `BR-*` rule binds this presentational primitive. The "122 icons" figure is a ✅ VERIFIED stale-count correction (live registry has ~322) — recorded here, old 6 files unedited.
+🟡 CODE-DERIVED 2026-06-03 (B11) from `[CODE]` falcon-icon.tsx + falcon-icon.component.ts + falcon-icons.css (registry verified: **exactly 314 glyph declarations**). No `BR-*` rule binds this presentational primitive. The "122 icons" figure is a ✅ VERIFIED stale-count correction → **314** (now applied across all 9 dossier files this pass).

@@ -23,20 +23,20 @@ The card runs **no validation** — no form control, no CVA (`[BRAIN-OUT]` API.m
 ## State / signal pattern
 `[CODE]` falcon-card.component.ts:30-48 — the wrapper uses **signal-backed `@Input()` setters** for `header`/`subheader`/`footer`: each `@Input() set` writes a `signal<string>('')`, the getter reads it, and `null`/`undefined` coerce to `''`. `variant`/`size`/`rootClass`/`useTailwind` are plain `@Input()`s. `ChangeDetectionStrategy.OnPush` (`[CODE]` :25).
 
-`[CODE]` falcon-card.component.ts:60-85 — the wrapper also declares **legacy `computed()` class helpers** (`classes`, `bodyClasses`, `headerClasses`, `footerClasses`). `[BRAIN-OUT]` GAPS_AND_UPGRADES.md:69-70 — these are **dead code**: the modern dual-render template drives styling through `<falcon-card-tw>`, not these helpers. They are a documented cleanup opportunity, not active behaviour.
+`[CODE]` falcon-card.component.ts:63-95 — the wrapper declares `computed()` class helpers (`classes`, `bodyClasses`, `headerClasses`, `footerClasses`). **CORRECTION (2026-06-03): these are the LIVE render path, NOT dead code** — they are bound in the template (`[class]="classes()"` html:15, `headerClasses()` :17, `bodyClasses()` :28, `footerClasses()` :33). The prior "dead code, styling comes from `<falcon-card-tw>`" claim is **retracted**. The Angular wrapper renders pure-Angular `<div>` chrome (Defect A FIX); it never instantiates the Stencil element.
 
-`[CODE]` falcon-card.component.ts:87-89 — `ngOnInit()` calls `defineFalconTwComponent('falcon-card')`. No error pipeline — nothing can fail.
+`[CODE]` There is **no `ngOnInit` / `defineFalconTwComponent` call** in the wrapper (it renders plain Angular `<div>`s — there is no custom element to register). No error pipeline — nothing can fail.
 
 ## Skeleton ↔ app-wrapper layering
-- **Stencil skeleton** — `[CODE]` falcon-card.tsx (Shadow DOM, `shadow:true`) `<falcon-card>` / `<falcon-card-tw>` (Light DOM). Reflects `variant`/`size` to host attributes (`[CODE]` :15-18, `reflect:true`).
-- **Angular wrapper** — `[CODE]` falcon-card.component.ts `<falcon-angular-card>`: dual-render-path (`useTailwind`, default `true` → Light DOM, Tailwind utilities; `false` → Shadow DOM, token-driven). `@HostBinding('class.falcon-angular-card')`.
-- Per `feedback_library_skeleton_app_api`: there is no app-level card wrapper because there is nothing to inject — the host fetches the section data and projects it into the body slot.
+- **Angular render (LIVE)** — `[CODE]` falcon-card.component.ts + .component.html `<falcon-angular-card>`: pure-Angular `<div>`/`<header>`/`<footer>` + native `<ng-content>` (body default / `[slot=header]` / `[slot=footer]`). `@HostBinding('class.falcon-angular-card')`. `useTailwind` is a **no-op** (always Angular chrome — Defect A FIX).
+- **Stencil skeleton (React/Vue ONLY)** — `[CODE]` falcon-card.tsx (`shadow:true`) `<falcon-card>` / falcon-card-tw.tsx (`scoped:true`) `<falcon-card-tw>`. Reflects `variant`/`size` (`reflect:true`). The Angular app never renders these.
+- Per `feedback_library_skeleton_app_api`: no app-level card wrapper because there is nothing to inject — the host fetches section data and projects it into the body slot.
 
 ## Integration gotchas
-- `[CODE]` falcon-card.tsx:48-63 — **header double-render**: prop `header` + `slot="header"` both render. Pick one path.
-- `[CODE]` falcon-card.component.ts:60-85 — the wrapper's `computed()` class helpers are unused dead code; do not rely on them — styling comes from the Stencil layer.
-- `[BRAIN-OUT]` OVERVIEW.md:23, API.md:28 — **registry-vs-source mismatch**: the component registry lists `interactive`/`selected`/`padding`/`falcon-click` — the live `[CODE]` falcon-card.tsx + falcon-card.component.ts have **none of them**. Treat the source as truth; the card is fully passive.
-- `[CODE]` falcon-card.component.ts:52-53 — `useTailwind=false` switches to the Shadow path; token overrides then only pierce via the documented CSS-var tokens.
+- `[CODE]` falcon-card.component.html:16-26/32-37 — **header/footer double-render**: prop `[header]` + `[slot=header]` both render (Angular-template `<ng-content select>`, not Stencil-slot). Pick one path.
+- `[CODE]` falcon-card.component.ts:63-95 — the `computed()` class helpers are **LIVE** (bound in template) — do NOT remove them (prior "dead code" claim retracted).
+- `[BRAIN-OUT]` OVERVIEW / API — **registry-vs-source mismatch**: the registry lists `interactive`/`selected`/`padding`/`falcon-click` — the live source has **none**. The card is fully passive.
+- `[CODE]` falcon-card.component.ts:58 — `useTailwind` is a **no-op**; it does NOT switch to a Shadow path. `--falcon-card-*` token overrides do NOT affect the Angular wrapper (only the Shadow path / React-Vue). Use `rootClass` for per-instance Angular-path overrides (FC-TOKEN-1).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-card.tsx + falcon-card.component.ts. No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper. The dead `computed()` helpers and registry mismatch are ✅ VERIFIED against source and documented here (old 6 files unedited).
+🟢 RE-VERIFIED 2026-06-03 (B10) from `[CODE]` falcon-card.component.ts (104 ln) + .component.html (38 ln) + falcon-card.tsx. No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA. **Corrected:** the `computed()` helpers are LIVE (not dead); the wrapper renders Angular chrome (not `<falcon-card-tw>`); `useTailwind` is a no-op; token overrides don't reach the Angular path.

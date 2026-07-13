@@ -22,6 +22,7 @@ created: 2026-05-15
 | 5 | [[First Login]] | `first-login` | Login · Force Change Password · OTP Challenge · default home |
 | 6 | [[Wallet Transfer]] | `wallet-transfer` | Wallet · Transfer Form · Wallet (refreshed) |
 | 7 | [[Edit Contract Status Aware]] | `edit-contract-status-aware` | Contracts list · Contract Detail · Edit Contract |
+| 8 | [[Basic Send Message]] | `basic-send-message` | [[Basic Send App]] · [[Send Whatsapp Message]] · [[Send Voice IVR Message]] · [[Basic Send WhatsApp Details]] · [[Basic Send Voice Details]] · [[WhatsApp Conversation]] |
 
 ## Brain Outputs entry points
 
@@ -33,6 +34,7 @@ created: 2026-05-15
 - [First Login playbook](../../../Brain%20Outputs/understanding/journeys/first-login/PLAYBOOK.md)
 - [Wallet Transfer playbook](../../../Brain%20Outputs/understanding/journeys/wallet-transfer/PLAYBOOK.md)
 - [Edit Contract status-aware playbook](../../../Brain%20Outputs/understanding/journeys/edit-contract-status-aware/PLAYBOOK.md)
+- Basic Send Message — playbook folder not yet seeded; SoT = [PRD-06 WORKFLOWS](../../../Brain%20Outputs/prd/modules/06-basic-send-application/WORKFLOWS.md) + [IMPLEMENTATION_PLAN](../../../Brain%20Outputs/prd/modules/06-basic-send-application/IMPLEMENTATION_PLAN.md)
 
 ## Tags
 

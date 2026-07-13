@@ -57,4 +57,7 @@ Light DOM `<falcon-filter-panel-tw>` via the Angular wrapper with `[useTailwind]
 9. **Safest upgrade path:** Add `'custom'` field type FIRST (additive). Then migrate text/select/date atoms one at a time.
 10. **Risky to change:** Event name standardisation breaks existing consumers (playground only today — low risk).
 
-**Verdict:** Lowest-priority component in Agent 2's roster for production-readiness. Quick to upgrade given limited consumer base.
+**Verdict:** Lowest-priority component for production-readiness. Quick to upgrade given the **0-consumer** base (B12). NEEDS-UPGRADE (native atoms, FFP-01) + unadopted → recommend parking or a single Falcon-atom migration wave. The `role="search"` gap is already closed.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh). Recommendation unchanged (NEEDS-UPGRADE; hand-compose Falcon atoms for production today). 0 consumers re-verified. FFP-01 (native→Falcon atoms) flagged HIGH-RISK-QUEUE in FINDINGS/B12. No deletion flag.

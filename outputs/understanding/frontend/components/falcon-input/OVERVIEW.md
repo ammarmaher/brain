@@ -49,8 +49,10 @@ Flagship single-line text-entry control. The reference implementation for the **
 | Stencil Light source | `libs/falcon-ui-core/src/components/falcon-input-tw/falcon-input-tw.tsx` |
 | Types | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.types.ts` |
 | Utils | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.utils.ts` |
-| Tailwind helper | `libs/falcon-ui-core/src/tailwind/input-tailwind-classes.ts` (cross-framework SSOT) |
-| Component token file | `libs/falcon-ui-tokens/src/components/input.tokens.css` |
+| Tailwind helper | `libs/falcon-ui-core/src/tailwind/input-tailwind-classes.ts` (cross-framework SSOT, re-exported via `tailwind/tailwind-classes.ts` barrel) |
+| Component token file | `libs/falcon-ui-tokens/src/components/input.tokens.css` (~237 lines; `:where()` scope ALSO covers `falcon-password*` tags) |
+| Stencil unit spec | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.spec.ts` (Jest `newSpecPage`, Shadow only) |
+| Stencil e2e | `libs/falcon-ui-core/src/components/falcon-input/falcon-input.e2e.ts` (Puppeteer — events/slots/parts/token-override) |
 
 ## Selectors / tags
 
@@ -60,20 +62,19 @@ Flagship single-line text-entry control. The reference implementation for the **
 | Stencil Shadow tag | `<falcon-input>` |
 | Stencil Light tag | `<falcon-input-tw>` |
 
-## Known consumers (grep verified)
+## Known consumers (grep verified 2026-06-03)
 
-- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html` — flagship usage (per-instance token override class `add-client-special-input` + `useTailwind` demo).
-- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-client-wizard/client-account-owner-step/...`
-- `apps/admin-console/src/app/features/organization-hierarchy/components/wizard-components/add-user-wizard/user-personal-step/...`
-- `apps/admin-console/src/app/features/organization-hierarchy/components/tab-components/hierarchy-tab/falcon-org-info-panel/...`
-- `apps/admin-console/src/app/features/organization-hierarchy/components/tab-components/hierarchy-tab/falcon-org-node-drawer/...`
-- `apps/admin-console/src/app/features/organization-hierarchy/components/organization-hierarchy-menu.component.html`
-- `apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step/...`
-- `apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-client-wizard/client-information-step/...`
-- `apps/management-console/src/app/features/organization-hierarchy-page/components/wizard-components/add-client-wizard/client-account-owner-step/...`
-- `apps/management-console/src/app/features/organization-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-info-panel/...`
-- `apps/management-console/src/app/features/organization-hierarchy-page/components/organization-hierarchy-page-menu.component.html`
-- `apps/host-shell/src/app/playground/playground.page.html` — playground demo route.
+`[CODE]` `<falcon-angular-input` across `apps/` = **37 files / 144 occurrences**, plus **4** under `libs/falcon/`. Heaviest users: org-hierarchy-page wizards (add-client / add-user / settings / info-panel / node-drawer in BOTH consoles) and templates-page wizard. Representative files:
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-client-wizard/client-information-step/client-information-step.component.html` — flagship (per-instance token override `add-client-special-input` + `useTailwind` demo; 12 occurrences).
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/settings-tab/settings-tab.component.html` (10)
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/tab-components/hierarchy-tab/falcon-org-info-panel/falcon-org-info-panel.component.html` (13, also in mgmt)
+- `apps/admin-console/src/app/features/templates-page/components/templates-wizard/steps/buttons/button-card.component.html` (9, also in mgmt)
+- `apps/host-shell/src/app/features/auth/get-started/get-started.component.html` + `forgot-password-flow/forgot-password-flow.component.html` (auth flows)
+- `libs/falcon/src/shared-features/user-details/components/user-details-page.component.html` + `shared-features/service-pricing-table/service-pricing-table.component.html` (shared features)
+- `libs/falcon/src/shared-ui/index.ts` (re-export); `libs/falcon/src/shared-utils/lib/validations/named-validators.ts` (selector string reference).
+
+See `USAGE.md` Consumer Sweep for the full enumerated list. (NOTE: the old `organization-hierarchy/` and `host-shell playground` paths in prior dossier versions are gone — folder is now `org-hierarchy-page/`; playground route removed.)
 
 ## Related components
 
@@ -83,3 +84,6 @@ Flagship single-line text-entry control. The reference implementation for the **
 ## Ownership / responsibility
 
 `libs/falcon-ui-core` (cross-framework). Owned by Falcon UI team. Token contract lives in `libs/falcon-ui-tokens`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B01 sweep). Source-file table re-confirmed on disk; consumer list refreshed to live `org-hierarchy-page/` paths (37 app files / 144 occurrences + 4 in `libs/falcon`). This dossier is the BATCH B01 gold reference — drift found this pass is corrected in API.md / GAPS_AND_UPGRADES.md.

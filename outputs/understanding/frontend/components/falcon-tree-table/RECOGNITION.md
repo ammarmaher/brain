@@ -46,4 +46,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Expecting children to lazy-load on expand — no `hasChildren` hint exists; the whole tree must be in memory.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-tree-table-tw.tsx + falcon-tree-table.types.ts + the 6 UI-layer dossiers. Cross-library map `[INFERRED]` from standard library APIs. The table vs tree vs tree-table split ✅ VERIFIED against `OVERVIEW.md` + `DECISION.md`.
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08) from `[CODE]` falcon-tree-table-tw.tsx (668 ln) + falcon-tree-table.types.ts + the UI-layer dossiers. Cross-library map `[INFERRED]` from standard library APIs. The table vs tree vs tree-table split ✅ VERIFIED against `OVERVIEW.md` + `DECISION.md`.

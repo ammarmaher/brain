@@ -39,7 +39,7 @@ Light DOM `<falcon-tag-tw>` via the Angular wrapper.
 
 ## Status
 
-**READY** for production use. Dead-code cleanup (`classes` computed) is the only minor blocker for cleanliness.
+**READY / ADOPTED** for production use (9 app files / 18 occurrences, 2026-06-03 — chiefly contact-groups sharedWith chips). Cleanliness items: dead-code `classes` computed (FT-01) + `-tw` token-parity (FT-07) — neither blocks use.
 
 ## Dynamic capability assessment
 
@@ -56,4 +56,7 @@ Light DOM `<falcon-tag-tw>` via the Angular wrapper.
    - Removing `'warn'` legacy alias — breaks consumers still passing it.
    - Renaming `(falconDismiss)` — kebab-case Stencil event `falcon-tag-dismiss` is the public contract; Angular wrapper alias must remain.
 
-**Verdict:** Mature component. Recommended adoption.
+**Verdict:** Mature component, already adopted (contact-groups chips). Recommended cleanup: FT-01 (dead `classes`) + FT-07 (`-tw` token parity).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B10). Recommendation unchanged (READY). Adopted across contact-groups (9 app files / 18). FT-01 dead code + FT-07 token-parity confirmed as the only cleanliness items.

@@ -32,7 +32,7 @@ A single-line bordered field with an optional **label above** (with a red `*` wh
 Customization order (`feedback_falcon_custom_library_mandatory`): inputs → templates → slots → variants → token override → upgrade → wrapper.
 1. **Inputs** — `[label]`, `[placeholder]`, `[(ngModel)]`/`formControlName`, `[required]`, `[clearable]`, `[helperText]`, `[errorMessage]`, `[state]`, `type`, `size`, `[maxlength]`.
 2. **Templates** — none (no `ng-template` inputs). Label/helper/error are prop-driven.
-3. **Slots** — `slot="prefix"` / `slot="suffix"` for leading/trailing content — **Shadow path only** (`useTailwind=false`). Tailwind path has no slots (GAP G1).
+3. **Slots** — `slot="icon-left"` / `slot="icon-right"` (toggle with `[iconLeft]`/`[iconRight]`) work in BOTH paths. `slot="prefix"` / `slot="suffix"` for richer leading/trailing content are **Shadow path only** (`useTailwind=false`); the Tailwind twin lacks `prefix`/`suffix` (GAP G1, downgraded 2026-06-03).
 4. **Variants** — `variant` (`form` / `search` / `grid`) + `appearance` (`default` / `filled` / `ghost`). Pick the variant before reaching for tokens.
 5. **Token override** — per-instance host class mutating `--falcon-input-*` (height, radius, focus color, bg). Example: `.add-client-special-input`. Never hardcode hex/px.
 6. **Upgrade** — needs a prop-driven leading icon? That is GAP G8 — raise it, do not hand-roll a sibling element.
@@ -43,7 +43,7 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - Native `<input>` or PrimeNG `<p-inputText>` in app code — banned (`feedback_falcon_ui_library_only_no_native`).
 - Binding both `[value]` and `[(ngModel)]` — `[value]` races CVA.
 - Nesting in `<falcon-form-field>` for new code while also setting `[label]` — renders two labels.
-- Relying on `prefix`/`suffix` slots in Tailwind mode — silently absent.
+- Relying on `prefix`/`suffix` slots in Tailwind mode — silently absent (use `iconLeft`/`iconRight` slots, which DO work in Tailwind mode, or switch to Shadow for true prefix/suffix).
 - Treating `[maxlength]` as validation — it is a keystroke cap only.
 - Adding SCSS rules in the consumer's `.component.css` to restyle the field — use the token-override host-class pattern.
 - Using it for numbers/passwords/phones/multiline — wrong component (see table above).

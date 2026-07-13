@@ -1,6 +1,6 @@
 # falcon-combobox — Business Layer
 
-> Layer 2 of 3. UI layer → `OVERVIEW.md` / `API.md` / `USAGE.md` / `TOKENS.md`. Integration → `INTEGRATION_VALIDATION.md`.
+> Layer 2 of 3. UI layer → `OVERVIEW.md` / `API.md` / `USAGE.md` / `TOKENS.md`. Integration → `INTEGRATION_VALIDATION.md`. Sweep-refreshed 2026-06-03 (B04) — 0-consumer status re-confirmed; business facts below verified against live `falcon-combobox.tsx`.
 
 ## Business purpose
 `[BRAIN-OUT]` `OVERVIEW.md` — The combobox is the **"choose or create"** control. Where `falcon-dropdown` forces the user to commit to one of a *closed* set of business values, the combobox lets the user either pick a known value **or type a value that is not in the list** (`allowFreeText`). In business terms it serves cases where the canonical list is reference data but the operator may legitimately enter something new — a tag, a free-form company name, a contact, an address fragment.
@@ -10,7 +10,7 @@
 |---|---|---|
 | (none mapped) | `[CODE]` grep | No `BR-*` rule currently binds to this component. |
 
-`[CODE] GAPS_AND_UPGRADES.md` Wave 7 — **consumer count is 0**: the combobox is showcase/playground-only today. It carries no live business rule because no production flow has adopted it yet. `[INFERRED]` This is the single most important business fact about it: it is a *capability the platform owns but does not yet use*.
+`[CODE]` Consumer Sweep 2026-06-03 — **consumer count is 0** (re-confirmed; grep returned only library-internal files). The combobox is showcase/playground-only today. It carries no live business rule because no production flow has adopted it yet. `[INFERRED]` This is the single most important business fact about it: it is a *capability the platform owns but does not yet use*.
 
 ## Business constraints baked in
 - `[CODE] falcon-combobox.tsx:165-169` — **`allowFreeText` is the business switch.** When `false` (default), pressing Enter on a query that matches no option does NOT commit a value — only an item from the list can be selected. This encodes "the list is authoritative." When `true`, free text is accepted as the value verbatim.

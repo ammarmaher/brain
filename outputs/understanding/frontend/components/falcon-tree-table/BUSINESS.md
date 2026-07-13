@@ -33,4 +33,4 @@
 - The `'radio'` column and the keyboard-focusable label cell are two separate tab stops on the same row — a minor a11y wrinkle (FTT P3), but functionally the selection still commits correctly.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-tree-table.types.ts + falcon-tree-table-tw.tsx + the 6 UI-layer dossiers. No production consumer (playground/showcase only per Wave 7 sweep) — business flows are 🟡 inferred from the documented wallet-hierarchy intent; 🔴 no user-confirmed working feature uses this component.
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08) from `[CODE]` falcon-tree-table.types.ts (52 ln) + falcon-tree-table-tw.tsx (668 ln) + the UI-layer dossiers. The `selectionMode` radio-only gate (types.ts:58), `node.disabled` radio-block (tsx:295-ish), and no-multi-select/no-sort/no-pagination constraints re-confirmed. **No production consumer (showcase/docs only — re-confirmed; the wallet only references it in code comments)** — business flows are 🟡 inferred from the wallet-hierarchy intent; 🔴 no user-confirmed working feature renders this component.

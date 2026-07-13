@@ -2,13 +2,20 @@
 
 ## Component token file
 
-`libs/falcon-ui-tokens/src/components/table.tokens.css` (157 lines, 14 categories).
+`libs/falcon-ui-tokens/src/components/table.tokens.css` (14 categories). **gate-12 compliant** — tokens are scoped under `:where(...)`, NOT `:root`.
 
 ```
-:where(falcon-table, falcon-table-tw, falcon-angular-table, .falcon-table, [data-falcon-table]) {
+:where(falcon-table, falcon-table-tw, falcon-angular-table, .falcon-table, [data-falcon-table],
+       falcon-data-table, falcon-data-table-tw, falcon-angular-data-table, .falcon-data-table, [data-falcon-data-table]) {
   /* 14 categories — see source */
 }
 ```
+
+`[CODE]` table.tokens.css:31-32 — the `:where()` selector was **extended to ALSO cover the `falcon-data-table*` host tags** (correction 2026-06-03; the prior dossier's selector listed only the `falcon-table*` set). Rationale (source comment lines 26-30): `--falcon-table-row-height` is defined ON the data-table host so it inherits to BOTH the inner `<falcon-table-tw>` (header/body cells) AND the sibling `<falcon-angular-custom-table-footer>` — without the data-table host in the list, the footer falls back to content height.
+
+`[CODE]` Alignment Contract v1 (2026-05-20): `--falcon-table-header-padding-inline` is now an alias `var(--falcon-table-cell-padding-inline)` (=`20px`) so header-label X = body-content outer-left X on every Falcon table. The legacy `17px` value caused a silent 3px header drift. See `falcon-data-table/ALIGNMENT-CONTRACT.md`.
+
+`[CODE]` `--falcon-table-container-overflow-x: auto` (Wave 25 revert from `scroll` — line 51): the scrollbar shows only on real overflow.
 
 ## Token categories (per source comment lines 9-24)
 
@@ -90,3 +97,6 @@ Direct token support: `--falcon-table-density-{compact,comfortable,spacious}-cel
 | Warning | Same — N/A. Use `rowStyleClass`. |
 | Disabled | `--falcon-table-disabled-opacity`, `--falcon-table-disabled-cursor` |
 | Loading | `--falcon-table-loading-{overlay-bg,overlay-color,spinner-size,spinner-border-width,spinner-border-color,spinner-duration}` |
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). `:where()` scope re-confirmed gate-12-compliant + corrected to include the `falcon-data-table*` host tags; Alignment-Contract header-padding alias + Wave-25 `overflow-x: auto` revert documented. Container `border-radius: 10px` literal + the `rgba(255,255,255,0.7)` loading-overlay dark gap still stand.

@@ -44,12 +44,12 @@ None blocking.
 - No prefix/suffix slot.
 
 ### 2. Dynamic via inputs/outputs?
-- 22 inputs.
-- 0 wrapper outputs (gap).
-- CVA.
+- `[CODE]` **25 inputs** (2026-06-03 recount) — incl. `iconLeft`/`iconRight`/`inputMode` (added 2026-05-17). NO `disabled` input (CVA-only). NO `clearable`.
+- **0 wrapper outputs** (GAP G1 — diverges from input's `(blur)` Output).
+- CVA (`writeValue` has no `componentOnReady` push, unlike input/input-number).
 
 ### 3. Slots/templates?
-- None.
+- `[CODE]` `slot="icon-left"` / `slot="icon-right"` (top-anchored, both paths). No `prefix`/`suffix`, no `ng-template`.
 
 ### 4. Tokens?
 - All visual axes.
@@ -74,5 +74,9 @@ None blocking.
 3. Add `resizeMode`.
 
 ### 10. Risky?
-- `autoResize` measuring strategy — performance regressions risk.
+- `autoResize` measuring strategy (`scrollHeight` on every input) — performance regression risk on very long content.
 - Variant set excludes `'search'` — adding any 4th would expand surface.
+- Adding a `(blur)` Output (G1) is safe/additive, but any existing consumer relying on the absence (unlikely) would be unaffected.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B01); RE-VERIFIED 2026-06-03 (W1-a). Recommendation unchanged (READY). Counts re-confirmed against live source: 25 inputs, 0 wrapper outputs (G1 — diverges from input's `(blur)`), icon slots present. W1-a verdict: PASS.

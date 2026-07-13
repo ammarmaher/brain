@@ -32,4 +32,4 @@
 - A green/checked "email verified" badge seen in a design is **not** this component out-of-the-box — it is a future upgrade; today the consumer renders confirmation itself.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-email-field.tsx` + `falcon-email-field.component.ts`. Consumer flows ✅ VERIFIED — Add Client / Add User are user-confirmed working features (`[MEMORY]` 2026-05-18). "Verified state" absence ✅ VERIFIED against source.
+🟢 code-verified (2026-06-03) — re-read `falcon-email-field.tsx` (`handleVerifyClick` guard `:125-128`, `type="email"`/`autocomplete` defaults `:40,53`, `verifyButton` opt-in `:48`). All cited business facts confirmed; no business-fact corrections needed this pass. Flagship consumer is the shared User-Details page (`verifyButton`+`verifyIcon`, PES-gated `canEditEmail`) — rendered by admin + management. "Verified state" absence ✅ VERIFIED against source (no `verified` prop on either tag).

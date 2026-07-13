@@ -40,4 +40,4 @@ The avatar runs **no validation** — it has no form control, no CVA (`[BRAIN-OU
 - `[INFERRED]` Setting `[status]` requires a presence data source Falcon does not yet emit (see `BUSINESS.md`) — wiring it to a static value produces a permanently-stale dot.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-avatar.tsx + falcon-avatar.component.ts. No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper source. Info-panel `ProfilePicture` link is `[INFERRED]` from `[MEMORY]`.
+🟡 CODE-DERIVED 2026-06-03 (B11) from `[CODE]` falcon-avatar.tsx + falcon-avatar.component.ts. No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper source. Info-panel `ProfilePicture` link is `[INFERRED]` from `[MEMORY]`. Live `src` source confirmed for the one consumer: the `wallet-balance-management` page resolves `headerImage()` (the account logo) and binds it to `[src]`.

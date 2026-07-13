@@ -1,56 +1,62 @@
 # falcon-notification — Recognition Layer
 
-> Given an external design / screenshot / React or Angular snippet, identify `<falcon-angular-notification>` (single card) or `FalconNotificationService` + `<falcon-angular-notification-stack>` (the queue) as the component to use, and how to compose it to parity.
+> Given an external design / screenshot / React or Angular snippet, identify the right Falcon message surface. For a transient card, the answer is "use the orchestrator (or a facade) — it renders THIS card."
 
 ## Visual fingerprint
-`[CODE]` `falcon-notification.component.ts:70-169` — a rounded card (default `radius:20`px — noticeably rounder than the toast's 10px) that slides in with a spring easing (`falconNotifIn`, `cubic-bezier(0.22,1,0.36,1)`):
+
+`[CODE]` falcon-notification.component.ts:70-169 — a rounded card (default `radius:20`px — noticeably rounder than the toast's 10px) that slides in with a spring easing (`falconNotifIn`, `cubic-bezier(0.22,1,0.36,1)`):
 - **Leading icon chip** — an 8×8 (`h-8 w-8`) rounded square; bare colored icon by default, or a *gradient-tinted chip with a ring* when `iconBg=true`. 16×16 stroke SVG inside (check / info-circle / X).
 - **Body** — bold `title` line + optional smaller muted `subtitle` line.
-- **Trailing × dismiss button** — 7×7 rounded, muted, hover-tinted.
+- **Trailing × dismiss** — 7×7 rounded, muted, hover-tinted.
 - **Left accent border** — by default `leftAccent:2` adds 2px to the left border in the intent color (a colored vertical bar signature).
-- **Countdown depletion bar** — a thin (`countdownHeight:1`px) intent-colored bar, by default at the **bottom**, that animates `scaleX(1)→scaleX(0)` over `dismissDuration`. This is the notification's headline distinguishing feature.
-- **Optional glossy surface** — `glossy:true` (default) gives a `backdrop-blur-xl` + gradient frosted-glass backdrop.
-- **Stacks** — `<falcon-angular-notification-stack>` parks at a viewport corner (default top-right, below the topbar) and stacks cards with a 2.5 gap.
+- **Countdown depletion bar** — a thin (`countdownHeight:1`px) intent-colored bar (default at the BOTTOM) animating `scaleX(1)→scaleX(0)` over the dismiss duration. **The notification's headline distinguishing feature.**
+- **Optional glossy surface** — `glossy:true` gives `backdrop-blur-xl` + frosted gradient.
+- In the live app the card is single (one at a time, from the orchestrator); the superseded stack would corner-anchor multiple.
 
 Distinguishing signature vs the toast: *rounder corners, a left color-accent bar, a visible countdown depletion bar, optional frosted-glass backdrop, spring slide-in.*
 
 ## Cross-library equivalents
+
 | Library | Their component | Parity notes |
 |---|---|---|
-| MUI | `<Snackbar>` + `<Alert variant="filled/outlined">` | MUI Snackbar = the positioned stack; the notification adds the countdown bar MUI lacks. |
-| PrimeNG | `<p-toast>` with a styled template | PrimeNG has no native countdown-bar notification; this is the Falcon-modern upgrade over `<p-toast>`. |
-| Ant Design | `notification.open({...})` | Ant's `notification.*` API ≈ `FalconNotificationService.push()`; Ant draws a progress line too. |
-| Bootstrap | `.toast` + custom progress div | Bootstrap toast has no built-in countdown — hand-rolled equivalent. |
-| shadcn / Radix | `sonner` toast / Radix `<Toast>` | `sonner` with `duration` + a progress bar is the closest twin; `sonner.success(...)` ≈ `push({intent:'success',...})`. |
-| plain HTML | a hand-rolled fixed div with a CSS-animated bar | always replace with `FalconNotificationService`. |
+| MUI | `<Snackbar>` + `<Alert variant="filled/outlined">` | the notification adds the countdown bar MUI lacks. |
+| PrimeNG | `<p-toast>` with a styled template | no native countdown-bar; this is the Falcon-modern upgrade. |
+| Ant Design | `notification.open({...})` static API | Ant's `notification.*` ≈ `FalconMessageOrchestratorService.show()` / `FalconNotificationService.push()`; Ant draws a progress line too. |
+| Bootstrap | `.toast` + custom progress div | no built-in countdown — hand-rolled. |
+| shadcn / Radix | `sonner` / Radix `<Toast>` | `sonner.success(...)` with `duration` + progress ≈ `orchestrator.show({category:'success', …})`. |
+| plain HTML | a fixed div with a CSS-animated bar | always replace with the orchestrator. |
 
 ## Use THIS vs siblings
+
 | If the design shows… | Use | Not |
 |---|---|---|
-| a transient card **with a visible countdown / progress bar**, modern slide-in, rounded | `<falcon-angular-notification>` + `FalconNotificationService` | toast |
-| a transient corner card with **no** progress bar, PrimeNG-`MessageService` firing semantics | `FalconMessageService.add()` + `<falcon-angular-message-host>` | notification |
-| a message the user **must click to acknowledge** before continuing | `<falcon-angular-popup>` / `<falcon-angular-confirm-dialog>` | notification (it auto-dismisses) |
-| an inline status banner *fixed inside a form/page* (not floating) | `<falcon-angular-notification>` used **standalone** (not via the stack) — it is a plain card | the stack |
+| a transient card with a visible countdown bar, modern slide-in, rounded | `FalconMessageOrchestratorService.show(...)` (renders this card) | embedding the card directly |
+| a transient corner card, simpler, PrimeNG-`MessageService` semantics | (legacy) `FalconMessageService` + `<falcon-angular-message-host>` | this card (overkill / wrong service) |
+| a message the user **must click to acknowledge** before continuing | orchestrator `action-required`/`configuration-required` → `<falcon-modal-adapter>` | this card (auto-dismisses, no confirm) |
+| an inline status banner FIXED inside a form/page (not floating) | `<falcon-angular-notification>` STANDALONE (a plain card) + `[open]`/`(dismiss)` | the stack / orchestrator |
 | a hover hint on an element | `<falcon-angular-tooltip>` | notification |
 | an empty-data placeholder | `<falcon-angular-empty-state>` | notification |
 
 ## Composition recipe to reach parity
-Customization order (per `feedback_falcon_custom_library_mandatory`):
-1. **For a queue** — inject `FalconNotificationService` (root singleton); call `push({ intent, title, subtitle?, dismissMode?, dismissDuration? })`. Mount `<falcon-angular-notification-stack [position]="…" />` **once** in the app shell.
+
+Customization order (`feedback_falcon_custom_library_mandatory`):
+1. **For platform messaging** — inject `FalconMessageOrchestratorService` and `show({ category, title, message, source })`, OR a facade (`FalconNotificationService.push`, `FalconToastService.*`, `withMessages` on an HTTP call). `<falcon-toast-adapter>` (already in `app.ts`) renders this card. Do NOT mount a stack.
 2. **For a standalone inline card** — use `<falcon-angular-notification>` directly with `[intent]`, `[title]` (required), `[subtitle]`, `[open]`, `(dismiss)`.
-3. **Inputs (appearance)** — 14 inputs: `glossy`, `iconBg`, `dismissMode`, `dismissDuration`, `countdownHeight`, `countdownBarTop`/`Bottom`/`Glossy`, `borderWidth`, `leftAccent`, `rightAccent`, `radius`. Match the design's roundness / accent / bar placement here.
-4. **No slots / no templates** — `title` + `subtitle` text only. If the design needs rich body content, that is a GAP (`GAPS_AND_UPGRADES.md`) — raise, do not hand-roll.
-5. **Defaults via config** — leave an input *unset* (`undefined`) to inherit `FalconConfigurationService.notification.*`; set it explicitly to override per-instance.
-6. **Tokens** — appearance is Tailwind-utility + Falcon palette tokens (no dedicated `notification.tokens.css`). Restyle by overriding palette tokens, never hardcoded hex.
-7. **Upgrade** — notification is the *preferred* surface; if you find yourself wanting toast's PrimeNG `MessageService` API, you are migrating, not building new — use the toast substrate for that case.
+3. **Inputs (appearance)** — 16 inputs: `glossy`/`iconBg`/`dismissMode`/`dismissDuration`/`countdownHeight`/`countdownBarTop|Bottom|Glossy`/`borderWidth`/`leftAccent`/`rightAccent`/`radius`. Match the design's roundness/accent/bar placement. Leave unset (`undefined`) to inherit `FalconConfigurationService.notification.*`.
+4. **No slots / no templates** — `title` + `subtitle` text only. Rich body content is GAP G3 — raise, don't hand-roll.
+5. **Tokens** — appearance is Tailwind-utility + Falcon palette (no dedicated token file — GAP G7). Restyle by overriding palette tokens / config defaults, never hardcoded hex.
+6. **Upgrade** — for a confirm/cancel decision, switch to the orchestrator's `modal` channel (the card has only a × dismiss).
 
 ## Anti-patterns
-- Mixing toast and notification semantics on the same page — pick one acknowledgement stack.
-- Mounting more than one `<falcon-angular-notification-stack>` — singleton service → duplicate cards.
-- Expecting a ⚠ triangle for `warning` — the icon map gives `warning` the info-circle (`BUSINESS.md` gotcha).
-- Putting a must-acknowledge decision in a notification — it has only a × dismiss, no confirm/cancel. Use a dialog.
-- Passing `null` to an appearance input expecting a reset — only `undefined` triggers the config-default fallback.
-- Trying to embed HTML/markup in `title`/`subtitle` — text only.
+
+- Embedding `<falcon-angular-notification>` per-feature for transient feedback — fire via the orchestrator/facades instead (the adapter renders it).
+- Mounting `<falcon-angular-notification-stack>` — superseded; its service feed returns `[]`; renders nothing.
+- Mounting a second `<falcon-toast-adapter>` / stack — duplicate cards.
+- Expecting a ⚠ triangle for `warning` — the icon map gives `warning` the info-circle (GAP G2).
+- Putting a must-acknowledge decision in a notification — only a × dismiss; use the orchestrator modal channel.
+- Passing `null` to an appearance input expecting a reset — only `undefined` falls back to config.
+- `auto` + `dismissDuration=0` expecting persistence — clamps to 1s; use `manual`.
+- Embedding HTML/markup in `title`/`subtitle` — text only.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-notification.component.ts` + `falcon-notification-stack.component.ts` + `falcon-notification.service.ts` + the 6 UI dossier files. Cross-library map is `[INFERRED]` mapping. "Preferred over toast" ✅ VERIFIED via registry + `OVERVIEW.md`.
+🟡 CODE-DERIVED 2026-06-03 (B16) from falcon-notification.component.ts + .service.ts + the orchestrator/adapter source. CORRECTED: this card is the canonical live surface reached via the orchestrator (not "preferred-but-thinly-adopted"); the stack is superseded. Cross-library map is `[INFERRED]`.

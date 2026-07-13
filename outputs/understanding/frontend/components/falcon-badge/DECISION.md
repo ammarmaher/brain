@@ -19,9 +19,9 @@ Light DOM `<falcon-badge-tw>` via the Angular wrapper. The wrapper projects `<ng
 
 ## Required upgrades before broader use
 
-| ID | Priority |
-|---|---|
-| FB-01 `[ariaLabel]` on wrapper | **P2** |
+| ID | Priority | Note |
+|---|---|---|
+| FB-01 `[ariaLabel]` on wrapper **and** the `-tw` twin | **P1** | EXPANDED 2026-06-03 — `ariaLabel` is Shadow-only; the default `useTailwind=true` path has no a11y-label surface at all. |
 
 ## Relationship to other components
 
@@ -51,4 +51,7 @@ Light DOM `<falcon-badge-tw>` via the Angular wrapper. The wrapper projects `<ng
 9. **Safest upgrade path:** Additive input on the wrapper.
 10. **Risky to change:** Variant → token mapping (changes break consumers). Variant vocabulary additions (e.g. `'tertiary'`) are additive — safe.
 
-**Verdict:** Mature component. The Angular wrapper is feature-complete except for `[ariaLabel]` parity.
+**Verdict:** Mature component. The Angular wrapper projects content correctly (verified) and is feature-complete except for `[ariaLabel]` parity (FB-01) — which 2026-06-03 re-audit found is broader than first documented: the *default* render path (`-tw`) has no a11y-label path at all, so FB-01 is P1 for any dot-only usage. Solid appearance aliases dot tokens (FB-04, cosmetic). Adoption (0 production consumers) remains the main barrier.
+
+## Verification
+🟢 code-verified — REFRESH 2026-06-03. `<ng-content>` projection, the 6-input wrapper surface, the Shadow↔`-tw` `ariaLabel` divergence, and the dot-token aliasing all re-confirmed against live source. NOT runtime-verified.

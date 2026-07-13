@@ -1,4 +1,4 @@
-# falcon-empty-state — USAGE
+﻿# falcon-empty-state — USAGE
 
 ## Example 1 — Empty state inside a data-table
 
@@ -55,7 +55,7 @@ The Light DOM variant uses `empty-state-tailwind-classes.ts` helpers. Per-instan
 ```css
 .welcome-empty-state {
   --falcon-empty-state-icon-color: var(--color-falcon-teal-500);
-  --falcon-empty-state-title-font-size: 18px;
+  --falcon-empty-state-title-size: 18px; /* [CODE] real token name is -title-size (NOT -title-font-size) */
 }
 ```
 
@@ -81,3 +81,25 @@ import type { FalconEmptyStateSize }
 - DO — translate `titleText` / `descriptionText` outside the component.
 - DON'T — render this for loading states.
 - DON'T — pass `[iconName]` to a non-existent icon — falls back to empty `<i>`.
+
+## When to reach for `<falcon-empty-data>` instead
+
+`[CODE]` Use the richer sibling `<falcon-angular-empty-data>` when you want the **card** look (dashed border + glossy gradient + tinted disc + built-in CTA button + info chip) OR when the empty state is **inside a data-table** (pass `[emptyData]="config"` to `<falcon-angular-data-table>` and it auto-mounts `<falcon-empty-data>`). Use `<falcon-angular-empty-state>` (this component) when you want the **minimal** look, a **projected/custom action** (`slot="action"`), or **heading semantics** (`<h3>`). They are complementary, NOT duplicates.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-empty-state>` returned **1 consumer file** as of 2026-05-17:
+- `apps/admin-console/.../add-user-wizard/add-user-wizard.component.html`
+
+## Deep-Dive Consumer Sweep (2026-06-03 — B12)
+
+`[CODE]` grep `<falcon-angular-empty-state>` across `apps/` → **3 files** (UP from 1). NOT re-exported from `libs/falcon` shared-ui (only `<falcon-angular-empty-data>` is).
+
+- `apps/admin-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html:53` — `iconName="user-x"`, `size="md"`, no action ("you cannot add a user here" explainer).
+- `apps/management-console/src/app/features/org-hierarchy-page/components/wizard-components/add-user-wizard/add-user-wizard.component.html:53` — same explainer, mgmt console.
+- `apps/management-console/src/app/features/new-wallet-balance/new-wallet-balance.component.ts:155` — `iconName="building"`, `size="md"`, no action (no-wallet-data block; an inline-template render).
+
+> `[INFERRED]` Adoption is still niche (3 minimal explainers) vs the broadly-used `<falcon-empty-data>` (auto-mounted by every `[emptyData]` data-table). That is by design: empty-state is the minimal tier.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh). Consumer Sweep re-run (1 → 3 files: add-user-wizard ×2 + new-wallet-balance, grep-verified); token-override example name corrected (`-title-size`); `<falcon-empty-data>` selection cross-ref added.

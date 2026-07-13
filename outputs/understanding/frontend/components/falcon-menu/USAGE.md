@@ -1,8 +1,12 @@
-# falcon-menu — USAGE
+﻿# falcon-menu — USAGE
 
-## Real usage examples
+## Real usage examples (active codebase)
 
-The menu is composed inside `FalconTreePanelComponent` and per-row data-table action menus. Direct `<falcon-angular-menu>` usage is limited because the component is typically wired through higher-level composers.
+`[CODE]` The menu has **2 render sites, both in `libs/`** — apps never render `<falcon-angular-menu>` directly; they reach it transitively through these composers:
+- `libs/falcon/src/shared-ui/lib/components/falcon-tree-panel/falcon-tree-panel.component.html:149` — the SHARED `<falcon-angular-menu #actionMenu rootClass="falcon-tree-action-menu">` host, opened via `showAt()` on per-node kebab triggers. Consumed by the org-hierarchy menus in both consoles.
+- `libs/falcon-ui-core/src/angular-wrapper/components/falcon-data-table/falcon-data-table.component.html:51` — the data-table per-row action menu (`rootClass="falcon-data-table-row-action-menu"`); `.component.ts:1186` wires `falcon-row-action-trigger` → `<falcon-angular-menu>.showAt(...)`.
+
+The examples below are the recommended authoring shapes for those external-anchor + inline patterns.
 
 ## Recommended usage for new pages
 
@@ -55,20 +59,22 @@ export class MyTableComponent {
 <!-- One menu, shared across all rows -->
 <falcon-angular-menu #rowMenu [items]="menuItems" (falconMenuItemSelect)="onSelect($event)" />
 
-<!-- Per-row trigger -->
+<!-- Per-row trigger (project rule: @for, not *ngFor) -->
 <table>
-  <tr *ngFor="let row of rows">
-    <td>{{ row.name }}</td>
-    <td>
-      <button (click)="onRowKebabClick(row, $event)" aria-label="Row actions">
-        <i class="falcon-icon falcon-icon-more-vertical"></i>
-      </button>
-    </td>
-  </tr>
+  @for (row of rows; track row.id) {
+    <tr>
+      <td>{{ row.name }}</td>
+      <td>
+        <button (click)="onRowKebabClick(row, $event)" aria-label="Row actions">
+          <i class="falcon-icon falcon-icon-more-vertical"></i>
+        </button>
+      </td>
+    </tr>
+  }
 </table>
 ```
 
-This is the PrimeNG `Menu.toggle(event)` parity — one shared menu, dynamic items.
+This is the PrimeNG `Menu.toggle(event)` parity — one shared menu, dynamic items. It is exactly the pattern `falcon-data-table` + `falcon-tree-panel` use internally. On open, the wrapper promotes the inline panel into the browser Top Layer (native popover + `FalconStackingService`) so it escapes a row's `overflow:hidden` — no body-portal needed.
 
 ### 3. Inline mode (no trigger, always open)
 
@@ -131,3 +137,21 @@ The wrapper auto-registers Stencil tags via `defineFalconTwComponent('falcon-men
 | Use `<slot name="trigger">` for custom triggers | Pass a raw string `triggerLabel` for icon-only kebabs (use slot for SVG / icon) |
 | Pass `data` payload per item for round-trip context | Mutate the items array in-place during render |
 | Use `[popup]="false"` for inline action lists | Use `popup=false` for popups (intent mismatch) |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-menu>` across `apps/` + `libs/falcon/` returned **2 consumer file(s)** as of 2026-05-17 (tree-panel only — the data-table render site is in `libs/falcon-ui-core`, outside the Wave-7 grep scope).
+
+## Consumer Sweep (2026-06-03)
+
+[CODE] grep `<falcon-angular-menu` (HOST render usage) across the repo → **2 render sites**:
+
+- `libs/falcon/src/shared-ui/lib/components/falcon-tree-panel/falcon-tree-panel.component.html:149` — the shared tree action-menu host (`#actionMenu`, `rootClass="falcon-tree-action-menu"`). The `.html` also has 2 explanatory comments at lines 44/117.
+- `libs/falcon-ui-core/src/angular-wrapper/components/falcon-data-table/falcon-data-table.component.html:51` — data-table per-row action menu (`rootClass="falcon-data-table-row-action-menu"`); wired in `.component.ts:1186`.
+
+Non-render references (comments / type imports, NOT consumers): `apps/{admin,management}-console/.../org-hierarchy-page/components/stencil-prop-patches.ts:114` (comment), `libs/falcon-ui-core/.../falcon-insufficient-balance-dialog.component.ts` (×3 comments citing the `[appendTo]` idiom), `libs/falcon-ui-tokens/src/components/menu.tokens.css:124` (scoped-override doc).
+
+> `[CODE]` Apps reach the menu **transitively** through `falcon-tree-panel` (org-hierarchy in both consoles) and `falcon-data-table` (every list with row actions) — so its effective footprint is large despite only 2 literal render sites.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13). Consumer Sweep re-run; the 2 render sites + their `rootClass` action-menu surfaces confirmed. Fixed the `*ngFor` example to `@for` (project rule) and added the Top-Layer-promotion note (the data-table/tree-panel real pattern).

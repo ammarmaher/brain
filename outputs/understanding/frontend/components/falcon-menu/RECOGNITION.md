@@ -52,9 +52,9 @@ Customization order (per `[VAULT]` `feedback_falcon_custom_library_mandatory`): 
 - Rendering multiple menus simultaneously — `[CODE]` `USAGE.md:108` they share the global Esc listener.
 - Positioning the panel via inline style — `[CODE]` `USAGE.md:109` use `showAt()` for external anchors.
 - Passing an `<a href>` as a menu item — `[CODE]` `USAGE.md:110` use a `command` callback + router navigate.
-- Expecting `appendTo="body"` to work — `[CODE]` `USAGE.md:111` only `'host'` is implemented; menus inside `overflow:hidden` clip.
+- Expecting `appendTo="body"` to DOM-portal — `[CODE]` only `'host'` is implemented; but the wrapper's Top-Layer popover promotion (Wave 6) already escapes `overflow:hidden` in supporting browsers, so the practical clipping risk is largely handled.
 - Using `popup=false` for a popup, or `popup=true` for an inline list — `[CODE]` `USAGE.md:133` intent mismatch.
 - Showing an action the operator may not perform — `[INFERRED]` gate the `items` array by PES / user-type / `availableActions[]` BEFORE binding (see `BUSINESS.md`).
 
 ## Verification
-🟢 LANDED — menu is production-ready, composed inside `falcon-tree-panel` (`USAGE.md:135-140`). 🟡 CODE-DERIVED for the visual fingerprint + composition recipe from `falcon-menu.tsx` + `API.md`. Cross-library map is `[INFERRED]` from each library's documented menu/dropdown primitive.
+🟢 CODE-VERIFIED 2026-06-03 (B13) — visual fingerprint + composition recipe re-read against `falcon-menu.tsx` (472 ln) + `falcon-menu-tw.tsx` (430 ln). Menu is production-ready, composed inside `falcon-tree-panel` + `falcon-data-table`. `appendTo="body"` anti-pattern re-scoped (Top-Layer mitigates clipping). Cross-library map `[INFERRED]` from each library's documented menu/dropdown primitive.

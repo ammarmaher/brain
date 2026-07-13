@@ -75,12 +75,11 @@ export interface FalconMenuToggleDetail {
 }
 ```
 
-## Reflected props (Stencil)
-`open`, `popup`, `appendTo`, `disabled`.
+## Reflected props (Stencil, both tags)
+`[CODE]` falcon-menu.tsx:46-50 / falcon-menu-tw.tsx:45-49 — `open`, `popup`, `appendTo`, `disabled` are `@Prop({ reflect: true })`. `items` is a non-reflected array prop; `anchorEl` is a plain (non-`@Prop`) class field (HTMLElement is non-serializable — always set as a JS property via `showAt()` or directly).
 
-## Stencil methods (on underlying element)
-Same as wrapper's proxied methods above, plus:
-- `setFocus()` — focuses trigger or active item.
+## Stencil methods (on underlying element — both tags)
+`[CODE]` falcon-menu.tsx:99-145 / falcon-menu-tw.tsx:91-129 — exactly: `openMenu()`, `closeMenu()`, `toggle()`, `showAt(el, event?)`, `hide()`. **There is NO `setFocus()` method** on either menu tag (CORRECTION 2026-06-03 — the prior dossier's "`setFocus()` — focuses trigger or active item" was fabricated; the menu focuses items internally via `focusActiveItem()`, a private method, never exposed). The wrapper proxies all five real methods (above).
 
 ## Slots
 
@@ -118,7 +117,10 @@ Not applicable.
 - Separators: `<li role="separator" aria-orientation="horizontal">`.
 - `aria-labelledby` on the list points to the trigger id (popup mode only).
 
-## Parts (Stencil Shadow)
+## Top Layer promotion (wrapper-level, additive)
+`[CODE]` falcon-menu.component.ts:69-83,253-338 — Phase C / Wave 6 (2026-05-21). The Stencil menu does NOT body-portal; its panel is rendered inline + `position:fixed` and carries `data-component="falcon-menu-panel"`. On `falcon-menu-open`, the wrapper (one rAF later) locates the panel (light-DOM `querySelector` first, then `shadowRoot`), sets `popover="auto"`, neutralizes the UA popover stylesheet (`right/bottom: auto !important; margin: 0 !important`), calls `showPopover()`, and registers it with `FalconStackingService`. On close it `hidePopover()` + unregisters. Feature-detected — non-supporting browsers keep the plain `position:fixed` presentation. This escapes the trigger's stacking context (e.g. a data-table row's `overflow:hidden`).
+
+## Parts (Stencil Shadow only — `<falcon-menu>`)
 | Part | Element |
 |---|---|
 | `base` | Outer container. |
@@ -130,3 +132,8 @@ Not applicable.
 | `item-icon` | Icon span. |
 | `item-label` | Label span. |
 | `separator` | Divider. |
+
+> `[CODE]` **Shadow↔`-tw` parity (B13):** the Light `<falcon-menu-tw>` mirrors `<falcon-menu>` 1:1 in props/events/methods/keyboard/ARIA/positioning, sharing the SAME inline navigability helpers + `positionPanel()` viewport-fixed logic + the `data-component="falcon-menu-panel"` Top-Layer hook. **Divergences (B-dim):** (1) the `-tw` twin emits NO `part=` attributes (all parts above are Shadow-only); (2) `-tw` styles via `menu-tailwind-classes.ts`, Shadow via `falcon-menu.css`; (3) `-tw` seeds an initial off-screen `style={top/left: -9999px}` in anchor mode (Shadow uses the `.anchor-fixed` CSS class for the same flash-prevention). Token contract identical.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13) against falcon-menu.component.ts (340 ln), .component.html (28 ln), falcon-menu.tsx (472 ln), falcon-menu-tw.tsx (430 ln), falcon-menu.types.ts. Drift corrected: **NO `setFocus()` Stencil method exists** (prior claim removed); documented the Top-Layer popover promotion + the `-tw` no-`part=` divergence; the 5 real `@Method`s (openMenu/closeMenu/toggle/showAt/hide) confirmed on BOTH tags + all proxied on the wrapper.

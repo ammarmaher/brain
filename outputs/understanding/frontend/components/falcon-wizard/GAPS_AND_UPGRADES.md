@@ -1,4 +1,4 @@
-# falcon-angular-wizard — GAPS & UPGRADES
+﻿# falcon-angular-wizard — GAPS & UPGRADES
 
 ## Missing capabilities
 
@@ -76,3 +76,40 @@
 - For #1 (`step.status` not visualized): consumer can drive `[steps]` with a derived array that uses `currentStep` to compute the displayed state via the embedded stepper's `completedValues` — but this is awkward and should be eliminated by fixing the wizard.
 - For #4 (Skip button): consumer can place a Skip button in `slot="footer-extra"` and call `wizardRef.next()` imperatively.
 - For #7 (Reset): consumer can `currentStep.set(0)` directly (2-way binding works).
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 0** ([CODE] grep `<falcon-angular-wizard>` across `apps/` + `libs/falcon/`).
+
+**Gap: Zero adoption** — component is showcase/playground-only. Either promote in an upcoming feature (recommended for primitives like `accordion`/`avatar`/`badge`) or formally retire if redundant. Priority: P2 — usability watch, not blocker.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B20)
+
+**Consumer count: STILL 0** ([CODE] grep `<falcon-angular-wizard[ >]` → 0 element usages; even the showcase/playground consumer is gone — playground route removed). The prior dossier's items 1–11 + a11y/test gaps are **re-confirmed accurate**. NEW gaps found this pass:
+
+### G-A11Y-1 — `-tw` render path (the DEFAULT) has NO region landmark / aria-live (P0 a11y — HIGH-RISK-QUEUE)
+
+`[CODE]` The Shadow `<falcon-wizard>` wraps root + content in `role="region"` + `aria-label` + `aria-live="polite"` (falcon-wizard.tsx:131-153). The Light `<falcon-wizard-tw>` renders **none of these** on root or content (falcon-wizard-tw.tsx:104-122). Because `useTailwind=true` is the wrapper default, the **default-rendered wizard exposes no landmark and announces no step change** to screen readers — a genuine a11y regression vs the Shadow twin.
+
+**Recommended fix:** mirror the Shadow region/aria-live markup into `<falcon-wizard-tw>` (add `role="region"`, `aria-label`, and `aria-live="polite"` on the content div) + add an `ariaLabel` prop to the `-tw` tag (it currently lacks it). Risk-class HIGH (a11y semantics + render markup change).
+
+### G-PARITY-1 — `ariaLabel` (Shadow-only) / `rootExtraClass` (`-tw`-only) prop divergence (P2)
+
+`[CODE]` `ariaLabel` exists only on Shadow (falcon-wizard.tsx:50); `rootExtraClass` only on `-tw` (falcon-wizard-tw.tsx:39). Neither is surfaced on the Angular wrapper. **Fix:** add both props to both tags and expose `ariaLabel` + `rootClass`/`wrapperClass` on the wrapper for full parity.
+
+### G-METHOD-1 — Angular wrapper does not proxy `goTo()` / `next()` / `back()` (P2)
+
+`[CODE]` All three are `@Method`s on both tags but the wrapper exposes no Angular-side proxies — consumers must reach through `@ViewChild('wizardRef', { read: ElementRef })` and call `wizardRef.nativeElement.next()`. **Fix:** add `async next()/back()/goTo()` proxies on the wrapper (mechanical).
+
+### G-MODEL-1 — Wrapper `currentStep` is one-way `@Input`, not a two-way model (P1)
+
+`[CODE]` falcon-wizard.component.ts:45 — `@Input() currentStep = 0` with NO `currentStepChange` Output. The inner Stencil `currentStep` is mutable (the element self-advances), but the new index is never emitted back to the host. So `[(currentStep)]` on the wrapper does NOT round-trip (the prior USAGE example is aspirational). **Fix:** add `@Output() currentStepChange` (or migrate to a `model()` signal) and emit on every step transition. This is the single biggest ergonomics gap blocking the `[(currentStep)]` pattern the docs assume.
+
+### G-TEST-1 — No specs at all (P2)
+
+`[CODE]` No `*.spec.ts` / `*.e2e.ts` found for `falcon-wizard`, `falcon-wizard-tw`, or the wrapper (the prior "Missing tests" recommendation still stands; confirmed zero on disk).
+
+**Triage:** G-A11Y-1 is HIGH-RISK-QUEUE (a11y semantics + markup parity). G-MODEL-1 / G-PARITY-1 / G-METHOD-1 / G-TEST-1 are `safe-local` additive improvements. See FINDINGS/B20.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B20 REFRESH). Prior gaps re-confirmed; consumer count still 0. New gaps verified in source: `-tw` lacks region/aria-live + `ariaLabel` (a11y parity break — HIGH-RISK-QUEUE), wrapper `currentStep` one-way (no `currentStepChange`), methods un-proxied, `ariaLabel`/`rootExtraClass` prop divergence, zero specs. Component stays ACTIVE/PREFERRED (un-adopted) — no deletion/retire flag (it is the documented migration target).

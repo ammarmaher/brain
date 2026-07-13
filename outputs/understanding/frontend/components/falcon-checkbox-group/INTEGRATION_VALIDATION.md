@@ -44,7 +44,7 @@
 - `[CODE] falcon-checkbox-group.component.ts:48,77` — both the `selectedValues` setter and `writeValue` **clone** the incoming array (`[...next]`) — mutating the array you passed in will not retroactively change the group; always bind a fresh array.
 - `[CODE] falcon-checkbox-group.component.ts:62` — `useTailwind` is forwarded to **each child checkbox**, not consumed by the group itself.
 - `[CODE] GAPS_AND_UPGRADES.md` G4 — `errorText` not `errorMessage` — inconsistent with other form controls; alias if you build a generic form-field wrapper.
-- `[INFERRED]` Per-checkbox accessibility is inherited from `<falcon-angular-checkbox>`; the group should expose `role="group"` + `aria-labelledby` — `GAPS_AND_UPGRADES.md` flags this as "verify in template".
+- `[CODE]` html:14-19 — the options container IS `role="group"` with `[attr.aria-label]="groupLabel ?? null"` (confirmed 2026-06-03 — resolves the prior "verify" flag). It uses `aria-label`, not `aria-labelledby` pointing at the rendered `.falcon-checkbox-group-label` span — a minor a11y refinement (the label text is duplicated rather than referenced).
 
 ## What it CAN do (integration)
 - `[CODE] falcon-checkbox-group.component.ts` — Participate in Reactive Forms / `ngModel` via array-valued CVA, **and** support `[selectedValues]` two-way binding for non-Forms consumers.
@@ -65,4 +65,4 @@
 - `[CODE] GAPS_AND_UPGRADES.md` G7/G8 — `'grid'` orientation + roving keyboard focus across the group.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE] src/angular-wrapper/components/falcon-checkbox-group/falcon-checkbox-group.component.ts` + `[CODE] src/components/falcon-checkbox-group/falcon-checkbox-group.types.ts` + `[CODE] GAPS_AND_UPGRADES.md`. CODE-DERIVED CORRECTION: Stencil option type uses `value: string`, the Angular wrapper type uses `value: string | number` — Angular consumers get the wider type. Used in 1 production consumer; backend endpoints [INFERRED].
+🟢 code-verified from `falcon-checkbox-group.component.{ts,html}` + both Stencil group tags + `falcon-checkbox-group.types.ts` (read 2026-06-03). Pure-Angular composition (no Stencil tag rendered), array-clone, no-pushOptions-guard, `value:string` (Stencil) vs `string|number` (wrapper) drift, and `role="group"`+`aria-label` all 🟢 confirmed. Consumer count corrected 1→0 (grep-verified — showcase-only). Backend endpoints 🟡 `[INFERRED]` (group owns no data).

@@ -1,6 +1,6 @@
 # falcon-combobox — Integration & Validation Layer
 
-> Layer 3 of 3. UI → `OVERVIEW.md`. Business → `BUSINESS.md`.
+> Layer 3 of 3. UI → `OVERVIEW.md`. Business → `BUSINESS.md`. Sweep-refreshed 2026-06-03 (B04) — all CODE-DERIVED facts below re-verified against live source; the Top-Layer MutationObserver detail added.
 
 ## Owning backend module(s)
 **None.** `[CODE] falcon-combobox.tsx` — the component is purely presentational; it owns no data. Its suggestion list (`items`) is whatever business reference data the parent flow feeds it. `[INFERRED]` In a real adoption the owning module would be whichever service supplies the suggestions (Commerce categories, Identity roles, etc.) — undetermined today because there are 0 consumers (`[CODE] GAPS_AND_UPGRADES.md` Wave 7).
@@ -34,6 +34,15 @@
 - **Stencil skeleton** — `[CODE] falcon-combobox.tsx` `<falcon-combobox>` (Shadow DOM) and `[CODE] falcon-combobox-tw.tsx` `<falcon-combobox-tw>` (Light DOM, Tailwind). Pure presentational; full WAI-ARIA combobox pattern (`role=combobox` on input, `role=listbox` on panel).
 - **Angular wrapper** — `[CODE] falcon-combobox.component.ts` `<falcon-angular-combobox>`: CVA + tag-switcher. `ngOnInit` calls `defineFalconTwComponent('falcon-combobox')` to register the web component on demand.
 - Per `feedback_library_skeleton_app_api` — suggestions are fetched by the app/state layer; the library never calls HTTP.
+
+### Top-Layer (popover) integration — MutationObserver, NOT body-portal
+
+`[CODE] falcon-combobox.component.ts:66-270` — Unlike `<falcon-dropdown-tw>` (which body-portals into `.falcon-overlay-container`), the combobox panel renders **inline** and the Stencil emits **no open/close event**. The wrapper therefore:
+1. Observes the Stencil host subtree with a `MutationObserver` scoped to `childList:true, subtree:true` (`.ts:170-185`); when a `[role="listbox"]` panel is added/removed (the Stencil's `{this.open && (...)}` conditional), it fires.
+2. `acquireTopLayer(panel)` (`.ts:207-256`) feature-detects the Popover API, sets `popover="auto"`, **neutralizes the UA popover stylesheet** direction-aware (`top/bottom auto`, physical-end `auto`, per-longhand margins so the author's `mt-1` survives — `.ts:239-246`), calls `showPopover()`, and registers with `FalconStackingService`.
+3. `releaseTopLayer()` `hidePopover()` + unregisters when the panel is removed or the component is destroyed.
+
+So the combobox panel escapes ancestor stacking ONLY on browsers with the Popover API; without it the inline panel stays trapped in its ancestor stacking context (and can be clipped by an `overflow:hidden` ancestor). This is a meaningfully WEAKER overlay story than the dropdown's body-portal-plus-Top-Layer. `gate-12`: no token-scope action needed (no body re-parent).
 
 ## Integration gotchas
 - `[CODE] falcon-combobox.component.ts:85,92` — **Stencil emits camelCase events** `falconComboboxSelect` / `falconComboboxFilter` / `falconComboboxClear` (`[CODE] falcon-combobox.tsx:53-60`). This **contradicts the existing `API.md` Outputs table**, which lists Stencil events as un-namespaced. CODE-DERIVED CORRECTION: the real Stencil event names are `falconComboboxFilter` / `falconComboboxSelect` / `falconComboboxClear`; the wrapper binds them in `falcon-combobox.component.html:24-26`.

@@ -1,14 +1,16 @@
 # falcon-icon — TOKENS
 
-## Token file
-`libs/falcon-ui-tokens/src/components/icon.tokens.css`
+## Component token file
+`libs/falcon-ui-tokens/src/components/icon.tokens.css` (**31 lines** — recount 2026-06-03).
 
-2 categories: sizing + color. Trivially short (31 lines).
+2 categories: SIZING + COLOR. Trivially short. **gate-12 compliant** (`:where()` scope, specificity 0, not `:root`). No dark-mode override block needed (color is `currentColor`).
 
 Token selector:
 ```css
 :where(falcon-icon, falcon-icon-tw, falcon-angular-icon, .falcon-icon, [data-falcon-icon])
 ```
+
+> Distinct from the FONT registry: `icon.tokens.css` controls **size + color**; the **314-glyph FONT** + `@font-face` live in `libs/falcon-theme/src/styles/falcon-icons.css`. The token file does NOT enumerate glyphs.
 
 ## Related Falcon theme tokens
 
@@ -69,6 +71,25 @@ Via `size` prop:
 <falcon-angular-icon class="brand-icon" name="check" size="md" />
 ```
 
+## Tailwind utility guidance for this component
+`[CODE]` The Tailwind helper `icon-tailwind-classes.ts` (`falconIconClasses()`) returns `inline-flex items-center justify-center leading-none align-middle text-[color:var(--falcon-icon-color)]` + per-size `text-[length:var(--falcon-icon-size-{size})] w-[…] h-[…]` — **token-driven, mirrors the Shadow CSS 1:1**. Consumers override tokens, not classes.
+
+## Static style risks
+- `[CODE]` `falcon-icon.css` (72 ln) is **token-only** — `font-size`/`width`/`height` all read `--falcon-icon-size*`, `color` reads `--falcon-icon-color`. The only literals are structural (`display`, `line-height: 1`, `1em` glyph box). The `.falcon-icon` font-family chain is re-declared inside the Shadow root (necessary). Clean.
+- No `.component.css` on the wrapper → no consumer-side risk.
+
+## Token usage by state
+
+| Aspect | Token(s) consumed |
+|---|---|
+| Size (default + per-size) | `--falcon-icon-size`, `--falcon-icon-size-{xs,sm,md,lg,xl}` (driven by `size` / `data-size`) |
+| Color | `--falcon-icon-color` (defaults `currentColor` — inherits from parent text color) |
+| Hover / focus / active / disabled | _None — icon has no interactive state._ |
+
 ## Standing rule
 - Always set color on the **parent** element (uses `currentColor` inheritance) — not via inline `style`.
 - For semantic colors that change with theme/dark mode, use Falcon palette tokens (`text-falcon-red-500`, etc.) rather than hex values.
+- Size is token-driven via the `size` prop — never Tailwind `text-*` on the host.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B11) — `icon.tokens.css` recounted at 31 lines (2 categories), `:where()` scope confirmed (gate-12 OK), Shadow CSS + `-tw` helper both verified token-only and mirror-matched. Glyph FONT (314 rules) lives separately in `falcon-icons.css` — clarified.

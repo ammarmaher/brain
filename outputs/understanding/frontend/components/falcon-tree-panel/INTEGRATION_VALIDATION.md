@@ -34,9 +34,9 @@ The panel has no PES key of its own. Action availability is gated two ways:
 `[CODE]` The panel is a **controlled component** — signal-based but it owns no domain state:
 - Inputs `root`, `expandedIds`, `selectedId` are `input()` signals owned by the consumer's **page state service** (`[MEMORY]` `hierarchy-page-state.service.ts`).
 - Outputs `toggle`, `select`, `action`, `hoverPathChange` push events up; the consumer mutates its own signals.
-- `[CODE]` `:143-151` internal signals: `targetNodeId` (which row's menu is open), `openMenuNodeId` (keeps the kebab lit while the popup is open), `hoveredPathIds` (hover-path mirror down to nodes).
-- `[CODE]` `:188-201` `rootMenuItems` / `nodeMenuItems` are `computed` — `nodeMenuItems` rebuilds for the currently-targeted node, applying the `visible(node)` filter.
-- `[CODE]` `:203-221` Two reactive bridges: an `effect()` on `selectedId` → `requestAnimationFrame` re-checks chevron overlap; a `queueMicrotask` + `fromEvent('mouseover')` + `takeUntilDestroyed` re-checks overlap on hover.
+- `[CODE]` ts:154-167 internal signals (CORRECTED 2026-06-03): **`menuContext`** (`'root' | nodeId | null` — which trigger opened the single shared menu; replaces `targetNodeId`), `openMenuNodeId` + `rootMenuOpen` (keep the kebab lit while the popup is open), **`hoveredIndexPath`** (ordered hover-path mirror; replaces `hoveredPathIds`).
+- `[CODE]` ts:206-215 **`activeMenuItems`** is ONE `computed` (replaces the split `rootMenuItems`/`nodeMenuItems`) — returns `rootActions` when `menuContext === 'root'`, else the targeted node's `visible(node)`-filtered `nodeActions`.
+- `[CODE]` ts:217-236 One reactive bridge: a `queueMicrotask` wires `fromEvent('mouseover')` on `.falcon-tree` (gated to `.chevron`/`.row-action`) + `takeUntilDestroyed` to re-check chevron overlap on hover. (CORRECTED: there is NO `effect()` on `selectedId` — the prior "`effect()` → RAF scroll" claim does not match current source.)
 - Error pipeline: none — the panel has no async surface.
 
 ## Skeleton ↔ app-wrapper layering
@@ -56,4 +56,4 @@ This is the layering the Phase 1 brief specifically calls out — there are **th
 - `[CODE]` `:99-101` The panel does NOT mutate `[root].children` — pass a fresh tree on every change; mutating in place will not re-render predictably.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-tree-panel.component.ts` + `models/models.ts` (full source) + the 6 existing dossier files + `[MEMORY]` org-hierarchy Wave 14/15/Phase-1 entries. The skeleton↔wrapper layering (`<falcon-tree-panel>` library → `<app-organization-hierarchy-tree>` host-shell wrapper) is ✅ VERIFIED from the `USAGE.md` Wave 7 consumer sweep. Exact tree-fetch endpoint is `[INFERRED]` — owned by the page state service, not the panel.
+🟢 RE-VERIFIED 2026-06-03 (B24) — `falcon-tree-panel.component.ts` (381 ln) + `models/models.ts` + `directives/directives.ts` re-read in full. Internal-signal names corrected (`menuContext`/`hoveredIndexPath`/`activeMenuItems`; no `effect()`-scroll). The skeleton↔wrapper layering (`<falcon-tree-panel>` library → `<app-organization-hierarchy-tree>` host-shell wrapper, the sole live element consumer) is 🟢 VERIFIED from the consumer sweep (10 occ / 4 files). Backend wiring + PES gate remain 🔴 INFERRED — the panel has no backend surface; the page state service owns the fetch + the `visible(node)` PES filter.

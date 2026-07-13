@@ -34,7 +34,7 @@
 ## Composition recipe to reach parity
 Customization order (`feedback_falcon_custom_library_mandatory`):
 1. **Inputs** — `[items]` is an array of `FalconAccordionItem` (`{ value, label, description?, icon?, disabled? }` — each `value` unique and stable); `[mode]` (`single` = one open / collapses to zero; `multiple` = independent); `[size]` (`sm`/`md`/`lg`); `[showChevron]`; `[ariaLabel]`; `[helperText]` / `[errorMessage]`; `[disabled]` to lock the whole accordion.
-2. **Expansion state** — `[(expandedValues)]` two-way (array of open values), or `[expandedValues]` + `(valueChange)`. There is no CVA — no `formControlName` (`GAPS_AND_UPGRADES.md` P1).
+2. **Expansion state** — `[expandedValues]` + `(valueChange)` (array of open values). There is NO `expandedValuesChange` Output (so `[(expandedValues)]` banana-box does not auto-wire — bind both explicitly) and NO CVA / `formControlName` (`GAPS_AND_UPGRADES.md` A1/P1).
 3. **Panel content (slots)** — project each section body as `<div slot="content-<value>">…</div>`; the `<value>` must match an `item.value` exactly. Panels can hold any content including Falcon form controls (`formControlName` bindings stay live even while collapsed).
 4. **Per-item disable** — set `disabled: true` on a `FalconAccordionItem` to lock just that section (host-decided, often PES-driven).
 5. **Header customization** — only `label` / `description` / `icon` props; **no header slot** — rich headers (badges, action buttons) are GAP P1. Raise it; do not project into the header.
@@ -48,11 +48,11 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - `[CODE]` Expecting `mode="single"` to keep one section always open — it collapses to zero on a re-click. Use the imperative `expand()` or raise `single-locked`.
 - `[CODE]` Duplicate `item.value`s — collide in the `headerRefs` Map and corrupt keyboard focus + slot matching.
 - `[CODE]` `slot="content-<value>"` with a mismatched or wrong-typed value — silently renders an empty panel.
-- `[CODE]` Binding `[(ngModel)]` / `formControlName` to the accordion — no CVA; the binding no-ops.
+- `[CODE]` Binding `[(ngModel)]` / `formControlName` / `[(expandedValues)]` to the accordion — no CVA and no `expandedValuesChange` Output; use `[expandedValues]` + `(valueChange)`.
 - Putting a `<falcon-angular-tabs>` inside an accordion panel — overlapping focus/keyboard management (`USAGE.md`).
 - Submitting a form whose invalid control sits in a collapsed (hidden) panel — the operator cannot see the error; auto-expand the offending section first.
 - Using an accordion where the design is clearly **tabs** (mutually-exclusive views, shared content pane) — wrong component.
 - Native `<details>` group or PrimeNG `<p-accordion>` in new app code — banned (`feedback_falcon_ui_library_only_no_native`).
 
 ## Verification
-✅ VERIFIED against `[CODE]` `falcon-accordion.tsx` rendered structure + `[CODE]` `falcon-accordion.component.ts` inputs. Cross-library mapping is `[INFERRED]` — though the PrimeNG mapping is `[CODE]`/`[BRAIN-OUT]`-confirmed (this component explicitly replaced `<p-accordion>` per Wave PR-8).
+🟡 CODE-DERIVED 2026-06-03 (B13) from `[CODE]` `falcon-accordion.tsx` rendered structure + `falcon-accordion.component.ts` inputs. Binding corrected to `[expandedValues]` + `(valueChange)`. Cross-library mapping is `[INFERRED]` — the PrimeNG mapping is `[CODE]`/`[BRAIN-OUT]`-confirmed (this component explicitly replaced `<p-accordion>` per Wave PR-8).

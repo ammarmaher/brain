@@ -49,4 +49,4 @@ The icon runs **no validation** — no form control, no CVA (`[BRAIN-OUT]` API.m
 - `[CODE]` falcon-icon.tsx — no `spin`/`pulse` animation; consumers add Tailwind `animate-spin` on the host (`GAPS_AND_UPGRADES.md` P1).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-icon.tsx + falcon-icon.component.ts + the verified `falcon-icons.css` registry (~322 declarations). No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper. Registry-coupling contract ✅ VERIFIED against source.
+🟡 CODE-DERIVED 2026-06-03 (B11) from `[CODE]` falcon-icon.tsx + falcon-icon.component.ts + the verified `falcon-icons.css` registry (**exactly 314 glyph declarations**). No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper. Registry-coupling contract ✅ VERIFIED against source.

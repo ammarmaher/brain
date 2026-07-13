@@ -37,7 +37,7 @@ Light DOM `<falcon-status-badge-tw>` via the Angular wrapper.
 
 ## Status
 
-**READY** for production use. Main gap is consumer adoption (admin / management consoles hand-roll status chips today).
+**READY / ADOPTED** for production use. The prior "main gap = consumer adoption" is **resolved** — broadly composed across both consoles + shared features (16 app files / 21 + 4 lib / 5, 2026-06-03). Remaining items (FSB-03 `[ariaLabel]`, FSB-04 type-SSOT) are additive polish, not blockers.
 
 ## Dynamic capability assessment
 
@@ -52,4 +52,7 @@ Light DOM `<falcon-status-badge-tw>` via the Angular wrapper.
 9. **Safest upgrade path:** Wrapper additions are fully additive. Consumer refactor is mechanical.
 10. **Risky to change:** Severity → bucket mapping. Renaming a severity (e.g. `'locked'` → `'restricted'`) breaks every consumer typed with `FalconStatusBadgeSeverity`.
 
-**Verdict:** Mature component. Adoption is the only barrier.
+**Verdict:** Mature component, now broadly adopted. No barrier to use; FSB-03/04 are additive polish.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B10). Recommendation unchanged (READY). Adoption barrier removed (16 app / 21 + 4 lib / 5). FSB-03 (`[ariaLabel]` Shadow-only) + FSB-04 (severity union re-declared in wrapper) remain GAPs.

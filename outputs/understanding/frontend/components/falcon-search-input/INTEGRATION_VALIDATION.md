@@ -45,4 +45,4 @@ There are no `V-*` rules for this component. It is not a form field.
 - `[CODE]` `falcon-search-input.tsx:77-80` `setFocus()` is a Stencil `@Method` but is **not proxied** on the Angular wrapper (`DECISION.md` G7) — there is no programmatic focus from app code today.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-search-input.tsx` + `falcon-search-input.component.ts` + `falcon-search-input.component.html`. No-CVA, built-in-debounce, double-event-on-clear ✅ VERIFIED against source. Backend-module list 🔴 INFERRED — the component names no endpoint.
+🟢 code-verified (re-read 2026-06-03) from `[CODE]` `falcon-search-input.tsx` + `falcon-search-input-tw.tsx` + `falcon-search-input.component.ts` + `.html`. No-CVA, built-in-debounce (single `setTimeout`, cleared on keystroke + `disconnectedCallback`), double-event-on-clear, `stopPropagation` of inner events, un-proxied `setFocus()` ✅ source-verified. Backend-module list 🔴 INFERRED — the component names no endpoint and has **zero live consumers** (grep 2026-06-03).

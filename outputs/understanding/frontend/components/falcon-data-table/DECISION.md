@@ -95,9 +95,9 @@
 | ID | Priority | Why |
 |---|---|---|
 | FDT-01 multiSortChange output | **P1** | Multi-sort mode is non-functional from the consumer's view (no event surfaces) |
-| FDT-02 Projection-orchestrator specs | **P1** | Strategy E is non-trivial; regressions are likely without tests |
-| FT-01 PrimeIcon row-action button removal | **P0** | Inherited from `falcon-table` (FT-01) — `pi pi-ellipsis-v` violates Wave PR-8 |
-| FT-02/FT-03 Keyboard sort + grid nav | **P0/P1** | Inherited from `falcon-table` core — same a11y impact |
+| FDT-02 Projection-orchestrator specs | **P1** | Strategy E is non-trivial; regressions are likely without tests (no `.spec.ts` for the wrapper) |
+| ~~FT-01 PrimeIcon row-action removal~~ | **DONE 2026-06-03** | RESOLVED in the core — row-action `⋮` is `falcon-icon falcon-icon-ellipsis-v` (falcon-table.tsx:660 / falcon-table-tw.tsx:1621). No longer inherited. |
+| FT-02/FT-03 Keyboard sort + grid nav | **P0/P1** | Inherited from `falcon-table` core — still open, same a11y impact |
 | FDT-04 Implement or remove reorder/resize placeholders | **P2** | API surface confusion |
 
 ## Relationship to other components
@@ -126,9 +126,11 @@
 **READY** for production use. Heavy active deployment in both admin-console + management-console organization-hierarchy pages. The Strategy E projection orchestrator is the foundational pattern that makes Angular cell templates work over Stencil Light DOM — it's working as designed.
 
 Caveats (must fix soon):
-- Inherits the `pi pi-ellipsis-v` PrimeIcon row-action button from `falcon-table` core (P0 fix in the Stencil core).
+- ~~Inherits the `pi pi-ellipsis-v` PrimeIcon row-action button~~ — **RESOLVED 2026-06-03**: the core now uses `falcon-icon falcon-icon-ellipsis-v` (both paths). No longer a caveat.
 - `[reorderableColumns]` / `[resizableColumns]` placeholder inputs (P2 — implement or remove).
 - No `(multiSortChange)` output (P1).
+- No `[density]` input on the wrapper (the Stencil core supports it) — P1 additive.
+- Inherited a11y gaps from the core: no keyboard sort (FT-02), no Arrow/Home/End grid nav (FT-03).
 
 ## Dynamic capability assessment
 
@@ -136,8 +138,8 @@ Caveats (must fix soon):
 
 - The fact that the component renders `<falcon-table-tw>` (not `<falcon-table>` Shadow). Hardcoded — `[useTailwind]` does nothing operative.
 - The row-menu component used internally — always `<falcon-angular-menu>` with `[appendTo]="'body'"`.
-- The `[currentPageReportTemplate]` and `[paginatorTemplate]` are hardcoded in the template (lines 31-32) — consumers can't override the report text shape.
-- The row-action `⋮` icon — still `pi pi-ellipsis-v` from the Stencil core.
+- The `[currentPageReportTemplate]` and `[paginatorTemplate]` are hardcoded in the template — consumers can't override the report text shape (no wrapper inputs for them — verified 2026-06-03).
+- The row-action `⋮` icon — `falcon-icon falcon-icon-ellipsis-v` from the Stencil core (PrimeIcon removed; FT-01 resolved 2026-06-03).
 
 ### 2. What is already dynamic through inputs/outputs?
 
@@ -167,10 +169,10 @@ The full data-table token surface (19 categories, ~80 variables) PLUS inherited 
 
 ### 6. What is missing to make this component reusable across pages?
 
-- `[density]` input (Stencil core supports it; wrapper doesn't expose it).
+- `[density]` input (Stencil core supports it; wrapper doesn't expose it — still missing, verified 2026-06-03).
 - `(multiSortChange)` output.
 - A typed cell-template context helper for better TS inference.
-- A built-in empty-state composer (`[emptyState]="{ iconName, descriptionKey, actionLabelKey }"`).
+- ~~A built-in empty-state composer~~ — **DONE**: `[emptyData]: FalconEmptyDataConfig` composes `<falcon-empty-data>` natively (2026-06-03).
 - Virtual scrolling for large lists.
 
 ### 7. What capability should be added to the shared component vs per-page?
@@ -211,4 +213,7 @@ The full data-table token surface (19 categories, ~80 variables) PLUS inherited 
 - **`addEventListener` event names** — `falcon-cells-mounted`, `falcon-row-action-trigger`, `falcon-row-select`, `falcon-sort`, `falcon-lazy-load`, `falcon-global-filter-change`. Rename = break.
 - **`adaptColumns()` `align` mapping** — `'right' → 'end'`, `'left' → 'start'`. Consumers passing other values fall through unchanged. Documented in the source.
 
-**Verdict:** `<falcon-angular-data-table>` is the most production-mature wrapper in the Falcon UI core. Its main risk surface is the legacy input shapes and the inherited PrimeIcon — both well-known and solvable.
+**Verdict:** `<falcon-angular-data-table>` is the most production-mature wrapper in the Falcon UI core. Its main risk surface is now the legacy input shapes (three menu-input paths) — the previously-cited inherited PrimeIcon is RESOLVED (2026-06-03). Remaining additive gaps: `[density]`, `(multiSortChange)`, virtual scrolling, orchestrator specs.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). FT-01 inherited-PrimeIcon caveat RESOLVED across the file; `[emptyData]` native empty-state composer documented (FDT-03 closed); wrapper-grew-to-1612-LOC + 7 directives + new footer/empty/expansion inputs confirmed; `[density]` still absent on the wrapper; the shadow-row Angular-only design (Wave 22D) + `(shadowRowDeleteRequest)` rationale (Wave 21) re-confirmed against live source. READY for production.

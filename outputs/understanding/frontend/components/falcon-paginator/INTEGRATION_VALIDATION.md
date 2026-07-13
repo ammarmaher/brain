@@ -51,4 +51,4 @@ When auto-composed inside `<falcon-angular-data-table [lazy]="true">`, the table
 - `[CODE]` **`paginatorTemplate` vocabulary is a public contract** — the region tokens (`CurrentPageReport FirstPageLink …`) are PrimeNG-shaped; renaming them breaks every table that inherits the template.
 
 ## Verification
-✅ VERIFIED against `[CODE]` `falcon-paginator.tsx` + `[CODE]` `falcon-paginator.component.ts` — the existing 6 dossier files (CVA support, PR-3 wrapper gap, native atoms, methods) are accurate; no corrections needed. Backend ownership is `[MEMORY]`/`[INFERRED]` — the component itself is verified presentational.
+✅ RE-VERIFIED 2026-06-03 (B09) against `[CODE]` `falcon-paginator.tsx` + `[CODE]` `falcon-paginator.component.ts` — CVA support, PR-3 wrapper gap (FP-01), native atoms (FP-03), un-proxied methods (FP-05) all re-confirmed accurate. NEW this pass: `falcon-rows-change` is NOT re-emitted by the wrapper; `rowsPerPageDropdownAppendTo` is `-tw`-only (FP-06). Backend ownership `[MEMORY]`/`[INFERRED]` — the component is verified presentational. Sole wrapper consumer = `falcon-custom-table-footer`.

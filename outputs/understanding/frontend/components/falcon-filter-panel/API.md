@@ -38,7 +38,7 @@
 - `falconFilterApply` — apply
 - `falconFilterClearAll` — clear all
 
-> NOTE — these Stencil event names are camelCase (`falconFilterChange`) not kebab-case like the rest of the library. The Angular wrapper bridges them via `(falconFilterChange)` template bindings — see `falcon-filter-panel.component.html` (not read but inferred from handler patterns).
+> NOTE — these Stencil event names are camelCase (`falconFilterChange`/`falconFilterApply`/`falconFilterClearAll`), NOT kebab-case (`falcon-change`) like the rest of the library (FFP-03). `[CODE]` The Angular wrapper bridges them via `(falconFilterChange)`/`(falconFilterApply)`/`(falconFilterClearAll)` template bindings on both branches — CONFIRMED at `falcon-filter-panel.component.html:17-19/30-32` (read 2026-06-03). The wrapper's `handleChange`/`handleApply`/`handleClearAll` re-emit them as `(filterChange)`/`(filterApply)`/`(filterClearAll)`.
 
 ## TypeScript types
 
@@ -83,6 +83,11 @@ NO — the panel has no single value, it's a panel of fields with a per-field-ev
 
 ## Accessibility
 
-- Each field has `<label for="ffp-{key}">` and `aria-label={filter.label}`.
-- The component does NOT set `role="search"` or `role="form"` on the container — should it? **P3.**
-- Apply / Clear All — should be `<falcon-angular-button>` for keyboard + screen-reader parity. Today they're native `<button>` (Stencil reference).
+- `[CODE]` Each field has `<label for="ffp-{key}">` (Shadow) / `for="ffptw-{key}"` (Light) and `aria-label={filter.label}` (`[CODE]` falcon-filter-panel.tsx:79/99 + tw.tsx:90/110).
+- `[CODE]` **CORRECTION (B12):** the container DOES set `role="search"` + `aria-label="Filters"` on **BOTH** variants — Shadow `falcon-filter-panel.tsx:159` and Light `falcon-filter-panel-tw.tsx:172-173`. The prior dossier's "does NOT set `role`" is **stale** — the role gap is closed on both tags.
+- `[CODE]` `daterange` renders two date inputs with `aria-label={label} from` / `{label} to` (`[CODE]` tsx:121/129).
+- `[CODE]` Apply / Clear All buttons have `aria-label` + `:focus-visible` outline, but are **native `<button>`** (Stencil-rendered), not `<falcon-angular-button>` — keyboard/screen-reader-OK but visually off-brand (FFP-01). Each select option, the placeholder "All {label}" `<option value="">`, is present.
+- `[CODE]` No Apply-on-Enter — there is no `keydown` handler (FFP-05).
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh) against falcon-filter-panel.tsx (192 ln), falcon-filter-panel-tw.tsx (205 ln), .component.ts (73 ln), .component.html (34 ln), .types.ts (28 ln). Corrected: `role="search"`+`aria-label="Filters"` set on BOTH variants (prior "no role" was stale); wrapper event-bridge confirmed at html:17-19/30-32; camelCase event names confirmed (FFP-03). Inputs/outputs/types tables re-confirmed accurate.

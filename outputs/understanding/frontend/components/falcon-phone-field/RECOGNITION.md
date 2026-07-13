@@ -50,4 +50,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Native `intl-tel-input` / `ngx-intl-tel-input` in app code — banned; both were removed from the platform.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-phone-field.tsx` render tree + `falcon-phone-field.component.ts`. Cross-library mappings 🔴 INFERRED from standard library APIs.
+🟢 code-verified (2026-06-03) from `falcon-phone-field.tsx` (Shadow inline panel `:404-478`) + `falcon-phone-field-tw.tsx` (body-portaled panel `:515-577`) render trees. Cross-library mappings 🔴 INFERRED from standard library APIs. The 25-country default + chooser/dial/input/verify segments + searchable panel ✅ VERIFIED against source. (Line refs in the body below were checked against the current Shadow tsx and remain accurate.)

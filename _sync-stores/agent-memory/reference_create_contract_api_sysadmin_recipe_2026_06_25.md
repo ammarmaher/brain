@@ -1,0 +1,28 @@
+---
+name: reference_create_contract_api_sysadmin_recipe_2026_06_25
+description: "Repeatable recipe to create Falcon contracts via backend API as sysadmin, with the two latent Commerce gotchas (contractId same-second collision + createdBy never stamped)."
+metadata: 
+  node_type: memory
+  type: reference
+  originSessionId: 4588b976-1891-4dd7-9f62-67b22277d855
+---
+
+Runtime recipe (verified 2026-06-25 on the local Docker stack) to create contracts via the Commerce API authenticated as the **sysadmin** Falcon user, plus two confirmed latent Commerce defects.
+
+**Auth (token):** `POST http://localhost:7777/api/auth/login` `{"username":"sysadmin","password":"Admin@1234"}` → `result.tokens.accessToken`. Single-step because sysadmin is Active + Dev `OtpRequiredOnLogin:false`. Token is a Zitadel JWT (~30 min TTL); `user-id`/`user-type` ride in the `urn:zitadel:iam:user:metadata` object (base64): user-id→`6a085915164fb80e0b9df8a3` (sysadmin Mongo `_id`), user-type→`1` (Falcon). Default test pwd = `Admin@1234` (seed `FALCON_TEST_PASSWORD`).
+
+**Create endpoint:** `POST http://localhost:7045/api/Contracts` (Commerce, `[Authorize]` + policy `RequireClaim("user-type","1","Falcon")`). A Falcon user bypasses `CreateContractHandler.ValidateCurrentUser` (that tenant-match guard only fires for `UserType==Client`), so sysadmin can create for any account.
+
+**Required payload gates** (`CreateContractRequest` + `Contract.Create`/`Validate`): `AccountId` must be the tenant's **Main node** (`type==1`); contract **`Currency` must equal the account's wallet currency** (else `InvalidContractConfiguration`); `CommittedValue>0`; `StartDate<EndDate` (normalized Riyadh); **≥1 rate**, each rate's `ApplicationId`+`ChannelId` must exist in the global `Applications`/`CommunicationChannels` catalogs; no duplicate rate key `app|channel|priority|destination|unit`. Optional: Quotas/OverageRates/UnitConversions (own validators). Created status = **Pending(1)**; a Hangfire `contract-lifecycle-worker` flips it to Active when the window opens.
+
+**Test Tenant 001 facts:** AccountId/Main-node `_id` = `000000000000000000a11001`; wallet `currency:1 (SAR)`, walletType:2. Catalog ids: apps BasicSendApp `695a304f901bb7d4a830d0dc`, SurveyPro `…0dd`, CampaignEngine `…0e1`, AnalyticsSuite `…101`; channels WhatsApp `…0e2`, Voice `…0de`, SMS `…110`, EmailRelay `…111`. Mongo: `mongodb://root:example@localhost:27017/FalconCommerceDB?authSource=admin&replicaSet=rs0`.
+
+**GOTCHA 1 — contractId same-second collision:** `Contract.Create` sets `contractId = "CTR-" + ObjectId.GenerateNewId().ToString()[..8]` = the 4-byte ObjectId **timestamp (seconds)**. Two creates in the same wall-clock second produce the SAME contractId → 409 `DuplicateValue` on unique index `contract_id_unique_idx`. Workaround: space inserts >1s. (Real concurrency bug.)
+
+**GOTCHA 2 — createdBy never stamped:** `ZitadelClaimsTransformation` decodes `user-type`/`tenant-id`/`node-id` from metadata into flat claims but NOT `user-id`; `SessionProvider.UserId` reads a flat `user-id` claim → always null → `Contract.CreatedBy` null for **every** contract (all 14 in DB null). To attribute authorship I patched `createdBy='6a085915164fb80e0b9df8a3'` in Mongo. Likely affects every Commerce write that relies on `ICurrentUser.UserId`.
+
+**GOTCHA 3 — a contract can ONLY price services VISIBLE on the node, or its rate matrix renders EMPTY in the UI and edit-save can't round-trip it.** The create/PUT handlers validate `ApplicationId`/`ChannelId` against the GLOBAL catalog only, so a contract can be persisted pricing a hidden service — but the FE builds the rate matrix from the node's VISIBLE services: `getApplicationOptions()` keeps strict `visibility===true` (admin/system-gw returns full catalog, FE filters), channels use server `GET commerce/Node/{id}/comm-channels/visible` (`.Where(c=>c.Visibility)`). Comment in `contracts-api.service.ts`: "A contract can't price a service hidden from the account." Symptom: details look "not filled" + edit drops the hidden-service rows (→ possibly 0 rates → `InvalidContractConfiguration`). FIX for TT001 2026-06-25: 2 priced services were hidden (Basic Send App `…d0dc` app + WhatsApp `…d0e2` channel) → set `visibility=true,status=1` directly in `Nodes.applications[]/commChannels[]` (embedded id field is `_id` STRING, not `id`; API maps `_id`→`id`). Verified through the gateway (:7256) that both now appear in the FE option endpoints + the WhatsApp contract PUT round-trips 200. Node-service change is live (read from Mongo per-request; NO container redeploy needed — gateway `commerce-cluster→http://commerce:8080`=falcon-commerce-1→`mongo`). Chrome ext was NOT connected so pixel render unverified; data path proven end-to-end.
+
+**TT001 (a11001) CURRENT visible catalog (set 2026-06-25 per user, supersedes earlier):** apps = ONLY **Basic Send App** (`…d0dc`); channels = ONLY **WhatsApp** (`…d0e2`), **AI** (`…d0e3`), **Voice** (`…d0de`). All other apps (Survey Pro/Campaign Engine/Workflow Builder/Analytics Suite/Form Builder/Reporting Hub/AI Assistant) + channels (SMS/Email Relay/Push/RCS/Telegram) set `visibility=false` (hidden, not deleted — Falcon-native; reversible). Mechanism = `Nodes.applications[]/commChannels[]` `visibility` flag, arrayFilters on `_id` (string). User chose to LEAVE the 3 earlier contracts unchanged even though they now price hidden services (C1→SMS, C2→Campaign Engine/Survey Pro, C3→Analytics Suite/Email Relay) → they render partial/empty by design (GOTCHA 3).
+
+Related: [[project_contract_wizard_dropdown_visibility_2026_06_21]], [[project_contract_view_dropdowns_enabled_catalog_apis_2026_06_22]], [[reference_user_delete_mechanism_status_transition]], [[project_backend_flip_to_main_deploy_2026_06_25]].

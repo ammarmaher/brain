@@ -2,7 +2,7 @@
 
 ## Brain SK final recommendation
 
-**STATUS: READY for typical OTP flows. NEEDS-UPGRADE for resend cooldown (G4) — very common ask.**
+**STATUS: READY for typical OTP flows (default `useTailwind=true`). NEEDS-UPGRADE for resend cooldown (G4 — very common ask) + the partial double-emit guard (G9). NOTE: zero live consumers today — maintained-but-unused.**
 
 ## Use this component for
 
@@ -45,9 +45,10 @@ P1: G4 (resend cooldown).
 - No resend cooldown.
 
 ### 2. Dynamic via inputs/outputs?
-- 17 inputs.
-- 7 outputs.
-- No CVA (not a form control).
+- `[CODE]` **17 inputs** (falcon-otp-send-dialog.component.ts:42-60).
+- `[CODE]` **7 outputs** (5 renamed kebab-alias intents + `openChange` + `stepChange`, ts:62-70). `stepChange` is declared but **never emitted** (G10).
+- No CVA (it is an orchestrator, not a value control).
+- `[CODE]` 3 Stencil `@Method`s (`advanceToCodeStep`/`markVerificationError`/`resetToChannelStep`) — NOT proxied on the wrapper (G1).
 
 ### 3. Slots/templates?
 - None.
@@ -79,3 +80,8 @@ P1: G4 (resend cooldown).
 ### 10. Risky?
 - Changing default copy — silent display break for consumers relying on defaults.
 - Step transition timing — visual regressions easy.
+- The `falcon-send`/`falcon-verify`/`falcon-resend` event contract — consumers bind these; renaming or changing the detail shape breaks flows. (And the partial double-emit guard, G9, means fixing it could change how many times a host listener fires — coordinate.)
+- The Shadow↔`-tw` channel-change wiring (G11) — aligning the two paths changes which click sources fire `falcon-channel-change`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B07). Recommendation: READY (default `-tw`) / NEEDS-UPGRADE for resend cooldown + double-emit guard. 17 inputs / 7 outputs (`stepChange` dead) / 3 un-proxied Stencil methods confirmed. Render-path + event-contract change-risks noted.

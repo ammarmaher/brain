@@ -1,55 +1,55 @@
 # falcon-confirm-dialog — Recognition Layer
 
-> Cross-cutting layer. Purpose: given an external design / screenshot / React or Angular snippet, identify `<falcon-angular-confirm-dialog>` as the component to use, and how to compose it to parity.
+> Given an external design / screenshot / React or Angular snippet that looks like a small confirm prompt, decide what to use. **Spoiler: not this component** — it is dormant. Route to `FalconConfirmService` (popup) or `<falcon-angular-alert-dialog>`.
 
-## Visual fingerprint
-`[CODE]` `falcon-confirm-dialog.tsx:97-144` — a **small, compact modal** (`size` default `sm` ≈ 420px wide, `[CODE]` `API.md:67`):
-- A standard dialog header with a **heading** (`title`) — left-aligned, not centered.
-- A body region (`falcon-confirm-body`) holding an **optional small left-aligned icon** (`falcon-confirm-icon`, ~32px `[CODE]` `TOKENS.md:57`) followed by a **one-line message** `[CODE]` `:113-118`.
-- An optional consumer-projected `<slot>` below the message for extra context (a date picker, an inline note) `[CODE]` `:119`.
-- A **2-button footer** — Reject button rendered FIRST, Accept SECOND `[CODE]` `:124-139` — raw `<button>`s, not the design-system button.
-- Backdrop + close-X (`closable` default `true` `[CODE]` `falcon-confirm-dialog.tsx:54`), focus-trap inherited from `falcon-dialog`.
+## Visual fingerprint (as-designed)
 
-The fingerprint vs siblings: *small, left-aligned icon, one-line message, custom verbs*. If the design is icon-first / centered / heavy-title, that is `falcon-alert-dialog`. If it matches error/delete/unsaved/save exactly, that is `falcon-popup`.
+`[CODE]` falcon-confirm-dialog.tsx:97-144 — a **small, compact modal** (`size` default `sm`):
+- A standard dialog header with a **heading** (left-aligned).
+- A body region (`falcon-confirm-body`, centered) holding an **optional icon** (`falcon-confirm-icon`, ~32px, centered via `align-items: center`) above/beside a **short message** (`[CODE]` css:10-28).
+- An optional default `<slot>` below the message for extra context.
+- A **2-button footer** — Reject FIRST, Accept SECOND (`[CODE]` tsx:124-139) — raw `<button>`s.
+- Backdrop + close-X + focus-trap inherited from `<falcon-dialog>`.
+
+> ⚠️ **You will never see this fingerprint in the live app** — the component does not render anywhere. If you see a small confirm modal in Falcon today, it is `<falcon-angular-popup variant="error">` (driven by `FalconConfirmService`) or `<falcon-angular-alert-dialog>`.
 
 ## Cross-library equivalents
+
 | Library | Their component | Parity notes |
 |---|---|---|
-| MUI | `<Dialog>` + `<DialogActions>` with two `<Button>`s | MUI's basic confirm dialog with custom action labels — confirm-dialog is the Falcon preset for it |
-| PrimeNG | `<p-confirmDialog>` / `confirmationService.confirm()` | direct 1:1 — `OVERVIEW.md:22` confirm-dialog replaces `<p-confirmDialog>` |
-| Ant Design | `Modal.confirm({ okText, cancelText })` | the static `Modal.confirm` with custom `okText`/`cancelText` — conceptual match |
-| Bootstrap | `.modal` with `.modal-footer` two buttons | upgrade target — no severity preset |
-| shadcn / Radix | `<AlertDialog>` with `<AlertDialogAction>` + `<AlertDialogCancel>` | Radix AlertDialog with custom action text — the non-icon-led confirm variant |
-| plain HTML | `window.confirm()` | replace — confirm-dialog is the styled, label-customisable answer |
+| MUI | `<Dialog>` + `<DialogActions>` with two `<Button>`s | Basic confirm with custom action labels. In Falcon → use `FalconConfirmService.confirm()`. |
+| PrimeNG | `<p-confirmDialog>` / `confirmationService.confirm()` | The confirm-dialog was meant to replace this — but the LIVE Falcon analogue of `confirmationService.confirm()` is `FalconConfirmService.confirm()` (Observable instead of callback options). |
+| Ant Design | `Modal.confirm({ okText, cancelText })` | Imperative confirm → `FalconConfirmService.confirm()`. |
+| Bootstrap | `.modal` + `.modal-footer` two buttons | Replace with `FalconConfirmService` or `<falcon-angular-alert-dialog>`. |
+| shadcn / Radix | `<AlertDialog>` + `<AlertDialogAction>` / `<AlertDialogCancel>` | The icon-led variant maps to `<falcon-angular-alert-dialog>`; the plain variant to the popup. |
+| plain HTML | `window.confirm()` | **Banned.** `[CODE]` contact-groups replaced `window.confirm` with `FalconConfirmService` (Wave 15). |
 
 ## Use THIS vs siblings
-| If the design shows… | Use | Not |
+
+| If the design shows… | Use | NOT |
 |---|---|---|
-| small modal, one-line message, custom verbs (Approve/Reject, Continue/Go-back) | `<falcon-angular-confirm-dialog>` | — |
-| centered big icon + title + subtitle + body, a high-stakes "are you sure?" | `<falcon-angular-alert-dialog>` | confirm-dialog |
-| one of the 4 canonical flows: error / delete / unsaved / save | `<falcon-angular-popup>` | confirm-dialog |
-| a form, multi-field editing, custom header/footer layout | `<falcon-angular-dialog>` (primitive) | confirm-dialog |
-| a transient "Done" message after the action | `<falcon-angular-notification>` / toast | confirm-dialog |
-| replace the footer with three or more buttons | `<falcon-angular-dialog>` | confirm-dialog (footer is fixed at 2) |
+| small modal, one-line message, custom verbs (imperative "are you sure?") | **`FalconConfirmService.confirm()`** (renders `<falcon-angular-popup variant="error">`) | this dormant confirm-dialog |
+| centered big icon + title + subtitle + body, a high-stakes acknowledgement | `<falcon-angular-alert-dialog>` | confirm-dialog |
+| one of the 4 canonical flows: error / delete / unsaved / save | `<falcon-angular-popup>` (right variant) | confirm-dialog |
+| a form / multi-field editing / custom header+footer | `<falcon-angular-dialog>` (primitive) | confirm-dialog |
+| a transient "Done" after the action | toast / `<falcon-angular-notification>` | confirm-dialog |
 
 ## Composition recipe to reach parity
-Customization order (per `[VAULT]` `feedback_falcon_custom_library_mandatory`): inputs → templates → slots → variants → token override → shared upgrade → wrapper → GAP.
-1. **Inputs** — `[(open)]`, `[title]`, `[message]`, `[severity]` (`info`/`success`/`warning`/`danger`), `[acceptLabel]`, `[rejectLabel]`, `[size]`, `[position]`, `[closable]`, `[closeOnBackdrop]`, `[closeOnEsc]` `[CODE]` `API.md:15-32`. Pass `acceptLabel`/`rejectLabel` explicitly — the `OK`/`Cancel` defaults are deliberately generic.
-2. **Icon** — `[icon]="'falcon-icon falcon-icon-trash'"` — a CSS class string, NOT an `<svg>` `[CODE]` `USAGE.md:82`.
-3. **Body slot** — project extra context (date picker, inline notes) into the default unnamed slot below the message `[CODE]` `API.md:54-58`. The footer is NOT projectable.
-4. **Variant / severity** — `severity` is the only "variant" knob; it drives the accent. `[INFERRED]` verify the danger accent reaches the Accept button (`GAPS_AND_UPGRADES.md:79-81` flags it unverified).
-5. **Token override** — `rootClass="my-confirm"` + a CSS class declaring `--falcon-confirm-dialog-*` tokens `[CODE]` `USAGE.md:61-76`; the token selector also cascades through the composed dialog `[CODE]` `TOKENS.md:11-17`.
-6. **Render path** — `[useTailwind]=true` (default, Light DOM) for Tailwind-v4 apps; `false` for Shadow-DOM isolation.
-7. **GAP** — `loading` / `acceptDisabled` busy state, a tertiary button, `<falcon-angular-button>`-composed footer, and `<falcon-angular-icon>` are NOT available `[CODE]` `GAPS_AND_UPGRADES.md:3-52`. The component is under-leveraged — `DECISION.md:123-124` recommends landing the structural fixes before wider adoption. Raise an upgrade; do not hand-roll.
+
+**Do not reach for this component.** The customization order (`[VAULT]` `feedback_falcon_custom_library_mandatory`: inputs → templates → slots → variants → token → shared upgrade → wrapper → GAP) resolves at step 1 for confirms:
+
+1. **Inputs** — call `this.confirm.confirm({ title, body, confirmLabel?, cancelLabel?, severity?, hideCancel? }).subscribe(accepted => …)` (`[CODE]` falcon-confirm.service.ts:30-41, 65). That IS the confirm primitive.
+2. If you need an **icon-led / subtitle / acknowledgement** look → `<falcon-angular-alert-dialog>` (B-substrate).
+3. If the dormant confirm-dialog itself is genuinely required (it is not, today) → that is GAP G1 (delete-or-revive); raise it, do not uncomment ad-hoc.
 
 ## Anti-patterns
-- Using confirm-dialog for the 4 canonical flows — `[CODE]` `USAGE.md:79`; a delete confirm belongs in `falcon-popup` (`variant="delete"`).
-- Expecting to **project replacement footer buttons** — `[CODE]` `USAGE.md:80` the accept/reject buttons are hardcoded raw `<button>`s.
-- Treating backdrop / Esc dismissal as distinct from rejection — `[CODE]` `USAGE.md:81` all dismissal paths fire the SAME `(reject)` event.
-- Passing an `<svg>` to `[icon]` — `[CODE]` `USAGE.md:82` it is a CSS class string.
-- Binding `[heading]` on the Angular wrapper — `[CODE]` `API.md:74` the wrapper exposes `[title]`; `heading` is the Stencil-layer prop.
-- Binding `onFalconClose` on the Stencil tag — `[CODE]` `API.md:73` the correct event is `onFalcon-close`.
-- Relying on an async-accept spinner — `[CODE]` `GAPS_AND_UPGRADES.md:20-29` there is no `loading` input; manage progress externally.
+
+- **Reviving / uncommenting this wrapper to use it** — `[CODE]` index.ts ships `export {}`; the platform confirm path is `FalconConfirmService`. Do not re-introduce a third confirm surface (GAP G1/G2).
+- Using `window.confirm()` — banned; replaced by `FalconConfirmService` (`[CODE]` contact-groups-list.component.ts:379).
+- Using confirm-dialog for the 4 canonical flows — `<falcon-popup>` carries the right copy + icon.
+- Expecting to project replacement footer buttons — the accept/reject pair is hardcoded.
+- Treating backdrop / Esc dismissal as distinct from rejection — all dismissals fire reject (the live service mirrors this: `false`).
+- Passing an `<svg>` to `[icon]` — it is a CSS class string.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-confirm-dialog.tsx` + the 6 UI dossier files. Cross-library map is `[INFERRED]` from each library's documented confirmation primitive. Composition recipe ✅ VERIFIED against `API.md` + `USAGE.md` + `TOKENS.md`.
+🟡 CODE-DERIVED 2026-06-03 (B15) from `falcon-confirm-dialog.tsx` + the live `FalconConfirmService`/modal-adapter source. Routing table re-pointed to the LIVE surfaces (popup via service / alert-dialog) since the confirm-dialog is dormant. Cross-library map `[INFERRED]` from each library's documented confirm primitive.

@@ -22,8 +22,7 @@
 ## Business flows using this component
 | Flow | Page | Role of the component |
 |---|---|---|
-| `[CODE]` `playground.page.html` (consumer grep, `USAGE.md` Wave 7) | host-shell playground | Component demo — the only consumer. |
-| `[BRAIN-OUT]` `OVERVIEW.md` — "Zero matches in apps/" / Wave 7 — "1 consumer" | — | The accordion is **production-ready but under-leveraged**: exported, demoed, not adopted by any real business flow. |
+| `[CODE]` **none** (Consumer Sweep 2026-06-03 → 0 app + 0 lib consumers) | — | The accordion is **production-ready but UNADOPTED**: exported + demoed in the showcase, not wired into any real business flow. (The prior dossier's `playground.page.html` consumer is stale — that route is gone.) |
 | `[INFERRED]` Candidate: settings groups, FAQ sections, multi-group forms | admin-console / management-console settings | The intended business homes — none wired yet. |
 
 ## Business gotchas
@@ -33,4 +32,4 @@
 - `[INFERRED]` **Not a substitute for tabs** — if the business UX is "switch between mutually-exclusive views", that is `<falcon-angular-tabs>`; the accordion keeps section *content inline*, stacked.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-accordion.tsx` + `[CODE]` `falcon-accordion.component.ts` + existing 6 dossier files. The component carrying no baked-in business rule is `[INFERRED]` from full source read. Under-leveraged status is `[BRAIN-OUT]`-confirmed.
+🟡 CODE-DERIVED 2026-06-03 (B13) from `[CODE]` `falcon-accordion.tsx` + `falcon-accordion.component.ts`. The component carrying no baked-in business rule is `[INFERRED]` from full source read. UNADOPTED status re-confirmed by the B13 Consumer Sweep (0 consumers; prior `playground.page.html` reference retired).

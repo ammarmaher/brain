@@ -70,13 +70,13 @@ None. The component is production-quality for the majority of form needs today. 
 
 ### 2. What is already dynamic through inputs/outputs?
 
-- 27 wrapper `@Input`s — every behavior + visual axis (type / size / state / variant / appearance / borderless / shadowless / flat / noFocusRing / readonly / required / clearable / etc.).
-- 5 outputs (`falcon-input`, `falcon-change`, `falcon-clear`, `falcon-blur`, plus `falcon-focus` via raw Stencil tag).
-- Full CVA support: `writeValue`, `registerOnChange`, `registerOnTouched`, `setDisabledState`.
+- `[CODE]` **30 wrapper `@Input`s** (2026-06-03 recount) — every behavior + visual axis (label / placeholder / helperText / errorMessage / type / size / state / variant / appearance / readonly / required / clearable / name / inputId / autocomplete / maxlength / minlength / borderless / shadowless / flat / noFocusRing / useTailwind / wrapperClass / inputClass / labelClass / iconLeft / iconRight / inputMode / disabled-setter).
+- `[CODE]` **One Angular `@Output`: `(blur)`** (void). Three Stencil events are bound internally and routed through CVA (`falcon-input` / `falcon-change` / `falcon-clear` → `handleInput`); `falcon-focus` is emitted by the tags but NOT bound (G4). (The prior dossier's "5 outputs incl. `falcon-focus`/`falconFocus`" was inaccurate — the wrapper exposes only `(blur)`.)
+- Full CVA support: `writeValue` (+ `componentOnReady` push), `registerOnChange`, `registerOnTouched`, `setDisabledState`.
 
 ### 3. What is already dynamic through slots / ng-template?
 
-- Shadow path: `slot="prefix"` + `slot="suffix"` via `<ng-content select="[slot=prefix]">`. Tailwind path: NONE (G1).
+- `[CODE]` Tailwind path: `slot="icon-left"` + `slot="icon-right"` (added 2026-05-17). Shadow path: those PLUS `slot="prefix"` + `slot="suffix"`. So Tailwind lacks only `prefix`/`suffix` now (G1, downgraded).
 - No `ng-template` inputs.
 
 ### 4. What is dynamic through token/theme overrides?
@@ -109,11 +109,11 @@ None. The component is production-quality for the majority of form needs today. 
 
 ### 8. What flags / options / templates / slots would make it better?
 
-- `@Input() prefixIcon?: string` + `@Input() suffixIcon?: string` (icon name from vendored Falcon icon font).
+- `@Input() prefixIcon?: string` + `@Input() suffixIcon?: string` (icon name from vendored Falcon icon font — convenience over the existing `iconLeft`/`iconRight` slot toggles).
 - `@Input() mask?: string` for masked input.
 - `@Input() loading?: boolean` to show a token-driven spinner in the suffix slot.
-- `@Output() falconFocus` Angular wrapper event.
-- Async method proxies: `setFocus()`, `clear()`.
+- `@Output() falconFocus` Angular wrapper event (does NOT exist today — G4).
+- Async method proxies: `setFocus()`, `clear()` (the Stencil `@Method`s exist; the wrapper does not proxy them — G2).
 
 ### 9. What is the safest upgrade path?
 
@@ -131,3 +131,6 @@ All phases are additive — no consumer break.
 - The four reflected Shadow-only attrs (`borderless` / `shadowless` / `flat` / `noFocusRing`) — any CSS in the Studio depending on `:host([borderless])` would need updating.
 - `<falcon-form-field>` legacy nesting pattern — existing wizards use this. Do NOT remove `<falcon-form-field>` support before migrating wizards.
 - The default `useTailwind=true` switch — flipping it would change DOM structure (Light DOM ↔ Shadow DOM) and break tests.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B01); RE-VERIFIED 2026-06-03 (W1-a). Recommendation unchanged (READY / flagship). Counts re-confirmed: 30 wrapper `@Input`s, 1 `@Output` (`blur`); `falconFocus`/`setFocus`/`clear` method-proxies remain GAPs. W1-a verdict: PASS.

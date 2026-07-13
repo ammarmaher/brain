@@ -6,9 +6,9 @@
 A horizontal **pill-shaped track** that changes background color between off (neutral grey) and on (teal), with an optional **label** to the trailing side. Three coexisting variants:
 - **`dot-knob`** (default) — a round **knob** that slides from the leading edge (off) to the trailing edge (on); the track recolors as it slides.
 - **`hidden-input`** — a flat **knobless pill**; only the track color signals state.
-- **`channel-pill`** — the track shows **two text labels** (`textOn` / `textOff`) inside it, one on each side; the active side is highlighted.
+- **`channel-pill`** — a **bordered pill** (1.5px border, 100px radius, 44×22) with a small dot whose fill flips on toggle; tinted teal when on, neutral outline when off.
 
-Plus: an optional `*` required asterisk on the label, a teal focus halo ring, error/success/warning state coloring, helper text below. In RTL the knob slides toward the opposite direction and `channel-pill` text order flips. Track + knob sizes scale with `size` (sm / md / lg).
+Optional inner text labels (`textOn` / `textOff`) can appear inside the track of **any** variant when set — the "on" word shows when checked, the "off" word when unchecked (cross-faded by opacity). Plus: an optional `*` required asterisk on the label, a teal focus halo ring, error coloring, helper text below. In RTL the knob slides toward the opposite direction and the inner-label order flips. NOTE: track/knob geometry is per-VARIANT; `size` (sm/md/lg) currently rescales the **label font only**, not the switch (GAPS G8).
 
 ## Cross-library equivalents
 | Library | Their component | Parity notes |
@@ -33,9 +33,9 @@ Plus: an optional `*` required asterisk on the label, a teal focus halo ring, er
 ## Composition recipe to reach parity
 Customization order (`feedback_falcon_custom_library_mandatory`): inputs → templates → slots → variants → token override → shared upgrade → wrapper → GAP.
 1. **Inputs** — `[label]`, `[(ngModel)]` / `formControlName` (CVA), `[size]`, `[state]`, `[helperText]`, `[errorText]`, `[required]`.
-2. **Variant** — pick `variant`: `dot-knob` (default feature toggle), `hidden-input` (compact dense rows), `channel-pill` (when the state needs words). For `channel-pill` also set `[textOn]` / `[textOff]`.
-3. **Slot** — for a rich label, project content via `<ng-content>` instead of `[label]`.
-4. **Parent-driven variant** — use `[checkedInput]` when a parent slice / table row owns the value (backend-confirmed toggles); never combine with CVA.
+2. **Variant** — pick `variant`: `dot-knob` (default feature toggle), `hidden-input` (compact dense rows), `channel-pill` (bordered pill). To show the state in words, set `[textOn]` / `[textOff]` — they work in ANY variant.
+3. **Slot** — there is NO label slot (the wrapper renders `[label]` text only — GAPS G2); compose a rich label outside the component.
+4. **Parent-driven** — use `[checkedInput]` when a parent slice / table row owns the value (backend-confirmed toggles); use `[disabled]` (the setter input) for parent-driven disable; never combine `[checkedInput]` with CVA.
 5. **Token override** — restyle track / knob colors and sizes via `switch.tokens.css` vars (`--falcon-switch-track-bg-on`, `--falcon-switch-knob-bg`, etc.); never hardcode hex/px.
 6. **Shared upgrade** — a `loading` state (G3), `description` sub-label (G2), `errorMessage` alias (G1), or in-knob icon (G6) is a GAP (`GAPS_AND_UPGRADES.md`) — raise it, do not hand-roll.
 7. **Wrapper** — for new pages always use `<falcon-angular-switch>` (the Angular wrapper), never the raw Stencil tag.
@@ -43,11 +43,11 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 ## Anti-patterns
 - Native checkbox styled as a toggle, or PrimeNG `<p-inputSwitch>` in app code — banned (`feedback_falcon_ui_library_only_no_native`).
 - Both `[(ngModel)]` and `[checkedInput]` on one instance — they fight (`USAGE.md:79`).
-- `textOn`/`textOff` on `dot-knob` or `hidden-input` — silent no-op (`USAGE.md:78`).
+- Assuming `textOn`/`textOff` only work on `channel-pill` — they render in ANY variant (CORRECTED 2026-06-03).
 - Treating a switch as instantly committed when the backend can reject it — gate `[disabled]` during the call and reconcile with the confirmed state.
 - Using a switch for a required form acceptance ("I agree") — that is a checkbox (`USAGE.md:85`).
 - Modelling a choice between two *named things* as a `channel-pill` switch — that is a radio/dropdown decision; the pill labels describe a *state*, not options.
 - Expecting tri-state — switch is strictly boolean by design (`GAPS_AND_UPGRADES.md:25`).
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` `falcon-switch.tsx` / `switch.tokens.css`. Cross-library mapping is `[INFERRED]` from standard component parity.
+🟢 RE-VERIFIED 2026-06-03 (B06) — CODE-DERIVED from falcon-switch.tsx + falcon-switch-tw.tsx + switch.tokens.css. CORRECTED: channel-pill is a bordered pill (not "two text labels each side"); `textOn`/`textOff` render in any variant; no label slot exists; `size`=label-font-only (G8). Cross-library mapping `[INFERRED]` from standard parity.

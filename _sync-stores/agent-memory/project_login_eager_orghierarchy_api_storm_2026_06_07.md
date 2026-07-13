@@ -1,0 +1,33 @@
+---
+name: project_login_eager_orghierarchy_api_storm_2026_06_07
+description: "Root cause — on login the org-hierarchy page eagerly fires Settings + Information + PES + country/city APIs for tabs/panels the user never opened, with duplicate/cancelled requests from multi-fire node selection."
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: f7ace426-0a58-4e34-976e-fbf1dcf92515
+---
+
+**"After login it calls a lot of APIs I'm not used to, and I'm not landing on the page that uses this API" — ROOT-CAUSED + FIXED (claude, 2026-06-07, FE-only, NO commits).**
+
+**FIX APPLIED** (both consoles, 4 files): (1) `InfoPanelStateSlice` ctor effect now gates `reloadFor` on `tree.infoOpen()` (+ client node + truthy id) → GET information / country / city fire ONLY when the Information panel is actually opened. (2) `SettingsTabStateSlice` now `inject(UsersStateSlice)` + gates on `activeClientTab()==='settings'` → GET setting fires ONLY when the Settings tab is active. (3) BOTH effects now TRACK the primitive `effectiveNodeId` and read the node object via `untracked(() => tree.selectedNode())` → the tree's object-identity churn no longer re-fires them → kills the duplicate + `(canceled)` requests. **NO caching added** — services (`SettingsService`/`InformationService`/`LookupService`) are stateless HTTP (no shareReplay/memo), GETs carry `Cache-Control: no-cache` (auth.service.ts:285); each surface re-fetches fresh on open. Only the pre-existing PES `AccessControlFacade` decision store remains (session-scoped, intentional, REDUCES calls — left as-is). Net: on login (lands on org-hierarchy tree view via auth_redirect) NONE of setting/information/country/city fire; sidebar-nav PES `resources` + topbar `me` + auth 3.9MB `Node` remain (all by design; Node deferral offered as optional follow-up). **`nx build admin-console + management-console` (dev, --skip-nx-cache) EXIT 0** — "Successfully ran target build for 2 projects", 0 TS errors. (First build had a STALE error in `node-drawer-state.signals.ts:137` `.trim()` on `never` — a DIFFERENT git-modified-by-prior-session file, NOT mine; current on-disk has 0 `.trim()`, was rewritten 4s into the build by a concurrent writer / WebStorm; clean re-build passed.) No slice has a direct .spec; no spec references getSettings/getInformation/HierarchyPageStateService/activeClientTab/infoOpen. DI safe (UsersStateSlice injects only TreeStateSlice — same one-way dep add-user-state already uses). Live UI verify pending login (credential policy).
+
+**ORIGINAL DIAGNOSIS:**
+
+The APIs in the network trace (`setting?ownerId=`, `information?NodeId=`, `resources` ×3 PES, country `…ba3`, city `…ba2?code=JOR`, plus a 3.9 MB `Node`) all belong to the **Org-Hierarchy page**, NOT a separate page. They fire because that page's state slices are **route-scoped + eagerly injected + self-loading**, independent of the visible surface.
+
+**Chain (all [CODE], admin-console; mgmt-console is a parallel port):**
+- Login Stage-4 → `handleLoginSuccess` (`auth.service.ts:107`) → `queueMicrotask(fetchOrganizationNode)` (`:129`) → `nodeService.getNode()` (`:144`) = the **3.9 MB `GET Node`** (full org tree into session). By design but heavy.
+- Navigation lands on the org-hierarchy route — almost certainly via restored **`auth_redirect`** (`auth.service.ts:132-136`, stored as `btoa(window.location.pathname)` in `AuthService.login()` `:84`). The shell's `handleDefaultNavigation()` is a **no-op** ("all users land on Dashboard at `/`", `layout.component.ts:470-472`) and there is NO forced nav to org-hierarchy — so the slices can only fire if that route was actually activated.
+- Route `providers: [HierarchyPageStateService, ...HIERARCHY_PAGE_STATE_PROVIDERS]` (`org-hierarchy-page.routes.ts:20`). The facade `HierarchyPageStateService` injects **every** slice in its ctor incl. `settingsSlice` + `infoSlice` (`hierarchy-page-state.service.ts:114,116`) → both instantiate the moment the page activates, regardless of tab.
+- `TreeStateSlice.applyTree()` **auto-selects** a default node (`computeInitialState` → `selectedTreeNode.set(initial)`, `tree-state.signals.ts:190-195`).
+- `SettingsTabStateSlice` ctor `effect` fires `reloadFor` on ANY `effectiveNodeId()` (`settings-tab.signals.ts:112-118`) → `GET setting` + PES `resolveFlags`. **`InfoPanelStateSlice`** ctor `effect` fires `reloadFor` when node `type==='client'` (`info-panel-state.signals.ts:127-137`) → `GET information` + PES + **Country** lookup, then chains **City** lookup (`:309-316`).
+
+**Why it's "a page I'm not on":** default `activeClientTab = 'hierarchy'` (`users-state.signals.ts:48`). Template gates: Settings tab renders only under `@case('settings')` (`org-hierarchy-page-menu.component.html:376`); Info panel renders only when `infoOpen() && !isRootSelected()` (`:288`, `infoOpen` defaults false `tree-state.signals.ts:132`, opened by the node-header "Information" button). So you see the **tree (Hierarchy tab)**, but the **Settings tab** + **Information panel** load their backend data anyway — including the Country/City dropdown lookups meant for *edit* mode nobody entered.
+
+**Why the duplicates + `(canceled)` rows:** `selectedNode()`/`effectiveNodeId()` change by reference 2-3× (auth `setNode` resolve + wrapper `treeChange` → `applyTreeUpdate` re-derives `selectedTreeNode` via `findPrimeNode`, a NEW object each time, `tree-state.signals.ts:245-248`). Each change re-runs both effects; `onCleanup` unsubscribes the in-flight forkJoin (`takeUntilDestroyed`) → cancelled request, then re-fires.
+
+**3× `resources`:** PES facade batches+dedupes per caller (`access-control.facade.ts:129-134`); three near-simultaneous distinct batches (sidebar-nav `ensure`, Settings `resolveFlags`, Info `resolveFlags`) can't coalesce.
+
+**Fix direction (not yet applied):** (1) gate `InfoPanelStateSlice.reloadFor` on `tree.infoOpen()` (lazy — only when the Information panel opens); defer Country/City lookups to edit-mode entry. (2) gate `SettingsTabStateSlice` on `activeClientTab()==='settings'` (or move both slices to component-level `providers` — but that breaks the facade's `pageHasUnsavedEdits`/`confirmDiscardIfDirty`, so effect-gating is lower-risk). (3) dedupe the auto-select so the effect fires once per real id change (track last-loaded id), killing the cancelled-request storm. The 3.9 MB `Node` could also be deferred/scoped.
+
+**OPEN:** Confirm the actual landing URL + the URL open before login. If they truly land on Dashboard/Templates yet still see these, there is a SECOND issue (org-hierarchy force-mounted); evidence favors auth_redirect restoring an org-hierarchy URL → they ARE on org-hierarchy's tree view. Related [[reference_fe_structure_standard_angular21_2026_06_02]].

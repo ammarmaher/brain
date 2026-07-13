@@ -50,4 +50,4 @@ Customization order (`feedback_falcon_custom_library_mandatory` — inputs → t
 - Using it for a search box, single-line field, or rich text — wrong component (see table above).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-textarea-tw.tsx` + `falcon-textarea.component.ts` + `falcon-textarea.component.html`. Cross-library map 🔴 INFERRED from each library's public API. Anti-patterns ✅ VERIFIED against source (no `disabled` input, no wrapper outputs, counter gate).
+🟢 RE-VERIFIED 2026-06-03 (B01) — CODE-DERIVED from `falcon-textarea-tw.tsx` + `falcon-textarea.component.ts` + `.html` re-read this pass. Anti-patterns ✅ confirmed against source (no `disabled` input, no wrapper outputs/G1, counter gated on `maxlength`, icon slots top-anchored). Cross-library map 🔴 INFERRED from each library's public API.

@@ -31,7 +31,7 @@ Distinguishing tell vs siblings: an empty-state is a *centred icon-title-descrip
 | a spinner / skeleton while data loads | the table `[loading]` skeleton / `<falcon-angular-loader-*>` | empty-state |
 | an error placeholder ("Failed to load — Retry") | **GAP** — empty-state has no `error` variant (FES-04); raise it | empty-state |
 | a bordered section grouping content | `<falcon-angular-card>` | empty-state |
-| a "no data" cell where `<falcon-empty-data>` already fits | `<falcon-angular-empty-data>` (sibling — lighter inline empty marker) | — |
+| a decorated empty **card** (dashed border + glossy gradient + tinted disc + built-in CTA button + info chip), or any empty data-**table** | `<falcon-angular-empty-data>` (sibling — the **RICHER** card tier; auto-mounted by the data-table `[emptyData]` shorthand) | this component (the minimal tier) |
 
 ## Composition recipe to reach parity
 Customization order (`feedback_falcon_custom_library_mandatory`):
@@ -49,4 +49,8 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Omitting `titleText` — the `<h3>` is not rendered and the placeholder has no announced name.
 - Projecting an action button without the `slot="action"` attribute — it will not land in the action region, especially on the Light-DOM path.
 - Expecting `<falcon-table>` core to show this automatically — it renders only a bare text empty cell (FES-01); project `<ng-template falconDataTableEmpty>` explicitly.
-- Passing an `iconName` not in the Falcon icon font — renders an empty glyph (see `falcon-icon`).
+- Passing an `iconName` not in the Falcon icon font — renders an empty glyph (see `falcon-icon`). (The icon is an **icon-font** glyph, NOT an inline SVG — that is the `<falcon-empty-data>` sibling.)
+- Reaching for this when the design clearly shows a **card** (border/gradient/disc/CTA button) — that is `<falcon-empty-data>`, the richer sibling; this minimal stack has no card surface.
+
+## Verification
+🟡 CODE-DERIVED 2026-06-03 (B12 refresh) from `[CODE]` falcon-empty-state.tsx + .component.ts. Sibling routing table CORRECTED — `<falcon-empty-data>` is the RICHER card tier (prior dossier wrongly called it "lighter inline empty marker"). Cross-library map `[INFERRED]` from standard library APIs. Icon-font (not SVG) render confirmed against source.

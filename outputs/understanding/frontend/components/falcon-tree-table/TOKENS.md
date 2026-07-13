@@ -72,3 +72,6 @@ Yes — `density: 'compact' | 'comfortable' | 'spacious'` maps to `--falcon-tree
 | Hover | `--falcon-tree-table-row-bg-hover`, rail color-active |
 | Focus | `--falcon-tree-table-row-bg-focus`, focus ring |
 | Disabled | Falcon-disabled-opacity inheritance, `.disabled` class on label cell |
+
+## Verification
+🟡 CODE-DERIVED, RE-VERIFIED 2026-06-03 (B08). Token file exists with the `:where(falcon-tree-table, falcon-tree-table-tw, falcon-angular-tree-table, .falcon-tree-table, [data-falcon-tree-table])` scope (gate-12-compliant). Grid-template-driven layout + rail/chevron tokens re-confirmed against the `-tw` source. No `:where(.app-dark)` block (dark inherits from master theme — gap stands). `FalconTreeColumn` still lacks `cellClass`/`headerClass` (P3 gap stands).

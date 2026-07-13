@@ -3,7 +3,7 @@
 > Layer 2 of 3. UI layer → `OVERVIEW.md` / `API.md` / `USAGE.md` / `TOKENS.md`. Integration layer → `INTEGRATION_VALIDATION.md`.
 > Source-prefix every fact: `[CODE]` `[BRAIN-OUT]` `[VAULT]` `[BRAIN-SK]` `[PRD]` `[INFERRED]`.
 
-> **Legacy bespoke component.** `<falcon-form-field>` is a pre-Wave-5 Angular-only wrapper at `libs/falcon/src/shared-ui/`. It has no Stencil twin. New Falcon UI inputs carry their own `label`/`errorMessage`/`required` — this component is for legacy maintenance and non-Falcon controls only. Status: NEEDS-DEPRECATION (`DECISION.md`).
+> **Legacy bespoke component.** `<falcon-form-field>` is a pre-built-in-label Angular-only wrapper at `libs/falcon/src/shared-ui/`. It has no Stencil twin and **no stylesheet** (Tailwind-only `templateUrl` — corrected 2026-06-03/B24; the prior "has a `.scss`" claim was drift). New Falcon UI inputs carry their own `label`/`errorMessage`/`required` — this component is for legacy maintenance and non-Falcon controls only. Status: NEEDS-DEPRECATION (`DECISION.md`).
 
 ## Business purpose
 `[BRAIN-OUT]` `<falcon-form-field>` exists to give a form field a **consistent labeled-row identity**: a translated label, a required-asterisk, a slot for the actual control, and a single place for the field's helper hint or validation error. In business terms it is how a wizard renders every field with the same "label / control / message" rhythm so an operator scans a form predictably and always knows which field is required and which field is wrong.
@@ -39,4 +39,4 @@
 - This is a **legacy component on a deprecation path** — it is correct to *maintain* it in existing wizard steps, but adding a NEW `<falcon-form-field>` around a Falcon input is a documented anti-pattern.
 
 ## Verification
-✅ VERIFIED in production usage — `<falcon-form-field>` is consumed by the confirmed-working Add Client and Add User wizard steps in admin-console (`USAGE.md` Wave 7 sweep — 5 consumer files across both wizards). Template behaviour (required asterisk, error/hint mutual exclusion, disabled dimming, translation-keyed text) is ✅ VERIFIED against `[CODE]` `falcon-form-field.component.html` (read in full). The component's LEGACY / deprecation status is ✅ VERIFIED against the existing `DECISION.md` + `OVERVIEW.md`.
+🟢 RE-VERIFIED 2026-06-03 (B24) — consumed by the confirmed-working Add Client + Add User wizard steps in BOTH consoles + templates-page step1 (`USAGE.md` Consumer Sweep — 10 live templates, up from the stale "5 admin-only"). Template behaviour (required asterisk, error/hint mutual exclusion, disabled dimming, translation-keyed text) re-confirmed against `[CODE]` `falcon-form-field.component.ts` (33 ln) + `.html` (29 ln). LEGACY / deprecation status re-confirmed. The component is Tailwind-only (no `.scss` — the prior dossier's SCSS premise was corrected this pass).

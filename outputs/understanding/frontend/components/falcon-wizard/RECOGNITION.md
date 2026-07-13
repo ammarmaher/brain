@@ -47,3 +47,7 @@ Customization order (per `feedback_falcon_custom_library_mandatory`): inputs →
 - Hand-rolling stepper + buttons instead of using this wizard for a new multi-step flow — the architect contract (§5.12.3) mandates this component.
 - Adding custom CSS to reorder/restyle the footer — propose `--falcon-wizard-*` tokens instead.
 - Expecting `falconStepValidationFail` to surface its own UI — it is a bare event; the consumer must show the toast / focus the field.
+- Relying on `[(currentStep)]` two-way on the wrapper to read the advanced step — the wrapper `currentStep` is one-way (no `currentStepChange`); track via `(falconWizardStepChange)` (2026-06-03, GAP G-MODEL-1).
+
+## Verification
+🟢 RE-VERIFIED 2026-06-03 (B20 REFRESH) — visual fingerprint + sibling-routing table + composition recipe re-confirmed against `falcon-wizard.tsx`. Added the `[(currentStep)]` anti-pattern (wrapper is one-way). Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]`.

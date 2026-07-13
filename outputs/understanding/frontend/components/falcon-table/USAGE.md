@@ -1,4 +1,4 @@
-# falcon-table — USAGE
+﻿# falcon-table — USAGE
 
 ## Direct use is rare
 
@@ -154,3 +154,36 @@ import { FalconAngularDataTableComponent } from '@falcon-ui-core/angular-wrapper
 - Don't hand-roll a `<table>` for any Falcon list view.
 - Don't put Falcon Angular components inside `col.render()` — `render()` returns a static HTML string. Use a template directive.
 - Don't expect Arrow-key navigation between rows — the table is `tabIndex={0}` but does NOT implement Arrow / Home / End key handling on rows (see GAPS_AND_UPGRADES.md).
+
+## Row-level mutation pattern (loading is a HARD SWAP)
+
+`[CODE]` `loading=true` unmounts every data `<tr>` and renders ONLY skeleton rows (falcon-table-tw.tsx:1458-1482; runtime-verified platform rule 2026-05-21). So **never flip `[loading]` for a single-row action** — it blanks the whole grid. The platform pattern: keep a consumer-side `busyRowIds = signal<ReadonlySet<string>>(new Set())` and gate the affected cell template with `isRowBusy(id)`:
+
+```ts
+// consumer feature component (e.g. service-pricing-table)
+readonly busyRowIds = input<ReadonlySet<string> | ReadonlyArray<string>>(new Set());
+protected isRowBusy(rowId: string): boolean { return new Set(this.busyRowIds()).has(rowId); }
+```
+```html
+<falcon-angular-data-table [data]="rows()" [columns]="cols">
+  <ng-template falconDataTableCell="status" let-row="row">
+    @if (isRowBusy(row.id)) { <falcon-angular-loader-inline /> }
+    @else { <falcon-angular-status-badge [severity]="row.status" /> }
+  </ng-template>
+</falcon-angular-data-table>
+```
+
+> `busyRowIds` is NOT a built-in input on the table/data-table — it is a consumer convention layered on top. Confirmed live consumers: `libs/falcon/src/shared-features/service-pricing-table`, `apps/host-shell/.../service-pricing`, `apps/management-console/.../comms-hub`, `.../marketplace-applications`.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-table>` across `apps/` + `libs/falcon/` returned **1 consumer file(s)** as of 2026-05-17:
+
+- `apps/host-shell/src/app/playground/playground.page.html`
+
+## Deep-Dive Sweep Consumer Sweep (2026-06-03 — B08)
+
+[CODE] grep `<falcon-angular-table[\s>]` across the workspace → **0 render-sites** (every hit is a comment / eslint guard / `app.config.ts` doc-comment / skeleton-defaults token). The deprecated basic wrapper is genuinely unused; the playground route (Wave-7's sole consumer) was removed. The substrate `<falcon-table-tw>` is reached only through `<falcon-angular-data-table>` (10 sites — see that dossier) and the wallet feature's direct Stencil-tag mounting.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). Basic-wrapper consumers re-grepped (0); the `loading`-hard-swap + `busyRowIds` row-mutation pattern documented against live consumer source.

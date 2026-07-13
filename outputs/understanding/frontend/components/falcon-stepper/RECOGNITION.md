@@ -1,8 +1,8 @@
-# falcon-angular-stepper — Recognition Layer
+# falcon-stepper — Recognition Layer
 
 > Cross-cutting layer. Purpose: given an external design / screenshot / React or Angular snippet, identify `<falcon-angular-stepper>` as the component to use, and how to compose it to parity.
 
-> Recognition note: an external design that shows a step rail belongs to the **Stencil-backed `<falcon-angular-stepper>`** documented here — NOT the legacy bespoke `<falcon-stepper>` in `libs/falcon/src/shared-ui/` (`falcon-stepper-legacy/`). The legacy one is reference-only; never target it for new work.
+> Recognition note: an external design that shows a step rail belongs to the **Stencil-backed `<falcon-angular-stepper>`** documented here. The prior legacy bespoke `dynamic-stepper` was DELETED 2026-05-17 (`falcon-stepper-legacy/`, DEPRECATED) — it no longer exists, so there is no ambiguity: the step rail IS this component.
 
 ## Visual fingerprint
 `[CODE]` `falcon-stepper.tsx` + `falcon-stepper.css`:
@@ -12,7 +12,7 @@ A horizontal (or vertical) row of **evenly-spaced solid circular dots**, 16/18/2
 | Library | Their component | Parity notes |
 |---|---|---|
 | MUI | `<Stepper>` + `<Step>` + `<StepLabel>` (+ `<StepContent>` for vertical) | direct conceptual 1:1 — MUI `activeStep` ≈ `activeValue`, MUI `completed` map ≈ `completedValues`. |
-| PrimeNG | `<p-steps>` / `<p-stepper>` + `<p-stepperPanel>` | direct 1:1 — this component replaces `<p-stepper>` (PrimeNG uninstalled, Wave PR-8). |
+| PrimeNG | `<p-steps>` / `<p-stepper>` + `<p-stepperPanel>` | conceptual 1:1 — PrimeNG is uninstalled (Wave PR-8); use this component. (The documented visual SoT is the React `ACStepBar`, not p-stepper.) |
 | Ant Design | `<Steps>` + `<Steps.Step>` | `Steps` `current` ≈ `activeValue`; Ant `status` per step ≈ the `upcoming/active/completed/error` resolution. |
 | Bootstrap | no native stepper — bespoke `.bs-stepper` plugin or a custom progress row | upgrade target — always replace with this. |
 | shadcn / Radix | no first-class stepper; usually a hand-rolled flex row of `Badge` + `Separator` | replace the hand-roll with this component. |
@@ -33,7 +33,7 @@ A horizontal (or vertical) row of **evenly-spaced solid circular dots**, 16/18/2
 Customization order (per `feedback_falcon_custom_library_mandatory`): inputs → templates → slots → variants → token override → shared upgrade → wrapper → GAP.
 
 1. **Inputs** — supply `[steps]` (`FalconStepperStep[]` with unique `value` + `label`, optional `description`/`icon`/`disabled`/`optional`/`errorMessage`), bind `[activeValue]` (or `[(ngModel)]`/`formControlName`/`[(activeValue)]`), bind `[completedValues]`. Set `mode` (`linear` for ordered flows), `orientation`, `size`, `showStepNumbers`, `showCheckOnComplete`, `groupLabel`, `helperText`/`errorMessage`.
-2. **Step-gating** — to block forward navigation while a step is invalid, bind `[forwardLockedFrom]` to a computed of currently-invalid step values; listen to `falcon-navigation-blocked` (native listener — no wrapper Output yet) to reveal field errors.
+2. **Step-gating** — to block forward navigation while a step is invalid, bind `[forwardLockedFrom]` to a computed of currently-invalid step values; bind the `(navigationBlocked)` Output (a real wrapper `@Output` — declarative, no native listener) to reveal field errors.
 3. **Slots** — project per-step body content as a top-level child annotated `slot="content-{value}"` (the `formatStepPanelSlot()` naming). One slot per step.
 4. **Variants** — `orientation` (`horizontal`/`vertical`), `labelPosition` (`top-center`/`bottom-center`/`side`), `size` (`sm`/`md`/`lg`), `useTailwind` (Light vs Shadow render path).
 5. **Token override** — restyle dots/track/labels/halo/motion via the 14 `--falcon-stepper-*` token categories in `stepper.tokens.css`; per-instance via `<falcon-angular-stepper class="x">` + `:where(.x){ --falcon-stepper-…: … }`. Never hardcode hex/px.
@@ -45,7 +45,10 @@ Customization order (per `feedback_falcon_custom_library_mandatory`): inputs →
 - Using `non-linear` for a flow whose later steps depend on earlier-step data — that breaks the business order contract.
 - `[attr.disabled]` — no-ops the wrapper setter; always `[disabled]="…"`.
 - Duplicate `value`s in `steps[]` — breaks the active/completed selectors and the dot-ref map.
-- Targeting the legacy bespoke `<falcon-stepper>` (`libs/falcon/src/shared-ui/`) for new code — reference-only.
+- Targeting a legacy bespoke stepper for new code — it was DELETED 2026-05-17; only this component exists.
 - Hand-painting dot CSS or animating the fill with JS — override tokens; the fill transition is token-owned.
 - `<p-stepper>` / `<p-step>` anywhere — PrimeNG is uninstalled (`feedback_falcon_ui_library_only_no_native`).
-- Treating `stepClick` as "navigation happened" — it fires even on a blocked click; listen to `valueChange`.
+- Treating `stepClick` as "navigation happened" — it fires even on a blocked click; listen to `valueChange` (transition) / `navigationBlocked` (rejection).
+
+## Verification
+🟢 CODE-DERIVED 2026-06-03 (B21) from `falcon-stepper.tsx` + the wrapper. Sibling routing cross-checked vs OVERVIEW. **Drift corrected:** `(navigationBlocked)` is a real wrapper Output (no native-listener workaround); the legacy stepper is deleted, not "reference-only". Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]`.

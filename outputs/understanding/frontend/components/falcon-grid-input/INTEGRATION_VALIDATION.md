@@ -4,9 +4,9 @@
 
 ## Owning backend module(s)
 **None — presentational only.** The component edits one transient `string` and emits commit/cancel/navigate intents. The persisted cell behind it is owned by whatever module backs the table:
-- **Commerce** — service / account / node grids (price-type, price-value, names).
-- **Charging / Provisioning** — quota and domain-specific grids.
-The grid-input itself is module-agnostic; the host table/cell directive routes `falconGridCommit` to the right write endpoint.
+- **Commerce** — the live consumer is the Contracts cost-management price/cost matrix (priority × destination cells); the contract/cost write is the host feature's, not grid-input's (`[CODE]` contract-details-step.component.ts — `onCellCommit` routes the parsed value).
+- **Charging / Provisioning** — quota and domain-specific grids (intended).
+The grid-input itself is module-agnostic; the host cell handler routes `falconGridCommit` to the right write.
 
 ## Backend wiring
 | Source | Mechanism | Backend module | Notes |
@@ -19,7 +19,7 @@ The grid-input itself is module-agnostic; the host table/cell directive routes `
 ## Validation rules (V-*)
 | V-rule | Field | Trigger | Error code / message |
 |---|---|---|---|
-| — | the cell | — | The component has **no validation surface** — no `errorMessage`, no `state`, no error tokens consumed today (`grid-input.tokens.css` defines an error/dirty token set but the component does not bind them). |
+| — | the cell | — | The component has **no validation surface** — no `errorMessage`, no `state`. (Correction: `grid-input.tokens.css` does NOT define an error/dirty token set — it has only 2 orphan focus-ring tokens; see TOKENS.md.) |
 | `[INFERRED]` Cell-value validity | numeric / bounded cells | after `falconGridCommit` | the **consumer** validates the committed string and, on failure, must surface the error on the row — the component cannot show it (`DECISION.md` G2). |
 
 There are no `V-*` rules wired into the component. Validation is entirely the host grid's responsibility, applied after commit.
@@ -46,4 +46,4 @@ There are no `V-*` rules wired into the component. Validation is entirely the ho
 - `[CODE]` `falcon-grid-input.tsx:77-80` `setFocus()` is a Stencil `@Method` but **not proxied** on the wrapper (`DECISION.md` G3).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-grid-input.tsx` + `falcon-grid-input.component.ts`. Double-commit guard, Tab-hijack, blur-commits, no-CVA, no-error-state ✅ VERIFIED against source. Backend-module list 🔴 INFERRED — the component names no endpoint.
+🟢 code-verified (re-read 2026-06-03) from `[CODE]` `falcon-grid-input.tsx` + `falcon-grid-input-tw.tsx` + `falcon-grid-input.component.ts`. Double-commit guard (`committed` flag), Tab-hijack, blur-commits, autoFocus-respects-disabled, no-CVA, no-error-state, un-proxied `setFocus()` ✅ source-verified. Live consumer 🟢 grep-verified (Contracts cost-management matrix, both consoles). Backend write endpoint 🔴 owned by the host feature (grid-input names none).

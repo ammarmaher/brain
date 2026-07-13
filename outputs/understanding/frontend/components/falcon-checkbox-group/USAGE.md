@@ -1,4 +1,4 @@
-# falcon-checkbox-group — USAGE
+﻿# falcon-checkbox-group — USAGE
 
 ## Real usage examples
 
@@ -92,3 +92,14 @@ The wrapper passes `useTailwind=true` (default) to each child. Per-row layout is
 | Use this wrapper for grouped checkboxes. | Hand-roll your own loop. |
 | Bind via CVA. | Mutate selection imperatively from outside. |
 | Use `orientation` for layout. | Set inline `style="display: flex"`. |
+
+## Consumer Sweep (2026-06-03)
+
+[CODE] grep `<falcon-angular-checkbox-group` across `apps/` + `libs/falcon/` returned **0 real app consumer files**. The only references are:
+- `libs/falcon-studio/src/lib/registry/gallery-defaults.ts` — Studio gallery showcase entry.
+- the component's own `index.ts` / source.
+
+All examples above are recommended-usage, not live citations. Real grouped-checkbox use in the apps today is hand-rolled (e.g. the wallet allocation table loops `<falcon-angular-checkbox>` directly — `apps/admin-console/.../wb-allocation-table.component.html:120`) rather than adopting this wrapper. Corrected from the stale Wave-7 "1 (playground)".
+
+## Verification
+🟢 grep-verified 2026-06-03 — 0 app consumers (showcase-only). Examples are 🟡 recommended-usage (no live consumer to cite). CVA + `[(selectedValues)]` two-way + `orientation` all 🟢 code-verified in `falcon-checkbox-group.component.ts`.

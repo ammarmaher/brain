@@ -1,7 +1,7 @@
 # falcon-select — Business Layer
 
-> Layer 2 of 3. UI layer → `OVERVIEW.md` / `API.md` / `USAGE.md` / `TOKENS.md`. Integration → `INTEGRATION_VALIDATION.md`.
-> **`falcon-select` is a pure TS alias of `falcon-dropdown`** — there is no separate component. For the canonical business layer read `../falcon-dropdown/BUSINESS.md`. This file states what is alias-specific.
+> Layer 2 of 3. UI layer → `OVERVIEW.md` / `API.md` / `USAGE.md` / `TOKENS.md`. Integration → `INTEGRATION_VALIDATION.md`. Sweep-refreshed 2026-06-03 (B04).
+> **`falcon-select` is a pure TS alias of `falcon-dropdown`** — there is no separate component, and the alias barrel is a flagged DEAD CANDIDATE (`index.ts:1`, 0 real consumers). For the canonical business layer read `../falcon-dropdown/BUSINESS.md`. This file states what is alias-specific.
 
 ## Business purpose
 `[CODE] src/angular-wrapper/components/falcon-select/index.ts` — `falcon-select` exists for ONE reason: the architecture spec §5.12.1 L1 named the single-choice control "Select", but the platform shipped it as `<falcon-dropdown>`. The alias lets new spec-aligned code reference the spec name without code duplication. **Business behavior is 100 % identical to `falcon-dropdown`** — it commits a single categorical decision (which country, which role, which status).

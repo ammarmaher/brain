@@ -62,7 +62,7 @@ Example phrases:
 
 **PRDs feed Business · Validation · API · Pages · Components · Gaps.** When a task touches a page or component, load the implementing PRD FIRST.
 
-- [[PRD_INDEX]] — 6 modules: [[01 Account Management]] · [[02 User Management]] · [[03 Contract Packaging Charging Billing]] · [[04 Contact Group Management]] · [[05 Templates]] · [[Root Documents]]
+- [[PRD_INDEX]] — 7 modules: [[01 Account Management]] · [[02 User Management]] · [[03 Contract Packaging Charging Billing]] · [[04 Contact Group Management]] · [[05 Templates]] · [[06 Basic Send Application]] · [[Root Documents]]
 - Coverage today: 48.3 % (69/143 effective rows) · 63.0 % including partial
 - Drive folder (canonical): `https://drive.google.com/drive/folders/1ww3nICya-CjW4_5mzoVpzTaaMz9nNTtH`
 - Refresh: `take latest from PRD`
@@ -89,7 +89,7 @@ Organization Hierarchy flow playbooks:
 ## Top-level indexes
 
 - [[IMPLEMENTATION_KNOWLEDGE_MAP]] — **flow playbooks + load order (Phase 2G)**
-- [[PRD_INDEX]] — 6 PRD modules (upstream)
+- [[PRD_INDEX]] — 7 PRD modules (upstream)
 - [[BACKEND_INDEX]] — 9 backend services
 - [[ERROR_INDEX]] — 233 error codes catalogued (Phase 3D)
 - [[GLOSSARY_INDEX]] — 44 canonical terms (Phase 3E)

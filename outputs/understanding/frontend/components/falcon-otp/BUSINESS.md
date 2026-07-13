@@ -46,4 +46,4 @@
 - The component has no expiry/resend — if the design shows a countdown or "Resend", that logic belongs to the flow (or use `<falcon-otp-send-dialog>`).
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-otp.tsx` + `otp.service.ts` + `forgot-password-flow.service.ts`. Login/forgot-password usage ✅ VERIFIED (auth flows are live consumers per Wave-7 sweep). Correction vs `API.md`: the Stencil component **does** emit a dedicated `falcon-complete` event (`falcon-otp.tsx:67-68,145-147`) — the GAP "no completion event" is stale at the Stencil layer (wrapper re-emission is the open item).
+🟢 code-verified (re-read 2026-06-03) from `falcon-otp.tsx` + `falcon-otp-tw.tsx` + `falcon-otp.component.ts` (+ auth `otp.service.ts` / `forgot-password-flow.service.ts` per prior pass). Login + forgot-password usage ✅ VERIFIED (live consumers, grep 2026-06-03: enter-otp + forgot-password-flow + the relocated `libs/falcon/shared-ui` otp-dialog). Stencil emits a dedicated `falcon-complete` (`falcon-otp.tsx:67-68,144-148`); the OPEN item is only the WRAPPER re-emission (`(falconComplete)` GAP G1) — confirmed still open this pass.

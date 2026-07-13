@@ -23,8 +23,8 @@
 
 | ID | Priority | Blocker for |
 |---|---|---|
-| FT-01 PrimeIcon removal at `falcon-table.tsx:655` | **P0** | Compliance with Wave PR-8 PrimeIcons-removal rule |
-| FT-02 Keyboard sort | **P0** | A11y certification (sortable columns must be keyboard-activatable) |
+| ~~FT-01 PrimeIcon removal~~ | **DONE 2026-06-03** | RESOLVED — `falcon-icon falcon-icon-ellipsis-v` live in both `.tsx` paths (falcon-table.tsx:660 / falcon-table-tw.tsx:1621). No longer a blocker. |
+| FT-02 Keyboard sort | **P0** | A11y certification (sortable columns must be keyboard-activatable) — still open in both paths |
 | FT-03 Grid keyboard nav | **P1** | WAI-ARIA grid contract (`role="grid"` implies arrow-key nav) |
 | FT-04 i18n strings | **P1** | RTL pages / Arabic UI for hardcoded `'Search…'` placeholder |
 | FT-11 Stencil unit tests | **P1** | Regression confidence as features compound |
@@ -49,7 +49,7 @@
 
 ## Status
 
-**NEEDS-UPGRADE** for direct use. **READY** as the substrate behind `<falcon-angular-data-table>`. Core component is feature-rich (lazy mode, frozen columns, multi-sort, sticky actions, scroll mode, ARIA grid) and the project's prime data-table primitive — but its row-action `⋮` button still ships a `pi pi-ellipsis-v` PrimeIcon class which violates Wave PR-8.
+**READY** as the substrate behind `<falcon-angular-data-table>`; **NEEDS-A11Y-UPGRADE** only (FT-02 keyboard sort + FT-03 grid nav) for direct use. Core component is feature-rich (lazy mode, frozen columns, multi-sort, sticky actions, scroll mode, row expansion, shadow rows, ARIA grid) and the project's prime data-table primitive. **The FT-01 PrimeIcon blocker is RESOLVED (2026-06-03)** — the row-action `⋮` is now `falcon-icon falcon-icon-ellipsis-v` in both render paths; only the stale compiled `.js` artifact retains the old class. The remaining direct-use gaps are a11y (keyboard sort/nav) + the hardcoded `'Search…'` placeholder, both additive.
 
 ## Dynamic capability assessment
 
@@ -61,7 +61,7 @@
 - Skeleton structure — hardcoded `<span class="falcon-table-skeleton-block" />` per cell.
 - Sort glyph — Unicode `▲▼`. Not configurable per-component.
 - Cell type `'badge'` renders a generic neutral chip (no severity).
-- Row-action icon — `pi pi-ellipsis-v` (PrimeIcon — should be Falcon icon).
+- Row-action icon — `falcon-icon falcon-icon-ellipsis-v` (Falcon icon font; the legacy PrimeIcon `pi pi-ellipsis-v` was removed — FT-01 resolved 2026-06-03).
 
 ### 2. What is already dynamic through inputs/outputs?
 
@@ -130,3 +130,6 @@ The full token contract (14 categories, ~80 variables). Per-instance: add a mark
 - **`hostsExternalCells` opt-in flag** — flipping its default to `true` would change rendering for every existing direct consumer of `<falcon-table-tw>`. Keep `false`.
 
 **Verdict: `<falcon-table>` core is mature.** The risky paths are well-known and gated by either type-level contracts or wrapper compositions.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). Recommendation upgraded: FT-01 PrimeIcon blocker RESOLVED in live source (both paths), so the component is READY as substrate + NEEDS-A11Y-UPGRADE only for direct use. `actionsVisibleField` per-row gate, `expandedRowId`/`row-expansion`, and the shadow-row suite confirmed in `-tw`. Basic `<falcon-angular-table>` wrapper has 0 render consumers.

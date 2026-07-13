@@ -2,7 +2,7 @@
 
 ## Brain SK final recommendation
 
-**STATUS: READY. Use for all N-digit code entry. Add G1 (`falconComplete` event) for auto-submit UX.**
+**STATUS: READY + LIVE.** Use for all N-digit code entry. 3 live consumers (auth enter-otp + forgot-password + shared otp-dialog) as of 2026-06-03. Add G1 (`(falconComplete)` wrapper output) to retire the per-page completion-length workaround.
 
 ## Use this component for
 
@@ -40,43 +40,45 @@ P1: G1 (`falconComplete` output).
 
 ## Dynamic capability assessment
 
-### 1. Static?
-- Per-box layout (flex).
-- Mask character.
-- Box-only rendering (no inline / banner-style alternatives).
+### 1. What is static today?
+- Per-box flex layout; box-only rendering (no inline/banner alternative).
+- Enter is always swallowed; auto-advance / backspace-retreat / paste-fill / Arrow-Home-End nav are fixed.
+- Mask glyph is a token, not an input (`--falcon-otp-mask-character`); masked boxes are native `type=password` dots.
 
-### 2. Dynamic via inputs/outputs?
-- 16 inputs.
-- 0 wrapper outputs (gap — G1).
-- CVA.
+### 2. What is dynamic through inputs/outputs?
+- 16 wrapper `@Input`s (label/placeholder/helper/error/length/mask/size/state/required/name/inputId/pattern/useTailwind + 4 `*Class`).
+- **0 wrapper `@Output`s** — value out via **CVA** only; the Stencil `falcon-complete` is NOT re-emitted (G1).
+- Full CVA (writeValue / registerOnChange / registerOnTouched / setDisabledState).
 
-### 3. Slots/templates?
-- None.
+### 3. What is dynamic through slots / ng-template?
+- **None.** No `<slot>` / `<ng-content>`.
 
-### 4. Tokens?
-- All visual axes.
+### 4. What is dynamic through token/theme overrides?
+- A full 14-category `--falcon-otp-*` set (~60 tokens) — box size, gap, bg/border/text per state, focus ring, separator, mask, caret, motion. All real-palette-aliased.
+- Dark mode + density (box size via `size`) flow through.
 
-### 5. Tailwind?
-- 4 passthrough classes.
+### 5. What is dynamic through Tailwind classes?
+- Host `class=` + 4 `*Class` passthroughs (`wrapperClass`/`boxClass`/`inputClass`/`labelClass`) — but these flow ONLY to the Tailwind (default) path; the Shadow path ignores them (parity finding).
 
-### 6. Missing for reuse?
-- `falconComplete` event (G1).
-- Method proxies (G3).
-- SMS auto-fill (G4 — Stencil-side).
-- Mask character (G6).
+### 6. What is missing to make it reusable across pages?
+- `(falconComplete)` wrapper output (G1), `setFocus(index)`/`clear()` proxies (G3), `maskCharacter` input (G6), `*Class` parity on the Shadow path, per-box state hook (G5).
 
-### 7. Shared?
-- Yes.
+### 7. What capability should be added to the shared component (not a page hack)?
+- All the above. The current G1 workaround (per-page `value.length === length` check, as in enter-otp) should be retired once `(falconComplete)` lands.
 
-### 8. Flags?
-- `falconComplete`, `maskCharacter`.
-- Method proxies.
+### 8. What flags / options would make it better?
+- `(falconComplete)` output, `maskCharacter` input, `setFocus`/`clear` proxies; `*Class` forwarded to both paths.
 
-### 9. Safest path?
-1. Add `falconComplete` (additive).
-2. Add `clear()` / `setFocus()` proxies.
-3. Verify SMS auto-fill attribute on Stencil.
+### 9. What is the safest upgrade path?
+1. **Phase A (additive):** add `(falconComplete)` (G1) + `setFocus`/`clear` proxies (G3) + `maskCharacter` (G6). Add the missing specs.
+2. **Phase B (parity):** forward the 4 `*Class` inputs to the Shadow branch too (or formally document them Tailwind-only).
+All additive — no consumer break.
 
-### 10. Risky?
-- Changing default `length` from 6 — silent breakage.
-- Adding new pattern semantics — careful with backward compat.
+### 10. What is risky to change because other pages depend on it?
+- Changing default `length` from 6 — silent backend-contract breakage.
+- The CVA `value` string contract — auth flows read it via `(ngModelChange)`.
+- The default `useTailwind=true` — flipping to Shadow changes the DOM (Light↔Shadow) AND drops the `*Class` inputs.
+- Pattern semantics (`compilePattern` anchoring) — changing it could let previously-rejected chars through.
+
+## Verification
+🟢 code-verified (re-read 2026-06-03) against `falcon-otp.component.ts/.html`, both Stencil tags, `falcon-otp.utils.ts`, the token file + Tailwind helper, and the live auth consumers. G1 (un-bound `falcon-complete`) + Shadow↔`-tw` 1:1 parity + `*Class` Tailwind-only + stale wrapper source-comment (default=Tailwind, not Shadow) ✅ confirmed this pass.

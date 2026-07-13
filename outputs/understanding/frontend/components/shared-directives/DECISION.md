@@ -1,5 +1,8 @@
 # Shared directives — DECISION
 
+> [!note] LIVE — refreshed 2026-06-03 (B23). Per-directive statuses below stand.
+> One material update: the bundle's **live consumer footprint is 1 app component** (`client-settings-step` → `falconIpAddress`); the other 11 directives have 0 live app consumers (Grep 2026-06-03). They remain exported + supported, but most are **dormant** — a candidate for a dead-code / consolidation review (NOT a deletion this pass; it would be a HIGH-RISK-QUEUE call because consumers MAY exist outside the FE app, e.g. falcon-studio or future features). Validation moved to `libs/falcon/src/shared-utils/lib/validators/falcon-validators.ts` (Reactive-Forms validators) + Falcon UI core inputs' built-in error display.
+
 ## Brain SK final recommendation
 
 ### Status (per directive)
@@ -39,7 +42,7 @@
 - `FalconFormValidate` is a form-wide overlay; Falcon UI inputs already carry per-input error display.
 
 ### Exact rule for future implementation tasks
-> "For new forms, use Falcon UI input components' built-in `errorMessage` + `state='error'` Inputs. Apply directive-level validators (`falconStartWithLetter`, `falconPhoneNumber`, `falconCheckExists`, etc.) on the inner `<input>` element. AVOID `[falconFormValidate]` on new forms — its inline styles and PrimeNG-era selectors are out of date."
+> "For new forms, prefer Falcon UI input components' built-in `errorMessage` + `state='error'` Inputs together with Reactive-Forms validators from `falcon-validators.ts` (that is where the live tree validates today — these template directives are largely dormant, only `falconIpAddress` has a live consumer). Reach for a directive-level validator (`falconStartWithLetter`, `falconPhoneNumber`, `falconCheckExists`, `falconIpAddress`, etc.) on an inner `<input>` ONLY when a template-driven form genuinely needs it. AVOID `[falconFormValidate]` on new forms — its inline styles + PrimeNG-era selectors are out of date. Do NOT add new consumers of `FalconEffectiveDate` (no-op stub)."
 
 ---
 
@@ -92,6 +95,11 @@
 6. Add `format` Input to `FalconPhoneMask` — purely additive.
 
 ### 10. What would be risky to change because other pages depend on it?
-- Any change to error key names (e.g., `falconCheckExists` → `falconExists`).
-- Removing PrimeNG selectors from `FalconFormValidate` — if any latent consumer still has PrimeNG remnants (unlikely after Wave PR-8).
-- Changing inline-style values (e.g., the `9px` left-padding) may shift layout for consumers that visually depend on it.
+- The one verified live consumer: `client-settings-step` depends on `falconIpAddress` (IPv4/IPv6 mode lock + masking + debounced validation). Changing its selector, error keys, or masking behavior is the highest-confidence regression risk in this bundle.
+- Any change to error key names (e.g., `falconCheckExists` → `falconExists`) — low live risk now (0 consumers) but would break re-adoption.
+- Removing PrimeNG selectors from `FalconFormValidate` — only matters if a latent consumer still has PrimeNG remnants (none found in `apps/` + `libs/falcon/` 2026-06-03).
+- Changing inline-style values (e.g., the `9px` left-padding) — moot with 0 `falconFormValidate` consumers.
+- **Before deleting any dormant directive**, sweep `libs/falcon-studio*` + future feature folders (out of this pass's grep scope) — treat a delete as HIGH-RISK-QUEUE.
+
+## Verification
+🟢 code-verified (B23 refresh 2026-06-03) — LIVE status + 1-consumer footprint confirmed via Glob of the directives folder + Grep of all 12 selectors/class names across `apps/` + `libs/falcon/`. Per-directive READY/stub statuses carried from the prior dossier (the `FalconFormValidate` inline-style/PrimeNG-selector claims not re-read line-by-line this pass → 🟡 for those specific code-quality assertions).

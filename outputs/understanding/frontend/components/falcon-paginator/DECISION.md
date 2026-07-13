@@ -49,6 +49,9 @@ Light DOM `<falcon-paginator-tw>` via the Angular wrapper with `[useTailwind]="t
 7. **Add to shared component:** All PR-3 inputs + `rowsChange` output.
 8. **Better flags/options:** None beyond PR-3 parity.
 9. **Safest upgrade path:** Add inputs and outputs to the wrapper one-for-one with Stencil props.
-10. **Risky to change:** `paginatorTemplate` vocabulary (PrimeNG-shaped tokens — many consumers via Falcon tables rely on it).
+10. **Risky to change:** `paginatorTemplate` vocabulary (PrimeNG-shaped tokens — every Falcon table inheriting the template relies on it); the `falcon-*` Stencil event names (the wrapper binds them by exact string); the page-clamp invariant (consumers assume the emitted page is always in `[1, totalPages]`).
 
-**Verdict:** Solid Stencil core. Wrapper is a quick fix away from PR-3 parity.
+**Verdict:** Solid Stencil core. Wrapper is a quick (additive) fix away from PR-3 parity (FP-01). Two NEW parity divergences found in B09 (FP-06 `-tw`-only `rowsPerPageDropdownAppendTo` + center-cluster wrapper; FP-07 PR-3 regions styled by table tokens) are worth folding in when FP-01 lands.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B09). Recommendation unchanged (READY in-table / NEEDS-UPGRADE standalone). Counts confirmed: 11 wrapper inputs, 2 outputs, single-mode CVA on the page number; `goto`/`setFocus`/`falcon-rows-change`/PR-3 props all un-surfaced by the wrapper. Sole wrapper consumer = `falcon-custom-table-footer`.

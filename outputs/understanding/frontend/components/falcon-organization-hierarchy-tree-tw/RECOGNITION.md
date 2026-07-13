@@ -28,7 +28,7 @@
 ## Composition recipe to reach parity
 Customization order (`feedback_falcon_custom_library_mandatory`): inputs → templates → slots → variants → token override → shared upgrade → wrapper → GAP.
 1. **Inputs (`@Prop`)** — `tree` (required `FalconOrgHierarchyNode` root), `selectedId`, `expandedIds`, `rootActions` / `nodeActions` (`FalconOrgHierarchyAction[]`), `sectionLabel`, `showExpand`, `showMoreActions`, `defaultExpandLevel`, `ariaLabel`. **Object props must be set via `el.prop = …`**, never `[attr.x]`.
-2. **Node visuals** — there is no template surface; the per-node bubble is driven entirely by `node.iconUrl` / `node.icon` / `node.initials` / `node.brand`. `brand` resolves to `client-logo bank-{x}` CSS classes (consumer CSS must define them).
+2. **Node visuals** — there is no template surface; the per-node bubble is driven by `node.iconUrl` → `node.icon` → `node.initials` (in that fallback order, tsx:718-788). **`node.brand` is declared in the type but currently UNUSED** (no `client-logo bank-{x}` class is emitted) — do not rely on it (GAP FOHT-08).
 3. **Events** — wire `(falcon-select)`, `(falcon-toggle)` (lazy-load hook — fetch + reassign `tree`), `(falcon-action)` (read `actionId` + `isRoot`).
 4. **Methods** — use `selectAndScrollTo(id)`, `expandAll()`, `collapseAll()`, `closeContextMenu()` for imperative flows.
 5. **Slots** — NONE. No Stencil slots — node rendering is fully token + tree driven.
@@ -43,3 +43,7 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - Using it for a generic (non-org-hierarchy) tree — the chrome is opinionated and locked to the React V0.2 reference.
 - Forgetting to `await defineFalconTwComponent('falcon-organization-hierarchy-tree-tw')` — the tag will not upgrade.
 - Ignoring `(falcon-toggle)` on a `hasChildren=true` node — the chevron opens to nothing without the lazy-load fetch.
+- Assuming keyboard operability — there is NO `onKeyDown`; rows are Tab-focusable but cannot be expanded/selected via keyboard (GAP FOHT-07). Do not ship to a keyboard-accessibility-required context without that gap closed.
+
+## Verification
+🟢 CODE-DERIVED 2026-06-03 (B21) from the full source + the live `<falcon-tree-panel>` path. Visual fingerprint + sibling routing confirmed. **Drift corrected:** `node.brand` is latent/unused; keyboard nav is absent (anti-pattern added). Cross-library mapping 🟡 CODE-DERIVED + `[INFERRED]`.

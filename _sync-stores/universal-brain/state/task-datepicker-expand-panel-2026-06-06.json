@@ -1,0 +1,23 @@
+{
+  "status": "completed",
+  "taskId": "datepicker-expand-panel-to-input-width-2026-06-06",
+  "title": "Date picker: add expandPanelToInputWidth prop so the calendar dropdown expands to fill the trigger-input (caller) width; apply to admin contract Start/Expiration date pickers (add + edit).",
+  "startedAt": "2026-06-06",
+  "completedAt": "2026-06-06",
+  "mode": "fe-library-feature + consumer-wiring",
+  "note": "SEPARATE SESSION — did NOT touch current-task.json (owned by a concurrent addclient row-vcenter session). Convention mirrors the other parallel sessions in progress-log.md.",
+  "repo": "C:/Falcon/Falcon/falcon-web-platform-ui",
+  "outcome": "DONE. New prop expandPanelToInputWidth (default false) on falcon-date-picker tw+shadow+wrapper; reuses popover-portal exactWidth + w-full/max-w-none + calendar block w-full/--falcon-calendar-width:100% to fill. Applied [expandPanelToInputWidth]=\"true\" to admin contract Start/Expiration (add-wizard + edit). Bulletproofed 'passed-true-stayed-false' across all 3 layers.",
+  "gates": {
+    "falcon-ui-core build": "EXIT 0 (Stencil dist regen + 106 Vue proxies regen)",
+    "admin-console build (development)": "EXIT 0 (final Hash 7894247cf761e174 after both-positionPopoverFixed-call-sites fix; first pass a75d5f7c21d78dd5)",
+    "admin-console test": "EXIT 0 = 38 files / 775 passed / 0 failed",
+    "falcon-ui-core lint": "my 6 lib files CLEAN; sole error falcon-input-number-tw.tsx:215 prefer-const is a CONCURRENT SESSION's input-number work (groupWhileTypingDisplay), not mine — left untouched"
+  },
+  "pending": "Live pixel-verify (panel expands + calendar fills) requires user login — assistant cannot type passwords; admin-console is an MF remote so user may need to restart npm start / hard-refresh to pick up the rebuilt falcon-ui-core dist.",
+  "memory": "project_datepicker_expand_panel_to_input_width_2026_06_06.md",
+  "noCommits": true,
+  "parkedTasks": [
+    { "taskId": "wallet-main-transfer-functionality-restore-2026-06-06", "status": "blocked", "blockedOn": "user accowner login for live PES probe", "note": "untouched; restore packet + memory valid" }
+  ]
+}

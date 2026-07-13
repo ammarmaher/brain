@@ -26,7 +26,7 @@
 | `[INFERRED]` First-run / zero-state pages | new account dashboards | empty-state with an onboarding CTA in the action slot. |
 | `[INFERRED]` Org-hierarchy empty tab | organization-hierarchy tabs | a tab with no rows (e.g. no comm-channels) — natural empty-state slot. |
 
-`[BRAIN-OUT]` OVERVIEW.md:37-38 + GAPS_AND_UPGRADES.md:56-58 — **one production consumer** (Wave 7 sweep). Most current empty states are bare strings; the component is near-unadopted.
+`[CODE]` **Three production consumers** (B12 sweep 2026-06-03, UP from 1 at Wave 7): two add-user-wizard "you cannot add here" explainers (admin + mgmt) and the new-wallet-balance no-data block. All three are **minimal, action-less** uses — exactly the tier this component owns. The richer, broadly-adopted empty visual is the sibling `<falcon-empty-data>` (auto-mounted by every `[emptyData]` data-table); empty-state stays the minimal-tier choice.
 
 ## Business gotchas
 - `[CODE]` falcon-empty-state.tsx:1-3 + `[BRAIN-OUT]` OVERVIEW.md:19-21 — **do not use it for a loading state.** A spinner-while-fetching is the table's `[loading]` skeleton, a different product moment. An empty-state shown during a fetch falsely tells the user "there is no data" before the data arrives.
@@ -35,4 +35,4 @@
 - `[BRAIN-OUT]` GAPS_AND_UPGRADES.md:6-7 (FES-01) — `<falcon-table>` core renders only a bare text empty cell — it does **not** auto-compose this component. A builder wanting a rich empty-state in a table must project `<ng-template falconDataTableEmpty>` explicitly.
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-empty-state.tsx + falcon-empty-state.component.ts + the 6 dossier files. No `BR-*` rule binds this presentational primitive. The empty-vs-error-vs-loading distinction and the `ariaLabel=""` presentational escape hatch are ✅ VERIFIED against source.
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh) from `[CODE]` falcon-empty-state.tsx + falcon-empty-state.component.ts. No `BR-*` rule binds this presentational primitive. The empty-vs-error-vs-loading distinction, the `<h3>` heading, and the `ariaLabel=""` presentational escape hatch are ✅ VERIFIED against source. Consumer count updated 1 → 3 (all minimal/action-less).

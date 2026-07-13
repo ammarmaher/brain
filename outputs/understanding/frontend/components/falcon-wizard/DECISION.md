@@ -19,12 +19,16 @@
 - `useTailwind=false` for foreign hosts without Falcon Tailwind.
 
 ### Required upgrades before wider use
-1. **Fix `step.status` visualization** — either thread through to embedded stepper OR remove from type. (P0)
-2. **Add `disabled?: boolean` overall flag + `busy?: boolean` overlay** for async-submit scenarios. (P2)
-3. **Add `reset()` method** for post-submit reuse. (P2)
-4. **Improve async-validator awaiting** in the `stepControls` derived validator. (P2)
-5. **Add `Skip` button** for optional steps. (P1)
-6. **Plan + execute org-hierarchy wizard migration** from legacy bespoke stepper.
+1. **Fix `-tw` a11y parity** — the DEFAULT (`useTailwind=true`) render path has NO `role="region"` / `aria-label` / `aria-live` (Shadow has all three). Mirror them into `<falcon-wizard-tw>` + add its missing `ariaLabel` prop. (P0 a11y — HIGH-RISK-QUEUE; new B20)
+2. **Fix `step.status` visualization** — either thread through to embedded stepper OR remove from type. (P0)
+3. **Add `currentStepChange` Output (or migrate `currentStep` to a `model()`)** — the wrapper `currentStep` is one-way today, so `[(currentStep)]` does not round-trip. (P1; new B20)
+4. **Add `disabled?: boolean` overall flag + `busy?: boolean` overlay** for async-submit scenarios. (P2)
+5. **Add `reset()` method** for post-submit reuse + **proxy `goTo()`/`next()`/`back()` on the wrapper.** (P2; method-proxy new B20)
+6. **Surface `ariaLabel` + a `rootClass`/`wrapperClass`** on the wrapper (Stencil has `ariaLabel` Shadow-only + `rootExtraClass` `-tw`-only). (P2; new B20)
+7. **Improve async-validator awaiting** in the `stepControls` derived validator. (P2)
+8. **Add `Skip` button** for optional steps. (P1)
+9. **Add specs** — none exist for wizard / wizard-tw / wrapper. (P2; new B20)
+10. **Plan + execute org-hierarchy wizard migration** from legacy `<falcon-stepper>` (the wizard shell still has 0 production consumers).
 
 ### Relationship to other components
 - Composes `<falcon-angular-stepper>` internally.
@@ -105,8 +109,11 @@
 7. Migrate org-hierarchy wizards from legacy stepper onto this wizard — BIG WAVE.
 
 ### 10. What would be risky to change because other pages depend on it?
-- **`currentStep` semantics (0-indexed)** — any future migration assumes 0-indexed. Adding `stepIndexOffset` mitigates this.
+- **`currentStep` semantics (0-indexed)** — any future migration assumes 0-indexed. Adding `stepIndexOffset` mitigates this. (NB: adoption is 0, so the risk is theoretical until the migration lands.)
 - **`steps[]` shape** — adding optional fields is safe; making fields required is breaking.
 - **Footer button order** — any consumer that styles them via CSS would notice a reordering.
 - **`validateStep` precedence over `stepControls`** — if a consumer thought they combine, behavior would surprise them; document loudly.
 - **Stencil event names** (`falconWizardNext`, `falconWizardBack`, `falconWizardFinish`, `falconWizardDraft`, `falconWizardStepChange`, `falconStepValidationFail`) — renaming breaks consumers.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B20 REFRESH). Recommendation unchanged (READY/PREFERRED, 0 production consumers). Required-upgrades list extended with the B20 findings (`-tw` a11y parity [HIGH-RISK-QUEUE], `currentStepChange` model gap, wrapper method-proxies, `ariaLabel`/`rootExtraClass` surfacing, zero specs). Prior 10-axis assessment re-confirmed accurate.

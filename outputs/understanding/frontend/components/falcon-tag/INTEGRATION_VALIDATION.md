@@ -33,7 +33,8 @@
 `[CODE]` `OVERVIEW.md:28-34`
 - **Stencil skeleton** — `<falcon-tag>` (Shadow DOM) / `<falcon-tag-tw>` (Light DOM). Pure presentational; `data-severity` + `data-size` attributes drive token cascading; the `✕` button is a native `<button aria-label="Remove">` (`API.md:63`).
 - **Angular wrapper** — `<falcon-angular-tag>`: dual render path (`useTailwind` default `true`), `<ng-content>` projected in both paths, re-emits `falconDismiss`.
-- `[CODE]` `API.md:69` / `GAPS_AND_UPGRADES.md:5-7` **Known dead code** — the wrapper carries a legacy `classes` computed signal (lines 62-71) with hardcoded `_severityClasses()` / `_sizeClasses()` helpers that are *unused in the actual template* (the template delegates to `<falcon-tag-tw>`). Wave 9.E carry-over; FT-01 recommends removal. A builder must not rely on or extend that `classes` signal.
+- `[CODE]` falcon-tag.component.ts:61-99 / GAPS_AND_UPGRADES.md FT-01 **Known dead code** — the wrapper carries a legacy `classes` computed signal with hardcoded `_severityClasses()` / `_sizeClasses()` helpers that are *unused in the actual template* (the 29-line template delegates to `<falcon-tag-tw>` / `<falcon-tag>`). Wave 9.E carry-over; FT-01 recommends removal. A builder must not rely on or extend that `classes` signal.
+- `[CODE]` GAPS_AND_UPGRADES.md FT-07 **Token-parity gap** — the default `-tw` path hardcodes `bg-falcon-*` palette utilities (`tag-tailwind-classes.ts:36-46`); `tag.tokens.css` carries no per-severity color tokens. A per-instance `--falcon-tag-bg` override only affects the Shadow path (`useTailwind=false`). Don't expect token overrides to recolor a default-mode tag.
 
 ## Integration gotchas
 - `[CODE]` `GAPS_AND_UPGRADES.md:5-7` **Dead `classes` computed in the wrapper** — internal-only; do not extend it. The Stencil tag is the live render path.
@@ -43,4 +44,4 @@
 - `[CODE]` `GAPS_AND_UPGRADES.md:51` **Visual collision with `<falcon-badge>`** — both share the info=blue / success=green palette; do not place a `<falcon-badge variant="info">` and `<falcon-tag severity="info">` on the same row — they look identical but mean different things.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` `falcon-tag.types.ts` / `falcon-tag.component.ts` API surface. Dead-code and i18n gaps are ✅ VERIFIED against `[CODE]` line references in `GAPS_AND_UPGRADES.md`. Backend ownership of represented data is `[INFERRED]` per host flow.
+🟢 RE-VERIFIED 2026-06-03 (B10) — `[CODE]` `falcon-tag.types.ts` / `falcon-tag.component.ts` API surface re-read. Dead-code (FT-01, ts:61-99) and token-parity (FT-07) and i18n (FT-02) gaps ✅ VERIFIED against source. The `falcon-tag-dismiss` → `(falconDismiss)` re-emit confirmed (ts:56,76-79). Backend ownership of represented data is `[INFERRED]` per host flow.

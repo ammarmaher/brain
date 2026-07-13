@@ -40,4 +40,4 @@ The badge runs **no validation** — no form control, no CVA (`[BRAIN-OUT]` API.
 - `[INFERRED]` The badge is `inline-flex` — placing it as an overlay on an icon (notification-count pattern) needs the *host* to add `relative`/`absolute` positioning; the badge has no built-in overlay mode (`[BRAIN-OUT]` GAPS_AND_UPGRADES.md notes no overlay capability — it is a flow-inline pill).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-badge.tsx + falcon-badge.component.ts. No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper. `ariaLabel`-wrapper-gap ✅ VERIFIED against both source files.
+🟡 CODE-DERIVED from `[CODE]` falcon-badge.tsx + falcon-badge.component.ts. No backend wiring, no V-rules, no PES — confirmed by the absence of `inject()`/HTTP/CVA in the wrapper. REFRESH 2026-06-03 — `ariaLabel` gap re-confirmed and found Shadow-only (the `-tw` twin at `[CODE]` falcon-badge-tw.tsx:19-27 also lacks it). The `<ng-content>` projection note (line 34) is correct — verified against `[CODE]` falcon-badge.component.html:11,20. `-tw` carries an extra `rootExtraClass` prop (`[CODE]` falcon-badge-tw.tsx:27) absent from Shadow.

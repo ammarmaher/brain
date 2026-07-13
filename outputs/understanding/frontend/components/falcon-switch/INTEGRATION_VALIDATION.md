@@ -4,8 +4,8 @@
 
 ## Owning backend module(s)
 **None — purely presentational.** The component owns no data. The boolean it produces is written into whatever the *host flow* owns:
-- **Commerce** — service / application enable-disable state (the `applications-table` switch flips a service's live state; the actual mutation is a Commerce call owned by the table's state slice — see `project_commchannels_apps_tabs_backend_integration_plan` in `[MEMORY]`, where `eFalconServiceAction.Enable=3` / `Disable=2` are the backend actions).
-- **Commerce** — Add Client service-row opt-in is part of the Add Client wizard payload (Commerce-owned).
+- **Commerce** — service-pricing row visibility (the `service-pricing-table` switch flips `row.visible`; the mutation is a Commerce call owned by the table's state slice). `[INFERRED]` Service enable/disable elsewhere uses `eFalconServiceAction.Enable=3 / Disable=2` per `project_commchannels_apps_tabs_backend_integration_plan` in `[MEMORY]`.
+- **Commerce** — Add Client application / comm-channel per-row opt-in is part of the Add Client wizard payload (Commerce-owned).
 - **Identity / Commerce** — settings preference toggles persist as account configuration.
 
 ## Backend wiring
@@ -47,9 +47,10 @@
 ## Integration gotchas
 - `[CODE]` `USAGE.md:79` **Never bind `[(ngModel)]` and `[checkedInput]` on the same instance** — two owners for one value.
 - `[CODE]` `GAPS_AND_UPGRADES.md:9-13` **No loading state** — for an async-confirmed toggle, gate `[disabled]` during the call yourself; the switch will not show pending on its own.
-- `[CODE]` `USAGE.md:78` **`textOn`/`textOff` only apply to `channel-pill`** — setting them on `dot-knob` / `hidden-input` is a silent no-op.
+- `[CODE]` falcon-switch.tsx:191 **`textOn`/`textOff` render in ANY variant** (whenever either is set) — NOT channel-pill-only (prior dossier was wrong).
+- `[CODE]` falcon-switch.component.ts:124-130 **The wrapper's `handleChange` has NO disabled guard** — it relies on the Stencil `if (this.disabled) { event.preventDefault(); return; }` (falcon-switch.tsx:99-106). If a future change bypasses the native input, a disabled switch could emit. (Contrast: the radio wrapper DOES guard in `handleChange`.)
 - `[INFERRED]` Optimistic flip without backend confirmation can desync — re-derive the switch's bound value from the confirmed server state after the call resolves.
-- `[INFERRED]` Per the `falcon-dropdown` `[disabled]` trap — prefer the property binding `[disabled]="true"` over `[attr.disabled]` so the wrapper setter fires.
+- `[CODE]` falcon-switch.component.ts:77 **Parent-driven disable input is `disabled` (binds)** — prefer `[disabled]="true"` over `[attr.disabled]` so the setter fires into `disabled$`.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` consumer grep + `[MEMORY]` `commchannels_apps_tabs` integration plan. Backend wiring rows are `[INFERRED]` (the plan is 🟡 PLANNED, not yet landed). A full-fidelity pass should read `falcon-switch.component.ts` CVA implementation directly.
+🟢 RE-VERIFIED 2026-06-03 (B06) — read `falcon-switch.component.ts` CVA directly: `writeValue`→`value$`, `handleChange`→`onChange`+`valueChange`, `disabled` setter + `setDisabledState` share `disabled$`. CORRECTED: `textOn`/`textOff` render in any variant; flagged the missing wrapper-side disabled guard. Backend wiring rows remain `[INFERRED]` (the commchannels plan is PLANNED); the live service-toggle wiring confirmed via service-pricing-table.

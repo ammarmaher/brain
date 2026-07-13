@@ -1,4 +1,4 @@
-# falcon-input — USAGE
+﻿# falcon-input — USAGE
 
 ## Real usage examples (active codebase)
 
@@ -181,3 +181,37 @@ import { FormsModule } from '@angular/forms'; // for ngModel
 | Use `useTailwind=true` (default). | Toggle to Shadow only if slots needed. |
 | Bind `(ngModelChange)` or `formControlName`. | Bind `[value]` directly. |
 | Add Tailwind utilities via `class=` or `wrapperClass`. | Add SCSS rules in consumer CSS. |
+
+## Icon-slot usage (2026-05-17 unified API)
+
+`[CODE]` Both render paths now support a leading/trailing icon via projected slots + a boolean toggle:
+
+```html
+<falcon-angular-input
+  [label]="'Search'"
+  [iconRight]="true"
+  [(ngModel)]="term">
+  <span slot="icon-right" aria-hidden="true"><i class="fi fi-search"></i></span>
+</falcon-angular-input>
+```
+
+> The `-tw` twin auto-prepends `--falcon-input-icon-input-padding-{start,end}` (1.5rem) to the native input so the value text never overlaps the glyph. Do NOT hand-roll `ps-7` — Falcon's `--spacing-7` is 2.5rem, not 28px.
+
+## Consumer Sweep (2026-06-03)
+
+[CODE] grep `<falcon-angular-input[\s>]` across `apps/` returned **37 files / 144 occurrences**; across `libs/falcon/` **4 files**. Full app list (occurrence counts):
+
+- `apps/{admin,management}-console/.../org-hierarchy-page/components/wizard-components/add-client-wizard/{client-information-step (12), client-account-owner-step (6), client-settings-step (9), client-applications-step, client-comm-channels-step}.component.html`
+- `apps/{admin,management}-console/.../org-hierarchy-page/components/wizard-components/add-user-wizard/user-personal-step.component.html` (5)
+- `apps/{admin,management}-console/.../org-hierarchy-page/components/tab-components/{settings-tab (10/4), hierarchy-tab/falcon-org-info-panel (13), hierarchy-tab/falcon-org-node-drawer (3)}.component.{html,ts}`
+- `apps/{admin,management}-console/.../templates-page/components/templates-wizard/steps/{step1-basic-info (3), step2-message-structure (6), flow/flow-editor (2), buttons/button-card (9)}.component.{html,ts}` + `templates-list.component.html` (1)
+- `apps/management-console/.../contact-groups/share-dialog/share-dialog.component.html` (1)
+- `apps/host-shell/.../auth/{get-started, forgot-password-flow}.component.html` (1 each; get-started also has a stale selector ref in its `.scss`)
+- `libs/falcon/src/shared-features/user-details/components/user-details-page.component.html`
+- `libs/falcon/src/shared-features/service-pricing-table/service-pricing-table.component.html`
+- `libs/falcon/src/shared-ui/index.ts` (re-export) · `libs/falcon/src/shared-utils/lib/validations/named-validators.ts` (selector-string ref, non-render)
+
+> `[INFERRED]` count rose from the prior "14" sweep mainly because templates-page + auth + contracts features adopted the component and the folder renamed `organization-hierarchy/` → `org-hierarchy-page/`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B01); RE-VERIFIED 2026-06-03 (W1-a). Example 1 (`add-client-special-input`) + the icon-slot example confirmed against live source; Consumer Sweep re-run (`<falcon-angular-input[\s>]` → 37 app files / 144 occurrences + 4 files in `libs/falcon`) — counts reproduced EXACTLY. W1-a verdict: PASS.

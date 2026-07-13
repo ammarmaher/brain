@@ -34,10 +34,10 @@ If there is **no** trailing button, it is visually just an input — the button 
 Customization order (`feedback_falcon_custom_library_mandatory` — inputs → templates → slots → variants → token override → upgrade → wrapper):
 1. **Inputs** — `[label]`, `[placeholder]`, `[(ngModel)]`/CVA, `[required]`, `[helperText]`, `[errorMessage]`, `size`, `state`.
 2. **Verify affordance** — `[verifyButton]="true"`, `[verifyLabel]="'Verify'"`, and `[verifyDisabled]` synced to form validity; handle `(falcon-verify)` to launch the challenge.
-3. **Slots** — `slot="icon-left"` projected child for a leading mail glyph (trailing slot is for the no-verify case).
-4. **Validation** — pair the form control with `Validators.email` + `Validators.required`; the component renders the error you pass, it does not compute it.
-5. **Tokens** — restyle via `email-field.tokens.css` `--falcon-email-field-*` (verify-button colors, partition divider) — never hardcode.
-6. **Upgrade** — a built-in `verified` / `verifying` state, a leading icon prop, or variant/appearance are GAPs (`DECISION.md` G2/G6/G8) — raise, do not hand-roll a checkmark overlay.
+3. **Slots** — `slot="icon-left"` (set `[iconLeft]`) for a leading mail glyph; `slot="icon-right"` (set `[iconRight]`) for the no-verify case (suppressed when `verifyButton` is on). `[verifyIcon]="true"` adds the circular-arrows glyph inside the Verify button (`-tw` path only).
+4. **Validation** — pair the form control with `Validators.email` + `Validators.required`; the component renders the error you pass, it does not compute it. Bind `(blur)` so touched updates (native blur doesn't bubble).
+5. **Tokens** — restyle via `email-field.tokens.css` `--falcon-email-field-*` (verify-button colors, 1px divider) — never hardcode.
+6. **Upgrade** — a built-in `verified`/`verifying` state (G2), Shadow-path `verifyIcon` parity (G1), a verify-button `aria-label` (G3), or variant/appearance (G6) are GAPs — raise, do not hand-roll a checkmark overlay.
 
 ## Anti-patterns
 - Placing a separate `<falcon-angular-button>` next to a plain input to fake the verify look — use `verifyButton` so the shared border and divider are correct.
@@ -47,4 +47,4 @@ Customization order (`feedback_falcon_custom_library_mandatory` — inputs → t
 - Using it for OTP entry, passwords, or phone numbers — wrong component (see table).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-email-field.tsx` + `falcon-email-field.component.ts`. Cross-library map 🔴 INFERRED from each library's public API. Single-element-look + verify-suppress-on-disabled + no-verified-state ✅ VERIFIED against source.
+🟢 code-verified (2026-06-03) from `falcon-email-field.tsx` + `falcon-email-field-tw.tsx` render trees. Cross-library map 🔴 INFERRED from each library's public API. Single-element-look + verify-suppress-on-disabled + no-verified-state + icon slots ✅ VERIFIED against source.

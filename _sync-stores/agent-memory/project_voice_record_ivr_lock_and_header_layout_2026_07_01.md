@@ -1,0 +1,21 @@
+---
+name: project_voice_record_ivr_lock_and_header_layout_2026_07_01
+description: Voice Records — per-row IVR lock (BACKEND-BLOCKED, fully REVERTED) + node-details-section moved under the tabs (KEPT, both consoles)
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 5976432b-1428-415f-a958-f9c51cccf11d
+---
+
+**UPDATE 2026-07-01 — the LOCK was fully REVERTED (FE + backend) per [[feedback_backend_is_sot_do_not_author_backend_2026_07_01]].** The lock needs a `usedInIvr` field on the list DTO that the backend doesn't have; adding it = authoring backend code, which the user forbids (backend = SoT). So: (a) my templates-svc changes (DTO / batch usage-reader / handler) were surgically reverted (prior-session sharedUsers + sharedWith work KEPT), rebuilt, redeployed → running list API confirmed no longer emits usedInIvr; (b) the FE lock (model usedInIvr / name-cell lock render / delete-disabled / i18n lockedHint) was reverted too (user's choice), nx build ×2 GREEN. The **node-details-under-tabs layout reorder was KEPT** (separate FE ask, both shells). Lock feature is PARKED — needs a backend-team PR to add usedInIvr before the FE can show it. Original (now-reverted) build detail below for reference.
+
+**Two screenshot-driven Voice Service changes (both consoles), 0 review defects.** Continues [[project_voice_record_pes_gating_2026_07_01]] / [[project_voice_service_client_port_2026_06_30]].
+
+**(1) Per-row IVR LOCK (records used by an IVR cannot be deleted).** SoT drives it off a per-row `usedInIvr`; that flag existed NOWHERE in our stack (only the delete guard used `IVoiceRecordUsageReader.IsUsedByAnyIvrAsync` single-check → 409), so added the whole data path:
+- **BACKEND (falcon-core-templates-svc, net10):** +`UsedInIvr` bool on `VoiceRecordListItemDto` (serialized camelCase → `usedInIvr`); +batch `GetIdsUsedByAnyIvrAsync(ids, ct)` on `IVoiceRecordUsageReader` + `IvrVoiceRecordUsageReader` (nested `ids.Contains(c.VoiceRecordId)` over `flow.nodes[].content[].voiceRecordId`, `DisplayStatus != Deleted`, then in-memory extract the referenced ids — one query per page, not N); `ListVoiceRecordsHandler` injects the reader + maps `r.MapToListItem() with { UsedInIvr = usedIds.Contains(r.Id) }`. DI already registered (delete handler injects it).
+- **FE (both apps):** model +`usedInIvr` (wire optional / domain / `mapVoiceRecordRow` default false → absent field is safe); records-tab NEW custom `name` cell = name + inline **lucide closed-padlock SVG** (currentColor) with native `[title]='voiceRecords.lockedHint'` when `row.usedInIvr`; Delete row action `disabled: (row) => !!row.usedInIvr` (FalconDataTableRowMenuAction supports a `disabled` predicate). i18n +`voiceRecords.lockedHint` "Used in an approved IVR — delete the IVR first." (en+ar).
+- **GOTCHAS:** Falcon font-icons only have `falcon-icon-lock-OPEN` (no closed padlock) → used an inline lucide `<svg>` (rect + shackle path). Backend build gates: **S125** (SonarAnalyzer flags a code-looking `//` comment — reword prose, no `;`/`()`), **MA0002** (Meziantou — bare `new HashSet<string>()` needs `StringComparer.Ordinal`).
+
+**(2) LAYOUT: node-details-section moved UNDER the tabs** in both shells (was above; SoT screenshot shows tabs → node header(avatar+name+Create action) → content). Pure FE template reorder; the create-button gate / avatar / flagsLoaded content gate all intact.
+
+**Verified:** nx build mgmt+admin GREEN; `dotnet build` templates-svc 0/0; templates-svc redeployed (`falcon-templates-1` restart → recompiled) → list API `GET /api/voice-records` **200 with `usedInIvr` on every row** (200 also proves the nested batch query translates). All rows read false today (no IVR references exist). Adversarial review (backend query correctness + FE render/layout, per-finding verify) → **0 defects**. NOT visually proven for a LOCKED row (needs a real IVR referencing a record — a voice comm channel to author, or Mongo auth to seed — stopped as a rabbit hole; the guard 409s regardless). Details-page lock (SoT also shows it in the Record-name field) = optional follow-up (needs the details DTO to also emit usedInIvr). **UNCOMMITTED** — FE on polishing-v0.4 ([[feedback_fe_no_commit_no_branch_without_instruction_2026_06_22]]); templates-svc change built + redeployed LOCALLY (not committed).

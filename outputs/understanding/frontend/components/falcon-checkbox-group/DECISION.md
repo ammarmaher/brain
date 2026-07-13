@@ -80,3 +80,8 @@ P2: G2 (select-all), G4 (alias), G5 (min/max), G6 (required marker).
 
 ### 10. Risky?
 - Selection comparison via `===` and `Array.includes` — switching to `trackByFn` semantics would break consumers tracking by identity. Maintain value equality.
+- The `checkedInput` bypass into children — shared with falcon-checkbox; don't change the child contract.
+- The two-implementation split (Angular composes children; Stencil twin self-contained) — "unifying" them would be a large refactor touching React/Vue.
+
+## Verification
+🟢 code-verified against the Angular wrapper + both Stencil group tags + token file (read 2026-06-03). **0 live consumers** (showcase-only — grep-verified 2026-06-03); the component is structurally sound but currently unused in the apps. Key structural finding: the Angular wrapper does NOT render the Stencil group (G9/G12); real grouped checkboxes are hand-rolled today.

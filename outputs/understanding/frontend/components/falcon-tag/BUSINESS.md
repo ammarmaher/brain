@@ -8,10 +8,10 @@
 ## PRD / business rules touched
 | Rule | Source | How this component enforces / surfaces it |
 |---|---|---|
-| `[CODE]` Account settings surface labelled attribute chips | `[CODE]` `USAGE.md:103` — `settings-tab.component.html` | The Settings tab uses tags to show settings-related labelled values as non-status chips. |
-| `[CODE]` Add Client settings step shows attribute chips | `[CODE]` `USAGE.md:104` — `add-client-wizard/client-settings-step.component.html` | The Add Client settings step renders tags for labelled values during client creation. |
-| `[INFERRED]` Permissions are a multi-value set on a user | `[INFERRED]` from `OVERVIEW.md:13` / `USAGE.md:28-39` | Each permission a user holds is one `secondary` tag inside a cell — the set of chips *is* the visible permission set. |
-| `[INFERRED]` Filters are a removable set of predicates | `[INFERRED]` from `OVERVIEW.md:13` / `USAGE.md:3-14` | Each active filter is a dismissible tag; dismissing it retracts that predicate from the query. |
+| `[CODE]` Contact-group "shared-with" recipients are a labelled set | `[CODE]` contact-groups-list.component.html:123-135 + contact-group-detail.component.html:157 (both consoles) | Each recipient is a `secondary` chip; a `+N` overflow chip caps the visible set. The set of chips *is* the visible share list. |
+| `[CODE]` Account settings surface labelled attribute chips | `[CODE]` settings-tab.component.html + add-client-wizard/client-settings-step.component.html | The Settings tab + Add Client settings step show settings-related labelled values as non-status chips. |
+| `[INFERRED]` Permissions are a multi-value set on a user | `[INFERRED]` from the sharedWith / multi-value cell pattern | Each permission a user holds is one `secondary` tag inside a cell — the set of chips *is* the visible permission set. |
+| `[INFERRED]` Filters are a removable set of predicates | `[INFERRED]` from the dismissible-chip pattern | Each active filter is a dismissible tag; dismissing it retracts that predicate from the query. |
 
 ## Business constraints baked in
 - `[CODE]` `API.md:36-38` / `falcon-tag.types.ts:2-9` **Severity vocabulary is fixed at 7 values** — `success`, `info`, `warning`, `warn` (legacy alias for `warning`), `danger`, `secondary`, `contrast`. `secondary` is the **neutral default** — the correct choice for a *non-status* attribute chip (a permission, a filter label). The severity is a *visual classification*, not a domain status enum (see the gotcha below).
@@ -28,10 +28,10 @@ Mixing the two on the same row is a `[CODE]`-flagged risk (`GAPS_AND_UPGRADES.md
 ## Business flows using this component
 | Flow | Page | Role of the component in the flow |
 |---|---|---|
-| Settings attribute chips | admin-console org-hierarchy `settings-tab` | Labelled value chips for settings-related attributes. |
-| Add Client — settings step | admin-console `add-client-wizard/client-settings-step` | Attribute chips shown during client creation. |
-| Filter chips | admin-console org-hierarchy tabs (`[INFERRED]`) | Each active filter is a dismissible chip; ✕ retracts the predicate. |
-| Permission tags in a table cell | user list cells (`[INFERRED]` per `USAGE.md:28-39`) | One `secondary` tag per permission — the chip set is the visible permission list. |
+| Contact-group sharedWith chips | both consoles `contact-groups-list` / `contact-group-detail` / `share-dialog` / `create-contact-group` | `secondary` recipient chips + `+N` overflow (the dominant production use). |
+| Settings attribute chips | admin-console org-hierarchy `settings-tab` + `add-client-wizard/client-settings-step` | Labelled value chips for settings-related attributes. |
+| Filter chips | org-hierarchy tabs (`[INFERRED]`) | Each active filter is a dismissible chip; ✕ retracts the predicate. |
+| Permission tags in a table cell | user list cells (`[INFERRED]`) | One `secondary` tag per permission — the chip set is the visible permission list. |
 | Multi-select selected values | anywhere `<falcon-angular-multi-select>` is used | Each selected option renders as a dismissible chip; ✕ deselects it. |
 
 ## Business gotchas
@@ -41,4 +41,4 @@ Mixing the two on the same row is a `[CODE]`-flagged risk (`GAPS_AND_UPGRADES.md
 - The dismiss `aria-label` is hardcoded English `"Remove"` (`GAPS_AND_UPGRADES.md:26-27`) — for an Arabic / RTL UI this is an i18n gap; the chip text itself must still be translated by the consumer before being passed to `[value]`.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` `falcon-tag.types.ts` severity enum. Settings-tab and Add Client settings-step uses are 🟡 CODE-DERIVED (present in admin-console source per `USAGE.md:103-104`); filter-chip and permission-tag uses are `[INFERRED]`. Severity-vs-status separation is ✅ VERIFIED against `falcon-tag.types.ts` (7 generic values) and `falcon-status-badge.types.ts` (9 status values) — two distinct enums confirmed in code.
+🟢 RE-VERIFIED 2026-06-03 (B10) — `[CODE]` `falcon-tag.types.ts:2-15` severity enum confirmed. Contact-groups sharedWith chips ✅ VERIFIED in live source (contact-groups-list.component.html:123-135, contact-group-detail.component.html:157; the dominant production use). Settings-tab / Add Client uses ✅ VERIFIED present. Filter-chip and permission-tag uses are `[INFERRED]`. Severity-vs-status separation ✅ VERIFIED against the two distinct type files (7 generic vs 9 status).

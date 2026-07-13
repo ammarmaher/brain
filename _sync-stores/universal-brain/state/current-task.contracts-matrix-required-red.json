@@ -1,0 +1,34 @@
+{
+  "status": "completed",
+  "completedAt": "2026-06-06",
+  "result": "DONE (v2 — CORRECTED). v1 (signal [state]=cellState()) was build/test-green but DEAD at runtime (red never showed): data-table projected cells are DETACHED EmbeddedViewRefs that only re-render on a NEW [data] ref. v2 = Add-Client baked-flag pattern (user-directed): invalidCells signal + matrixRows() bakes cellErrors:{[dest]:bool}; cell reads [state]=row.cellErrors?.[dest]?'error':'default' + (focusout)=onCellBlur (add if empty/remove if filled); reset on app/channel switch. Falcon components only, NO PrimeNG/native/SCSS/ng-deep, NO libs change. GREEN: admin vitest 784/784 (matrix 28) + mgmt 617/617 (section 26); admin build EXIT0 133a597b595189f0 + mgmt EXIT0 5f9ef967d35c72ce; my files lint-clean (admin lint fails only on pre-existing untracked old-test-charging). Live pixel-verify pending login; HIGH confidence (proven Add-Client mechanism). NO COMMITS. Memory: project_contracts_matrix_required_empty_red_2026_06_06.md.",
+  "note": "SIDECAR task slot — the shared current-task.json is held by a CONCURRENT session (Add-Client row vcenter). This file tracks THIS session's task so neither clobbers the other (mirrors the current-task.uploader-consolidation.json convention).",
+  "taskId": "contracts-matrix-required-empty-red-2026-06-06",
+  "title": "Add-Contract wizard step-3 Contract-Details matrix: required-rate cells turn RED once VISITED and left EMPTY (touched + empty).",
+  "startedAt": "2026-06-06",
+  "mode": "fe-feature-validation-ux",
+  "branch": "polishing-v0.4 (contracts uncommitted tree; NO commits per policy)",
+  "repo": "C:/Falcon/Falcon/falcon-web-platform-ui",
+  "scope": "ADMIN-ONLY at runtime (editable matrix = contracts-add-wizard step3 + contracts-edit-contract, both reuse admin contract-details-step). mgmt contract-details-section is view-only (editable=false) — mirrored for byte-parity (inert).",
+  "currentStep": "Source + tests DONE (admin .ts/.html + mgmt .ts/.html + admin matrix spec + mgmt section spec). Running vitest + dev-build gates.",
+  "nextStep": "Run admin + mgmt contracts vitest; then nx build admin-console + management-console --configuration=development; update memory; finalize.",
+  "design": {
+    "trigger": "(focusout) on each <falcon-angular-input-number> -> markCellTouched(priority,destination) -> immutable Set signal (zoneless-correct CD).",
+    "red": "[state]=cellState(...) -> Falcon built-in 'error' state (red --falcon-input tokens) when touched AND existing live matrix() ratePerUnit null. NO hand-rolled colors.",
+    "empty_source": "Reads LIVE matrix() (NOT the deliberately-stale flattened let-value).",
+    "shortCircuit": "cellState reads touchedCells() FIRST -> untouched cells never read matrix() -> disappears-as-you-type reference-stability invariant untouched.",
+    "reset": "touchedCells cleared in changeRateSelection (app/channel switch).",
+    "noRequiredAttr": "Deliberately NO `required` attr (empty cell is a valid 'unset' rate dropped from payload; would over-claim aria-required). state='error' sets aria-invalid when red. Visual-only; does NOT gate Save.",
+    "zeroLibChange": true
+  },
+  "files": [
+    "apps/admin-console/.../contracts-add-wizard/contract-details-step/contract-details-step.component.ts + .html",
+    "apps/management-console/.../contracts-contract-details-section/contracts-contract-details-section.component.ts + .html",
+    "apps/admin-console/tests/contracts/contract-matrix-deepdive.spec.ts (+11 cellState tests)",
+    "apps/management-console/tests/contracts/contracts-contract-details-section.component.spec.ts (+7 cellState tests)"
+  ],
+  "blockers": [],
+  "noCommits": true,
+  "parkedTask": "state/parked-tasks/20260606_wallet-main-transfer-restore-PARKED.json",
+  "memory": "project_contracts_matrix_falcon_datatable_migration_2026_06_06.md ; project_datepicker_required_star_red_2026_06_06.md"
+}

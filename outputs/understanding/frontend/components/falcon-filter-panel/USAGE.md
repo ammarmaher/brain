@@ -1,4 +1,4 @@
-# falcon-filter-panel — USAGE
+﻿# falcon-filter-panel — USAGE
 
 ## Example 1 — Admin user-list filter strip
 
@@ -101,3 +101,14 @@ import type {
 - DO — use `(filterApply)` for the "commit filters" UX.
 - DON'T — bind `[(values)]` expecting two-way; the panel is one-way for values, output-only.
 - DON'T — try to project a custom field via `<ng-template>` — not supported (P1 gap).
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-filter-panel>` across `apps/` + `libs/falcon/` returned **0 consumers** as of 2026-05-17. Status: showcase-only or not yet adopted.
+
+## Deep-Dive Consumer Sweep (2026-06-03 — B12)
+
+`[CODE]` grep `<falcon-angular-filter-panel>` / `<falcon-filter-panel>` / `<falcon-filter-panel-tw>` across `apps/` + `libs/falcon` → **0 consumers** (unchanged). Only the TYPES are barrel-exported (`falcon-ui-core/src/index.ts:105/109`). For production filter strips, hand-compose Falcon atoms per `DECISION.md` until FFP-01 lands.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh). Examples re-confirmed against falcon-filter-panel-tw.tsx; Consumer Sweep re-run (still 0); the `[wrapperClass]`/`[slotClass]`/`[inputClass]` inputs + the controlled-`values` pattern confirmed in source.

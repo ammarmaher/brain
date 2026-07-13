@@ -1,5 +1,8 @@
 # falcon-message-host — DECISION
 
+> [!warning] SUPERSEDED — documented canonically at [[falcon-message-service]]; canonical service is `FalconMessageOrchestratorService`.
+> The `<falcon-angular-message-host>` component is a no-op host pending removal; `FalconMessageService` is a back-compat shim forwarding to the orchestrator. [CODE] `libs/falcon-ui-core/src/angular-wrapper/components/falcon-message-service/falcon-message-service.ts:1-23`. The Tier-1/Tier-2 upgrade list below predates Phase 5 and is OBSOLETE — those upgrades now belong to `FalconMessageOrchestratorService`, not this host.
+
 ## Brain SK final recommendation
 
 ### Use this component for
@@ -38,7 +41,7 @@
 > Use `<falcon-angular-message-host>` ONLY for PrimeNG migration substrate or when `FalconMessageService.add()` semantics are explicitly needed. Mount once at the app shell. Inject `FalconMessageService` in HTTP interceptors / feature components and call `add({severity, summary, detail})`. Use `severity: 'warn'` for PrimeNG compat (auto-mapped to `'warning'`). For brand-new business-status feedback in net-new code, prefer `<falcon-angular-notification-stack>` + `FalconNotificationService.push()`.
 
 ### Status
-**ACTIVE substrate** — production usage in host-shell verified. The underlying toast IS deprecated for new code; the message-host remains as the PrimeNG-compat substrate.
+**SUPERSEDED (dossier).** Canonical unit doc = [[falcon-message-service]]. The host component is a no-op pending removal; the `FalconMessageService` shim is back-compat-only and forwards to `FalconMessageOrchestratorService.show()`. For new code use the orchestrator directly. [CODE] `falcon-message-service.ts:1-23`.
 
 ---
 
@@ -96,4 +99,7 @@ All items 6.
 - **The `severity: 'warn'` → `'warning'` mapping** — removing breaks PrimeNG migration code paths.
 - **The `providedIn: 'root'` singleton** — flipping to module-scoped would break shared usage.
 - **The auto-id generation pattern (`falcon-msg-<N>`)** — consumers might be inspecting ids.
-- **The `messages$` observable** — feature code MAY be subscribing to it externally for analytics.
+- **The `messages$` observable** — _NOTE (Phase 5): it now always emits `[]`_ ([CODE] `falcon-message-service.ts:65-69`); any external subscriber relying on real data is already broken. The remaining live risk is the `.add({severity, summary, detail})` shim signature, which the orchestrator preserves.
+
+## Verification
+🟡 code-derived (B23 reconcile 2026-06-03) — supersession + shim/no-op facts cross-checked against the live successor dossier [BRAIN-OUT] `understanding/frontend/components/falcon-message-service/OVERVIEW.md` (B18, 🟢 vs `falcon-message-service.ts`); host still mounted [CODE] `apps/host-shell/src/app/app.ts:38`. Upgrade lists above the banner are obsolete (pre-Phase-5).

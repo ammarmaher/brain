@@ -36,10 +36,10 @@ Composed Stencil tag: `<falcon-table-tw>` (Light DOM, with `hosts-external-cells
 | `lazy` | `boolean` | `false` | Server-side mode |
 | `totalRecords` | `number \| null` | `null` | Required for lazy mode |
 | `sortMode` | `'single' \| 'multiple'` | `'single'` | |
-| `loading` | `boolean` | `false` | Renders skeleton rows |
-| `skeletonRows` | `number` | `6` | |
-| `scrollable` | `boolean` | `false` | Sticky thead + maxHeight clamp |
-| `scrollHeight` | `string \| undefined` | — | CSS length or `'flex'` |
+| `loading` | `boolean` | `false` | Renders skeleton rows. **HARD SWAP — see the Loading + busyRowIds note below.** |
+| `skeletonRows` | `number` | `5` | `[CODE]` :230-239 — default 5 (falls back to `provideFalconDataTableSkeleton()` config when not bound; the prior dossier's "6" is stale). |
+| `scrollable` | `boolean` | **`true`** | `[CODE]` :257 — default is now `true` (the prior dossier's `false` is stale). Sticky thead + maxHeight clamp. |
+| `scrollHeight` | `string` | **`'var(--falcon-data-table-default-scroll-height, 70vh)'`** | `[CODE]` :264 — token-backed default (was `undefined`). |
 | `striped` | `boolean` | `false` | |
 | `hoverable` | `boolean` | `true` | |
 | `tableStyleClass` | `string` | `''` | Class on the inner `<table>` |
@@ -56,6 +56,14 @@ Composed Stencil tag: `<falcon-table-tw>` (Light DOM, with `hosts-external-cells
 | `actionFlags` | `Record<string, boolean>` | `{}` | Feature flags consumed by `enableFlag` |
 | `stickyActions` | `boolean` | `false` | Pin last column to inline-end + shadow |
 | `paginatorDropdownAppendTo` | `string \| undefined` | — | Forwarded to paginator rows-per-page wrapper |
+| `actionsHeaderLabel` | `string` | `'Actions'` | `[CODE]` :306 — visible Actions-column header label (i18n via `\| translate`). |
+| `actionsVisibleField` | `string` | `''` | `[CODE]` :318 — per-row kebab visibility gate; `row[field] === false` hides the `⋮` for that row only (column alignment preserved). The "row-action gated on a row-level allowed-flag" mechanism. |
+| `expandedRowId` | `string \| number \| null` | `null` | `[CODE]` :324 — single-row expansion; project content via `<slot name="row-expansion">` on the inner `<falcon-table-tw>`. |
+| `tableBorderRadius` | `string \| undefined` | — | `[CODE]` :383 — per-instance container radius override. |
+| `emptyData` | `FalconEmptyDataConfig \| undefined` | — | `[CODE]` :390 — **NEW empty-state composition** (composes `<falcon-empty-data>`); resolves the prior "empty cell is bare text" gap when set. Pairs with `(emptyDataAction)` + `(emptyStateChange)`. |
+| `showCustomFooter` | `boolean` | `true` | `[CODE]` :410 — renders `<falcon-angular-custom-table-footer>` (Showing X from Y + rows-per-page) instead of the bare paginator. |
+| `currentPage` | `number` | `1` | `[CODE]` :413 — paired with `(pageChange)` + `(rowsChange)` for the custom footer. |
+| `footerShowingLabel` / `footerFromLabel` / `footerRowsPerPageLabel` | `string` | `'Showing'`/`'from'`/`'Rows per page'` | `[CODE]` :416-418 — i18n strings for the custom footer. |
 
 ## Outputs
 
@@ -66,7 +74,12 @@ Composed Stencil tag: `<falcon-table-tw>` (Light DOM, with `hosts-external-cells
 | `lazyLoad` | `EventEmitter<FalconDataTableLazyLoad>` | Server-side page/sort/filter |
 | `rowAction` | `EventEmitter<FalconDataTableRowAction<T>>` (`{ action, row }`) | Row-menu item activated |
 | `rowMenuAction` | `EventEmitter<FalconDataTableRowAction<T>>` | Legacy alias of `rowAction` |
+| `rowClick` | `EventEmitter<FalconDataTableRowAction<T>>` | `[CODE]` :449 — row body clicked (distinct from row-menu) |
 | `globalFilterChange` | `EventEmitter<string>` | Search input change |
+| `emptyDataAction` | `EventEmitter<void>` | `[CODE]` :393 — the `emptyData` empty-state action button clicked |
+| `emptyStateChange` | `EventEmitter<boolean>` | `[CODE]` :398 — fires when the table flips into/out of the empty state |
+| `pageChange` | `EventEmitter<number>` | `[CODE]` :421 — custom-footer page change |
+| `rowsChange` | `EventEmitter<number>` | `[CODE]` :423 — custom-footer rows-per-page change |
 
 ## TypeScript types (from `falcon-data-table.types.ts`)
 
@@ -130,7 +143,7 @@ interface FalconDataTableMenuItem {
 
 ## Angular template projection directives
 
-All four standalone, all colocated in `falcon-data-table-cell.directive.ts`:
+**Seven** standalone directives, all colocated in `falcon-data-table-cell.directive.ts` (the four below + `FalconDataTableShadowDirective` + `FalconDataTableShadowActionsDirective` + `FalconDataTableShadowColDirective` — the latter three are in the Shadow-rows section). Core four:
 
 ```ts
 @Directive({ selector: '[falconDataTableCell]',       standalone: true })
@@ -210,8 +223,18 @@ Inherits everything from `<falcon-table-tw>`:
 - `role="grid"` + `aria-rowcount` + `aria-busy` + `aria-label`
 - Per-`<th>` `aria-sort` for sortable columns
 - Per-`<tr>` `aria-selected` when selection is active
-- Row-action button labelled per row
+- Row-action button labelled per row; icon is `falcon-icon falcon-icon-ellipsis-v` (no PrimeIcon — FT-01 resolved in the core)
 - The row-action menu is `<falcon-angular-menu>` (Falcon menu primitive with its own a11y)
+- Inherited a11y GAPS: no keyboard sort (FT-02), no Arrow/Home/End row nav (FT-03) — both still open in the core.
+
+## Loading is a HARD SWAP — use `busyRowIds` for row-level mutations
+
+`[CODE]` When `[loading]="true"`, the composed `<falcon-table-tw>` UNMOUNTS every data `<tr>` and renders only skeleton rows (the wrapper destroys/recreates the loading `EmbeddedViewRef` via `syncLoadingView` :951/1170-1182; Stencil gates `renderCell` off and shows `data-loading-mount`). Runtime-verified platform rule (2026-05-21). **Therefore never toggle `[loading]` for a single-row action** — it blanks the whole grid.
+
+`[CODE]` `busyRowIds` is **NOT an input on `<falcon-angular-data-table>`** (verified — the wrapper has no such input). The platform pattern lives in the CONSUMING feature wrapper: it keeps `busyRowIds = signal<ReadonlySet<string>>(new Set())` + an `isRowBusy(id)` guard inside its projected `<ng-template falconDataTableCell>`, rendering a per-row spinner while the table's own `[loading]` stays untouched. Live consumers: `libs/falcon/src/shared-features/service-pricing-table/service-pricing-table.component.ts:179,542` + `apps/host-shell/.../service-pricing`, `apps/management-console/.../comms-hub` (via `app-comm-mkt-view`), `.../marketplace-applications`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08) against falcon-data-table.component.ts (1612 ln), .component.html (85 ln), -cell.directive.ts (179 ln, 7 directives), .types.ts (158 ln). Drift corrected: `scrollable` default `true`, `scrollHeight` token-backed default, `skeletonRows` default 5; added `actionsHeaderLabel`/`actionsVisibleField`/`expandedRowId`/`emptyData`/custom-footer inputs + `rowClick`/`emptyDataAction`/`emptyStateChange`/`pageChange`/`rowsChange` outputs + the 3 shadow directives + `FalconDataTableShadowColDirective`; documented the `loading`-hard-swap + consumer `busyRowIds` pattern; FT-01 PrimeIcon inherited-gap RESOLVED.
 
 ---
 

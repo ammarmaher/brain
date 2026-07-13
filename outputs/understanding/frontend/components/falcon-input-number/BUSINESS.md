@@ -35,4 +35,4 @@
 - `null` vs `0`: an empty quota field is "no quota set," a `0` is "quota of zero." Treating them the same is a business error.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-input-number.component.ts` + `[VAULT]` API/USAGE dossiers. Settings-tab + Add Client Settings-step consumers ✅ VERIFIED (Wave 14 settings tab user-confirmed working, `[MEMORY]`). Clamp-on-blur + integer-truncate ✅ VERIFIED in source.
+🟢 RE-VERIFIED 2026-06-03 (B01) — `coerce()` `Math.trunc` (ts:158), empty→`null` (ts:155), `number | null` value type, clamp-on-blur all re-confirmed in live source. Consumer set broadened to contracts-cost-management (rate-card price-value) + settings + wallet drawers (USAGE.md). Settings-tab consumer ✅ VERIFIED (Wave 14, `[MEMORY]`).

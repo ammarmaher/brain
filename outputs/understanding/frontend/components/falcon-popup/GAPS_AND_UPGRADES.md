@@ -1,168 +1,114 @@
 # falcon-popup — GAPS AND UPGRADES
 
-## Missing capabilities
+> Gap IDs stabilised 2026-06-03 (B14). All findings this pass are DOC/audit only — nothing fixed.
 
-### P0 — No focus trap / focus restore
-The popup uses `role="dialog"` + `aria-modal="true"` but does NOT implement a focus trap. Tab from inside the popup can escape into the page underneath. Comparison: `falcon-angular-drawer` and `falcon-angular-dialog` BOTH have focus traps.
+## Missing capabilities (active source verified)
 
-**Risk:** keyboard users can lose context (escape into elements they can't see), tab order breaks WCAG 2.1 SC 2.4.3 (Focus Order) and SC 2.4.11 (Focus Not Obscured).
+### G-LOADING — no loading / disabled state on the confirm action (P0)
+`[CODE]` After clicking "Delete", the popup stays open and the Confirm button is clickable again. There is no built-in way to show a spinner during async work, disable both buttons in-flight, or display an error state. Consumers either close-then-run (loses context on failure) or manage a parallel signal (popup has no such inputs).
 
-**Where to fix:** This component (shared, not page-level).
+**Proposed:** `readonly loading = input<boolean>(false)` (disable both buttons, spinner on confirm) + `readonly confirmDisabled = input<boolean>(false)`. **risk-class: safe-local** (additive inputs).
 
-**Fix path:**
-- Composed approach: have the popup compose `<falcon-angular-dialog>` (with the existing focus trap) and project its variant-driven body. Currently it ignores `falcon-dialog` entirely.
-- OR replicate the focus-trap pattern from `falcon-dialog.tsx` lines 142-166.
+### G-VARIANT — no 5th variant without source changes (P1)
+`[CODE]` ts:32,47 — `VARIANTS` is typed against the 4-member union. Adding `archive`/`restore` requires editing the union + the `VARIANTS` map + the `<svg>` `@switch` (ts:134-162). Workaround: `<falcon-angular-confirm-dialog>` for non-canonical flows. **risk-class: safe-local** (extensibility design).
 
-**Priority: P0** — a11y violation.
+### G-ICONS — icons are hardcoded inline SVG, not `<falcon-angular-icon>` (P1)
+`[CODE]` ts:132-163 — four hardcoded inline `<svg>` paths in an `@switch`. Bypasses the vendored Falcon icon font + the `<falcon-angular-icon>` abstraction → inconsistency; brand-icon changes require popup source edits. Swap for `<falcon-angular-icon [name]="content().icon">`. **risk-class: safe-local**.
 
-### P0 — No loading state on confirm action
-After clicking "Delete", the popup stays open and the Delete button is clickable again. There's no built-in mechanism to:
-- Show a spinner during async work.
-- Disable both buttons during in-flight work.
-- Display the error state if the action fails.
+### G-TOKENS — no token file (P1)
+`[CODE]` Unlike dialog/drawer, popup has no `popup.tokens.css`. Visual customisation requires editing the inline template's Tailwind classes; the `::backdrop` dim is a literal (not dark-mode-aware). Introduce `popup.tokens.css` with per-variant accent/chip/surface + motion + backdrop tokens, then refactor to arbitrary-value token utilities. **risk-class: safe-local** (visual-identical until consumers override).
 
-Consumers must:
-- Close the popup, then run the async work outside it (loses context if it fails).
-- Or: manage a parallel `[loading]` signal + manually disable buttons (popup has no such inputs).
+### G-FOCUS — no hand-rolled Tab-cycle trap (P2 — DOWNGRADED from prior P0)
+`[CODE]` ts:101-112 — **CORRECTION (2026-06-03):** the popup now renders inside a native `<dialog>.showModal()`, which **confines focus to the dialog + makes the rest of the page inert**. The prior dossier's "P0 — keyboard users can tab into the page underneath" is **no longer accurate** — the native modal handles the business-critical containment. What remains absent is a *hand-rolled* focus-cycle wrap at the first/last focusable boundary (dialog/drawer have one in their Stencil cores) + explicit focus-restore-on-close. Native `showModal()` does restore focus to the invoker by default. **risk-class: safe-local** (the residual is a polish, not a WCAG blocker now).
 
-**Proposed API:**
-```ts
-@Input() loading = false;          // disable both buttons, show spinner on confirm
-@Input() confirmDisabled = false;  // independently disable confirm
-```
+### G-SELFCLOSE-DOC — does not self-close (P3 docs)
+`[CODE]` ts:408-414 — `confirm`/`cancel` only emit; the flow toggles `[open]`. Already documented; keep the "close AFTER async" warning prominent. **risk-class: safe-local** (doc).
 
-**Priority: P0**
+### G-NAME-CONSISTENCY — `[name]` interpolation is delete-only (P3)
+`[CODE]` ts:63 — other variants ignore `name`. Inconsistent but harmless. **risk-class: safe-local**.
 
-### P1 — No way to add a 5th variant without source changes
-The `VARIANTS` const is `Record<FalconPopupVariant, VariantContent>` — typed against the union. Adding a new flow type (e.g. `archive`, `restore`) requires:
-- Extending the `FalconPopupVariant` union.
-- Adding a `VariantContent` entry.
-- Adding an icon path to the `<svg>` `@switch` block (lines 121-149 of the component).
+## Drift corrected this pass (B14 — 2026-06-03)
 
-**Workaround:** use `<falcon-angular-confirm-dialog>` for non-canonical flows.
+### DRIFT-TOPLAYER — native `<dialog falconOverlay="modal">` (was "fixed wrapper + HostListener") (🟠)
+`[CODE]` ts:101-112,230-289 — the prior dossier described an outer `.fixed` backdrop wrapper + `@HostListener('document:keydown.escape')`. The live component renders a native `<dialog>` promoted into the Top Layer; ESC is the native `cancel`→`close`→`(falconClose)="onCancel()"`; focus is natively contained. CORRECTED in OVERVIEW / API / INTEGRATION / BUSINESS, and G-FOCUS downgraded. **risk-class: safe-local** (doc).
 
-**Priority: P1** — design system extensibility.
+### DRIFT-DEFAULTS — `iconBg`/`iconColor`/`glossy` default `undefined`, not `true` (🟡)
+`[CODE]` ts:309-311,333-335 — the toggles default to `undefined` (sentinel → `FalconConfigurationService.popup.*`), NOT `true`. The prior API table was wrong. CORRECTED in API. **risk-class: safe-local**.
 
-### P1 — Icons are inline SVG hardcoded, not using `<falcon-angular-icon>`
-The popup uses inline `<svg>` with hardcoded paths for the 4 icons. This bypasses the vendored Falcon icon font and the `<falcon-angular-icon>` abstraction.
+### DRIFT-HIDE-INPUTS — `hideCancel` / `hideConfirm` were missing (🟡)
+`[CODE]` ts:322-323 — two orthogonal footer-button toggles (OK-only / dismiss-only) — absent from the prior API table. The HTTP-error host binds `[hideCancel]="true"`. ADDED to API/USAGE. **risk-class: safe-local**.
 
-**Risk:** inconsistency with the rest of the platform's icon usage; changing brand icons requires modifying the popup source.
+### DRIFT-HINTS — `error`/`delete` default hints are EMPTY (🟡)
+`[CODE]` ts:56,67 — both are `''`, not "Error code: T2-409 · No data was changed." (the prior BUSINESS.md value was fabricated). CORRECTED in API/BUSINESS. **risk-class: safe-local**.
 
-**Fix:** swap inline SVG for `<falcon-angular-icon [name]="content().icon">` calls.
-
-**Priority: P1**
-
-### P1 — No token file
-Unlike every other Falcon UI component, popup has no `libs/falcon-ui-tokens/src/components/popup.tokens.css`. Visual customisation requires editing the inline template's Tailwind classes.
-
-**Risk:** Theme drift, brand customisation impossible per instance.
-
-**Proposed:** introduce `popup.tokens.css` with per-variant accent / chip / surface tokens.
-
-**Priority: P1**
-
-### P2 — No `severity` input independent of variant
-`variant` carries both UI semantics AND intent. To get a "primary-tone confirm with a generic info icon", you have to override `titleOverride`, `bodyOverride`, `hintOverride`, AND `confirmLabelOverride` while picking the closest matching variant.
-
-**Proposed:** decouple `variant` (visual / icon) from `tone` (intent).
-
-**Priority: P2**
-
-### P2 — `name` interpolation is `delete`-variant only
-Other variants ignore the `name` input. Inconsistent.
-
-**Priority: P2**
-
-### P3 — Backdrop blur is always on when `glossy=true`
-`glossy=true` is the default. On low-end devices the blur is expensive. Consider an opt-out per page.
-
-**Priority: P3**
+### DRIFT-CONSUMERS — sweep refreshed (🟡)
+`[CODE]` grep 2026-06-03 → **5 app files / 9 + 0 direct in libs/falcon** (templates-wizard ×2, wallet confirm-save, showcase) PLUS 2 library host components. The prior 8 hits (org-hierarchy add-user/add-client/page-menu/applications-table, otp-dialog) are stale. CORRECTED in OVERVIEW/USAGE. **risk-class: safe-local**.
 
 ## Missing ng-template / template slots
-- No body slot — body is pure string + signal-driven override. Rich content (icons inline, formatted text, a small form) not supported.
-- No footer slot — buttons are fixed at 2 (cancel + confirm).
-- No icon slot — icons hardcoded per variant.
+- No body slot — body is string + signal-driven override (rich content unsupported).
+- No footer slot — buttons are fixed at ≤2 (cancel + confirm, gated by `hideCancel`/`hideConfirm`); no tertiary button (G-TERTIARY).
+- No icon slot — icons hardcoded per variant (G-ICONS).
 
 ## Missing flags / options / states
-- `loading` / `confirmDisabled` — see above.
-- `tertiaryButton` — for 3-button decisions (Save / Discard / Cancel).
-- `dismissible` — today Esc always dismisses; no way to force the user to pick one of the 2 buttons.
-- `position` — always centered.
-- `size` — always max-w-md.
+- `loading` / `confirmDisabled` (G-LOADING).
+- `tertiaryButton` for 3-button decisions (Save / Discard / Cancel) (G-TERTIARY).
+- `dismissible` — today Esc/backdrop always dismiss; no way to force a button choice (G-DISMISS).
+- `size` / `position` — always centered `max-w-md`.
 
 ## Missing accessibility features
-- **No focus trap (P0).**
-- **No focus restore (P0).** Closing the popup leaves focus on the document body, not back on the trigger element.
-- No `aria-describedby` linking body/hint to the dialog.
-- No `aria-labelledby` linking title to the dialog (currently uses `aria-label="<resolvedTitle>"`).
+- **A1 (P2):** no `aria-describedby` linking body/hint to the dialog.
+- **A2 (P2):** double `role="dialog"` + `aria-modal="true"` (on the native `<dialog>` AND the inner `<article>`, ts:101-116) — redundant; the inner one is superfluous. Drop the inner pair.
+- **A3 (P3):** close × `aria-label="Close"` hardcoded English (ts:174).
+- Uses `aria-label="<resolvedTitle>"` rather than `aria-labelledby` → no programmatic link to the rendered `<h2>`.
 
 ## Missing tests
-- No `.spec.ts`.
-- No visual regression test for the 4 variants.
+- `[CODE]` No library `.spec.ts` (verified 2026-06-03). No visual regression for the 4 variants. (Consumer-side `confirm-save-modal.spec.ts` exists but is not a library spec.) GAP G-TEST: add a spec covering variant content, override fallback (`pick`), `hideCancel`/`hideConfirm`, the config-default chain, and backdrop-click→cancel. **risk-class: safe-local**.
 
 ## Missing Tailwind / token parity
-N/A — popup is Tailwind-direct, no Shadow / Light split.
+N/A — popup is Tailwind-direct, no Shadow/Light split. (The token-file absence is G-TOKENS.)
 
 ## Performance risks
-- The backdrop-blur is heavy on low-end devices.
-- The `effect()` re-runs the auto-dismiss timer logic — fine for popup (no auto-dismiss).
-- Re-rendering on each signal change is `OnPush`-friendly.
+- Backdrop-blur (`glossy`) heavy on low-end devices (now in the `::backdrop` — applies to the whole viewport).
+- `OnPush` + computeds — efficient.
 
 ## Visual / interaction risks
-- The "Cancel" button always uses `variant="secondary"` on `<falcon-button-tw>` regardless of intent.
-- The "Confirm" button visually matches the confirm tone, but for `variant="unsaved"` the confirm button is RED ("Discard & leave") — this is intentional (destructive confirm) but can read as "wrong" without context.
-- The icon chip has no animation — opens with the entire panel scale-in.
+- "Cancel" always `variant="secondary"`; "Confirm" matches the confirm tone, but `unsaved`'s confirm is RED ("Discard & leave") — intentional (destructive) but can read as "wrong" without context. Do NOT change.
+- The icon chip has no animation — opens with the panel scale-in.
 
-## Reusable upgrades needed
-1. **Focus trap + restore** (P0).
-2. **`loading` / `confirmDisabled` inputs** (P0).
-3. **Replace inline SVG with `<falcon-angular-icon>`** (P1).
-4. **Introduce `popup.tokens.css`** (P1).
-5. **Compose `<falcon-angular-dialog>` internally** — would inherit focus trap, body unmount, ARIA, etc.
-6. **Variant extensibility** — accept a `customVariant` object or move to plugin-style variants.
+## Recommended upgrade priority
 
-## Priority: page-level vs shared
-ALL belong in the shared component. Page-level workarounds break the design system.
+| ID | Title | Priority | risk-class |
+|---|---|---|---|
+| G-LOADING | `loading` / `confirmDisabled` inputs | P0 | safe-local |
+| G-TOKENS | Introduce `popup.tokens.css` | P1 | safe-local |
+| G-ICONS | Replace inline SVG with `<falcon-angular-icon>` | P1 | safe-local |
+| G-VARIANT | 5th-variant extensibility | P1 | safe-local |
+| A2 | Drop the inner duplicate `role="dialog"` | P2 | safe-local |
+| G-FOCUS | Hand-rolled Tab-cycle + explicit restore (polish) | P2 | safe-local |
+| G-TERTIARY / G-DISMISS | tertiary button / `dismissible` | P2 | safe-local |
+| G-TEST | Add a library spec | P2 | safe-local |
 
 ## Recommended upgrade API (proposed)
-
 ```ts
-@Component({ selector: 'falcon-angular-popup', ... })
-export class FalconAngularPopupComponent implements OnInit {
-  readonly open = input<boolean>(false);
-  readonly variant = input<FalconPopupVariant>('error');
-  readonly name = input<string>('');
-
-  // NEW
-  readonly loading = input<boolean>(false);
-  readonly confirmDisabled = input<boolean>(false);
-  readonly tertiaryButton = input<{ label: string; tone: 'ghost' | 'primary'; on: () => void } | null>(null);
-  readonly dismissible = input<boolean>(true);
-
-  // Visual props (already exist)
-  readonly iconBg = input<boolean>(true);
-  readonly iconColor = input<boolean>(true);
-  readonly glossy = input<boolean>(true);
-
-  // Overrides (already exist)
-  readonly titleOverride = input<string | null>(null);
-  readonly bodyOverride = input<string | null>(null);
-  readonly hintOverride = input<string | null>(null);
-  readonly confirmLabelOverride = input<string | null>(null);
-  readonly cancelLabelOverride = input<string | null>(null);
-  
-  // NEW outputs
-  readonly tertiary = output<void>();
-}
+readonly loading = input<boolean>(false);
+readonly confirmDisabled = input<boolean>(false);
+readonly dismissible = input<boolean>(true);
+readonly tertiaryButton = input<{ label: string; tone: 'ghost' | 'primary'; } | null>(null);
+readonly tertiary = output<void>();
 ```
 
 ## Future-proof recommendation
-**Compose `<falcon-angular-dialog>` instead of re-implementing.** Today popup duplicates: backdrop, ARIA, scale-in animation, Esc handling. Composing dialog:
-- Inherits focus trap (P0 fix).
-- Inherits focus restore (P0 fix).
-- Inherits aria-describedby / aria-labelledby idioms.
-- Consolidates motion / blur tokens.
+Two competing directions, both defensible:
+1. **Keep it standalone** (current) — add `loading`/tokens/icon-abstraction. Lowest risk; the native `<dialog>` already gives focus containment, so the old "compose dialog for the focus trap" argument is weaker now.
+2. **Compose `<falcon-angular-dialog>`** — would consolidate motion/backdrop tokens + dedupe modal scaffolding, BUT dialog is itself @deprecated-for-direct-use and pure-Angular popup is simpler. **Recommendation: stay standalone + add the token file + loading state** rather than refactor onto dialog.
 
-The variant-specific content (icon + title + body + buttons) layers on top via dialog's slots. Net result: popup becomes a thin layer of variant config + content composition, not an entire modal re-implementation.
+## Wave 7 Findings (2026-05-17)
+**Consumer count: 8** ([CODE] grep `<falcon-angular-popup>`). See `USAGE.md` for the (now-stale) file list.
 
-This is the SINGLE highest-leverage change for this component.
+## Deep-Dive Sweep Findings (2026-06-03 — B14)
+**Consumer count: 5 app files / 9 occurrences + 0 direct in `libs/falcon` (2 library host components compose it)** ([CODE] grep `falcon-angular-popup`).
+
+Status stays **ACTIVE / PREFERRED for the 4 canonical flows.** Findings: DRIFT-TOPLAYER (architecture — biggest), DRIFT-DEFAULTS (sentinel toggles), DRIFT-HIDE-INPUTS, DRIFT-HINTS (empty `error`/`delete` hints), DRIFT-CONSUMERS; G-LOADING / G-TOKENS / G-ICONS / G-VARIANT carried; **G-FOCUS DOWNGRADED P0→P2** (native `showModal()` contains focus). **0 HIGH-RISK-QUEUE** — all `safe-local` (the focus a11y concern is now mitigated by the platform, and the residual upgrades are additive). See FINDINGS/B14.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B14) against the 416-line source. The headline change is the focus-trap reframing (native `<dialog>.showModal()` confines focus → G-FOCUS no longer a P0 WCAG blocker) + the architecture/defaults/inputs/hints drift corrections. No deletion/promotion flags — stays ACTIVE/PREFERRED.

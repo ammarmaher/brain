@@ -45,4 +45,4 @@ Error pipeline — the panel itself emits no HTTP calls, so it has no error beha
 - No Apply-on-Enter (`[CODE]` — no `keydown` handler); the operator must click Apply (FFP-05 gap).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` falcon-filter-panel-tw.tsx + the 6 UI-layer dossiers. The `role="search"` correction ✅ VERIFIED directly against `falcon-filter-panel-tw.tsx:173` (live source). "No projection in the Angular wrapper" ✅ VERIFIED ([CODE] grep returned no `TemplateRef`). 🔴 No production consumer — endpoint wiring is inferred from the intended pattern.
+🟢 CODE-VERIFIED 2026-06-03 (B12 refresh) from `[CODE]` falcon-filter-panel-tw.tsx + falcon-filter-panel.tsx + .component.ts + .component.html. The `role="search"` is on BOTH variants (tsx:159 + tw.tsx:172-173) — now propagated to API.md + GAPS (prior "no role" was stale). No CVA / no `<ng-template>` projection ✅ RE-VERIFIED. camelCase event bridge confirmed at .component.html:17-19/30-32. 🔴 No production consumer — endpoint wiring inferred from the intended pattern.

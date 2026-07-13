@@ -23,24 +23,37 @@ The component itself binds **nothing**. The owning *flow* (Add Client / Add User
 | Ownership / verification | phone number | flow requires a verified number | proven only by the OTP round-trip (`<falcon-otp-send-dialog>` / `auth/verify-otp`), never by this field. |
 
 ## PES keys gating this component
-- `[INFERRED]` The field has no PES key of its own. Where the host *form field* is PES-gated (e.g. account-owner step in Add Client), the parent step resolves the gate and binds `disabled` accordingly. Use the property binding — not the attribute — so the wrapper's `setDisabledState` / `disabled` signal actually fires.
+| PES key | Action | Effect when denied |
+|---|---|---|
+| `[CODE]` `state.permFlags().canEditPhone` (User-Details) | edit the phone | `user-details-page.component.html:458` binds `[readonly]="!state.permFlags().canEditPhone || state.isTargetStatusFrozen()"` — read-only when the actor lacks edit-phone permission OR the target's status is frozen. |
+| `[CODE]` `state.phoneVerifyDisabled()` (User-Details) | press Verify | `[verifyDisabled]` wired off a flow predicate — see/edit the phone but can't trigger SMS verification when disallowed. |
+
+The phone-field has **no PES key of its own** — it inherits the gate of the **field**. The flagship User-Details page resolves `canEditPhone` and binds `[readonly]` + `[verifyDisabled]`. (Where a wizard step is PES-gated, that step resolves the gate; use the `[disabled]`/`[readonly]` *property* binding so the wrapper's signal fires — never `[attr.disabled]`.)
 
 ## State / signal pattern
-- `[CODE]` `falcon-phone-field.component.ts:107-129` Angular wrapper is a `ChangeDetectionStrategy.OnPush` CVA. Internal `value` + `disabled` are `signal`s. `writeValue` accepts the full E.164 string OR national number; `onChange` emits `detail.value` (full E.164).
-- `[CODE]` `falcon-phone-field.component.ts:132-137` `handleInput` reads `detail.nationalNumber` into the value signal but emits `detail.value` to the form — the national part is the *display*, the E.164 is the *model*.
-- `[CODE]` `falcon-phone-field.component.ts:139-147` `falcon-country-change` and `falcon-verify` are re-emitted as wrapper `@Output`s for the flow to consume.
-- `[CODE]` `falcon-phone-field.tsx:75-80` Stencil-internal `@State`: `focused`, `open` (country panel), `searchQuery`, `resolvedId` — none leak to the app.
+- `[CODE]` `falcon-phone-field.component.ts:65-185` Angular wrapper is `ChangeDetectionStrategy.OnPush` + CVA. Internal `value` + `disabled` are `signal`s. `writeValue` is lenient; `onChange` emits `detail.value` (full E.164).
+- `[CODE]` `falcon-phone-field.component.ts:180-185` `handleInput` reads `detail.nationalNumber` into the value signal but emits `detail.value` to the form — the national part is the *display*, the E.164 is the *model*.
+- `[CODE]` `falcon-phone-field.component.ts:187-200` `falcon-country-change`, `falcon-verify` re-emitted as wrapper `@Output`s (`countryChangeOut` / `verifyOut`); `handleBlur` re-emits `(blur)` + `onTouched`.
+- `[CODE]` `falcon-phone-field.component.ts:95-96,209-265` injects `FalconStackingService` + holds `activePanelEl`; the `(falcon-open)`/`(falcon-close)` handlers acquire/release the native Top Layer for the portaled panel.
+- `[CODE]` `falcon-phone-field.tsx:77-81` Stencil-internal `@State`: `focused`, `open` (country panel), `searchQuery`, `resolvedId` — none leak to the app.
 
 ## Skeleton ↔ app-wrapper layering
-- **Stencil skeleton** — `<falcon-phone-field>` (Shadow, `falcon-phone-field.tsx`) / `<falcon-phone-field-tw>` (Light DOM). Pure presentational: renders chooser + native `<input type="tel">` + optional Verify button inside one border. Owns the country panel, outside-click + Esc close, paste-fill is N/A here.
-- **Angular wrapper** — `<falcon-angular-phone-field>` (`falcon-phone-field.component.ts`): CVA, `defineFalconTwComponent('falcon-phone-field')` lazy-registers the Stencil element on `ngOnInit`, `useTailwind=true` default selects the Light-DOM variant.
+- **Stencil skeleton (two tags, divergent panel rendering):**
+  - `<falcon-phone-field>` (Shadow, `falcon-phone-field.tsx`) — renders chooser + dial + native `<input type="tel">` + optional Verify inside one border, and the country panel **INLINE** (`{this.open && <div class="falcon-phone-field-panel">…}` `:404-478`). Outside-click (document `mousedown`) + Esc close.
+  - `<falcon-phone-field-tw>` (Light, `falcon-phone-field-tw.tsx`) — same surface but **body-portals** the panel into `.falcon-overlay-container` via `ensurePortaled`/`positionPopoverFixed`/`removeFromOverlay` (`appendTo='body'` default; set `'inline'` to opt out), with scroll/resize reposition listeners + a `disconnectedCallback` cleanup (`:184-246`).
+- **Angular wrapper** — `<falcon-angular-phone-field>`: CVA, lazy-registers via `defineFalconTwComponent('falcon-phone-field')`, `useTailwind=true` selects the Light variant, and **drives the native Top-Layer popover lifecycle** off `(falcon-open)`/`(falcon-close)` (Phase C / Wave 6) — see below.
 - Per `feedback_library_skeleton_app_api` — the library never fetches; the country list is a static constant and the flow owns any backend interaction.
 
+## Top-Layer popover lifecycle (Angular wrapper) — **NOT a no-op**
+`[CODE]` `falcon-phone-field.component.ts:86-265` — the wrapper injects `FalconStackingService`. On `(falcon-open)` → `handlePopoverOpen()` → `scheduleTopLayerAcquire()` defers a frame, finds the portaled panel (`.falcon-overlay-container [data-falcon-popover-instance="<resolvedId>"][data-falcon-portaled="true"]`), promotes it via `showPopover()` (native Top Layer), and `stacking.register(panel, 'popover')`. On `(falcon-close)` / `ngOnDestroy` → `releaseTopLayer()` → `hidePopover()` + `stacking.unregister`. **Correction vs the prior dossier: these are active handlers, not no-ops** (the no-op state was the 2026-05-15 portal wave; the 2026-05-21 Phase C wave wired them).
+
 ## Integration gotchas
-- `[CODE]` `falcon-phone-field.component.ts:118-120` `writeValue` is lenient — passing a national number works, but then the emitted E.164 may be missing a dial-code prefix if the country never changed. Always seed `country` alongside `[(ngModel)]`.
-- `[CODE]` `falcon-phone-field.component.ts:100-102` Outputs are kebab-case (`falcon-country-change`, `falcon-verify`) — bind exactly that string; a camelCase guess silently no-ops.
-- `[CODE]` `falcon-phone-field.tsx:153-165` The country panel is portal-managed in the `-tw` variant (moved into `.falcon-overlay-container`) — the wrapper's `handlePopoverOpen/Close` are deliberate no-ops; do not re-wire them.
-- `[INFERRED]` Performance: the default list is only 25 entries, so the GAPS doc's "~250 nodes" concern is stale against current source — `DEFAULT_PHONE_COUNTRIES` is short and unvirtualized rendering is fine.
+- `[CODE]` `falcon-phone-field.component.ts:166-185` **CVA value-shape split** — `writeValue` is lenient (sets the signal as-is); `handleInput` stores `nationalNumber` in the signal but emits the **full E.164** (`detail.value`) to `onChange`. Always seed `country` alongside `[(ngModel)]` — `writeValue` does NOT parse a dial-code out of an incoming value, so the emitted E.164 depends on the current `country`.
+- `[CODE]` `falcon-phone-field.component.ts:144-146` Outputs are kebab-case aliases (`falcon-country-change`, `falcon-verify`) — bind exactly those strings; a camelCase guess silently no-ops. `(blur)` IS camelCase (re-emitted Stencil `falcon-blur`).
+- `[CODE]` **`verifyIcon` + `*ExtraClass` + `appendTo` are `-tw`-only** — the Shadow tag lacks them; toggling them while `useTailwind=false` no-ops.
+- `[CODE]` **No `componentOnReady` value re-push** in `writeValue` — same data-table-cell-remount race as email-field (GAP).
+- `[CODE]` **`[maxlength]` is NOT a wrapper input** — the User-Details consumer's `[maxlength]="10"` falls through as an unknown attr on the host and does NOT cap the inner native input. Cap via a Reactive Forms validator (GAP).
+- `[CODE]` Performance: the default list is **25** entries (`falcon-phone-field.utils.ts:8-34`), rendered unvirtualized — fine. The GAPS "~250 nodes" virtualization concern is **stale/overstated** and is corrected there.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-phone-field.{tsx,utils.ts,component.ts}` + `forgot-password-flow.service.ts`. Correction vs `GAPS_AND_UPGRADES.md`: the default country list is **25 countries, not ~250** (`falcon-phone-field.utils.ts:8-34`) — the virtualization perf concern is overstated. PES gating 🔴 INFERRED.
+🟢 code-verified (2026-06-03) against `falcon-phone-field.component.ts` + `.html` + `falcon-phone-field.tsx` + `falcon-phone-field-tw.tsx` + `.utils.ts`, and the flagship `user-details-page.component.html:453-463`. **Corrected**: the popover handlers actively acquire the Top Layer (not no-ops); documented Shadow-inline vs `-tw`-portal; real `canEditPhone` PES gating; the 25-country fact; the non-existent `maxlength` input. Backend (SMS-OTP) wiring 🟡 code-derived from `forgot-password-flow.service.ts` (prior pass).

@@ -46,4 +46,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`):
 - Listening on the host element for the events instead of the `@Output`s — risks the double-emit the wrapper guards against.
 
 ## Verification
-🟡 CODE-DERIVED from `falcon-otp-send-dialog.tsx` render tree + `.types.ts`. Cross-library mappings 🔴 INFERRED from standard library APIs.
+🟡 CODE-DERIVED (RE-VERIFIED 2026-06-03, B07) from `falcon-otp-send-dialog.tsx` (366 ln) render tree + `.types.ts`. The two-step render tree (channel `:198-283` / code `:286-344`), composed `<falcon-dialog size="sm">` shell (`:350`), and the `step='code'` enum (types.ts:10) re-confirmed. Cross-library mappings 🔴 INFERRED from standard library APIs.

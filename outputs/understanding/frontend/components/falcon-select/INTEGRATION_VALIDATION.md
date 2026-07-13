@@ -1,7 +1,7 @@
 # falcon-select — Integration & Validation Layer
 
-> Layer 3 of 3. UI → `OVERVIEW.md`. Business → `BUSINESS.md`.
-> **`falcon-select` is a pure TS alias of `falcon-dropdown`.** Canonical integration layer → `../falcon-dropdown/INTEGRATION_VALIDATION.md`. This file states only what is alias-specific.
+> Layer 3 of 3. UI → `OVERVIEW.md`. Business → `BUSINESS.md`. Sweep-refreshed 2026-06-03 (B04).
+> **`falcon-select` is a pure TS alias of `falcon-dropdown`** (DEAD-CANDIDATE barrel, 0 real consumers). Canonical integration layer → `../falcon-dropdown/INTEGRATION_VALIDATION.md`. This file states only what is alias-specific.
 
 ## Owning backend module(s)
 None of its own. The component is presentational; its *option list* is business reference data owned exactly as for `falcon-dropdown`:

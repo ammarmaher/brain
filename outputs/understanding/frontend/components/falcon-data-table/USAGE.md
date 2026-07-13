@@ -1,4 +1,4 @@
-# falcon-data-table — USAGE
+﻿# falcon-data-table — USAGE
 
 ## Example 1 — Production usage from admin-console org-hierarchy
 
@@ -506,3 +506,26 @@ Pass pre-translated strings for the chevron toggle + default action button aria-
 
 When a per-action aria-label input is `null` (the default), the visible label text is reused as the aria-label — so the simplest consumer can still just translate `shadow{Edit,Delete,Save,Cancel}Label` and get reasonable a11y.
 ```
+
+## Loading is a HARD SWAP — row-level mutation pattern
+
+`[CODE]` `[loading]="true"` UNMOUNTS every data `<tr>` and renders only skeleton rows (runtime-verified 2026-05-21). **Never flip `[loading]` for a single-row action.** The platform pattern keeps a consumer-side `busyRowIds = signal<ReadonlySet<string>>(new Set())` + an `isRowBusy(id)` guard inside a projected cell template (per-row spinner), while the table's `[loading]` stays untouched. `busyRowIds` is NOT a table input — it lives on the consuming feature wrapper. Live consumers: `libs/falcon/src/shared-features/service-pricing-table/service-pricing-table.component.ts:179,542`, `apps/host-shell/.../service-pricing`, `apps/management-console/.../comms-hub`, `.../marketplace-applications`.
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-data-table>` across `apps/` + `libs/falcon/` returned **10 consumer file(s)** as of 2026-05-17 (mix of HTML + ts + models).
+
+## Deep-Dive Sweep Consumer Sweep (2026-06-03 — B08)
+
+[CODE] grep `<falcon-angular-data-table[\s>]` in `*.html` → **10 real render-sites** (folder `org-hierarchy-page/`):
+
+- `apps/{admin,management}-console/.../org-hierarchy-page/components/org-hierarchy-page-menu.component.html` (×2 each)
+- `apps/{admin,management}-console/.../templates-page/components/templates-list.component.html` + `templates-details/templates-details.component.html` (×4)
+- `apps/management-console/.../contact-groups/contact-groups-list/contact-groups-list.component.html`
+- `apps/admin-console/.../org-hierarchy-page/.../add-client-wizard/{client-comm-channels-step, client-applications-step}.component.html`
+- `libs/falcon/src/shared-features/service-pricing-table/service-pricing-table.component.html`
+
+(`libs/falcon/.../comm-mkt-view` + both consoles' `contracts-cost-management` reach it via shared components.) The prior `applications-table` / `comms-hub` direct-HTML sites have been refactored behind the shared `service-pricing-table` / `comm-mkt-view` wrappers.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08). Consumer sweep re-run (10 HTML render-sites on `org-hierarchy-page/` paths); `loading`-hard-swap + `busyRowIds` row-mutation pattern documented against live consumer source; the shadow-row + sticky-actions usage re-confirmed against `falcon-data-table.component.ts` (1612 ln).

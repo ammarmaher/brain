@@ -1,6 +1,12 @@
-# falcon-accordion — GAPS AND UPGRADES
+﻿# falcon-accordion — GAPS AND UPGRADES
 
 ## Missing capabilities
+
+### A1 — No CVA + no `expandedValuesChange` Output (P1)
+`[CODE]` falcon-accordion.component.ts:52,60-66 — the wrapper has an `expandedValues` getter/setter and a `(valueChange)` Output, but **no `expandedValuesChange` Output** → the `[(expandedValues)]` banana-box does NOT auto-wire (the prior dossier's `[(expandedValues)]` examples were wrong). It also does NOT implement `ControlValueAccessor`. **Fix (additive, zero-risk — 0 consumers):** add `@Output() expandedValuesChange` aliased from `valueChange`, AND/OR implement CVA for Reactive-Forms-driven section visibility.
+
+### A2 — Stencil `expand()` / `collapse()` not proxied on the wrapper (P2)
+`[CODE]` falcon-accordion.tsx:79-90 / -tw.tsx:86-96 — both Stencil tags expose `@Method() expand(value)` / `collapse(value)`, but the Angular wrapper does NOT proxy them and does NOT tag the inner element with a template `#ref`. Consumers must `querySelector('falcon-accordion-tw, falcon-accordion')` off a host `ViewChild`. **Fix:** tag the inner element + add async `expand()` / `collapse()` proxies on the wrapper.
 
 ### P1 — No header slot per item
 Today the header content is built from `FalconAccordionItem` props (`label`, `description`, `icon`). For richer header content (badges, status pills, action buttons next to the title), there's no escape hatch.
@@ -66,7 +72,7 @@ Accordion can be nested inside an accordion panel — but the outer-accordion's 
 - No e2e for keyboard nav.
 
 ## Missing Tailwind / token parity
-- Light + Shadow renderers both exist; parity not deeply audited but follows the same dual-render pattern.
+- `[CODE]` **Light + Shadow render-path parity VERIFIED 2026-06-03 (B13)** — `falcon-accordion-tw.tsx` mirrors `falcon-accordion.tsx` 1:1 in `@Prop`/`@Event`/`@Method`/slots/keyboard, sharing the SAME `falcon-accordion.utils.ts` and the SAME `--falcon-accordion-*` tokens (Shadow via CSS, `-tw` via `accordion-tailwind-classes.ts`). **One divergence (B-dim):** the `-tw` twin emits NO `part=` attributes (`part="header"`/`"panel"`/etc. are Shadow-only — Light DOM has no `::part`). Token parity OK.
 
 ## Performance risks
 - `headerRefs` Map grows per-render and is cleaned in `onItemsChange`. For very long accordions (>50 items), the Map and DOM grow proportionally. Acceptable for typical use.
@@ -129,3 +135,21 @@ export interface FalconAccordionItem {
 
 ## Future-proof recommendation
 Land the header slot first (P1) — unblocks the "rich header with status badge" pattern that any settings page will eventually need.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 1** ([CODE] grep `<falcon-angular-accordion>` across `apps/` + `libs/falcon/`) — STALE (`playground.page.html`, route now gone).
+
+## Deep-Dive Sweep Findings (2026-06-03 — B13)
+
+**Consumer count: 0 app files / 0 occurrences + 0 in `libs/falcon`** ([CODE] grep `<falcon-angular-accordion`). Only showcase/registry/docs/safelist references remain — the component stays ACTIVE but UNADOPTED.
+
+Drift corrected vs prior dossier (no deletion/promotion flags; component stays ACTIVE):
+- **`-tw` twin CONFIRMED to exist** — `falcon-accordion-tw/falcon-accordion-tw.tsx` (238 ln) is on disk + registered in `define-falcon-tw-component.ts:28`. The dual-render is real (prior dossier listed the path; the B10 mis-pattern of "single-render" does NOT apply here). Render-path parity verified (one divergence: `-tw` emits no `part=`).
+- **Binding corrected** — there is no `expandedValuesChange` Output, so `[(expandedValues)]` does NOT banana-box. New gap **A1** (add the Output and/or CVA). USAGE/RECOGNITION/INTEGRATION/DECISION corrected to `[expandedValues]` + `(valueChange)`.
+- **New gap A2** — Stencil `expand()`/`collapse()` `@Method`s are not proxied on the Angular wrapper.
+- **Token recount** — token file is **139 lines / 14 categories** (`:where()`-scoped, gate-12 compliant); Shadow CSS + `-tw` helper verified token-only (no raw hex).
+- **No new structural gaps** beyond A1/A2 + the previously-listed P1/P2 items. All findings are `safe-local` — see `FINDINGS/B13.md`.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13) against all source layers. Gaps A1 (no `expandedValuesChange`/CVA) + A2 (un-proxied methods) added; render-path parity + token scope verified; consumer count reconciled to 0. No deletion/promotion flags — component stays ACTIVE but UNADOPTED.

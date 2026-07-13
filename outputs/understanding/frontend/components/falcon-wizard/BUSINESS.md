@@ -31,7 +31,7 @@
 | Add Client wizard (5 steps) | organization-hierarchy | Full shell: Information → Settings → Channels → Applications → Owner, with per-step validation gating + Finish submit. 🟡 target consumer — production wizards still run the legacy bespoke stepper + manual buttons. |
 | Add User wizard | organization-hierarchy | Full shell for the Add User flow (personal → role/status → permissions). 🟡 same migration status. |
 | Add Subscription / Add Contact Group (future) | organization-hierarchy | `[INFERRED]` Any future multi-step business form — the architect contract says all new wizards use this component. |
-| Playground showcase | host-shell | `[CODE]` `playground.page.html` — 5-step dual-render-path demo. ✅ exercised. |
+| ~~Playground showcase~~ | ~~host-shell~~ | **REMOVED (2026-06-03)** — the playground route was deleted (`[MEMORY]` B01); no showcase consumer remains. The wizard shell currently has **0 consumers of any kind**. |
 
 ## Business gotchas
 - `falconStepValidationFail` is a **business signal, not an error** — it means "the operator tried to advance with an invalid step". The consumer MUST react (toast + focus the first invalid field); otherwise the Next button looks dead.
@@ -41,4 +41,4 @@
 - The wizard does not destroy non-current step bodies — sibling `slot="step-{i}"` content stays in the DOM (just unrendered). Heavy step bodies still run lifecycle hooks (`GAPS_AND_UPGRADES.md` item 11).
 
 ## Verification
-🟡 CODE-DERIVED from `[CODE]` `falcon-wizard.tsx` (read in full) + the existing UI dossier. The step-gating rules (forward-gated/back-free, `canProceed` block, last-step Finish, validate-on-Finish) are ✅ VERIFIED against the Stencil source. The "confirmed-working Add Client / Add User" features currently run on the legacy bespoke stepper + manual button rows — they prove the *business pattern*, but this exact component has 0 production consumers (`GAPS_AND_UPGRADES.md` Wave 7: consumer count 0); adoption is the pending migration.
+🟢 RE-VERIFIED 2026-06-03 (B20 REFRESH) — step-gating rules (forward-gated/back-free, `canProceed` block, last-step Finish, validate-on-Finish, 0-indexed, draft≠finish) re-confirmed against `falcon-wizard.tsx`. Stale playground row struck through (route removed). The Add Client / Add User features prove the *business pattern* but run on the legacy `<falcon-stepper>` + manual footer + `<falcon-angular-wizard-finalization>` — this shell still has **0 production consumers** (B20 Consumer Sweep). Rule cross-refs (BR-AM-19, Add Client README) 🟡 CODE-DERIVED / `[MEMORY]`.

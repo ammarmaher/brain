@@ -1,4 +1,4 @@
-# falcon-data-table — GAPS & UPGRADES
+﻿# falcon-data-table — GAPS & UPGRADES
 
 ## Closed in Wave 20 (2026-05-15) — Shadow row notch alignment
 
@@ -87,7 +87,7 @@
 
 ### Empty cell rendering when no template provided
 
-- When NO `[falconDataTableEmpty]` template is projected, the wrapper writes `el.textContent = (emptyMessage ?? emptyMessageKey)` directly into the `[data-empty-mount]` element. Good — no flash of empty content. But this is plain text — no icon / illustration / action button. Consumers must explicitly project an empty template to get a rich empty state. **P2 — add an `emptyState` input shape `{ iconName, descriptionKey, actionLabelKey }` that composes `<falcon-angular-empty-state>` by default.**
+- **FDT-03 LARGELY RESOLVED (2026-06-03).** The wrapper now has an `[emptyData]: FalconEmptyDataConfig` input (`[CODE]` :390) + `(emptyDataAction)` + `(emptyStateChange)` outputs that compose `<falcon-empty-data>` for a rich default empty state (icon / description / action) WITHOUT a projected template. The original "empty cell is bare text" gap only applies when NEITHER `[emptyData]` NOR `<ng-template falconDataTableEmpty>` is supplied (then the wrapper writes `el.textContent = emptyMessage ?? emptyMessageKey` — plain text, no flash). The `<falcon-angular-empty-state>`-via-template path also still works. **Largely closed — `[emptyData]` is the built-in composer FDT-03 asked for.**
 
 ### Frozen + sticky-actions
 
@@ -115,7 +115,7 @@
 |---|---|---|---|
 | FDT-01 | `multiSortChange` output | **P1** | `@Output() readonly multiSortChange = new EventEmitter<{ field: string; order: 1\|-1 }[]>();` forwarding `falcon-multi-sort` |
 | FDT-02 | Specs for projection orchestrator | **P1** | Vitest specs covering mount, reuse, GC, empty/loading views |
-| FDT-03 | Default empty-state composition | **P2** | Optional `[emptyState]="{ iconName, descriptionKey, actionLabelKey }"` input |
+| ~~FDT-03~~ | ~~Default empty-state composition~~ | **DONE 2026-06-03** | RESOLVED — `[emptyData]: FalconEmptyDataConfig` input composes `<falcon-empty-data>` natively (+ `(emptyDataAction)`/`(emptyStateChange)`). |
 | FDT-04 | Remove or implement reorder/resize placeholders | **P2** | Implement column reordering + resizing via CDK drag-drop OR remove inputs |
 | FDT-05 | Typed-action callback hook | **P2** | `FalconDataTableRowMenuAction<T>` adds `command?: (row: T) => void` invoked in `onMenuItemSelect` |
 | FDT-06 | Frozen + sticky-actions precedence | **P2** | Document or enforce; right-frozen columns win over sticky-actions or vice versa |
@@ -145,3 +145,26 @@
 - **Deprecate `rowMenuItems` and `boundMenuItems`** once consumers fully migrate to typed `rowActions`. Add an ESLint rule disallowing the legacy inputs in `apps/`.
 - **Document Strategy E publicly.** It's a unique pattern (Stencil emits projection mount-points; Angular wraps with `EmbeddedViewRef`) that other Falcon wrappers could adopt (`<falcon-angular-tree-table>` could project per-row templates the same way).
 - **Add a typed cell template helper** — a tiny utility type to give cell templates better TS inference for `let-value="value" let-row="row"` context typing.
+
+## Wave 7 Findings (2026-05-17)
+
+**Consumer count: 10** ([CODE] grep `<falcon-angular-data-table>` across `apps/` + `libs/falcon/`). See `USAGE.md` for the file list.
+
+No new structural gaps detected by Wave 7 sweep beyond items already listed above.
+
+## Deep-Dive Sweep Findings (2026-06-03 — B08)
+
+**Consumer count: 10 HTML render-sites** ([CODE] grep `<falcon-angular-data-table[\s>]` in `*.html`; folder is now `org-hierarchy-page/`). The component stays ACTIVE / production-critical / READY.
+
+Drift corrected vs prior dossier:
+- **Wrapper-only confirmed** — there is NO `falcon-data-table` Stencil component; this is the NEW cross-framework wrapper over `<falcon-table-tw>`, NOT a survivor (legacy PrimeNG facade deleted Wave PR-7 per eslint.config.mjs:295). OVERVIEW Status clarified.
+- **LOC 672 → 1612**; directives 4 → **7** (added shadow + shadow-actions + shadow-col).
+- **Input/output drift filled** — `scrollable` default `true`, `scrollHeight` token-backed, `skeletonRows` 5; added `actionsHeaderLabel`/`actionsVisibleField`/`expandedRowId`/`tableBorderRadius`/`emptyData`/`showCustomFooter`/`currentPage`/`footer*Label` inputs + `rowClick`/`emptyDataAction`/`emptyStateChange`/`pageChange`/`rowsChange` outputs.
+- **FDT-03 RESOLVED** — `[emptyData]` natively composes `<falcon-empty-data>`.
+- **FT-01 (inherited PrimeIcon) RESOLVED** in the core (`falcon-table` FT-01) — the row-action `⋮` is `falcon-icon falcon-icon-ellipsis-v`; the DECISION "inherits `pi pi-ellipsis-v`" caveat is now stale (corrected in DECISION.md).
+- **`loading`-hard-swap + consumer `busyRowIds`/`isRowBusy` pattern** documented (spec note a; `busyRowIds` is a consumer-wrapper convention, NOT a table input — verified).
+- Still-open: FDT-01 (`multiSortChange`), FDT-02 (orchestrator specs — still no `.spec.ts` for the wrapper), FDT-04 (reorder/resize placeholders), no `[density]` input, no virtual scrolling. FT-02/FT-03 a11y inherited from the core.
+- All findings `safe-local` (doc). See FINDINGS/B08.md.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B08) against falcon-data-table.component.ts (1612 ln) + -cell.directive.ts (7 directives) + .types.ts. **FDT-03 + FT-01-inherited RETIRED** (both resolved in source); LOC + directive-count + input/output drift corrected; `loading`-hard-swap + `busyRowIds` consumer pattern documented. Component stays ACTIVE / READY / production-critical. 0 HIGH-RISK (inherited a11y queued in the core).

@@ -1,10 +1,12 @@
 # send-credentials-popup (LEGACY) — DECISION
 
+> [!warning] REMOVED — do NOT use. Superseded by [[falcon-sending-credentials-dialog]] (`<falcon-angular-sending-credentials-dialog>`).
+> The folder was deleted and the re-export removed. [CODE] `libs/falcon/src/shared-ui/index.ts:24-26`. The "wait for popup variant=custom" roadmap below never executed — a dedicated dialog shipped instead.
+
 ## Brain SK final recommendation
 
 ### Status
-- **LEGACY-IN-USE.** Bespoke confirmation popup for credential delivery.
-- Roadmap: migrate to `<falcon-angular-popup variant="custom">` once a slot-friendly variant lands.
+- **REMOVED (0 live consumers).** [CODE] `libs/falcon/src/shared-ui/index.ts:24-26`. The realized successor is `<falcon-angular-sending-credentials-dialog>` (a dedicated Falcon UI core component), NOT the `<falcon-angular-popup variant="custom">` the old dossier anticipated.
 
 ### Use this component for
 - Send-credentials confirmation flow after creating a new client / user.
@@ -23,13 +25,12 @@
 5. **Delete SCSS** during refactor (P0).
 
 ### Relationship to other components
-- `<falcon-angular-dialog>` (composed today as shell).
-- `<falcon-angular-radio>` (composed for the radio group).
-- `<falcon-angular-button>` (Submit + close).
-- Future replacement: `<falcon-angular-popup variant="custom">`.
+- **`<falcon-angular-sending-credentials-dialog>` ([[falcon-sending-credentials-dialog]]) — the realized replacement.**
+- `<falcon-angular-wizard-finalization>` ([[falcon-wizard-finalization]]) — composes the sending-credentials dialog in the final wizard step.
+- `<falcon-angular-dialog>` / `<falcon-angular-radio>` / `<falcon-angular-button>` — were composed by the old popup; equivalents are composed inside the successor.
 
 ### Exact rule for future implementation tasks
-> "For credential-delivery confirmation flows, use `<falcon-send-credentials-popup>` today. When `<falcon-angular-popup>` gains a slot-friendly `custom` variant, migrate. For any OTHER credential flow (e.g., password reset), build a fresh component on `<falcon-angular-popup variant='custom'>` — do not extend this one."
+> "`<falcon-send-credentials-popup>` is DELETED — do not reference it. For credential-delivery confirmation use `<falcon-angular-sending-credentials-dialog>` (typically reached through `<falcon-angular-wizard-finalization>` on the final wizard step). See the [[falcon-sending-credentials-dialog]] dossier for its API."
 
 ---
 
@@ -76,5 +77,9 @@
 4. Delete legacy folder.
 
 ### 10. What would be risky to change because other pages depend on it?
-- Consumers expect `(submit)` to emit `DeliveryMethod`. Maintaining that contract during migration is essential.
-- `[(visible)]` two-way pattern must be preserved.
+- _Moot — the component is deleted and has 0 consumers._ The contract concerns (`(submit)` emitting `DeliveryMethod`, `[(visible)]` two-way) were resolved when consumers moved to `<falcon-angular-sending-credentials-dialog>`.
+
+> _N.B. — §9's "safest upgrade path" executed: the legacy folder was deleted and consumers migrated to a dedicated dialog._
+
+## Verification
+🟢 code-verified (B23 reconcile 2026-06-03) — REMOVED confirmed via [CODE] `libs/falcon/src/shared-ui/index.ts:24-26`; realized successor `<falcon-angular-sending-credentials-dialog>` confirmed live via Glob + the `falcon-wizard-finalization` consumer.

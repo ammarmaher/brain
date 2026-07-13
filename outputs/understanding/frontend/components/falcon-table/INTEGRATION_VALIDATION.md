@@ -44,4 +44,4 @@ Error pipeline `[MEMORY]` Wave 17, verified configured in `apps/host-shell/.../f
 - `[MEMORY]` Wave 17 — `notShowToaster:'true'` header is set ONLY on do-payment POSTs; service-list GETs run the standard error pipeline.
 
 ## Verification
-🟡 CODE-DERIVED + `[MEMORY]`. Endpoint wiring + state-slice pattern ✅ VERIFIED (`[MEMORY]` project_commchannels_apps_tabs_wave17` — `nx build admin-console` GREEN, mocks deleted, API loading live, user-confirmed working). Strategy E mount-point contract `[CODE]`-verified against `falcon-table-tw.tsx`.
+🟡 CODE-DERIVED + `[MEMORY]`, RE-VERIFIED 2026-06-03 (B08). Endpoint wiring + state-slice pattern ✅ VERIFIED (`[MEMORY]` project_commchannels_apps_tabs_wave17`). Strategy E mount-point contract `[CODE]`-verified against `falcon-table-tw.tsx` (cell-mount `<td>`, shadow-mount now `<div>`, header/empty/loading mounts). The **`loading`-hard-swap + consumer `busyRowIds`/`isRowBusy` row-mutation pattern** is now documented in API.md/USAGE.md (verified against live consumer source in `libs/falcon/.../service-pricing-table` + 3 app features).

@@ -1,10 +1,10 @@
-# falcon-tabs — USAGE
+﻿# falcon-tabs — USAGE
 
 ## Real usage examples (cited from active source)
 
 ### 1. Organization-hierarchy tab strip (admin-console)
 
-`apps/admin-console/src/app/features/organization-hierarchy/components/organization-hierarchy-menu.component.html` (lines 53-65):
+`apps/admin-console/src/app/features/org-hierarchy-page/components/org-hierarchy-page-menu.component.html` (folder renamed from the prior `organization-hierarchy/`; this file pairs `<falcon-angular-tabs>` with a `falconTabActions` template for the tree/chart toggle):
 
 ```html
 <div class="org-menu-tabs-bar flex items-center justify-between gap-2">
@@ -199,3 +199,25 @@ The wrapper auto-registers the Stencil tags via `defineFalconTwComponent('falcon
 | Pass `ariaLabel` to give the tablist a name | Rely on a `<h2>` outside the component to label it implicitly |
 | Drive `selectedValue` via signal | Set it imperatively in `setTimeout` |
 | Use `(valueChange)` or `[(selectedValue)]` for two-way | Subscribe to the raw `falcon-change` event from the Stencil tag |
+
+## Wave 7 Consumer Sweep (2026-05-17)
+
+[CODE] grep `<falcon-angular-tabs>` across `apps/` + `libs/falcon/` returned **5 consumer file(s)** as of 2026-05-17 (now superseded — see below).
+
+## Consumer Sweep (2026-06-03)
+
+[CODE] grep `<falcon-angular-tabs` across `apps/` → **12 files / 15 occurrences**; across `libs/falcon/` → **1 file**. Full list:
+
+- `apps/{admin,management}-console/.../org-hierarchy-page/components/org-hierarchy-page-menu.component.html` (1 each; both use `falconTabActions`).
+- `apps/{admin,management}-console/.../templates-page/components/templates-list.component.html` (1 each).
+- `apps/admin-console/.../contracts-cost-management/components/contracts-view-contract.component.{ts,html}` (1 html + ts import) + `contracts-edit-contract.component.{ts,html}` (2 html + ts import) + `apps/management-console/.../contracts-view-contract.component.html` (1).
+- `apps/management-console/.../contact-groups/contact-groups-list/contact-groups-list.component.html` (1).
+- `libs/falcon/src/shared-features/user-details/components/user-details-page.component.html` (the user-details tab strip moved into `libs/falcon`; also uses `falconTabActions`).
+- Showcase (host-shell): `falcon-ui-showcase/gallery/showcase-tabs-actions-demo.component.ts` (2 — `falconTabActions` reference impl), `gallery/showcase-code-panel.component.ts` (2 — Live/Code toggle).
+
+`falconTabActions` directive specifically: [CODE] grep `falconTabActions` → **5 files** (`org-hierarchy-page-menu` ×2 consoles, `user-details-page`, `showcase-tabs-actions-demo`, `showcase-code-panel`, registry).
+
+> `[INFERRED]` count rose from "5" mainly because contracts-cost-management + contact-groups + templates-page adopted tabs, the org-hierarchy folder renamed `organization-hierarchy/` → `org-hierarchy-page/`, user-details moved to `libs/falcon`, and `playground.page.html` was removed.
+
+## Verification
+🟢 CODE-VERIFIED 2026-06-03 (B13). Example 1 admin path corrected to `org-hierarchy-page/`; Consumer Sweep re-run (`<falcon-angular-tabs` → 12 app files / 15 occurrences + 1 in `libs/falcon`; `falconTabActions` → 5 files). The `panel-<value>` slot + `falconTabActions` examples re-confirmed against live source.

@@ -35,7 +35,7 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 2. **Output** — bind `(falconDismiss)` to a parent method that removes the keyed member from the collection signal (immutable `.update()`).
 3. **Slot** — for richer label content (an icon glued to text), project via `<ng-content>` instead of `[value]` (`API.md:48`).
 4. **Variant** — shape via `[rounded]`; tint via `[severity]`.
-5. **Token override** — restyle bg / fg / radius via `tag.tokens.css` vars (`--falcon-tag-bg`, `--falcon-tag-fg`, `--falcon-tag-radius`); never hardcode hex/px.
+5. **Token override** — restyle radius via `tag.tokens.css` vars (`--falcon-tag-radius`); for **color** (`--falcon-tag-bg`/`-fg`) the override only bites on the Shadow path (`useTailwind=false`) — the default `-tw` path hardcodes palette utilities (FT-07). Never hardcode hex/px.
 6. **Shared upgrade** — i18n dismiss label (FT-02 `[dismissAriaLabel]`), dismiss hover/focus tokens (FT-03), a `<falcon-tag-list>` overflow orchestrator (FT-05), or `col.type='tag'` table integration (FT-06) are GAPs (`GAPS_AND_UPGRADES.md`) — raise them, do not hand-roll.
 7. **Wrapper** — for new pages always use `<falcon-angular-tag>` (the Angular wrapper), never the raw Stencil tag (except the documented i18n `aria-label` workaround).
 8. **Multi-tag layout** — wrap a tag set in `<div class="flex flex-wrap gap-1">` (no orchestrator exists yet — FT-05).
@@ -51,4 +51,4 @@ Customization order (`feedback_falcon_custom_library_mandatory`): inputs → tem
 - PrimeNG `<p-tag>` / native `<span>` chips in app code — banned.
 
 ## Verification
-🟡 CODE-DERIVED from the 6 UI dossier files + `[CODE]` `falcon-tag.types.ts` (7-value severity enum confirmed). Cross-library mapping is `[INFERRED]` from standard component parity. Severity-vs-status separation ✅ VERIFIED against the two distinct type files.
+🟢 RE-VERIFIED 2026-06-03 (B10) — anatomy + 7-value severity enum confirmed against `[CODE]` `falcon-tag.types.ts:2-15`, `falcon-tag.tsx`, `falcon-tag-tw.tsx`. Cross-library mapping is `[INFERRED]` from standard component parity. Severity-vs-status separation ✅ VERIFIED against the two distinct type files. Token-override note corrected (color override is Shadow-path-only — FT-07).

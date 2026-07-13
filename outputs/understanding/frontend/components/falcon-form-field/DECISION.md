@@ -21,9 +21,9 @@ N/A — Angular-only component.
 ## Required upgrades before wider use
 
 - **DO NOT** widen use. Instead:
-  - P1 G1: Migrate SCSS → Tailwind + tokens.
-  - P1 G2: Label-for-control association.
-  - P1 G3: Workspace-wide migration audit + deprecation.
+  - ~~P1 G1: Migrate SCSS → Tailwind~~ — **RESOLVED/MOOT** (no SCSS exists; already Tailwind-only — corrected 2026-06-03).
+  - P1 G2: Label-for-control association (`controlId`/`for=`).
+  - P1 G3: Workspace-wide migration audit + deprecation (migrate Falcon-input usages off the wrapper).
 
 ## Relationship
 
@@ -41,9 +41,9 @@ N/A — Angular-only component.
 ## Dynamic capability assessment
 
 ### 1. Static?
-- SCSS-driven visuals.
-- Label-row markup.
-- No token contract yet.
+- Label-row markup + the single message line (error xor hint).
+- Tailwind-utility visuals (NOT SCSS — corrected 2026-06-03); colors via `--text-*` theme tokens.
+- No `--falcon-form-field-*` token namespace (none needed).
 
 ### 2. Dynamic via inputs/outputs?
 - 7 signal inputs.
@@ -53,10 +53,10 @@ N/A — Angular-only component.
 - Default content slot.
 
 ### 4. Tokens?
-- None — SCSS-only.
+- No component token file. Label/hint colors read the `--text-2` / `--text-muted` theme tokens via `var(..., fallback)`; required/error use the `text-falcon-red-500` palette utility.
 
 ### 5. Tailwind?
-- N/A — wrapper isn't using Tailwind.
+- **Yes** — the wrapper IS Tailwind-utility-driven (corrected 2026-06-03; the prior "isn't using Tailwind / SCSS-only" was drift). Host `class=` adds layout utilities.
 
 ### 6. Missing for cross-page reuse?
 - Token contract (G1).
@@ -72,12 +72,16 @@ N/A — Angular-only component.
 - `controlId` for explicit association (G2).
 
 ### 9. Safest path?
-1. Migrate SCSS → Tailwind + tokens (template + token file).
-2. Add `controlId` input + bridge to inner control.
-3. Document deprecation; tag with `@deprecated` JSDoc.
-4. Run workspace-wide migration replacing `<falcon-form-field>` around Falcon inputs.
+1. Add `controlId` input + render `[for]` on the label (G2).
+2. Add `helperText` alias for `hint` (G6); add a component spec (G-TEST).
+3. Document deprecation; tag with `@deprecated` JSDoc (G3).
+4. Run workspace-wide migration replacing `<falcon-form-field>` around Falcon inputs with the input's built-in `label`.
+(The old "migrate SCSS" step is dropped — no SCSS exists.)
 
 ### 10. Risky?
-- Removing SCSS may shift visuals — guard with a visual regression test.
-- Workspace-wide replace must not double-label.
-- Some legacy wizards depend on the wrapper's spacing — token-mirror before removing SCSS.
+- Workspace-wide replace must not double-label (G3).
+- Some legacy wizards depend on the wrapper's `gap-1.5` row spacing — verify visually before removing the wrapper.
+- The `--text-2` / `--text-muted` fallback literals (`#3d3d3d` / `#6b7280`) assume those theme tokens exist — verify platform-wide (G7).
+
+## Verification
+🟢 RE-VERIFIED 2026-06-03 (B24). Recommendation unchanged (LEGACY / NEEDS-DEPRECATION, Tailwind-only). **Drift corrected:** the component is Tailwind-utility-driven with no SCSS and no token file — every "SCSS-only / migrate SCSS" claim in the prior dossier was wrong. 7 inputs / 0 outputs / `hasError` precedence re-confirmed from source.
